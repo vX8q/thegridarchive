@@ -1,0 +1,199 @@
+// Static schedules for series that might not have API events
+(function () {
+  if (typeof window === 'undefined') return;
+
+  window.TGA_STATIC_SCHEDULES = {
+    indycarTable: [
+      { rd: 1,  date: 'March 1',   race: 'Firestone Grand Prix of St. Petersburg',         track: 'Streets of St. Petersburg',           location: 'St. Petersburg, Florida',          time_et: '12:00 p.m.', time_msk: '8:00 p.m.', event_id: 'indycar_2026_1' },
+      { rd: 2,  date: 'March 7',   race: 'Good Ranchers 250',                             track: 'Phoenix Raceway',                      location: 'Avondale, Arizona',                time_et: '3:00 p.m.',  time_msk: '11:00 p.m.' },
+      { rd: 3,  date: 'March 15',  race: 'Grand Prix of Arlington',                       track: 'Streets of Arlington',                 location: 'Arlington, Texas',                 time_et: '12:30 p.m.', time_msk: '8:30 p.m.' },
+      { rd: 4,  date: 'March 29',  race: 'Children\'s of Alabama Indy Grand Prix',         track: 'Barber Motorsports Park',              location: 'Birmingham, Alabama',              time_et: '1:00 p.m.',  time_msk: '8:00 p.m.' },
+      { rd: 5,  date: 'April 19',  race: 'Acura Grand Prix of Long Beach',                 track: 'Streets of Long Beach',                location: 'Long Beach, California',           time_et: '5:30 p.m.',  time_msk: '1:30 a.m.' },
+      { rd: 6,  date: 'May 9',     race: 'Sonsio Grand Prix',                              track: 'Indianapolis Motor Speedway Road Course', location: 'Speedway, Indiana',           time_et: '4:30 p.m.',  time_msk: '11:30 p.m.', event_id: 'indycar_2026_6' },
+      { rd: 7,  date: 'May 24',    race: '110th Running of the Indianapolis 500',          track: 'Indianapolis Motor Speedway',          location: 'Speedway, Indiana',                time_et: '10:00 a.m.', time_msk: '5:00 p.m.' },
+      { rd: 8,  date: 'May 31',    race: 'Chevrolet Detroit Grand Prix',                   track: 'Streets of Detroit',                   location: 'Detroit, Michigan',                time_et: '12:30 p.m.', time_msk: '7:30 p.m.' },
+      { rd: 9,  date: 'June 7',    race: 'Bommarito Automotive Group 500',                 track: 'World Wide Technology Raceway',        location: 'Madison, Illinois',                time_et: '9:00 p.m.',  time_msk: '4:00 a.m.' },
+      { rd:10,  date: 'June 21',   race: 'XPEL Grand Prix at Road America',                track: 'Road America',                         location: 'Elkhart Lake, Wisconsin',          time_et: '2:00 p.m.',  time_msk: '9:00 p.m.' },
+      { rd:11,  date: 'July 5',    race: 'Honda Indy 200 at Mid-Ohio',                     track: 'Mid-Ohio Sports Car Course',           location: 'Lexington, Ohio',                  time_et: '12:30 p.m.', time_msk: '7:30 p.m.' },
+      { rd:12,  date: 'July 19',   race: 'Borchetta Bourbon Music City Grand Prix',        track: 'Nashville Superspeedway',              location: 'Lebanon, Tennessee',               time_et: 'TBD',       time_msk: 'TBD' },
+      { rd:13,  date: 'August 9',  race: 'BitNile.com Grand Prix of Portland',             track: 'Portland International Raceway',       location: 'Portland, Oregon',                 time_et: '4:00 p.m.',  time_msk: '11:00 p.m.' },
+      { rd:14,  date: 'August 16', race: 'Ontario Honda Dealers Indy at Markham',          track: 'Streets of Markham',                   location: 'Markham, Ontario',                 time_et: '12:00 p.m.', time_msk: '7:00 p.m.' },
+      { rd:15,  date: 'August 23', race: 'Freedom 250 Grand Prix of Washington, D.C.',     track: 'Streets of Washington',                location: 'Washington, D.C.',                 time_et: 'TBD',       time_msk: 'TBD' },
+      { rd:16,  date: 'August 29', race: 'Snap-on Makers and Fixers 250',                  track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            time_et: '2:30 p.m.',  time_msk: '9:30 p.m.' },
+      { rd:17,  date: 'August 30', race: 'Snap-on Milwaukee Mile 250',                     track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            time_et: '1:00 p.m.',  time_msk: '8:00 p.m.' },
+      { rd:18,  date: 'September 6', race: 'IndyCar Grand Prix of Monterey',               track: 'WeatherTech Raceway Laguna Seca',      location: 'Monterey, California',             time_et: '2:30 p.m.',  time_msk: '9:30 p.m.' }
+    ],
+
+    indycarEvents: [
+      { date: 'March 1',   name: 'Firestone Grand Prix of St. Petersburg', track: 'Streets of St. Petersburg',           location: 'St. Petersburg, Florida',          est: '12:00 p.m.', msk: '8:00 p.m.', event_id: 'indycar_2026_1' },
+      { date: 'March 7',   name: 'Good Ranchers 250',                      track: 'Phoenix Raceway',                      location: 'Avondale, Arizona',                est: '3:00 p.m.',  msk: '11:00 p.m.' },
+      { date: 'March 15',  name: 'Grand Prix of Arlington',              track: 'Streets of Arlington',                 location: 'Arlington, Texas',                 est: '12:30 p.m.', msk: '8:30 p.m.' },
+      { date: 'March 29',  name: 'Children\'s of Alabama Indy Grand Prix',track: 'Barber Motorsports Park',              location: 'Birmingham, Alabama',              est: '1:00 p.m.',  msk: '8:00 p.m.' },
+      { date: 'April 19',  name: 'Acura Grand Prix of Long Beach',        track: 'Streets of Long Beach',                location: 'Long Beach, California',           est: '5:30 p.m.',  msk: '1:30 a.m.' },
+      { date: 'May 9',     name: 'Sonsio Grand Prix',                     track: 'Indianapolis Motor Speedway Road Course', location: 'Speedway, Indiana',           est: '4:30 p.m.',  msk: '11:30 p.m.', event_id: 'indycar_2026_6' },
+      { date: 'May 24',    name: '110th Running of the Indianapolis 500', track: 'Indianapolis Motor Speedway',          location: 'Speedway, Indiana',                est: '10:00 a.m.', msk: '5:00 p.m.' },
+      { date: 'May 31',    name: 'Chevrolet Detroit Grand Prix',          track: 'Streets of Detroit',                   location: 'Detroit, Michigan',                est: '12:30 p.m.', msk: '7:30 p.m.' },
+      { date: 'June 7',    name: 'Bommarito Automotive Group 500',        track: 'World Wide Technology Raceway',        location: 'Madison, Illinois',                est: '9:00 p.m.',  msk: '4:00 a.m.' },
+      { date: 'June 21',   name: 'XPEL Grand Prix at Road America',       track: 'Road America',                         location: 'Elkhart Lake, Wisconsin',          est: '2:00 p.m.',  msk: '9:00 p.m.' },
+      { date: 'July 5',    name: 'Honda Indy 200 at Mid-Ohio',            track: 'Mid-Ohio Sports Car Course',           location: 'Lexington, Ohio',                  est: '12:30 p.m.', msk: '7:30 p.m.' },
+      { date: 'July 19',   name: 'Borchetta Bourbon Music City Grand Prix', track: 'Nashville Superspeedway',           location: 'Lebanon, Tennessee',               est: 'TBD',       msk: 'TBD' },
+      { date: 'August 9',  name: 'BitNile.com Grand Prix of Portland',    track: 'Portland International Raceway',       location: 'Portland, Oregon',                 est: '4:00 p.m.',  msk: '11:00 p.m.' },
+      { date: 'August 16', name: 'Ontario Honda Dealers Indy at Markham', track: 'Streets of Markham',                   location: 'Markham, Ontario',                 est: '12:00 p.m.', msk: '7:00 p.m.' },
+      { date: 'August 23', name: 'Freedom 250 Grand Prix of Washington, D.C.', track: 'Streets of Washington',          location: 'Washington, D.C.',                 est: 'TBD',       msk: 'TBD' },
+      { date: 'August 29', name: 'Snap-on Makers and Fixers 250',         track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            est: '2:30 p.m.',  msk: '9:30 p.m.' },
+      { date: 'August 30', name: 'Snap-on Milwaukee Mile 250',            track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            est: '1:00 p.m.',  msk: '8:00 p.m.' },
+      { date: 'September 6', name: 'IndyCar Grand Prix of Monterey',      track: 'WeatherTech Raceway Laguna Seca',      location: 'Monterey, California',             est: '2:30 p.m.',  msk: '9:30 p.m.' }
+    ],
+
+    f1: [
+      { rd: 1,  grand_prix: 'Australian Grand Prix',          circuit: 'Australia — Albert Park Circuit, Melbourne',                            date: '8 March, 15:00' },
+      { rd: 2,  grand_prix: 'Chinese Grand Prix',             circuit: 'China — Shanghai International Circuit, Shanghai',                      date: '15 March' },
+      { rd: 3,  grand_prix: 'Japanese Grand Prix',            circuit: 'Japan — Suzuka Circuit, Suzuka',                                        date: '29 March' },
+      // Rounds 4 and 5 (Bahrain / Saudi Arabia) cancelled for 2026 calendar.
+      { rd: 6,  grand_prix: 'Miami Grand Prix',    circuit: 'United States — Miami International Autodrome, Miami Gardens, Florida', date: '3 May' },
+      { rd: 7,  grand_prix: 'Canadian Grand Prix',            circuit: 'Canada — Circuit Gilles Villeneuve, Montreal',                          date: '24 May' },
+      { rd: 8,  grand_prix: 'Monaco Grand Prix',              circuit: 'Monaco — Circuit de Monaco, Monaco',                                    date: '7 June' },
+      { rd: 9,  grand_prix: 'Barcelona-Catalunya Grand Prix', circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló',                      date: '14 June' },
+      { rd:10,  grand_prix: 'Austrian Grand Prix',            circuit: 'Austria — Red Bull Ring, Spielberg',                                    date: '28 June' },
+      { rd:11,  grand_prix: 'British Grand Prix',             circuit: 'United Kingdom — Silverstone Circuit, Silverstone',                     date: '5 July' },
+      { rd:12,  grand_prix: 'Belgian Grand Prix',             circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot',                      date: '19 July' },
+      { rd:13,  grand_prix: 'Hungarian Grand Prix',           circuit: 'Hungary — Hungaroring, Mogyoród',                                       date: '26 July' },
+      { rd:14,  grand_prix: 'Dutch Grand Prix',               circuit: 'Netherlands — Circuit Zandvoort, Zandvoort',                            date: '23 August' },
+      { rd:15,  grand_prix: 'Italian Grand Prix',             circuit: 'Italy — Monza Circuit, Monza',                                          date: '6 September' },
+      { rd:16,  grand_prix: 'Spanish Grand Prix',             circuit: 'Spain — Madring, Madrid',                                               date: '13 September' },
+      { rd:17,  grand_prix: 'Azerbaijan Grand Prix',          circuit: 'Azerbaijan — Baku City Circuit, Baku',                                  date: '26 September' },
+      { rd:18,  grand_prix: 'Singapore Grand Prix',           circuit: 'Singapore — Marina Bay Street Circuit, Singapore',                      date: '11 October' },
+      { rd:19,  grand_prix: 'United States Grand Prix',       circuit: 'United States — Circuit of the Americas, Austin, Texas',                date: '25 October' },
+      { rd:20,  grand_prix: 'Mexico City Grand Prix',         circuit: 'Mexico — Autódromo Hermanos Rodríguez, Mexico City',                    date: '1 November' },
+      { rd:21,  grand_prix: 'São Paulo Grand Prix',           circuit: 'Brazil — Interlagos Circuit, São Paulo',                                 date: '8 November' },
+      { rd:22,  grand_prix: 'Las Vegas Grand Prix',           circuit: 'United States — Las Vegas Strip Circuit, Paradise, Nevada',             date: '21 November' },
+      { rd:23,  grand_prix: 'Qatar Grand Prix',               circuit: 'Qatar — Lusail International Circuit, Lusail',                           date: '29 November' },
+      { rd:24,  grand_prix: 'Abu Dhabi Grand Prix',           circuit: 'United Arab Emirates — Yas Marina Circuit, Abu Dhabi',                  date: '6 December' }
+    ],
+
+    f1_2025: [
+      { rd: 1,  grand_prix: 'Australian Grand Prix',          circuit: 'Australia — Albert Park Circuit, Melbourne',                            date: '16 March, 15:00' },
+      { rd: 2,  grand_prix: 'Chinese Grand Prix',             circuit: 'China — Shanghai International Circuit, Shanghai',                      date: '23 March, 15:00' },
+      { rd: 3,  grand_prix: 'Japanese Grand Prix',            circuit: 'Japan — Suzuka Circuit, Suzuka',                                        date: '6 April, 14:00' },
+      { rd: 4,  grand_prix: 'Bahrain Grand Prix',             circuit: 'Bahrain — Bahrain International Circuit, Sakhir',                      date: '13 April, 18:00' },
+      { rd: 5,  grand_prix: 'Saudi Arabian Grand Prix',       circuit: 'Saudi Arabia — Jeddah Corniche Circuit, Jeddah',                        date: '20 April, 20:00' },
+      { rd: 6,  grand_prix: 'Miami Grand Prix',               circuit: 'United States — Miami International Autodrome, Miami Gardens, Florida', date: '4 May, 16:00' },
+      { rd: 7,  grand_prix: 'Emilia Romagna Grand Prix',      circuit: 'Italy — Imola Circuit, Imola',                                          date: '18 May, 15:00' },
+      { rd: 8,  grand_prix: 'Monaco Grand Prix',              circuit: 'Monaco — Circuit de Monaco, Monaco',                                    date: '25 May, 15:00' },
+      { rd: 9,  grand_prix: 'Spanish Grand Prix',             circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló',                      date: '1 June, 15:00' },
+      { rd:10,  grand_prix: 'Canadian Grand Prix',            circuit: 'Canada — Circuit Gilles Villeneuve, Montreal',                          date: '15 June, 16:00' },
+      { rd:11,  grand_prix: 'Austrian Grand Prix',            circuit: 'Austria — Red Bull Ring, Spielberg',                                    date: '29 June, 15:00' },
+      { rd:12,  grand_prix: 'British Grand Prix',             circuit: 'United Kingdom — Silverstone Circuit, Silverstone',                     date: '6 July, 15:00' },
+      { rd:13,  grand_prix: 'Belgian Grand Prix',             circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot',                      date: '27 July, 15:00' },
+      { rd:14,  grand_prix: 'Hungarian Grand Prix',           circuit: 'Hungary — Hungaroring, Mogyoród',                                       date: '3 August, 15:00' },
+      { rd:15,  grand_prix: 'Dutch Grand Prix',               circuit: 'Netherlands — Circuit Zandvoort, Zandvoort',                            date: '31 August, 15:00' },
+      { rd:16,  grand_prix: 'Italian Grand Prix',             circuit: 'Italy — Monza Circuit, Monza',                                          date: '7 September, 15:00' },
+      { rd:17,  grand_prix: 'Azerbaijan Grand Prix',          circuit: 'Azerbaijan — Baku City Circuit, Baku',                                  date: '21 September, 15:00' },
+      { rd:18,  grand_prix: 'Singapore Grand Prix',           circuit: 'Singapore — Marina Bay Street Circuit, Singapore',                      date: '5 October, 20:00' },
+      { rd:19,  grand_prix: 'United States Grand Prix',       circuit: 'United States — Circuit of the Americas, Austin, Texas',                date: '19 October, 15:00' },
+      { rd:20,  grand_prix: 'Mexico City Grand Prix',         circuit: 'Mexico — Autódromo Hermanos Rodríguez, Mexico City',                    date: '26 October, 14:00' },
+      { rd:21,  grand_prix: 'São Paulo Grand Prix',           circuit: 'Brazil — Interlagos Circuit, São Paulo',                                 date: '9 November, 14:00' },
+      { rd:22,  grand_prix: 'Las Vegas Grand Prix',           circuit: 'United States — Las Vegas Strip Circuit, Paradise, Nevada',             date: '22 November, 20:00' },
+      { rd:23,  grand_prix: 'Qatar Grand Prix',               circuit: 'Qatar — Lusail International Circuit, Lusail',                           date: '30 November, 19:00' },
+      { rd:24,  grand_prix: 'Abu Dhabi Grand Prix',           circuit: 'United Arab Emirates — Yas Marina Circuit, Abu Dhabi',                  date: '7 December, 17:00' }
+    ],
+
+    f2: [
+      { rd: 1,  circuit: 'Australia — Albert Park Circuit, Melbourne', event_id: 'F2_2026_1',
+        sprint: '7 March',  sprintLocal: '14:10', sprintMsk: '06:10',
+        feature: '8 March', featureLocal: '11:25', featureMsk: '03:25' },
+      { rd: 2,  circuit: 'United States — Miami International Autodrome, Miami Gardens, Florida', event_id: 'F2_2026_2',
+        sprint: '2 May', sprintLocal: '', sprintMsk: '',
+        feature: '3 May', featureLocal: '', featureMsk: '' },
+      { rd: 3,  circuit: 'Canada — Circuit Gilles Villeneuve, Montreal', event_id: 'F2_2026_3',
+        sprint: '23 May', sprintLocal: '', sprintMsk: '',
+        feature: '24 May', featureLocal: '', featureMsk: '' },
+      { rd: 4,  circuit: 'Monaco — Circuit de Monaco, Monaco', event_id: 'F2_2026_4',
+        sprint: '6 June', sprintLocal: '14:15', sprintMsk: '15:15',
+        feature: '7 June', featureLocal: '09:25', featureMsk: '10:25' },
+      { rd: 5,  circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló', event_id: 'F2_2026_5',
+        sprint: '13 June', sprintLocal: '14:15', sprintMsk: '15:15',
+        feature: '14 June', featureLocal: '11:25', featureMsk: '12:25' },
+      { rd: 6,  circuit: 'Austria — Red Bull Ring, Spielberg',
+        sprint: '27 June', sprintLocal: '', sprintMsk: '',
+        feature: '28 June', featureLocal: '', featureMsk: '' },
+      { rd: 7,  circuit: 'United Kingdom — Silverstone Circuit, Silverstone',
+        sprint: '4 July', sprintLocal: '', sprintMsk: '',
+        feature: '5 July', featureLocal: '', featureMsk: '' },
+      { rd: 8,  circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot',
+        sprint: '18 July', sprintLocal: '', sprintMsk: '',
+        feature: '19 July', featureLocal: '', featureMsk: '' },
+      { rd: 9,  circuit: 'Hungary — Hungaroring, Mogyoród',
+        sprint: '25 July', sprintLocal: '', sprintMsk: '',
+        feature: '26 July', featureLocal: '', featureMsk: '' },
+      { rd:10,  circuit: 'Italy — Monza Circuit, Monza',
+        sprint: '5 September', sprintLocal: '', sprintMsk: '',
+        feature: '6 September', featureLocal: '', featureMsk: '' },
+      { rd:11,  circuit: 'Spain — Madring, Madrid',
+        sprint: '12 September', sprintLocal: '', sprintMsk: '',
+        feature: '13 September', featureLocal: '', featureMsk: '' },
+      { rd:12,  circuit: 'Azerbaijan — Baku City Circuit, Baku',
+        sprint: '26 September', sprintLocal: '', sprintMsk: '',
+        feature: '27 September', featureLocal: '', featureMsk: '' },
+      { rd:13,  circuit: 'Qatar — Lusail International Circuit, Lusail',
+        sprint: '28 November', sprintLocal: '', sprintMsk: '',
+        feature: '29 November', featureLocal: '', featureMsk: '' },
+      { rd:14,  circuit: 'United Arab Emirates — Yas Marina Circuit, Abu Dhabi',
+        sprint: '5 December', sprintLocal: '', sprintMsk: '',
+        feature: '6 December', featureLocal: '', featureMsk: '' }
+    ],
+
+    f3: [
+      { rd: 1,  circuit: 'Australia — Albert Park Circuit, Melbourne', event_id: 'F3_2026_1',
+        // Local: Sprint 11:15, Feature 08:50 → MSK (UTC+3) −8 hours
+        sprint: '7 March',  sprintLocal: '11:15', sprintMsk: '03:15',
+        feature: '8 March', featureLocal: '08:50', featureMsk: '00:50' },
+      // Original round 2 (Bahrain) cancelled for 2026 calendar.
+      { rd: 2,  circuit: 'Monaco — Circuit de Monaco, Monaco', event_id: 'F3_2026_3',
+        sprint: '6 June', sprintLocal: '10:45', sprintMsk: '11:45',
+        feature: '7 June', featureLocal: '07:45', featureMsk: '08:45' },
+      { rd: 3,  circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló', event_id: 'F3_2026_4',
+        sprint: '13 June', sprintLocal: '10:05', sprintMsk: '11:05',
+        feature: '14 June', featureLocal: '08:40', featureMsk: '09:40' },
+      { rd: 4,  circuit: 'Austria — Red Bull Ring, Spielberg', event_id: 'F3_2026_5',
+        sprint: '27 June', sprintLocal: '10:05', sprintMsk: '11:05',
+        feature: '28 June', featureLocal: '08:40', featureMsk: '09:40' },
+      { rd: 5,  circuit: 'United Kingdom — Silverstone Circuit, Silverstone', event_id: 'F3_2026_6',
+        sprint: '4 July', sprintLocal: '09:35', sprintMsk: '11:35',
+        feature: '5 July', featureLocal: '08:25', featureMsk: '10:25' },
+      { rd: 6,  circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot', event_id: 'F3_2026_7',
+        sprint: '18 July', sprintLocal: '10:05', sprintMsk: '11:05',
+        feature: '19 July', featureLocal: '08:40', featureMsk: '09:40' },
+      { rd: 7,  circuit: 'Hungary — Hungaroring, Mogyoród', event_id: 'F3_2026_8',
+        sprint: '25 July', sprintLocal: '10:05', sprintMsk: '11:05',
+        feature: '26 July', featureLocal: '08:40', featureMsk: '09:40' },
+      { rd: 8,  circuit: 'Italy — Monza Circuit, Monza', event_id: 'F3_2026_9',
+        sprint: '5 September', sprintLocal: '10:05', sprintMsk: '11:05',
+        feature: '6 September', featureLocal: '08:40', featureMsk: '09:40' },
+      { rd: 9,  circuit: 'Spain — Madring, Madrid', event_id: 'F3_2026_10',
+        sprint: '12 September', sprintLocal: '11:05', sprintMsk: '12:05',
+        feature: '13 September', featureLocal: '09:55', featureMsk: '10:55' }
+    ],
+
+    // F1 2026 sprint weekends: Saturday sprint times (MSK) + dates.
+    f1Sprint2026: {
+      F1_2026_2:  { sprintDate: '2026-03-14', sprintLocal: '11:00', sprintMsk: '06:00' },
+      F1_2026_4:  { sprintDate: '2026-05-02', sprintLocal: '12:00', sprintMsk: '19:00' },
+      F1_2026_5:  { sprintDate: '2026-05-23', sprintLocal: '12:00', sprintMsk: '19:00' },
+      F1_2026_9:  { sprintDate: '2026-07-04', sprintLocal: '12:00', sprintMsk: '14:00' },
+      F1_2026_12: { sprintDate: '2026-08-22', sprintLocal: '12:00', sprintMsk: '13:00' },
+      F1_2026_16: { sprintDate: '2026-10-10', sprintLocal: '17:00', sprintMsk: '12:00' }
+    },
+
+    // Per-race times for SMP F4 weekends (Full Schedule only — cards stay one row per event).
+    smpF4RuScheduleRaces: {
+      SMP_F4_RU_2026_2: [
+        { race: 1, date: '2026-06-13', time_msk: '12:10' },
+        { race: 2, date: '2026-06-13', time_msk: '16:35' },
+        { race: 3, date: '2026-06-14', time_msk: '11:45' },
+        { race: 4, date: '2026-06-14', time_msk: '15:10' }
+      ]
+    }
+  };
+})();
+

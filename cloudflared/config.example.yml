@@ -1,0 +1,14 @@
+# Example ingress for a config-file-based tunnel (optional).
+#
+# Token-based tunnels (docker-compose default): set the origin in the dashboard:
+#   Cloudflare Zero Trust → Networks → Tunnels → <tunnel> → Public Hostname
+#   Service type: HTTP
+#   URL: http://app:8080
+#
+# "localhost" or "127.0.0.1" will NOT work inside Docker Compose — cloudflared
+# runs in a separate container and must reach the app service by name.
+
+ingress:
+  - hostname: example.com
+    service: http://app:8080
+  - service: http_status:404

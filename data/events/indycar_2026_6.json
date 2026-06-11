@@ -1,0 +1,1468 @@
+{
+  "event_id": "INDYCAR_2026_6",
+  "series": "IndyCar Series",
+  "race": "Sonsio Grand Prix",
+  "date": "2026-05-09",
+  "track": "Indianapolis Motor Speedway Road Course",
+  "location": "Speedway, Indiana",
+  "laps": "85",
+  "distance": "207.315 miles (333.641 km)",
+  "youtube_id": "Zo8HbqY4Xfw",
+  "event_preview": "The Indianapolis Motor Speedway Road Course is a 2.439-mile (3.926 km) 14-turn circuit built around the historic oval in Speedway, Indiana, first raced by IndyCar in 2014. The Sonsio Grand Prix is the sixth round of the 2026 NTT IndyCar Series season and the traditional curtain-raiser for the Month of May before Indy 500 qualifying begins the following weekend, run over 85 laps (207.3 miles). Reigning four-time champion Alex Palou has won the last three consecutive Sonsio Grand Prix events and could become only the fifth driver since 1946 to win four consecutive IndyCar races at the same track. Palou leads the championship standings by 17 points over Kyle Kirkwood heading into the weekend. Will Power, who has won five times at the IMS road course for Team Penske, enters for the first time representing Andretti Global, seeking to prove that his track record here transcends machinery. Three Rookie of the Year contenders — Caio Collet, Dennis Hauger and Mick Schumacher — will race on the IMS road course for the first time this weekend. The all-time qualifying record at the IMS road course belongs to Palou, who logged a 1:09.0004 in the 2024 Firestone Fast Six — the fastest lap ever turned in qualifying on the 2.439-mile layout. The race lap record is held by Palou as well, a 1:09.3417 set during his dominant 2025 victory, when he used a fresh set of alternate tyres in the Fast Six to seal pole before converting it into his third consecutive win.",
+  "entry_list": [
+    {
+      "number": "4",
+      "driver": "Caio Collet",
+      "team": "A. J. Foyt Enterprises",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "caio-collet"
+    },
+    {
+      "number": "14",
+      "driver": "Santino Ferrucci",
+      "team": "A. J. Foyt Enterprises",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "santino-ferrucci"
+    },
+    {
+      "number": "26",
+      "driver": "Will Power",
+      "team": "Andretti Global",
+      "manufacturer": "Honda",
+      "driver_slug": "will-power"
+    },
+    {
+      "number": "27",
+      "driver": "Kyle Kirkwood",
+      "team": "Andretti Global",
+      "manufacturer": "Honda",
+      "driver_slug": "kyle-kirkwood"
+    },
+    {
+      "number": "28",
+      "driver": "Marcus Ericsson",
+      "team": "Andretti Global",
+      "manufacturer": "Honda",
+      "driver_slug": "marcus-ericsson"
+    },
+    {
+      "number": "5",
+      "driver": "Pato O'Ward",
+      "team": "Arrow McLaren",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "pato-o-ward"
+    },
+    {
+      "number": "6",
+      "driver": "Nolan Siegel",
+      "team": "Arrow McLaren",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "nolan-siegel"
+    },
+    {
+      "number": "7",
+      "driver": "Christian Lundgaard",
+      "team": "Arrow McLaren",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "christian-lundgaard"
+    },
+    {
+      "number": "8",
+      "driver": "Kyffin Simpson",
+      "team": "Chip Ganassi Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "kyffin-simpson"
+    },
+    {
+      "number": "9",
+      "driver": "Scott Dixon",
+      "team": "Chip Ganassi Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "scott-dixon"
+    },
+    {
+      "number": "10",
+      "driver": "Álex Palou",
+      "team": "Chip Ganassi Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "alex-palou"
+    },
+    {
+      "number": "18",
+      "driver": "Romain Grosjean",
+      "team": "Dale Coyne Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "romain-grosjean"
+    },
+    {
+      "number": "19",
+      "driver": "Dennis Hauger",
+      "team": "Dale Coyne Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "dennis-hauger"
+    },
+    {
+      "number": "20",
+      "driver": "Alexander Rossi",
+      "team": "Ed Carpenter Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "alexander-rossi"
+    },
+    {
+      "number": "21",
+      "driver": "Christian Rasmussen",
+      "team": "Ed Carpenter Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "christian-rasmussen"
+    },
+    {
+      "number": "76",
+      "driver": "Rinus VeeKay",
+      "team": "Juncos Hollinger Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "rinus-veekay"
+    },
+    {
+      "number": "77",
+      "driver": "Sting Ray Robb",
+      "team": "Juncos Hollinger Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "sting-ray-robb"
+    },
+    {
+      "number": "60",
+      "driver": "Felix Rosenqvist",
+      "team": "Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Honda",
+      "driver_slug": "felix-rosenqvist"
+    },
+    {
+      "number": "66",
+      "driver": "Marcus Armstrong",
+      "team": "Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Honda",
+      "driver_slug": "marcus-armstrong"
+    },
+    {
+      "number": "15",
+      "driver": "Graham Rahal",
+      "team": "Rahal Letterman Lanigan Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "graham-rahal"
+    },
+    {
+      "number": "45",
+      "driver": "Louis Foster",
+      "team": "Rahal Letterman Lanigan Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "louis-foster"
+    },
+    {
+      "number": "47",
+      "driver": "Mick Schumacher",
+      "team": "Rahal Letterman Lanigan Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "mick-schumacher"
+    },
+    {
+      "number": "2",
+      "driver": "Josef Newgarden",
+      "team": "Team Penske",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "josef-newgarden"
+    },
+    {
+      "number": "3",
+      "driver": "Scott McLaughlin",
+      "team": "Team Penske",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "scott-mclaughlin"
+    },
+    {
+      "number": "12",
+      "driver": "David Malukas",
+      "team": "Team Penske",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "david-malukas"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "title": "Practice 1",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Total Laps"
+      ],
+      "rows": [
+        [
+          "1",
+          "10",
+          "Palou, Alex",
+          "D/H/F",
+          "01:10.0904",
+          "125.273",
+          "--.----",
+          "--.----",
+          "23",
+          "23"
+        ],
+        [
+          "2",
+          "15",
+          "Rahal, Graham",
+          "D/H/F",
+          "01:10.1979",
+          "125.081",
+          "0.1075",
+          "0.1075",
+          "17",
+          "18"
+        ],
+        [
+          "3",
+          "27",
+          "Kirkwood, Kyle",
+          "D/H/F",
+          "01:10.2146",
+          "125.051",
+          "0.1242",
+          "0.0167",
+          "22",
+          "22"
+        ],
+        [
+          "4",
+          "60",
+          "Rosenqvist, Felix",
+          "D/H/F",
+          "01:10.2161",
+          "125.048",
+          "0.1257",
+          "0.0015",
+          "22",
+          "23"
+        ],
+        [
+          "5",
+          "12",
+          "Malukas, David",
+          "D/C/F",
+          "01:10.3773",
+          "124.762",
+          "0.2869",
+          "0.1612",
+          "20",
+          "20"
+        ],
+        [
+          "6",
+          "8",
+          "Simpson, Kyffin",
+          "D/H/F",
+          "01:10.4194",
+          "124.687",
+          "0.3290",
+          "0.0421",
+          "21",
+          "21"
+        ],
+        [
+          "7",
+          "66",
+          "Armstrong, Marcus",
+          "D/H/F",
+          "01:10.4436",
+          "124.644",
+          "0.3532",
+          "0.0242",
+          "21",
+          "22"
+        ],
+        [
+          "8",
+          "9",
+          "Dixon, Scott",
+          "D/H/F",
+          "01:10.4734",
+          "124.592",
+          "0.3830",
+          "0.0298",
+          "20",
+          "20"
+        ],
+        [
+          "9",
+          "20",
+          "Rossi, Alexander",
+          "D/C/F",
+          "01:10.4788",
+          "124.582",
+          "0.3884",
+          "0.0054",
+          "19",
+          "21"
+        ],
+        [
+          "10",
+          "7",
+          "Lundgaard, Christian",
+          "D/C/F",
+          "01:10.4822",
+          "124.576",
+          "0.3918",
+          "0.0034",
+          "14",
+          "18"
+        ],
+        [
+          "11",
+          "28",
+          "Ericsson, Marcus",
+          "D/H/F",
+          "01:10.5285",
+          "124.494",
+          "0.4381",
+          "0.0463",
+          "19",
+          "22"
+        ],
+        [
+          "12",
+          "45",
+          "Foster, Louis",
+          "D/H/F",
+          "01:10.5454",
+          "124.465",
+          "0.4550",
+          "0.0169",
+          "19",
+          "21"
+        ],
+        [
+          "13",
+          "21",
+          "Rasmussen, Christian",
+          "D/C/F",
+          "01:10.6135",
+          "124.344",
+          "0.5231",
+          "0.0681",
+          "18",
+          "21"
+        ],
+        [
+          "14",
+          "26",
+          "Power, Will",
+          "D/H/F",
+          "01:10.6472",
+          "124.285",
+          "0.5568",
+          "0.0337",
+          "19",
+          "23"
+        ],
+        [
+          "15",
+          "5",
+          "O'Ward, Pato",
+          "D/C/F",
+          "01:10.6633",
+          "124.257",
+          "0.5729",
+          "0.0161",
+          "18",
+          "21"
+        ],
+        [
+          "16",
+          "6",
+          "Siegel, Nolan",
+          "D/C/F",
+          "01:10.6869",
+          "124.215",
+          "0.5965",
+          "0.0236",
+          "23",
+          "24"
+        ],
+        [
+          "17",
+          "3",
+          "McLaughlin, Scott",
+          "D/C/F",
+          "01:10.7319",
+          "124.136",
+          "0.6415",
+          "0.0450",
+          "19",
+          "22"
+        ],
+        [
+          "18",
+          "19",
+          "Hauger, Dennis (R)",
+          "D/H/F",
+          "01:10.7371",
+          "124.127",
+          "0.6467",
+          "0.0052",
+          "26",
+          "31"
+        ],
+        [
+          "19",
+          "4",
+          "Collet, Caio (R)",
+          "D/C/F",
+          "01:10.7833",
+          "124.046",
+          "0.6929",
+          "0.0462",
+          "26",
+          "31"
+        ],
+        [
+          "20",
+          "14",
+          "Ferrucci, Santino",
+          "D/C/F",
+          "01:10.8289",
+          "123.966",
+          "0.7385",
+          "0.0456",
+          "21",
+          "23"
+        ],
+        [
+          "21",
+          "18",
+          "Grosjean, Romain",
+          "D/H/F",
+          "01:10.9060",
+          "123.832",
+          "0.8156",
+          "0.0771",
+          "4",
+          "17"
+        ],
+        [
+          "22",
+          "47",
+          "Schumacher, Mick (R)",
+          "D/H/F",
+          "01:10.9649",
+          "123.729",
+          "0.8745",
+          "0.0589",
+          "23",
+          "24"
+        ],
+        [
+          "23",
+          "2",
+          "Newgarden, Josef",
+          "D/C/F",
+          "01:10.9750",
+          "123.711",
+          "0.8846",
+          "0.0101",
+          "6",
+          "22"
+        ],
+        [
+          "24",
+          "76",
+          "VeeKay, Rinus",
+          "D/C/F",
+          "01:11.0636",
+          "123.557",
+          "0.9732",
+          "0.0886",
+          "23",
+          "24"
+        ],
+        [
+          "25",
+          "77",
+          "Robb, Sting Ray",
+          "D/C/F",
+          "01:11.7997",
+          "122.290",
+          "1.7093",
+          "0.2076",
+          "6",
+          "21"
+        ]
+      ]
+    },
+    "practice2": {
+      "title": "Practice 2",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Total Laps"
+      ],
+      "rows": [
+        [
+          "1",
+          "10",
+          "Palou, Alex",
+          "D/H/F",
+          "01:10.4507",
+          "124.632",
+          "--.----",
+          "--.----",
+          "13",
+          "24"
+        ],
+        [
+          "2",
+          "27",
+          "Kirkwood, Kyle",
+          "D/H/F",
+          "01:10.5574",
+          "124.443",
+          "0.1067",
+          "0.1067",
+          "12",
+          "22"
+        ],
+        [
+          "3",
+          "45",
+          "Foster, Louis",
+          "D/H/F",
+          "01:10.7182",
+          "124.160",
+          "0.2675",
+          "0.1608",
+          "9",
+          "27"
+        ],
+        [
+          "4",
+          "7",
+          "Lundgaard, Christian",
+          "D/C/F",
+          "01:10.7370",
+          "124.127",
+          "0.2863",
+          "0.0188",
+          "24",
+          "24"
+        ],
+        [
+          "5",
+          "28",
+          "Ericsson, Marcus",
+          "D/H/F",
+          "01:10.7396",
+          "124.123",
+          "0.2889",
+          "0.0026",
+          "10",
+          "21"
+        ],
+        [
+          "6",
+          "60",
+          "Rosenqvist, Felix",
+          "D/H/F",
+          "01:10.7857",
+          "124.042",
+          "0.3350",
+          "0.0154",
+          "13",
+          "20"
+        ],
+        [
+          "7",
+          "47",
+          "Schumacher, Mick (R)",
+          "D/H/F",
+          "01:10.7904",
+          "124.034",
+          "0.3397",
+          "0.0047",
+          "24",
+          "25"
+        ],
+        [
+          "8",
+          "20",
+          "Rossi, Alexander",
+          "D/C/F",
+          "01:10.8529",
+          "123.924",
+          "0.4022",
+          "0.0625",
+          "15",
+          "20"
+        ],
+        [
+          "9",
+          "66",
+          "Armstrong, Marcus",
+          "D/H/F",
+          "01:10.9268",
+          "123.795",
+          "0.4761",
+          "0.0739",
+          "13",
+          "24"
+        ],
+        [
+          "10",
+          "6",
+          "Siegel, Nolan",
+          "D/C/F",
+          "01:10.9636",
+          "123.731",
+          "0.5129",
+          "0.0368",
+          "25",
+          "26"
+        ],
+        [
+          "11",
+          "12",
+          "Malukas, David",
+          "D/C/F",
+          "01:11.0095",
+          "123.651",
+          "0.5588",
+          "0.0459",
+          "10",
+          "23"
+        ],
+        [
+          "12",
+          "14",
+          "Ferrucci, Santino",
+          "D/C/F",
+          "01:11.0274",
+          "123.620",
+          "0.5767",
+          "0.0179",
+          "11",
+          "23"
+        ],
+        [
+          "13",
+          "3",
+          "McLaughlin, Scott",
+          "D/C/F",
+          "01:11.0476",
+          "123.585",
+          "0.5969",
+          "0.0202",
+          "12",
+          "26"
+        ],
+        [
+          "14",
+          "19",
+          "Hauger, Dennis (R)",
+          "D/H/F",
+          "01:11.0541",
+          "123.573",
+          "0.6034",
+          "0.0065",
+          "22",
+          "24"
+        ],
+        [
+          "15",
+          "9",
+          "Dixon, Scott",
+          "D/H/F",
+          "01:11.0649",
+          "123.555",
+          "0.6142",
+          "0.0108",
+          "16",
+          "16"
+        ],
+        [
+          "16",
+          "18",
+          "Grosjean, Romain",
+          "D/H/F",
+          "01:11.0744",
+          "123.538",
+          "0.6237",
+          "0.0095",
+          "18",
+          "27"
+        ],
+        [
+          "17",
+          "26",
+          "Power, Will",
+          "D/H/F",
+          "01:11.0864",
+          "123.517",
+          "0.6357",
+          "0.0120",
+          "10",
+          "27"
+        ],
+        [
+          "18",
+          "2",
+          "Newgarden, Josef",
+          "D/C/F",
+          "01:11.0903",
+          "123.511",
+          "0.6396",
+          "0.0039",
+          "8",
+          "18"
+        ],
+        [
+          "19",
+          "5",
+          "O'Ward, Pato",
+          "D/C/F",
+          "01:11.0955",
+          "123.501",
+          "0.6448",
+          "0.0052",
+          "24",
+          "29"
+        ],
+        [
+          "20",
+          "4",
+          "Collet, Caio (R)",
+          "D/C/F",
+          "01:11.1611",
+          "123.388",
+          "0.7104",
+          "0.0656",
+          "9",
+          "22"
+        ],
+        [
+          "21",
+          "77",
+          "Robb, Sting Ray",
+          "D/C/F",
+          "01:11.3495",
+          "123.062",
+          "0.8988",
+          "0.1884",
+          "25",
+          "26"
+        ],
+        [
+          "22",
+          "21",
+          "Rasmussen, Christian",
+          "D/C/F",
+          "01:11.3528",
+          "123.056",
+          "0.9021",
+          "0.0033",
+          "3",
+          "19"
+        ],
+        [
+          "23",
+          "76",
+          "VeeKay, Rinus",
+          "D/C/F",
+          "01:11.5337",
+          "122.745",
+          "1.0830",
+          "0.1609",
+          "10",
+          "23"
+        ],
+        [
+          "24",
+          "15",
+          "Rahal, Graham",
+          "D/H/F",
+          "01:11.6439",
+          "122.556",
+          "1.1932",
+          "0.1102",
+          "4",
+          "9"
+        ],
+        [
+          "25",
+          "8",
+          "Simpson, Kyffin",
+          "D/H/F",
+          "01:11.6445",
+          "122.555",
+          "1.1938",
+          "0.0006",
+          "3",
+          "9"
+        ]
+      ]
+    },
+    "qualifying": {
+      "title": "Qualifying",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Session"
+      ],
+      "rows": [
+        [
+          "1",
+          "10",
+          "Palou, Alex",
+          "D/H/F",
+          "01:09.7487",
+          "125.886",
+          "Round 3 / Firestone Fast Six"
+        ],
+        [
+          "2",
+          "5",
+          "O'Ward, Pato",
+          "D/C/F",
+          "01:10.2962",
+          "124.906",
+          "Round 3 / Firestone Fast Six"
+        ],
+        [
+          "3",
+          "60",
+          "Rosenqvist, Felix",
+          "D/H/F",
+          "01:10.4548",
+          "124.625",
+          "Round 3 / Firestone Fast Six"
+        ],
+        [
+          "4",
+          "7",
+          "Lundgaard, Christian",
+          "D/C/F",
+          "01:10.4751",
+          "124.589",
+          "Round 3 / Firestone Fast Six"
+        ],
+        [
+          "5",
+          "12",
+          "Malukas, David",
+          "D/C/F",
+          "01:10.5660",
+          "124.428",
+          "Round 3 / Firestone Fast Six"
+        ],
+        [
+          "6",
+          "45",
+          "Foster, Louis",
+          "D/H/F",
+          "01:10.9404",
+          "123.772",
+          "Round 3 / Firestone Fast Six"
+        ],
+        [
+          "7",
+          "15",
+          "Rahal, Graham",
+          "D/H/F",
+          "01:10.4042",
+          "124.714",
+          "Elimination Round 2 / Top 12"
+        ],
+        [
+          "8",
+          "9",
+          "Dixon, Scott",
+          "D/H/F",
+          "01:10.4142",
+          "124.696",
+          "Elimination Round 2 / Top 12"
+        ],
+        [
+          "9",
+          "27",
+          "Kirkwood, Kyle",
+          "D/H/F",
+          "01:10.4189",
+          "124.688",
+          "Elimination Round 2 / Top 12"
+        ],
+        [
+          "10",
+          "2",
+          "Newgarden, Josef",
+          "D/C/F",
+          "01:10.4938",
+          "124.556",
+          "Elimination Round 2 / Top 12"
+        ],
+        [
+          "11",
+          "18",
+          "Grosjean, Romain",
+          "D/H/F",
+          "01:10.4981",
+          "124.548",
+          "Elimination Round 2 / Top 12"
+        ],
+        [
+          "12",
+          "4",
+          "Collet, Caio (R)",
+          "D/C/F",
+          "01:10.6299",
+          "124.316",
+          "Elimination Round 2 / Top 12"
+        ],
+        [
+          "13",
+          "20",
+          "Rossi, Alexander",
+          "D/C/F",
+          "01:10.7736",
+          "124.063",
+          "Elimination Round 1 / Group 1"
+        ],
+        [
+          "14",
+          "28",
+          "Ericsson, Marcus",
+          "D/H/F",
+          "01:10.3765",
+          "124.763",
+          "Elimination Round 1 / Group 2"
+        ],
+        [
+          "15",
+          "14",
+          "Ferrucci, Santino",
+          "D/C/F",
+          "01:10.8113",
+          "123.997",
+          "Elimination Round 1 / Group 1"
+        ],
+        [
+          "16",
+          "6",
+          "Siegel, Nolan",
+          "D/C/F",
+          "01:10.4288",
+          "124.671",
+          "Elimination Round 1 / Group 2"
+        ],
+        [
+          "17",
+          "3",
+          "McLaughlin, Scott",
+          "D/C/F",
+          "01:10.8281",
+          "123.968",
+          "Elimination Round 1 / Group 1"
+        ],
+        [
+          "18",
+          "47",
+          "Schumacher, Mick (R)",
+          "D/H/F",
+          "01:10.4487",
+          "124.635",
+          "Elimination Round 1 / Group 2"
+        ],
+        [
+          "19",
+          "21",
+          "Rasmussen, Christian",
+          "D/C/F",
+          "01:10.8877",
+          "123.864",
+          "Elimination Round 1 / Group 1"
+        ],
+        [
+          "20",
+          "66",
+          "Armstrong, Marcus",
+          "D/H/F",
+          "01:10.4742",
+          "124.590",
+          "Elimination Round 1 / Group 2"
+        ],
+        [
+          "21",
+          "76",
+          "VeeKay, Rinus",
+          "D/C/F",
+          "01:11.0611",
+          "123.561",
+          "Elimination Round 1 / Group 1"
+        ],
+        [
+          "22",
+          "8",
+          "Simpson, Kyffin",
+          "D/H/F",
+          "01:10.4751",
+          "124.589",
+          "Elimination Round 1 / Group 2"
+        ],
+        [
+          "23",
+          "77",
+          "Robb, Sting Ray",
+          "D/C/F",
+          "01:11.2029",
+          "123.315",
+          "Elimination Round 1 / Group 1"
+        ],
+        [
+          "24",
+          "19",
+          "Hauger, Dennis (R)",
+          "D/H/F",
+          "01:10.5163",
+          "124.516",
+          "Elimination Round 1 / Group 2"
+        ],
+        [
+          "25",
+          "26",
+          "Power, Will",
+          "D/H/F",
+          "01:10.5701",
+          "124.421",
+          "Elimination Round 1 / Group 2"
+        ]
+      ]
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Start Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Laps Led",
+        "Pit Stops",
+        "Elapsed Time",
+        "Average Speed",
+        "Status",
+        "Points"
+      ],
+      "rows": [
+        [
+          "1",
+          "4",
+          "7",
+          "Christian Lundgaard",
+          "Arrow McLaren",
+          "85",
+          "20",
+          "3",
+          "01:55:40.2894",
+          "107.536",
+          "Running",
+          "51"
+        ],
+        [
+          "2",
+          "5",
+          "12",
+          "David Malukas",
+          "Team Penske",
+          "85",
+          "27",
+          "3",
+          "01:55:44.9607",
+          "107.464",
+          "Running",
+          "43"
+        ],
+        [
+          "3",
+          "7",
+          "15",
+          "Graham Rahal",
+          "Rahal Letterman Lanigan Racing",
+          "85",
+          "0",
+          "3",
+          "01:55:48.2036",
+          "107.414",
+          "Running",
+          "35"
+        ],
+        [
+          "4",
+          "10",
+          "2",
+          "Josef Newgarden",
+          "Team Penske",
+          "85",
+          "0",
+          "3",
+          "01:55:50.3186",
+          "107.381",
+          "Running",
+          "32"
+        ],
+        [
+          "5",
+          "1",
+          "10",
+          "Álex Palou",
+          "Chip Ganassi Racing",
+          "85",
+          "23",
+          "3",
+          "01:55:54.6524",
+          "107.314",
+          "Running",
+          "32"
+        ],
+        [
+          "6",
+          "8",
+          "9",
+          "Scott Dixon",
+          "Chip Ganassi Racing",
+          "85",
+          "0",
+          "4",
+          "01:56:07.1314",
+          "107.122",
+          "Running",
+          "28"
+        ],
+        [
+          "7",
+          "6",
+          "45",
+          "Louis Foster",
+          "Rahal Letterman Lanigan Racing",
+          "85",
+          "0",
+          "3",
+          "01:56:08.4163",
+          "107.102",
+          "Running",
+          "26"
+        ],
+        [
+          "8",
+          "24",
+          "19",
+          "Dennis Hauger",
+          "Dale Coyne Racing",
+          "85",
+          "0",
+          "3",
+          "01:56:12.2219",
+          "107.044",
+          "Running",
+          "24"
+        ],
+        [
+          "9",
+          "9",
+          "27",
+          "Kyle Kirkwood",
+          "Andretti Global w/ Curb-Agajanian",
+          "85",
+          "0",
+          "3",
+          "01:56:14.4832",
+          "107.009",
+          "Running",
+          "22"
+        ],
+        [
+          "10",
+          "16",
+          "6",
+          "Nolan Siegel",
+          "Arrow McLaren",
+          "85",
+          "0",
+          "3",
+          "01:56:19.1331",
+          "106.938",
+          "Running",
+          "20"
+        ],
+        [
+          "11",
+          "20",
+          "66",
+          "Marcus Armstrong",
+          "Meyer Shank w/ Curb-Agajanian",
+          "85",
+          "0",
+          "4",
+          "01:56:26.7604",
+          "106.821",
+          "Running",
+          "19"
+        ],
+        [
+          "12",
+          "22",
+          "8",
+          "Kyffin Simpson",
+          "Chip Ganassi Racing",
+          "85",
+          "0",
+          "3",
+          "01:56:30.4793",
+          "106.764",
+          "Running",
+          "18"
+        ],
+        [
+          "13",
+          "25",
+          "26",
+          "Will Power",
+          "Andretti Global",
+          "85",
+          "15",
+          "3",
+          "01:56:32.3181",
+          "106.736",
+          "Running",
+          "18"
+        ],
+        [
+          "14",
+          "15",
+          "14",
+          "Santino Ferrucci",
+          "A.J. Foyt Enterprises",
+          "85",
+          "0",
+          "3",
+          "01:56:36.6602",
+          "106.670",
+          "Running",
+          "16"
+        ],
+        [
+          "15",
+          "21",
+          "76",
+          "Rinus VeeKay",
+          "Juncos Hollinger Racing",
+          "85",
+          "0",
+          "4",
+          "01:56:39.8747",
+          "106.621",
+          "Running",
+          "15"
+        ],
+        [
+          "16",
+          "17",
+          "3",
+          "Scott McLaughlin",
+          "Team Penske",
+          "85",
+          "0",
+          "4",
+          "01:56:40.1597",
+          "106.617",
+          "Running",
+          "14"
+        ],
+        [
+          "17",
+          "23",
+          "77",
+          "Sting Ray Robb",
+          "Juncos Hollinger Racing",
+          "85",
+          "0",
+          "4",
+          "01:56:40.4559",
+          "106.612",
+          "Running",
+          "13"
+        ],
+        [
+          "18",
+          "2",
+          "5",
+          "Pato O'Ward",
+          "Arrow McLaren",
+          "85",
+          "0",
+          "4",
+          "01:56:46.5751",
+          "106.519",
+          "Running",
+          "12"
+        ],
+        [
+          "19",
+          "12",
+          "4",
+          "Caio Collet",
+          "A.J. Foyt Enterprises",
+          "85",
+          "0",
+          "4",
+          "01:56:47.9595",
+          "106.498",
+          "Running",
+          "11"
+        ],
+        [
+          "20",
+          "18",
+          "47",
+          "Mick Schumacher",
+          "Rahal Letterman Lanigan Racing",
+          "85",
+          "0",
+          "3",
+          "01:56:54.4186",
+          "106.400",
+          "Running",
+          "10"
+        ],
+        [
+          "21",
+          "11",
+          "18",
+          "Romain Grosjean",
+          "Dale Coyne Racing",
+          "84",
+          "0",
+          "4",
+          "01:56:36.7538",
+          "105.414",
+          "Running",
+          "9"
+        ],
+        [
+          "22",
+          "14",
+          "28",
+          "Marcus Ericsson",
+          "Andretti Global",
+          "61",
+          "0",
+          "2",
+          "01:26:12.0214",
+          "103.558",
+          "Mechanical",
+          "8"
+        ],
+        [
+          "23",
+          "3",
+          "60",
+          "Felix Rosenqvist",
+          "Meyer Shank w/ Curb-Agajanian",
+          "28",
+          "0",
+          "2",
+          "00:43:26.3824",
+          "94.327",
+          "Contact",
+          "7"
+        ],
+        [
+          "24",
+          "19",
+          "21",
+          "Christian Rasmussen",
+          "ECR",
+          "28",
+          "0",
+          "2",
+          "01:24:24.0159",
+          "48.549",
+          "Mechanical",
+          "6"
+        ],
+        [
+          "25",
+          "13",
+          "20",
+          "Alexander Rossi",
+          "ECR",
+          "20",
+          "0",
+          "0",
+          "00:28:36.8339",
+          "102.286",
+          "Mechanical",
+          "5"
+        ]
+      ]
+    },
+    "caution_breakdown": {
+      "headers": [
+        "Condition",
+        "From Lap",
+        "To Lap",
+        "# Of Laps",
+        "Reason",
+        "Free Pass"
+      ],
+      "rows": [
+        [
+          "",
+          "1",
+          "4",
+          "4",
+          "Contact: Cars 4, 5, 9, 45 and 60 in Turn 1",
+          ""
+        ],
+        [
+          "",
+          "22",
+          "25",
+          "4",
+          "Mechanical: Car 20 on Front Straight",
+          ""
+        ],
+        [
+          "",
+          "28",
+          "31",
+          "4",
+          "Contact: Cars 8, 60 and 66 in Turn 13",
+          ""
+        ]
+      ]
+    }
+  }
+}

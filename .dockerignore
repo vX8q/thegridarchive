@@ -1,0 +1,54 @@
+# Git and IDE
+.git
+.git-rewrite
+.github
+.cursor
+.cursorignore
+.idea
+.vscode
+
+# Local data (mounted as volume at runtime)
+data
+backups
+agent-tools
+
+# Build artifacts
+bin
+tmp
+*.exe
+*.dll
+*.test
+*.out
+coverage.out
+coverage.html
+*.prof
+*.pprof
+
+# SQLite (local DB; not baked into image)
+*.sqlite
+*.sqlite-*
+
+# Logs
+*.log
+server_err.log
+server_out.log
+build-errors.log
+
+# Node / tooling not used in Docker build stage
+node_modules
+
+# Docs, load tests, maintenance scripts (not compiled into server)
+docs
+k6
+scripts
+Makefile
+docker-compose.yml
+*.md
+!README.md
+
+# OS junk
+.DS_Store
+Thumbs.db
+* (1).jpg
+* (1).jpeg
+* (1).png

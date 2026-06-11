@@ -1,0 +1,738 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/vX8q/tga/config"
+	"github.com/vX8q/tga/internal/driverutil"
+	"github.com/vX8q/tga/internal/schedulefile"
+	"github.com/vX8q/tga/internal/store"
+	"github.com/vX8q/tga/internal/tableutil"
+	"github.com/vX8q/tga/models"
+)
+
+// bootstrapStoreFromFiles populates and updates the store from JSON on every server start.
+// Series and events are upserted from config and data/schedules; race results are re-imported from data/events.
+func bootstrapStoreFromFiles(st store.Store, dataDir string) error {
+	if st == nil {
+		return nil
+	}
+	ctx := context.Background()
+	return st.RunInTransaction(ctx, func(tx store.Store) error {
+		// 1) Persist all series from config.Championships to the DB.
+		for _, c := range config.Championships {
+			series := &models.Series{
+				ID:      c.ID,
+				Name:    c.Name,
+				Season:  c.Season,
+				Type:    string(c.Type),
+				Country: c.Country,
+			}
+			if err := tx.UpsertSeries(ctx, series); err != nil {
+				return err
+			}
+		}
+
+		// 2) For all championships, load schedules from data/schedules/*.json and save events to the DB.
+		for _, c := range config.Championships {
+			dataID := config.DataSeriesID(c.ID)
+			events, err := schedulefile.LoadEvents(dataDir, dataID)
+			if err != nil {
+				return err
+			}
+			for _, e := range events {
+				ev, err := schedulefile.EventToModel(e)
+				if err != nil {
+					return err
+				}
+				if err := tx.UpsertEvent(ctx, ev); err != nil {
+					return err
+				}
+			}
+		}
+
+		// 3) Series with detailed race results in JSON: import results and stages into the DB.
+		for _, c := range config.Championships {
+			// Stock-car series (NASCAR/ARCA/etc.) use race_results format. Supercars too, but races are loaded from race.sessions below.
+			if c.Type == config.StockCarRacing || strings.EqualFold(c.ID, "SUPERCARS") {
+				if err := importStockCarSeries(ctx, tx, dataDir, c.ID); err != nil {
+					return err
+				}
+			}
+			// Supercars: results from tables.race.sessions (Race 1, Race 2, … per event).
+			if strings.EqualFold(c.ID, "SUPERCARS") {
+				if err := importSupercarsFromRaceSessions(ctx, tx, dataDir, c.ID); err != nil {
+					return err
+				}
+			}
+			// F1, F2, F3: results from tables.race (sessions or a single table).
+			if strings.EqualFold(c.ID, "F1") || strings.EqualFold(c.ID, "F2") || strings.EqualFold(c.ID, "F3") {
+				if err := importOpenwheelSeries(ctx, tx, dataDir, c.ID); err != nil {
+					return err
+				}
+			}
+		}
+		// 4) Universal driver import from entry_list for all series
+		// (e.g. GTWCE Sprint/Endurance with driver1/driver2/driver3 fields).
+		if err := importDriversFromAllEntryLists(ctx, tx, dataDir); err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+func importDriversFromAllEntryLists(ctx context.Context, st store.Store, dataDir string) error {
+	for _, c := range config.Championships {
+		dataID := config.DataSeriesID(c.ID)
+		events, err := schedulefile.LoadEvents(dataDir, dataID)
+		if err != nil {
+			return err
+		}
+		for _, e := range events {
+			raw, err := schedulefile.ReadEventDetailFile(dataDir, e.ID)
+			if err != nil || len(raw) == 0 {
+				continue
+			}
+			var root map[string]any
+			if err := json.Unmarshal(raw, &root); err != nil {
+				continue
+			}
+			entryAny, ok := root["entry_list"]
+			if !ok || entryAny == nil {
+				continue
+			}
+			entryRows, ok := entryAny.([]any)
+			if !ok {
+				continue
+			}
+			for _, rowAny := range entryRows {
+				row, ok := rowAny.(map[string]any)
+				if !ok {
+					continue
+				}
+				carNumber := firstNonEmptyFromMap(row, "number", "car_number", "car", "no")
+				driverNames := extractDriverNamesFromEntryRow(row)
+				for _, driverName := range driverNames {
+					driverID := driverutil.MakeDriverID(c.ID, driverName, carNumber)
+					if err := st.UpsertDriver(ctx, &models.Driver{
+						ID:        driverID,
+						Name:      driverName,
+						ShortName: "",
+						Number:    carNumber,
+					}); err != nil {
+						return err
+					}
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func firstNonEmptyFromMap(m map[string]any, keys ...string) string {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok || v == nil {
+			continue
+		}
+		s, ok := v.(string)
+		if !ok {
+			continue
+		}
+		s = strings.TrimSpace(s)
+		if s != "" {
+			return s
+		}
+	}
+	return ""
+}
+
+func extractDriverNamesFromEntryRow(row map[string]any) []string {
+	var out []string
+	add := func(v string) {
+		name := strings.TrimSpace(v)
+		if name == "" {
+			return
+		}
+		for _, p := range strings.Split(name, ",") {
+			p = strings.TrimSpace(p)
+			if p == "" {
+				continue
+			}
+			out = append(out, p)
+		}
+	}
+
+	for _, key := range []string{"driver", "driver1", "driver2", "driver3", "driver4"} {
+		if v, ok := row[key].(string); ok {
+			add(v)
+		}
+	}
+
+	if arr, ok := row["drivers"].([]any); ok {
+		for _, item := range arr {
+			if v, ok := item.(string); ok {
+				add(v)
+			}
+		}
+	}
+	return out
+}
+
+// importStockCarSeries loads schedule and detailed stock-car results from JSON
+// and fills events, races, results, and stage_results tables.
+// seriesID is the championship ID (e.g. NASCAR_CUP); config.DataSeriesID is used to load files.
+func importStockCarSeries(ctx context.Context, st store.Store, dataDir, seriesID string) error {
+	dataID := config.DataSeriesID(seriesID)
+	events, err := schedulefile.LoadEvents(dataDir, dataID)
+	if err != nil {
+		return err
+	}
+	if len(events) == 0 {
+		return nil
+	}
+
+	for _, e := range events {
+		ev, err := schedulefile.EventToModel(e)
+		if err != nil {
+			return err
+		}
+		if err := st.UpsertEvent(ctx, ev); err != nil {
+			return err
+		}
+
+		// 2) Event detail: race and stage tables
+		detail, err := schedulefile.LoadEventDetail(dataDir, e.ID)
+		if err != nil || detail == nil || detail.Tables == nil {
+			continue
+		}
+		rr, ok := detail.Tables["race_results"]
+		if !ok || len(rr.Headers) == 0 || len(rr.Rows) == 0 {
+			continue
+		}
+
+		// 3) Race
+		raceID := e.ID + ":RACE"
+		raceLaps := maxIntColumn(rr.Headers, rr.Rows, []string{"Laps"})
+		race := &models.Race{
+			ID:         raceID,
+			EventID:    e.ID,
+			SeriesID:   e.SeriesID,
+			Season:     e.Season,
+			Name:       e.Name,
+			ScheduleAt: ev.StartDate,
+			Laps:       raceLaps,
+			Distance:   detail.Distance,
+			Status:     "",
+		}
+		if err := st.UpsertRace(ctx, race); err != nil {
+			return err
+		}
+
+		// 4) Race results
+		colPos := firstHeaderIndex(rr.Headers, "Pos", "Fin")
+		colGrid := firstHeaderIndex(rr.Headers, "Grid", "St", "Start", "Started")
+		colNo := firstHeaderIndex(rr.Headers, "No", "#", "Car")
+		colDriver := firstHeaderIndex(rr.Headers, "Driver")
+		colTeam := firstHeaderIndex(rr.Headers, "Team")
+		colManu := firstHeaderIndex(rr.Headers, "Manufacturer", "Chassis", "Make")
+		colLaps := firstHeaderIndex(rr.Headers, "Laps")
+		colLed := firstHeaderIndex(rr.Headers, "Led", "Laps Led")
+		colStatus := firstHeaderIndex(rr.Headers, "Status", "Reason", "Notes")
+		colPts := firstHeaderIndex(rr.Headers, "Points", "Pts")
+
+		if colDriver < 0 {
+			continue
+		}
+
+		for _, row := range rr.Rows {
+			if colDriver >= len(row) {
+				continue
+			}
+			driverName := strings.TrimSpace(row[colDriver])
+			if driverName == "" {
+				continue
+			}
+			carNumber := valueOrEmpty(row, colNo)
+			teamName := valueOrEmpty(row, colTeam)
+			manufacturer := valueOrEmpty(row, colManu)
+			status := valueOrEmpty(row, colStatus)
+
+			carForDriverID := carNumber
+			if strings.EqualFold(seriesID, "SUPERCARS") {
+				carForDriverID = schedulefile.SupercarsCarToCanonical(carNumber)
+			}
+			driverID := driverutil.MakeDriverID(seriesID, driverName, carForDriverID)
+			teamID := makeTeamID(seriesID, teamName)
+
+			if err := st.UpsertDriver(ctx, &models.Driver{
+				ID:        driverID,
+				Name:      driverName,
+				ShortName: "",
+				Number:    carForDriverID,
+			}); err != nil {
+				return err
+			}
+			if teamName != "" {
+				if err := st.UpsertTeam(ctx, &models.Team{
+					ID:      teamID,
+					Name:    teamName,
+					Country: "",
+					Car:     manufacturer,
+				}); err != nil {
+					return err
+				}
+			}
+
+			pos := atoiSafe(valueOrEmpty(row, colPos))
+			grid := atoiSafe(valueOrEmpty(row, colGrid))
+			laps := atoiSafe(valueOrEmpty(row, colLaps))
+			lapsLed := 0
+			if colLed >= 0 {
+				lapsLed = atoiSafe(valueOrEmpty(row, colLed))
+			}
+			points := float64(atoiSafe(valueOrEmpty(row, colPts)))
+
+			resID := raceID + ":" + driverID
+			if carNumber != "" {
+				resID = raceID + ":" + carNumber
+			}
+
+			if err := st.UpsertResult(ctx, &models.Result{
+				ID:           resID,
+				RaceID:       raceID,
+				DriverID:     driverID,
+				TeamID:       teamID,
+				CarNumber:    carNumber,
+				Position:     pos,
+				GridPosition: grid,
+				Laps:         laps,
+				LapsLed:      lapsLed,
+				Status:       status,
+				Points:       points,
+			}); err != nil {
+				return err
+			}
+		}
+
+		// 5) Stages (stage_1 / stage1, stage_2 / stage2)
+		for stageNo := 1; stageNo <= 2; stageNo++ {
+			table, ok := schedulefile.StageN(detail.Tables, stageNo)
+			if !ok {
+				continue
+			}
+			colPosS := firstHeaderIndex(table.Headers, "Pos", "Fin")
+			colNoS := firstHeaderIndex(table.Headers, "No", "#", "Car")
+			colDriverS := firstHeaderIndex(table.Headers, "Driver")
+			colTeamS := firstHeaderIndex(table.Headers, "Team")
+			colManuS := firstHeaderIndex(table.Headers, "Manufacturer", "Chassis", "Make")
+			colLapsS := firstHeaderIndex(table.Headers, "Laps")
+			colPtsS := firstHeaderIndex(table.Headers, "Points", "Pts")
+			colStatusS := firstHeaderIndex(table.Headers, "Status", "Reason", "Notes")
+
+			if colDriverS < 0 {
+				continue
+			}
+
+			for _, row := range table.Rows {
+				if colDriverS >= len(row) {
+					continue
+				}
+				driverName := strings.TrimSpace(row[colDriverS])
+				if driverName == "" {
+					continue
+				}
+				carNumber := valueOrEmpty(row, colNoS)
+				teamName := valueOrEmpty(row, colTeamS)
+				manufacturer := valueOrEmpty(row, colManuS)
+				status := valueOrEmpty(row, colStatusS)
+
+				carForDriverID := carNumber
+				if strings.EqualFold(seriesID, "SUPERCARS") {
+					carForDriverID = schedulefile.SupercarsCarToCanonical(carNumber)
+				}
+				driverID := driverutil.MakeDriverID(seriesID, driverName, carForDriverID)
+				teamID := makeTeamID(seriesID, teamName)
+
+				if err := st.UpsertDriver(ctx, &models.Driver{
+					ID:        driverID,
+					Name:      driverName,
+					ShortName: "",
+					Number:    carForDriverID,
+				}); err != nil {
+					return err
+				}
+				if teamName != "" {
+					if err := st.UpsertTeam(ctx, &models.Team{
+						ID:      teamID,
+						Name:    teamName,
+						Country: "",
+						Car:     manufacturer,
+					}); err != nil {
+						return err
+					}
+				}
+
+				pos := atoiSafe(valueOrEmpty(row, colPosS))
+				laps := atoiSafe(valueOrEmpty(row, colLapsS))
+				points := atoiSafe(valueOrEmpty(row, colPtsS))
+
+				stageID := raceID + ":S" + strconv.Itoa(stageNo) + ":" + driverID
+
+				if err := st.UpsertStageResult(ctx, &models.StageResult{
+					ID:        stageID,
+					RaceID:    raceID,
+					SeriesID:  e.SeriesID,
+					Season:    e.Season,
+					StageNo:   stageNo,
+					DriverID:  driverID,
+					TeamID:    teamID,
+					CarNumber: carNumber,
+					Position:  pos,
+					Laps:      laps,
+					Status:    status,
+					Points:    points,
+				}); err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// importSupercarsFromRaceSessions loads Supercars results from JSON (tables.race.sessions: Race 1, Race 2, …).
+func importSupercarsFromRaceSessions(ctx context.Context, st store.Store, dataDir, seriesID string) error {
+	dataID := config.DataSeriesID(seriesID)
+	events, err := schedulefile.LoadEvents(dataDir, dataID)
+	if err != nil {
+		return err
+	}
+	if len(events) == 0 {
+		return nil
+	}
+	const dateLayout = "2006-01-02"
+	for _, e := range events {
+		if e.Season != config.CurrentSeason {
+			continue
+		}
+		ev, err := schedulefile.EventToModel(e)
+		if err != nil {
+			continue
+		}
+		sessions, err := schedulefile.LoadEventRaceSessions(dataDir, e.ID)
+		if err != nil || len(sessions) == 0 {
+			continue
+		}
+		// Starting Grid for Race 1..7, used to compute avg_start in stats.
+		gridByRace, _ := schedulefile.LoadSupercarsStartingGridByRace(dataDir, e.ID)
+		scheduleAt := ev.StartDate
+		if scheduleAt.IsZero() {
+			if t, err := time.Parse(dateLayout, e.StartDate); err == nil {
+				scheduleAt = t
+			}
+		}
+		for sessIdx, sess := range sessions {
+			raceID := e.ID + ":R" + strconv.Itoa(sessIdx+1)
+			raceName := sess.Title
+			if raceName == "" {
+				raceName = "Race " + strconv.Itoa(sessIdx+1)
+			}
+			race := &models.Race{
+				ID:         raceID,
+				EventID:    e.ID,
+				SeriesID:   e.SeriesID,
+				Season:     e.Season,
+				Name:       raceName,
+				ScheduleAt: scheduleAt,
+				Laps:       0,
+				Distance:   "",
+				Status:     "",
+			}
+			if err := st.UpsertRace(ctx, race); err != nil {
+				return err
+			}
+			colPos := firstHeaderIndex(sess.Headers, "Pos", "Fin")
+			colNo := firstHeaderIndex(sess.Headers, "No", "No.", "#", "Car")
+			colDriver := firstHeaderIndex(sess.Headers, "Driver")
+			colTeam := firstHeaderIndex(sess.Headers, "Team")
+			colPts := firstHeaderIndex(sess.Headers, "Points", "Pts", "Pts.")
+			if colDriver < 0 {
+				continue
+			}
+			for rowIdx, row := range sess.Rows {
+				if colDriver >= len(row) {
+					continue
+				}
+				driverName := strings.TrimSpace(row[colDriver])
+				if driverName == "" {
+					continue
+				}
+				carNumber := valueOrEmpty(row, colNo)
+				teamName := valueOrEmpty(row, colTeam)
+				carForDriverID := carNumber
+				if strings.EqualFold(seriesID, "SUPERCARS") {
+					carForDriverID = schedulefile.SupercarsCarToCanonical(carNumber)
+				}
+				driverID := driverutil.MakeDriverID(seriesID, driverName, carForDriverID)
+				teamID := makeTeamID(seriesID, teamName)
+				if err := st.UpsertDriver(ctx, &models.Driver{
+					ID:        driverID,
+					Name:      driverName,
+					ShortName: "",
+					Number:    carForDriverID,
+				}); err != nil {
+					return err
+				}
+				if teamName != "" {
+					if err := st.UpsertTeam(ctx, &models.Team{
+						ID:      teamID,
+						Name:    teamName,
+						Country: "",
+						Car:     "",
+					}); err != nil {
+						return err
+					}
+				}
+				posStr := valueOrEmpty(row, colPos)
+				pos := atoiSafe(posStr)
+				if pos <= 0 && (strings.EqualFold(posStr, "DNF") || posStr == "") {
+					pos = rowIdx + 1
+				}
+				ptsStr := valueOrEmpty(row, colPts)
+				points := float64(atoiSafe(strings.TrimPrefix(strings.TrimSpace(ptsStr), "+")))
+				resID := raceID + ":" + driverID
+				if carNumber != "" {
+					resID = raceID + ":" + carNumber
+				}
+				status := ""
+				if strings.EqualFold(posStr, "DNF") {
+					status = "DNF"
+				}
+				gridPos := 0
+				if byCar := gridByRace[sessIdx+1]; byCar != nil {
+					gridPos = byCar[carForDriverID]
+				}
+				if err := st.UpsertResult(ctx, &models.Result{
+					ID:           resID,
+					RaceID:       raceID,
+					DriverID:     driverID,
+					TeamID:       teamID,
+					CarNumber:    carNumber,
+					Position:     pos,
+					GridPosition: gridPos,
+					Laps:         0,
+					LapsLed:      0,
+					Status:       status,
+					Points:       points,
+				}); err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
+
+// importOpenwheelSeries loads F1/F2/F3 results from JSON (tables.race.sessions or tables.race with headers/rows).
+func importOpenwheelSeries(ctx context.Context, st store.Store, dataDir, seriesID string) error {
+	dataID := config.DataSeriesID(seriesID)
+	events, err := schedulefile.LoadEvents(dataDir, dataID)
+	if err != nil || len(events) == 0 {
+		return err
+	}
+	const dateLayout = "2006-01-02"
+	for _, e := range events {
+		// By default import only the current season (config.CurrentSeason),
+		// but for F1 also pull 2025 so the /season/f1-2025 history page
+		// is built from DB data.
+		if e.Season != config.CurrentSeason {
+			if !(strings.EqualFold(seriesID, "F1") && e.Season == "2025") {
+				continue
+			}
+		}
+		ev, err := schedulefile.EventToModel(e)
+		if err != nil {
+			continue
+		}
+		sessions, err := schedulefile.LoadEventRaceSessions(dataDir, e.ID)
+		if err != nil || len(sessions) == 0 {
+			continue
+		}
+		entryList, _ := schedulefile.LoadEventEntryList(dataDir, e.ID)
+		scheduleAt := ev.StartDate
+		if scheduleAt.IsZero() {
+			if t, err := time.Parse(dateLayout, e.StartDate); err == nil {
+				scheduleAt = t
+			}
+		}
+		for _, sess := range sessions {
+			raceSuffix := ":FEATURE"
+			if strings.EqualFold(seriesID, "F1") {
+				raceSuffix = ":RACE"
+			} else if strings.Contains(strings.ToUpper(sess.Title), "SPRINT") {
+				raceSuffix = ":SPRINT"
+			}
+			raceID := e.ID + raceSuffix
+			raceName := sess.Title
+			if raceName == "" {
+				raceName = raceSuffix[1:]
+			}
+			race := &models.Race{
+				ID:         raceID,
+				EventID:    e.ID,
+				SeriesID:   e.SeriesID,
+				Season:     e.Season,
+				Name:       raceName,
+				ScheduleAt: scheduleAt,
+				Laps:       0,
+				Distance:   "",
+				Status:     "",
+			}
+			if err := st.UpsertRace(ctx, race); err != nil {
+				return err
+			}
+			colPos := firstHeaderIndex(sess.Headers, "Pos", "Fin")
+			colNo := firstHeaderIndex(sess.Headers, "No", "No.", "#", "Car")
+			colDriver := firstHeaderIndex(sess.Headers, "Driver")
+			colTeam := firstHeaderIndex(sess.Headers, "Team", "Constructor")
+			colPts := firstHeaderIndex(sess.Headers, "Points", "Pts", "Pts.")
+			colLaps := firstHeaderIndex(sess.Headers, "Laps")
+			colGrid := firstHeaderIndex(sess.Headers, "Grid")
+			colLapsLed := firstHeaderIndex(sess.Headers, "Laps Led", "Laps led")
+			colBestLap := firstHeaderIndex(sess.Headers, "Best Lap", "Best lap")
+			if colDriver < 0 {
+				continue
+			}
+			for rowIdx, row := range sess.Rows {
+				if colDriver >= len(row) {
+					continue
+				}
+				driverName := strings.TrimSpace(row[colDriver])
+				if driverName == "" {
+					continue
+				}
+				// Normalize problematic names for consistency and to avoid duplicates
+				if strings.EqualFold(seriesID, "F1") && driverName == "Carlos Sainz" {
+					driverName = "Carlos Sainz Jr."
+				}
+				carNumber := valueOrEmpty(row, colNo)
+				teamName := valueOrEmpty(row, colTeam)
+				// F2/F3: use entry_list to map "M. Shin"/"W. Shin" to one driver (Michael Shin) by car number
+				if canonical, ok := entryList[carNumber]; ok && canonical != "" {
+					driverName = canonical
+				}
+				driverID := driverutil.MakeDriverID(seriesID, driverName, carNumber)
+				teamID := makeTeamID(seriesID, teamName)
+				if err := st.UpsertDriver(ctx, &models.Driver{
+					ID:        driverID,
+					Name:      driverName,
+					ShortName: "",
+					Number:    carNumber,
+				}); err != nil {
+					return err
+				}
+				if teamName != "" {
+					if err := st.UpsertTeam(ctx, &models.Team{
+						ID:      teamID,
+						Name:    teamName,
+						Country: "",
+						Car:     "",
+					}); err != nil {
+						return err
+					}
+				}
+				posStr := valueOrEmpty(row, colPos)
+				pos := atoiSafe(posStr)
+				if pos <= 0 && (strings.EqualFold(posStr, "DNF") || posStr == "") {
+					pos = rowIdx + 1
+				}
+				points := float64(atoiSafe(valueOrEmpty(row, colPts)))
+				resID := raceID + ":" + driverID
+				if carNumber != "" {
+					resID = raceID + ":" + carNumber
+				}
+				status := ""
+				switch strings.ToUpper(strings.TrimSpace(posStr)) {
+				case "DNF":
+					status = "DNF"
+				case "DNS":
+					status = "DNS"
+				case "RET", "NC":
+					status = posStr
+				}
+				laps := atoiSafe(valueOrEmpty(row, colLaps))
+				gridPos := atoiSafe(valueOrEmpty(row, colGrid))
+				lapsLed := atoiSafe(valueOrEmpty(row, colLapsLed))
+				fastestLap := strings.TrimSpace(valueOrEmpty(row, colBestLap))
+				if err := st.UpsertResult(ctx, &models.Result{
+					ID:           resID,
+					RaceID:       raceID,
+					DriverID:     driverID,
+					TeamID:       teamID,
+					CarNumber:    carNumber,
+					Position:     pos,
+					GridPosition: gridPos,
+					Laps:         laps,
+					LapsLed:      lapsLed,
+					Status:       status,
+					Points:       points,
+					FastestLap:   fastestLap,
+				}); err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func firstHeaderIndex(headers []string, names ...string) int {
+	return tableutil.FirstColIndex(headers, names...)
+}
+
+func valueOrEmpty(row []string, idx int) string {
+	if idx < 0 || idx >= len(row) {
+		return ""
+	}
+	return strings.TrimSpace(row[idx])
+}
+
+func atoiSafe(s string) int {
+	s = strings.TrimSpace(s)
+	n, err := strconv.Atoi(s)
+	if err != nil {
+		return 0
+	}
+	return n
+}
+
+func maxIntColumn(headers []string, rows [][]string, names []string) int {
+	col := firstHeaderIndex(headers, names...)
+	if col < 0 {
+		return 0
+	}
+	maxVal := 0
+	for _, row := range rows {
+		if col >= len(row) {
+			continue
+		}
+		v := atoiSafe(strings.TrimSpace(row[col]))
+		if v > maxVal {
+			maxVal = v
+		}
+	}
+	return maxVal
+}
+
+func makeTeamID(seriesID, teamName string) string {
+	if teamName == "" {
+		return ""
+	}
+	return strings.ToUpper(seriesID) + ":TEAM:" + driverutil.NormalizeKey(teamName)
+}

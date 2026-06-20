@@ -2592,7 +2592,7 @@ body.series-imsa #view-event #event-content:is([data-event-section="practice"], 
   max-width: none;
 }
 
-/* Italian F4 / SMP F4: race results — fit columns, same readability as starting grid */
+/* Italian F4: race results — fit columns, same readability as starting grid */
 .f4-race-results-table {
   width: auto;
   table-layout: auto;
@@ -3027,21 +3027,18 @@ body.ev-supercars-2026-8 .video-embed-wrap:has(.video-facade-wrap) {
   border-bottom: 2px solid #000;
 }
 
-/* Italian F4 / SMP F4: compact per-race columns in championship table */
-.series-f4_it #standings-table .col-race,
-.series-smp_f4_ru #standings-table .col-race {
+/* Italian F4: compact per-race columns in championship table */
+.series-f4_it #standings-table .col-race {
   min-width: 2.25rem;
   text-align: center;
   padding-left: 0.35rem;
   padding-right: 0.35rem;
 }
-.series-f4_it #standings-table .col-race-group,
-.series-smp_f4_ru #standings-table .col-race-group {
+.series-f4_it #standings-table .col-race-group {
   font-size: 0.88em;
   white-space: nowrap;
 }
-.series-f4_it .standings-section .table-wrap,
-.series-smp_f4_ru .standings-section .table-wrap {
+.series-f4_it .standings-section .table-wrap {
   max-width: 100%;
 }
 .standings-race-link {
@@ -3055,6 +3052,11 @@ body.ev-supercars-2026-8 .video-embed-wrap:has(.video-facade-wrap) {
 /* Разделитель этапов Supercars: Sydney | Melbourne */
 .supercars-stage-divider {
   border-left: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Playoff cutline in NASCAR Cup / Xfinity / Truck driver standings */
+#standings-table tr.standings-playoff-cutline td {
+  border-top: 2px dashed rgba(255, 255, 255, 0.35);
 }
 
 /* Race tab: таблицы гонок и pre-season блоки прижаты к левому краю внутри контента. */
@@ -3302,6 +3304,319 @@ tr.table-separator-row td {
   letter-spacing: 0.04em;
 }
 
+/* ── Home feed tabs (Race | Live debug) ───────────────────────────────────── */
+.home-feed-nav {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+.home-feed-nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  border: 1px solid var(--border-2);
+  background: transparent;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.home-feed-nav-link:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.home-feed-nav-link.active {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Temporary live debug page */
+.live-debug-root {
+  margin-bottom: 1.75rem;
+}
+.live-debug-header {
+  margin-bottom: 1rem;
+}
+.live-debug-title {
+  font-size: var(--heading-2-size, 1.25rem);
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+.live-debug-meta,
+.live-debug-note {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.live-debug-section {
+  margin-bottom: 1.25rem;
+}
+.live-debug-section-title {
+  font-size: var(--heading-4-size, 1rem);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+.live-debug-url {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+.live-debug-error {
+  margin: 0 0 0.5rem;
+  color: #f87171;
+  font-size: 0.9rem;
+}
+.live-debug-pre {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-2);
+  background: rgba(0, 0, 0, 0.25);
+  overflow: auto;
+  max-height: 28rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.live-debug-pre--full {
+  max-height: 40rem;
+}
+
+/* ── NASCAR live leaderboards (/live tab) ─────────────────────────────────── */
+.nascar-live-root {
+  margin-bottom: 1.5rem;
+}
+.nascar-live-header {
+  margin-bottom: 1.1rem;
+}
+.nascar-live-title {
+  font-size: var(--heading-2-size, 1.35rem);
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+.nascar-live-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.nascar-live-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.nascar-live-boards {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 900px) {
+  .nascar-live-boards {
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  }
+}
+
+.nlb-card {
+  --nlb-accent: #ffb400;
+  background: var(--card-2);
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+.nlb-card--error {
+  padding: 1rem 1.1rem 1.1rem;
+}
+.nlb-head {
+  padding: 1rem 1.1rem 0.85rem;
+  border-bottom: 1px solid var(--border-2);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--nlb-accent) 14%, transparent), transparent 72%);
+}
+.nlb-head-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.55rem;
+}
+.nlb-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111;
+  background: var(--nlb-accent);
+}
+.nlb-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ff5252;
+}
+.nlb-live-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+  animation: nrc-blink 1s ease-in-out infinite;
+}
+.nlb-title {
+  margin: 0;
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  color: #fff;
+}
+.nlb-track {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.nlb-lap {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--nlb-accent) 72%, #fff);
+}
+.nlb-leaders-label {
+  margin: 0.65rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nlb-table-wrap {
+  overflow-x: auto;
+}
+.nlb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.nlb-table thead th {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border-2);
+  white-space: nowrap;
+}
+.nlb-table tbody td {
+  padding: 0.62rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+}
+.nlb-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.nlb-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+.nlb-pos {
+  width: 2.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+.nlb-driver {
+  min-width: 10rem;
+}
+.nlb-driver-name {
+  display: block;
+  font-weight: 650;
+  color: #fff;
+  line-height: 1.2;
+}
+.nlb-driver-link {
+  color: inherit;
+  text-decoration: none;
+}
+.nlb-driver-link:hover {
+  color: var(--nlb-accent);
+}
+.nlb-driver-meta {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+.nlb-grid,
+.nlb-gap {
+  width: 4.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #ececec;
+  white-space: nowrap;
+}
+.nlb-gap {
+  width: 5.5rem;
+  font-weight: 600;
+}
+.nlb-event-link {
+  display: block;
+  padding: 0.65rem 0.9rem;
+  border-top: 1px solid var(--border-2);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--nlb-accent);
+}
+.nlb-event-link:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+.nlb-error {
+  margin: 0;
+  color: #f87171;
+  font-size: 0.88rem;
+}
+
+.live-debug-details {
+  margin-top: 1.25rem;
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.15);
+}
+.live-debug-details > summary {
+  cursor: pointer;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  list-style: none;
+}
+.live-debug-details > summary::-webkit-details-marker {
+  display: none;
+}
+.live-debug-details[open] > summary {
+  border-bottom: 1px solid var(--border-2);
+}
+.live-debug-details .live-debug-root {
+  padding: 0.85rem 0.9rem 1rem;
+}
+
 /* ── Next race cards (per series) ─────────────────────────────────────────── */
 .next-races-row {
   margin-bottom: 1.5rem;
@@ -3524,6 +3839,39 @@ tr.table-separator-row td {
   margin-top: 0.28rem;
 }
 
+/* WEC: до 3 классов (Le Mans — Hypercar / LMP2 / LMGT3) */
+.lrc-card--wec {
+  padding: 1.15rem 1.45rem;
+}
+.lrc-card--wec .lrc-name {
+  font-size: 0.92rem;
+  line-height: 1.08;
+}
+.lrc-card--wec .lrc-winner {
+  font-size: 0.66rem;
+  line-height: 1.08;
+  margin-top: 0.18rem;
+  max-height: none;
+  overflow: visible;
+}
+.lrc-card--wec .lrc-winner-line {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lrc-card--wec.lrc-card--circuit-de-la-sarthe .lrc-name {
+  font-size: 0.86rem;
+  line-height: 1.06;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.lrc-card--wec.lrc-card--circuit-de-la-sarthe .lrc-winner {
+  font-size: 0.62rem;
+  line-height: 1.06;
+  margin-top: 0.12rem;
+}
+
 /* ELMS / GTWCE Europe: одна высота карточки, до 4 строк победителей по классам */
 .lrc-card--elms,
 .lrc-card--gtwce {
@@ -3583,25 +3931,47 @@ tr.table-separator-row td {
   opacity: 0.85;
 }
 
+/* Track photo cards: sharper bg, lighter overlay, no hover blur (card size unchanged). */
+.race-card-photo {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  isolation: isolate;
+}
+.race-card-photo:hover {
+  transform: none;
+  border-color: var(--border-3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), 0 0 0 1px var(--border-2);
+}
+.race-card-photo::before {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.lrc-card.race-card-photo {
+  background-size: cover;
+  background-position: center;
+}
+
 /* Placeholders for track-specific backgrounds (images to be wired later). */
 .lrc-card--f1-2026-2 {
-  background-image: url('/web/shanghai-circuit-bg.jpg');
+  background-image: url('/api/card-bg/shanghai-circuit-bg.jpg');
   background-size: cover;
   background-position: center;
 }
 .lrc-card--cup-2026-3 {
-  background-image: url('/web/las-vegas-bg.jpg');
+  background-image: url('/api/card-bg/las-vegas-bg.jpg');
   background-size: cover;
   background-position: center;
 }
 .lrc-card--indycar-2026-3 {
-  background-image: url('/web/indycar-arlington-bg.jpg');
+  background-image: url('/api/card-bg/indycar-arlington-bg.jpg');
   background-size: cover;
   background-position: center;
 }
 
 .lrc-card--albert-park {
-  background-image: url('/web/albert-park-bg.jpg');
+  background-image: url('/api/card-bg/albert-park-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3623,34 +3993,34 @@ tr.table-separator-row td {
   background-position: center;
 }
 .lrc-card--monaco {
-  background-image: url('/web/Monaco-circuit.jpg');
+  background-image: url('/api/card-bg/Monaco-circuit.jpg');
 }
 .lrc-card--monza {
-  background-image: url('/web/monza.png');
+  background-image: url('/api/card-bg/monza.png');
 }
 .lrc-card--michigan {
-  background-image: url('/web/michigan-speedway.jpg');
+  background-image: url('/api/card-bg/michigan-speedway.jpg');
 }
 .lrc-card--nashville-superspeedway {
-  background-image: url('/web/nashville-superspeedway.jpg');
+  background-image: url('/api/card-bg/nashville-superspeedway.jpg');
 }
 .lrc-card--riverhead-raceway {
-  background-image: url('/web/riverhead-raceway.jpg');
+  background-image: url('/api/card-bg/riverhead-raceway.jpg');
 }
 .lrc-card--streets-of-detroit {
-  background-image: url('/web/streets-of-detroit.jpg');
+  background-image: url('/api/card-bg/streets-of-detroit.jpg');
 }
 .lrc-card--world-wide-technology-raceway {
-  background-image: url('/web/world-wide-technology-raceway.png');
+  background-image: url('/api/card-bg/world-wide-technology-raceway.png');
 }
 .lrc-card--pocono {
-  background-image: url('/web/Pocono.jpg');
+  background-image: url('/api/card-bg/Pocono.jpg');
 }
 .lrc-card--kazan-ring {
-  background-image: url('/web/kazan-ring.jpg');
+  background-image: url('/api/card-bg/kazan-ring.jpg');
 }
 .lrc-card--circuit-de-la-sarthe {
-  background-image: url('/web/Circuit-de-la-Sarthe.jpg');
+  background-image: url('/api/card-bg/Circuit-de-la-Sarthe.jpg');
 }
 .lrc-card--monaco::after,
 .lrc-card--monza::after,
@@ -3670,9 +4040,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.92) 0%,
-    rgba(0, 0, 0, 0.5) 55%,
-    rgba(0, 0, 0, 0.1) 100%
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.38) 52%,
+    rgba(0, 0, 0, 0.08) 100%
   );
   z-index: 1;
 }
@@ -3695,7 +4065,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/motegi.jpg');
+  background-image: url('/api/card-bg/motegi.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3708,9 +4078,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3724,7 +4094,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Circuit-de-Catalunya-bg.jpg');
+  background-image: url('/api/card-bg/Circuit-de-Catalunya-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3737,9 +4107,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3753,7 +4123,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/taupo-bg.jpg');
+  background-image: url('/api/card-bg/taupo-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3766,9 +4136,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3782,7 +4152,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/bristol-bg.jpg');
+  background-image: url('/api/card-bg/bristol-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3795,9 +4165,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3811,7 +4181,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/okayama-bg.jpg');
+  background-image: url('/api/card-bg/okayama-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3824,9 +4194,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3840,7 +4210,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/paul-ricard.jpg');
+  background-image: url('/api/card-bg/paul-ricard.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3853,9 +4223,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3869,7 +4239,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/thompson-speedway.jpg');
+  background-image: url('/api/card-bg/thompson-speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3882,9 +4252,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3898,7 +4268,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/imola-bg.jpg');
+  background-image: url('/api/card-bg/imola-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3911,9 +4281,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3927,7 +4297,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/kansas-speedway.jpg');
+  background-image: url('/api/card-bg/kansas-speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3940,9 +4310,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3956,7 +4326,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Autopolis.JPG');
+  background-image: url('/api/card-bg/Autopolis.JPG');
   background-size: cover;
   background-position: center;
 }
@@ -3969,9 +4339,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -3985,7 +4355,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/TalladegaSuperspeedway2-2.jpg');
+  background-image: url('/api/card-bg/TalladegaSuperspeedway2-2.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -3998,9 +4368,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4014,7 +4384,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/texas-motor-speedway.jpg');
+  background-image: url('/api/card-bg/texas-motor-speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4027,9 +4397,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4043,7 +4413,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/brands-hatch.jpg');
+  background-image: url('/api/card-bg/brands-hatch.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4056,9 +4426,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4072,7 +4442,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/oxford-plains.jpg');
+  background-image: url('/api/card-bg/oxford-plains.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4085,9 +4455,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4101,7 +4471,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/fuji.jpg');
+  background-image: url('/api/card-bg/fuji.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4114,9 +4484,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4130,7 +4500,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/miami-international-autodrome.jpg');
+  background-image: url('/api/card-bg/miami-international-autodrome.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4143,9 +4513,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4160,7 +4530,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/circuit-gilles-villeneuve.jpg');
+  background-image: url('/api/card-bg/circuit-gilles-villeneuve.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4189,7 +4559,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/laguna-seca.jpg');
+  background-image: url('/api/card-bg/laguna-seca.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4202,9 +4572,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4219,7 +4589,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/misano.jpg');
+  background-image: url('/api/card-bg/misano.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4232,9 +4602,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4249,7 +4619,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/watkins-glen-international.png');
+  background-image: url('/api/card-bg/watkins-glen-international.png');
   background-size: cover;
   background-position: center;
 }
@@ -4262,9 +4632,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4279,7 +4649,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/IndyRoadCourse.jpg');
+  background-image: url('/api/card-bg/IndyRoadCourse.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4292,9 +4662,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4309,7 +4679,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Circuit-de-Spa-Francorchamps19.jpg');
+  background-image: url('/api/card-bg/Circuit-de-Spa-Francorchamps19.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4322,9 +4692,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4338,7 +4708,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Red-Bull-Ring.jpg');
+  background-image: url('/api/card-bg/Red-Bull-Ring.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4351,9 +4721,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4367,7 +4737,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/long-beach.jpg');
+  background-image: url('/api/card-bg/long-beach.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4380,9 +4750,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4396,7 +4766,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/euromarque.jpg');
+  background-image: url('/api/card-bg/euromarque.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4409,9 +4779,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4426,7 +4796,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Dover-Motor-Speedway.jpg');
+  background-image: url('/api/card-bg/Dover-Motor-Speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4439,9 +4809,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4456,7 +4826,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/seekonk-speedway.jpg');
+  background-image: url('/api/card-bg/seekonk-speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4469,9 +4839,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4486,7 +4856,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/moscow-raceway.jpg');
+  background-image: url('/api/card-bg/moscow-raceway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4499,9 +4869,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4516,7 +4886,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Toledo-Speedway.jpg');
+  background-image: url('/api/card-bg/Toledo-Speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4529,9 +4899,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4546,7 +4916,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/charlotte-motor-speedway.jpg');
+  background-image: url('/api/card-bg/charlotte-motor-speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4559,9 +4929,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4576,7 +4946,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/zandvoort.jpg');
+  background-image: url('/api/card-bg/zandvoort.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4589,9 +4959,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4606,7 +4976,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Autodromo-Vallelunga.png');
+  background-image: url('/api/card-bg/Autodromo-Vallelunga.png');
   background-size: cover;
   background-position: center;
 }
@@ -4619,9 +4989,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4636,7 +5006,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/Symmons-Plains-Raceway.jpg');
+  background-image: url('/api/card-bg/Symmons-Plains-Raceway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4649,9 +5019,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4666,7 +5036,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/indianapolis-motor-speedway.jpg');
+  background-image: url('/api/card-bg/indianapolis-motor-speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4679,9 +5049,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4694,7 +5064,7 @@ tr.table-separator-row td {
 .lrc-card--phoenix,
 .lrc-card--cup-phoenix,
 .lrc-card--noaps-phoenix {
-  background-image: url('/web/phoenix-bg.jpg');
+  background-image: url('/api/card-bg/phoenix-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4704,7 +5074,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/darlington-bg.jpg');
+  background-image: url('/api/card-bg/darlington-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4718,9 +5088,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4735,7 +5105,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/rockingham-speedway.jpg');
+  background-image: url('/api/card-bg/rockingham-speedway.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4749,9 +5119,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4766,7 +5136,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/sebring-bg.jpg');
+  background-image: url('/api/card-bg/sebring-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -4780,9 +5150,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4797,7 +5167,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/martinsville-bg.png');
+  background-image: url('/api/card-bg/martinsville-bg.png');
   background-size: cover;
   background-position: center;
 }
@@ -4810,9 +5180,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4826,7 +5196,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/suzuka-bg.png');
+  background-image: url('/api/card-bg/suzuka-bg.png');
   background-size: cover;
   background-position: center;
 }
@@ -4839,9 +5209,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4855,7 +5225,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/web/barber-bg.png');
+  background-image: url('/api/card-bg/barber-bg.png');
   background-size: cover;
   background-position: center;
 }
@@ -4868,13 +5238,80 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
 .lrc-card--barber > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.lrc-card--road-america,
+.lrc-card--white-mountain-motorsports-park,
+.lrc-card--berlin-raceway,
+.lrc-card--lausitzring,
+.lrc-card--hidden-valley-raceway,
+.lrc-card--sepang,
+.lrc-card--coronado-street {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+}
+.lrc-card--road-america {
+  background-image: url('/api/card-bg/Road-America.jpg');
+}
+.lrc-card--white-mountain-motorsports-park {
+  background-image: url('/api/card-bg/White-Mountain-Motorsports-Park.jpg');
+}
+.lrc-card--berlin-raceway {
+  background-image: url('/api/card-bg/Berlin-Raceway.jpg');
+}
+.lrc-card--lausitzring {
+  background-image: url('/api/card-bg/Lausitzring.jpg');
+}
+.lrc-card--hidden-valley-raceway {
+  background-image: url('/api/card-bg/hidden-valley-raceway.jpg');
+}
+.lrc-card--sepang {
+  background-image: url('/api/card-bg/sepang.jpg');
+}
+.lrc-card--coronado-street {
+  background-image: url('/api/card-bg/Coronado-street.jpg');
+}
+.lrc-card--road-america::after,
+.lrc-card--white-mountain-motorsports-park::after,
+.lrc-card--berlin-raceway::after,
+.lrc-card--lausitzring::after,
+.lrc-card--hidden-valley-raceway::after,
+.lrc-card--sepang::after,
+.lrc-card--coronado-street::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.lrc-card--road-america > *,
+.lrc-card--white-mountain-motorsports-park > *,
+.lrc-card--berlin-raceway > *,
+.lrc-card--lausitzring > *,
+.lrc-card--hidden-valley-raceway > *,
+.lrc-card--sepang > *,
+.lrc-card--coronado-street > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -4890,7 +5327,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/darlington-bg.jpg');
+  background-image: url('/api/card-bg/darlington-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -4907,9 +5344,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4932,7 +5369,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/rockingham-speedway.jpg');
+  background-image: url('/api/card-bg/rockingham-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -4949,9 +5386,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -4974,7 +5411,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/sebring-bg.jpg');
+  background-image: url('/api/card-bg/sebring-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -4991,9 +5428,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5015,7 +5452,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/martinsville-bg.png');
+  background-image: url('/api/card-bg/martinsville-bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5032,9 +5469,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5053,7 +5490,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/suzuka-bg.png');
+  background-image: url('/api/card-bg/suzuka-bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5070,9 +5507,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5091,7 +5528,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/barber-bg.png');
+  background-image: url('/api/card-bg/barber-bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5108,9 +5545,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5147,9 +5584,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5166,7 +5603,7 @@ tr.table-separator-row td {
 }
 
 .lrc-card--cup-phoenix {
-  background-image: url('/web/phoenix-bg.jpg');
+  background-image: url('/api/card-bg/phoenix-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -5270,7 +5707,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/shanghai-circuit-bg.jpg');
+  background-image: url('/api/card-bg/shanghai-circuit-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5287,9 +5724,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5312,7 +5749,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/las-vegas-bg.jpg');
+  background-image: url('/api/card-bg/las-vegas-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5329,9 +5766,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5354,7 +5791,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/indycar-arlington-bg.jpg');
+  background-image: url('/api/card-bg/indycar-arlington-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5371,9 +5808,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5398,7 +5835,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/phoenix-bg.jpg');
+  background-image: url('/api/card-bg/phoenix-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5416,9 +5853,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5443,7 +5880,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/phoenix-bg.jpg');
+  background-image: url('/api/card-bg/phoenix-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5460,9 +5897,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5485,7 +5922,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/albert-park-bg.jpg');
+  background-image: url('/api/card-bg/albert-park-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5502,9 +5939,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5535,7 +5972,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Monaco-circuit.jpg');
+  background-image: url('/api/card-bg/Monaco-circuit.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5561,9 +5998,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5588,7 +6025,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/monza.png');
+  background-image: url('/api/card-bg/monza.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5600,7 +6037,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/michigan-speedway.jpg');
+  background-image: url('/api/card-bg/michigan-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5612,7 +6049,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/nashville-superspeedway.jpg');
+  background-image: url('/api/card-bg/nashville-superspeedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5624,7 +6061,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/riverhead-raceway.jpg');
+  background-image: url('/api/card-bg/riverhead-raceway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5636,7 +6073,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/streets-of-detroit.jpg');
+  background-image: url('/api/card-bg/streets-of-detroit.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5648,7 +6085,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/world-wide-technology-raceway.png');
+  background-image: url('/api/card-bg/world-wide-technology-raceway.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5660,7 +6097,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Pocono.jpg');
+  background-image: url('/api/card-bg/Pocono.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5672,7 +6109,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/kazan-ring.jpg');
+  background-image: url('/api/card-bg/kazan-ring.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5684,7 +6121,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Circuit-de-la-Sarthe.jpg');
+  background-image: url('/api/card-bg/Circuit-de-la-Sarthe.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5714,7 +6151,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/motegi.jpg');
+  background-image: url('/api/card-bg/motegi.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5731,9 +6168,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5755,7 +6192,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Circuit-de-Catalunya-bg.jpg');
+  background-image: url('/api/card-bg/Circuit-de-Catalunya-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5772,9 +6209,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5796,7 +6233,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/taupo-bg.jpg');
+  background-image: url('/api/card-bg/taupo-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5813,9 +6250,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5837,7 +6274,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/bristol-bg.jpg');
+  background-image: url('/api/card-bg/bristol-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5854,9 +6291,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5878,7 +6315,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/okayama-bg.jpg');
+  background-image: url('/api/card-bg/okayama-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5895,9 +6332,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5919,7 +6356,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/paul-ricard.jpg');
+  background-image: url('/api/card-bg/paul-ricard.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5936,9 +6373,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -5960,7 +6397,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/thompson-speedway.jpg');
+  background-image: url('/api/card-bg/thompson-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -5977,9 +6414,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6001,7 +6438,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/imola-bg.jpg');
+  background-image: url('/api/card-bg/imola-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6018,9 +6455,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6042,7 +6479,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/kansas-speedway.jpg');
+  background-image: url('/api/card-bg/kansas-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6059,9 +6496,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6083,7 +6520,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Autopolis.JPG');
+  background-image: url('/api/card-bg/Autopolis.JPG');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6100,9 +6537,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6124,7 +6561,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/TalladegaSuperspeedway2-2.jpg');
+  background-image: url('/api/card-bg/TalladegaSuperspeedway2-2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6141,9 +6578,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6165,7 +6602,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/texas-motor-speedway.jpg');
+  background-image: url('/api/card-bg/texas-motor-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6182,9 +6619,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6206,7 +6643,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/brands-hatch.jpg');
+  background-image: url('/api/card-bg/brands-hatch.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6223,9 +6660,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6247,7 +6684,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/oxford-plains.jpg');
+  background-image: url('/api/card-bg/oxford-plains.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6264,9 +6701,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6288,7 +6725,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/fuji.jpg');
+  background-image: url('/api/card-bg/fuji.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6305,9 +6742,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6329,7 +6766,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/miami-international-autodrome.jpg');
+  background-image: url('/api/card-bg/miami-international-autodrome.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6346,9 +6783,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6370,7 +6807,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/circuit-gilles-villeneuve.jpg');
+  background-image: url('/api/card-bg/circuit-gilles-villeneuve.jpg');
   background-size: cover;
   background-position: center;
   opacity: 1;
@@ -6386,9 +6823,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6410,7 +6847,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/laguna-seca.jpg');
+  background-image: url('/api/card-bg/laguna-seca.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6427,9 +6864,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6451,7 +6888,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/misano.jpg');
+  background-image: url('/api/card-bg/misano.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6468,9 +6905,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6492,7 +6929,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/watkins-glen-international.png');
+  background-image: url('/api/card-bg/watkins-glen-international.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6509,9 +6946,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6533,7 +6970,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/IndyRoadCourse.jpg');
+  background-image: url('/api/card-bg/IndyRoadCourse.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6550,9 +6987,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6574,7 +7011,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Circuit-de-Spa-Francorchamps19.jpg');
+  background-image: url('/api/card-bg/Circuit-de-Spa-Francorchamps19.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6591,9 +7028,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6615,7 +7052,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Red-Bull-Ring.jpg');
+  background-image: url('/api/card-bg/Red-Bull-Ring.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6632,9 +7069,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6656,7 +7093,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/long-beach.jpg');
+  background-image: url('/api/card-bg/long-beach.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6673,9 +7110,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6697,7 +7134,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/euromarque.jpg');
+  background-image: url('/api/card-bg/euromarque.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6714,9 +7151,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6738,7 +7175,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Dover-Motor-Speedway.jpg');
+  background-image: url('/api/card-bg/Dover-Motor-Speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6755,9 +7192,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6779,7 +7216,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/seekonk-speedway.jpg');
+  background-image: url('/api/card-bg/seekonk-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6796,9 +7233,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6820,7 +7257,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/moscow-raceway.jpg');
+  background-image: url('/api/card-bg/moscow-raceway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6837,9 +7274,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6861,7 +7298,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Toledo-Speedway.jpg');
+  background-image: url('/api/card-bg/Toledo-Speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6878,9 +7315,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6902,7 +7339,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/charlotte-motor-speedway.jpg');
+  background-image: url('/api/card-bg/charlotte-motor-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6919,9 +7356,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6943,7 +7380,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/zandvoort.jpg');
+  background-image: url('/api/card-bg/zandvoort.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6960,9 +7397,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -6984,7 +7421,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Autodromo-Vallelunga.png');
+  background-image: url('/api/card-bg/Autodromo-Vallelunga.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -7001,9 +7438,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -7025,7 +7462,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/Symmons-Plains-Raceway.jpg');
+  background-image: url('/api/card-bg/Symmons-Plains-Raceway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -7042,9 +7479,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -7066,7 +7503,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/web/indianapolis-motor-speedway.jpg');
+  background-image: url('/api/card-bg/indianapolis-motor-speedway.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -7083,9 +7520,9 @@ tr.table-separator-row td {
   top: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.7) 55%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
   );
   z-index: 1;
 }
@@ -7095,6 +7532,97 @@ tr.table-separator-row td {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 .nrc-card--indianapolis-ims:hover::before {
+  transform: none;
+}
+
+.nrc-card--road-america,
+.nrc-card--white-mountain-motorsports-park,
+.nrc-card--berlin-raceway,
+.nrc-card--lausitzring,
+.nrc-card--hidden-valley-raceway,
+.nrc-card--sepang,
+.nrc-card--coronado-street {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.nrc-card--road-america::before {
+  background-image: url('/api/card-bg/Road-America.jpg');
+}
+.nrc-card--white-mountain-motorsports-park::before {
+  background-image: url('/api/card-bg/White-Mountain-Motorsports-Park.jpg');
+}
+.nrc-card--berlin-raceway::before {
+  background-image: url('/api/card-bg/Berlin-Raceway.jpg');
+}
+.nrc-card--lausitzring::before {
+  background-image: url('/api/card-bg/Lausitzring.jpg');
+}
+.nrc-card--hidden-valley-raceway::before {
+  background-image: url('/api/card-bg/hidden-valley-raceway.jpg');
+}
+.nrc-card--sepang::before {
+  background-image: url('/api/card-bg/sepang.jpg');
+}
+.nrc-card--coronado-street::before {
+  background-image: url('/api/card-bg/Coronado-street.jpg');
+}
+.nrc-card--road-america::before,
+.nrc-card--white-mountain-motorsports-park::before,
+.nrc-card--berlin-raceway::before,
+.nrc-card--lausitzring::before,
+.nrc-card--hidden-valley-raceway::before,
+.nrc-card--sepang::before,
+.nrc-card--coronado-street::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: 0;
+  transition: transform 0.2s ease;
+}
+.nrc-card--road-america::after,
+.nrc-card--white-mountain-motorsports-park::after,
+.nrc-card--berlin-raceway::after,
+.nrc-card--lausitzring::after,
+.nrc-card--hidden-valley-raceway::after,
+.nrc-card--sepang::after,
+.nrc-card--coronado-street::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.nrc-card--road-america > *,
+.nrc-card--white-mountain-motorsports-park > *,
+.nrc-card--berlin-raceway > *,
+.nrc-card--lausitzring > *,
+.nrc-card--hidden-valley-raceway > *,
+.nrc-card--sepang > *,
+.nrc-card--coronado-street > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+.nrc-card--road-america:hover::before,
+.nrc-card--white-mountain-motorsports-park:hover::before,
+.nrc-card--berlin-raceway:hover::before,
+.nrc-card--lausitzring:hover::before,
+.nrc-card--hidden-valley-raceway:hover::before,
+.nrc-card--sepang:hover::before,
+.nrc-card--coronado-street:hover::before {
   transform: none;
 }
 

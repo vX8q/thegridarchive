@@ -193,7 +193,7 @@
     },
     {
       "number": "44",
-      "driver": "Andrés Pérez de Lara",
+      "driver": "Andres Perez de Lara",
       "team": "Niece Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Wally Rogers",
@@ -310,7 +310,7 @@
   "tables": {
     "qualifying": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -412,7 +412,7 @@
         [
           "9",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "32.242",
@@ -916,7 +916,7 @@
           "15",
           "9",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "125",
@@ -1208,7 +1208,7 @@
     },
     "stage_1": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -1267,7 +1267,7 @@
         [
           "7",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "4"
@@ -1300,7 +1300,7 @@
     },
     "stage_2": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -1367,7 +1367,7 @@
         [
           "8",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "3"

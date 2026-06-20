@@ -2,7 +2,6 @@
   // Extra haystack terms for series that do not literally contain common queries.
   window.TGA_SEARCH_ALIASES = {
     F4_IT: 'formula 4 italian italy f4 italia',
-    SMP_F4_RU: 'formula 4 russia smp f4',
     FREC: 'formula 4 regional europe frec'
   };
 
@@ -28,7 +27,6 @@
     'ARCA',
     'FREC',
     'F4_IT',
-    'NASCAR_MODIFIED',
-    'SMP_F4_RU'
+    'NASCAR_MODIFIED'
   ];
 })();

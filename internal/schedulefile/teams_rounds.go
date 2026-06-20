@@ -57,6 +57,19 @@ func placeholderText(s string) bool {
 	return false
 }
 
+// StripDriverParenSuffix removes trailing "(...)" tags (TBA, (i), race counts, etc.).
+func StripDriverParenSuffix(name string) string {
+	cleaned := name
+	for {
+		next := driverParenSuffix.ReplaceAllString(cleaned, "")
+		if next == cleaned {
+			break
+		}
+		cleaned = next
+	}
+	return strings.TrimSpace(cleaned)
+}
+
 // dropPlaceholderRows removes placeholder rows: driver not set (TBA/TBC) OR no
 // participation data (empty/placeholder rounds). For multi-driver rows (IMSA,
 // driver in Drivers[]) only rounds is considered.
@@ -67,7 +80,7 @@ func dropPlaceholderRows(rows []TeamJSON) []TeamJSON {
 	out := rows[:0:0]
 	for _, r := range rows {
 		multiDriver := strings.TrimSpace(r.Driver) == "" && len(r.Drivers) > 0
-		if !multiDriver && placeholderText(r.Driver) {
+		if !multiDriver && placeholderText(StripDriverParenSuffix(r.Driver)) {
 			continue
 		}
 		if placeholderText(r.Rounds) {
@@ -153,12 +166,55 @@ var eventOrdinalSeries = map[string]bool{
 	"supercars": true,
 }
 
+// championshipOrdinalSeries — series whose schedule event IDs follow another
+// calendar (e.g. F1 round numbers) and may skip weekends without a support
+// race. Teams rounds use the chronological championship ordinal (1, 2, 3…)
+// instead of the numeric suffix in the event ID when schedule IDs skip weekends.
+var championshipOrdinalSeries = map[string]bool{
+	"f3": true,
+}
+
 // eventRoundSets returns for each event ID the set of scoring rounds it
 // covers. By default one round (number from ID suffix). For double-header
 // series (doubleHeaderRoundSeries) consecutive events at one circuit merge into
 // a group, and each event in the group covers ALL its rounds.
 func eventRoundSets(sid string, events []EventJSON, season string) map[string][]int {
 	out := map[string][]int{}
+	if championshipOrdinalSeries[sid] {
+		type ev struct {
+			id    string
+			idNum int
+			date  string
+		}
+		var list []ev
+		for _, e := range events {
+			if season != "" && e.Season != "" && e.Season != season {
+				continue
+			}
+			r, ok := eventRoundNumber(e.ID)
+			if !ok {
+				continue
+			}
+			list = append(list, ev{id: e.ID, idNum: r, date: strings.TrimSpace(e.StartDate)})
+		}
+		sort.Slice(list, func(i, j int) bool {
+			di, dj := list[i].date, list[j].date
+			if di != "" && dj != "" && di != dj {
+				return di < dj
+			}
+			if di != "" && dj == "" {
+				return true
+			}
+			if di == "" && dj != "" {
+				return false
+			}
+			return list[i].idNum < list[j].idNum
+		})
+		for i, e := range list {
+			out[e.id] = []int{i + 1}
+		}
+		return out
+	}
 	if !doubleHeaderRoundSeries[sid] && !eventOrdinalSeries[sid] {
 		for _, e := range events {
 			if season != "" && e.Season != "" && e.Season != season {

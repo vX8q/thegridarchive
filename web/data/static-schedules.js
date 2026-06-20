@@ -148,29 +148,28 @@
         // Local: Sprint 11:15, Feature 08:50 → MSK (UTC+3) −8 hours
         sprint: '7 March',  sprintLocal: '11:15', sprintMsk: '03:15',
         feature: '8 March', featureLocal: '08:50', featureMsk: '00:50' },
-      // Original round 2 (Bahrain) cancelled for 2026 calendar.
-      { rd: 2,  circuit: 'Monaco — Circuit de Monaco, Monaco', event_id: 'F3_2026_3',
+      { rd: 2,  circuit: 'Monaco — Circuit de Monaco, Monaco', event_id: 'F3_2026_2',
         sprint: '6 June', sprintLocal: '10:45', sprintMsk: '11:45',
         feature: '7 June', featureLocal: '07:45', featureMsk: '08:45' },
-      { rd: 3,  circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló', event_id: 'F3_2026_4',
+      { rd: 3,  circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló', event_id: 'F3_2026_3',
         sprint: '13 June', sprintLocal: '10:05', sprintMsk: '11:05',
         feature: '14 June', featureLocal: '08:40', featureMsk: '09:40' },
-      { rd: 4,  circuit: 'Austria — Red Bull Ring, Spielberg', event_id: 'F3_2026_5',
+      { rd: 4,  circuit: 'Austria — Red Bull Ring, Spielberg', event_id: 'F3_2026_4',
         sprint: '27 June', sprintLocal: '10:05', sprintMsk: '11:05',
         feature: '28 June', featureLocal: '08:40', featureMsk: '09:40' },
-      { rd: 5,  circuit: 'United Kingdom — Silverstone Circuit, Silverstone', event_id: 'F3_2026_6',
+      { rd: 5,  circuit: 'United Kingdom — Silverstone Circuit, Silverstone', event_id: 'F3_2026_5',
         sprint: '4 July', sprintLocal: '09:35', sprintMsk: '11:35',
         feature: '5 July', featureLocal: '08:25', featureMsk: '10:25' },
-      { rd: 6,  circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot', event_id: 'F3_2026_7',
+      { rd: 6,  circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot', event_id: 'F3_2026_6',
         sprint: '18 July', sprintLocal: '10:05', sprintMsk: '11:05',
         feature: '19 July', featureLocal: '08:40', featureMsk: '09:40' },
-      { rd: 7,  circuit: 'Hungary — Hungaroring, Mogyoród', event_id: 'F3_2026_8',
+      { rd: 7,  circuit: 'Hungary — Hungaroring, Mogyoród', event_id: 'F3_2026_7',
         sprint: '25 July', sprintLocal: '10:05', sprintMsk: '11:05',
         feature: '26 July', featureLocal: '08:40', featureMsk: '09:40' },
-      { rd: 8,  circuit: 'Italy — Monza Circuit, Monza', event_id: 'F3_2026_9',
+      { rd: 8,  circuit: 'Italy — Monza Circuit, Monza', event_id: 'F3_2026_8',
         sprint: '5 September', sprintLocal: '10:05', sprintMsk: '11:05',
         feature: '6 September', featureLocal: '08:40', featureMsk: '09:40' },
-      { rd: 9,  circuit: 'Spain — Madring, Madrid', event_id: 'F3_2026_10',
+      { rd: 9,  circuit: 'Spain — Madring, Madrid', event_id: 'F3_2026_9',
         sprint: '12 September', sprintLocal: '11:05', sprintMsk: '12:05',
         feature: '13 September', featureLocal: '09:55', featureMsk: '10:55' }
     ],
@@ -183,16 +182,6 @@
       F1_2026_9:  { sprintDate: '2026-07-04', sprintLocal: '12:00', sprintMsk: '14:00' },
       F1_2026_12: { sprintDate: '2026-08-22', sprintLocal: '12:00', sprintMsk: '13:00' },
       F1_2026_16: { sprintDate: '2026-10-10', sprintLocal: '17:00', sprintMsk: '12:00' }
-    },
-
-    // Per-race times for SMP F4 weekends (Full Schedule only — cards stay one row per event).
-    smpF4RuScheduleRaces: {
-      SMP_F4_RU_2026_2: [
-        { race: 1, date: '2026-06-13', time_msk: '12:10' },
-        { race: 2, date: '2026-06-13', time_msk: '16:35' },
-        { race: 3, date: '2026-06-14', time_msk: '11:45' },
-        { race: 4, date: '2026-06-14', time_msk: '15:10' }
-      ]
     }
   };
 })();

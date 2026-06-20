@@ -8,6 +8,19 @@
   var nrcLiveRefresh = null;
   /** Live event IDs from API (data/live.json). Mutated when refetching. */
   var nrcLiveSet = {};
+  /** Series with server-side livesync — schedule-time LIVE fallback is disabled. */
+  var NRC_LIVE_SYNC_PREFIXES = [
+    'NASCAR_CUP_', 'NOAPS_', 'NASCAR_TRUCK_', 'F1_', 'WEC_', 'SUPER_FORMULA_'
+  ];
+
+  function eventUsesLiveSync(eventId) {
+    var u = String(eventId || '').toUpperCase();
+    if (!u) return false;
+    for (var i = 0; i < NRC_LIVE_SYNC_PREFIXES.length; i++) {
+      if (u.indexOf(NRC_LIVE_SYNC_PREFIXES[i]) === 0) return true;
+    }
+    return false;
+  }
 
   function stopNextRaceTimers() {
     if (nrcInterval) { clearInterval(nrcInterval); nrcInterval = null; }
@@ -37,7 +50,7 @@
     if (!container) return;
     container.classList.remove('hidden');
 
-    // Same per-race rows and UTC times as Full Schedule (SMP F4, etc.).
+    // Same per-race rows and UTC times as Full Schedule (multi-race weekends).
     var prepareScheduleSessionEvents = window.TGA.prepareScheduleSessionEvents;
     if (prepareScheduleSessionEvents) {
       allEvents = prepareScheduleSessionEvents(Array.isArray(allEvents) ? allEvents.slice() : []);
@@ -48,18 +61,26 @@
     var windowEnd = windowStart + 7 * 24 * 60 * 60 * 1000 - 1;
     var nowTs = Date.now();
 
-    // When to remove card from "Next": single-day — LIVE window ~3 h after start;
-    // multi-day events (FREC, WEC, …) keep until end of last end_date day.
+    var liveEndTsForEvent = window.TGA.liveEndTsForEvent;
+    var nextRaceEndTs = window.TGA.nextRaceEndTs;
+
+    // When to remove card from "Next": named endurance duration, else calendar/heuristic fallback.
     function endTsForEvent(e, startTs) {
-      var startStr = (e.start_date || e.date || '').slice(0, 10);
-      var endStr = (e.end_date || e.start_date || e.date || '').slice(0, 10);
-      if (!endStr) return startTs ? startTs + 3 * 60 * 60 * 1000 : null;
-      var endOfDay = new Date(endStr + 'T23:59:59').getTime();
-      if (endStr > startStr) {
-        return endOfDay;
+      var calendarEnd = (function () {
+        var startStr = (e.start_date || e.date || '').slice(0, 10);
+        var endStr = (e.end_date || e.start_date || e.date || '').slice(0, 10);
+        if (!endStr) return startTs ? startTs + 3 * 60 * 60 * 1000 : null;
+        var endOfDay = new Date(endStr + 'T23:59:59').getTime();
+        if (endStr > startStr) {
+          return endOfDay;
+        }
+        var threeHoursAfter = startTs ? startTs + 3 * 60 * 60 * 1000 : endOfDay;
+        return threeHoursAfter < endOfDay ? threeHoursAfter : endOfDay;
+      })();
+      if (nextRaceEndTs) {
+        return nextRaceEndTs(e, startTs, calendarEnd);
       }
-      var threeHoursAfter = startTs ? startTs + 3 * 60 * 60 * 1000 : endOfDay;
-      return threeHoursAfter < endOfDay ? threeHoursAfter : endOfDay;
+      return calendarEnd;
     }
 
     function eventSeriesUpper(ev) {
@@ -85,9 +106,10 @@
       var startTs = dt.getTime();
       var endTs = endTsForEvent(e, startTs);
       if (!endTs) endTs = startTs + 3 * 60 * 60 * 1000;
+      var liveEndTs = liveEndTsForEvent ? liveEndTsForEvent(e, startTs, endTs) : endTs;
       // Show only events not yet finished (start or LIVE window not passed).
       if (endTs >= nowTs) {
-        weekEntries.push({ event: e, date: dt, endTs: endTs });
+        weekEntries.push({ event: e, date: dt, endTs: endTs, liveEndTs: liveEndTs });
       }
     });
 
@@ -356,6 +378,27 @@
           )) {
             extraClass += ' nrc-card--circuit-de-la-sarthe';
           }
+          if (trackKey.indexOf('road america') >= 0) {
+            extraClass += ' nrc-card--road-america';
+          }
+          if (trackKey.indexOf('white mountain') >= 0) {
+            extraClass += ' nrc-card--white-mountain-motorsports-park';
+          }
+          if (trackKey.indexOf('berlin raceway') >= 0) {
+            extraClass += ' nrc-card--berlin-raceway';
+          }
+          if (trackKey.indexOf('lausitzring') >= 0 || trackKey.indexOf('lausitz') >= 0) {
+            extraClass += ' nrc-card--lausitzring';
+          }
+          if (trackKey.indexOf('hidden valley') >= 0) {
+            extraClass += ' nrc-card--hidden-valley-raceway';
+          }
+          if (trackKey.indexOf('sepang') >= 0) {
+            extraClass += ' nrc-card--sepang';
+          }
+          if (trackKey.indexOf('coronado') >= 0) {
+            extraClass += ' nrc-card--coronado-street';
+          }
           if (eventNameLc.indexOf('taupo') >= 0 || eventNameLc.indexOf('taupō') >= 0) {
             extraClass += ' nrc-card--taupo';
           }
@@ -485,6 +528,27 @@
           if (eventNameLc.indexOf('24 hours of le mans') >= 0 || eventNameLc.indexOf('hours of le mans') >= 0) {
             extraClass += ' nrc-card--circuit-de-la-sarthe';
           }
+          if (eventNameLc.indexOf('road america') >= 0) {
+            extraClass += ' nrc-card--road-america';
+          }
+          if (eventNameLc.indexOf('white mountain') >= 0) {
+            extraClass += ' nrc-card--white-mountain-motorsports-park';
+          }
+          if (eventNameLc.indexOf('berlin raceway') >= 0) {
+            extraClass += ' nrc-card--berlin-raceway';
+          }
+          if (eventNameLc.indexOf('lausitzring') >= 0 || eventNameLc.indexOf('lausitz') >= 0) {
+            extraClass += ' nrc-card--lausitzring';
+          }
+          if (eventNameLc.indexOf('hidden valley') >= 0) {
+            extraClass += ' nrc-card--hidden-valley-raceway';
+          }
+          if (eventNameLc.indexOf('sepang') >= 0) {
+            extraClass += ' nrc-card--sepang';
+          }
+          if (eventNameLc.indexOf('coronado') >= 0) {
+            extraClass += ' nrc-card--coronado-street';
+          }
           if (trackKey.indexOf('pocono raceway') >= 0) {
             extraClass += ' nrc-card--pocono';
           }
@@ -604,12 +668,16 @@
             } else if (eventSlug.indexOf('kazan') >= 0) {
               extraClass += ' nrc-card--kazan-ring';
             } else if (
-              eventSlug.indexOf('le-mans') >= 0 &&
-              eventSlug.indexOf('lone-star') < 0 &&
-              eventSlug.indexOf('cota') < 0
+              eventSlug === 'wec-2026-3' ||
+              (eventSlug.indexOf('le-mans') >= 0 &&
+                eventSlug.indexOf('lone-star') < 0 &&
+                eventSlug.indexOf('cota') < 0)
             ) {
               extraClass += ' nrc-card--circuit-de-la-sarthe';
             }
+          }
+          if (extraClass) {
+            extraClass += ' race-card-photo';
           }
           return (
             '<a href="' + href + '" class="nrc-card nrc-card-enter' + extraClass + '" style="animation-delay: ' + delayMs + 'ms">' +
@@ -656,7 +724,7 @@
           el: container.querySelector('[data-nrc="' + idx + '"]'),
           liveEl: container.querySelector('[data-nrc-live="' + idx + '"]'),
           date: entry.date,
-          endTs: entry.endTs,
+          liveEndTs: entry.liveEndTs != null ? entry.liveEndTs : entry.endTs,
           eventId: (e.id || '').toUpperCase()
         };
       });
@@ -667,7 +735,7 @@
           if (!c.el) return;
           var startTs = c.date.getTime();
           var fromApi = c.eventId && nrcLiveSet[c.eventId];
-          var fromTime = now2 >= startTs && now2 <= c.endTs;
+          var fromTime = !eventUsesLiveSync(c.eventId) && now2 >= startTs && now2 <= c.liveEndTs;
           var isLive = fromApi || fromTime;
           if (c.liveEl) {
             if (isLive) {
@@ -700,13 +768,15 @@
     }
 
     renderWithLiveSet();
-    var fetchJSON = window.TGA && window.TGA.fetchJSON;
-    if (!fetchJSON) fetchJSON = function (url) { return fetch(url).then(function (r) { return r.json(); }); };
-    fetchJSON('/api/live-events')
+    var API = window.TGA && window.TGA.API;
+    function fetchLiveIds() {
+      return API ? API.getLiveEvents() : fetch('/api/live-events').then(function (r) { return r.json(); });
+    }
+    fetchLiveIds()
       .then(function (ids) {
         applyLiveIds(ids);
         nrcLiveRefresh = setInterval(function () {
-          fetchJSON('/api/live-events').then(applyLiveIds).catch(function () {});
+          fetchLiveIds().then(applyLiveIds).catch(function () {});
         }, 60000);
       })
       .catch(function () {});

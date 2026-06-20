@@ -19,7 +19,7 @@
 
 | Категория | Серии |
 |-----------|-------|
-| **Formula** | Formula 1, Formula 2, Formula 3, FREC, Italian F4, SMP F4 Russia, Porsche Supercup |
+| **Formula** | Formula 1, Formula 2, Formula 3, FREC, Italian F4, Porsche Supercup |
 | **Stock Car** | NASCAR Cup, NASCAR Xfinity (O'Reilly), NASCAR Truck (Craftsman), ARCA Menards, Whelen Modified Tour |
 | **Open-Wheel** | IndyCar, Super Formula |
 | **Touring** | Supercars, DTM, Super GT |

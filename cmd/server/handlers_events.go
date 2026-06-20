@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"log/slog"
 	"net/http"
@@ -59,6 +60,46 @@ func handleEvent(w http.ResponseWriter, r *http.Request, dataDir string, _ *cach
 	_, _ = w.Write(body)
 }
 
+func filterLiveEventIDs(ctx context.Context, st store.Store, ids []string) []string {
+	if ids == nil {
+		ids = []string{}
+	}
+	if st == nil || len(ids) == 0 {
+		out := make([]string, 0, len(ids))
+		for _, id := range ids {
+			if id == "" {
+				continue
+			}
+			out = append(out, strings.ToUpper(strings.TrimSpace(id)))
+		}
+		return out
+	}
+	filtered := make([]string, 0, len(ids))
+	for _, id := range ids {
+		if id == "" {
+			continue
+		}
+		eventID := strings.ToUpper(strings.TrimSpace(id))
+		races, err := st.ListRacesByEvent(ctx, eventID)
+		if err != nil || len(races) == 0 {
+			filtered = append(filtered, eventID)
+			continue
+		}
+		hasResults := false
+		for _, ra := range races {
+			results, err := st.ListResultsByRace(ctx, ra.ID)
+			if err == nil && len(results) > 0 {
+				hasResults = true
+				break
+			}
+		}
+		if !hasResults {
+			filtered = append(filtered, eventID)
+		}
+	}
+	return filtered
+}
+
 // handleLiveEvents returns event_ids currently marked "live".
 // Source: data/live.json. Events that already have results in the DB are excluded so the race is not shown as LIVE.
 func handleLiveEvents(w http.ResponseWriter, r *http.Request, dataDir string, st store.Store) {
@@ -82,33 +123,7 @@ func handleLiveEvents(w http.ResponseWriter, r *http.Request, dataDir string, st
 	if ids == nil {
 		ids = []string{}
 	}
-	if st != nil && len(ids) > 0 {
-		ctx := r.Context()
-		filtered := make([]string, 0, len(ids))
-		for _, id := range ids {
-			if id == "" {
-				continue
-			}
-			eventID := strings.ToUpper(strings.TrimSpace(id))
-			races, err := st.ListRacesByEvent(ctx, eventID)
-			if err != nil || len(races) == 0 {
-				filtered = append(filtered, eventID)
-				continue
-			}
-			hasResults := false
-			for _, ra := range races {
-				results, err := st.ListResultsByRace(ctx, ra.ID)
-				if err == nil && len(results) > 0 {
-					hasResults = true
-					break
-				}
-			}
-			if !hasResults {
-				filtered = append(filtered, eventID)
-			}
-		}
-		ids = filtered
-	}
+	ids = filterLiveEventIDs(r.Context(), st, ids)
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "no-cache, max-age=60")
 	_ = json.NewEncoder(w).Encode(ids)

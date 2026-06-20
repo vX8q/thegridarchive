@@ -6,8 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"net/http"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -21,9 +20,10 @@ import (
 )
 
 const (
-	nascarFeedBase  = "https://feed.nascar.com"
+	nascarFeedBase  = "https://feed.nascar.com" // legacy; now returns 401 without token
+	nascarCFBase    = "https://cf.nascar.com"
+	nascarCFLiveFeed = nascarCFBase + "/live/feeds/live-feed.json"
 	openF1Base      = "https://api.openf1.org"
-	httpTimeout     = 15 * time.Second
 	defaultInterval = 2 * time.Minute
 )
 
@@ -54,42 +54,62 @@ func init() {
 	prometheus.MustRegister(livesyncErrorsTotal, livesyncLastSuccess)
 }
 
-// Run syncs NASCAR and OpenF1 in sequence (each merges its result into live.json).
+// Run syncs NASCAR, OpenF1, WEC, and Super Formula in sequence (each merges its result into live.json).
 func Run(dataDir string) error {
 	if err := SyncNASCAR(dataDir); err != nil {
-		log.Printf("livesync NASCAR: %v", err)
+		slog.Warn("livesync NASCAR failed", "err", err)
 	}
 	if err := SyncOpenF1(dataDir); err != nil {
-		log.Printf("livesync OpenF1: %v", err)
+		slog.Warn("livesync OpenF1 failed", "err", err)
 	}
+	if err := SyncWEC(dataDir); err != nil {
+		slog.Warn("livesync WEC failed", "err", err)
+	}
+	if err := SyncSuperFormula(dataDir); err != nil {
+		slog.Warn("livesync Super Formula failed", "err", err)
+	}
+	livePath := filepath.Join(dataDir, "live.json")
+	ids := readLiveIDs(livePath)
+	if ids == nil {
+		ids = []string{}
+	}
+	slog.Info("livesync tick complete", "live_event_ids", ids)
 	return nil
 }
 
 // test hooks for substituting HTTP functions in unit tests.
 var (
-	fetchNASCARLiveFeedFunc      = fetchNASCARLiveFeed
-	fetchNASCARRacesFunc         = fetchNASCARRaces
-	fetchOpenF1SessionsLatestFunc = fetchOpenF1SessionsLatest
+	fetchNASCARLiveFeedFullFunc = fetchNASCARLiveFeedFull
+	fetchNASCARRacesFunc        = fetchNASCARRaces
 )
 
 // SyncNASCAR updates only NASCAR entries (Cup/Xfinity/Truck) in live.json.
 func SyncNASCAR(dataDir string) error {
 	livePath := filepath.Join(dataDir, "live.json")
-	live, err := fetchNASCARLiveFeedFunc()
+	live, err := fetchNASCARLiveFeedFullFunc()
 	if err != nil || live == nil || live.RaceID == 0 {
 		livesyncErrorsTotal.WithLabelValues("nascar", "live_feed").Inc()
 		return mergeLiveJSONNASCAR(livePath, nil)
 	}
-	dataID, ok := nascarSeriesToDataID[live.SeriesID]
+	if nascarFeedRaceFinished(live) {
+		return mergeLiveJSONNASCAR(livePath, nil)
+	}
+	season, _ := strconv.Atoi(config.CurrentSeason)
+	seriesID, err := nascarResolveSeriesID(live.RaceID, live.SeriesID, season)
+	if err != nil {
+		livesyncErrorsTotal.WithLabelValues("nascar", "unknown_series").Inc()
+		return mergeLiveJSONNASCAR(livePath, nil)
+	}
+	live.SeriesID = seriesID
+	dataID, ok := nascarSeriesToDataID[seriesID]
 	if !ok {
 		livesyncErrorsTotal.WithLabelValues("nascar", "unknown_series").Inc()
 		return mergeLiveJSONNASCAR(livePath, nil)
 	}
-	season, _ := strconv.Atoi(config.CurrentSeason)
-	races, err := fetchNASCARRacesFunc(live.SeriesID, season)
+	races, err := fetchNASCARRacesFunc(seriesID, season)
 	if err != nil {
 		livesyncErrorsTotal.WithLabelValues("nascar", "races_fetch").Inc()
-		return err
+		return mergeLiveJSONNASCAR(livePath, nil)
 	}
 	raceDate := make(map[int]string)
 	for _, r := range races {
@@ -112,6 +132,9 @@ func SyncNASCAR(dataDir string) error {
 		livesyncErrorsTotal.WithLabelValues("nascar", "no_matching_event").Inc()
 		return mergeLiveJSONNASCAR(livePath, nil)
 	}
+	if !nascarFeedCountsAsLiveRace(live, schedDate) {
+		return mergeLiveJSONNASCAR(livePath, nil)
+	}
 	if err := mergeLiveJSONNASCAR(livePath, []string{eventID}); err != nil {
 		livesyncErrorsTotal.WithLabelValues("nascar", "write_live_json").Inc()
 		return err
@@ -123,28 +146,12 @@ func SyncNASCAR(dataDir string) error {
 // SyncOpenF1 updates only F1 entries in live.json.
 func SyncOpenF1(dataDir string) error {
 	livePath := filepath.Join(dataDir, "live.json")
-	sessions, err := fetchOpenF1SessionsLatestFunc()
-	if err != nil || len(sessions) == 0 {
-		reason := "no_sessions"
-		if err != nil {
-			reason = "sessions_fetch"
-		}
-		livesyncErrorsTotal.WithLabelValues("openf1", reason).Inc()
-		return mergeLiveJSONF1(livePath, nil)
-	}
-	session := sessions[0]
-	now := time.Now().UTC()
-	start, err := time.Parse(time.RFC3339, session.DateStart)
+	session, err := findOpenF1LiveSessionAt(openF1NowFunc())
 	if err != nil {
-		livesyncErrorsTotal.WithLabelValues("openf1", "parse_start").Inc()
+		livesyncErrorsTotal.WithLabelValues("openf1", "sessions_fetch").Inc()
 		return mergeLiveJSONF1(livePath, nil)
 	}
-	end, err := time.Parse(time.RFC3339, session.DateEnd)
-	if err != nil {
-		livesyncErrorsTotal.WithLabelValues("openf1", "parse_end").Inc()
-		return mergeLiveJSONF1(livePath, nil)
-	}
-	if now.Before(start) || now.After(end) {
+	if session == nil {
 		livesyncErrorsTotal.WithLabelValues("openf1", "no_live_window").Inc()
 		return mergeLiveJSONF1(livePath, nil)
 	}
@@ -312,93 +319,93 @@ func mergeLiveJSONF1(livePath string, newF1Ids []string) error {
 	return writeLiveJSON(livePath, filtered)
 }
 
-// ——— NASCAR API ———
-
-type nascarLiveFeed struct {
-	RaceID   int `json:"race_id"`
-	SeriesID int `json:"series_id"`
+func mergeLiveJSONWEC(livePath string, newWECIDs []string) error {
+	current := readLiveIDs(livePath)
+	if current == nil {
+		current = []string{}
+	}
+	filtered := current[:0]
+	seen := make(map[string]struct{}, len(current))
+	for _, id := range current {
+		u := strings.ToUpper(id)
+		if strings.HasPrefix(u, "WEC_") {
+			continue
+		}
+		filtered = append(filtered, id)
+		seen[u] = struct{}{}
+	}
+	for _, id := range newWECIDs {
+		if id == "" {
+			continue
+		}
+		u := strings.ToUpper(id)
+		if _, ok := seen[u]; ok {
+			continue
+		}
+		seen[u] = struct{}{}
+		filtered = append(filtered, id)
+	}
+	return writeLiveJSON(livePath, filtered)
 }
+
+func mergeLiveJSONSuperFormula(livePath string, newSFIDs []string) error {
+	current := readLiveIDs(livePath)
+	if current == nil {
+		current = []string{}
+	}
+	filtered := current[:0]
+	seen := make(map[string]struct{}, len(current))
+	for _, id := range current {
+		u := strings.ToUpper(id)
+		if strings.HasPrefix(u, "SUPER_FORMULA_") {
+			continue
+		}
+		filtered = append(filtered, id)
+		seen[u] = struct{}{}
+	}
+	for _, id := range newSFIDs {
+		if id == "" {
+			continue
+		}
+		u := strings.ToUpper(id)
+		if _, ok := seen[u]; ok {
+			continue
+		}
+		seen[u] = struct{}{}
+		filtered = append(filtered, id)
+	}
+	return writeLiveJSON(livePath, filtered)
+}
+
+// ——— NASCAR API ———
 
 type nascarRace struct {
 	RaceID        int    `json:"race_id"`
 	DateScheduled string `json:"date_scheduled"`
 }
 
-func fetchNASCARLiveFeed() (*nascarLiveFeed, error) {
-	req, _ := http.NewRequest(http.MethodGet, nascarFeedBase+"/api/LiveFeed", nil)
-	req.Header.Set("Accept", "application/json")
-	client := &http.Client{Timeout: httpTimeout}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		if closeErr := resp.Body.Close(); closeErr != nil {
-			log.Printf("livesync: failed to close NASCAR live feed body: %v", closeErr)
-		}
-	}()
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("status %d", resp.StatusCode)
-	}
-	var out nascarLiveFeed
-	if err := json.NewDecoder(resp.Body).Decode(&out); err != nil {
-		return nil, err
-	}
-	return &out, nil
+type nascarRaceListBasic struct {
+	Series1 []nascarRace `json:"series_1"`
+	Series2 []nascarRace `json:"series_2"`
+	Series3 []nascarRace `json:"series_3"`
 }
 
 func fetchNASCARRaces(seriesID, season int) ([]nascarRace, error) {
-	url := fmt.Sprintf("%s/api/races?series_id=%d&race_season=%d", nascarFeedBase, seriesID, season)
-	req, _ := http.NewRequest(http.MethodGet, url, nil)
-	req.Header.Set("Accept", "application/json")
-	client := &http.Client{Timeout: httpTimeout}
-	resp, err := client.Do(req)
-	if err != nil {
+	url := fmt.Sprintf("%s/cacher/%d/race_list_basic.json", nascarCFBase, season)
+	var decoded nascarRaceListBasic
+	if err := livesyncGetJSON(url, &decoded); err != nil {
 		return nil, err
 	}
-	defer func() {
-		if closeErr := resp.Body.Close(); closeErr != nil {
-			log.Printf("livesync: failed to close NASCAR races body: %v", closeErr)
-		}
-	}()
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("status %d", resp.StatusCode)
+	switch seriesID {
+	case 1:
+		return decoded.Series1, nil
+	case 2:
+		return decoded.Series2, nil
+	case 3:
+		return decoded.Series3, nil
+	default:
+		return nil, fmt.Errorf("unknown series_id %d", seriesID)
 	}
-	var out []nascarRace
-	if err := json.NewDecoder(resp.Body).Decode(&out); err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ——— OpenF1 API ———
-
-type openF1Session struct {
-	DateStart string `json:"date_start"`
-	DateEnd   string `json:"date_end"`
-}
-
-func fetchOpenF1SessionsLatest() ([]openF1Session, error) {
-	req, _ := http.NewRequest(http.MethodGet, openF1Base+"/v1/sessions?session_key=latest", nil)
-	req.Header.Set("Accept", "application/json")
-	client := &http.Client{Timeout: httpTimeout}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		if closeErr := resp.Body.Close(); closeErr != nil {
-			log.Printf("livesync: failed to close OpenF1 sessions body: %v", closeErr)
-		}
-	}()
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("status %d", resp.StatusCode)
-	}
-	var out []openF1Session
-	if err := json.NewDecoder(resp.Body).Decode(&out); err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 // StartBackground starts a background sync loop every interval (0 = 2 minutes).
@@ -407,19 +414,21 @@ func StartBackground(ctx context.Context, dataDir string, interval time.Duration
 	if interval <= 0 {
 		interval = defaultInterval
 	}
+	StartSuperFormulaCacheLoop(ctx)
+	slog.Info("livesync background worker started", "interval", interval.String(), "data_dir", dataDir)
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
-	// first run immediately
 	if err := Run(dataDir); err != nil {
-		log.Printf("livesync background tick error: %v", err)
+		slog.Warn("livesync background tick error", "err", err)
 	}
 	for {
 		select {
 		case <-ctx.Done():
+			slog.Info("livesync background worker stopped")
 			return
 		case <-ticker.C:
 			if err := Run(dataDir); err != nil {
-				log.Printf("livesync background tick error: %v", err)
+				slog.Warn("livesync background tick error", "err", err)
 			}
 		}
 	}

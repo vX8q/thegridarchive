@@ -446,6 +446,70 @@ func TestBuildDriverStatsFromJSON_NascarNonNumericPositions(t *testing.T) {
 	}
 }
 
+// TestBuildDriverStatsFromJSON_StagePointsFromTable checks stage points come from JSON Points column
+// (including 0 for ineligible drivers), not from 11−Pos.
+func TestBuildDriverStatsFromJSON_StagePointsFromTable(t *testing.T) {
+	dataDir := t.TempDir()
+	falseVal := false
+
+	events := []EventJSON{
+		{
+			ID:        "NASCAR_CUP_2026_99",
+			SeriesID:  "NASCAR_CUP",
+			Season:    "2026",
+			Name:      "Stage Points Test",
+			StartDate: "2026-01-01",
+			EndDate:   "2026-01-01",
+		},
+	}
+	writeJSON(t, filepath.Join(dataDir, "schedules", "nascar_cup.json"), events)
+
+	detail := &EventDetailJSON{
+		EventID: "NASCAR_CUP_2026_99",
+		Laps:    "100",
+		EntryList: []EntryListRow{
+			{Number: "33", Driver: "Austin Hill (i)", PointsEligible: &falseVal},
+		},
+		Tables: map[string]EventTable{
+			"stage_1": {
+				Headers: []string{"Pos", "No", "Driver", "Team", "Manufacturer", "Points"},
+				Rows: [][]string{
+					{"1", "11", "Denny Hamlin", "Joe Gibbs Racing", "Toyota", "10"},
+					{"10", "33", "Austin Hill (i)", "Richard Childress Racing", "Chevrolet", "0"},
+				},
+			},
+			"race_results": {
+				Headers: []string{"Pos", "No", "Driver", "Team", "Manufacturer", "Grid", "Laps", "Led"},
+				Rows: [][]string{
+					{"1", "11", "Denny Hamlin", "Joe Gibbs Racing", "Toyota", "1", "100", "50"},
+					{"10", "33", "Austin Hill (i)", "Richard Childress Racing", "Chevrolet", "10", "100", "0"},
+				},
+			},
+		},
+	}
+	writeJSON(t, filepath.Join(dataDir, "events", "nascar_cup_2026_99.json"), detail)
+
+	stats, err := buildDriverStatsFromJSON(dataDir, "NASCAR_CUP", "2026")
+	if err != nil {
+		t.Fatalf("buildDriverStatsFromJSON error: %v", err)
+	}
+	var hamlin, hill *DriverStatsRow
+	for i := range stats.Rows {
+		switch stats.Rows[i].Driver {
+		case "Denny Hamlin":
+			hamlin = &stats.Rows[i]
+		case "Austin Hill (i)":
+			hill = &stats.Rows[i]
+		}
+	}
+	if hamlin == nil || hamlin.StagePoints != 10 || hamlin.StageWins != 1 {
+		t.Fatalf("Hamlin stage stats = wins %d pts %d, want 1 win / 10 pts", hamlin.StageWins, hamlin.StagePoints)
+	}
+	if hill == nil || hill.StagePoints != 0 {
+		t.Fatalf("Austin Hill (i) stage points = %d, want 0", hill.StagePoints)
+	}
+}
+
 // TestBuildDriverStatsFromJSON_IndyCarManufacturerFromTeams checks manufacturer from Teams by car number.
 func TestBuildDriverStatsFromJSON_IndyCarManufacturerFromTeams(t *testing.T) {
 	dataDir := t.TempDir()

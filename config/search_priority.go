@@ -25,7 +25,6 @@ var SeriesSearchPriority = []string{
 	"FREC",
 	"F4_IT",
 	"NASCAR_MODIFIED",
-	"SMP_F4_RU",
 }
 
 // SeriesPriorityScore returns a higher value for series ranked earlier in SeriesSearchPriority.

@@ -33,14 +33,14 @@ ID события — тот же, что в расписании и в `data/ev
 
 ### NASCAR — автоматическая синхронизация (официальный API)
 
-Используется **официальный API NASCAR** [feed.nascar.com](https://feed.nascar.com/swagger/ui/index). Утилита `sync-nascar-live` опрашивает Live Feed, определяет текущую гонку (Cup / Xfinity / Truck) и обновляет `data/live.json`.
+Используется **официальный API NASCAR** [feed.nascar.com](https://feed.nascar.com/swagger/ui/index). При запуске **`cmd/server`** фоновый **livesync** каждые **2 минуты** опрашивает Live Feed, определяет текущую гонку (Cup / Xfinity / Truck) и обновляет `data/live.json`. Отдельный cron не нужен, пока работает сервер.
 
-**Запуск вручную:**
+**Запуск вручную (без сервера):**
 ```bash
 go run ./cmd/sync-nascar-live -data-dir=./data
 ```
 
-**По cron (каждые 1–2 минуты в гоночные дни):**
+**По cron** — только если сервер не запущен постоянно:
 ```bash
 */2 * * * * cd /path/to/TGA && go run ./cmd/sync-nascar-live -data-dir=./data
 ```
@@ -50,19 +50,51 @@ go run ./cmd/sync-nascar-live -data-dir=./data
 
 ### F1 — OpenF1 (api.openf1.org)
 
-Утилита `sync-openf1-live` опрашивает **OpenF1** (неофициальный, бесплатный API), получает текущую/последнюю сессию (`session_key=latest`), проверяет, что сейчас между `date_start` и `date_end`, и записывает соответствующий `F1_2026_X` в `live.json`. Маппинг по дате сессии на событие из `data/schedules/f1.json` (с учётом одного уик-энда: пт/сб/вс).
+Интеграция с **OpenF1** (неофициальный, бесплатный API):
 
-**Запуск:**
+- **LIVE-бейдж** — фоновый livesync ищет сессию текущего уик-энда (`meeting_key=latest`) в окне `date_start`…`date_end` и пишет `F1_2026_X` в `live.json`.
+- **Live-таблица** — на вкладке `/live` (как NASCAR): позиции, команда, решётка, отставание (в гонке — из `/v1/intervals` **по каждому пилоту**, не полный дамп), номер круга лидера (кэш ~45 с). API: `GET /api/live-boards` (топ-**22**).
+
+**Запуск вручную (без сервера):**
 ```bash
 go run ./cmd/sync-openf1-live -data-dir=./data
 ```
 
-**Cron (каждые 1–2 минуты в гоночные уик-энды F1):**
+**Проверка на уик-энде:** `/live` и `/api/live-debug` (блок `openf1`: `live_session`, `board`, `mapped_event_id`).
+
+Сервер (`cmd/server`) уже синхронизирует NASCAR, F1, WEC и Super Formula в одном фоновом цикле. CLI-утилиты нужны только для ручного прогона или cron без сервера.
+
+### WEC — ECM live JSON (Google Cloud Storage)
+
+Публичный снимок тайминга Al Kamel / ECM:
+
+- **LIVE-бейдж** — livesync читает `https://storage.googleapis.com/ecm-prod/live/WEC/data.json`, проверяет `raceState` / прогресс сессии и пишет `WEC_2026_X` в `live.json` (маппинг по `startTime` → дата уик-энда в `data/schedules/wec.json`).
+- **Live-таблица** — на `/live`: позиции, команда/шасси, класс, отставание, круг. API: `GET /api/live-boards` (топ-**22**).
+
+**Запуск вручную:**
 ```bash
-*/2 * * * * cd /path/to/TGA && go run ./cmd/sync-openf1-live -data-dir=./data
+go run ./cmd/sync-wec-live -data-dir=./data
 ```
 
-Утилита **только обновляет** F1-записи в `live.json`, не трогая NASCAR и ручные id. Можно запускать вместе с `sync-nascar-live`: оба по очереди в cron дадут и NASCAR, и F1 live.
+**Проверка:** `/api/live-debug` (блок `wec`: `snapshot`, `board`, `mapped_event_id`).
+
+Вне сессии JSON может оставаться «застывшим» с финишным `raceState` (например `Chk`) — LIVE не включается.
+
+### Super Formula — RaceNow WebSocket
+
+Официальный live timing RaceLive / RaceNow:
+
+- **LIVE-бейдж** — livesync читает снимок RaceNow из **фонового кэша** (обновление каждые ~30 с, не блокирует цикл `Run`), пишет `SUPER_FORMULA_2026_X` по ближайшей дате уик-энда в расписании.
+- **Live-таблица** — позиции, команда, двигатель, отставание, круги.
+
+**Запуск вручную:**
+```bash
+go run ./cmd/sync-superformula-live -data-dir=./data
+```
+
+**Проверка:** `/api/live-debug` (блок `super_formula`).
+
+WebSocket доступен **только во время сессий**; вне уик-энда соединение отклоняется — это нормально.
 
 ### Остальные чемпионаты
 
@@ -73,15 +105,18 @@ go run ./cmd/sync-openf1-live -data-dir=./data
 | Источник | Серии | Доступ | Примечание |
 |----------|--------|--------|------------|
 | **NASCAR feed** | Cup, Xfinity, Truck | Бесплатно, публичный API | Уже интегрирован: `sync-nascar-live`. [feed.nascar.com](https://feed.nascar.com/swagger/ui/index). |
-| **OpenF1** | Только Formula 1 | Бесплатно, без ключа | Интегрирован: `sync-openf1-live`. [api.openf1.org](https://openf1.org/docs/) — сессии, `session_key=latest`, проверка по date_start/date_end. |
+| **OpenF1** | Только Formula 1 | Бесплатно, без ключа | LIVE-бейдж + live-таблица на `/live` (`/api/live-boards`). Сессии: `meeting_key=latest`; позиции/интервалы по `session_key`. |
+| **ECM WEC JSON** | WEC | Бесплатно, публичный GCS | LIVE-бейдж + live-таблица (`sync-wec-live`). `storage.googleapis.com/ecm-prod/live/WEC/data.json`. |
+| **RaceNow WebSocket** | Super Formula | Бесплатно | LIVE-бейдж + live-таблица (`sync-superformula-live`). `ws://superformula.racelive.jp:6001/get`. |
 | **Sportradar** | F1, IndyCar, NASCAR, MotoGP, Formula E и др. | Платно (есть trial) | Официальный поставщик данных для многих чемпионатов. Live Data по F1 (gRPC), расписания и результаты IndyCar/NASCAR. Регистрация: [developer.sportradar.com](https://developer.sportradar.com). Для коммерческого использования — контракт. |
 | **Ergast** | F1 | Бесплатно | Только исторические данные, без live. [ergast.com](https://ergast.com/mrd/). |
 
-Итого: для **автоматического** LIVE без платных подписок сейчас реалистичны только **NASCAR** (уже есть) и при желании **F1 через OpenF1** (отдельная утилита по аналогии с `sync-nascar-live`). Остальные серии — вручную или по времени из расписания.
+Итого: для **автоматического** LIVE без платных подписок сейчас реалистичны **NASCAR**, **F1 (OpenF1)**, **WEC (ECM JSON)** и **Super Formula (RaceNow)**. Остальные серии — вручную или по времени из расписания.
 
 ## Логика на фронте
 
 - Если **event_id есть в ответе `/api/live-events`** — карточка сразу помечается как LIVE (мигающая иконка и подпись «LIVE»).
-- Если **нет** — используется запасной вариант: текущее время попадает в интервал между `start_date`/временем старта и `end_date` события.
+- Для серий с **автоматическим livesync** (NASCAR Cup/Xfinity/Truck, F1, WEC, Super Formula) **запасной LIVE по времени отключён** — только `live.json` / API. Иначе бейдж мог бы гореть по расписанию, когда внешний фид молчит.
+- Для **остальных** чемпионатов (Supercars, IndyCar, …) при пустом `live.json` LIVE по-прежнему может загораться, если текущее время попадает в интервал `start_date`…`end_date` карточки.
 
-То есть при пустом `live.json` LIVE по-прежнему может загораться по расписанию; заполнение `live.json` нужно, когда хотите опираться на внешний источник или вручную указать «сейчас идёт эта гонка».
+То есть для интегрированных серий заполнение `live.json` (вручную или через livesync) — единственный источник LIVE на карточках NEXT RACE; для остальных — ручной `live.json` или эвристика по календарю.

@@ -12,6 +12,7 @@ function shouldSkip(raw) {
   const t = String(raw ?? "").trim();
   if (!t) return true;
   const l = t.toLowerCase();
+  if (l === "tba" || l === "tbc" || l === "tbd") return true;
   return (
     l === "driver" ||
     l === "drivers" ||

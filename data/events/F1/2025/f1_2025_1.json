@@ -111,7 +111,7 @@
     },
     {
       "number": "27",
-      "driver": "Nico Hülkenberg",
+      "driver": "Nico Hulkenberg",
       "team": "Stake F1 Team Kick Sauber",
       "manufacturer": "Kick Sauber-Ferrari",
       "constructor": "Kick Sauber-Ferrari",
@@ -180,7 +180,7 @@
         {
           "title": "Practice 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -327,7 +327,7 @@
             [
               "18",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.334s",
               "18"
@@ -353,7 +353,7 @@
         {
           "title": "Practice 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -420,7 +420,7 @@
             [
               "8",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+0.722s",
               "24"
@@ -518,7 +518,7 @@
         {
           "title": "Practice 3",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -649,7 +649,7 @@
             [
               "16",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.225s",
               "15"
@@ -865,7 +865,7 @@
         [
           "17",
           "27",
-          "Nico Hülkenberg",
+          "Nico Hulkenberg",
           "Kick Sauber-Ferrari",
           "1:16.579",
           "N/A",
@@ -915,7 +915,7 @@
         "Grid",
         "Laps Led",
         "Best Lap",
-        "Pts."
+        "Points"
       ],
       "rows": [
         [
@@ -993,7 +993,7 @@
         [
           "7",
           "27",
-          "Nico Hülkenberg",
+          "Nico Hulkenberg",
           "Kick Sauber",
           "57",
           "+18.423s",
@@ -1257,7 +1257,7 @@
           "57"
         ],
         [
-          "Hülkenberg",
+          "Hulkenberg",
           "I 1–33",
           "M 33–44",
           "I 44–57",
@@ -1415,7 +1415,7 @@
         ],
         [
           "SC №3",
-          "44–46"
+          "47–51"
         ]
       ]
     }

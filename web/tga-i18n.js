@@ -145,7 +145,6 @@
     F3: true,
     FREC: true,
     F4_IT: true,
-    SMP_F4_RU: true,
     PSC: true,
     DTM: true,
     SUPER_FORMULA: true

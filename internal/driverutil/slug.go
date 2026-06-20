@@ -109,6 +109,8 @@ func NormalizeSlug(slug string) string {
 		return "cem-bolukbasi"
 	case "rafael-c-mara":
 		return "rafael-camara"
+	case "woohyun-shin", "w-shin", "m-shin":
+		return "michael-shin"
 	default:
 		return strings.ToLower(strings.TrimSpace(slug))
 	}

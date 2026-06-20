@@ -242,7 +242,7 @@
   "tables": {
     "practice": {
       "headers": [
-        "Pos.",
+        "Pos",
         "No.",
         "Driver",
         "Team",
@@ -521,7 +521,7 @@
     },
     "practice2": {
       "headers": [
-        "Pos.",
+        "Pos",
         "No.",
         "Driver",
         "Team",
@@ -792,7 +792,7 @@
         {
           "title": "Qualifying Round 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "Group",
             "No.",
             "Driver",
@@ -1047,7 +1047,7 @@
         {
           "title": "Qualifying Round 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "Group",
             "No.",
             "Driver",
@@ -1307,7 +1307,7 @@
           "title": "Race Round 1",
           "note": "Less than 75% of the scheduled race distance was completed due to disruptions caused by rain. Half points were awarded for race positions; qualifying bonus points (3/2/1) were awarded in full.",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -1691,7 +1691,7 @@
         {
           "title": "Race Round 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",

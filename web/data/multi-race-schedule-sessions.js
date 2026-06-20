@@ -212,7 +212,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_3": [
+  "F3_2026_2": [
     {
       "label": "Sprint",
       "date": "2026-06-06",
@@ -226,7 +226,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_4": [
+  "F3_2026_3": [
     {
       "label": "Sprint",
       "date": "2026-06-13",
@@ -240,7 +240,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_5": [
+  "F3_2026_4": [
     {
       "label": "Sprint",
       "date": "2026-06-27",
@@ -254,7 +254,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_6": [
+  "F3_2026_5": [
     {
       "label": "Sprint",
       "date": "2026-07-04",
@@ -268,7 +268,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_7": [
+  "F3_2026_6": [
     {
       "label": "Sprint",
       "date": "2026-07-18",
@@ -282,7 +282,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_8": [
+  "F3_2026_7": [
     {
       "label": "Sprint",
       "date": "2026-07-25",
@@ -296,7 +296,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_9": [
+  "F3_2026_8": [
     {
       "label": "Sprint",
       "date": "2026-09-05",
@@ -310,7 +310,7 @@
       "kind": "feature"
     }
   ],
-  "F3_2026_10": [
+  "F3_2026_9": [
     {
       "label": "Sprint",
       "date": "2026-09-12",
@@ -809,162 +809,6 @@
       "label": "Race 2",
       "date": "2026-10-02",
       "time_msk": "16:30",
-      "kind": ""
-    }
-  ],
-  "SMP_F4_RU_2026_1": [
-    {
-      "label": "Race 1",
-      "date": "2026-05-16",
-      "time_msk": "12:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-05-16",
-      "time_msk": "16:00",
-      "kind": ""
-    },
-    {
-      "label": "Race 3",
-      "date": "2026-05-17",
-      "time_msk": "11:45",
-      "kind": ""
-    },
-    {
-      "label": "Race 4",
-      "date": "2026-05-17",
-      "time_msk": "15:10",
-      "kind": ""
-    }
-  ],
-  "SMP_F4_RU_2026_2": [
-    {
-      "label": "Race 1",
-      "date": "2026-06-13",
-      "time_msk": "12:10",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-06-13",
-      "time_msk": "16:35",
-      "kind": ""
-    },
-    {
-      "label": "Race 3",
-      "date": "2026-06-14",
-      "time_msk": "11:45",
-      "kind": ""
-    },
-    {
-      "label": "Race 4",
-      "date": "2026-06-14",
-      "time_msk": "15:10",
-      "kind": ""
-    }
-  ],
-  "SMP_F4_RU_2026_3": [
-    {
-      "label": "Race 1",
-      "date": "2026-08-08",
-      "time_msk": "12:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-08-08",
-      "time_msk": "16:00",
-      "kind": ""
-    },
-    {
-      "label": "Race 3",
-      "date": "2026-08-09",
-      "time_msk": "11:45",
-      "kind": ""
-    },
-    {
-      "label": "Race 4",
-      "date": "2026-08-09",
-      "time_msk": "15:10",
-      "kind": ""
-    }
-  ],
-  "SMP_F4_RU_2026_4": [
-    {
-      "label": "Race 1",
-      "date": "2026-08-29",
-      "time_msk": "12:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-08-29",
-      "time_msk": "16:00",
-      "kind": ""
-    },
-    {
-      "label": "Race 3",
-      "date": "2026-08-30",
-      "time_msk": "11:45",
-      "kind": ""
-    },
-    {
-      "label": "Race 4",
-      "date": "2026-08-30",
-      "time_msk": "15:10",
-      "kind": ""
-    }
-  ],
-  "SMP_F4_RU_2026_5": [
-    {
-      "label": "Race 1",
-      "date": "2026-09-12",
-      "time_msk": "12:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-09-12",
-      "time_msk": "16:00",
-      "kind": ""
-    },
-    {
-      "label": "Race 3",
-      "date": "2026-09-13",
-      "time_msk": "11:45",
-      "kind": ""
-    },
-    {
-      "label": "Race 4",
-      "date": "2026-09-13",
-      "time_msk": "15:10",
-      "kind": ""
-    }
-  ],
-  "SMP_F4_RU_2026_6": [
-    {
-      "label": "Race 1",
-      "date": "2026-10-10",
-      "time_msk": "12:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-10-10",
-      "time_msk": "16:00",
-      "kind": ""
-    },
-    {
-      "label": "Race 3",
-      "date": "2026-10-11",
-      "time_msk": "11:45",
-      "kind": ""
-    },
-    {
-      "label": "Race 4",
-      "date": "2026-10-11",
-      "time_msk": "15:10",
       "kind": ""
     }
   ]

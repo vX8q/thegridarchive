@@ -41,7 +41,7 @@
       "car": "Oreca 07 - Gibson",
       "driver1": "Jamie Chadwick",
       "driver2": "Valerio Rinicella",
-      "driver3": "Laurents Hörr"
+      "driver3": "Laurents Horr"
     },
     {
       "number": "22",
@@ -49,7 +49,7 @@
       "team": "UNITED AUTOSPORTS",
       "car": "Oreca 07 - Gibson",
       "driver1": "Griffin Peebles",
-      "driver2": "Grégoire Saucy",
+      "driver2": "Gregoire Saucy",
       "driver3": "Benjamin Hanley"
     },
     {
@@ -129,8 +129,8 @@
       "class": "LMP2 Pro/Am",
       "team": "VECTOR SPORT",
       "car": "Oreca 07 - Gibson",
-      "driver1": "Jens Reno Møller",
-      "driver2": "Cem Bölükbaşi",
+      "driver1": "Jens Reno Moller",
+      "driver2": "Cem Bolukbasi",
       "driver3": "Lorenzo Fluxa"
     },
     {
@@ -148,7 +148,7 @@
       "team": "ROSSA RACING BY VIRAGE",
       "car": "Oreca 07 - Gibson",
       "driver1": "John Falb",
-      "driver2": "Manuel Espírito Santo",
+      "driver2": "Manuel Espirito Santo",
       "driver3": "Rik Koen"
     },
     {
@@ -201,7 +201,7 @@
       "class": "LMP2 Pro/Am",
       "team": "AF CORSE",
       "car": "Oreca 07 - Gibson",
-      "driver1": "François Perrodo",
+      "driver1": "Francois Perrodo",
       "driver2": "Matthieu Vaxiviere",
       "driver3": "Antonio Fuoco"
     },
@@ -220,7 +220,7 @@
       "team": "AO BY TF",
       "car": "Oreca 07 - Gibson",
       "driver1": "Pj Hyett",
-      "driver2": "Louis Delétraz",
+      "driver2": "Louis Deletraz",
       "driver3": "Dane Cameron"
     },
     {
@@ -237,7 +237,7 @@
       "class": "LMP3",
       "team": "RINALDI RACING",
       "car": "Ligier JS P325 - Toyota",
-      "driver1": "José Fernandes Cautela",
+      "driver1": "Jose Fernandes Cautela",
       "driver2": "Alvise Rodella",
       "driver3": "Mikkel Gaarde Pedersen"
     },
@@ -247,7 +247,7 @@
       "team": "TEAM VIRAGE",
       "car": "Ligier JS P325 - Toyota",
       "driver1": "Louis Stern",
-      "driver2": "Mattéo Quintarelli",
+      "driver2": "Matteo Quintarelli",
       "driver3": "Daniel Nogales"
     },
     {
@@ -283,7 +283,7 @@
       "team": "RACING SPIRIT OF LEMAN",
       "car": "Ligier JS P325 - Toyota",
       "driver1": "Ralph Meichtry",
-      "driver2": "Grégory De Sybourg",
+      "driver2": "Gregory De Sybourg",
       "driver3": "Lenny Ried"
     },
     {
@@ -381,7 +381,7 @@
       "class": "LMGT3",
       "team": "RACING SPIRIT OF LEMAN",
       "car": "Aston Martin Vantage AMR LMGT3",
-      "driver1": "Clément Mateu",
+      "driver1": "Clement Mateu",
       "driver2": "Marius Fossard",
       "driver3": "Valentin Hasse Clot"
     },
@@ -450,7 +450,7 @@
         "Course": "Circuit de Barcelona-Catalunya"
       },
       "headers": [
-        "Pos.",
+        "Pos",
         "Class",
         "Car",
         "No.",
@@ -1133,7 +1133,7 @@
         "Course": "Circuit de Barcelona-Catalunya"
       },
       "headers": [
-        "Pos.",
+        "Pos",
         "Class",
         "Car",
         "No.",
@@ -1648,7 +1648,7 @@
         "Course": "Circuit de Barcelona-Catalunya"
       },
       "headers": [
-        "Pos.",
+        "Pos",
         "Class",
         "Car",
         "No.",
@@ -2334,7 +2334,7 @@
         "Course": "Circuit de Barcelona-Catalunya"
       },
       "headers": [
-        "Pos.",
+        "Pos",
         "Class",
         "Car",
         "No.",
@@ -3015,7 +3015,7 @@
         "Start": "12:00"
       },
       "headers": [
-        "Pos.",
+        "Pos",
         "Class",
         "Car",
         "No.",

@@ -115,7 +115,7 @@
     },
     {
       "number": "27",
-      "driver": "Nico Hülkenberg",
+      "driver": "Nico Hulkenberg",
       "team": "Stake F1 Team Kick Sauber",
       "manufacturer": "Kick Sauber-Ferrari",
       "constructor": "Kick Sauber-Ferrari",
@@ -184,7 +184,7 @@
         {
           "title": "Practice 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -357,7 +357,7 @@
         {
           "title": "Practice 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -496,7 +496,7 @@
             [
               "17",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.349s",
               "29"
@@ -530,7 +530,7 @@
         {
           "title": "Practice 3",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -653,7 +653,7 @@
             [
               "15",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.001s",
               "19"
@@ -901,7 +901,7 @@
             [
               "19",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "1:26.574",
               "N/A",
@@ -955,7 +955,7 @@
             "Grid",
             "Laps Led",
             "Best Lap",
-            "Pts."
+            "Points"
           ],
           "rows": [
             [
@@ -985,7 +985,7 @@
             [
               "3",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "52",
               "+34.742",
@@ -1211,19 +1211,11 @@
       "rows": [
         [
           "VSC №1",
-          "1–4"
-        ],
-        [
-          "VSC №2",
-          "6–7"
+          "2–3"
         ],
         [
           "SC №1",
-          "14–17"
-        ],
-        [
-          "SC №2",
-          "18–21"
+          "14–21"
         ]
       ]
     },
@@ -1259,7 +1251,7 @@
           "52"
         ],
         [
-          "Hülkenberg",
+          "Hulkenberg",
           "I 1–9",
           "I 10–42",
           "M 43–52",

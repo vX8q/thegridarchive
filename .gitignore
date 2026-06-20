@@ -48,6 +48,11 @@ data/**/*.sqlite-*
 data/live.json
 data/cache/
 
+# Runtime live state / local fetch scratch (not data/live.json)
+/live.json
+/tmp_nascar_feed.json
+/tmp_series_feed.json
+
 # Local server logs
 server_err.log
 server_out.log

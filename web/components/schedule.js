@@ -105,55 +105,12 @@
     return out;
   }
 
-  /**
-   * SMP F4 Russia: expands weekend into separate races (Full Schedule + Next Events).
-   * Last results stays one event per weekend.
-   */
-  function expandSmpF4RuForFullSchedule(events) {
-    if (!Array.isArray(events) || events.length === 0) return events;
-    var raceMap = window.TGA_MULTI_RACE_SESSIONS
-      || (window.TGA_STATIC_SCHEDULES && window.TGA_STATIC_SCHEDULES.smpF4RuScheduleRaces)
-      || {};
-    var out = [];
-    events.forEach(function (e) {
-      if (scheduleEventSeriesUpper(e) !== 'SMP_F4_RU') {
-        out.push(e);
-        return;
-      }
-      var idU = String(e.id || '').toUpperCase();
-      var races = raceMap[idU];
-      if (!Array.isArray(races) || races.length === 0) {
-        out.push(e);
-        return;
-      }
-      var baseName = String(e.name || '').replace(/\s*\(Race\s+\d+\)\s*/gi, ' ').replace(/\s+/g, ' ').trim();
-      races.forEach(function (r) {
-        var raceNum = r.race != null ? r.race : (String(r.label || '').match(/(\d+)/) || [])[1];
-        var ds = String(r.date || '').slice(0, 10);
-        var timeMsk = String(r.time_msk || '').trim();
-        var row = Object.assign({}, e, {
-          name: baseName + (raceNum ? ' (Race ' + raceNum + ')' : (r.label ? ' (' + r.label + ')' : '')),
-          start_date: ds,
-          end_date: ds,
-          date: ds,
-          time_est: timeMsk,
-          time_msk: timeMsk,
-          _scheduleRaceNum: raceNum
-        });
-        delete row._raceUtcMs;
-        delete row._scheduleDate;
-        out.push(row);
-      });
-    });
-    return out;
-  }
-
-  /** Per-race rows (FREC, DTM, F4 IT, GTWCE Sprint, F1 sprint, SMP F4, …) + UTC times.  */
+  /** Per-race rows (FREC, DTM, F4 IT, GTWCE Sprint, F1 sprint, …) + UTC times.  */
   function prepareScheduleSessionEvents(events) {
     if (!Array.isArray(events) || events.length === 0) return events;
     var expanded = (window.TGA && window.TGA.expandFullScheduleEvents)
       ? window.TGA.expandFullScheduleEvents(events)
-      : expandSmpF4RuForFullSchedule(events);
+      : events;
     var normalize = window.TGA.normalizeScheduleEvent;
     if (!normalize) return expanded;
     return expanded.map(function (e) {
@@ -325,7 +282,6 @@
   window.TGA.buildScheduleHTML = buildScheduleHTML;
   window.TGA.getScheduleTimeLabel = getScheduleTimeLabel;
   window.TGA.collapseSuperFormulaScheduleEvents = collapseSuperFormulaScheduleEvents;
-  window.TGA.expandSmpF4RuForFullSchedule = expandSmpF4RuForFullSchedule;
   window.TGA.prepareScheduleSessionEvents = prepareScheduleSessionEvents;
   window.TGA.superFormulaVenueLine = superFormulaVenueLine;
 })();

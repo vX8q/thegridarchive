@@ -80,7 +80,7 @@
     },
     {
       "number": "27",
-      "driver": "Nico Hülkenberg",
+      "driver": "Nico Hulkenberg",
       "team": "Audi Revolut F1 Team",
       "constructor": "Audi",
       "manufacturer": "R26",
@@ -88,7 +88,7 @@
     },
     {
       "number": "11",
-      "driver": "Sergio Pérez",
+      "driver": "Sergio Perez",
       "team": "Cadillac Formula 1 Team",
       "constructor": "Cadillac-Ferrari",
       "manufacturer": "MAC-26",
@@ -213,7 +213,7 @@
             "Length": "60 mins"
           },
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -336,7 +336,7 @@
             [
               "15",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Audi",
               "+2.285s",
               "33"
@@ -360,7 +360,7 @@
             [
               "18",
               "11",
-              "Sergio Pérez",
+              "Sergio Perez",
               "Cadillac",
               "+2.737s",
               "25"
@@ -414,7 +414,7 @@
             "Length": ""
           },
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Constructor",
@@ -537,7 +537,7 @@
             [
               "12",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Audi",
               "1:30.270",
               "1:30.019",
@@ -597,7 +597,7 @@
             [
               "18",
               "11",
-              "Sergio Pérez",
+              "Sergio Perez",
               "Cadillac-Ferrari",
               "1:31.255",
               "N/A",
@@ -657,7 +657,7 @@
             "Length": ""
           },
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Constructor",
@@ -760,7 +760,7 @@
             [
               "10",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Audi",
               "1:29.645",
               "1:29.439",
@@ -860,7 +860,7 @@
             [
               "20",
               "11",
-              "Sergio Pérez",
+              "Sergio Perez",
               "Cadillac-Ferrari",
               "1:31.967",
               "N/A",
@@ -896,7 +896,7 @@
         {
           "title": "Sprint classification",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Constructor",
@@ -905,7 +905,7 @@
             "Grid",
             "Laps Led",
             "Best Lap",
-            "Pts."
+            "Points"
           ],
           "rows": [
             [
@@ -1091,7 +1091,7 @@
             [
               "16",
               "11",
-              "Sergio Pérez",
+              "Sergio Perez",
               "Cadillac-Ferrari",
               "19",
               "+1:16.691",
@@ -1139,7 +1139,7 @@
             [
               "DNS",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Audi",
               "0",
               "Engine",
@@ -1436,7 +1436,7 @@
         [
           "16",
           "11",
-          "Sergio Pérez",
+          "Sergio Perez",
           "Cadillac-Ferrari",
           "56",
           "+1 lap",
@@ -1472,7 +1472,7 @@
         [
           "Ret",
           "27",
-          "Nico Hülkenberg",
+          "Nico Hulkenberg",
           "Audi",
           "7",
           "Mechanical",
@@ -1668,7 +1668,7 @@
           "56"
         ],
         [
-          "Pérez",
+          "Perez",
           "M 1–28",
           "H 29–56",
           "",
@@ -1695,7 +1695,7 @@
           "55"
         ],
         [
-          "Hülkenberg",
+          "Hulkenberg",
           "M 1–1",
           "M 2–7",
           "",

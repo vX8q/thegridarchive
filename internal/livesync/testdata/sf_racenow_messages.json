@@ -1,0 +1,9 @@
+[
+  {"type":"S","CATEGORY":"SUPER FORMULA","DESCR_J":"Race","RACE_TYPE":"R","CLASS_LIST":"SF"},
+  {"type":"F","flag":"G","togo":"15"},
+  {"type":"0","rows":[
+    {"CARNO":"16","DRIVER_E":"Ren Sato","TEAM_E":"Team Mugen","LAPS":12,"TOTAL_TIME":1456.321,"START_POS":2,"RUN_FLAG":"1","MAKER":"honda"},
+    {"CARNO":"1","DRIVER_E":"Naoki Yamamoto","TEAM_E":"Team Kunimitsu","LAPS":12,"TOTAL_TIME":1454.100,"START_POS":1,"RUN_FLAG":"1","MAKER":"honda"},
+    {"CARNO":"3","DRIVER_E":"Kenta Yamamoto","TEAM_E":"Kondo Racing","LAPS":11,"TOTAL_TIME":1340.500,"START_POS":3,"RUN_FLAG":"1","MAKER":"toyota"}
+  ]}
+]

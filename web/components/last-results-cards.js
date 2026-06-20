@@ -24,6 +24,11 @@
       return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
     }
 
+    function pickIsoDate(s) {
+      var x = String(s || '').slice(0, 10);
+      return isIsoYMD(x) ? x : '';
+    }
+
     /** Last Results card: show only while "today" is not later than event_end + 7 calendar days.  */
     var LAST_RESULTS_DAYS_AFTER_END = 7;
     function isWithinLastResultsWindowByEndDate(endStr) {
@@ -42,58 +47,18 @@
 
     /**
      * Estimated UTC moment after which race is reasonably finished (start + typical duration).
-     * Needed to show Last Results same calendar day after finish, even without JSON tables.
+     * Uses the same UTC start as Full Schedule / Next Race (getEventRaceUtcMs).
      */
     function estimateRaceFinishedUtcMs(ev) {
-      if (!ev) return null;
-      var parseTime = window.TGA && window.TGA.parseTimeStringToParts;
-      var estToUtc = window.TGA && window.TGA.estToUtcMs;
-      if (!parseTime || !estToUtc) return null;
-      var ds = (ev.start_date || ev.date || '').slice(0, 10);
-      if (!isIsoYMD(ds)) return null;
-      var y = parseInt(ds.slice(0, 4), 10);
-      var m = parseInt(ds.slice(5, 7), 10);
-      var d = parseInt(ds.slice(8, 10), 10);
-      var sid = String(ev._seriesId || ev.series_id || '').toUpperCase();
-      var startUtc;
-      if (sid === 'F1' || sid === 'F2' || sid === 'F3') {
-        var mskRaw = String(ev.time_msk || ev.time_est || '').trim();
-        var pm = parseTime(mskRaw);
-        if (!pm) return null;
-        startUtc = Date.UTC(y, m - 1, d, pm.hour - 3, pm.minute || 0);
-      } else {
-        var estRaw = String(ev.time_est || '').trim();
-        var pe = parseTime(estRaw);
-        if (!pe) return null;
-        startUtc = estToUtc(y, m, d, pe.hour, pe.minute || 0);
-      }
-      var hours = 4;
-      if (sid === 'NASCAR_CUP' || sid === 'NOAPS' || sid === 'NASCAR_TRUCK' || sid === 'ARCA' || sid === 'NASCAR_MODIFIED') {
-        hours = 4.5;
-      } else if (sid === 'INDYCAR') {
-        hours = 3.5;
-      } else if (sid === 'F1') {
-        hours = 3.5;
-      } else if (sid === 'F2' || sid === 'F3') {
-        hours = 2.5;
-      } else if (sid === 'SUPERCARS' || sid === 'SUPER_FORMULA' || sid === 'SUPER_GT' || sid === 'DTM') {
-        hours = 3.5;
-      } else if (sid === 'WEC' || sid === 'ELMS') {
-        hours = 9;
-      } else if (sid === 'IMSA') {
-        var nm = String(ev.name || '').toLowerCase();
-        // IMSA has both sprints (~100–160 minutes) and endurance.
-        // Use rough heuristic from event name.
-        if (nm.indexOf('rolex') >= 0 || /\b24\b/.test(nm)) hours = 26;
-        else if (nm.indexOf('12 hour') >= 0 || nm.indexOf('twelve') >= 0) hours = 13;
-        else if (nm.indexOf('10 hour') >= 0 || nm.indexOf('ten') >= 0 || nm.indexOf('petit le mans') >= 0) hours = 11;
-        else if (nm.indexOf('six hours') >= 0 || nm.indexOf('6 hour') >= 0) hours = 7;
-        else if (nm.indexOf('long beach') >= 0) hours = 2.25;
-        else if (nm.indexOf('detroit') >= 0) hours = 2.25;
-        else if (nm.indexOf('monterey') >= 0 || nm.indexOf('laguna seca') >= 0) hours = 2.5;
-        else hours = 3.5;
-      }
-      return startUtc + hours * 3600000;
+      return window.TGA.estimateRaceFinishedUtcMs
+        ? window.TGA.estimateRaceFinishedUtcMs(ev)
+        : null;
+    }
+
+    function isPastForLastResults(ev) {
+      return window.TGA.isPastForLastResultsEvent
+        ? window.TGA.isPastForLastResultsEvent(ev)
+        : false;
     }
 
     var allPast = [];
@@ -101,14 +66,8 @@
     (Array.isArray(allEvents) ? allEvents : []).forEach(function (e) {
       if (!e || !e.id) return;
       var dateStr = (e.end_date || e.start_date || e.date || '').slice(0, 10);
-      if (!isIsoYMD(dateStr) || dateStr > todayISO) return;
-      // Calendar "today" events not treated as past until
-      // estimated finish moment passed — otherwise last schedule group becomes
-      // today's cluster (still no results), not past weekend.
-      if (dateStr === todayISO) {
-        var finMsToday = estimateRaceFinishedUtcMs(e);
-        if (finMsToday == null || Date.now() < finMsToday) return;
-      }
+      if (!isIsoYMD(dateStr)) return;
+      if (!isPastForLastResults(e)) return;
 
       allPast.push({ event: e, dateStr: dateStr });
 
@@ -215,18 +174,7 @@
     }
 
     // Fetch event details for each recent event to get race_results winner.
-    var fetchJSON = window.TGA && window.TGA.fetchJSON;
-    if (!fetchJSON) {
-      fetchJSON = function (url) {
-        return fetch(url).then(function (r) {
-          if (!r.ok) {
-            var err = new Error(r.status === 404 ? 'Not found' : 'HTTP ' + r.status);
-            throw err;
-          }
-          return r.json();
-        });
-      };
-    }
+    var API = window.TGA && window.TGA.API;
 
     var promises = recentUnique.map(function (item) {
       var e = item.event;
@@ -235,14 +183,13 @@
       // Do not request non-detailed events here: this avoids noisy 404s
       // for schedule-only ids while still showing a pending card.
       if (e.has_detail === false) {
-        // Today and earlier — show card with Results pending; drop future dates only.
-        if (item.dateStr && item.dateStr <= todayISO) {
+        if (isPastForLastResults(e)) {
           return Promise.resolve({
             event: e,
             dateStr: item.dateStr,
             winners: [],
-            rangeStart: item.dateStr,
-            rangeEnd: item.dateStr,
+            rangeStart: (e.start_date || e.date || item.dateStr || '').slice(0, 10),
+            rangeEnd: (e.end_date || e.start_date || item.dateStr || '').slice(0, 10),
             isF1SprintWeekend: false
           });
         }
@@ -250,7 +197,10 @@
       }
       var apiEventId = eventId; // keep as-is; backend normalises case.
 
-      return fetchJSON('/api/events/' + encodeURIComponent(apiEventId) + '?_=' + Date.now())
+      return (API ? API.getEvent(apiEventId) : fetch('/api/events/' + encodeURIComponent(apiEventId)).then(function (r) {
+          if (!r.ok) throw new Error(r.status === 404 ? 'Not found' : 'HTTP ' + r.status);
+          return r.json();
+        }))
         .then(function (d) {
           if (!d || typeof d !== 'object') return null;
           if (d.data && typeof d.data === 'object') d = d.data;
@@ -315,11 +265,18 @@
             return false;
           }
 
-          // Event date range: default — date from schedule,
-          // but if sessions have meta.Date (Thu 05 Mar 2026, Sun 08 Mar 2026),
-          // expand to min/max of those dates.
-          var evStart = item.dateStr || '';
-          var evEnd = item.dateStr || '';
+          // Event date range: prefer the event's own start/end (schedule),
+          // not cross-series weekend group bounds from buildScheduleGroups.
+          var evStart = '';
+          var evEnd = '';
+          var scheduleStart = '';
+          var scheduleEnd = '';
+          scheduleStart = pickIsoDate(e.start_date);
+          scheduleEnd = pickIsoDate(e.end_date);
+          evStart = scheduleStart || pickIsoDate(item.weekendStart) || pickIsoDate(item.dateStr);
+          evEnd = scheduleEnd || pickIsoDate(e.start_date) || pickIsoDate(item.weekendEnd) || pickIsoDate(item.dateStr);
+          if (evStart && !evEnd) evEnd = evStart;
+          if (evEnd && !evStart) evStart = evEnd;
 
           function parseMetaDateToISO(str) {
             if (!str || typeof str !== 'string') return null;
@@ -339,6 +296,7 @@
           }
 
           function updateRangeFromMetaDate(metaDate) {
+            if (scheduleStart && scheduleEnd) return;
             var iso = parseMetaDateToISO(metaDate);
             if (!iso) return;
             if (!evStart || iso < evStart) evStart = iso;
@@ -492,7 +450,7 @@
             extractWinnerFromTable(finalStage, label || '');
           }
 
-          // WEC: first rows per Hypercar / LMGT3 class in overall table (order = overall finish).
+          // WEC: class winners from overall race table (Hypercar, LMP2 at Le Mans, LMGT3).
           // On card — class and team only (no driver names): Team column, not Drivers.
           function extractWecClassWinnersFromRaceResults(table) {
             if (!table || !Array.isArray(table.headers) || !Array.isArray(table.rows) || table.rows.length === 0) return;
@@ -504,19 +462,30 @@
             var posIdx = hLower.indexOf('pos');
             if (posIdx < 0) posIdx = hLower.indexOf('pos.');
             if (classIdx < 0 || teamIdx < 0) return;
-            var wantOrder = ['hypercar', 'lmgt3'];
+            var wantOrder = ['hypercar', 'lmp2', 'lmgt3'];
+            var labelByKey = { hypercar: 'Hypercar', lmp2: 'LMP2', lmgt3: 'LMGT3' };
             var seen = {};
+
+            function wecClassKey(clsRaw) {
+              if (clsRaw === 'hypercar' || clsRaw === 'lmgt3') return clsRaw;
+              if (clsRaw === 'lmp2') return 'lmp2';
+              return '';
+            }
+
             (table.rows || []).forEach(function (row) {
               if (!row || !Array.isArray(row)) return;
               var clsRaw = String(row[classIdx] || '').trim().toLowerCase();
-              if (wantOrder.indexOf(clsRaw) < 0 || seen[clsRaw]) return;
+              var key = wecClassKey(clsRaw);
+              if (!key || seen[key]) return;
               var posCell = String((posIdx >= 0 && posIdx < row.length ? row[posIdx] : row[0]) || '').trim().toUpperCase();
-              if (posCell === 'RET' || posCell.indexOf('RET') === 0) return;
-              seen[clsRaw] = true;
+              if (posCell === 'RET' || posCell.indexOf('RET') === 0 || posCell === 'DNF') return;
               var name = String(row[teamIdx] || '').trim();
               var car = (noIdx >= 0 && noIdx < row.length) ? String(row[noIdx] || '').trim() : '';
-              var label = clsRaw === 'lmgt3' ? 'LMGT3' : 'Hypercar';
-              winners.push({ name: name, car: car, label: label });
+              seen[key] = { name: name, car: car, label: labelByKey[key] || key };
+            });
+
+            wantOrder.forEach(function (key) {
+              if (seen[key]) winners.push(seen[key]);
             });
           }
 
@@ -881,14 +850,14 @@
           };
         })
         .catch(function () {
-          if (item.dateStr && item.dateStr <= todayISO) {
+          if (isPastForLastResults(e)) {
             return {
               event: e,
               dateStr: item.dateStr,
               winners: [],
               raceWasCancelled: false,
-              rangeStart: item.dateStr,
-              rangeEnd: item.dateStr,
+              rangeStart: (e.start_date || e.date || item.dateStr || '').slice(0, 10),
+              rangeEnd: (e.end_date || e.start_date || item.dateStr || '').slice(0, 10),
               isF1SprintWeekend: false
             };
           }
@@ -1066,18 +1035,15 @@
 
       // Do not show calendar-future. Past/today — only if since event end date
       // at most 7 days passed (otherwise card "sticks" in feed).
-      // "Today": has winners OR schedule past estimated finish (start + duration).
+      // Show when finished (start + duration) or winners already loaded.
       cards = cards.filter(function (card) {
         var e = card.event || {};
         var endIso = (card.rangeEnd || e.end_date || e.start_date || card.dateStr || '').slice(0, 10);
         if (!isIsoYMD(endIso)) return false;
-        if (endIso > todayISO) return false;
         if (!isWithinLastResultsWindowByEndDate(endIso)) return false;
-        if (endIso < todayISO) return true;
         var w = card.winners;
         if (w && w.length > 0) return true;
-        var finMs = estimateRaceFinishedUtcMs(card.event);
-        return finMs != null && Date.now() >= finMs;
+        return isPastForLastResults(e);
       });
 
       if (cards.length === 0) {
@@ -1093,9 +1059,9 @@
         '<div class="lrc-cards">' +
         cards.map(function (card, idx) {
           var e = card.event;
-          // For each card show its own event date range.
-          var startIso = (card.rangeStart || e.start_date || e.date || card.dateStr || '').slice(0, 10);
-          var endIso = (card.rangeEnd || e.end_date || startIso || '').slice(0, 10);
+          // For each card show its own event date range (not cross-series group bounds).
+          var startIso = pickIsoDate(card.rangeStart) || pickIsoDate(e.start_date) || pickIsoDate(card.dateStr);
+          var endIso = pickIsoDate(card.rangeEnd) || pickIsoDate(e.end_date) || startIso;
           var rangeStart = startIso || card.dateStr || '';
           var rangeEnd = endIso || rangeStart;
           var name = e.name || '—';
@@ -1285,6 +1251,27 @@
           )) {
             extraClass += ' lrc-card--circuit-de-la-sarthe';
           }
+          if (trackKey.indexOf('road america') >= 0) {
+            extraClass += ' lrc-card--road-america';
+          }
+          if (trackKey.indexOf('white mountain') >= 0) {
+            extraClass += ' lrc-card--white-mountain-motorsports-park';
+          }
+          if (trackKey.indexOf('berlin raceway') >= 0) {
+            extraClass += ' lrc-card--berlin-raceway';
+          }
+          if (trackKey.indexOf('lausitzring') >= 0 || trackKey.indexOf('lausitz') >= 0) {
+            extraClass += ' lrc-card--lausitzring';
+          }
+          if (trackKey.indexOf('hidden valley') >= 0) {
+            extraClass += ' lrc-card--hidden-valley-raceway';
+          }
+          if (trackKey.indexOf('sepang') >= 0) {
+            extraClass += ' lrc-card--sepang';
+          }
+          if (trackKey.indexOf('coronado') >= 0) {
+            extraClass += ' lrc-card--coronado-street';
+          }
           if (eventNameLc.indexOf('taupo') >= 0 || eventNameLc.indexOf('taupō') >= 0) {
             extraClass += ' lrc-card--taupo';
           }
@@ -1414,6 +1401,27 @@
           if (eventNameLc.indexOf('24 hours of le mans') >= 0 || eventNameLc.indexOf('hours of le mans') >= 0) {
             extraClass += ' lrc-card--circuit-de-la-sarthe';
           }
+          if (eventNameLc.indexOf('road america') >= 0) {
+            extraClass += ' lrc-card--road-america';
+          }
+          if (eventNameLc.indexOf('white mountain') >= 0) {
+            extraClass += ' lrc-card--white-mountain-motorsports-park';
+          }
+          if (eventNameLc.indexOf('berlin raceway') >= 0) {
+            extraClass += ' lrc-card--berlin-raceway';
+          }
+          if (eventNameLc.indexOf('lausitzring') >= 0 || eventNameLc.indexOf('lausitz') >= 0) {
+            extraClass += ' lrc-card--lausitzring';
+          }
+          if (eventNameLc.indexOf('hidden valley') >= 0) {
+            extraClass += ' lrc-card--hidden-valley-raceway';
+          }
+          if (eventNameLc.indexOf('sepang') >= 0) {
+            extraClass += ' lrc-card--sepang';
+          }
+          if (eventNameLc.indexOf('coronado') >= 0) {
+            extraClass += ' lrc-card--coronado-street';
+          }
           if (trackKey.indexOf('pocono raceway') >= 0) {
             extraClass += ' lrc-card--pocono';
           }
@@ -1532,12 +1540,17 @@
             } else if (eventSlug.indexOf('kazan') >= 0) {
               extraClass += ' lrc-card--kazan-ring';
             } else if (
-              eventSlug.indexOf('le-mans') >= 0 &&
-              eventSlug.indexOf('lone-star') < 0 &&
-              eventSlug.indexOf('cota') < 0
+              eventSlug === 'wec-2026-3' ||
+              (eventSlug.indexOf('le-mans') >= 0 &&
+                eventSlug.indexOf('lone-star') < 0 &&
+                eventSlug.indexOf('cota') < 0)
             ) {
               extraClass += ' lrc-card--circuit-de-la-sarthe';
             }
+          }
+
+          if (extraClass) {
+            extraClass += ' race-card-photo';
           }
 
           // Extra classes by series (for F2/F3 winner styling).
@@ -1576,14 +1589,14 @@
                 return esc(line);
               }).join('<br>');
             } else if (seriesIdUpper === 'WEC') {
-              // WEC: "class — crew" (Hypercar / LMGT3).
+              // WEC: "class — crew" (Hypercar / LMP2 / LMGT3).
               winnerHtml = list.slice(0, 4).map(function (w) {
                 var crew = w.name || '';
                 if (w.car) crew = '#' + w.car + ' ' + crew;
                 var label = (w.label || '').trim();
                 var line = label ? label + ' — ' + crew : crew;
-                return esc(line);
-              }).join('<br>');
+                return '<span class="lrc-winner-line">' + esc(line) + '</span>';
+              }).join('');
             } else if (seriesIdUpper === 'ELMS') {
               // ELMS: class winners — «Label - Team #no» (.lrc-winner-line — display:block).
               winnerHtml = list.slice(0, 4).map(function (w) {

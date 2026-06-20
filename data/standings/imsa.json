@@ -59,7 +59,7 @@
         {
           "pos": 3,
           "car": "6",
-          "driver": "Matt Campbell / Kévin Estre / Laurens Vanthoor / Kevin Estre",
+          "driver": "Matt Campbell / Kevin Estre / Laurens Vanthoor",
           "team": "Porsche Penske Motorsport",
           "manufacturer": "Porsche 963",
           "races": {
@@ -79,7 +79,7 @@
         {
           "pos": 4,
           "car": "93",
-          "driver": "Kakunoshin Ohta / Álex Palou / Nick Yelloly / Renger van der Zande",
+          "driver": "Kakunoshin Ohta / alex Palou / Nick Yelloly / Renger van der Zande",
           "team": "Acura Meyer Shank Racing with Curb-Agajanian",
           "manufacturer": "Acura ARX-06",
           "races": {
@@ -119,7 +119,7 @@
         {
           "pos": 6,
           "car": "24",
-          "driver": "Robin Frijns / René Rast / Sheldon van der Linde / Dries Vanthoor / Rene Rast",
+          "driver": "Robin Frijns / Rene Rast / Sheldon van der Linde / Dries Vanthoor",
           "team": "BMW M Team WRT",
           "manufacturer": "BMW M Hybrid V8",
           "races": {
@@ -159,7 +159,7 @@
         {
           "pos": 8,
           "car": "40",
-          "driver": "Louis Delétraz / Colton Herta / Jordan Taylor / Louis Deletraz",
+          "driver": "Louis Deletraz / Colton Herta / Jordan Taylor",
           "team": "Cadillac Wayne Taylor Racing",
           "manufacturer": "Cadillac V-Series.R",
           "races": {
@@ -199,7 +199,7 @@
         {
           "pos": 10,
           "car": "23",
-          "driver": "Roman De Angelis / Ross Gunn / Alex Riberas / Marco Sørensen / Marco Sorensen",
+          "driver": "Roman De Angelis / Ross Gunn / Alex Riberas / Marco Sorensen",
           "team": "Aston Martin THOR Team",
           "manufacturer": "Aston Martin Valkyrie",
           "races": {
@@ -245,7 +245,7 @@
         {
           "pos": 1,
           "car": "22",
-          "driver": "Paul di Resta / Dan Goldburg / Rasmus Lindh / Grégoire Saucy / Gregoire Saucy",
+          "driver": "Paul di Resta / Dan Goldburg / Rasmus Lindh / Gregoire Saucy",
           "team": "United Autosports USA",
           "manufacturer": "Oreca 07",
           "races": {
@@ -294,7 +294,7 @@
         {
           "pos": 4,
           "car": "43",
-          "driver": "Jeremy Clarke / Tom Dillmann / António Félix da Costa / Bijoy Garg / Antonio Felix da Costa",
+          "driver": "Jeremy Clarke / Tom Dillmann / Antonio Felix da Costa / Bijoy Garg",
           "team": "Inter Europol Competition",
           "manufacturer": "Oreca 07",
           "races": {
@@ -310,7 +310,7 @@
         {
           "pos": 5,
           "car": "8",
-          "driver": "Sebastián Álvarez / Sébastien Bourdais / John Farano / Kyffin Simpson / Tristan Vautier / Sebastian Alvarez / Sebastien Bourdais",
+          "driver": "Sebastian alvarez / Sebastien Bourdais / John Farano / Kyffin Simpson / Tristan Vautier",
           "team": "Tower Motorsports",
           "manufacturer": "Oreca 07",
           "races": {
@@ -390,7 +390,7 @@
         {
           "pos": 10,
           "car": "11",
-          "driver": "Mathias Beche / David Heinemeier Hansson / Tobias Lütke / Charles Milesi / Tobias Lutke",
+          "driver": "Mathias Beche / David Heinemeier Hansson / Tobias Lutke / Charles Milesi",
           "team": "TDS Racing",
           "manufacturer": "Oreca 07",
           "races": {
@@ -406,7 +406,7 @@
         {
           "pos": 11,
           "car": "73",
-          "driver": "Chris Cumming / Manuel Espírito Santo / Enzo Fittipaldi / Pietro Fittipaldi / Manuel Espirito Santo",
+          "driver": "Chris Cumming / Manuel Espirito Santo / Enzo Fittipaldi / Pietro Fittipaldi",
           "team": "Pratt Miller Motorsports",
           "manufacturer": "Oreca 07",
           "races": {
@@ -422,7 +422,7 @@
         {
           "pos": 12,
           "car": "343",
-          "driver": "Nick Cassidy / Georgios Kolovos / Nolan Siegel / Jakub Śmiechowski / Jakub Smiechowski",
+          "driver": "Nick Cassidy / Georgios Kolovos / Nolan Siegel / Jakub smiechowski",
           "team": "Inter Europol Competition",
           "manufacturer": "Oreca 07",
           "races": {
@@ -436,7 +436,7 @@
         {
           "pos": 13,
           "car": "83",
-          "driver": "Dylan Murry / Nicklas Nielsen / François Perrodo / Matthieu Vaxivière / Francois Perrodo / Matthieu Vaxiviere",
+          "driver": "Dylan Murry / Nicklas Nielsen / Francois Perrodo / Matthieu Vaxiviere",
           "team": "AF Corse USA",
           "manufacturer": "Oreca 07",
           "races": {
@@ -524,7 +524,7 @@
         {
           "pos": 4,
           "car": "65",
-          "driver": "Christopher Mies / Sebastian Priaulx / Frédéric Vervisch / Frederic Vervisch",
+          "driver": "Christopher Mies / Sebastian Priaulx / Frederic Vervisch",
           "team": "Ford Racing",
           "manufacturer": "Ford Mustang GT3 Evo",
           "races": {
@@ -542,7 +542,7 @@
         {
           "pos": 5,
           "car": "3",
-          "driver": "Antonio García / Marvin Kirchhöfer / Alexander Sims / Antonio Garcia / Marvin Kirchhofer",
+          "driver": "Antonio Garcia / Marvin Kirchhofer / Alexander Sims",
           "team": "Corvette Racing by Pratt Miller Motorsports",
           "manufacturer": "Chevrolet Corvette Z06 GT3.R",
           "races": {
@@ -632,7 +632,7 @@
         {
           "pos": 10,
           "car": "911",
-          "driver": "Klaus Bachler / Ricardo Feller / Ayhancan Güven / Thomas Preining / Ayhancan Guven",
+          "driver": "Klaus Bachler / Ricardo Feller / Ayhancan Guven / Thomas Preining",
           "team": "Manthey Racing",
           "manufacturer": "Porsche 911 GT3 R (992.2)",
           "races": {
@@ -715,7 +715,7 @@
         {
           "pos": 15,
           "car": "69",
-          "driver": "Anthony Bartone / Maximilian Götz / Jules Gounon / Fabian Schiller / Maximilian Goetz",
+          "driver": "Anthony Bartone / Maximilian Gotz / Jules Gounon / Fabian Schiller / Maximilian Goetz",
           "team": "Bartone Bros with GetSpeed",
           "manufacturer": "Mercedes-AMG GT3 Evo",
           "races": {
@@ -916,7 +916,7 @@
         {
           "pos": 10,
           "car": "19",
-          "driver": "Sébastien Baud / Carl Bennett / Valentin Hasse-Clot / Rory van der Steur / Sebastien Baud",
+          "driver": "Sebastien Baud / Carl Bennett / Valentin Hasse-Clot / Rory van der Steur",
           "team": "van der Steur Racing",
           "manufacturer": "Aston Martin Vantage AMR GT3 Evo",
           "races": {
@@ -976,7 +976,7 @@
         {
           "pos": 13,
           "car": "81",
-          "driver": "Giacomo Altoè / Matteo Cairoli / Henrik Hedman / Casper Stevenson / Giacomo Altoe",
+          "driver": "Giacomo Altoe / Matteo Cairoli / Henrik Hedman / Casper Stevenson",
           "team": "DragonSpeed",
           "manufacturer": "Chevrolet Corvette Z06 GT3.R",
           "races": {
@@ -996,7 +996,7 @@
         {
           "pos": 14,
           "car": "36",
-          "driver": "Charlie Eastwood / Mason Filippi / Scott McLaughlin / Salih Yoluç / Salih Yoluc / Robert Wickens",
+          "driver": "Charlie Eastwood / Mason Filippi / Scott McLaughlin / Salih Yoluc / Robert Wickens",
           "team": "DXDT Racing",
           "manufacturer": "Chevrolet Corvette Z06 GT3.R",
           "races": {
@@ -1068,7 +1068,7 @@
         {
           "pos": 18,
           "car": "28",
-          "driver": "Jan Heylen / Dillon Machavern / Sven Müller / Eric Zitza / Spencer Pumpelly / Sven Muller",
+          "driver": "Jan Heylen / Dillon Machavern / Sven Muller / Eric Zitza / Spencer Pumpelly",
           "team": "RS1",
           "manufacturer": "Porsche 911 GT3 R (992.2)",
           "races": {

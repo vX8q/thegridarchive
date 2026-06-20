@@ -100,7 +100,7 @@
     },
     {
       "number": "27",
-      "driver": "Nico Hülkenberg",
+      "driver": "Nico Hulkenberg",
       "team": "Stake F1 Team Kick Sauber",
       "manufacturer": "Kick Sauber-Ferrari",
       "constructor": "Kick Sauber-Ferrari",
@@ -183,7 +183,7 @@
         {
           "title": "Practice 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -282,7 +282,7 @@
             [
               "12",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.062s",
               "26"
@@ -356,7 +356,7 @@
         {
           "title": "Practice 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -423,7 +423,7 @@
             [
               "8",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+0.363s",
               "27"
@@ -529,7 +529,7 @@
         {
           "title": "Practice 3",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -620,7 +620,7 @@
             [
               "11",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+0.406s",
               "18"
@@ -829,7 +829,7 @@
             [
               "12",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "1:19.777",
               "1:19.498",
@@ -935,7 +935,7 @@
             "Grid",
             "Laps Led",
             "Best Lap",
-            "Pts."
+            "Points"
           ],
           "rows": [
             [
@@ -1169,7 +1169,7 @@
             [
               "DNS",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "0",
               "Hydraulics",
@@ -1403,7 +1403,7 @@
           "24"
         ],
         [
-          "Hülkenberg",
+          "Hulkenberg",
           "M 0–0",
           "",
           "",

@@ -91,8 +91,9 @@ func main() {
 	// Context to stop background goroutines on shutdown
 	appCtx, cancelApp := context.WithCancel(context.Background())
 	defer cancelApp()
-	// Background livesync: NASCAR + OpenF1 every 2 minutes
-	go livesync.StartBackground(appCtx, dataDir, 2*time.Minute)
+	const livesyncInterval = 2 * time.Minute
+	slog.Info("livesync enabled", "interval", livesyncInterval.String(), "sources", "nascar,openf1,wec,super_formula")
+	go livesync.StartBackground(appCtx, dataDir, livesyncInterval)
 
 	rateLimiter := newRateLimiter(cfg.RateLimitRPS, 2*int(cfg.RateLimitRPS)+1)
 	if rateLimiter != nil {
@@ -113,7 +114,7 @@ func main() {
 		http.StripPrefix("/web/", fs).ServeHTTP(w, r)
 	}))
 	http.HandleFunc("/favicon.ico", staticWrap(func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "/web/favicon.svg", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/web/images/favicon.svg", http.StatusMovedPermanently)
 	}))
 
 	indexPath := filepath.Join(webDir, "index.html")
@@ -132,7 +133,7 @@ func main() {
 			http.Redirect(w, r, "/season/f1-"+config.CurrentSeason, http.StatusMovedPermanently)
 			return
 		}
-		if p == "/" || p == "/schedule" || strings.HasPrefix(p, "/search") || strings.HasPrefix(p, "/series") || strings.HasPrefix(p, "/season") || strings.HasPrefix(p, "/track") || strings.HasPrefix(p, "/driver") || strings.HasPrefix(p, "/team") || strings.HasPrefix(p, "/crew-chief") {
+		if p == "/" || p == "/schedule" || p == "/live" || strings.HasPrefix(p, "/search") || strings.HasPrefix(p, "/series") || strings.HasPrefix(p, "/season") || strings.HasPrefix(p, "/track") || strings.HasPrefix(p, "/driver") || strings.HasPrefix(p, "/team") || strings.HasPrefix(p, "/crew-chief") {
 			http.ServeFile(w, r, indexPath)
 			return
 		}
@@ -184,17 +185,32 @@ func main() {
 	http.HandleFunc("/api/live-events", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleLiveEvents(w, r, dataDir, st)
 	}))
+	http.HandleFunc("/api/live-debug", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleLiveDebug(w, r, dataDir, st)
+	}))
+	http.HandleFunc("/api/live-boards", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleLiveBoards(w, r, dataDir)
+	}))
+	http.HandleFunc("/api/nascar-live", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleLiveBoards(w, r, dataDir)
+	}))
 	http.HandleFunc("/api/driver/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleDriverBySlug(w, r, dataDir, st)
 	}))
 	http.HandleFunc("/api/drivers/primary-context", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleDriversPrimaryContext(w, r, dataDir)
 	}))
+	http.HandleFunc("/api/driver-profile-redirects", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleDriverProfileRedirects(w, r, dataDir)
+	}))
 	http.HandleFunc("/api/drivers", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleDriversList(w, r, dataDir, st)
 	}))
 	http.HandleFunc("/api/driver-thumb/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleDriverThumbnail(w, r, dataDir)
+	}))
+	http.HandleFunc("/api/card-bg/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleCardBackground(w, r, webDir, dataDir)
 	}))
 	http.HandleFunc("/api/flag/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleCountryFlag(w, r, dataDir)

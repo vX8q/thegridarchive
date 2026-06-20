@@ -8,7 +8,6 @@
     f3: true,
     frec: true,
     f4_it: true,
-    smp_f4_ru: true,
     gtwce_sprint: true,
     dtm: true,
     f1: true

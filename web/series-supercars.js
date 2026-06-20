@@ -68,10 +68,9 @@ window.tgaSeries.supercars = window.TGA.seriesSupercars = {
     var eventId = 'SUPERCARS_2026_1';
     var seriesKey = 'supercars';
 
-    var fetchJSON = window.TGA && window.TGA.fetchJSON;
-    if (!fetchJSON) fetchJSON = function (url) { return fetch(url).then(function (r) { return r.json(); }); };
+    var API = window.TGA && window.TGA.API;
     function fetchSupercarsTeamManufacturers() {
-      return fetchJSON('/api/series/' + encodeURIComponent(seriesKey.toLowerCase()) + '/teams')
+      return (API ? API.getSeriesTeams(seriesKey) : fetch('/api/series/' + encodeURIComponent(seriesKey.toLowerCase()) + '/teams').then(function (r) { return r.json(); }))
         .catch(function () { return {}; })
         .then(function (data) {
           var teams = data && data.teams ? data.teams : (Array.isArray(data) ? data : []);
@@ -114,7 +113,7 @@ window.tgaSeries.supercars = window.TGA.seriesSupercars = {
       var teamByNumber = teamInfo && teamInfo.teamByNumber ? teamInfo.teamByNumber : {};
       var teamByDriver = teamInfo && teamInfo.teamByDriver ? teamInfo.teamByDriver : {};
 
-      return fetchJSON('/api/events/' + encodeURIComponent(eventId.toLowerCase()))
+      return (API ? API.getEvent(eventId, { cacheBust: false }) : fetch('/api/events/' + encodeURIComponent(eventId.toLowerCase())).then(function (r) { return r.json(); }))
         .then(function (d) {
           if (!d || typeof d !== 'object') return { rows: [] };
           if (d.data && typeof d.data === 'object') d = d.data;

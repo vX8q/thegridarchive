@@ -131,7 +131,7 @@ type StandingsClass struct {
 	Rows []StandingRow `json:"rows"`
 }
 
-// StandingsPointsInfo holds reference tables for the points system (SMP F4, etc.).
+// StandingsPointsInfo holds reference tables for the points system.
 type StandingsPointsInfo struct {
 	QualifyingPoints *EventTable  `json:"qualifying_points,omitempty"`
 	RacePoints       []EventTable `json:"race_points,omitempty"`

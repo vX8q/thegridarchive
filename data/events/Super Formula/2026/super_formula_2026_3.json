@@ -232,7 +232,7 @@
     "practice": {
       "title": "Practice 1",
       "headers": [
-        "Pos.",
+        "Pos",
         "No.",
         "Driver",
         "Team",
@@ -512,7 +512,7 @@
     "practice2": {
       "title": "Practice 2",
       "headers": [
-        "Pos.",
+        "Pos",
         "No.",
         "Driver",
         "Team",
@@ -792,7 +792,7 @@
     "qualifying": {
       "title": "Qualifying",
       "headers": [
-        "Pos.",
+        "Pos",
         "Group",
         "No.",
         "Driver",
@@ -1075,7 +1075,7 @@
           "title": "Race Round 3",
           "note": "Race cancelled at Autopolis due to adverse weather. Rescheduled to Fuji Speedway (18–19 July 2026, second race of the Fuji triple-header). Qualifying bonus points (3/2/1) awarded; race points will be awarded when the race is held at Fuji.",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",

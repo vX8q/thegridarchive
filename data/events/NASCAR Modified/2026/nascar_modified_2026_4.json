@@ -5,11 +5,19 @@
   "date": "Saturday, June 6, 2026",
   "start_date": "2026-06-06",
   "end_date": "2026-06-06",
+  "youtube_id": "8S7dY2A9v4Q",
   "track": "Oxford Plains Speedway",
   "location": "Oxford, Maine",
   "laps": "150",
   "distance": "0.375 mile paved track (56.25 miles)",
-  "event_preview": "Oxford Plains Speedway is a 0.375-mile (0.604 km) paved oval in Oxford, Maine, opened in 1950 and operating in its current configuration since a 1992 repaving and backstretch widening that expanded the layout from its original third-mile dimensions. The track seats 14,000 — the largest capacity of any sporting venue in Maine. The All States Materials Group 150 marks the first Whelen Modified Tour visit to Oxford in 35 years, with the series having previously raced here five times in the mid-1980s through the early 1990s, the last occasion being June 1991 when future Tour champion Jeff Fuller won. Previous Whelen Modified Tour winners at the Route 26 oval include NASCAR Hall of Famer Richie Evans, former Cup Series winner Jimmy Spencer, and longtime Xfinity Series standout Mike McLaughlin. The race is Race 4 of the 2026 season and runs 150 laps (56.25 miles).\n\nThe absence of four-time champion and 48-time series winner Justin Bonsignore — who has withdrawn along with confirming he will also skip the following Seekonk event — means the field will race without him for the first time since October 2009. Bonsignore sits fifth in the championship standings, having won the season opener at New Smyrna before finishing seventh at Thompson. Patrick Emerling, who leads the entry list in the No. 1, is among the pre-event favourites; Ron Silk and Matt Hirschman complete the strongest of the remaining contingent.\n\nBecause the Whelen Modified Tour has not visited Oxford in 35 years, all qualifying and race lap records at the circuit will be set for the first time this weekend in the series' modern era.",
+  "race_statistics": {
+    "Lead changes": "1",
+    "Cautions / Laps": "2 for 12 laps",
+    "Red flags": "0",
+    "Time of race": "46 minutes and 34 seconds",
+    "Average speed": "72.477 miles per hour (116.641 km/h)"
+  },
+  "event_preview": "Oxford Plains Speedway is a 0.375-mile (0.604 km) paved oval in Oxford, Maine, opened in 1950 and operating in its current configuration since a 1992 repaving and backstretch widening that expanded the layout from its original third-mile dimensions. The track seats 14,000 — the largest capacity of any sporting venue in Maine. Originally scheduled for May 2, the All States Materials Group 150 was postponed to Saturday, June 6, after a poor weather forecast and became the first Whelen Modified Tour visit to Oxford in 35 years. The series had previously raced here five times from the mid-1980s through the early 1990s, the last occasion being June 1991 when future Tour champion Jeff Fuller won. Previous Whelen Modified Tour winners at the Route 26 oval include NASCAR Hall of Famer Richie Evans, former Cup Series winner Jimmy Spencer, and longtime Xfinity Series standout Mike McLaughlin. The 150-lap race (56.25 miles) was contested as Race 4 of the 2026 season.\n\nJon McKennedy swept both practice sessions and dominated after passing polesitter Stephen Kopcik for the lead, scoring his second victory of 2026 and the first Modified Tour win at Oxford since 1991. Tyler Rypkema finished second in the No. 3 Ole Blue Modified — the only car in the field that also competed in the 1991 race here. The field raced without four-time champion and 48-time series winner Justin Bonsignore, who had withdrawn to reinvest in his program and also skipped the following Seekonk event — the first Modified Tour start he missed since October 2009.",
   "entry_list": [
     {
       "number": "1",
@@ -48,21 +56,12 @@
       "driver_slug": "john-michael-shenette"
     },
     {
-      "number": "16",
-      "driver": "Ron Silk",
-      "team": "Haydt Yannone Racing",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "Phil Moran",
-      "sponsor": "Blue Mountain Machine; Future Homes",
-      "driver_slug": "ron-silk"
-    },
-    {
       "number": "17",
       "driver": "Anthony Nocella",
       "team": "Michele Davini",
       "manufacturer": "LFR",
       "crew_chief": "Chris Mctaggart",
-      "sponsor": "Bell's Septic; Sontag Motorsports; Xtreme Autobody; Copart; Keene Towing & Recovery",
+      "sponsor": "Bells Septic; Sontag Motorsports; Copart; Xtreme Autobody; Keene Towing & Recovery",
       "driver_slug": "anthony-nocella"
     },
     {
@@ -75,15 +74,6 @@
       "driver_slug": "ken-heagy"
     },
     {
-      "number": "20",
-      "driver": "TBA",
-      "team": "Morgan Zachem Racing",
-      "manufacturer": "Troyer",
-      "crew_chief": "Max Zachem",
-      "sponsor": "Lu-Mac's Package Store",
-      "driver_slug": "tba"
-    },
-    {
       "number": "21",
       "driver": "Stephen Kopcik",
       "team": "Wanick Motorsports",
@@ -91,15 +81,6 @@
       "crew_chief": "Nick Kopcik",
       "sponsor": "Wanick Construction; Newtown Pools",
       "driver_slug": "stephen-kopcik"
-    },
-    {
-      "number": "22",
-      "driver": "Kyle Bonsignore",
-      "team": "Kyle Bonsignore",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "Cam McDermott",
-      "sponsor": "ChawLew; MTT; Munn's Auto; Penngrade Oil",
-      "driver_slug": "kyle-bonsignore"
     },
     {
       "number": "31",
@@ -111,22 +92,13 @@
       "driver_slug": "michael-christopher-jr"
     },
     {
-      "number": "36",
-      "driver": "David Sapienza",
-      "team": "Sapienza Racing",
-      "manufacturer": "Troyer",
-      "crew_chief": "Greg Kleila",
-      "sponsor": "Sapienza Enterprises; Eastport Feeds",
-      "driver_slug": "david-sapienza"
-    },
-    {
-      "number": "46",
-      "driver": "Craig Lutz",
-      "team": "Goodie Racing",
+      "number": "50",
+      "driver": "Ronnie Williams",
+      "team": "Ronnie Williams",
       "manufacturer": "FURY Race Cars",
-      "crew_chief": "Douglas Ogiejko",
-      "sponsor": "Riverhead Building Supply",
-      "driver_slug": "craig-lutz"
+      "crew_chief": "Adam Skowyra",
+      "sponsor": "Empower Financial Advisory",
+      "driver_slug": "ronnie-williams"
     },
     {
       "number": "54",
@@ -201,13 +173,13 @@
       "driver_slug": "andrew-molleur"
     },
     {
-      "number": "95",
-      "driver": "Cory Plummer",
-      "team": "Apex Racing",
-      "manufacturer": "Apex Race Cars",
-      "crew_chief": "Jonah Gosnell",
-      "sponsor": "Tuckers Metal Fabrication & Welding; Apex Race Cars; Croteau Machine & More; Shiny Rhino Carpet Cleaning",
-      "driver_slug": "cory-plummer"
+      "number": "84",
+      "driver": "Tyler Catalano",
+      "team": "Catalano Motorsports",
+      "manufacturer": "Troyer",
+      "crew_chief": "Tom Fuchs",
+      "sponsor": "Catalano Motorsports",
+      "driver_slug": "tyler-catalano"
     }
   ],
   "tables": {
@@ -240,7 +212,224 @@
         "# Laps",
         "Best Lap"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "79",
+          "Jon McKennedy",
+          "Jonathan McKennedy Racing",
+          "FURY Race Cars",
+          "15.286",
+          "",
+          "88.316",
+          "34",
+          "5"
+        ],
+        [
+          "2",
+          "64",
+          "Austin Beers",
+          "KLM Motorsports",
+          "Troyer",
+          "15.488",
+          "0.202",
+          "87.164",
+          "50",
+          "7"
+        ],
+        [
+          "3",
+          "73",
+          "Paulie Hartwig III",
+          "Hartwig Racing",
+          "LFR",
+          "15.579",
+          "0.293",
+          "86.655",
+          "21",
+          "4"
+        ],
+        [
+          "4",
+          "54",
+          "Tommy Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "15.580",
+          "0.294",
+          "86.650",
+          "31",
+          "5"
+        ],
+        [
+          "5",
+          "17",
+          "Anthony Nocella",
+          "Michele Davini",
+          "LFR",
+          "15.600",
+          "0.314",
+          "86.538",
+          "35",
+          "26"
+        ],
+        [
+          "6",
+          "21",
+          "Stephen Kopcik",
+          "Wanick Motorsports",
+          "Troyer",
+          "15.603",
+          "0.317",
+          "86.522",
+          "59",
+          "8"
+        ],
+        [
+          "7",
+          "60",
+          "Matt Hirschman",
+          "Pee Dee Motorsports",
+          "Troyer",
+          "15.605",
+          "0.319",
+          "86.511",
+          "43",
+          "27"
+        ],
+        [
+          "8",
+          "1",
+          "Patrick Emerling",
+          "USNE Motorsports",
+          "LFR",
+          "15.610",
+          "0.324",
+          "86.483",
+          "31",
+          "6"
+        ],
+        [
+          "9",
+          "56",
+          "Trevor Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "15.623",
+          "0.337",
+          "86.411",
+          "37",
+          "4"
+        ],
+        [
+          "10",
+          "05",
+          "Teddy Hodgdon IV",
+          "Teddy Hodgdon Racing",
+          "FURY Race Cars",
+          "15.630",
+          "0.344",
+          "86.372",
+          "39",
+          "9"
+        ],
+        [
+          "11",
+          "82",
+          "Andrew Molleur",
+          "DWR Racing",
+          "LFR",
+          "15.648",
+          "0.362",
+          "86.273",
+          "35",
+          "6"
+        ],
+        [
+          "12",
+          "58",
+          "Eric Goodale",
+          "Goodie Motorsports",
+          "FURY Race Cars",
+          "15.656",
+          "0.370",
+          "86.229",
+          "43",
+          "9"
+        ],
+        [
+          "13",
+          "50",
+          "Ronnie Williams",
+          "Ronnie Williams",
+          "FURY Race Cars",
+          "15.685",
+          "0.399",
+          "86.069",
+          "36",
+          "6"
+        ],
+        [
+          "14",
+          "84",
+          "Tyler Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "15.700",
+          "0.414",
+          "85.987",
+          "58",
+          "6"
+        ],
+        [
+          "15",
+          "3",
+          "Tyler Rypkema",
+          "BRE Racing",
+          "Boehler Racing",
+          "15.750",
+          "0.464",
+          "85.714",
+          "27",
+          "5"
+        ],
+        [
+          "16",
+          "8",
+          "John-Michael Shenette",
+          "Eighty-Two Autosport",
+          "LFR",
+          "15.809",
+          "0.523",
+          "85.394",
+          "38",
+          "5"
+        ],
+        [
+          "17",
+          "18",
+          "Ken Heagy",
+          "Heagy Motorsports",
+          "FURY Race Cars",
+          "15.837",
+          "0.551",
+          "85.243",
+          "29",
+          "27"
+        ],
+        [
+          "18",
+          "31",
+          "Michael Christopher Jr.",
+          "Elite Motorsports",
+          "LFR",
+          "15.894",
+          "0.608",
+          "84.938",
+          "34",
+          "4"
+        ]
+      ]
     },
     "practice2": {
       "headers": [
@@ -255,19 +444,234 @@
         "# Laps",
         "Best Lap"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "79",
+          "Jon McKennedy",
+          "Jonathan McKennedy Racing",
+          "FURY Race Cars",
+          "15.376",
+          "",
+          "87.799",
+          "25",
+          "5"
+        ],
+        [
+          "2",
+          "64",
+          "Austin Beers",
+          "KLM Motorsports",
+          "Troyer",
+          "15.505",
+          "0.129",
+          "87.069",
+          "23",
+          "3"
+        ],
+        [
+          "3",
+          "73",
+          "Paulie Hartwig III",
+          "Hartwig Racing",
+          "LFR",
+          "15.547",
+          "0.171",
+          "86.833",
+          "29",
+          "29"
+        ],
+        [
+          "4",
+          "3",
+          "Tyler Rypkema",
+          "BRE Racing",
+          "Boehler Racing",
+          "15.568",
+          "0.192",
+          "86.716",
+          "28",
+          "6"
+        ],
+        [
+          "5",
+          "58",
+          "Eric Goodale",
+          "Goodie Motorsports",
+          "FURY Race Cars",
+          "15.586",
+          "0.210",
+          "86.616",
+          "35",
+          "4"
+        ],
+        [
+          "6",
+          "60",
+          "Matt Hirschman",
+          "Pee Dee Motorsports",
+          "Troyer",
+          "15.587",
+          "0.211",
+          "86.611",
+          "20",
+          "20"
+        ],
+        [
+          "7",
+          "17",
+          "Anthony Nocella",
+          "Michele Davini",
+          "LFR",
+          "15.602",
+          "0.226",
+          "86.527",
+          "18",
+          "18"
+        ],
+        [
+          "8",
+          "1",
+          "Patrick Emerling",
+          "USNE Motorsports",
+          "LFR",
+          "15.619",
+          "0.243",
+          "86.433",
+          "27",
+          "5"
+        ],
+        [
+          "9",
+          "56",
+          "Trevor Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "15.650",
+          "0.274",
+          "86.262",
+          "10",
+          "9"
+        ],
+        [
+          "10",
+          "54",
+          "Tommy Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "15.668",
+          "0.292",
+          "86.163",
+          "15",
+          "13"
+        ],
+        [
+          "11",
+          "21",
+          "Stephen Kopcik",
+          "Wanick Motorsports",
+          "Troyer",
+          "15.675",
+          "0.299",
+          "86.124",
+          "29",
+          "12"
+        ],
+        [
+          "12",
+          "05",
+          "Teddy Hodgdon IV",
+          "Teddy Hodgdon Racing",
+          "FURY Race Cars",
+          "15.683",
+          "0.307",
+          "86.080",
+          "24",
+          "15"
+        ],
+        [
+          "13",
+          "31",
+          "Michael Christopher Jr.",
+          "Elite Motorsports",
+          "LFR",
+          "15.698",
+          "0.322",
+          "85.998",
+          "22",
+          "4"
+        ],
+        [
+          "14",
+          "18",
+          "Ken Heagy",
+          "Heagy Motorsports",
+          "FURY Race Cars",
+          "15.708",
+          "0.332",
+          "85.943",
+          "26",
+          "12"
+        ],
+        [
+          "15",
+          "82",
+          "Andrew Molleur",
+          "DWR Racing",
+          "LFR",
+          "15.713",
+          "0.337",
+          "85.916",
+          "27",
+          "11"
+        ],
+        [
+          "16",
+          "84",
+          "Tyler Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "15.722",
+          "0.346",
+          "85.867",
+          "17",
+          "11"
+        ],
+        [
+          "17",
+          "50",
+          "Ronnie Williams",
+          "Ronnie Williams",
+          "FURY Race Cars",
+          "15.748",
+          "0.372",
+          "85.725",
+          "23",
+          "4"
+        ],
+        [
+          "18",
+          "8",
+          "John-Michael Shenette",
+          "Eighty-Two Autosport",
+          "LFR",
+          "15.909",
+          "0.533",
+          "84.858",
+          "26",
+          "5"
+        ]
+      ]
     },
     "qualifying": {
       "headers": [
-        "Rank",
-        "#",
-        "Driver",
-        "Team",
-        "Chassis",
-        "Time",
-        "Speed"
+        "Note"
       ],
-      "rows": []
+      "rows": [
+        [
+          "Qualifying was not held due to an afternoon rain shower."
+        ]
+      ]
     },
     "caution_breakdown": {
       "headers": [
@@ -278,7 +682,48 @@
         "Reason",
         "Free Pass"
       ],
-      "rows": []
+      "rows": [
+        [
+          "",
+          "1",
+          "20",
+          "20",
+          "",
+          ""
+        ],
+        [
+          "",
+          "21",
+          "25",
+          "5",
+          "#54 spun frontstretch",
+          "none"
+        ],
+        [
+          "",
+          "26",
+          "42",
+          "17",
+          "",
+          ""
+        ],
+        [
+          "",
+          "43",
+          "49",
+          "7",
+          "debris turn 3",
+          "none"
+        ],
+        [
+          "",
+          "50",
+          "150",
+          "101",
+          "",
+          ""
+        ]
+      ]
     },
     "starting_lineup": {
       "headers": [
@@ -305,7 +750,224 @@
         "Status",
         "Pts"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "4",
+          "79",
+          "Jon McKennedy",
+          "Jonathan McKennedy Racing",
+          "FURY Race Cars",
+          "150",
+          "142",
+          "Running",
+          "48"
+        ],
+        [
+          "2",
+          "7",
+          "3",
+          "Tyler Rypkema",
+          "BRE Racing",
+          "Boehler Racing",
+          "150",
+          "0",
+          "Running",
+          "42"
+        ],
+        [
+          "3",
+          "6",
+          "58",
+          "Eric Goodale",
+          "Goodie Motorsports",
+          "FURY Race Cars",
+          "150",
+          "0",
+          "Running",
+          "41"
+        ],
+        [
+          "4",
+          "16",
+          "50",
+          "Ronnie Williams",
+          "Ronnie Williams",
+          "FURY Race Cars",
+          "150",
+          "0",
+          "Running",
+          "40"
+        ],
+        [
+          "5",
+          "13",
+          "73",
+          "Paulie Hartwig III",
+          "Hartwig Racing",
+          "LFR",
+          "150",
+          "0",
+          "Running",
+          "39"
+        ],
+        [
+          "6",
+          "11",
+          "56",
+          "Trevor Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "150",
+          "0",
+          "Running",
+          "38"
+        ],
+        [
+          "7",
+          "3",
+          "1",
+          "Patrick Emerling",
+          "USNE Motorsports",
+          "LFR",
+          "150",
+          "0",
+          "Running",
+          "37"
+        ],
+        [
+          "8",
+          "12",
+          "82",
+          "Andrew Molleur",
+          "DWR Racing",
+          "LFR",
+          "150",
+          "0",
+          "Running",
+          "36"
+        ],
+        [
+          "9",
+          "10",
+          "05",
+          "Teddy Hodgdon IV",
+          "Teddy Hodgdon Racing",
+          "FURY Race Cars",
+          "150",
+          "0",
+          "Running",
+          "35"
+        ],
+        [
+          "10",
+          "14",
+          "8",
+          "John-Michael Shenette",
+          "Eighty-Two Autosport",
+          "LFR",
+          "150",
+          "0",
+          "Running",
+          "34"
+        ],
+        [
+          "11",
+          "2",
+          "64",
+          "Austin Beers",
+          "KLM Motorsports",
+          "Troyer",
+          "150",
+          "0",
+          "Running",
+          "33"
+        ],
+        [
+          "12",
+          "9",
+          "31",
+          "Michael Christopher Jr.",
+          "Elite Motorsports",
+          "LFR",
+          "149",
+          "0",
+          "Running",
+          "32"
+        ],
+        [
+          "13",
+          "5",
+          "54",
+          "Tommy Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "149",
+          "0",
+          "Running",
+          "31"
+        ],
+        [
+          "14",
+          "1",
+          "21",
+          "Stephen Kopcik",
+          "Wanick Motorsports",
+          "Troyer",
+          "149",
+          "8",
+          "Running",
+          "31"
+        ],
+        [
+          "15",
+          "18",
+          "17",
+          "Anthony Nocella",
+          "Michele Davini",
+          "LFR",
+          "149",
+          "0",
+          "Running",
+          "29"
+        ],
+        [
+          "16",
+          "8",
+          "60",
+          "Matt Hirschman",
+          "Pee Dee Motorsports",
+          "Troyer",
+          "149",
+          "0",
+          "Running",
+          "28"
+        ],
+        [
+          "17",
+          "15",
+          "18",
+          "Ken Heagy",
+          "Heagy Motorsports",
+          "FURY Race Cars",
+          "148",
+          "0",
+          "Running",
+          "27"
+        ],
+        [
+          "18",
+          "17",
+          "84",
+          "Tyler Catalano",
+          "Catalano Motorsports",
+          "Troyer",
+          "137",
+          "0",
+          "Handling",
+          "26"
+        ]
+      ]
     }
   }
 }

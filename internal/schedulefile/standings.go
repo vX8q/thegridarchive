@@ -1,12 +1,8 @@
 package schedulefile
 
 import (
-	"encoding/csv"
-	"io"
 	"log"
 	"math"
-	"os"
-	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -128,7 +124,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		strings.EqualFold(seriesID, "F3")
 	isDTMSeries := strings.EqualFold(seriesID, "DTM")
 	isFrecSeries := strings.EqualFold(seriesID, "FREC")
-	isF4MultiRaceSeries := strings.EqualFold(seriesID, "F4_IT") || strings.EqualFold(seriesID, "SMP_F4_RU")
+	isF4MultiRaceSeries := strings.EqualFold(seriesID, "F4_IT")
 	isMultiRacePerEvent := isFrecSeries || isF4MultiRaceSeries
 	dtmEventCode := func(name string, round int) string {
 		tokens := strings.FieldsFunc(strings.ToLower(strings.TrimSpace(name)), func(r rune) bool {
@@ -293,31 +289,18 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			raceOrder = ro
 		}
 	}
-	// FREC / Italian F4 / SMP F4: a round may have multiple races (tables.race.sessions).
+	// FREC / Italian F4: a round may have multiple races (tables.race.sessions).
 	// Build race_order dynamically from actual session count per round.
 	if isMultiRacePerEvent {
 		var ro []string
 		var names []string
 		round := 0
-		smpMoscowVisits := 0
 		for _, ev := range events {
 			if ev.Season != season {
 				continue
 			}
 			round++
 			name := strings.TrimSpace(ev.Name)
-			if strings.EqualFold(seriesID, "SMP_F4_RU") {
-				raceCount := 4
-				if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
-					raceCount = len(sessions)
-				}
-				short := smpEventShortLabel(ev, &smpMoscowVisits)
-				for ri := 0; ri < raceCount; ri++ {
-					ro = append(ro, "R"+strconv.Itoa(round)+"-R"+strconv.Itoa(ri+1))
-					names = append(names, short)
-				}
-				continue
-			}
 			sessCount := 1
 			if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
 				sessCount = len(sessions)
@@ -376,8 +359,6 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		points       float64
 		stages       int
 		guest        bool // PSC: guest entry (separate standings table)
-		smpRoundPts  map[int][6]float64 // SMP F4: Q1,Q2,R1,R2,R3,R4 per round
-		smpRoundFin  map[int][6]string  // Fin/# for the same sessions
 	}
 	parsePointsValue := func(raw string) float64 {
 		s := strings.TrimSpace(raw)
@@ -464,87 +445,10 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			byDriver[key].points += bonus[i]
 		}
 	}
-	applySmpQualTable := func(rr EventTable, round, qualIdx, _ int, entryByCar map[string]string) {
-		if len(rr.Headers) == 0 || len(rr.Rows) == 0 {
-			return
-		}
-		posCol := firstColIndex(rr.Headers, "Pos", "Fin", "#")
-		carCol := firstColIndex(rr.Headers, "No", "No.", "#", "Car")
-		teamCol := colIndex(rr.Headers, "Team")
-		driverCol := colIndex(rr.Headers, "Driver")
-		ptsCol := pointsColIndex(rr.Headers)
-		if driverCol < 0 && colIndex(rr.Headers, "Drivers") < 0 {
-			return
-		}
-		for _, row := range rr.Rows {
-			drivers := driversFromRow(rr.Headers, row)
-			if len(drivers) == 0 {
-				continue
-			}
-			carNum := ""
-			if carCol >= 0 && carCol < len(row) {
-				carNum = strings.TrimSpace(row[carCol])
-			}
-			pos := 0
-			if posCol >= 0 && posCol < len(row) {
-				pos = atoiSafe(strings.TrimSpace(row[posCol]))
-			}
-			pts := 0
-			if ptsCol >= 0 && ptsCol < len(row) {
-				pts = int(parsePointsValue(row[ptsCol]))
-			} else if pos > 0 {
-				pts = smpQualPointsForPos(pos)
-			}
-			team := ""
-			if teamCol >= 0 && teamCol < len(row) {
-				team = strings.TrimSpace(row[teamCol])
-			}
-			for _, driver := range drivers {
-				if carNum != "" && entryByCar != nil {
-					if full, ok := entryByCar[carNum]; ok && strings.TrimSpace(full) != "" {
-						driver = full
-					}
-				}
-				key := standingsAggregateKey("SMP_F4_RU", driver, carNum)
-				if byDriver[key] == nil {
-					byDriver[key] = &accRow{
-						driver: driver, car: carNum, team: team, races: make(map[string]string),
-						smpRoundPts: make(map[int][6]float64), smpRoundFin: make(map[int][6]string),
-					}
-				}
-				r := byDriver[key]
-				if r.smpRoundPts == nil {
-					r.smpRoundPts = make(map[int][6]float64)
-				}
-				if r.smpRoundFin == nil {
-					r.smpRoundFin = make(map[int][6]string)
-				}
-				if team != "" {
-					r.team = team
-				}
-				if carNum != "" {
-					r.car = carNum
-				}
-				r.driver = preferLongerDriverName(r.driver, driver)
-				ptsSess := r.smpRoundPts[round]
-				ptsSess[qualIdx] = float64(pts)
-				r.smpRoundPts[round] = ptsSess
-				fin := ""
-				if posCol >= 0 && posCol < len(row) {
-					fin = standingsRacePosCell("SMP_F4_RU", strings.TrimSpace(row[posCol]))
-				}
-				finSess := r.smpRoundFin[round]
-				finSess[qualIdx] = fin
-				r.smpRoundFin[round] = finSess
-				// Standings cells — race positions only (qual stored for Pts calculation).
-			}
-		}
-	}
 	var entryByCarForEvent map[string]string
 	var eligibleByCarForEvent map[string]bool
 	var completedRaces []string
 	raceIdx := 0
-	smpRound := 0
 	today := time.Now().Format(dateFormat)
 	isCupSeries := strings.EqualFold(seriesID, "NASCAR_CUP")
 	isStockCarSeries := strings.EqualFold(seriesID, "NASCAR_CUP") ||
@@ -670,14 +574,6 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 					byDriver[key] = &accRow{driver: driver, car: carNum, team: team, manufacturer: manu, races: make(map[string]string)}
 				}
 				r := byDriver[key]
-				if strings.EqualFold(seriesID, "SMP_F4_RU") {
-					if r.smpRoundPts == nil {
-						r.smpRoundPts = make(map[int][6]float64)
-					}
-					if r.smpRoundFin == nil {
-						r.smpRoundFin = make(map[int][6]string)
-					}
-				}
 				r.driver = preferLongerDriverName(r.driver, driver)
 				if r.car == "" {
 					r.car = carNum
@@ -687,19 +583,6 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				}
 				if r.manufacturer == "" {
 					r.manufacturer = manu
-				}
-				if strings.EqualFold(seriesID, "SMP_F4_RU") && ptsCol >= 0 {
-					fin := standingsRacePosCell("SMP_F4_RU", rawPos)
-					if rnd, ri, ok := smpParseRaceCode(raceCode); ok && ri >= 1 && ri <= 4 {
-						ptsSess := r.smpRoundPts[rnd]
-						ptsSess[ri+1] = racePts
-						r.smpRoundPts[rnd] = ptsSess
-						finSess := r.smpRoundFin[rnd]
-						finSess[ri+1] = fin
-						r.smpRoundFin[rnd] = finSess
-					}
-					r.stages += stagePointsByDriver[key]
-					continue
 				}
 				r.races[raceCode] = standingsRacePosCell(seriesID, rawPos)
 				r.points += racePts
@@ -729,51 +612,6 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		if raceIdx >= len(raceOrder) {
 			break
 		}
-		// SMP F4: four races; Q1 points → R1, Q2 → R3 (same cell as race).
-		if strings.EqualFold(seriesID, "SMP_F4_RU") {
-			smpRound++
-			detail, errDet := LoadEventDetail(dataDir, ev.ID)
-			if errDet != nil {
-				continue
-			}
-			entryByCarForEvent, _ = LoadEventEntryList(dataDir, ev.ID)
-			roundPrefix := "R" + strconv.Itoa(smpRound) + "-R"
-			if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil {
-				for ri, rs := range sessions {
-					if raceIdx >= len(raceOrder) {
-						break
-					}
-					if len(rs.Headers) == 0 || len(rs.Rows) == 0 {
-						continue
-					}
-					code := roundPrefix + strconv.Itoa(ri+1)
-					applyEventTable(EventTable{Headers: rs.Headers, Rows: rs.Rows}, code, detail, false)
-					completedRaces = append(completedRaces, code)
-					raceIdx++
-				}
-			}
-			if qualSessions, errQual := LoadEventQualifyingSessions(dataDir, ev.ID); errQual == nil {
-				qualTargets := []struct {
-					idx  int
-					race int
-				}{
-					{0, 1},
-					{1, 3},
-				}
-				for _, qt := range qualTargets {
-					if qt.idx >= len(qualSessions) {
-						continue
-					}
-					qs := qualSessions[qt.idx]
-					if len(qs.Headers) == 0 || len(qs.Rows) == 0 {
-						continue
-					}
-					applySmpQualTable(EventTable{Headers: qs.Headers, Rows: qs.Rows}, smpRound, qt.idx, qt.race, entryByCarForEvent)
-				}
-			}
-			continue
-		}
-
 		// Super Formula: one JSON per weekend; round from session title (Race Round N) or ID group.
 		if strings.EqualFold(seriesID, "SUPER_FORMULA") {
 			primaryID := superFormulaPrimaryEventID(ev.ID, events, season, dataDir)
@@ -1153,24 +991,6 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		SplitBaseIneligible(base)
 		return base, nil
 	}
-	if strings.EqualFold(seriesID, "SMP_F4_RU") {
-		for _, r := range byDriver {
-			if r == nil || len(r.smpRoundPts) == 0 {
-				continue
-			}
-			r.points = 0
-			for round, sess := range r.smpRoundPts {
-				fin := r.smpRoundFin[round]
-				roundSum, _ := smpRoundPointsSum(sess)
-				r.points += roundSum
-				prefix := "R" + strconv.Itoa(round) + "-R"
-				r.races[prefix+"1"] = strings.TrimSpace(fin[2])
-				r.races[prefix+"2"] = strings.TrimSpace(fin[3])
-				r.races[prefix+"3"] = strings.TrimSpace(fin[4])
-				r.races[prefix+"4"] = strings.TrimSpace(fin[5])
-			}
-		}
-	}
 	rows := make([]StandingRow, 0, len(byDriver))
 	for _, r := range byDriver {
 		rows = append(rows, StandingRow{
@@ -1307,76 +1127,6 @@ func EnrichStagesFromEvents(dataDir string, seriesID string, data *StandingsData
 		driver := strings.TrimSpace(data.Ineligible[i].Driver)
 		sum := stagePointsByDriver[canonicalDriverKey(driver)]
 		data.Ineligible[i].Stages = itoa(sum)
-	}
-	applyStageTotalsFromTSVReference(dataDir, seriesID, data)
-}
-
-// applyStageTotalsFromTSVReference sets Stages column from reference TSV
-// for series with manual NASCAR.com reconciliation (currently Cup/NOAPS).
-func applyStageTotalsFromTSVReference(dataDir string, seriesID string, data *StandingsData) {
-	if data == nil {
-		return
-	}
-	refFile := ""
-	seriesKey := strings.NewReplacer("-", "_", " ", "_").Replace(strings.ToUpper(strings.TrimSpace(seriesID)))
-	switch seriesKey {
-	case "NASCAR_CUP":
-		refFile = "nascar_cup_2026_nascar_com.tsv"
-	case "NOAPS":
-		refFile = "noaps_2026_nascar_com.tsv"
-	case "NASCAR_TRUCK":
-		refFile = "nascar_truck_2026_nascar_com.tsv"
-	default:
-		return
-	}
-	path := filepath.Join(dataDir, "reference", refFile)
-	// #nosec G304 -- refFile is selected from a fixed allowlist above.
-	b, err := os.ReadFile(path)
-	if err != nil || len(b) == 0 {
-		return
-	}
-	rdr := csv.NewReader(strings.NewReader(string(b)))
-	rdr.Comma = '\t'
-	rdr.LazyQuotes = true
-	rdr.FieldsPerRecord = -1
-	if _, err := rdr.Read(); err != nil {
-		return
-	}
-	refStages := make(map[string]int)
-	for {
-		rec, err := rdr.Read()
-		if err == io.EOF {
-			break
-		}
-		if err != nil || len(rec) < 3 {
-			continue
-		}
-		name := strings.TrimSpace(rec[0])
-		if name == "" || strings.EqualFold(name, "driver") {
-			continue
-		}
-		stRaw := strings.TrimSpace(rec[2])
-		n := 0
-		if stRaw != "" && stRaw != "—" && stRaw != "-" {
-			for _, c := range stRaw {
-				if c >= '0' && c <= '9' {
-					n = n*10 + int(c-'0')
-				}
-			}
-		}
-		refStages[canonicalDriverKey(name)] = n
-	}
-	for i := range data.Rows {
-		k := canonicalDriverKey(data.Rows[i].Driver)
-		if v, ok := refStages[k]; ok {
-			data.Rows[i].Stages = itoa(v)
-		}
-	}
-	for i := range data.Ineligible {
-		k := canonicalDriverKey(data.Ineligible[i].Driver)
-		if v, ok := refStages[k]; ok {
-			data.Ineligible[i].Stages = itoa(v)
-		}
 	}
 }
 

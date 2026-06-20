@@ -7,7 +7,7 @@
       "number": "6",
       "drivers": [
         "Matt Campbell",
-        "Kévin Estre",
+        "Kevin Estre",
         "Laurens Vanthoor"
       ],
       "rounds": "Rolex 24"
@@ -42,7 +42,7 @@
       "chassis": "Cadillac V-Series.R",
       "number": "40",
       "drivers": [
-        "Louis Delétraz",
+        "Louis Deletraz",
         "Colton Herta",
         "Jordan Taylor"
       ],
@@ -57,7 +57,7 @@
         "Roman De Angelis",
         "Ross Gunn",
         "Alex Riberas",
-        "Marco Sørensen"
+        "Marco Sorensen"
       ],
       "rounds": "Rolex 24"
     },
@@ -68,7 +68,7 @@
       "number": "24",
       "drivers": [
         "Robin Frijns",
-        "René Rast",
+        "Rene Rast",
         "Sheldon van der Linde",
         "Dries Vanthoor"
       ],
@@ -109,7 +109,7 @@
         "A. J. Allmendinger",
         "Tom Blomqvist",
         "Colin Braun",
-      "Scott Dixon"
+        "Scott Dixon"
       ],
       "rounds": "Rolex 24"
     },
@@ -120,7 +120,7 @@
       "number": "93",
       "drivers": [
         "Kakunoshin Ohta",
-        "Álex Palou",
+        "alex Palou",
         "Nick Yelloly",
         "Renger van der Zande"
       ],
@@ -173,7 +173,7 @@
         "Paul di Resta",
         "Dan Goldburg",
         "Rasmus Lindh",
-        "Grégoire Saucy"
+        "Gregoire Saucy"
       ],
       "rounds": "Rolex 24"
     },
@@ -183,8 +183,8 @@
       "chassis": "Oreca 07",
       "number": "8",
       "drivers": [
-        "Sebastián Álvarez",
-        "Sébastien Bourdais",
+        "Sebastian alvarez",
+        "Sebastien Bourdais",
         "John Farano",
         "Kyffin Simpson",
         "Tristan Vautier"
@@ -199,7 +199,7 @@
       "drivers": [
         "Mathias Beche",
         "David Heinemeier Hansson",
-        "Tobias Lütke",
+        "Tobias Lutke",
         "Charles Milesi"
       ],
       "rounds": "Rolex 24"
@@ -238,7 +238,7 @@
       "drivers": [
         "Jeremy Clarke",
         "Tom Dillmann",
-        "António Félix da Costa",
+        "Antonio Felix da Costa",
         "Bijoy Garg"
       ],
       "rounds": "Rolex 24"
@@ -252,7 +252,7 @@
         "Nick Cassidy",
         "Georgios Kolovos",
         "Nolan Siegel",
-        "Jakub Śmiechowski"
+        "Jakub smiechowski"
       ],
       "rounds": "Rolex 24"
     },
@@ -275,7 +275,7 @@
       "chassis": "Oreca 07",
       "number": "61",
       "drivers": [
-        "Tõnis Kasemets"
+        "Tonis Kasemets"
       ],
       "rounds": "TBC"
     },
@@ -286,7 +286,7 @@
       "number": "73",
       "drivers": [
         "Chris Cumming",
-        "Manuel Espírito Santo",
+        "Manuel Espirito Santo",
         "Enzo Fittipaldi",
         "Pietro Fittipaldi"
       ],
@@ -300,8 +300,8 @@
       "drivers": [
         "Dylan Murry",
         "Nicklas Nielsen",
-        "François Perrodo",
-        "Matthieu Vaxivière"
+        "Francois Perrodo",
+        "Matthieu Vaxiviere"
       ],
       "rounds": "Rolex 24"
     },
@@ -350,8 +350,8 @@
       "chassis": "Chevrolet Corvette Z06 GT3.R",
       "number": "3",
       "drivers": [
-        "Antonio García",
-        "Marvin Kirchhöfer",
+        "Antonio Garcia",
+        "Marvin Kirchhofer",
         "Alexander Sims"
       ],
       "rounds": "Rolex 24"
@@ -416,7 +416,7 @@
         "Max Esterson",
         "Nikita Johnson",
         "Dean MacDonald",
-        "Jüri Vips"
+        "Juri Vips"
       ],
       "rounds": "Rolex 24"
     },
@@ -452,7 +452,7 @@
       "drivers": [
         "Christopher Mies",
         "Sebastian Priaulx",
-        "Frédéric Vervisch"
+        "Frederic Vervisch"
       ],
       "rounds": "Rolex 24"
     },
@@ -463,7 +463,7 @@
       "number": "69",
       "drivers": [
         "Anthony Bartone",
-        "Maximilian Götz",
+        "Maximilian Gotz",
         "Jules Gounon",
         "Fabian Schiller"
       ],
@@ -502,7 +502,7 @@
       "drivers": [
         "Klaus Bachler",
         "Ricardo Feller",
-        "Ayhancan Güven",
+        "Ayhancan Guven",
         "Thomas Preining"
       ],
       "rounds": "Rolex 24"
@@ -565,7 +565,7 @@
       "chassis": "Aston Martin Vantage AMR GT3 Evo",
       "number": "19",
       "drivers": [
-        "Sébastien Baud",
+        "Sebastien Baud",
         "Carl Bennett",
         "Valentin Hasse-Clot",
         "Rory van der Steur"
@@ -606,7 +606,7 @@
       "drivers": [
         "Jan Heylen",
         "Dillon Machavern",
-        "Sven Müller",
+        "Sven Muller",
         "Eric Zitza"
       ],
       "rounds": "Rolex 24"
@@ -633,7 +633,7 @@
         "Charlie Eastwood",
         "Mason Filippi",
         "Scott McLaughlin",
-        "Salih Yoluç"
+        "Salih Yoluc"
       ],
       "rounds": "Rolex 24"
     },
@@ -721,7 +721,7 @@
       "chassis": "Chevrolet Corvette Z06 GT3.R",
       "number": "81",
       "drivers": [
-        "Giacomo Altoè",
+        "Giacomo Altoe",
         "Matteo Cairoli",
         "Henrik Hedman",
         "Casper Stevenson"

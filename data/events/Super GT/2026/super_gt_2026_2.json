@@ -469,7 +469,7 @@
         {
           "title": "GT500",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Team",
             "Drivers",
@@ -498,7 +498,7 @@
         {
           "title": "GT300",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Team",
             "Drivers",
@@ -553,7 +553,7 @@
           "class": "GT500",
           "title": "Qualifying 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Team",
             "Drivers",
@@ -583,7 +583,7 @@
           "class": "GT500",
           "title": "Qualifying 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Team",
             "Drivers",
@@ -613,7 +613,7 @@
           "class": "GT300",
           "title": "Qualifying 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Team",
             "Drivers",
@@ -658,7 +658,7 @@
           "class": "GT300",
           "title": "Qualifying 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Team",
             "Drivers",
@@ -710,7 +710,7 @@
         "Distance": "3 hours"
       },
       "headers": [
-        "Pos.",
+        "Pos",
         "Class",
         "Car",
         "No.",

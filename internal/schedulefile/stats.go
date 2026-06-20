@@ -124,37 +124,12 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 		if raceLaps == 0 && detail.Laps != "" {
 			raceLaps = atoiSafe(detail.Laps)
 		}
-		stageWinsThisRace := make(map[string]int)
-		stagePointsThisRace := make(map[string]int)
-		for sn := 1; sn <= 2; sn++ {
-			st, ok := StageN(detail.Tables, sn)
-			if !ok {
-				continue
-			}
-			spos := firstColIndex(st.Headers, "Pos", "Fin")
-			sDriver := firstColIndex(st.Headers, "Driver")
-			sNo := firstColIndex(st.Headers, "No", "#", "Car")
-			if sDriver < 0 {
-				continue
-			}
-			for _, row := range st.Rows {
-				stagePos := atoiSafe(valueAt(row, spos))
-				if stagePos <= 0 {
-					continue
-				}
-				dr := valueAt(row, sDriver)
-				no := valueAt(row, sNo)
-				// Use canonicalDriverKey so we can match with race_results aggregation keys.
-				key := canonicalDriverKey(dr) + "\t" + no
-				if stagePos == 1 {
-					stageWinsThisRace[key]++
-				}
-				if stagePos <= 10 {
-					// NASCAR stage scoring: P1..P10 = 10..1 points.
-					stagePointsThisRace[key] += 11 - stagePos
-				}
-			}
+		useStockCarStageRules := isStockCarStatsSeries(seriesID)
+		var eligibleByCar map[string]bool
+		if useStockCarStageRules {
+			eligibleByCar, _ = LoadEventPointsEligibleByCar(dataDir, e.ID)
 		}
+		stageWinsThisRace, stagePointsThisRace := accumulateStageStatsPerRace(detail.Tables, eligibleByCar, useStockCarStageRules)
 		for rowIdx, row := range rr.Rows {
 			driverName := valueAt(row, colDriver)
 			// F1: normalize Carlos Sainz -> Carlos Sainz Jr.
@@ -1021,6 +996,86 @@ func mergeStockCarDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 		out = append(out, *merged[k])
 	}
 	return out
+}
+
+func isStockCarStatsSeries(seriesID string) bool {
+	switch strings.ToUpper(strings.TrimSpace(seriesID)) {
+	case "NASCAR_CUP", "NOAPS", "NASCAR_TRUCK", "ARCA", "NASCAR_MODIFIED":
+		return true
+	default:
+		return false
+	}
+}
+
+// accumulateStageStatsPerRace reads stage wins and points from stage_1/stage_2 tables.
+// When a Points/Pts column is present, values are taken from JSON (respecting 0 for ineligible drivers).
+// Without Points, stock-car series fall back to 11−Pos for top 10 among points-eligible drivers only.
+func accumulateStageStatsPerRace(tables map[string]EventTable, eligibleByCar map[string]bool, useEligibleRules bool) (wins, points map[string]int) {
+	wins = make(map[string]int)
+	points = make(map[string]int)
+	for sn := 1; sn <= 2; sn++ {
+		st, ok := StageN(tables, sn)
+		if !ok {
+			continue
+		}
+		spos := firstColIndex(st.Headers, "Pos", "Fin")
+		sDriver := firstColIndex(st.Headers, "Driver")
+		sNo := firstColIndex(st.Headers, "No", "#", "Car")
+		sPts := firstColIndex(st.Headers, "Points")
+		if sPts < 0 {
+			sPts = firstColIndex(st.Headers, "Pts")
+		}
+		if sDriver < 0 {
+			continue
+		}
+		for _, row := range st.Rows {
+			dr := valueAt(row, sDriver)
+			no := valueAt(row, sNo)
+			key := canonicalDriverKey(dr) + "\t" + no
+			stagePos := atoiSafe(valueAt(row, spos))
+			if stagePos <= 0 {
+				continue
+			}
+			if stagePos == 1 {
+				wins[key]++
+			}
+			pts := 0
+			if sPts >= 0 {
+				pts = parseStagePointsCell(valueAt(row, sPts))
+			} else if stagePos <= 10 && (!useEligibleRules || isDriverPointsEligible(dr, no, eligibleByCar)) {
+				pts = 11 - stagePos
+			}
+			points[key] += pts
+		}
+	}
+	return wins, points
+}
+
+func parseStagePointsCell(raw string) int {
+	s := strings.TrimSpace(raw)
+	if s == "" {
+		return 0
+	}
+	pts := 0
+	for _, c := range s {
+		if c >= '0' && c <= '9' {
+			pts = pts*10 + int(c-'0')
+		}
+	}
+	return pts
+}
+
+func isDriverPointsEligible(driver, car string, eligibleByCar map[string]bool) bool {
+	if strings.Contains(strings.ToLower(strings.TrimSpace(driver)), "(i)") {
+		return false
+	}
+	car = strings.TrimSpace(car)
+	if car != "" && eligibleByCar != nil {
+		if eligible, exists := eligibleByCar[car]; exists && !eligible {
+			return false
+		}
+	}
+	return true
 }
 
 func joinWithSlashUnique(base, next string) string {

@@ -32,16 +32,41 @@
   }
 
   // ─── Driver names ───────────────────────────────────────────────────────
-  var driverDisplayNames = { 'Cleetus Mitchell': 'Garrett Mitchell' };
+  var driverDisplayNames = { 'Cleetus Mitchell': 'Garrett Mitchell', 'Woohyun Shin': 'Michael Shin' };
+
+  /** Latin diacritics → ASCII (mirrors internal/driverutil/slug.go). */
+  function foldDiacritics(value) {
+    if (value == null) return '';
+    var out = String(value);
+    var pairs = [
+      ['ü', 'u'], ['Ü', 'u'], ['é', 'e'], ['É', 'e'], ['á', 'a'], ['Á', 'a'],
+      ['í', 'i'], ['Í', 'i'], ['ó', 'o'], ['Ó', 'o'], ['ú', 'u'], ['Ú', 'u'],
+      ['ñ', 'n'], ['Ñ', 'n'], ['ä', 'a'], ['Ä', 'a'], ['ö', 'o'], ['Ö', 'o'],
+      ['ß', 'ss'], ['ø', 'o'], ['Ø', 'o'], ['å', 'a'], ['Å', 'a'],
+      ['æ', 'ae'], ['Æ', 'ae'], ['ç', 'c'], ['Ç', 'c'],
+      ['è', 'e'], ['È', 'e'], ['ê', 'e'], ['Ê', 'e'], ['ë', 'e'], ['Ë', 'e'],
+      ['ì', 'i'], ['Ì', 'i'], ['î', 'i'], ['Î', 'i'], ['ï', 'i'], ['Ï', 'i'],
+      ['ò', 'o'], ['Ò', 'o'], ['ô', 'o'], ['Ô', 'o'], ['ù', 'u'], ['Ù', 'u'],
+      ['û', 'u'], ['Û', 'u'], ['ý', 'y'], ['Ý', 'y'], ['ÿ', 'y'],
+      ['ž', 'z'], ['Ž', 'z'], ['š', 's'], ['Š', 's'], ['č', 'c'], ['Č', 'c'],
+      ['ř', 'r'], ['Ř', 'r'], ['ď', 'd'], ['Ď', 'd'], ['ť', 't'], ['Ť', 't'],
+      ['ň', 'n'], ['Ň', 'n'], ['ł', 'l'], ['Ł', 'l'], ['ą', 'a'], ['Ą', 'a'],
+      ['ę', 'e'], ['Ę', 'e'], ['ś', 's'], ['Ś', 's'], ['ź', 'z'], ['Ź', 'z'],
+      ['ż', 'z'], ['Ż', 'z'], ['ć', 'c'], ['Ć', 'c'], ['ő', 'o'], ['Ő', 'o'],
+      ['ű', 'u'], ['Ű', 'u'], ['à', 'a'], ['À', 'a'], ['â', 'a'], ['Â', 'a'],
+      ['ã', 'a'], ['Ã', 'a'], ['õ', 'o'], ['Õ', 'o'], ['ð', 'd'], ['Ð', 'd'],
+      ['þ', 'th'], ['Þ', 'th'], ['đ', 'd'], ['Đ', 'd'], ['ħ', 'h'], ['Ħ', 'h'],
+      ['ı', 'i'], ['İ', 'i']
+    ];
+    for (var i = 0; i < pairs.length; i++) {
+      if (out.indexOf(pairs[i][0]) >= 0) out = out.split(pairs[i][0]).join(pairs[i][1]);
+    }
+    return out.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 
   function driverNameKey(name) {
     if (name == null) return '';
-    return String(name)
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
+    return foldDiacritics(name).toLowerCase().replace(/\s+/g, ' ').trim();
   }
 
   function driverDisplayName(name) {
@@ -52,7 +77,7 @@
       var seen = {};
       var out = [];
       for (var i = 0; i < parts.length; i++) {
-        var p = parts[i].trim();
+        var p = foldDiacritics(parts[i].trim());
         if (!p) continue;
         var k = driverNameKey(p);
         if (seen[k]) continue;
@@ -61,19 +86,42 @@
       }
       trimmed = out.join(' / ');
     }
+    trimmed = foldDiacritics(trimmed);
     trimmed = trimmed.replace(/\s*\((?:i|r|g)\)\s*$/i, '').trim();
+    trimmed = trimmed.replace(/\s*\((?:tba|tbc|tbd)\)\s*$/i, '').trim();
     var withoutRaces = trimmed.replace(/\s*\(\d+\s+races?\)\s*$/i, '').trim();
     var normalized = driverDisplayNames[withoutRaces] || driverDisplayNames[trimmed] || withoutRaces || trimmed;
+    normalized = foldDiacritics(normalized);
     if (normalized === 'AJ Allmendinger') return 'A. J. Allmendinger';
     return normalized;
   }
 
   function slugify(str) {
-    return String(str).toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/ß/g, 'ss').replace(/æ/g, 'ae').replace(/ø/g, 'o').replace(/ł/g, 'l')
+    return resolveDriverSlug(foldDiacritics(String(str)).toLowerCase()
       .replace(/[^a-z0-9\u0400-\u04ff]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/^-+|-+$/g, ''));
+  }
+
+  /** Follow driver_profile_redirects.json (optional map from search bootstrap). */
+  function resolveDriverSlug(slug, redirects) {
+    slug = String(slug || '').trim().toLowerCase();
+    if (!slug) return '';
+    var seen = {};
+    var map = redirects && typeof redirects === 'object' ? redirects : null;
+    while (slug) {
+      var next = map ? map[slug] : '';
+      if (!next) {
+        if (slug === 'woohyun-shin' || slug === 'w-shin' || slug === 'm-shin') next = 'michael-shin';
+        else if (slug === 'nico-h-lkenberg' || slug === 'nicolas-hulkenberg' || slug === 'nicolas-h-lkenberg') next = 'nico-hulkenberg';
+        else if (slug === 'sergio-p-rez') next = 'sergio-perez';
+        else break;
+      }
+      next = String(next).trim().toLowerCase();
+      if (!next || seen[slug]) break;
+      seen[slug] = true;
+      slug = next;
+    }
+    return slug;
   }
 
   // GTWCE: "A, B". Stock-car "Surname, First" — one word in each part, not a crew.
@@ -107,6 +155,7 @@
     var seen = {};
     var out = [];
     parts.forEach(function (p) {
+      p = foldDiacritics(p);
       var k = driverNameKey(p);
       if (seen[k]) return;
       seen[k] = true;
@@ -154,6 +203,7 @@
   function driverLinkHtml(name) {
     var raw = String(name == null ? '' : name).trim();
     if (!raw || dash(raw) === '—') return '—';
+    if (/^(?:tba|tbc|tbd)$/i.test(raw)) return '—';
     if (raw.indexOf('/') >= 0 || raw.indexOf(';') >= 0 || isCommaSeparatedCrew(raw)) return driversCellHtml(raw);
     var display = driverDisplayName(raw);
     if (!display || dash(display) === '—') return '—';
@@ -391,7 +441,7 @@
 
   // ─── Series categories ─────────────────────────────────────────────────────
   var categories = [
-    { key: 'openwheel', ids: ['F1', 'INDYCAR', 'SUPER_FORMULA', 'F2', 'F3', 'FREC', 'F4_IT', 'SMP_F4_RU'] },
+    { key: 'openwheel', ids: ['F1', 'INDYCAR', 'SUPER_FORMULA', 'F2', 'F3', 'FREC', 'F4_IT'] },
     { key: 'stockcar',  ids: ['NASCAR_CUP', 'NOAPS', 'NASCAR_TRUCK', 'ARCA', 'NASCAR_MODIFIED'] },
     { key: 'endurance', ids: ['WEC', 'ELMS', 'IMSA'] },
     // In Touring, show Supercars first
@@ -459,6 +509,110 @@
     return getLang() === 'ru'
       ? d1day + '\u00a0' + m1 + '\u2013' + d2day + '\u00a0' + m2
       : m1 + '\u00a0' + d1day + '\u2013' + m2 + '\u00a0' + d2day;
+  }
+
+  /**
+   * Race duration in hours when encoded in the event name
+   * (e.g. "24 Hours of Le Mans", "Mobil 1 Twelve Hours of Sebring", "Rolex 24 at Daytona").
+   * Returns null when duration cannot be inferred from the title.
+   */
+  function parseNamedRaceDurationHours(name) {
+    var nm = String(name || '').toLowerCase().trim();
+    if (!nm) return null;
+
+    var numeric = nm.match(/\b(\d{1,2})\s*hours?\s+of\b/);
+    if (numeric) return parseInt(numeric[1], 10);
+
+    var wordHours = {
+      twelve: 12, eleven: 11, ten: 10, nine: 9, eight: 8, seven: 7,
+      six: 6, five: 5, four: 4, three: 3, two: 2, one: 1
+    };
+    var wordMatch = nm.match(/\b(twelve|eleven|ten|nine|eight|seven|six|five|four|three|two|one)\s+hours?\s+of\b/);
+    if (wordMatch) return wordHours[wordMatch[1]];
+
+    if (/\brolex\s*24\b/.test(nm) || /\b24\s+at\s+daytona\b/.test(nm)) return 24;
+
+    return null;
+  }
+
+  /** LIVE badge end: named race duration (+2 h buffer) or fallbackEndTs when unknown. */
+  function liveEndTsForEvent(ev, startTs, fallbackEndTs) {
+    var hours = parseNamedRaceDurationHours(ev && ev.name);
+    if (hours != null && startTs) {
+      return startTs + (hours + 2) * 3600000;
+    }
+    return fallbackEndTs != null ? fallbackEndTs : (startTs ? startTs + 3 * 3600000 : null);
+  }
+
+  function isIsoYmdDate(s) {
+    return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
+  }
+
+  /** Typical race length in hours when not encoded in the event title. */
+  function defaultRaceDurationHours(ev) {
+    var sid = String((ev && (ev._seriesId || ev.series_id)) || '').toUpperCase();
+    if (sid === 'NASCAR_CUP' || sid === 'NOAPS' || sid === 'NASCAR_TRUCK' || sid === 'ARCA' || sid === 'NASCAR_MODIFIED') return 4.5;
+    if (sid === 'INDYCAR') return 3.5;
+    if (sid === 'F1') return 3.5;
+    if (sid === 'F2' || sid === 'F3') return 2.5;
+    if (sid === 'SUPERCARS' || sid === 'SUPER_FORMULA' || sid === 'SUPER_GT' || sid === 'DTM') return 3.5;
+    if (sid === 'WEC' || sid === 'ELMS') return 6;
+    if (sid === 'IMSA') {
+      var nm = String((ev && ev.name) || '').toLowerCase();
+      if (nm.indexOf('rolex') >= 0 || /\b24\b/.test(nm)) return 26;
+      if (nm.indexOf('12 hour') >= 0 || nm.indexOf('twelve') >= 0) return 13;
+      if (nm.indexOf('10 hour') >= 0 || nm.indexOf('ten') >= 0 || nm.indexOf('petit le mans') >= 0) return 11;
+      if (nm.indexOf('six hours') >= 0 || nm.indexOf('6 hour') >= 0) return 7;
+      if (nm.indexOf('long beach') >= 0) return 2.25;
+      if (nm.indexOf('detroit') >= 0) return 2.25;
+      if (nm.indexOf('monterey') >= 0 || nm.indexOf('laguna seca') >= 0) return 2.5;
+      return 3.5;
+    }
+    return 4;
+  }
+
+  function raceDurationHours(ev) {
+    var named = parseNamedRaceDurationHours(ev && ev.name);
+    if (named != null) return named;
+    return defaultRaceDurationHours(ev);
+  }
+
+  /**
+   * Estimated UTC moment when the race is over (uses getEventRaceUtcMs + duration from title).
+   * Shared by Last Results and Next Race cards.
+   */
+  function estimateRaceFinishedUtcMs(ev) {
+    if (!ev) return null;
+    var getRaceUtc = window.TGA.getEventRaceUtcMs;
+    var startUtc = getRaceUtc ? getRaceUtc(ev) : 0;
+    if (!startUtc) return null;
+    return startUtc + raceDurationHours(ev) * 3600000;
+  }
+
+  /** Whether the event should appear in Last Results (race window ended). */
+  function isPastForLastResultsEvent(ev) {
+    if (!ev) return false;
+    var today = new Date();
+    var todayISO = today.getFullYear() + '-' +
+      ('0' + (today.getMonth() + 1)).slice(-2) + '-' +
+      ('0' + today.getDate()).slice(-2);
+    var startStr = (ev.start_date || ev.date || '').slice(0, 10);
+    var endStr = (ev.end_date || startStr || '').slice(0, 10);
+    if (!isIsoYmdDate(endStr)) return false;
+    if (isIsoYmdDate(startStr) && startStr > todayISO) return false;
+    if (endStr < todayISO) return true;
+    var finMs = estimateRaceFinishedUtcMs(ev);
+    if (finMs == null) return endStr <= todayISO;
+    return Date.now() >= finMs;
+  }
+
+  /** When to drop an event from Next Race cards (after estimated finish + small buffer). */
+  function nextRaceEndTs(ev, startTs, fallbackEndTs) {
+    var finMs = estimateRaceFinishedUtcMs(ev);
+    if (finMs != null) {
+      return finMs + 3600000;
+    }
+    return fallbackEndTs != null ? fallbackEndTs : (startTs ? startTs + 3 * 3600000 : null);
   }
 
   /** Parse event start datetime. timeStr in HH:MM or 12h AM/PM/a.m./p.m. tzOffset: '+03:00' (MSK) or '-05:00' (EST). */
@@ -650,6 +804,22 @@
     }
   }
 
+  function wecStandingsRoundLabel(eventNames, idx) {
+    var raw = String((eventNames && eventNames[idx]) || '').trim();
+    if (!raw) return 'R' + String((idx || 0) + 1);
+    var lc = raw.toLowerCase();
+    if (lc.indexOf('imola') >= 0) return 'IMO';
+    if (lc.indexOf('spa') >= 0) return 'SPA';
+    if (lc.indexOf('lone star') >= 0) return 'COT';
+    if (lc.indexOf('le mans') >= 0) return 'LEM';
+    if (lc.indexOf('são paulo') >= 0 || lc.indexOf('sao paulo') >= 0) return 'SAO';
+    if (lc.indexOf('fuji') >= 0) return 'FUJ';
+    if (lc.indexOf('qatar') >= 0) return 'QAT';
+    if (lc.indexOf('bahrain') >= 0) return 'BAH';
+    var compact = raw.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+    return compact.slice(0, 3) || ('R' + String((idx || 0) + 1));
+  }
+
   /** IMSA / GTWCE / ELMS / WEC / Super GT: per-class tables in #standings-imsa-wrap  */
   function buildImsaGtwceClassStandingsHtml(dataObj, seriesKey, mode) {
     var tFn = function (k) { return window.TGA.t(k); };
@@ -668,8 +838,12 @@
     var sk = seriesKey;
     var lang = getLang();
     var carLabel = tFn('th.car') || 'Car';
+    var showModelCol = sk !== 'wec';
     function raceHeaderLabel(code, idx) {
       if (!code || typeof code !== 'string') return code;
+      if (sk === 'wec') {
+        return wecStandingsRoundLabel(eventNamesForStandings, idx);
+      }
       if (sk === 'gtwce_end' || sk === 'gtwce_sprint') {
         return code;
       }
@@ -755,8 +929,8 @@
           var tr1 = '<th class="col-num" rowspan="2">' + tFn('th.pos') + '</th>';
           if (hasCarNum) tr1 += '<th class="col-car" rowspan="2">' + tFn('th.no') + '</th>';
           if (!isCrewMode) tr1 += '<th rowspan="2">' + tFn('th.driver') + '</th>';
-          tr1 += '<th rowspan="2">' + tFn('th.team') + '</th>' +
-            '<th rowspan="2">' + esc(carLabel) + '</th>';
+          tr1 += '<th rowspan="2">' + tFn('th.team') + '</th>';
+          if (showModelCol) tr1 += '<th rowspan="2">' + esc(carLabel) + '</th>';
           for (var im = 0; im < raceOrder.length; im++) {
             tr1 += '<th class="col-race" colspan="2">' + esc(raceHeaderLabel(raceOrder[im], im)) + '</th>';
           }
@@ -772,7 +946,8 @@
             var td = '<td class="col-num">' + posDisplay + '</td>';
             if (hasCarNum) td += '<td class="col-car">' + esc(row.car || '—') + '</td>';
             if (!isCrewMode) td += '<td>' + driversCellHtml(row.driver) + '</td>';
-            td += '<td>' + esc(dash(row.team)) + '</td><td>' + carCell(row) + '</td>';
+            td += '<td>' + esc(dash(row.team)) + '</td>';
+            if (showModelCol) td += '<td>' + carCell(row) + '</td>';
             for (var jm = 0; jm < raceOrder.length; jm++) {
               var rcode = raceOrder[jm];
               var isCmp = completedRacesSet[rcode];
@@ -789,7 +964,8 @@
           th = '<th class="col-num">' + tFn('th.pos') + '</th>';
           if (hasCarNum) th += '<th class="col-car">' + tFn('th.no') + '</th>';
           if (!isCrewMode) th += '<th>' + tFn('th.driver') + '</th>';
-          th += '<th>' + tFn('th.team') + '</th><th>' + esc(carLabel) + '</th>';
+          th += '<th>' + tFn('th.team') + '</th>';
+          if (showModelCol) th += '<th>' + esc(carLabel) + '</th>';
           for (var i = 0; i < raceOrder.length; i++) {
             th += '<th class="col-race">' + esc(raceHeaderLabel(raceOrder[i], i)) + '</th>';
           }
@@ -800,7 +976,8 @@
             var td = '<td class="col-num">' + posDisplay + '</td>';
             if (hasCarNum) td += '<td class="col-car">' + esc(row.car || '—') + '</td>';
             if (!isCrewMode) td += '<td>' + driversCellHtml(row.driver) + '</td>';
-            td += '<td>' + esc(dash(row.team)) + '</td><td>' + carCell(row) + '</td>';
+            td += '<td>' + esc(dash(row.team)) + '</td>';
+            if (showModelCol) td += '<td>' + carCell(row) + '</td>';
             td += raceCells(row);
             td += '<td class="col-pts">' + esc(dash(row.points)) + '</td>';
             return '<tr>' + td + '</tr>';
@@ -824,11 +1001,13 @@
   window.TGA.dash                     = dash;
   window.TGA.standingsRacePosOnly     = standingsRacePosOnly;
   window.TGA.driverDisplayName        = driverDisplayName;
+  window.TGA.foldDiacritics           = foldDiacritics;
   window.TGA.isGuestEntryRow          = isGuestEntryRow;
   window.TGA.guestCarNumberSet        = guestCarNumberSet;
   window.TGA.entryListDriverCell      = entryListDriverCell;
   window.TGA.entryListDriverLabel     = entryListDriverLabel;
   window.TGA.slugify                  = slugify;
+  window.TGA.resolveDriverSlug        = resolveDriverSlug;
   window.TGA.driverLinkHtml           = driverLinkHtml;
   window.TGA.driversCellHtml          = driversCellHtml;
   window.TGA.splitDriverNames         = splitDriverNames;
@@ -857,4 +1036,10 @@
   window.TGA.formatShortDate          = formatShortDate;
   window.TGA.formatDateRange          = formatDateRange;
   window.TGA.parseEventDate           = parseEventDate;
+  window.TGA.parseNamedRaceDurationHours = parseNamedRaceDurationHours;
+  window.TGA.liveEndTsForEvent        = liveEndTsForEvent;
+  window.TGA.raceDurationHours          = raceDurationHours;
+  window.TGA.estimateRaceFinishedUtcMs  = estimateRaceFinishedUtcMs;
+  window.TGA.isPastForLastResultsEvent  = isPastForLastResultsEvent;
+  window.TGA.nextRaceEndTs              = nextRaceEndTs;
 })();

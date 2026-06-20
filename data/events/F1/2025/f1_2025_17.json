@@ -100,7 +100,7 @@
     },
     {
       "number": "27",
-      "driver": "Nico Hülkenberg",
+      "driver": "Nico Hulkenberg",
       "team": "Stake F1 Team Kick Sauber",
       "manufacturer": "Kick Sauber-Ferrari",
       "constructor": "Kick Sauber-Ferrari",
@@ -177,7 +177,7 @@
         {
           "title": "Practice 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -276,7 +276,7 @@
             [
               "12",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.282s",
               "18"
@@ -350,7 +350,7 @@
         {
           "title": "Practice 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -497,7 +497,7 @@
             [
               "18",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.527s",
               "22"
@@ -523,7 +523,7 @@
         {
           "title": "Practice 3",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -622,7 +622,7 @@
             [
               "12",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.205s",
               "17"
@@ -873,7 +873,7 @@
             [
               "17",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "1:42.916",
               "N/A",
@@ -928,7 +928,7 @@
             "Grid",
             "Laps led",
             "Best lap",
-            "Pts."
+            "Points"
           ],
           "rows": [
             [
@@ -1114,7 +1114,7 @@
             [
               "16",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "51",
               "+1:20.237",
@@ -1185,10 +1185,6 @@
         [
           "SC №1",
           "1–4"
-        ],
-        [
-          "SC №2",
-          "17–19"
         ]
       ]
     },
@@ -1371,7 +1367,7 @@
           "51"
         ],
         [
-          "Hülkenberg",
+          "Hulkenberg",
           "H 1–35",
           "M 36–51",
           "",

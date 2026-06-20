@@ -23,13 +23,13 @@
   "entry_list": [
     {
       "number": "1",
-      "driver": "Rafael Câmara",
+      "driver": "Rafael Camara",
       "team": "Invicta Racing",
       "driver_slug": "rafael-camara"
     },
     {
       "number": "2",
-      "driver": "Joshua Dürksen",
+      "driver": "Joshua Durksen",
       "team": "Invicta Racing",
       "driver_slug": "joshua-durksen"
     },
@@ -47,7 +47,7 @@
     },
     {
       "number": "5",
-      "driver": "Noel León",
+      "driver": "Noel Leon",
       "team": "Campos Racing",
       "driver_slug": "noel-leon"
     },
@@ -71,7 +71,7 @@
     },
     {
       "number": "9",
-      "driver": "Gabriele Minì",
+      "driver": "Gabriele Mini",
       "team": "MP Motorsport",
       "driver_slug": "gabriele-mini"
     },
@@ -83,7 +83,7 @@
     },
     {
       "number": "11",
-      "driver": "Sebastián Montoya",
+      "driver": "Sebastian Montoya",
       "team": "Prema Racing",
       "driver_slug": "sebastian-montoya"
     },
@@ -131,13 +131,13 @@
     },
     {
       "number": "22",
-      "driver": "Nicolás Varrone",
+      "driver": "Nicolas Varrone",
       "team": "Van Amersfoort Racing",
       "driver_slug": "nicolas-varrone"
     },
     {
       "number": "23",
-      "driver": "Rafael Villagómez",
+      "driver": "Rafael Villagomez",
       "team": "Van Amersfoort Racing",
       "driver_slug": "rafael-villagomez"
     },
@@ -173,7 +173,7 @@
         "Laps",
         "Time",
         "Gap",
-        "Int.",
+        "Int",
         "KPH"
       ],
       "rows": [
@@ -235,7 +235,7 @@
         [
           "6",
           "5",
-          "N. León",
+          "N. Leon",
           "Campos Racing",
           "18",
           "1:22.746",
@@ -257,7 +257,7 @@
         [
           "8",
           "2",
-          "J. Dürksen",
+          "J. Durksen",
           "Invicta Racing",
           "26",
           "1:22.936",
@@ -301,7 +301,7 @@
         [
           "12",
           "9",
-          "G. Minì",
+          "G. Mini",
           "MP Motorsport",
           "19",
           "1:23.150",
@@ -323,7 +323,7 @@
         [
           "14",
           "1",
-          "R. Câmara",
+          "R. Camara",
           "Invicta Racing",
           "22",
           "1:23.158",
@@ -356,7 +356,7 @@
         [
           "17",
           "23",
-          "R. Villagómez",
+          "R. Villagomez",
           "Van Amersfoort Racing",
           "24",
           "1:23.282",
@@ -439,7 +439,7 @@
         "Laps",
         "Time",
         "Gap",
-        "Int.",
+        "Int",
         "KPH"
       ],
       "rows": [
@@ -457,7 +457,7 @@
         [
           "2",
           "1",
-          "R. Câmara",
+          "R. Camara",
           "Invicta Racing",
           "19",
           "1:21.689",
@@ -501,7 +501,7 @@
         [
           "6",
           "2",
-          "J. Dürksen",
+          "J. Durksen",
           "Invicta Racing",
           "18",
           "1:21.780",
@@ -523,7 +523,7 @@
         [
           "8",
           "5",
-          "N. León",
+          "N. Leon",
           "Campos Racing",
           "18",
           "1:21.881",
@@ -534,7 +534,7 @@
         [
           "9",
           "23",
-          "R. Villagómez",
+          "R. Villagomez",
           "Van Amersfoort Racing",
           "17",
           "1:21.902",
@@ -545,7 +545,7 @@
         [
           "10",
           "9",
-          "G. Minì",
+          "G. Mini",
           "MP Motorsport",
           "16",
           "1:21.971",
@@ -705,7 +705,7 @@
             "Laps",
             "Time",
             "Gap",
-            "Int.",
+            "Int",
             "KPH",
             "Best",
             "Lap",
@@ -715,7 +715,7 @@
             [
               "1",
               "5",
-              "N. León",
+              "N. Leon",
               "Campos Racing",
               "28",
               "43:36.869",
@@ -729,7 +729,7 @@
             [
               "2",
               "9",
-              "G. Minì",
+              "G. Mini",
               "MP Motorsport",
               "28",
               "43:40.595",
@@ -799,7 +799,7 @@
             [
               "7",
               "1",
-              "R. Câmara",
+              "R. Camara",
               "Invicta Racing",
               "28",
               "43:46.587",
@@ -953,7 +953,7 @@
             [
               "DNF",
               "23",
-              "R. Villagómez",
+              "R. Villagomez",
               "Van Amersfoort Racing",
               "24",
               "37:40.027",
@@ -981,7 +981,7 @@
             [
               "DNF",
               "2",
-              "J. Dürksen",
+              "J. Durksen",
               "Invicta Racing",
               "17",
               "26:23.879",
@@ -1024,7 +1024,7 @@
             "Laps",
             "Time",
             "Gap",
-            "Int.",
+            "Int",
             "KPH",
             "Best",
             "Lap",
@@ -1062,7 +1062,7 @@
             [
               "3",
               "9",
-              "G. Minì",
+              "G. Mini",
               "MP Motorsport",
               "37",
               "1:03:09.336",
@@ -1160,7 +1160,7 @@
             [
               "10",
               "5",
-              "N. León",
+              "N. Leon",
               "Campos Racing",
               "37",
               "1:03:16.583",
@@ -1174,7 +1174,7 @@
             [
               "11",
               "2",
-              "J. Dürksen",
+              "J. Durksen",
               "Invicta Racing",
               "37",
               "1:03:19.613",
@@ -1216,7 +1216,7 @@
             [
               "14",
               "1",
-              "R. Câmara",
+              "R. Camara",
               "Invicta Racing",
               "34",
               "1:03:20.867",
@@ -1272,7 +1272,7 @@
             [
               "DNF",
               "23",
-              "R. Villagómez",
+              "R. Villagomez",
               "Van Amersfoort Racing",
               "16",
               "27:24.230",

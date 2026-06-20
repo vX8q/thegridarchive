@@ -98,7 +98,7 @@ func collapseSpacedInitials(sLower string) string {
 // may be "A. Aksoy" and "Alp Aksoy" across races), otherwise canonicalDriverKey.
 func standingsAggregateKey(seriesID, driver, car string) string {
 	car = strings.TrimSpace(car)
-	if (strings.EqualFold(seriesID, "F4_IT") || strings.EqualFold(seriesID, "SMP_F4_RU")) && car != "" {
+	if strings.EqualFold(seriesID, "F4_IT") && car != "" {
 		return "#" + car
 	}
 	key := canonicalDriverKey(driver)
@@ -118,7 +118,7 @@ func standingsRacePosCell(seriesID, raw string) string {
 	if strings.Contains(s, "/") {
 		s = strings.TrimSpace(strings.SplitN(s, "/", 2)[0])
 	}
-	if strings.EqualFold(seriesID, "F4_IT") || strings.EqualFold(seriesID, "SMP_F4_RU") {
+	if strings.EqualFold(seriesID, "F4_IT") {
 		if i := strings.Index(s, "*"); i >= 0 {
 			s = strings.TrimSpace(s[:i])
 		}

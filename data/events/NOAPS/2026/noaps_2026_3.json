@@ -15,7 +15,7 @@
   "entry_list": [
     {
       "number": "0",
-      "driver": "Alex Labbé",
+      "driver": "Alex Labbe",
       "team": "SS-Green Light Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Bryan Berry",
@@ -629,7 +629,7 @@
         [
           "22",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "101.858",
@@ -877,7 +877,7 @@
     },
     "qualifying": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -1132,7 +1132,7 @@
         [
           "28",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "1:40.243",
@@ -1268,7 +1268,7 @@
     },
     "stage_1": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -1360,7 +1360,7 @@
     },
     "stage_2": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -1612,7 +1612,7 @@
           "13",
           "28",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "65",

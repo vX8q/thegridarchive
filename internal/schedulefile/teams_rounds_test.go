@@ -306,6 +306,15 @@ func TestDriverMatchKey_AllmendingerVariants(t *testing.T) {
 	}
 }
 
+func TestStripDriverParenSuffix_TBA(t *testing.T) {
+	if got := StripDriverParenSuffix("Max Zachem (TBA)"); got != "Max Zachem" {
+		t.Fatalf("StripDriverParenSuffix = %q", got)
+	}
+	if got := StripDriverParenSuffix("TBA"); got != "TBA" {
+		t.Fatalf("StripDriverParenSuffix(TBA) = %q", got)
+	}
+}
+
 func TestDriverMatchKey_InitialVariants(t *testing.T) {
 	pairs := [][2]string{
 		{"JJ Yeley", "J. J. Yeley"},
@@ -350,6 +359,46 @@ func TestEnrichTeamsRoundsFromEvents_MergesAllmendingerNameVariants(t *testing.T
 	}
 	if data.Teams[0].Rounds != "1–3" {
 		t.Fatalf("rounds = %q, want 1–3", data.Teams[0].Rounds)
+	}
+}
+
+func TestEnrichTeamsRoundsFromEvents_F3ChampionshipOrdinal(t *testing.T) {
+	dataDir := t.TempDir()
+	// F3 2026: consecutive championship round IDs (Monaco = 2, Barcelona = 3, …).
+	schedule := []EventJSON{
+		{ID: "F3_2026_1", SeriesID: "F3", Season: "2026", StartDate: "2026-03-07", EndDate: "2026-03-08"},
+		{ID: "F3_2026_2", SeriesID: "F3", Season: "2026", StartDate: "2026-06-06", EndDate: "2026-06-07"},
+		{ID: "F3_2026_3", SeriesID: "F3", Season: "2026", StartDate: "2026-06-13", EndDate: "2026-06-14"},
+	}
+	writeJSON(t, filepath.Join(dataDir, "schedules", "f3.json"), schedule)
+	writeJSON(t, filepath.Join(dataDir, "teams", "f3.json"), &TeamsWithSpec{
+		Teams: []TeamJSON{{
+			Number: "2", Driver: "Ugo Ugochukwu", Team: "Campos Racing", FullTime: true,
+		}},
+	})
+	row := EntryListRow{Number: "2", Driver: "Ugo Ugochukwu", Team: "Campos Racing"}
+	writeJSON(t, filepath.Join(dataDir, "events", "F3", "2026", "f3_2026_1.json"), &EventDetailJSON{EntryList: []EntryListRow{row}})
+	writeJSON(t, filepath.Join(dataDir, "events", "F3", "2026", "f3_2026_2.json"), &EventDetailJSON{EntryList: []EntryListRow{row}})
+	writeJSON(t, filepath.Join(dataDir, "events", "F3", "2026", "f3_2026_3.json"), &EventDetailJSON{EntryList: []EntryListRow{row}})
+
+	data, err := LoadTeams(dataDir, "f3")
+	if err != nil {
+		t.Fatal(err)
+	}
+	EnrichTeamsRoundsFromEvents(dataDir, "f3", "2026", data)
+	if len(data.Teams) != 1 {
+		t.Fatalf("expected one row, got %d: %+v", len(data.Teams), data.Teams)
+	}
+	if data.Teams[0].Rounds != "1–3" {
+		t.Fatalf("rounds = %q, want 1–3 (not 1, 3–4 from event ID suffix)", data.Teams[0].Rounds)
+	}
+
+	sets := eventRoundSets("f3", schedule, "2026")
+	if got := sets["F3_2026_2"]; len(got) != 1 || got[0] != 2 {
+		t.Fatalf("F3_2026_2 rounds = %v, want [2]", got)
+	}
+	if got := sets["F3_2026_3"]; len(got) != 1 || got[0] != 3 {
+		t.Fatalf("F3_2026_3 rounds = %v, want [3]", got)
 	}
 }
 

@@ -1044,7 +1044,7 @@
     },
     "qualifying": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -2045,7 +2045,7 @@
     },
     "stage_1": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -2137,7 +2137,7 @@
     },
     "stage_2": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",

@@ -1,0 +1,115 @@
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-EN" lang="en-EN">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RaceLive</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="pages/jquery/jquery.mixitup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="pages/css/live.css" type="text/css" />
+    <link rel="stylesheet" href="pages/css/live2.css" type="text/css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@100;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+
+
+
+</head>
+<body>
+	<div id="liveTrack">
+		<div class='img' style="position:relative;">
+		<div class="course"><img src="pages/images/circuit/suzuka_course.png"></div>
+		</div>
+		<div class='img' style="position:absolute;top:0px;left:250px;">
+			<img id="weather" src='pages/images/dummy.gif' width="64">
+		</div>
+		<div class='tempdescr' style="position:absolute;top:0px;left:330px;">
+			<p id="condition"></p>
+		</div>
+        <div class='telopdescr' style="position:absolute;bottom:-37px;left:70px;">
+            <p id="telop"></p>
+        </div>
+		<div class='sector' style="position:absolute;bottom:-250px;left:60px;">
+				<table style="table-layout: fixed;" border=0>
+				<tr><td align="right">Fastest&nbsp;</td><td id="fastno" align="right" width="30"></td><td id="fastname" align="left" width="130"></td><td id="fasttime" align="right"></td></tr>
+
+				<tr><td align="right">Sec1Best&nbsp;</td><td id="sec1no" align="right" width="30"></td><td id="sec1name" align="left" width="130"></td><td id="sec1time" align="right"></td></tr>
+
+
+				<tr><td align="right">Sec2Best&nbsp;</td><td id="sec2no" align="right" width="30"></td><td id="sec2name" align="left" width="130"></td><td id="sec2time" align="right"></td></tr>
+
+
+				<tr><td align="right">Sec3Best&nbsp;</td><td id="sec3no" align="right" width="30"></td><td id="sec3name" align="left" width="130"></td><td id="sec3time" align="right"></td></tr>
+
+
+				<tr><td align="right">Sec4Best&nbsp;</td><td id="sec4no" align="right" width="30"></td><td id="sec4name" align="left" width="130"></td><td id="sec4time" align="right"></td></tr>
+
+
+				<tr><td align="right">SpeedBest&nbsp;</td><td id="spdno" align="right" width="30"></td><td id="spdname" align="left" width="130"></td><td id="spdkm" align="right"></td></tr>
+
+			</table>
+		</div>
+<!--
+		<div class='app' style="position:absolute;bottom:-720px;left:70px;">
+	          <table>
+                    <tr>
+                      <td>
+                        <a href="https://geo.itunes.apple.com/jp/app/resuraibu/id868019588?mt=8" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat;width:165px;height:40px;"></a>
+		       </td>
+                       <td>
+                         <a href="https://play.google.com/store/apps/details?id=jp.racelive&amp;utm_source=global_co&amp;utm_medium=prtnr&amp;utm_content=Mar2515&amp;utm_campaign=PartBadge&amp;pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1" target="_blank"><img src="https://play.google.com/intl/en_us/badges/images/apps/ja-play-badge.png" alt="Get it on Google Play" width="165" /></a>
+	               </td>
+                    </tr>
+                  </table>
+                </div>
+-->
+	</div>
+
+    <div>
+	    <ul id="livetitle"><li class="title"  style="position:absolute;top:0px;left:30px;"></li></ul>
+	    <div class="toggle-container" id="toggleContainer">
+                <label class="switch" style="width: 63px;position:absolute;top: 2px;left: 1034px;">
+                    <input type="checkbox" id="toggleSwitch">
+                    <span class="slider round"></span>
+                </label>
+                <span class="label-text" id="labelText" style="width: 63px;position: absolute;top: 5px;left: 960px;color: #000;font-family: 'Saira', sans-serif;font-size: 17px;font-weight:bold;">SecMode</span>
+            </div>
+
+
+	    <div id="classfilter" style="width: 800px; position:absolute;top:-15px;left:100px;">
+            </div>
+
+	    <ul id="livelaps"><li class="laps"></li></ul>
+
+	    <img id="liveflag" src="pages/images/green_off.png">
+
+
+
+
+    </div>
+    <div id="listtitle"></div>
+    <div id="Container" class="container">
+        <div id="ListArea" class="listarea">
+<!-- DUMMY -->
+<div id="c-1" class="mix category-0" data-sort="-99999999999"></div>
+<!-- DUMMY -->
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var uri = "ws://superformula.racelive.jp:6001/" + "get";
+    var sector = "4";
+    var speed = "ON";
+    var circuit = "superformula";
+</script>
+<script src="pages/js/live.js"></script>
+</body>
+</html>

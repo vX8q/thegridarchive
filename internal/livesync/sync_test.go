@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
+	"time"
 
 	"github.com/vX8q/tga/internal/schedulefile"
 )
@@ -95,17 +97,16 @@ func TestReadLiveIDs_SupportsObjectAndArray(t *testing.T) {
 }
 
 func TestSyncNASCAR_GracefulOnEmptyFeed(t *testing.T) {
-	// Replace fetch functions with stubs.
-	origFetchLive := fetchNASCARLiveFeedFunc
+	origFetchLive := fetchNASCARLiveFeedFullFunc
 	origFetchRaces := fetchNASCARRacesFunc
-	fetchNASCARLiveFeedFunc = func() (*nascarLiveFeed, error) {
+	fetchNASCARLiveFeedFullFunc = func() (*nascarCFLiveFeedJSON, error) {
 		return nil, fmt.Errorf("network down")
 	}
 	fetchNASCARRacesFunc = func(_, _ int) ([]nascarRace, error) {
 		return nil, fmt.Errorf("should not be called")
 	}
 	defer func() {
-		fetchNASCARLiveFeedFunc = origFetchLive
+		fetchNASCARLiveFeedFullFunc = origFetchLive
 		fetchNASCARRacesFunc = origFetchRaces
 	}()
 
@@ -129,12 +130,115 @@ func TestSyncNASCAR_GracefulOnEmptyFeed(t *testing.T) {
 	}
 }
 
-func TestSyncOpenF1_GracefulOnNoSessions(t *testing.T) {
-	origFetch := fetchOpenF1SessionsLatestFunc
-	fetchOpenF1SessionsLatestFunc = func() ([]openF1Session, error) {
+func TestSyncNASCAR_ClearsLiveWhenRaceFinished(t *testing.T) {
+	origFetchLive := fetchNASCARLiveFeedFullFunc
+	origFetchRaces := fetchNASCARRacesFunc
+	fetchNASCARLiveFeedFullFunc = func() (*nascarCFLiveFeedJSON, error) {
+		return &nascarCFLiveFeedJSON{
+			RaceID:     1,
+			SeriesID:   1,
+			LapNumber:  160,
+			LapsInRace: 160,
+			Vehicles: []nascarCFVehicle{
+				{RunningPosition: 1, LapsCompleted: 160, Driver: nascarCFDriver{FullName: "Winner"}},
+			},
+		}, nil
+	}
+	fetchNASCARRacesFunc = func(_, _ int) ([]nascarRace, error) {
+		t.Fatal("should not fetch races when feed is finished")
 		return nil, nil
 	}
-	defer func() { fetchOpenF1SessionsLatestFunc = origFetch }()
+	defer func() {
+		fetchNASCARLiveFeedFullFunc = origFetchLive
+		fetchNASCARRacesFunc = origFetchRaces
+	}()
+
+	dir := t.TempDir()
+	livePath := filepath.Join(dir, "live.json")
+	if err := os.WriteFile(livePath, []byte(`["NASCAR_CUP_2026_16"]`), 0o644); err != nil {
+		t.Fatalf("write seed live.json: %v", err)
+	}
+	if err := SyncNASCAR(dir); err != nil {
+		t.Fatalf("SyncNASCAR error: %v", err)
+	}
+	got, err := os.ReadFile(livePath)
+	if err != nil {
+		t.Fatalf("read live.json: %v", err)
+	}
+	const want = "[]"
+	if strings.TrimSpace(string(got)) != want {
+		t.Fatalf("live.json = %s, want %s", string(got), want)
+	}
+}
+
+func TestSyncNASCAR_ClearsLiveWhenNotRaceDay(t *testing.T) {
+	origFetchLive := fetchNASCARLiveFeedFullFunc
+	origFetchRaces := fetchNASCARRacesFunc
+	origNow := nascarNowFunc
+	fetchNASCARLiveFeedFullFunc = func() (*nascarCFLiveFeedJSON, error) {
+		return &nascarCFLiveFeedJSON{
+			RaceID:     5613,
+			LapNumber:  1,
+			FlagState:  9,
+			LapsInRace: 999,
+			Vehicles: []nascarCFVehicle{
+				{RunningPosition: 1, Driver: nascarCFDriver{FullName: "Tyler Reddick"}},
+			},
+		}, nil
+	}
+	fetchNASCARRacesFunc = func(seriesID, _ int) ([]nascarRace, error) {
+		if seriesID != 1 {
+			return nil, nil
+		}
+		return []nascarRace{{RaceID: 5613, DateScheduled: "2026-06-21T20:00:00Z"}}, nil
+	}
+	nascarNowFunc = func() time.Time {
+		return time.Date(2026, 6, 20, 15, 0, 0, 0, time.UTC)
+	}
+	defer func() {
+		fetchNASCARLiveFeedFullFunc = origFetchLive
+		fetchNASCARRacesFunc = origFetchRaces
+		nascarNowFunc = origNow
+	}()
+
+	dir := t.TempDir()
+	schedDir := filepath.Join(dir, "schedules")
+	if err := os.MkdirAll(schedDir, 0o755); err != nil {
+		t.Fatalf("mkdir schedules: %v", err)
+	}
+	sched := `[{"id":"NASCAR_CUP_2026_17","series_id":"NASCAR_CUP","season":"2026","name":"Anduril 250","start_date":"2026-06-21","end_date":"2026-06-21"}]`
+	if err := os.WriteFile(filepath.Join(schedDir, "nascar_cup.json"), []byte(sched), 0o644); err != nil {
+		t.Fatalf("write schedule: %v", err)
+	}
+	livePath := filepath.Join(dir, "live.json")
+	if err := os.WriteFile(livePath, []byte(`["NASCAR_CUP_2026_17"]`), 0o644); err != nil {
+		t.Fatalf("write seed live.json: %v", err)
+	}
+	if err := SyncNASCAR(dir); err != nil {
+		t.Fatalf("SyncNASCAR error: %v", err)
+	}
+	got, err := os.ReadFile(livePath)
+	if err != nil {
+		t.Fatalf("read live.json: %v", err)
+	}
+	if strings.TrimSpace(string(got)) != "[]" {
+		t.Fatalf("live.json = %s, want []", string(got))
+	}
+}
+
+func TestSyncOpenF1_GracefulOnNoSessions(t *testing.T) {
+	origMeet := fetchOpenF1LatestMeetingSessionsFunc
+	origLatest := fetchOpenF1SessionsLatestRawFunc
+	fetchOpenF1LatestMeetingSessionsFunc = func() ([]openF1SessionFull, error) {
+		return nil, nil
+	}
+	fetchOpenF1SessionsLatestRawFunc = func() ([]openF1SessionFull, error) {
+		return nil, nil
+	}
+	defer func() {
+		fetchOpenF1LatestMeetingSessionsFunc = origMeet
+		fetchOpenF1SessionsLatestRawFunc = origLatest
+	}()
 
 	dir := t.TempDir()
 	livePath := filepath.Join(dir, "live.json")

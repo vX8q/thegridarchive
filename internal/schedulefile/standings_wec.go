@@ -51,9 +51,24 @@ func wecChampionshipEvents(events []EventJSON, season string) []struct {
 	return out
 }
 
-func loadWecEntryBriefByCar(dataDir, eventID string) map[string]struct {
-	team, drivers, car, bucket string
-} {
+type wecEntryBrief struct {
+	team, drivers, car, bucket, series string
+}
+
+func isWecChampionshipSeries(s string) bool {
+	return strings.EqualFold(strings.TrimSpace(s), "WEC")
+}
+
+// wecCarCountsForChampionship is true when the car is eligible for WEC points at this round.
+// If the entry list has no Series column, every Hypercar/LMGT3 crew is treated as WEC.
+func wecCarCountsForChampionship(b wecEntryBrief, sessionHasSeries bool) bool {
+	if !sessionHasSeries {
+		return true
+	}
+	return isWecChampionshipSeries(b.series)
+}
+
+func loadWecEntryBriefByCar(dataDir, eventID string) map[string]wecEntryBrief {
 	raw, err := ReadEventDetailFile(dataDir, eventID)
 	if err != nil || len(raw) == 0 {
 		return nil
@@ -62,9 +77,7 @@ func loadWecEntryBriefByCar(dataDir, eventID string) map[string]struct {
 	if json.Unmarshal(raw, &root) != nil {
 		return nil
 	}
-	out := make(map[string]struct {
-		team, drivers, car, bucket string
-	})
+	out := make(map[string]wecEntryBrief)
 	for _, s := range root.Tables.EntryList.Sessions {
 		bucket := wecBucketForClass(s.Title)
 		if bucket == "" {
@@ -82,10 +95,11 @@ func loadWecEntryBriefByCar(dataDir, eventID string) map[string]struct {
 		}
 		noI, drvI := col("no."), col("drivers")
 		entrantI, carI := col("entrant"), col("car")
+		seriesI := col("series")
 		if noI < 0 || drvI < 0 {
 			continue
 		}
-		var curNum, curTeam, curCar string
+		var curNum, curTeam, curCar, curSeries string
 		var drivers []string
 		flush := func() {
 			if curNum == "" {
@@ -99,6 +113,7 @@ func loadWecEntryBriefByCar(dataDir, eventID string) map[string]struct {
 				e.car = curCar
 			}
 			e.bucket = bucket
+			e.series = curSeries
 			if len(drivers) > 0 {
 				e.drivers = strings.Join(drivers, " / ")
 			}
@@ -106,16 +121,21 @@ func loadWecEntryBriefByCar(dataDir, eventID string) map[string]struct {
 			drivers = nil
 		}
 		for _, row := range s.Rows {
+			no := cellStr(row, noI)
+			if no != "" {
+				flush()
+				curNum = no
+			}
 			if t := cellStr(row, entrantI); t != "" {
 				curTeam = t
 			}
 			if c := cellStr(row, carI); c != "" {
 				curCar = c
 			}
-			no := cellStr(row, noI)
-			if no != "" {
-				flush()
-				curNum = no
+			if seriesI >= 0 {
+				if ser := cellStr(row, seriesI); ser != "" {
+					curSeries = ser
+				}
 			}
 			d := cellStr(row, drvI)
 			if d != "" {
@@ -130,6 +150,66 @@ func loadWecEntryBriefByCar(dataDir, eventID string) map[string]struct {
 	return out
 }
 
+type wecRoundEligibility struct {
+	hasSeriesCol map[string]bool
+	wecCars      map[string]map[string]bool
+}
+
+func loadWecRoundEligibility(dataDir, eventID string) *wecRoundEligibility {
+	entries := loadWecEntryBriefByCar(dataDir, eventID)
+	if len(entries) == 0 {
+		return nil
+	}
+	raw, err := ReadEventDetailFile(dataDir, eventID)
+	if err != nil || len(raw) == 0 {
+		return nil
+	}
+	var root wecGridRoot
+	if json.Unmarshal(raw, &root) != nil {
+		return nil
+	}
+	hasSeriesCol := map[string]bool{}
+	for _, s := range root.Tables.EntryList.Sessions {
+		bucket := wecBucketForClass(s.Title)
+		if bucket == "" {
+			continue
+		}
+		for _, h := range s.Headers {
+			if strings.EqualFold(strings.TrimSpace(anyToStr(h)), "series") {
+				hasSeriesCol[bucket] = true
+				break
+			}
+		}
+	}
+	wecCars := map[string]map[string]bool{
+		"hypercar": {},
+		"lmgt3":    {},
+	}
+	for num, brief := range entries {
+		if brief.bucket == "" {
+			continue
+		}
+		if !wecCarCountsForChampionship(brief, hasSeriesCol[brief.bucket]) {
+			continue
+		}
+		if wecCars[brief.bucket] == nil {
+			wecCars[brief.bucket] = map[string]bool{}
+		}
+		wecCars[brief.bucket][num] = true
+	}
+	return &wecRoundEligibility{hasSeriesCol: hasSeriesCol, wecCars: wecCars}
+}
+
+func wecCarEligibleForRound(el *wecRoundEligibility, bucket, carNum string) bool {
+	if el == nil {
+		return true
+	}
+	if !el.hasSeriesCol[bucket] {
+		return true
+	}
+	return el.wecCars[bucket][carNum]
+}
+
 func wecMergeEntryList(dataDir string, champs []struct {
 	round int
 	ev    EventJSON
@@ -138,8 +218,13 @@ func wecMergeEntryList(dataDir string, champs []struct {
 		if ce.ev.Season != season {
 			continue
 		}
-		for num, brief := range loadWecEntryBriefByCar(dataDir, ce.ev.ID) {
+		entries := loadWecEntryBriefByCar(dataDir, ce.ev.ID)
+		eligibility := loadWecRoundEligibility(dataDir, ce.ev.ID)
+		for num, brief := range entries {
 			if brief.bucket == "" {
+				continue
+			}
+			if !wecCarEligibleForRound(eligibility, brief.bucket, num) {
 				continue
 			}
 			b := buckets[brief.bucket]
@@ -256,6 +341,7 @@ func BuildWecStandingsFromEvents(dataDir string, season string) (*StandingsData,
 			continue
 		}
 		completedSet[code] = true
+		eligibility := loadWecRoundEligibility(dataDir, ce.ev.ID)
 
 		h := rr.Headers
 		classCol := colIndex(h, "Class")
@@ -285,6 +371,9 @@ func BuildWecStandingsFromEvents(dataDir string, season string) (*StandingsData,
 			}
 			carNum := strings.TrimSpace(row[carCol])
 			if carNum == "" {
+				continue
+			}
+			if !wecCarEligibleForRound(eligibility, bName, carNum) {
 				continue
 			}
 			rawPos := ""

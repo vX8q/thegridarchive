@@ -18,14 +18,13 @@
     loadingP.textContent = t('loading');
     container.appendChild(loadingP);
 
-    var fetchJSON = window.TGA && window.TGA.fetchJSON;
-    if (!fetchJSON) fetchJSON = function (url) { return fetch(url).then(function (r) { return r.json(); }); };
+    var API = window.TGA && window.TGA.API;
 
     var maxAttempts = 10;
     var retryDelayMs = 1000;
 
     function loadSeries(attempt) {
-      fetchJSON('/api/series')
+      (API ? API.getSeries() : fetch('/api/series').then(function (r) { return r.json(); }))
       .then(function (data) {
         if (!Array.isArray(data) || data.length === 0) {
           if (attempt + 1 < maxAttempts) {

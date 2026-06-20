@@ -107,7 +107,7 @@
     },
     {
       "number": "27",
-      "driver": "Nico Hülkenberg",
+      "driver": "Nico Hulkenberg",
       "team": "Stake F1 Team Kick Sauber",
       "manufacturer": "Kick Sauber-Ferrari",
       "constructor": "Kick Sauber-Ferrari",
@@ -184,7 +184,7 @@
         {
           "title": "Practice 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -357,7 +357,7 @@
         {
           "title": "Practice 2",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -456,7 +456,7 @@
             [
               "12",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.056s",
               "31"
@@ -530,7 +530,7 @@
         {
           "title": "Practice 3",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -613,7 +613,7 @@
             [
               "10",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+1.109s",
               "21"
@@ -900,7 +900,7 @@
             [
               "19",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "1:16.081",
               "N/A",
@@ -935,7 +935,7 @@
             "Grid",
             "Laps Led",
             "Best Lap",
-            "Pts."
+            "Points"
           ],
           "rows": [
             [
@@ -1085,7 +1085,7 @@
             [
               "13",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "69",
               "+1 lap",
@@ -1190,7 +1190,7 @@
       ],
       "rows": [
         [
-          "Nico Hülkenberg",
+          "Nico Hulkenberg",
           "5 seconds",
           "Jump start"
         ]
@@ -1340,7 +1340,7 @@
           "69"
         ],
         [
-          "Hülkenberg",
+          "Hulkenberg",
           "S 1–4",
           "M 5–40",
           "M 41–69",

@@ -243,7 +243,7 @@
     "practice": {
       "title": "Practice 1",
       "headers": [
-        "Pos.",
+        "Pos",
         "No.",
         "Driver",
         "Team",
@@ -523,7 +523,7 @@
     "practice2": {
       "title": "Practice 2",
       "headers": [
-        "Pos.",
+        "Pos",
         "No.",
         "Driver",
         "Team",
@@ -805,7 +805,7 @@
         {
           "title": "Qualifying Round 4",
           "headers": [
-            "Pos.",
+            "Pos",
             "Group",
             "No.",
             "Driver",
@@ -1060,7 +1060,7 @@
         {
           "title": "Qualifying Round 5",
           "headers": [
-            "Pos.",
+            "Pos",
             "Group",
             "No.",
             "Driver",
@@ -1319,7 +1319,7 @@
         {
           "title": "Race Round 4",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -1674,7 +1674,7 @@
         {
           "title": "Race Round 5",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",

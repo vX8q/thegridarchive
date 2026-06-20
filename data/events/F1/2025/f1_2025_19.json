@@ -111,7 +111,7 @@
     },
     {
       "number": "27",
-      "driver": "Nico Hülkenberg",
+      "driver": "Nico Hulkenberg",
       "team": "Stake F1 Team Kick Sauber",
       "manufacturer": "Kick Sauber-Ferrari",
       "constructor": "Kick Sauber-Ferrari",
@@ -188,7 +188,7 @@
         {
           "title": "Practice 1",
           "headers": [
-            "Pos.",
+            "Pos",
             "No.",
             "Driver",
             "Team",
@@ -207,7 +207,7 @@
             [
               "2",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber",
               "+0.255s",
               "24"
@@ -408,7 +408,7 @@
             [
               "4",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "1:34.236",
               "1:33.577",
@@ -693,7 +693,7 @@
             [
               "11",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "1:33.551",
               "1:33.334",
@@ -809,7 +809,7 @@
             "Grid",
             "Laps led",
             "Best lap",
-            "Pts."
+            "Points"
           ],
           "rows": [
             [
@@ -959,7 +959,7 @@
             [
               "13",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "19",
               "+6.624",
@@ -1066,7 +1066,7 @@
             "Grid",
             "Laps led",
             "Best lap",
-            "Pts."
+            "Points"
           ],
           "rows": [
             [
@@ -1156,7 +1156,7 @@
             [
               "8",
               "27",
-              "Nico Hülkenberg",
+              "Nico Hulkenberg",
               "Kick Sauber-Ferrari",
               "56",
               "+57.249",
@@ -1313,23 +1313,6 @@
         }
       ]
     },
-    "vsc_sprint": {
-      "title": "Race neutralisation",
-      "headers": [
-        "Type",
-        "Laps"
-      ],
-      "rows": [
-        [
-          "SC №1",
-          "1–5"
-        ],
-        [
-          "SC №2",
-          "16–19"
-        ]
-      ]
-    },
     "penalties_sprint_after": {
       "headers": [
         "Driver",
@@ -1436,7 +1419,7 @@
           "56"
         ],
         [
-          "Hülkenberg",
+          "Hulkenberg",
           "M 1–32",
           "S 33–56",
           "",

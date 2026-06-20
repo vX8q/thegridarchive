@@ -12,7 +12,7 @@ import (
 // eventSeriesFolderNames maps series folder under data/events (season subfolders 2025, 2026, etc.).
 // All championships from config: slug (data series id) → folder name for Series/Year layout.
 var eventSeriesFolderNames = map[string]string{
-	"f1": "F1", "f2": "F2", "f3": "F3", "frec": "FREC", "f4_it": "Italian F4", "smp_f4_ru": "SMP F4 Russia", "psc": "Porsche Supercup",
+	"f1": "F1", "f2": "F2", "f3": "F3", "frec": "FREC", "f4_it": "Italian F4", "psc": "Porsche Supercup",
 	"nascar_cup": "NASCAR Cup Series", "nascar_truck": "NASCAR Truck", "nascar_modified": "NASCAR Modified", "arca": "ARCA", "noaps": "NOAPS",
 	"indycar": "IndyCar", "super_formula": "Super Formula",
 	"supercars": "Supercars", "dtm": "DTM", "super_gt": "Super GT",

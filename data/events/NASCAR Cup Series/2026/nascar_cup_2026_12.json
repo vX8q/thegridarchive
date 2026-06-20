@@ -72,7 +72,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -556,7 +556,7 @@
         [
           "17",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "72.775",
@@ -990,7 +990,7 @@
         [
           "16",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "1:11.723",
@@ -1198,7 +1198,7 @@
     },
     "stage_1": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -1290,7 +1290,7 @@
     },
     "stage_2": {
       "headers": [
-        "Pos.",
+        "Pos",
         "#",
         "Driver",
         "Team",
@@ -1529,7 +1529,7 @@
           "13",
           "16",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "100",

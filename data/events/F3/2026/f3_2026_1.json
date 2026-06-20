@@ -9,7 +9,7 @@
   "entry_list": [
     {
       "number": "1",
-      "driver": "Théophile Naël",
+      "driver": "Theophile Nael",
       "team": "Campos Racing",
       "driver_slug": "theophile-nael"
     },
@@ -27,7 +27,7 @@
     },
     {
       "number": "4",
-      "driver": "Noah Strømsted",
+      "driver": "Noah Stromsted",
       "team": "Trident",
       "driver_slug": "noah-stromsted"
     },
@@ -69,7 +69,7 @@
     },
     {
       "number": "11",
-      "driver": "Maciej Gładysz",
+      "driver": "Maciej Gladysz",
       "team": "ART Grand Prix",
       "driver_slug": "maciej-gladysz"
     },
@@ -129,15 +129,15 @@
     },
     {
       "number": "22",
-      "driver": "José Garfias",
+      "driver": "Jose Garfias",
       "team": "Prema Racing",
       "driver_slug": "jose-garfias"
     },
     {
       "number": "23",
-      "driver": "Woohyun Shin",
+      "driver": "Michael Shin",
       "team": "Hitech",
-      "driver_slug": "woohyun-shin"
+      "driver_slug": "michael-shin"
     },
     {
       "number": "24",
@@ -207,7 +207,7 @@
         "Laps",
         "Time",
         "Gap",
-        "Int.",
+        "Int",
         "KPH"
       ],
       "rows": [
@@ -236,7 +236,7 @@
         [
           "3",
           "4",
-          "N. Strømsted",
+          "N. Stromsted",
           "Trident",
           "15",
           "1:35.056",
@@ -247,7 +247,7 @@
         [
           "4",
           "1",
-          "T. Naël",
+          "T. Nael",
           "Campos Racing",
           "14",
           "1:35.070",
@@ -412,7 +412,7 @@
         [
           "19",
           "11",
-          "M. Gładysz",
+          "M. Gladysz",
           "ART Grand Prix",
           "15",
           "1:35.692",
@@ -561,14 +561,14 @@
         "Laps",
         "Time",
         "Gap",
-        "Int.",
+        "Int",
         "KPH"
       ],
       "rows": [
         [
           "1",
           "1",
-          "T. Naël",
+          "T. Nael",
           "Campos Racing",
           "14",
           "1:34.187",
@@ -601,7 +601,7 @@
         [
           "4",
           "11",
-          "M. Gładysz",
+          "M. Gladysz",
           "ART Grand Prix",
           "15",
           "1:34.454",
@@ -667,7 +667,7 @@
         [
           "10",
           "4",
-          "N. Strømsted",
+          "N. Stromsted",
           "Trident",
           "12",
           "1:34.638",
@@ -915,7 +915,7 @@
             "Laps",
             "Time",
             "Gap",
-            "Int.",
+            "Int",
             "KPH",
             "Best",
             "Lap",
@@ -967,7 +967,7 @@
             [
               "4",
               "4",
-              "N. Strømsted",
+              "N. Stromsted",
               "Trident",
               "7",
               "11:38.747",
@@ -995,7 +995,7 @@
             [
               "6",
               "11",
-              "M. Gładysz",
+              "M. Gladysz",
               "ART Grand Prix",
               "7",
               "11:41.297",
@@ -1051,7 +1051,7 @@
             [
               "10",
               "1",
-              "T. Naël",
+              "T. Nael",
               "Campos Racing",
               "7",
               "11:48.229",
@@ -1360,7 +1360,7 @@
             "Laps",
             "Time",
             "Gap",
-            "Int.",
+            "Int",
             "KPH",
             "Best",
             "Lap",
@@ -1426,7 +1426,7 @@
             [
               "5",
               "11",
-              "M. Gładysz",
+              "M. Gladysz",
               "ART Grand Prix",
               "23",
               "43:02.906",
@@ -1524,7 +1524,7 @@
             [
               "12",
               "1",
-              "T. Naël",
+              "T. Nael",
               "Campos Racing",
               "23",
               "43:05.943",
@@ -1692,7 +1692,7 @@
             [
               "24",
               "4",
-              "N. Strømsted",
+              "N. Stromsted",
               "TRIDENT",
               "23",
               "43:11.274",

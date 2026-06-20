@@ -1,0 +1,287 @@
+import { readFileSync, writeFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const src = join(root, 'data/events/F1/2026/f1_2026_6.json');
+const out = join(root, 'data/events/F1/2026/f1_2026_7.json');
+
+const base = JSON.parse(readFileSync(src, 'utf8'));
+
+function pr(rows) {
+  return rows.map(([pos, no, driver, team, time, laps]) => [pos, no, driver, team, time, laps]);
+}
+
+const fp1 = pr([
+  ['1', '63', 'George Russell', 'Mercedes', '1:16.363', '27'],
+  ['2', '81', 'Oscar Piastri', 'McLaren', '+0.203s', '29'],
+  ['3', '16', 'Charles Leclerc', 'Ferrari', '+0.520s', '29'],
+  ['4', '3', 'Max Verstappen', 'Red Bull Racing', '+0.684s', '29'],
+  ['5', '67', 'Leonardo Fornaroli', 'McLaren', '+0.853s', '22'],
+  ['6', '97', 'Paul Aron', 'Audi', '+0.958s', '24'],
+  ['7', '30', 'Liam Lawson', 'Racing Bulls', '+1.109s', '24'],
+  ['8', '38', 'Dino Beganovic', 'Ferrari', '+1.415s', '30'],
+  ['9', '41', 'Arvid Lindblad', 'Racing Bulls', '+1.441s', '29'],
+  ['10', '43', 'Franco Colapinto', 'Alpine', '+1.530s', '28'],
+  ['11', '87', 'Oliver Bearman', 'Haas F1 Team', '+1.809s', '25'],
+  ['12', '5', 'Gabriel Bortoleto', 'Audi', '+1.846s', '28'],
+  ['13', '55', 'Carlos Sainz', 'Williams', '+1.930s', '27'],
+  ['14', '36', 'Ayumu Iwasa', 'Red Bull Racing', '+1.935s', '21'],
+  ['15', '72', 'Frederik Vesti', 'Mercedes', '+2.002s', '28'],
+  ['16', '31', 'Esteban Ocon', 'Haas F1 Team', '+2.009s', '27'],
+  ['17', '10', 'Pierre Gasly', 'Alpine', '+2.145s', '23'],
+  ['18', '77', 'Valtteri Bottas', 'Cadillac', '+2.551s', '23'],
+  ['19', '14', 'Fernando Alonso', 'Aston Martin', '+3.704s', '23'],
+  ['20', '18', 'Lance Stroll', 'Aston Martin', '+3.955s', '21'],
+  ['21', '25', 'Colton Herta', 'Cadillac', '+4.334s', '27'],
+]);
+
+const fp2 = pr([
+  ['1', '1', 'Lando Norris', 'McLaren', '1:15.426', '30'],
+  ['2', '63', 'George Russell', 'Mercedes', '+0.009s', '28'],
+  ['3', '81', 'Oscar Piastri', 'McLaren', '+0.057s', '24'],
+  ['4', '16', 'Charles Leclerc', 'Ferrari', '+0.373s', '29'],
+  ['5', '12', 'Kimi Antonelli', 'Mercedes', '+0.589s', '31'],
+  ['6', '3', 'Max Verstappen', 'Red Bull Racing', '+0.895s', '33'],
+  ['7', '41', 'Arvid Lindblad', 'Racing Bulls', '+0.985s', '29'],
+  ['8', '5', 'Gabriel Bortoleto', 'Audi', '+1.185s', '27'],
+  ['9', '44', 'Lewis Hamilton', 'Ferrari', '+1.205s', '28'],
+  ['10', '6', 'Isack Hadjar', 'Red Bull Racing', '+1.248s', '30'],
+  ['11', '27', 'Nico Hulkenberg', 'Audi', '+1.508s', '31'],
+  ['12', '87', 'Oliver Bearman', 'Haas F1 Team', '+1.519s', '31'],
+  ['13', '30', 'Liam Lawson', 'Racing Bulls', '+1.541s', '8'],
+  ['14', '55', 'Carlos Sainz', 'Williams', '+1.594s', '29'],
+  ['15', '43', 'Franco Colapinto', 'Alpine', '+1.625s', '30'],
+  ['16', '10', 'Pierre Gasly', 'Alpine', '+1.834s', '29'],
+  ['17', '31', 'Esteban Ocon', 'Haas F1 Team', '+2.112s', '29'],
+  ['18', '77', 'Valtteri Bottas', 'Cadillac', '+2.799s', '6'],
+  ['19', '23', 'Alexander Albon', 'Williams', '+3.364s', '29'],
+  ['20', '11', 'Sergio Perez', 'Cadillac', '+3.835s', '34'],
+  ['21', '14', 'Fernando Alonso', 'Aston Martin', '+3.860s', '21'],
+  ['22', '18', 'Lance Stroll', 'Aston Martin', '+4.033s', '20'],
+]);
+
+const fp3 = pr([
+  ['1', '63', 'George Russell', 'Mercedes', '1:15.679', '11'],
+  ['2', '81', 'Oscar Piastri', 'McLaren', '+0.214s', '12'],
+  ['3', '16', 'Charles Leclerc', 'Ferrari', '+0.243s', '17'],
+  ['4', '1', 'Lando Norris', 'McLaren', '+0.246s', '15'],
+  ['5', '44', 'Lewis Hamilton', 'Ferrari', '+0.702s', '16'],
+  ['6', '3', 'Max Verstappen', 'Red Bull Racing', '+0.755s', '12'],
+  ['7', '12', 'Kimi Antonelli', 'Mercedes', '+0.821s', '12'],
+  ['8', '6', 'Isack Hadjar', 'Red Bull Racing', '+1.005s', '15'],
+  ['9', '27', 'Nico Hulkenberg', 'Audi', '+1.282s', '22'],
+  ['10', '41', 'Arvid Lindblad', 'Racing Bulls', '+1.341s', '16'],
+  ['11', '5', 'Gabriel Bortoleto', 'Audi', '+1.348s', '13'],
+  ['12', '30', 'Liam Lawson', 'Racing Bulls', '+1.645s', '15'],
+  ['13', '10', 'Pierre Gasly', 'Alpine', '+1.904s', '15'],
+  ['14', '43', 'Franco Colapinto', 'Alpine', '+1.946s', '14'],
+  ['15', '55', 'Carlos Sainz', 'Williams', '+2.051s', '19'],
+  ['16', '31', 'Esteban Ocon', 'Haas F1 Team', '+2.361s', '15'],
+  ['17', '87', 'Oliver Bearman', 'Haas F1 Team', '+2.712s', '13'],
+  ['18', '23', 'Alexander Albon', 'Williams', '+2.733s', '15'],
+  ['19', '11', 'Sergio Perez', 'Cadillac', '+3.012s', '21'],
+  ['20', '14', 'Fernando Alonso', 'Aston Martin', '+3.817s', '18'],
+  ['21', '77', 'Valtteri Bottas', 'Cadillac', '+4.283s', '14'],
+  ['22', '18', 'Lance Stroll', 'Aston Martin', '+4.424s', '17'],
+]);
+
+const quali = [
+  ['1', '63', 'George Russell', 'Mercedes', '1:15.717', '1:15.228', '1:14.679', '1'],
+  ['2', '44', 'Lewis Hamilton', 'Ferrari', '1:15.625', '1:15.418', '1:14.743', '2'],
+  ['3', '12', 'Kimi Antonelli', 'Mercedes', '1:15.977', '1:15.295', '1:14.998', '3'],
+  ['4', '1', 'Lando Norris', 'McLaren-Mercedes', '1:16.287', '1:15.361', '1:15.001', '4'],
+  ['5', '3', 'Max Verstappen', 'Red Bull Racing-Red Bull Ford', '1:16.352', '1:15.484', '1:15.021', '5'],
+  ['6', '6', 'Isack Hadjar', 'Red Bull Racing-Red Bull Ford', '1:16.427', '1:15.754', '1:15.077', '6'],
+  ['7', '81', 'Oscar Piastri', 'McLaren-Mercedes', '1:16.138', '1:15.518', '1:15.090', '7'],
+  ['8', '30', 'Liam Lawson', 'Racing Bulls-Red Bull Ford', '1:16.673', '1:15.585', '1:16.542', '8'],
+  ['9', '27', 'Nico Hulkenberg', 'Audi', '1:16.066', '1:15.768', '1:16.657', '9'],
+  ['10', '16', 'Charles Leclerc', 'Ferrari', '1:15.964', '1:15.281', 'No time', '10'],
+  ['11', '41', 'Arvid Lindblad', 'Racing Bulls-Red Bull Ford', '1:16.425', '1:15.840', 'N/A', '11'],
+  ['12', '5', 'Gabriel Bortoleto', 'Audi', '1:16.616', '1:16.001', 'N/A', '12'],
+  ['13', '43', 'Franco Colapinto', 'Alpine-Mercedes', '1:16.590', '1:16.191', 'N/A', '13'],
+  ['14', '10', 'Pierre Gasly', 'Alpine-Mercedes', '1:16.599', '1:16.261', 'N/A', '14'],
+  ['15', '87', 'Oliver Bearman', 'Haas-Ferrari', '1:16.571', '1:16.389', 'N/A', '15'],
+  ['16', '55', 'Carlos Sainz Jr.', 'Atlassian Williams-Mercedes', '1:16.881', '1:17.827', 'N/A', '16'],
+  ['17', '31', 'Esteban Ocon', 'Haas-Ferrari', '1:17.073', 'N/A', 'N/A', '17'],
+  ['18', '23', 'Alexander Albon', 'Atlassian Williams-Mercedes', '1:17.424', 'N/A', 'N/A', '18'],
+  ['19', '11', 'Sergio Perez', 'Cadillac-Ferrari', '1:17.545', 'N/A', 'N/A', '19'],
+  ['20', '77', 'Valtteri Bottas', 'Cadillac-Ferrari', '1:17.757', 'N/A', 'N/A', '20'],
+  ['21', '18', 'Lance Stroll', 'Aston Martin Aramco-Honda', '1:18.758', 'N/A', 'N/A', '21'],
+  ['22', '14', 'Fernando Alonso', 'Aston Martin Aramco-Honda', '1:18.815', 'N/A', 'N/A', 'PL'],
+];
+
+const race = [
+  ['1', '44', 'Lewis Hamilton', 'Ferrari', '66', '1:32:28.105', '2', '29', '1:20.122', '25'],
+  ['2', '63', 'George Russell', 'Mercedes', '66', '+19.561', '1', '32', '1:20.640', '18'],
+  ['3', '1', 'Lando Norris', 'McLaren-Mercedes', '66', '+23.719', '4', '0', '1:20.232', '15'],
+  ['4', '3', 'Max Verstappen', 'Red Bull Racing-Red Bull Ford', '66', '+40.497', '5', '0', '1:20.230', '12'],
+  ['5', '81', 'Oscar Piastri', 'McLaren-Mercedes', '66', '+58.661', '7', '0', '1:20.835', '10'],
+  ['6', '6', 'Isack Hadjar', 'Red Bull Racing-Red Bull Ford', '65', '+1 lap', '6', '0', '1:20.150', '8'],
+  ['7', '10', 'Pierre Gasly', 'Alpine-Mercedes', '65', '+1 lap', '14', '0', '1:21.960', '6'],
+  ['8', '30', 'Liam Lawson', 'Racing Bulls-Red Bull Ford', '65', '+1 lap', '8', '0', '1:22.691', '4'],
+  ['9', '41', 'Arvid Lindblad', 'Racing Bulls-Red Bull Ford', '65', '+1 lap', '11', '0', '1:21.914', '2'],
+  ['10', '43', 'Franco Colapinto', 'Alpine-Mercedes', '65', '+1 lap', '13', '0', '1:22.449', '1'],
+  ['11', '5', 'Gabriel Bortoleto', 'Audi', '64', '+2 laps', '12', '0', '1:21.446', ''],
+  ['12', '55', 'Carlos Sainz Jr.', 'Atlassian Williams-Mercedes', '64', '+2 laps', '16', '0', '1:22.061', ''],
+  ['13', '31', 'Esteban Ocon', 'Haas-Ferrari', '64', '+2 laps', '17', '0', '1:21.643', ''],
+  ['14', '11', 'Sergio Perez', 'Cadillac-Ferrari', '63', '+3 laps', '19', '0', '1:22.820', ''],
+  ['15', '16', 'Charles Leclerc', 'Ferrari', '62', 'Steering', '10', '1', '1:20.379', ''],
+  ['16', '12', 'Kimi Antonelli', 'Mercedes', '61', 'Engine', '3', '4', '1:20.704', ''],
+  ['17', '87', 'Oliver Bearman', 'Haas-Ferrari', '60', '', '15', '0', '1:22.419', ''],
+  ['NC', '23', 'Alexander Albon', 'Atlassian Williams-Mercedes', '55', '+11 laps', '18', '0', '1:21.744', ''],
+  ['Ret', '14', 'Fernando Alonso', 'Aston Martin Aramco-Honda', '37', 'Battery', 'PL', '0', '1:25.366', ''],
+  ['Ret', '27', 'Nico Hulkenberg', 'Audi', '29', '', '9', '0', '1:21.446', ''],
+  ['Ret', '77', 'Valtteri Bottas', 'Cadillac-Ferrari', '15', '', '20', '0', '1:25.745', ''],
+  ['Ret', '18', 'Lance Stroll', 'Aston Martin Aramco-Honda', '5', 'Gearbox', '21', '0', '1:25.904', ''],
+];
+
+function session(title, sessionName, date, rows) {
+  return {
+    title,
+    meta: {
+      Championship: '2026 FIA Formula 1 World Championship',
+      Session: sessionName,
+      Date: date,
+      Start: '',
+      Length: sessionName.startsWith('Practice') ? '60 mins' : '',
+    },
+    headers: ['Pos.', 'No.', 'Driver', 'Team', 'Time / Gap', 'Laps'],
+    rows,
+  };
+}
+
+base.event_id = 'F1_2026_7';
+base.race = '2026 Barcelona-Catalunya Grand Prix';
+base.date = '14 June 2026';
+base.start_date = '2026-06-12';
+base.end_date = '2026-06-14';
+base.track = 'Circuit de Barcelona-Catalunya';
+base.location = 'Montmeló, Spain';
+base.circuit_name = 'Circuit de Barcelona-Catalunya';
+base.laps = '66';
+base.distance = '307.236 km (190.908 miles)';
+base.tyre_compounds = 'Tyre supplier Pirelli brought the C2, C3 and C4 tyre compounds.';
+base.youtube_id = 'Ey8j_BlLvFM';
+base.youtube_highlights = [{ id: 'Ey8j_BlLvFM', title: 'Race highlights' }];
+base.event_preview =
+  "Circuit de Barcelona-Catalunya is a 4.657 km (2.894 mi) permanent road course in Montmeló, north of Barcelona, built in 1991. The 14-corner layout is considered the ultimate test of overall car balance, with low-speed technical sections balanced by high-speed sweepers and medium-speed corners — making it the traditional venue for Formula One pre-season testing. The 2026 Barcelona-Catalunya Grand Prix is the seventh round of the season, held June 12-14.\n\nKimi Antonelli leads the championship with 156 points, 66 ahead of Lewis Hamilton and 68 ahead of George Russell. Mercedes leads the constructors' standings with 244 points, ahead of Ferrari with 165 and McLaren with 118. Hamilton, now driving for Ferrari, carries momentum from his prior success here — he holds the record for most wins at the circuit with six victories. Antonelli will seek to extend his championship lead, while Lando Norris and McLaren will target additional points in their push forward in both championships. Max Verstappen's Red Bull faces continued pressure on a circuit where precision and consistency determine success.\n\nThe all-time qualifying record at Circuit de Barcelona-Catalunya belongs to Lando Norris, who set a 1:11.383 during qualifying in 2024. The race lap record is held by Oscar Piastri, who clocked a 1:15.743 during the 2025 race.";
+
+base.tables.practice = {
+  sessions: [
+    session('Practice 1', 'Practice 1', 'Fri 12 Jun 2026', fp1),
+    session('Practice 2', 'Practice 2', 'Fri 12 Jun 2026', fp2),
+    session('Practice 3', 'Practice 3', 'Sat 13 Jun 2026', fp3),
+  ],
+};
+
+base.tables.qualifying = {
+  sessions: [
+    {
+      title: 'Qualifying classification',
+      meta: {
+        Championship: '2026 FIA Formula 1 World Championship',
+        Session: 'Qualifying',
+        Date: 'Sat 13 Jun 2026',
+        'Race day': 'Sun 14 Jun 2026',
+        Start: '',
+        Length: '',
+      },
+      headers: ['Pos.', 'No.', 'Driver', 'Constructor', 'Q1', 'Q2', 'Q3', 'Final grid'],
+      rows: quali,
+    },
+  ],
+};
+
+base.tables.race_results = {
+  headers: ['Pos.', 'No.', 'Driver', 'Constructor', 'Laps', 'Time/Retired', 'Grid', 'Laps Led', 'Best Lap', 'Points'],
+  rows: race,
+};
+
+base.tables.penalties_after = {
+  headers: ['Driver', 'Penalty', 'Reason', 'Lost position'],
+  rows: [
+    ['Franco Colapinto', '10 seconds', 'Ignoring yellow flags', '2'],
+    ['Kimi Antonelli', '5 seconds', 'Crossing track limits', '0'],
+  ],
+};
+
+base.tables.best_laps = {
+  headers: ['Pos.', 'No.', 'Driver', 'Team', 'Lap', 'Time of Day', 'Time', 'Avg. Speed'],
+  rows: [
+    ['1', '44', 'Lewis Hamilton', 'Ferrari', '44', '16:05:14', '1:20.122', '209.245'],
+    ['2', '6', 'Isack Hadjar', 'Red Bull Racing', '61', '16:28:35', '1:20.150', '209.172'],
+    ['3', '3', 'Max Verstappen', 'Red Bull Racing', '42', '16:02:59', '1:20.230', '208.964'],
+    ['4', '1', 'Lando Norris', 'McLaren', '37', '15:55:17', '1:20.232', '208.959'],
+    ['5', '16', 'Charles Leclerc', 'Ferrari', '47', '16:09:44', '1:20.379', '208.576'],
+    ['6', '63', 'George Russell', 'Mercedes', '43', '16:03:57', '1:20.640', '207.901'],
+    ['7', '12', 'Kimi Antonelli', 'Mercedes', '46', '16:08:01', '1:20.704', '207.736'],
+    ['8', '81', 'Oscar Piastri', 'McLaren', '46', '16:08:30', '1:20.835', '207.400'],
+    ['9', '5', 'Gabriel Bortoleto', 'Audi', '57', '16:23:03', '1:21.446', '205.844'],
+    ['10', '31', 'Esteban Ocon', 'Haas F1 Team', '65', '16:35:31', '1:21.643', '205.347'],
+    ['11', '23', 'Alexander Albon', 'Williams', '65', '16:35:13', '1:21.744', '205.093'],
+    ['12', '41', 'Arvid Lindblad', 'Racing Bulls', '46', '16:08:34', '1:21.914', '204.668'],
+    ['13', '10', 'Pierre Gasly', 'Alpine', '44', '16:05:25', '1:21.960', '204.553'],
+    ['14', '55', 'Carlos Sainz', 'Williams', '60', '16:27:12', '1:22.061', '204.301'],
+    ['15', '87', 'Oliver Bearman', 'Haas F1 Team', '44', '16:05:53', '1:22.419', '203.414'],
+    ['16', '43', 'Franco Colapinto', 'Alpine', '44', '16:05:29', '1:22.449', '203.340'],
+    ['17', '30', 'Liam Lawson', 'Racing Bulls', '46', '16:08:18', '1:22.691', '202.745'],
+    ['18', '11', 'Sergio Perez', 'Cadillac', '45', '16:06:46', '1:22.820', '202.429'],
+    ['19', '27', 'Nico Hulkenberg', 'Audi', '2', '15:06:22', '1:23.447', '200.908'],
+    ['20', '14', 'Fernando Alonso', 'Aston Martin', '28', '15:43:07', '1:25.366', '196.392'],
+    ['21', '77', 'Valtteri Bottas', 'Cadillac', '3', '15:07:54', '1:25.745', '195.523'],
+    ['22', '18', 'Lance Stroll', 'Aston Martin', '3', '15:07:56', '1:25.904', '195.162'],
+  ],
+};
+
+base.tables.vsc = {
+  title: 'Race neutralisation',
+  headers: ['Type', 'Laps', 'Reason'],
+  rows: [
+    ['VSC №1', '41–42', 'Fernando Alonso stopped (battery) at Turn 9'],
+    ['VSC №2', '63–65', 'Kimi Antonelli stopped (engine)'],
+  ],
+};
+
+base.tables.laps_led = {
+  headers: ['Laps', 'Driver', 'Constructor'],
+  rows: [
+    ['32', 'George Russell', 'Mercedes'],
+    ['29', 'Lewis Hamilton', 'Ferrari'],
+    ['4', 'Kimi Antonelli', 'Mercedes'],
+    ['1', 'Charles Leclerc', 'Ferrari'],
+  ],
+};
+
+base.tables.pit_stops = {
+  title: 'Pit Stops',
+  subtitle: 'H = Hard (C2), M = Medium (C3), S = Soft (C4). Total: 48 pit stops.',
+  headers: ['Driver', 'Stint 1', 'Stint 2', 'Stint 3', 'Stint 4', 'Stint 5', 'Laps'],
+  rows: [
+    ['Hamilton', 'S 1–10', 'H 11–26', 'M 27–40', 'H 41–66', '', '66'],
+    ['Russell', 'M 1–11', 'H 12–35', 'H 36–66', '', '', '66'],
+    ['Norris', 'M 1–12', 'H 13–34', 'H 35–66', '', '', '66'],
+    ['Verstappen', 'S 1–11', 'M 12–28', 'H 29–39', 'M 40–66', '', '66'],
+    ['Piastri', 'M 1–13', 'H 14–35', 'H 36–66', '', '', '66'],
+    ['Hadjar', 'M 1–14', 'H 15–31', 'H 32–57', 'S 58–65', '', '65'],
+    ['Gasly', 'M 1–13', 'H 14–39', 'H 40–65', '', '', '65'],
+    ['Lawson', 'M 1–10', 'H 11–34', 'H 35–65', '', '', '65'],
+    ['Lindblad', 'M 1–21', 'H 22–36', 'H 37–65', '', '', '65'],
+    ['Colapinto', 'S 1–11', 'H 12–33', 'H 34–65', '', '', '65'],
+    ['Bortoleto', 'M 1–14', 'H 15–32', 'H 33–52', 'S 53–64', '', '64'],
+    ['Sainz', 'S 1–13', 'H 14–29', 'H 30–54', 'M 55–64', '', '64'],
+    ['Ocon', 'S 1–12', 'H 13–33', 'M 34–57', 'S 58–64', '', '64'],
+    ['Perez', 'S 1–11', 'H 12–30', 'H 31–38', 'M 39–63', '', '63'],
+    ['Leclerc', 'M 1–15', 'H 16–38', 'H 39–62', '', '', '62'],
+    ['Antonelli', 'M 1–13', 'H 14–36', 'H 37–61', '', '', '61'],
+    ['Bearman', 'M 1–17', 'H 18–38', 'S 39–60', '', '', '60'],
+    ['Albon', 'M 1–12', 'H 13–28', 'H 29–33', 'S 34–55', '', '55'],
+    ['Alonso', 'H 1–20', 'H 21–37', '', '', '', '37'],
+    ['Hulkenberg', 'S 1–12', 'H 13–38', '', '', '', '38'],
+    ['Bottas', 'M 1–13', 'H 14–28', '', '', '', '28'],
+    ['Stroll', 'M 1–5', '', '', '', '', '5'],
+  ],
+};
+
+writeFileSync(out, JSON.stringify(base, null, 2) + '\n', 'utf8');
+console.log('Wrote', out);

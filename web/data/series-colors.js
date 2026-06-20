@@ -17,7 +17,6 @@
     F3:            '#0071c2',
     FREC:          '#5b8def',
     F4_IT:         '#40c463',
-    SMP_F4_RU:     '#6f42c1',
 
     NASCAR_CUP:    '#ffb400',
     NOAPS:         '#ff6b6b',
@@ -39,8 +38,8 @@
 
   window.TGA_SERIES_SHORT = {
     'F1': 'F1', 'INDYCAR': 'IndyCar', 'SUPER_FORMULA': 'Super Formula', 'F2': 'F2', 'F3': 'F3',
-    'FREC': 'F Regional', 'F4_IT': 'F4', 'SMP_F4_RU': 'F4 RU',
-    'NASCAR_CUP': 'Cup', 'NOAPS': 'NOAPS', 'NASCAR_TRUCK': 'Trucks',
+    'FREC': 'F Regional', 'F4_IT': 'F4',
+    'NASCAR_CUP': 'Cup', 'NOAPS': "O'Reilly", 'NASCAR_TRUCK': 'Trucks',
     'ARCA': 'ARCA', 'NASCAR_MODIFIED': 'Modified',
     'WEC': 'WEC', 'ELMS': 'ELMS', 'IMSA': 'IMSA',
     'GTWCE_END': 'GT WC End', 'GTWCE_SPRINT': 'GT WC', 'PSC': 'PSC',

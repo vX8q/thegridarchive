@@ -285,6 +285,22 @@ func attachProfileMetadata(resp map[string]interface{}, profileSlug string, p dr
 	_ = profileSlug
 }
 
+func handleDriverProfileRedirects(w http.ResponseWriter, r *http.Request, dataDir string) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "no-store")
+	redirects, err := loadDriverProfileRedirects(dataDir)
+	if err != nil {
+		slog.Warn("load driver profile redirects failed", "err", err, "trace_id", TraceID(r.Context()))
+		redirects = map[string]string{}
+	}
+	if redirects == nil {
+		redirects = map[string]string{}
+	}
+	if err := jsonMarshalTo(w, redirects); err != nil {
+		slog.Warn("jsonMarshalTo failed", "endpoint", "/api/driver-profile-redirects", "err", err)
+	}
+}
+
 func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, st store.Store) {
 	type driverItem struct {
 		Name        string `json:"name"`
@@ -293,6 +309,13 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "no-store")
+
+	profiles, _ := loadDriverProfiles(dataDir)
+	redirects, _ := loadDriverProfileRedirects(dataDir)
+	redirectSource := map[string]struct{}{}
+	for from := range redirects {
+		redirectSource[from] = struct{}{}
+	}
 
 	dedupe := map[string]driverItem{}
 	normalizeSearchDriverName := func(name string) string {
@@ -305,6 +328,7 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 		if strings.HasSuffix(lower, "(i)") {
 			n = strings.TrimSpace(n[:len(n)-3])
 		}
+		n = schedulefile.StripDriverParenSuffix(n)
 		n = driverutil.FoldDiacritics(n)
 		n = strings.Join(strings.Fields(n), " ")
 		return n
@@ -321,6 +345,18 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 			return normalizeSearchDriverName(name)
 		}
 	}
+	resolveSearchSlug := func(raw string) string {
+		return resolveDriverProfileSlug(driverutil.NormalizeSlug(raw), profiles, redirects)
+	}
+	nameForSearchSlug := func(rawSlug, fallback string) string {
+		slug := resolveSearchSlug(rawSlug)
+		if p, ok := profiles[slug]; ok {
+			if dn := profileDisplayName(slug, p); dn != "" {
+				return canonicalDriverName(slug, normalizeSearchDriverName(dn))
+			}
+		}
+		return canonicalDriverName(slug, normalizeSearchDriverName(fallback))
+	}
 	add := func(name string) {
 		n := normalizeSearchDriverName(name)
 		if n == "" {
@@ -329,11 +365,18 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 		if shouldSkipSearchDriverName(n) {
 			return
 		}
-		s := driverutil.NormalizeSlug(driverutil.Slug(n))
+		rawSlug := driverutil.NormalizeSlug(driverutil.Slug(n))
+		s := resolveSearchSlug(rawSlug)
 		if s == "" {
 			return
 		}
+		if _, isAlias := redirectSource[rawSlug]; isAlias {
+			n = nameForSearchSlug(rawSlug, n)
+		}
 		n = canonicalDriverName(s, n)
+		if shouldSkipSearchDriverName(n) {
+			return
+		}
 		if old, ok := dedupe[s]; ok {
 			if len(strings.TrimSpace(old.Name)) >= len(n) {
 				return
@@ -343,13 +386,17 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 	}
 	addWithSlug := func(name, slug, searchExtra string) {
 		n := normalizeSearchDriverName(name)
-		s := driverutil.NormalizeSlug(strings.TrimSpace(slug))
-		if s == "" {
+		rawSlug := driverutil.NormalizeSlug(strings.TrimSpace(slug))
+		if rawSlug == "" {
 			add(n)
 			return
 		}
+		s := resolveSearchSlug(rawSlug)
 		if n == "" {
 			n = strings.ReplaceAll(s, "-", " ")
+		}
+		if _, isAlias := redirectSource[rawSlug]; isAlias {
+			n = nameForSearchSlug(rawSlug, n)
 		}
 		n = canonicalDriverName(s, n)
 		if shouldSkipSearchDriverName(n) {
@@ -372,12 +419,6 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 				add(d.Name)
 			}
 		}
-	}
-	profiles, _ := loadDriverProfiles(dataDir)
-	redirects, _ := loadDriverProfileRedirects(dataDir)
-	redirectSource := map[string]struct{}{}
-	for from := range redirects {
-		redirectSource[from] = struct{}{}
 	}
 	for slug, p := range profiles {
 		if _, skip := redirectSource[slug]; skip {
@@ -407,6 +448,9 @@ func shouldSkipSearchDriverName(name string) bool {
 	if n == "" {
 		return true
 	}
+	if isPlaceholderDriverSlug(driverutil.Slug(n)) {
+		return true
+	}
 	// Composite crews should not appear as "driver" entities.
 	if strings.Contains(n, "/") || strings.Contains(n, ";") {
 		return true
@@ -421,6 +465,15 @@ func shouldSkipSearchDriverName(name string) bool {
 		return true
 	}
 	return false
+}
+
+func isPlaceholderDriverSlug(slug string) bool {
+	switch strings.ToLower(strings.TrimSpace(slug)) {
+	case "tba", "tbc", "tbd":
+		return true
+	default:
+		return false
+	}
 }
 
 // driverFilledScore returns the number of filled fields (nationality, birth_date, birth_place).
@@ -448,6 +501,10 @@ func handleDriverBySlug(w http.ResponseWriter, r *http.Request, dataDir string, 
 	}
 
 	slug = driverutil.NormalizeSlug(slug)
+	if isPlaceholderDriverSlug(slug) {
+		writeError(w, http.StatusNotFound, "not found")
+		return
+	}
 	profiles, _ := loadDriverProfiles(dataDir)
 	redirects, _ := loadDriverProfileRedirects(dataDir)
 	slugKey := driverutil.Slug(slug)

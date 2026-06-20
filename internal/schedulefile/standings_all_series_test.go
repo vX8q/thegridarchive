@@ -40,7 +40,6 @@ func TestBuildStandingsFromEvents_AllSeriesWithRealData(t *testing.T) {
 		// Series without 2026 data — test must not panic.
 		{"FREC", ""},
 		{"F4_IT", ""},
-		{"SMP_F4_RU", ""},
 		{"PSC", ""},
 		{"DTM", ""},
 		{"GTWCE_SPRINT", ""},

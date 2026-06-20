@@ -3,11 +3,16 @@ package tableutil
 
 import "strings"
 
+func normalizeHeaderName(s string) string {
+	return strings.TrimRight(strings.TrimSpace(strings.ToLower(s)), ".")
+}
+
 // ColIndex returns the column index by header name (case-insensitive).
+// Trailing periods are ignored so "Pos." matches "Pos".
 func ColIndex(headers []string, name string) int {
-	lower := strings.TrimSpace(strings.ToLower(name))
+	lower := normalizeHeaderName(name)
 	for i, h := range headers {
-		if strings.TrimSpace(strings.ToLower(h)) == lower {
+		if normalizeHeaderName(h) == lower {
 			return i
 		}
 	}

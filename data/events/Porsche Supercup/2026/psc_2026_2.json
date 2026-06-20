@@ -1,0 +1,987 @@
+{
+  "event_id": "PSC_2026_2",
+  "series": "Porsche Mobil 1 Supercup",
+  "race": "Barcelona-Catalunya",
+  "date": "12–14 June 2026",
+  "start_date": "2026-06-12",
+  "end_date": "2026-06-14",
+  "track": "Circuit de Barcelona-Catalunya",
+  "location": "Montmeló",
+  "laps": "16",
+  "distance": "46.3 mi (74.5 km)",
+  "event_preview": "Circuit de Barcelona-Catalunya is a 4.657 km (2.894 mi) permanent road course in Montmeló, north of Barcelona. The second round of the 2026 Porsche Mobil 1 Supercup takes place June 12-14, supporting the Spanish Grand Prix. Jacques Villeneuve, the 1997 Formula One World Champion, makes his debut as a VIP guest driver at this round. The season marks the first to use the new Porsche 911 Cup based on the 992.2 generation, alongside the 25th consecutive season of Michelin as tyre supply partner.\n\nTen teams share the 28 permanent entries, with Porsche Juniors Flynt Schuring and Marcus Amand among the standout names to watch, alongside eleven Supercup newcomers making their series debuts this season. Following the season-opening race in Monaco, the field heads to Barcelona's faster, more flowing layout — a circuit that traditionally rewards strong aerodynamic efficiency and tends to produce closer racing than the tight streets of Monte Carlo.",
+  "entry_list": [
+    {
+      "number": "1",
+      "driver": "Robert de Haan",
+      "team": "BWT Lechner Racing",
+      "driver_slug": "robert-de-haan"
+    },
+    {
+      "number": "2",
+      "driver": "Marcus Amand",
+      "team": "BWT Lechner Racing",
+      "status": "R",
+      "driver_slug": "marcus-amand"
+    },
+    {
+      "number": "3",
+      "driver": "Caleb Sumich",
+      "team": "BWT Lechner Racing",
+      "status": "R",
+      "driver_slug": "caleb-sumich"
+    },
+    {
+      "number": "4",
+      "driver": "Keagan Masters",
+      "team": "Proton Competition",
+      "driver_slug": "keagan-masters"
+    },
+    {
+      "number": "5",
+      "driver": "Kai Pfister",
+      "team": "Proton Competition",
+      "driver_slug": "kai-pfister"
+    },
+    {
+      "number": "6",
+      "driver": "Alexander Tauscher",
+      "team": "Proton Competition",
+      "guest": true,
+      "driver_slug": "alexander-tauscher"
+    },
+    {
+      "number": "7",
+      "driver": "Andrea Bristot",
+      "team": "Dinamic Motorsport",
+      "status": "R",
+      "driver_slug": "andrea-bristot"
+    },
+    {
+      "number": "8",
+      "driver": "William Mezzetti",
+      "team": "Dinamic Motorsport",
+      "status": "R",
+      "driver_slug": "william-mezzetti"
+    },
+    {
+      "number": "9",
+      "driver": "Eugenio Pisani",
+      "team": "Dinamic Motorsport",
+      "guest": true,
+      "driver_slug": "eugenio-pisani"
+    },
+    {
+      "number": "11",
+      "driver": "Chester Kieffer",
+      "team": "Schumacher CLRT",
+      "status": "R",
+      "driver_slug": "chester-kieffer"
+    },
+    {
+      "number": "12",
+      "driver": "Flynt Schuring",
+      "team": "Schumacher CLRT",
+      "driver_slug": "flynt-schuring"
+    },
+    {
+      "number": "13",
+      "driver": "Jorge Ramirez",
+      "team": "RGB Racing",
+      "driver_slug": "jorge-ramirez"
+    },
+    {
+      "number": "14",
+      "driver": "Juan Pablo Vega Dieppa",
+      "team": "RGB Racing",
+      "driver_slug": "juan-pablo-vega-dieppa"
+    },
+    {
+      "number": "15",
+      "driver": "Theo Oeverhaus",
+      "team": "Martinet by Alméras",
+      "driver_slug": "theo-oeverhaus"
+    },
+    {
+      "number": "16",
+      "driver": "Paul Cauhaupe",
+      "team": "Martinet by Alméras",
+      "status": "R",
+      "driver_slug": "paul-cauhaupe"
+    },
+    {
+      "number": "17",
+      "driver": "Jaap van Lagen",
+      "team": "Martinet by Alméras",
+      "driver_slug": "jaap-van-lagen"
+    },
+    {
+      "number": "18",
+      "driver": "Liam McNeilly",
+      "team": "Ombra Racing",
+      "status": "R",
+      "driver_slug": "liam-mcneilly"
+    },
+    {
+      "number": "19",
+      "driver": "Luciano Martinez",
+      "team": "Ombra Racing",
+      "status": "R",
+      "driver_slug": "luciano-martinez"
+    },
+    {
+      "number": "20",
+      "driver": "Filip Ugran",
+      "team": "Ombra Racing",
+      "status": "R",
+      "driver_slug": "filip-ugran"
+    },
+    {
+      "number": "21",
+      "driver": "Jukka Honkavuori",
+      "team": "Looping by CarTech",
+      "guest": true,
+      "driver_slug": "jukka-honkavuori"
+    },
+    {
+      "number": "22",
+      "driver": "Dirk Schouten",
+      "team": "Looping by CarTech",
+      "driver_slug": "dirk-schouten"
+    },
+    {
+      "number": "23",
+      "driver": "Samer Shahin",
+      "team": "GP Elite",
+      "driver_slug": "samer-shahin"
+    },
+    {
+      "number": "24",
+      "driver": "Jonas Greif",
+      "team": "GP Elite",
+      "status": "R",
+      "driver_slug": "jonas-greif"
+    },
+    {
+      "number": "25",
+      "driver": "Wouter Boerekamps",
+      "team": "Team GP Elite",
+      "driver_slug": "wouter-boerekamps"
+    },
+    {
+      "number": "26",
+      "driver": "Gustav Burton",
+      "team": "Team GP Elite",
+      "driver_slug": "gustav-burton"
+    },
+    {
+      "number": "27",
+      "driver": "Matheus Ferreira",
+      "team": "Team GP Elite",
+      "status": "R",
+      "driver_slug": "matheus-ferreira"
+    },
+    {
+      "number": "28",
+      "driver": "Aldo Festante",
+      "team": "Target Competition",
+      "driver_slug": "aldo-festante"
+    },
+    {
+      "number": "29",
+      "driver": "Jack Young",
+      "team": "Target Competition",
+      "status": "R",
+      "driver_slug": "jack-young"
+    },
+    {
+      "number": "911",
+      "driver": "Jacques Villeneuve",
+      "team": "Porsche Motorsport",
+      "guest": true,
+      "driver_slug": "jacques-villeneuve"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "title": "Practice",
+      "meta": {
+        "Date": "Fri 12 Jun 2026",
+        "Start": "18:30",
+        "End": "19:15"
+      },
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Best lap",
+        "Gap"
+      ],
+      "rows": [
+        [
+          "1",
+          "6",
+          "Alexander Tauscher",
+          "Proton Competition",
+          "1:42.431",
+          "—"
+        ],
+        [
+          "2",
+          "1",
+          "Robert de Haan",
+          "BWT Lechner Racing",
+          "1:42.756",
+          "+0.325"
+        ],
+        [
+          "3",
+          "17",
+          "Jaap van Lagen",
+          "Martinet by Alméras",
+          "1:43.064",
+          "+0.633"
+        ],
+        [
+          "4",
+          "16",
+          "Paul Cauhaupe",
+          "Martinet by Alméras",
+          "1:43.102",
+          "+0.671"
+        ],
+        [
+          "5",
+          "4",
+          "Keagan Masters",
+          "Proton Competition",
+          "1:43.119",
+          "+0.688"
+        ],
+        [
+          "6",
+          "15",
+          "Theo Oeverhaus",
+          "Martinet by Alméras",
+          "1:43.206",
+          "+0.775"
+        ],
+        [
+          "7",
+          "27",
+          "Matheus Ferreira",
+          "Team GP Elite",
+          "1:43.280",
+          "+0.849"
+        ],
+        [
+          "8",
+          "2",
+          "Marcus Amand",
+          "BWT Lechner Racing",
+          "1:43.327",
+          "+0.896"
+        ],
+        [
+          "9",
+          "22",
+          "Dirk Schouten",
+          "Looping by CarTech",
+          "1:43.341",
+          "+0.910"
+        ],
+        [
+          "10",
+          "21",
+          "Jukka Honkavuori",
+          "Looping by CarTech",
+          "1:43.403",
+          "+0.972"
+        ],
+        [
+          "11",
+          "18",
+          "Liam McNeilly",
+          "Ombra Racing",
+          "1:43.433",
+          "+1.002"
+        ],
+        [
+          "12",
+          "28",
+          "Aldo Festante",
+          "Target Competition",
+          "1:43.495",
+          "+1.064"
+        ],
+        [
+          "13",
+          "11",
+          "Chester Kieffer",
+          "Schumacher CLRT",
+          "1:43.498",
+          "+1.067"
+        ],
+        [
+          "14",
+          "3",
+          "Caleb Sumich",
+          "BWT Lechner Racing",
+          "1:43.513",
+          "+1.082"
+        ],
+        [
+          "15",
+          "29",
+          "Jack Young",
+          "Target Competition",
+          "1:43.635",
+          "+1.204"
+        ],
+        [
+          "16",
+          "20",
+          "Filip Ugran",
+          "Ombra Racing",
+          "1:43.683",
+          "+1.252"
+        ],
+        [
+          "17",
+          "9",
+          "Eugenio Pisani",
+          "Dinamic Motorsport",
+          "1:43.769",
+          "+1.338"
+        ],
+        [
+          "18",
+          "25",
+          "Wouter Boerekamps",
+          "Team GP Elite",
+          "1:43.813",
+          "+1.382"
+        ],
+        [
+          "19",
+          "7",
+          "Andrea Bristot",
+          "Dinamic Motorsport",
+          "1:43.832",
+          "+1.401"
+        ],
+        [
+          "20",
+          "12",
+          "Flynt Schuring",
+          "Schumacher CLRT",
+          "1:43.900",
+          "+1.469"
+        ],
+        [
+          "21",
+          "26",
+          "Gustav Burton",
+          "Team GP Elite",
+          "1:44.000",
+          "+1.569"
+        ],
+        [
+          "22",
+          "19",
+          "Luciano Martinez",
+          "Ombra Racing",
+          "1:44.097",
+          "+1.666"
+        ],
+        [
+          "23",
+          "24",
+          "Jonas Greif",
+          "GP Elite",
+          "1:44.209",
+          "+1.778"
+        ],
+        [
+          "24",
+          "8",
+          "William Mezzetti",
+          "Dinamic Motorsport",
+          "1:44.408",
+          "+1.977"
+        ],
+        [
+          "25",
+          "23",
+          "Samer Shahin",
+          "GP Elite",
+          "1:44.513",
+          "+2.082"
+        ],
+        [
+          "26",
+          "14",
+          "Juan Pablo Vega Dieppa",
+          "RGB Racing",
+          "1:45.824",
+          "+3.393"
+        ],
+        [
+          "27",
+          "13",
+          "Jorge Ramirez",
+          "RGB Racing",
+          "1:45.885",
+          "+3.454"
+        ],
+        [
+          "28",
+          "5",
+          "Kai Pfister",
+          "Proton Competition",
+          "1:45.967",
+          "+3.536"
+        ],
+        [
+          "29",
+          "911",
+          "Jacques Villeneuve",
+          "Porsche Motorsport",
+          "—",
+          "—"
+        ]
+      ]
+    },
+    "qualifying": {
+      "title": "Qualifying",
+      "meta": {
+        "Date": "Sat 13 Jun 2026",
+        "Start": "11:20",
+        "End": "11:50"
+      },
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Best lap",
+        "Gap"
+      ],
+      "rows": [
+        [
+          "1",
+          "4",
+          "Keagan Masters",
+          "Proton Competition",
+          "1:42.637",
+          "—"
+        ],
+        [
+          "2",
+          "16",
+          "Paul Cauhaupe",
+          "Martinet by Alméras",
+          "1:42.671",
+          "+0.034"
+        ],
+        [
+          "3",
+          "15",
+          "Theo Oeverhaus",
+          "Martinet by Alméras",
+          "1:42.700",
+          "+0.063"
+        ],
+        [
+          "4",
+          "25",
+          "Wouter Boerekamps",
+          "Team GP Elite",
+          "1:42.716",
+          "+0.079"
+        ],
+        [
+          "5",
+          "12",
+          "Flynt Schuring",
+          "Schumacher CLRT",
+          "1:42.727",
+          "+0.090"
+        ],
+        [
+          "6",
+          "21",
+          "Jukka Honkavuori",
+          "Looping by CarTech",
+          "1:42.771",
+          "+0.134"
+        ],
+        [
+          "7",
+          "7",
+          "Andrea Bristot",
+          "Dinamic Motorsport",
+          "1:42.857",
+          "+0.220"
+        ],
+        [
+          "8",
+          "2",
+          "Marcus Amand",
+          "BWT Lechner Racing",
+          "1:42.887",
+          "+0.250"
+        ],
+        [
+          "9",
+          "18",
+          "Liam McNeilly",
+          "Ombra Racing",
+          "1:42.889",
+          "+0.252"
+        ],
+        [
+          "10",
+          "29",
+          "Jack Young",
+          "Target Competition",
+          "1:42.969",
+          "+0.332"
+        ],
+        [
+          "11",
+          "22",
+          "Dirk Schouten",
+          "Looping by CarTech",
+          "1:43.060",
+          "+0.423"
+        ],
+        [
+          "12",
+          "6",
+          "Alexander Tauscher",
+          "Proton Competition",
+          "1:43.068",
+          "+0.431"
+        ],
+        [
+          "13",
+          "17",
+          "Jaap van Lagen",
+          "Martinet by Alméras",
+          "1:43.089",
+          "+0.452"
+        ],
+        [
+          "14",
+          "26",
+          "Gustav Burton",
+          "Team GP Elite",
+          "1:43.109",
+          "+0.472"
+        ],
+        [
+          "15",
+          "11",
+          "Chester Kieffer",
+          "Schumacher CLRT",
+          "1:43.141",
+          "+0.504"
+        ],
+        [
+          "16",
+          "3",
+          "Caleb Sumich",
+          "BWT Lechner Racing",
+          "1:43.196",
+          "+0.559"
+        ],
+        [
+          "17",
+          "27",
+          "Matheus Ferreira",
+          "Team GP Elite",
+          "1:43.234",
+          "+0.597"
+        ],
+        [
+          "18",
+          "28",
+          "Aldo Festante",
+          "Target Competition",
+          "1:43.298",
+          "+0.661"
+        ],
+        [
+          "19",
+          "24",
+          "Jonas Greif",
+          "GP Elite",
+          "1:43.312",
+          "+0.675"
+        ],
+        [
+          "20",
+          "20",
+          "Filip Ugran",
+          "Ombra Racing",
+          "1:43.428",
+          "+0.791"
+        ],
+        [
+          "21",
+          "8",
+          "William Mezzetti",
+          "Dinamic Motorsport",
+          "1:44.067",
+          "+1.430"
+        ],
+        [
+          "22",
+          "9",
+          "Eugenio Pisani",
+          "Dinamic Motorsport",
+          "1:44.135",
+          "+1.498"
+        ],
+        [
+          "23",
+          "911",
+          "Jacques Villeneuve",
+          "Porsche Motorsport",
+          "1:44.214",
+          "+1.577"
+        ],
+        [
+          "24",
+          "19",
+          "Luciano Martinez",
+          "Ombra Racing",
+          "1:44.415",
+          "+1.778"
+        ],
+        [
+          "25",
+          "23",
+          "Samer Shahin",
+          "GP Elite",
+          "1:44.459",
+          "+1.822"
+        ],
+        [
+          "26",
+          "14",
+          "Juan Pablo Vega Dieppa",
+          "RGB Racing",
+          "1:44.993",
+          "+2.356"
+        ],
+        [
+          "27",
+          "5",
+          "Kai Pfister",
+          "Proton Competition",
+          "1:45.385",
+          "+2.748"
+        ],
+        [
+          "28",
+          "13",
+          "Jorge Ramirez",
+          "RGB Racing",
+          "1:45.575",
+          "+2.938"
+        ],
+        [
+          "NC",
+          "1",
+          "Robert de Haan",
+          "BWT Lechner Racing",
+          "—",
+          "—"
+        ]
+      ]
+    },
+    "race_results": {
+      "title": "Race",
+      "meta": {
+        "Date": "Sun 14 Jun 2026",
+        "Start": "10:10",
+        "Laps": "16"
+      },
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Best lap",
+        "Points"
+      ],
+      "rows": [
+        [
+          "1",
+          "12",
+          "Flynt Schuring",
+          "Schumacher CLRT",
+          "16",
+          "1:44.764",
+          "25"
+        ],
+        [
+          "2",
+          "16",
+          "Paul Cauhaupe",
+          "Martinet by Alméras",
+          "16",
+          "1:44.870",
+          "20"
+        ],
+        [
+          "3",
+          "15",
+          "Theo Oeverhaus",
+          "Martinet by Alméras",
+          "16",
+          "1:44.950",
+          "17"
+        ],
+        [
+          "4",
+          "2",
+          "Marcus Amand",
+          "BWT Lechner Racing",
+          "16",
+          "1:45.119",
+          "14"
+        ],
+        [
+          "5",
+          "4",
+          "Keagan Masters",
+          "Proton Competition",
+          "16",
+          "1:45.026",
+          "12"
+        ],
+        [
+          "6",
+          "22",
+          "Dirk Schouten",
+          "Looping by CarTech",
+          "16",
+          "1:45.249",
+          "10"
+        ],
+        [
+          "7",
+          "25",
+          "Wouter Boerekamps",
+          "Team GP Elite",
+          "16",
+          "1:45.315",
+          "9"
+        ],
+        [
+          "8",
+          "11",
+          "Chester Kieffer",
+          "Schumacher CLRT",
+          "16",
+          "1:45.462",
+          "8"
+        ],
+        [
+          "9",
+          "6",
+          "Alexander Tauscher",
+          "Proton Competition",
+          "16",
+          "1:45.442",
+          "0"
+        ],
+        [
+          "10",
+          "7",
+          "Andrea Bristot",
+          "Dinamic Motorsport",
+          "16",
+          "1:45.473",
+          "7"
+        ],
+        [
+          "11",
+          "21",
+          "Jukka Honkavuori",
+          "Looping by CarTech",
+          "16",
+          "1:45.632",
+          "0"
+        ],
+        [
+          "12",
+          "28",
+          "Aldo Festante",
+          "Target Competition",
+          "16",
+          "1:45.797",
+          "6"
+        ],
+        [
+          "13",
+          "26",
+          "Gustav Burton",
+          "Team GP Elite",
+          "16",
+          "1:45.752",
+          "5"
+        ],
+        [
+          "14",
+          "17",
+          "Jaap van Lagen",
+          "Martinet by Alméras",
+          "16",
+          "1:45.336",
+          "4"
+        ],
+        [
+          "15",
+          "3",
+          "Caleb Sumich",
+          "BWT Lechner Racing",
+          "16",
+          "1:45.847",
+          "3"
+        ],
+        [
+          "16",
+          "20",
+          "Filip Ugran",
+          "Ombra Racing",
+          "16",
+          "1:45.536",
+          "2"
+        ],
+        [
+          "17",
+          "8",
+          "William Mezzetti",
+          "Dinamic Motorsport",
+          "16",
+          "1:45.979",
+          "1"
+        ],
+        [
+          "18",
+          "27",
+          "Matheus Ferreira",
+          "Team GP Elite",
+          "16",
+          "1:45.562",
+          "0"
+        ],
+        [
+          "19",
+          "24",
+          "Jonas Greif",
+          "GP Elite",
+          "16",
+          "1:45.835",
+          "0"
+        ],
+        [
+          "20",
+          "9",
+          "Eugenio Pisani",
+          "Dinamic Motorsport",
+          "16",
+          "1:45.935",
+          "0"
+        ],
+        [
+          "21",
+          "29",
+          "Jack Young",
+          "Target Competition",
+          "16",
+          "1:45.499",
+          "0"
+        ],
+        [
+          "22",
+          "19",
+          "Luciano Martinez",
+          "Ombra Racing",
+          "16",
+          "1:46.667",
+          "0"
+        ],
+        [
+          "23",
+          "14",
+          "Juan Pablo Vega Dieppa",
+          "RGB Racing",
+          "16",
+          "1:46.932",
+          "0"
+        ],
+        [
+          "24",
+          "13",
+          "Jorge Ramirez",
+          "RGB Racing",
+          "16",
+          "1:47.099",
+          "0"
+        ],
+        [
+          "Ret",
+          "1",
+          "Robert de Haan",
+          "BWT Lechner Racing",
+          "9",
+          "1:47.737",
+          "0"
+        ],
+        [
+          "Ret",
+          "5",
+          "Kai Pfister",
+          "Proton Competition",
+          "2",
+          "—",
+          "0"
+        ],
+        [
+          "Ret",
+          "911",
+          "Jacques Villeneuve",
+          "Porsche Motorsport",
+          "1",
+          "—",
+          "0"
+        ],
+        [
+          "Ret",
+          "23",
+          "Samer Shahin",
+          "GP Elite",
+          "1",
+          "—",
+          "0"
+        ],
+        [
+          "Ret",
+          "18",
+          "Liam McNeilly",
+          "Ombra Racing",
+          "0",
+          "—",
+          "0"
+        ]
+      ]
+    }
+  }
+}

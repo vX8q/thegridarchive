@@ -81,6 +81,9 @@ func TestNormalizeSlug(t *testing.T) {
 		"jj-yeley":         "j-j-yeley",
 		"bj-mcleod":        "b-j-mcleod",
 		"lewis-hamilton":   "lewis-hamilton",
+		"woohyun-shin":     "michael-shin",
+		"w-shin":           "michael-shin",
+		"m-shin":           "michael-shin",
 	}
 	for in, want := range cases {
 		if got := NormalizeSlug(in); got != want {

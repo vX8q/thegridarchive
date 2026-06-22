@@ -92,7 +92,7 @@
       "manufacturer": "LFR",
       "team": "Elite Racing",
       "number": "31",
-      "driver": "Mike Christopher Jr.",
+      "driver": "Michael Christopher Jr.",
       "crew_chief": "Eugene Orlando",
       "full_time": true
     },
@@ -100,7 +100,7 @@
       "manufacturer": "LFR",
       "team": "Teddy Hodgdon Racing",
       "number": "55",
-      "driver": "Teddy Hodgdon",
+      "driver": "Teddy Hodgdon IV",
       "crew_chief": "Ted Hodgdon",
       "full_time": true
     },
@@ -333,38 +333,137 @@
     }
   ],
   "technical_spec": [
-    { "key": "Series", "value": "NASCAR Whelen Modified Tour" },
-    { "key": "Season", "value": "2026" },
-    { "key": "Vehicle Type", "value": "Open‑wheel modified stock car" },
-    { "key": "Generation / Chassis", "value": "Fabricator‑built tubular steel chassis" },
-    { "key": "Approved Chassis Builders", "value": "Troyer Engineering · Chassis Dynamics · Spafco · Raceworks · Fury Race Cars / LFR Chassis" },
-    { "key": "Body Construction", "value": "Hand‑fabricated sheetmetal panels" },
-    { "key": "Body Type", "value": "Open front wheels, exposed front suspension" },
-    { "key": "Manufacturer Involvement", "value": "Branding decals only (no OEM chassis/body)" },
-    { "key": "Overall Length", "value": "Not fixed by rule (estimated ~190–195 in / ~4830–4950 mm)" },
-    { "key": "Overall Width", "value": "~101–103 in (≈ 2565–2615 mm), over 23 in wider than Cup car" },
-    { "key": "Overall Height", "value": "~49–50 in (≈ 1245–1270 mm), approx. 11 in lower than Cup car" },
-    { "key": "Wheelbase", "value": "107 in (≈ 2718 mm)" },
-    { "key": "Minimum Weight", "value": "2,610 lb (≈ 1,180 kg), additional ballast for ≥358 cu in engines" },
-    { "key": "Engine Configuration", "value": "Small‑block pushrod V8" },
-    { "key": "Engine Displacement", "value": "Typically 355–368 cu in (5.8–6.0 L)" },
-    { "key": "Induction", "value": "4‑barrel carburetor" },
-    { "key": "Carburetor Flow Limit", "value": "390 cfm (≈ 11 m³/min)" },
-    { "key": "Aspiration", "value": "Naturally aspirated" },
-    { "key": "Power Output", "value": "~625–700 hp (466–522 kW)" },
-    { "key": "Power Limiting", "value": "Restrictor plate required at select large tracks" },
-    { "key": "Fuel System", "value": "Carbureted (EFI not permitted)" },
-    { "key": "Fuel Type", "value": "Sunoco Green E15" },
-    { "key": "Drivetrain", "value": "Rear‑wheel drive (RWD)" },
-    { "key": "Transmission", "value": "4‑speed manual racing gearbox" },
-    { "key": "Suspension (Front)", "value": "Independent, exposed, modified‑specific geometry" },
-    { "key": "Suspension (Rear)", "value": "Solid rear axle (live axle)" },
-    { "key": "Brakes", "value": "Steel disc brakes, multi‑piston calipers" },
-    { "key": "Wheels", "value": "Wide steel racing wheels (series‑approved)" },
-    { "key": "Tires", "value": "Hoosier Racing Tire (Modified‑spec slicks)" },
-    { "key": "Aerodynamics", "value": "Minimal body aero; no splitter, no diffuser" },
-    { "key": "Underbody", "value": "Open / flat floor, no ground‑effect devices" },
-    { "key": "Safety Equipment", "value": "Full roll cage, HANS, 6‑point harness, fire suppression (NASCAR mandated)" },
-    { "key": "Key Features", "value": "Ultra‑wide track, very low ride height, open wheels, carbureted V8, fabricator chassis" }
+    {
+      "key": "Series",
+      "value": "NASCAR Whelen Modified Tour"
+    },
+    {
+      "key": "Season",
+      "value": "2026"
+    },
+    {
+      "key": "Vehicle Type",
+      "value": "Open‑wheel modified stock car"
+    },
+    {
+      "key": "Generation / Chassis",
+      "value": "Fabricator‑built tubular steel chassis"
+    },
+    {
+      "key": "Approved Chassis Builders",
+      "value": "Troyer Engineering · Chassis Dynamics · Spafco · Raceworks · Fury Race Cars / LFR Chassis"
+    },
+    {
+      "key": "Body Construction",
+      "value": "Hand‑fabricated sheetmetal panels"
+    },
+    {
+      "key": "Body Type",
+      "value": "Open front wheels, exposed front suspension"
+    },
+    {
+      "key": "Manufacturer Involvement",
+      "value": "Branding decals only (no OEM chassis/body)"
+    },
+    {
+      "key": "Overall Length",
+      "value": "Not fixed by rule (estimated ~190–195 in / ~4830–4950 mm)"
+    },
+    {
+      "key": "Overall Width",
+      "value": "~101–103 in (≈ 2565–2615 mm), over 23 in wider than Cup car"
+    },
+    {
+      "key": "Overall Height",
+      "value": "~49–50 in (≈ 1245–1270 mm), approx. 11 in lower than Cup car"
+    },
+    {
+      "key": "Wheelbase",
+      "value": "107 in (≈ 2718 mm)"
+    },
+    {
+      "key": "Minimum Weight",
+      "value": "2,610 lb (≈ 1,180 kg), additional ballast for ≥358 cu in engines"
+    },
+    {
+      "key": "Engine Configuration",
+      "value": "Small‑block pushrod V8"
+    },
+    {
+      "key": "Engine Displacement",
+      "value": "Typically 355–368 cu in (5.8–6.0 L)"
+    },
+    {
+      "key": "Induction",
+      "value": "4‑barrel carburetor"
+    },
+    {
+      "key": "Carburetor Flow Limit",
+      "value": "390 cfm (≈ 11 m³/min)"
+    },
+    {
+      "key": "Aspiration",
+      "value": "Naturally aspirated"
+    },
+    {
+      "key": "Power Output",
+      "value": "~625–700 hp (466–522 kW)"
+    },
+    {
+      "key": "Power Limiting",
+      "value": "Restrictor plate required at select large tracks"
+    },
+    {
+      "key": "Fuel System",
+      "value": "Carbureted (EFI not permitted)"
+    },
+    {
+      "key": "Fuel Type",
+      "value": "Sunoco Green E15"
+    },
+    {
+      "key": "Drivetrain",
+      "value": "Rear‑wheel drive (RWD)"
+    },
+    {
+      "key": "Transmission",
+      "value": "4‑speed manual racing gearbox"
+    },
+    {
+      "key": "Suspension (Front)",
+      "value": "Independent, exposed, modified‑specific geometry"
+    },
+    {
+      "key": "Suspension (Rear)",
+      "value": "Solid rear axle (live axle)"
+    },
+    {
+      "key": "Brakes",
+      "value": "Steel disc brakes, multi‑piston calipers"
+    },
+    {
+      "key": "Wheels",
+      "value": "Wide steel racing wheels (series‑approved)"
+    },
+    {
+      "key": "Tires",
+      "value": "Hoosier Racing Tire (Modified‑spec slicks)"
+    },
+    {
+      "key": "Aerodynamics",
+      "value": "Minimal body aero; no splitter, no diffuser"
+    },
+    {
+      "key": "Underbody",
+      "value": "Open / flat floor, no ground‑effect devices"
+    },
+    {
+      "key": "Safety Equipment",
+      "value": "Full roll cage, HANS, 6‑point harness, fire suppression (NASCAR mandated)"
+    },
+    {
+      "key": "Key Features",
+      "value": "Ultra‑wide track, very low ride height, open wheels, carbureted V8, fabricator chassis"
+    }
   ]
 }

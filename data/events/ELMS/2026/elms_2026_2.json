@@ -15,6 +15,7 @@
     }
   ],
   "event_preview": "Circuit Paul Ricard is a 5.821 km (3.617 mi) permanent road course at Le Castellet in the Var, opened in 1970 and the only venue to have featured on every ELMS calendar since the series began in 2013. The Mistral Straight chicane, reintroduced in 2024 after a seven-year absence, is retained for 2026, breaking up what was previously the fastest section of the lap and placing additional emphasis on mechanical grip through the mid-straight interruption. The 4 Hours of Le Castellet is Round 2 of the 2026 European Le Mans Series and the 15th ELMS race held at this venue. A 47-car field lines up across LMP2, LMP3 and LMGT3 — 11 LMP2s, 12 LMP2 Pro/Ams, 10 LMP3s and 14 LMGT3s — representing eight French teams on home soil.\n\nForestier Racing by Panis arrives as championship leaders following their Barcelona victory with Esteban Masson, Oliver Gray and Louis Rousset in the No. 29 Oreca-Gibson, while last year's overall winners IDEC Sport — whose Jamie Chadwick became the first woman to win overall in ELMS history at this venue in 2025 — return with Chadwick joined by Valerio Rinicella and Laurents Hörr in the No. 18. Nick Yelloly is absent from the No. 43 Inter Europol due to IMSA commitments, with Luca Ghiotto substituting alongside Tom Dillmann and Jakub Śmiechowski. In LMGT3, Proton Competition's No. 75 Porsche of Kurzejewski, Sargent and Lietz leads the class standings following their Barcelona class win.\n\nThe all-time ELMS LMP2 qualifying lap record at Paul Ricard belongs to Filipe Albuquerque, who set a 1:38.268 (211.4 kph) on 18 July 2020. The LMP2 race lap record is held by Nyck de Vries, who clocked a 1:40.139 (207.5 kph) the following day. Both marks were set in the same weekend of what was an exceptional year for lap times at the circuit.",
+  "event_preview_ru": "Circuit Paul Ricard — постоянная трасса длиной 5,821 км (3,617 мили) в Le Castellet, департамент Var; открыта в 1970 году и единственная, что присутствовала в каждом календаре ELMS с основания серии в 2013 году. Шикана Mistral Straight, возвращённая в 2024 году после семилетнего отсутствия, сохранена и в 2026-м, разбивая прежний самый быстрый участок круга и усиливая роль механического сцепления на прерывании прямой. 4 Hours of Le Castellet — второй этап European Le Mans Series 2026 и 15-й заезд ELMS на этой трассе. На старте 47 машин в классах LMP2, LMP3 и LMGT3 — 11 LMP2, 12 LMP2 Pro/Am, 10 LMP3 и 14 LMGT3, — представляющих восемь французских команд на домашней земле.\n\nForestier Racing by Panis приезжает лидером чемпионата после победы в Barcelona с Esteban Masson, Oliver Gray и Louis Rousset на Oreca-Gibson No. 29, тогда как прошлогодние общие победители IDEC Sport — Jamie Chadwick стала первой женщиной, выигравшей общий зачёт ELMS на этой трассе в 2025 году — возвращаются с Chadwick, Valerio Rinicella и Laurents Hörr на No. 18. Nick Yelloly отсутствует в No. 43 Inter Europol из-за обязательств в IMSA; его заменяет Luca Ghiotto вместе с Tom Dillmann и Jakub Śmiechowski. В LMGT3 лидирует в зачёте класса No. 75 Porsche Proton Competition с Kurzejewski, Sargent и Lietz после классовой победы в Barcelona.\n\nАбсолютный квалификационный рекорд ELMS LMP2 на Paul Ricard принадлежит Filipe Albuquerque — 1:38.268 (211,4 км/ч) 18 июля 2020 года. Гоночный рекорд LMP2 у Nyck de Vries — 1:40.139 (207,5 км/ч) на следующий день. Оба результата установлены в один уик-энд исключительно быстрого сезона на этой трассе.",
   "entry_list": [
     {
       "number": "9",
@@ -211,7 +212,7 @@
       "team": "PROTON COMPETITION",
       "car": "Oreca 07 - Gibson",
       "driver1": "Horst Felbermayr",
-      "driver2": "Horst Felix Felbermayr",
+      "driver2": "Lorenzo Fluxa",
       "driver3": "Rene Binder"
     },
     {
@@ -390,7 +391,7 @@
       "class": "LMGT3",
       "team": "TEAM QATAR BY IRON LYNX",
       "car": "Mercedes-AMG LMGT3",
-      "driver1": "Abdulla Ali Al-Khelaifi",
+      "driver1": "Abdulla Al-Khelaifi",
       "driver2": "Julian Hanses",
       "driver3": "Maxime Martin"
     },

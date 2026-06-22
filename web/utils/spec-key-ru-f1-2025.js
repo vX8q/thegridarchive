@@ -1,0 +1,92 @@
+// F1 2025-specific spec keys/values (extends spec-key-ru-extended.js).
+(function () {
+  if (typeof window === 'undefined') return;
+  window.TGA_RU = window.TGA_RU || {};
+
+  Object.assign(window.TGA_RU.specKeyRu, {
+    'maximum bodywork width (excl. tyres & rims)': 'Макс. ширина обтекателя (без шин и дисков)',
+    'minimum mass (all sessions, without fuel)': 'Мин. масса (все сессии, без топлива)',
+    'es cells mass (cells + clamping plates + connections)': 'Масса элементов ES (ячейки + пластины + соединения)',
+    'maximum fuel mass flow': 'Макс. массовый расход топлива',
+    'maximum fuel injector pressure': 'Макс. давление в топливных форсунках',
+    'maximum wastegates': 'Макс. число wastegate',
+    'maximum pop-off valves': 'Макс. число предохранительных клапанов',
+    'motor generators': 'Мотор-генераторы',
+    'mgu-k maximum power': 'Макс. мощность MGU-K',
+    'mgu-k maximum torque': 'Макс. крутящий момент MGU-K',
+    'mgu-k maximum rotational speed': 'Макс. частота вращения MGU-K',
+    'mgu-h maximum rotational speed': 'Макс. частота вращения MGU-H',
+    'mgu-h minimum mass': 'Мин. масса MGU-H',
+    'efficiency correction applied by ecu (mgu-k monitoring)': 'Поправка КПД, применяемая ЭБУ (контроль MGU-K)',
+    'ice-to-transmission mounting': 'Крепление ICE к трансмиссии',
+    'caliper material': 'Материал суппорта',
+    'maximum attachments per caliper': 'Макс. креплений на суппорт',
+    'calipers per wheel': 'Суппортов на колесо',
+    'cooling holes in pads': 'Отверстия охлаждения в колодках',
+    'outer lip diameter (front/rear)': 'Наружный диаметр борта (перед/зад)',
+    'tyre width (front)': 'Ширина шины (перед)',
+    'tyre width (rear)': 'Ширина шины (зад)',
+    'maximum tyre diameter (dry)': 'Макс. диаметр шины (сухая)',
+    'maximum tyre diameter (wet)': 'Макс. диаметр шины (дождь)',
+    '(ron+mon)/2': '(RON+MON)/2',
+    'total diolefins': 'Суммарные диолефины',
+    'advanced sustainable ethanol content': 'Доля устойчивого этанола'
+  });
+
+  Object.assign(window.TGA_RU.specSectionRu || (window.TGA_RU.specSectionRu = {}), {
+    'ers': 'ERS'
+  });
+
+  Object.assign(window.TGA_RU.specValueExact || (window.TGA_RU.specValueExact = {}), {
+    'no part outboard of y=1000 (total ≤ 2000 mm)': 'Ничего за пределами Y=1000 (всего ≤ 2000 мм)',
+    '≤ 3600 mm': '≤ 3600 мм',
+    'xf=0 not behind xa=100': 'XF=0 не позади XA=100',
+    '800 kg + heat hazard mass increase': '800 кг + прибавка массы (тепловой режим)',
+    '≥ 44.6% of minimum mass': '≥ 44,6% от минимальной массы',
+    '≥ 53.9% of minimum mass': '≥ 53,9% от минимальной массы',
+    '≥ 151 kg': '≥ 151 кг',
+    '20–25 kg': '20–25 кг',
+    '≥ 300 g': '≥ 300 г',
+    '≥ 5300 g': '≥ 5300 г',
+    '≤ 18.0': '≤ 18,0',
+    '≥ 43.95 mm': '≥ 43,95 мм',
+    '≤ 100 kg/h': '≤ 100 кг/ч',
+    'q (kg/h) = 0.009 × n (rpm) + 5.5': 'Q (кг/ч) = 0,009 × N (об/мин) + 5,5',
+    'q = 10 kg/h': 'Q = 10 кг/ч',
+    'q (kg/h) = 0.257 × p (kw) + 22.85': 'Q (кг/ч) = 0,257 × P (кВт) + 22,85',
+    '≤ 500 barg': '≤ 500 бар',
+    '2': '2',
+    'mgu-k + mgu-h (two units)': 'MGU-K + MGU-H (две установки)',
+    '120 kw': '120 кВт',
+    '200 nm (referenced to crankshaft speed)': '200 Н⋅м (относительно частоты коленвала)',
+    '≤ 50,000 rpm': '≤ 50 000 об/мин',
+    '≥ 7 kg': '≥ 7 кг',
+    '≤ 125,000 rpm': '≤ 125 000 об/мин',
+    '≥ 4 kg': '≥ 4 кг',
+    '0.95 (fixed)': '0,95 (фиксировано)',
+    '90–100 mm': '90–100 мм',
+    'on y=0': 'На Y=0',
+    'xr = −60 to +60 mm; z = 250–260 mm': 'XR = −60…+60 мм; Z = 250–260 мм',
+    '≤ 635 mm from y=0': '≤ 635 мм от Y=0',
+    '≤ 548 mm from y=0': '≤ 548 мм от Y=0',
+    'mandatory (article 13)': 'Обязательно (статья 13)',
+    'aluminium (modulus of elasticity ≤ 80 gpa)': 'Алюминий (модуль упругости ≤ 80 ГПа)',
+    '1 (max 6 pistons)': '1 (макс. 6 поршней)',
+    '325–330 mm': '325–330 мм',
+    '275–280 mm': '275–280 мм',
+    '32 mm': '32 мм',
+    '3 mm': '3 мм',
+    'permitted (electronically controlled)': 'Разрешено (электронное управление)',
+    '335.3 ± 0.5 mm': '335,3 ± 0,5 мм',
+    '429.3 ± 0.5 mm': '429,3 ± 0,5 мм',
+    '490.6 ± 1 mm': '490,6 ± 1 мм',
+    '345–375 mm': '345–375 мм',
+    '440–470 mm': '440–470 мм',
+    '725 mm': '725 мм',
+    '735 mm': '735 мм',
+    '≥ 87': '≥ 87',
+    '≤ 3.45 wt%': '≤ 3,45 мас.%',
+    '10 wt% (minimum)': '10 мас.% (минимум)',
+    '≤ 0.1 wt%': '≤ 0,1 мас.%'
+  });
+})();

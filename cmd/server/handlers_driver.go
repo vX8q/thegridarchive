@@ -323,6 +323,11 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 		if n == "" {
 			return ""
 		}
+		// NASCAR provisional / substitute markers (* prefix or suffix).
+		n = strings.TrimLeft(n, "*")
+		n = strings.TrimSpace(n)
+		n = strings.TrimRight(n, "*")
+		n = strings.TrimSpace(n)
 		// "(i)" is eligibility metadata, not part of a person's identity.
 		lower := strings.ToLower(n)
 		if strings.HasSuffix(lower, "(i)") {

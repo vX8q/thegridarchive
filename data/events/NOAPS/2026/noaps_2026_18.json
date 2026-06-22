@@ -1,0 +1,92 @@
+{
+  "event_id": "NOAPS_2026_18",
+  "series": "NASCAR O'Reilly Auto Parts Series",
+  "race": "United Rentals Driven to Serve 250",
+  "date": "Saturday, June 20, 2026",
+  "start_date": "2026-06-20",
+  "end_date": "2026-06-20",
+  "track": "Coronado Street Course",
+  "location": "Coronado Street Course, San Diego, California",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Trk",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed",
+        "Lap #",
+        "# Laps",
+        "-Fastest",
+        "-Next"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Fin",
+        "St",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Laps",
+        "Led",
+        "Status",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "stage_1": {
+      "title": "Stage 1",
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "stage_2": {
+      "title": "Stage 2",
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "stage_3": {
+      "title": "Stage 3",
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

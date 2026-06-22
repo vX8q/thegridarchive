@@ -115,9 +115,19 @@
     return [];
   }
 
+  function localizedScheduleBaseName(e) {
+    var base = normalizeEventBaseName(e && e.name);
+    var loc = window.TGA && window.TGA.localizeEventFromData;
+    if (loc) return loc(Object.assign({}, e, { name: base }));
+    var locName = window.TGA && window.TGA.localizeEventName;
+    if (locName) return locName(base);
+    return base;
+  }
+
   function normalizeEventBaseName(name) {
     return String(name || '')
       .replace(/\s*\((Sprint|Feature(?:\s+Race)?|Race\s+\d+)\)\s*/gi, ' ')
+      .replace(/\s*\([^)]*rescheduled[^)]*\)\s*/gi, ' ')
       .replace(/\s+Race\s+\d+$/i, '')
       .replace(/\s+/g, ' ')
       .trim();
@@ -146,7 +156,7 @@
         out.push(e);
         return;
       }
-      var baseName = normalizeEventBaseName(e.name);
+      var baseName = localizedScheduleBaseName(e);
       var groupId = String(e.id || baseName);
       sessions.forEach(function (s, idx) {
         var row = Object.assign({}, e, {
@@ -188,7 +198,7 @@
     }
     var sessions = buildSessionsForEvent(sid, e);
     if (!sessions || sessions.length <= 1) return [e];
-    var baseName = normalizeEventBaseName(e.name);
+    var baseName = localizedScheduleBaseName(e);
     return sessions.map(function (s) {
       var displayLabel = s.kind ? raceSessionDisplayLabel(s.kind, s.label) : s.label;
       var row = Object.assign({}, e, {

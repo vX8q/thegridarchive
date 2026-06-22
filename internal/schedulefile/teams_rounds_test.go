@@ -430,3 +430,42 @@ func TestEntryDrivers_SplitsCrewStrings(t *testing.T) {
 		t.Fatalf("driver1/2/3: got %#v", gotSlots)
 	}
 }
+
+func TestEnrichTeamsRoundsFromEvents_SupercarsDropsUnenteredWildcard(t *testing.T) {
+	dataDir := t.TempDir()
+	writeJSON(t, filepath.Join(dataDir, "schedules", "supercars.json"), []EventJSON{
+		{ID: "SUPERCARS_2026_1", SeriesID: "SUPERCARS", Season: "2026", StartDate: "2026-02-20"},
+	})
+	writeJSON(t, filepath.Join(dataDir, "teams", "supercars.json"), &TeamsWithSpec{
+		Teams: []TeamJSON{
+			{Manufacturer: "Chevrolet", Team: "Team 18", Number: "15", Driver: "Craig Lowndes", FullTime: false},
+			{Manufacturer: "Chevrolet", Team: "Team 18", Number: "18", Driver: "Anton de Pasquale", Rounds: "1", FullTime: true},
+		},
+	})
+	writeJSON(t, filepath.Join(dataDir, "events", "Supercars", "2026", "supercars_2026_1.json"), &EventDetailJSON{
+		EntryList: []EntryListRow{{Number: "18", Driver: "Anton de Pasquale", Team: "Team 18", Manufacturer: "Chevrolet"}},
+	})
+
+	data, err := LoadTeams(dataDir, "supercars")
+	if err != nil {
+		t.Fatal(err)
+	}
+	EnrichTeamsRoundsFromEvents(dataDir, "supercars", "2026", data)
+	for _, row := range data.Teams {
+		if row.Driver == "Craig Lowndes" {
+			t.Fatalf("unentered wildcard should be dropped, still have Craig Lowndes")
+		}
+	}
+	found := false
+	for _, row := range data.Teams {
+		if row.Driver == "Anton de Pasquale" {
+			found = true
+			if row.Rounds != "1" {
+				t.Fatalf("Anton rounds = %q, want 1", row.Rounds)
+			}
+		}
+	}
+	if !found {
+		t.Fatal("expected Anton de Pasquale row")
+	}
+}

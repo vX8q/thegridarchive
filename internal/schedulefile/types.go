@@ -77,6 +77,11 @@ type TeamJSON struct {
 	DriverRounds []string `json:"driver_rounds,omitempty"` // rounds per driver (parallel to Drivers)
 	Rounds       string   `json:"rounds,omitempty"`        // round schedule (All, "7", "Rolex 24", etc.)
 
+	// Supercars: enduro co-driver (co_rounds from entry_list when present).
+	CoDriver string `json:"co_driver,omitempty"`
+	CoRounds string `json:"co_rounds,omitempty"`
+	Model    string `json:"model,omitempty"`
+
 	// F1: power unit (Engine)
 	PowerUnit string `json:"power_unit,omitempty"`
 

@@ -111,7 +111,7 @@
     "id": "SUPERCARS_2026_11",
     "series_id": "SUPERCARS",
     "season": "2026",
-    "name": "Christchurch Super 440 Race 1",
+    "name": "Christchurch Super 440",
     "location": "Christchurch, Canterbury Region, New Zealand",
     "circuit_name": "Euromarque Motorsport Park",
     "start_date": "2026-04-17",
@@ -123,7 +123,7 @@
     "id": "SUPERCARS_2026_12",
     "series_id": "SUPERCARS",
     "season": "2026",
-    "name": "Christchurch Super 440 Race 2",
+    "name": "Christchurch Super 440",
     "location": "Christchurch, Canterbury Region, New Zealand",
     "circuit_name": "Euromarque Motorsport Park",
     "start_date": "2026-04-18",
@@ -132,22 +132,10 @@
     "time_msk": "4/18/26 03:45"
   },
   {
-    "id": "SUPERCARS_2026_13",
-    "series_id": "SUPERCARS",
-    "season": "2026",
-    "name": "Christchurch Super 440 Race 3",
-    "location": "Christchurch, Canterbury Region, New Zealand",
-    "circuit_name": "Euromarque Motorsport Park",
-    "start_date": "2026-04-19",
-    "end_date": "2026-04-19",
-    "time_est": "3:05 PM",
-    "time_msk": "4/19/26 06:05"
-  },
-  {
     "id": "SUPERCARS_2026_10",
     "series_id": "SUPERCARS",
     "season": "2026",
-    "name": "Christchurch Super 440 Race 4 (Taupō Race 3, rescheduled)",
+    "name": "Christchurch Super 440",
     "location": "Christchurch, Canterbury Region, New Zealand",
     "circuit_name": "Euromarque Motorsport Park",
     "start_date": "2026-04-18",
@@ -155,6 +143,18 @@
     "time_est": "4:10 PM",
     "time_msk": "4/18/26 07:10",
     "date": "2026-04-18"
+  },
+  {
+    "id": "SUPERCARS_2026_13",
+    "series_id": "SUPERCARS",
+    "season": "2026",
+    "name": "Christchurch Super 440",
+    "location": "Christchurch, Canterbury Region, New Zealand",
+    "circuit_name": "Euromarque Motorsport Park",
+    "start_date": "2026-04-19",
+    "end_date": "2026-04-19",
+    "time_est": "3:05 PM",
+    "time_msk": "4/19/26 06:05"
   },
   {
     "id": "SUPERCARS_2026_14",

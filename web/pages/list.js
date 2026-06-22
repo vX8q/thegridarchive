@@ -9,6 +9,7 @@
     var categories = window.TGA.categories;
     var countryHtml = window.TGA.countryHtml;
     var loadGlobalSchedule = window.TGA.loadGlobalSchedule;
+    var localizeSeriesName = window.TGA.localizeSeriesName || function (n, id) { return n || id || '—'; };
     if (!t || !esc || !categories || !loadGlobalSchedule) return;
 
     if (container._listLoaded) return;
@@ -53,7 +54,7 @@
           var href = s.id === 'F1' ? '/season/f1-2026' : '/series/' + encodeURIComponent(slug);
           return (
             '<a href="' + href + '" class="series-card">' +
-              '<h3>' + esc(s.name) + '</h3>' +
+              '<h3>' + esc(localizeSeriesName(s.name, s.id)) + '</h3>' +
               '<div class="meta">' + esc(s.season) + ' · ' + (countryHtml ? countryHtml(country) : esc(country || '')) + '</div>' +
             '</a>'
           );

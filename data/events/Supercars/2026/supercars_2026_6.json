@@ -1,0 +1,40 @@
+{
+  "event_id": "SUPERCARS_2026_6",
+  "series": "Supercars Championship",
+  "race": "Darwin Triple Crown",
+  "date": "19–21 June 2026",
+  "start_date": "2026-06-19",
+  "end_date": "2026-06-21",
+  "track": "Hidden Valley Raceway",
+  "location": "Darwin, Northern Territory",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

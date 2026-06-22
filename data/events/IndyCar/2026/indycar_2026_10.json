@@ -1,0 +1,98 @@
+{
+  "event_id": "INDYCAR_2026_10",
+  "series": "IndyCar Series",
+  "race": "XPEL Grand Prix at Road America",
+  "date": "Sunday, June 21, 2026",
+  "start_date": "2026-06-21",
+  "end_date": "2026-06-21",
+  "track": "Road America",
+  "location": "Elkhart Lake, Wisconsin",
+  "entry_list": [],
+  "tables": {
+    "caution_breakdown": {
+      "headers": [
+        "Condition",
+        "From Lap",
+        "To Lap",
+        "# Of Laps",
+        "Reason"
+      ],
+      "rows": []
+    },
+    "final_practice": {
+      "title": "Final Practice",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Laps"
+      ],
+      "rows": []
+    },
+    "practice": {
+      "title": "Practice 1",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Laps"
+      ],
+      "rows": []
+    },
+    "practice2": {
+      "title": "Practice 2",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Laps"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "title": "Qualifying",
+      "headers": [
+        "Pos",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "St",
+        "No",
+        "Driver",
+        "Team",
+        "Engine",
+        "Laps",
+        "Time/Retired",
+        "Led",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

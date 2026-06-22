@@ -1,0 +1,40 @@
+{
+  "event_id": "DTM_2026_3",
+  "series": "DTM",
+  "race": "DTM — Lausitzring",
+  "date": "20–21 June 2026",
+  "start_date": "2026-06-20",
+  "end_date": "2026-06-21",
+  "track": "Lausitzring",
+  "location": "Klettwitz, Brandenburg",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

@@ -10,7 +10,8 @@
   var esc = P.esc;
   var dash = P.dash;
   var slugify = P.slugify;
-  var driverDisplayName = P.driverDisplayName;
+  var driverTableCell = P.driverTableCell;
+  var localizeDriverNamesInText = P.localizeDriverNamesInText;
   var isGuestEntryRow = P.isGuestEntryRow;
   var guestCarNumberSet = P.guestCarNumberSet;
   var entryListDriverCell = P.entryListDriverCell;
@@ -24,11 +25,24 @@
   var localizeTableHeader = P.localizeTableHeader;
   var localizeCellNote = P.localizeCellNote;
   var localizeRaceReason = P.localizeRaceReason;
+  var localizeCautionFlagLabel = P.localizeCautionFlagLabel;
   var translateValueHeaders = P.translateValueHeaders;
   var translateReasonHeaders = P.translateReasonHeaders;
   var localizeDate = P.localizeDate;
   var localizeDistance = P.localizeDistance;
   var localizeEventPreview = P.localizeEventPreview;
+  var localizeTyreCompounds = P.localizeTyreCompounds;
+  var localizeSectionTitle = P.localizeSectionTitle;
+  var localizeCompoundLegend = P.localizeCompoundLegend;
+  var localizeCircuitName = P.localizeCircuitName;
+  var localizeLocation = P.localizeLocation;
+  var localizeDriverName = P.localizeDriverName;
+  var localizeEventName = P.localizeEventName;
+  var localizeEventFromData = P.localizeEventFromData;
+  var localizeRacingClass = P.localizeRacingClass;
+  var teamLabel = P.teamLabel;
+  var localizeQualifyingSeparator = P.localizeQualifyingSeparator;
+  var documentTitle = P.documentTitle;
   var trimTrailingZeros = P.trimTrailingZeros;
   var countryHtml = P.countryHtml;
   var categories = P.categories;
@@ -49,6 +63,18 @@
   var logger = P.logger;
   var state = P.state;
   var API = P.API;
+
+  function teamLink(name) {
+    var raw = name != null ? String(name).trim() : '';
+    if (!raw) return '—';
+    var label = teamLabel ? teamLabel(raw) : raw;
+    return '<a href="/team/' + encodeURIComponent(slugify(raw)) + '" class="track-link">' + esc(label) + '</a>';
+  }
+
+  function renderDriverCell(name, joiner) {
+    var cell = driverTableCell(name, joiner);
+    return cell || '—';
+  }
 
   function makeTableSortable() { return P.makeTableSortable.apply(null, arguments); }
   function makeSimpleTableSortable(tableEl) { P.makeSimpleTableSortable(tableEl); }
@@ -71,6 +97,12 @@
     // Universally extract series_id from event_id:
     // SUPER_FORMULA_2026_1 -> SUPER_FORMULA, NASCAR_TRUCK_2026_5 -> NASCAR_TRUCK, F1_2026_3 -> F1
     return u.replace(/_\d+.*$/, '');
+  }
+
+  /** NASCAR national tours use stage points; ARCA Menards Series does not. */
+  function seriesUsesStages(seriesId) {
+    var s = String(seriesId || '').toLowerCase();
+    return ['nascar_cup', 'noaps', 'nascar_truck', 'nascar_modified'].indexOf(s) >= 0;
   }
 
   function isF4SeriesId(seriesId) {
@@ -211,10 +243,12 @@
         var seriesMetaLc = (d.event_id && eventSeriesId(d.event_id)) ? (eventSeriesId(d.event_id) || '').toLowerCase() : '';
         if (d.tables && d.tables.starting_lineup && seriesMetaLc !== 'f4_it') s.push(t('meta.starting_grid'));
         if (raceResultsFirstMeta && d.tables.race_results) s.push(t('meta.race_results'));
-        if (d.tables && tgaStageTable(d.tables, 1)) s.push(t('meta.stage1'));
-        if (d.tables && tgaStageTable(d.tables, 2)) s.push(t('meta.stage2'));
-        if (d.tables && tgaStageTable(d.tables, 3)) s.push(t('meta.stage3'));
-        if (d.tables && tgaStageTable(d.tables, 4)) s.push(t('meta.stage4'));
+        if (seriesUsesStages(seriesMeta)) {
+          if (d.tables && tgaStageTable(d.tables, 1)) s.push(t('meta.stage1'));
+          if (d.tables && tgaStageTable(d.tables, 2)) s.push(t('meta.stage2'));
+          if (d.tables && tgaStageTable(d.tables, 3)) s.push(t('meta.stage3'));
+          if (d.tables && tgaStageTable(d.tables, 4)) s.push(t('meta.stage4'));
+        }
         if (!raceResultsFirstMeta && d.tables && d.tables.race_results) s.push(t('meta.race_results'));
         return s.join(' · ');
       }
@@ -287,6 +321,9 @@
     var driverColIndices = {};
     var driversColIndices = {};
     var teamColIndices   = {};
+    var cautionConditionColIdx = -1;
+    var cautionReasonColIdx = -1;
+    var isCautionBreakdown = extraClass && extraClass.indexOf('caution-breakdown') >= 0;
     headers.forEach(function (h, idx) {
       var lh = (h || '').toLowerCase().trim();
       if (translateValueHeaders.indexOf(lh)  >= 0) noteColIndices[idx]   = true;
@@ -295,6 +332,8 @@
       if (lh === 'driver' || lh === 'driver name' || (lh.indexOf('driver') === 0 && lh.length <= 12)) driverColIndices[idx] = true;
       if (lh === 'drivers') driversColIndices[idx] = true;
       if (lh === 'team') teamColIndices[idx] = true;
+      if (isCautionBreakdown && lh === 'condition') cautionConditionColIdx = idx;
+      if (isCautionBreakdown && (lh === 'reason' || lh === 'причина')) cautionReasonColIdx = idx;
     });
     var teamColIdx = -1;
     for (var ti = 0; ti < headers.length; ti++) { if (teamColIndices[ti]) { teamColIdx = ti; break; } }
@@ -338,6 +377,7 @@
       ? rows.map(function (row, rowIndex) {
           if (isSeparatorRow(row)) {
             var text = (row[0] != null ? String(row[0]).trim() : '');
+            if (typeof localizeQualifyingSeparator === 'function') text = localizeQualifyingSeparator(text);
             return '<tr class="table-separator-row"><td colspan="' + Math.max(1, headers.length) + '">' + esc(text) + '</td></tr>';
           }
           var rc = getRowClass ? getRowClass(row) : '';
@@ -346,39 +386,29 @@
             if (mergeTeamCells && ci === teamColIdx && teamColIdx >= 0) {
               if (teamRowSpan[rowIndex] === -1) return '';
               if (teamRowSpan[rowIndex] > 0) {
-                var teamVal = (cell != null && String(cell).trim() !== '') ? '<a href="/team/' + encodeURIComponent(slugify(String(cell).trim())) + '" class="track-link">' + esc(String(cell).trim()) + '</a>' : emptyCell;
+                var teamVal = (cell != null && String(cell).trim() !== '') ? teamLink(String(cell).trim()) : emptyCell;
                 return '<td rowspan="' + teamRowSpan[rowIndex] + '" class="stockcar-team-cell">' + teamVal + '</td>';
               }
             }
             var val;
             if (teamColIndices[ci]) {
-              val = (cell != null && String(cell).trim() !== '') ? '<a href="/team/' + encodeURIComponent(slugify(String(cell).trim())) + '" class="track-link">' + esc(String(cell).trim()) + '</a>' : emptyCell;
+              val = (cell != null && String(cell).trim() !== '') ? teamLink(String(cell).trim()) : emptyCell;
             } else if (driverColIndices[ci]) {
               var rawDriver = (cell != null ? String(cell) : '').trim();
-              var crewNames = (window.TGA && window.TGA.splitDriverNames)
-                ? window.TGA.splitDriverNames(rawDriver)
-                : [rawDriver];
-              if (rawDriver && crewNames.length > 1 && window.TGA && window.TGA.driversCellHtml) {
-                val = window.TGA.driversCellHtml(rawDriver);
-              } else {
-                var d = rawDriver ? driverDisplayName(rawDriver) : '';
-                if (d && /^[^,]+\s*,\s*[^,]+$/.test(d)) {
-                  var parts = d.split(/\s*,\s*/);
-                  d = (parts[1] + ' ' + parts[0]).trim();
-                }
-                val = d ? '<a href="/driver/' + encodeURIComponent(slugify(d)) + '" class="track-link">' + esc(d) + '</a>' : emptyCell;
-              }
+              val = rawDriver ? (driverTableCell(rawDriver) || emptyCell) : emptyCell;
             } else if (driversColIndices[ci]) {
               var rawDrivers = (cell != null ? String(cell) : '').trim();
-              if (rawDrivers && window.TGA && window.TGA.driversCellHtml) {
-                val = window.TGA.driversCellHtml(rawDrivers, '<br>');
+              val = rawDrivers ? (driverTableCell(rawDrivers, '<br>') || emptyCell) : emptyCell;
+            } else if (ci === cautionConditionColIdx && cautionConditionColIdx >= 0) {
+              var condRaw = (cell != null ? String(cell).trim() : '');
+              if (condRaw) {
+                val = typeof localizeCautionFlagLabel === 'function' ? localizeCautionFlagLabel(condRaw, false) : condRaw;
               } else {
-                val = rawDrivers ? String(rawDrivers).split(/\s*;\s*/).map(function (p) {
-                  var t = p.trim();
-                  if (!t) return '';
-                  var d = driverDisplayName(t);
-                  return '<a href="/driver/' + encodeURIComponent(slugify(d)) + '" class="track-link">' + esc(d) + '</a>';
-                }).filter(Boolean).join('<br>') : emptyCell;
+                var reasonIdx = cautionReasonColIdx >= 0 ? cautionReasonColIdx : 4;
+                var hasCautionReason = row[reasonIdx] != null && String(row[reasonIdx]).trim() !== '';
+                val = typeof localizeCautionFlagLabel === 'function'
+                  ? localizeCautionFlagLabel('', hasCautionReason)
+                  : (hasCautionReason ? 'Caution' : 'Green flag');
               }
             } else {
               val = noteColIndices[ci]   ? localizeCellNote(cell)
@@ -394,7 +424,7 @@
       : '<tr><td class="empty-row" colspan="' + Math.max(1, headers.length) + '">' + esc(t('error.no_section_data')) + '</td></tr>';
     var tbody = '<tbody>' + tbodyRows + '</tbody>';
     var titleCls = 'table-section-title' + (titleClass ? ' ' + titleClass : '');
-    var titleBlock = (title ? '<h4 class="' + titleCls + '">' + esc(title) + '</h4>' : '');
+    var titleBlock = (title ? '<h4 class="' + titleCls + '">' + esc((typeof localizeSectionTitle === 'function' ? localizeSectionTitle(title) : title)) + '</h4>' : '');
     var subtitleBlock = (subtitle ? '<p class="table-section-subtitle">' + esc(subtitle) + '</p>' : '');
     var html = titleBlock + subtitleBlock +
       '<div class="table-wrap"><table class="' + cls + '">' + colgroup + thead + tbody + '</table></div>';
@@ -413,7 +443,7 @@
 
       function fillFromEventLike(match) {
         if (!match) return;
-        var name = match.name || match.race || match.id || apiEventId || '';
+        var name = localizeEventFromData(match) || match.id || apiEventId || '';
         if (titleEl && name && (!titleEl.textContent || titleEl.textContent === '—')) {
           titleEl.textContent = name;
         }
@@ -435,7 +465,7 @@
         var circuit = match.circuit_name || match.track || '';
         var location = match.location || '';
         if (circuit) {
-          datePart += (datePart ? ' · ' : '') + circuit;
+          datePart += (datePart ? ' · ' : '') + localizeCircuitName(circuit);
         }
         if (location) {
           var locTrim = String(location).trim();
@@ -445,7 +475,7 @@
               (locTrim !== circTrim &&
                locTrim.indexOf(circTrim) === -1 &&
                circTrim.indexOf(locTrim) === -1)) {
-            datePart += (datePart ? ', ' : '') + location;
+            datePart += (datePart ? ', ' : '') + localizeLocation(location);
           }
         }
         if (datePart) metaEl.textContent = datePart;
@@ -555,7 +585,7 @@
       if (seriesIdForName && seriesIdForName.toUpperCase() === 'F1' && typeof rawName === 'string') {
         rawName = rawName.replace(/^F1\s*[—-]\s*/i, '');
       }
-      var eventName   = rawName;
+      var eventName = localizeEventFromData(Object.assign({}, d, { name: rawName }));
       var seriesId    = eventSeriesId(d.event_id || apiEventId);
       var seriesLabel = seriesId.replace(/_/g, ' ');
 
@@ -584,9 +614,9 @@
       }
       var sectionLabel = '';
       if (isWecPrologue && activeSection && wecSessionLabelsById[activeSection]) {
-        sectionLabel = wecSessionLabelsById[activeSection];
+        sectionLabel = localizeRacingClass(wecSessionLabelsById[activeSection]);
       } else if (isElmsPrologue && activeSection && elmsClassLabelsById[activeSection]) {
-        sectionLabel = elmsClassLabelsById[activeSection];
+        sectionLabel = localizeRacingClass(elmsClassLabelsById[activeSection]);
       } else {
         sectionLabel = blockDef ? t('block.' + blockDef.id) : '';
       }
@@ -608,7 +638,7 @@
       } else {
         datePart = typeof localizeDate === 'function' ? localizeDate(d.date || '') : String(d.date || '').trim();
       }
-      if (d.track) datePart += (datePart ? ' · ' : '') + d.track;
+      if (d.track) datePart += (datePart ? ' · ' : '') + localizeCircuitName(d.track);
       if (d.location) {
         var locTrimMeta = String(d.location).trim();
         var trackTrimMeta = String(d.track || '').trim();
@@ -616,11 +646,11 @@
             (locTrimMeta !== trackTrimMeta &&
              locTrimMeta.indexOf(trackTrimMeta) === -1 &&
              trackTrimMeta.indexOf(locTrimMeta) === -1)) {
-          datePart += (datePart ? ', ' : '') + d.location;
+          datePart += (datePart ? ', ' : '') + localizeLocation(d.location);
         }
       }
       metaEl.textContent = datePart;
-      document.title = (activeSection ? sectionLabel + ' — ' : '') + eventName + ' — The Grid Archive (TGA)';
+      document.title = documentTitle((activeSection ? sectionLabel + ' — ' : '') + eventName);
       var eventSlugForUrl = (d.event_id || eventId || '').toLowerCase().replace(/_/g, '-');
 
       // Breadcrumbs: All series / F1 / (optional F1 20XX) / Event / Section
@@ -672,7 +702,7 @@
           var base = '/event/' + encodeURIComponent(eventSlugForUrl);
           sectionNavEl.innerHTML = visibleBlocks.map(function (b) {
             var active = activeSection === b.id ? ' active' : '';
-            var label = ((isWecPrologue || isElmsPrologue) && b.label) ? b.label : t('block.' + b.id);
+            var label = ((isWecPrologue || isElmsPrologue) && b.label) ? localizeRacingClass(b.label) : t('block.' + b.id);
             return '<a href="' + base + '/' + b.id + '" class="nav-link' + active + '">' + esc(label) + '</a>';
         }).join('');
         } else {
@@ -775,7 +805,7 @@
     var evKeyOverview = ((d.event_id || eventId || '') + '')
       .toUpperCase()
       .replace(/[^A-Z0-9]+/g, '_');
-    var eventName = (d.name && String(d.name).trim()) || d.race || d.event_id || eventId || 'Event';
+    var eventName = localizeEventFromData(d) || d.event_id || eventId || 'Event';
     var datePart = d.date || d.start_date || d.startDate || '';
     if (evKeyOverview === 'IMSA_2026_PRE_SEASON_TEST' || evKeyOverview === 'F1_2026_PRE_SEASON_TEST_1' || evKeyOverview === 'F1_2026_PRE_SEASON_TEST_2') {
       renderEventSectionContent(d, 'pre_season_tests', contentEl, null);
@@ -832,7 +862,7 @@
         var blocksClass = 'event-blocks ' + (isRowBlocksEvent ? 'event-blocks--row' : 'event-blocks--2x2');
         html += '<div class="' + blocksClass + '">' +
           visibleBlocks.map(function (b) {
-            var blockLabel = b.label || t('block.' + b.id) || b.id;
+            var blockLabel = b.label ? localizeRacingClass(b.label) : (t('block.' + b.id) || b.id);
             return '<a href="/event/' + encodeURIComponent((eventId || '').toLowerCase().replace(/_/g, '-')) + '/' + b.id + '" class="event-block">' +
               '<span class="event-block-label">' + esc(blockLabel) + '</span>' +
             '</a>';
@@ -855,8 +885,12 @@
         .replace(/—/g, '-')
         .replace(/\s+/g, ' ')
         .trim();
-      if (getLang() === 'ru' && !(d.event_preview_ru && d.event_preview_ru.trim())) {
-        previewTextBody = localizeEventPreview(previewTextBody);
+      if (getLang() === 'ru') {
+        if (d.event_preview_ru && d.event_preview_ru.trim()) {
+          previewTextBody = localizeDriverNamesInText(previewTextBody);
+        } else {
+          previewTextBody = localizeEventPreview(previewTextBody);
+        }
       }
     }
     var overviewPreviewBlock = previewTextBody.length > 0 || hasPreviewKey;
@@ -865,7 +899,7 @@
         (previewTextBody.length > 0 ? esc(previewTextBody) : '') + '</p>';
     }
     if (d.tyre_compounds && typeof d.tyre_compounds === 'string' && d.tyre_compounds.trim()) {
-      html += '<p class="event-preview-text tyre-compounds-text">' + esc(d.tyre_compounds.trim()) + '</p>';
+      html += '<p class="event-preview-text tyre-compounds-text">' + esc(localizeTyreCompounds(d.tyre_compounds.trim())) + '</p>';
     }
 
     // Highlights — YouTube (preferred) or external link.
@@ -887,7 +921,7 @@
       var videoWrapCls = 'video-embed-wrap' + ((highlightsList.length === 1 && hasSingleRaceSession) ? ' video-embed-wrap--single' : '');
       html += '<div class="' + videoWrapCls + '">';
       if (highlightsList.length === 1) {
-        html += '<h4 class="table-section-title">' + esc(highlightsList[0].title || t('section.highlights')) + '</h4>';
+        html += '<h4 class="table-section-title">' + esc(localizeSectionTitle(highlightsList[0].title || t('section.highlights'))) + '</h4>';
       } else {
         html += '<h4 class="table-section-title">' + t('section.highlights') + '</h4>';
       }
@@ -900,7 +934,7 @@
           // Remove caption under preview if it is the only video (heading already above).
           var showLabel = (highlightsList.length > 1);
           var label = (showLabel && item.title)
-            ? '<p class="video-facade-label">' + esc(item.title) + '</p>'
+            ? '<p class="video-facade-label">' + esc(localizeSectionTitle(item.title)) + '</p>'
             : '';
           var thumbBase = 'https://img.youtube.com/vi/' + yid + '/';
           var thumbFallback = 'onerror="var s=this.src;if(s.indexOf(\'maxresdefault\')!==-1){this.src=s.replace(\'maxresdefault\',\'sddefault\');this.onerror=function(){this.src=s.replace(\'maxresdefault\',\'hqdefault\');this.onerror=null;};}else if(s.indexOf(\'sddefault\')!==-1){this.src=s.replace(\'sddefault\',\'hqdefault\');this.onerror=null;}"';
@@ -1108,9 +1142,9 @@
       if (evKeyEvent && evKeyEvent.indexOf('F1_') === 0) {
         var baseTitle = titleText.trim();
         if (/^sprint$/i.test(baseTitle)) {
-          titleText = 'Sprint Results';
+          titleText = t('table.sprint_results');
         } else if (/^race$/i.test(baseTitle) || /^race\s+classification$/i.test(baseTitle)) {
-          titleText = 'Race Results';
+          titleText = t('table.race_results');
         }
       }
       var skipVenueSubtitle = (seriesIdLower === 'f2' || seriesIdLower === 'f3');
@@ -1120,10 +1154,10 @@
         if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event) {
           out += buildSessionMetaTable(sess.meta);
         }
-        if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(titleText) + '</h3>';
+        if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(localizeSectionTitle(titleText)) + '</h3>';
         if (!skipVenueSubtitle && sess.subtitle) out += '<p class="event-pre-season-subtitle">' + esc(sess.subtitle) + '</p>';
       } else {
-        if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(titleText) + '</h3>';
+        if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(localizeSectionTitle(titleText)) + '</h3>';
         if (!skipVenueSubtitle && sess.subtitle) out += '<p class="event-pre-season-subtitle">' + esc(sess.subtitle) + '</p>';
         if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event) {
           out += buildSessionMetaTable(sess.meta);
@@ -1588,7 +1622,7 @@
       });
     }
     if (isAllstarStageRace) {
-      var allstarTitle = (rrAllstar.title && String(rrAllstar.title).trim()) ? String(rrAllstar.title).trim() : 'Stage results';
+      var allstarTitle = (rrAllstar.title && String(rrAllstar.title).trim()) ? localizeSectionTitle(String(rrAllstar.title).trim()) : t('table.stage_results');
       html += '<h2 class="race-section-title">' + esc(allstarTitle) + '</h2>';
       rrAllstar.stages.forEach(function (stage) { renderAllstarStageRace(stage); });
     }
@@ -1631,7 +1665,7 @@
             add((typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race', sprintPenaltiesTable, 'penalties-table', null, null, null, null, false);
           }
           if (sprintPenaltiesAfterTable && sprintPenaltiesAfterTable.rows && sprintPenaltiesAfterTable.rows.length > 0) {
-            add('Penalties added after the chequered flag', sprintPenaltiesAfterTable, 'penalties-table penalties-table--after', null, null, null, null, false);
+            add(t('table.penalties_after'), sprintPenaltiesAfterTable, 'penalties-table penalties-table--after', null, null, null, null, false);
           }
           if (sprintVscTable && sprintVscTable.rows && sprintVscTable.rows.length > 0) {
             var vscSprintTitle = (sprintVscTable.title && String(sprintVscTable.title).trim())
@@ -1647,7 +1681,7 @@
               add((typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race', tables.penalties, 'penalties-table', null, null, null, null, false);
             }
             if (tables.penalties_after && tables.penalties_after.rows && tables.penalties_after.rows.length > 0) {
-              add('Penalties added after the chequered flag', tables.penalties_after, 'penalties-table penalties-table--after', null, null, null, null, false);
+              add(t('table.penalties_after'), tables.penalties_after, 'penalties-table penalties-table--after', null, null, null, null, false);
             }
             if (tables.vsc && tables.vsc.rows && tables.vsc.rows.length > 0) {
               var vscTitleSprint = (tables.vsc.title && String(tables.vsc.title).trim()) ? tables.vsc.title : ((typeof t === 'function' && t('table.vsc')) ? t('table.vsc') : 'Race neutralisation');
@@ -1749,7 +1783,7 @@
     function appendRaceResultsBlock() {
       var rp = tables.race_points;
       if (rp && Array.isArray(rp.headers) && Array.isArray(rp.rows) && rp.rows.length > 0) {
-        var rpTitle = (rp.title != null && String(rp.title).trim()) ? String(rp.title).trim() : 'Points system';
+        var rpTitle = (rp.title != null && String(rp.title).trim()) ? localizeSectionTitle(String(rp.title).trim()) : t('table.points_system');
         add(rpTitle, { headers: rp.headers, rows: rp.rows }, 'wec-race-points-table', null, null, null, null, false);
       }
       var rr = tables.race_results;
@@ -1925,16 +1959,18 @@
     }
 
     var stageWidthsForUse = isStockCarSeriesRace ? null : stagePointsWidths;
-    add((d.stage1_laps ? t('table.stage1') + ' (' + d.stage1_laps + ' ' + t('stage.laps') + ')' : t('table.stage1')), tgaStageTable(tables, 1), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
-    add((d.stage2_laps ? t('table.stage2') + ' (' + d.stage2_laps + ' ' + t('stage.laps') + ')' : t('table.stage2')), tgaStageTable(tables, 2), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
-    var stage3TitleDefault = (d.stage3_laps ? t('table.stage3') + ' (' + d.stage3_laps + ' ' + t('stage.laps') + ')' : t('table.stage3'));
-    var stage3Title = stage3TitleDefault;
-    if (isStockCarSeriesRace && tgaStageTable(tables, 3) && !tables.race_results) {
-      stage3Title = (d.stage3_laps ? t('table.race_results') + ' (' + d.stage3_laps + ' ' + t('stage.laps') + ')' : t('table.race_results'));
-    }
-    add(stage3Title, tgaStageTable(tables, 3), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
-    if (!tables.race_results) {
-      add((d.stage4_laps ? t('table.stage4') + ' (' + d.stage4_laps + ' ' + t('stage.laps') + ')' : t('table.stage4')), tgaStageTable(tables, 4), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
+    if (seriesUsesStages(seriesIdLower)) {
+      add((d.stage1_laps ? t('table.stage1') + ' (' + d.stage1_laps + ' ' + t('stage.laps') + ')' : t('table.stage1')), tgaStageTable(tables, 1), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
+      add((d.stage2_laps ? t('table.stage2') + ' (' + d.stage2_laps + ' ' + t('stage.laps') + ')' : t('table.stage2')), tgaStageTable(tables, 2), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
+      var stage3TitleDefault = (d.stage3_laps ? t('table.stage3') + ' (' + d.stage3_laps + ' ' + t('stage.laps') + ')' : t('table.stage3'));
+      var stage3Title = stage3TitleDefault;
+      if (isStockCarSeriesRace && tgaStageTable(tables, 3) && !tables.race_results) {
+        stage3Title = (d.stage3_laps ? t('table.race_results') + ' (' + d.stage3_laps + ' ' + t('stage.laps') + ')' : t('table.race_results'));
+      }
+      add(stage3Title, tgaStageTable(tables, 3), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
+      if (!tables.race_results) {
+        add((d.stage4_laps ? t('table.stage4') + ' (' + d.stage4_laps + ' ' + t('stage.laps') + ')' : t('table.stage4')), tgaStageTable(tables, 4), 'race-stage-table race-stage-table--points', null, stageWidthsForUse, null, null, false);
+      }
     }
 
     appendRaceResultsBlock();
@@ -1975,14 +2011,14 @@
       if (tables.penalties) {
         var penaltiesTitle;
         if (evKeyEvent === 'F1_2025_2') {
-          penaltiesTitle = 'Penalties added after the chequered flag';
+          penaltiesTitle = t('table.penalties_after');
         } else {
           penaltiesTitle = (typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race';
         }
         add(penaltiesTitle, tables.penalties, 'penalties-table', null, null, null, null, false);
       }
       if (tables.penalties_after && tables.penalties_after.rows && tables.penalties_after.rows.length > 0) {
-        var penaltiesAfterTitle = 'Penalties added after the chequered flag';
+        var penaltiesAfterTitle = t('table.penalties_after');
         add(penaltiesAfterTitle, tables.penalties_after, 'penalties-table penalties-table--after', null, null, null, null, false);
       }
       if (tables.vsc) {
@@ -1993,9 +2029,11 @@
     if (tables.pit_stops) {
       var ps = tables.pit_stops;
       var psTitle = (ps.title && String(ps.title).trim())
-        ? ps.title
-        : ((typeof t === 'function' && t('table.pit_stops')) ? t('table.pit_stops') : 'PIT STOPS');
+        ? localizeSectionTitle(ps.title)
+        : t('table.pit_stops');
       var psRows = ps.rows || [];
+      var pitEntryList = Array.isArray(d.entry_list) ? d.entry_list : [];
+      var resolvePitDriver = (window.TGA && window.TGA.resolveDriverFromEntryList) || function (n) { return n; };
       function parseStint(str) {
         if (!str || typeof str !== 'string') return null;
         str = str.trim();
@@ -2070,7 +2108,7 @@
           ? 'width: 100%;'
           : 'width: 20px; min-width: 20px;';
         html += '<div class="pit-stops-chart-row">';
-        html += '<span class="pit-stops-chart-driver">' + esc(driver.toUpperCase()) + '</span>';
+        html += '<span class="pit-stops-chart-driver">' + esc((window.TGA && window.TGA.driverLabel) ? window.TGA.driverLabel(resolvePitDriver(driver, pitEntryList)) : driver) + '</span>';
         html += '<div class="pit-stops-chart-bar-wrap"><div class="pit-stops-chart-bar pit-stops-chart-bar--overlay" style="' + barStyle + '">';
         stints.forEach(function (seg, i) {
           var laps = seg.to - seg.from + 1;
@@ -2117,9 +2155,9 @@
       if (usedCompounds.S) legendParts.push('C5 — Soft (red)');
       if (usedCompounds.I) legendParts.push('I — Intermediate (green)');
       if (usedCompounds.W) legendParts.push('W — Wet (blue)');
-      var legendText = legendParts.length ? legendParts.join(', ') + '.' : '';
+      var legendText = legendParts.length ? localizeCompoundLegend(legendParts.join(', ') + '.') : '';
       html += '<span class="pit-stops-legend-text">' + esc(legendText) + '</span>';
-      html += '<span class="pit-stops-chart-total">Total pit stops: ' + esc(String(totalPitStops)) + '</span>';
+      html += '<span class="pit-stops-chart-total">' + esc(t('event.total_pit_stops').replace('{n}', String(totalPitStops))) + '</span>';
       html += '</div></div>';
       sortQueue.push({ rows: psRows, getRowClass: null });
     }
@@ -2169,12 +2207,28 @@
     var isImsa2026Round2 = evKey === 'IMSA_2026_2';
     var isImsa2026Round3 = evKey === 'IMSA_2026_3';
     var isImsa2026Round4 = evKey === 'IMSA_2026_4';
+    function bopH(key) { return t('event.bop.h.' + key); }
+    function bopHeaders(keys) { return keys.map(bopH); }
+    function localizeBopCell(val) {
+      var s = String(val == null ? '' : val);
+      if (getLang() !== 'ru') return s;
+      if (s === 'BoP Table') return t('event.bop.bop_table');
+      return s
+        .replace(/\(2026 Homologation\)/g, t('event.bop.homologation_2026'))
+        .replace(/\(2025 Homologation\)/g, t('event.bop.homologation_2025'));
+    }
     function row(cells) {
       return '<tr>' + cells.map(function (c) {
-        return '<td>' + e(c).replace(/\n/g, '<br>') + '</td>';
+        return '<td>' + e(localizeBopCell(c)).replace(/\n/g, '<br>') + '</td>';
       }).join('') + '</tr>';
     }
     function theadRow(cells) { return '<tr>' + cells.map(function (c) { return '<th>' + e(c) + '</th>'; }).join('') + '</tr>'; }
+    function bopNotes(noteKeys) {
+      var items = noteKeys.map(function (k) {
+        return '<li>' + e(t('event.bop.note.' + k)) + '</li>';
+      }).join('');
+      return '<p class="bop-notes"><strong>' + e(t('event.bop.notes_label')) + '</strong></p><ul class="bop-notes-list">' + items + '</ul>';
+    }
     var gtpCars = isImsa2026Round3 ? [
       ['Acura', 'ARX-06', '1059', '9512', '96.2', '97.1', '190', '200', '901', '22.525', 'R80'],
       ['Aston Martin', 'Valkyrie', '1030', '8400', '100.0', '100.0', '190', '200', '913', '22.825', 'R80'],
@@ -2249,52 +2303,54 @@
       ['PPUMaxIntegral_BoP', '10', 'kJ'],
       ['PPURate_BoP', '20', 'kW']
     ];
-    var gtpHead = ['Manufacturer', 'Car Model', 'Weight (kg)', 'Nmax (rpm)', 'Power ≤V1 (%)', 'Power ≥V2 (%)', 'V1 (km/h)', 'V2 (km/h)', 'Max Stint Energy (MJ)', 'Replenishment Rate (MJ/s)', 'Fuel'];
-    var gtpRegHead = ['Regulatory BoP Parameter', 'GTP', 'Unit'];
-    var gtdHead = ['Manufacturer', 'Car Model', 'Weight (kg)', 'Nmax (rpm)', 'Power ≤V1 (%)', 'Power ≥V2 (%)', 'V1 (km/h)', 'V2 (km/h)', 'Wing Min (deg)', 'Wing Max (deg)', 'Max Stint Energy (MJ)', 'Replenishment Rate (MJ/s)'];
-    var gtdRegHead = ['Parameter', 'Value', 'Unit'];
+    var gtpHead = bopHeaders(['manufacturer', 'car_model', 'weight_kg', 'nmax_rpm', 'power_le_v1', 'power_ge_v2', 'v1_kmh', 'v2_kmh', 'max_stint_energy', 'replenishment_rate', 'fuel']);
+    var gtpRegHead = bopHeaders(['regulatory_param', 'gtp', 'unit']);
+    var gtdHead = bopHeaders(['manufacturer', 'car_model', 'weight_kg', 'nmax_rpm', 'power_le_v1', 'power_ge_v2', 'v1_kmh', 'v2_kmh', 'wing_min', 'wing_max', 'max_stint_energy', 'replenishment_rate']);
+    var gtdRegHead = bopHeaders(['parameter', 'value', 'unit']);
     var out = '';
     out += '<div class="bop-content">';
-    var bopTitle = 'Balance of Performance — Daytona ROAR & Rolex 24';
-    var bopSubtitle = 'Technical Bulletin | IMSA WeatherTech SportsCar Championship 2026 Round 1';
+    var bopTitleKey = 'event.bop.title.daytona';
+    var bopRound = '1';
     if (isImsa2026Round2) {
-      bopTitle = 'Balance of Performance — Mobil 1 Twelve Hours of Sebring';
-      bopSubtitle = 'Technical Bulletin | IMSA WeatherTech SportsCar Championship 2026 Round 2';
+      bopTitleKey = 'event.bop.title.sebring';
+      bopRound = '2';
     } else if (isImsa2026Round3) {
-      bopTitle = 'Balance of Performance — Acura Grand Prix of Long Beach';
-      bopSubtitle = 'Technical Bulletin | IMSA WeatherTech SportsCar Championship 2026 Round 3';
+      bopTitleKey = 'event.bop.title.long_beach';
+      bopRound = '3';
     } else if (isImsa2026Round4) {
-      bopTitle = 'Balance of Performance — Monterey SportsCar Championship';
-      bopSubtitle = 'Technical Bulletin | IMSA WeatherTech SportsCar Championship 2026 Round 4';
+      bopTitleKey = 'event.bop.title.monterey';
+      bopRound = '4';
     } else if (isImsa2026Round1) {
-      bopTitle = 'Balance of Performance — Daytona ROAR & Rolex 24';
-      bopSubtitle = 'Technical Bulletin | IMSA WeatherTech SportsCar Championship 2026 Round 1';
+      bopTitleKey = 'event.bop.title.daytona';
+      bopRound = '1';
     }
+    var bopTitle = t(bopTitleKey);
+    var bopSubtitle = t('event.bop.subtitle').replace('{round}', bopRound);
     out += '<h2 class="bop-main-title">' + e(bopTitle) + '</h2>';
     out += '<p class="bop-subtitle">' + e(bopSubtitle) + '</p>';
     out += '<hr class="bop-divider">';
-    out += '<h3 class="bop-class-title">GTP CLASS</h3>';
+    out += '<h3 class="bop-class-title">' + e(t('event.bop.gtp_class')) + '</h3>';
     out += '<div class="table-wrap"><table class="data-table bop-table">';
     out += '<thead>' + theadRow(gtpHead) + '</thead><tbody>';
     gtpCars.forEach(function (r) { out += row(r); });
     out += '</tbody></table></div>';
-    out += '<p class="bop-notes"><strong>Notes:</strong></p><ul class="bop-notes-list"><li>Linear interpolation used between V1 and V2</li><li>% of High power curve defined in LMDh TR 5.1.2 and LMH TR Appendix 4b</li><li>For N/Nmax &lt; 0.55, maximum power is equal to N/Nmax = 0.55</li></ul>';
+    out += bopNotes(['gtp_1', 'gtp_2', 'gtp_3']);
     if (!isImsa2026Round3) {
-      out += '<h4 class="table-section-title">GTP Regulatory BoP Parameters</h4>';
+      out += '<h4 class="table-section-title">' + e(t('event.bop.gtp_reg_title')) + '</h4>';
       out += '<div class="table-wrap"><table class="data-table bop-table">';
       out += '<thead>' + theadRow(gtpRegHead) + '</thead><tbody>';
       gtpRegForRender.forEach(function (r) { out += row(r); });
       out += '</tbody></table></div>';
     }
     out += '<hr class="bop-divider">';
-    out += '<h3 class="bop-class-title">' + e(isImsa2026Round3 ? 'GTD CLASS' : 'GTD / GTD PRO CLASS') + '</h3>';
+    out += '<h3 class="bop-class-title">' + e(t(isImsa2026Round3 ? 'event.bop.gtd_class' : 'event.bop.gtd_pro_class')) + '</h3>';
     out += '<div class="table-wrap"><table class="data-table bop-table bop-table--wide">';
     out += '<thead>' + theadRow(gtdHead) + '</thead><tbody>';
     gtdCars.forEach(function (r) { out += row(r); });
     out += '</tbody></table></div>';
-    out += '<p class="bop-notes"><strong>Notes:</strong></p><ul class="bop-notes-list"><li>Linear interpolation used between V1 and V2</li><li>For N/Nmax &lt; 0.55, maximum power is equal to N/Nmax = 0.55</li><li>Linear interpolation used between each 0.025 step from 0.55 to 1.025 N/Nmax</li><li>For N/Nmax &gt;= 1.025, maximum power is 0.856 of maximum power at N/Nmax = 1.000</li><li>Declared power varies — comparisons between cars are invalid</li><li>Wing angle at Y=0 using measurement described in ITEF (stated angle includes tolerance)</li></ul>';
+    out += bopNotes(['gtd_1', 'gtd_2', 'gtd_3', 'gtd_4', 'gtd_5', 'gtd_6']);
     if (!isImsa2026Round3) {
-      out += '<h4 class="table-section-title">GTD / GTD PRO Regulatory BoP Parameters (all sessions)</h4>';
+      out += '<h4 class="table-section-title">' + e(t('event.bop.gtd_reg_title')) + '</h4>';
       out += '<div class="table-wrap"><table class="data-table bop-table">';
       out += '<thead>' + theadRow(gtdRegHead) + '</thead><tbody>';
       gtdReg.forEach(function (r) { out += row(r); });
@@ -2707,7 +2763,7 @@
           if (evKeyPst !== 'F1_2026_PRE_SEASON_TEST_1' && evKeyPst !== 'F1_2026_PRE_SEASON_TEST_2') {
             rows = applyTeamNameByNumber(rows, numberColIdx, teamColIdxAfterSplit);
           }
-          var resultsTitle = (evKeyPst === 'F1_2026_PRE_SEASON_TEST_1' || evKeyPst === 'F1_2026_PRE_SEASON_TEST_2') ? '' : '<h4 class="table-section-title">Results</h4>';
+          var resultsTitle = (evKeyPst === 'F1_2026_PRE_SEASON_TEST_1' || evKeyPst === 'F1_2026_PRE_SEASON_TEST_2') ? '' : '<h4 class="table-section-title">' + esc(t('table.results')) + '</h4>';
           out += resultsTitle;
           var defaultHeaders = ['POS', 'CAR NO', 'DRIVERS', 'TEAM', 'CAR', 'CLASS', 'CLASS POS', 'ST POS', 'NO LAPS', 'FASTEST LAP', 'STATUS'];
           var headersForTable = sess.headers && sess.headers.length > 0 ? sess.headers : defaultHeaders;
@@ -2931,7 +2987,7 @@
                 if (entrantSpan[rIdx] === -1) continue;
                 var teamRaw = String(effective[rIdx][ci] || '').trim();
                 var teamCell = teamRaw
-                  ? '<a href="/team/' + encodeURIComponent(slugify(teamRaw)) + '" class="track-link">' + esc(teamRaw) + '</a>'
+                  ? teamLink(teamRaw)
                   : '—';
                 cells += '<td rowspan="' + Math.max(1, entrantSpan[rIdx]) + '" class="entry-list-team-cell">' + teamCell + '</td>';
                 continue;
@@ -2974,12 +3030,7 @@
               }
               if (ci === driverIdx) {
                 var drvRaw = (row[ci] != null ? String(row[ci]) : '').trim();
-                if (drvRaw) {
-                  var display = driverDisplayName(drvRaw);
-                  cells += '<td><a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a></td>';
-                } else {
-                  cells += '<td>—</td>';
-                }
+                cells += '<td>' + (drvRaw ? renderDriverCell(drvRaw) : '—') + '</td>';
                 continue;
               }
               var val = (row[ci] == null || String(row[ci]).trim() === '') ? '—' : row[ci];
@@ -3012,7 +3063,7 @@
       var seriesSlugEntryList = (eventSeriesId(d.event_id || eventIdFromRoute || '') || '').toLowerCase();
       if (seriesSlugEntryList === 'imsa') {
         // Column order: #, Class, Team, Car, Drivers. For one team merge Team, Class and Car cells (rowspan).
-        var headImsa = '<th>' + t('th.no') + '</th><th>Class</th><th>' + t('th.team') + '</th><th>Car</th><th>' + t('th.driver') + '</th>';
+        var headImsa = '<th>' + t('th.no') + '</th><th>' + t('th.class') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver') + '</th>';
         function buildImsaEntryTbody(arr, byNum) {
           var teamVals = arr.map(function (row) {
             var tv = row.team;
@@ -3039,17 +3090,14 @@
             var driverRaw = row.driver != null ? String(row.driver) : '';
             var driverParts = driverRaw.split(/\s*\/\s*/).map(function (p) { return p.trim(); }).filter(function (p) { return p; });
             var driverCell = driverParts.length
-              ? driverParts.map(function (name) {
-                  var display = driverDisplayName(name);
-                  return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>' : esc(name);
-                }).join(' / ')
+              ? driverParts.map(function (name) { return renderDriverCell(name); }).join(' / ')
               : '—';
             var span = teamRowspan[idx];
             var teamTd = span > 0
-              ? '<td rowspan="' + span + '" class="entry-list-team-cell">' + (teamDisplay ? '<a href="/team/' + encodeURIComponent(slugify(teamDisplay)) + '" class="track-link">' + esc(teamDisplay) + '</a>' : '—') + '</td>'
+              ? '<td rowspan="' + span + '" class="entry-list-team-cell">' + (teamDisplay ? teamLink(teamDisplay) : '—') + '</td>'
               : '';
             var classTd = span > 0
-              ? '<td rowspan="' + span + '" class="entry-list-class-cell">' + esc(dash(classDisplay)) + '</td>'
+              ? '<td rowspan="' + span + '" class="entry-list-class-cell">' + esc(dash(localizeRacingClass(classDisplay))) + '</td>'
               : '';
             var carTd = span > 0
               ? '<td rowspan="' + span + '" class="entry-list-car-cell">' + esc(dash(carDisplay)) + '</td>'
@@ -3086,10 +3134,7 @@
         function renderElmsDriverCell(name) {
           var raw = (name == null) ? '' : String(name).trim();
           if (!raw || raw === '-') return '—';
-          var display = driverDisplayName(raw);
-          return display
-            ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>'
-            : esc(raw);
+          return renderDriverCell(raw);
         }
         var htmlElms = '';
         for (var ci = 0; ci < elmsClassOrder.length; ci++) {
@@ -3100,9 +3145,7 @@
           if (!clsRows.length) continue;
           var bodyElms = clsRows.map(function (row) {
             var teamName = (row && row.team != null) ? String(row.team).trim() : '';
-            var teamCell = teamName
-              ? '<a href="/team/' + encodeURIComponent(slugify(teamName)) + '" class="track-link">' + esc(teamName) + '</a>'
-              : '—';
+            var teamCell = teamName ? teamLink(teamName) : '—';
             var carVal = (row && row.car != null) ? String(row.car).trim() : '';
             return '<tr>' +
               '<td>' + esc(dash(row && row.number)) + '</td>' +
@@ -3115,7 +3158,7 @@
           }).join('');
           htmlElms += '<h4 class="table-section-title">' + esc(clsName) + '</h4>' +
             '<div class="table-wrap"><table class="data-table entry-list-table">' +
-            '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>Car</th><th>Driver 1</th><th>Driver 2</th><th>Driver 3</th></tr></thead>' +
+            '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver1') + '</th><th>' + t('th.driver2') + '</th><th>' + t('th.driver3') + '</th></tr></thead>' +
             '<tbody>' + bodyElms + '</tbody></table></div>';
         }
         contentEl.innerHTML = htmlElms || ('<p class="empty-msg">' + t('error.no_entry_list') + '</p>');
@@ -3127,7 +3170,7 @@
       if (isGtwceEndEntry) {
         var gtwceSprintTwoDrivers = seriesLowerEntry === 'gtwce_sprint';
         var gtwceClassOrder = ['PRO', 'GOLD', 'SILVER', 'BRONZE'];
-        var gtwceClassLabels = { PRO: 'Pro', GOLD: 'Gold', SILVER: 'Silver', BRONZE: 'Bronze' };
+        var gtwceClassKeys = { PRO: 'class.gtwce_pro', GOLD: 'class.gtwce_gold', SILVER: 'class.gtwce_silver', BRONZE: 'class.gtwce_bronze' };
         function normGtwceClass(v) {
           return String(v || '')
             .replace(/\u00a0/g, ' ')
@@ -3151,10 +3194,7 @@
         function renderGtwceDriverCell(name) {
           var raw = (name == null) ? '' : String(name).trim();
           if (!raw || raw === '-') return '—';
-          var display = driverDisplayName(raw);
-          return display
-            ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>'
-            : esc(raw);
+          return renderDriverCell(raw);
         }
         var htmlGtwce = '';
         for (var gci = 0; gci < gtwceClassOrder.length; gci++) {
@@ -3178,9 +3218,7 @@
           }
           var bodyGtwce = clsRowsGtwce.map(function (row, trix) {
             var teamNameG = (row && row.team != null) ? String(row.team).trim() : '';
-            var teamCellG = teamNameG
-              ? '<a href="/team/' + encodeURIComponent(slugify(teamNameG)) + '" class="track-link">' + esc(teamNameG) + '</a>'
-              : '—';
+            var teamCellG = teamNameG ? teamLink(teamNameG) : '—';
             var carValG = (row && row.car != null) ? String(row.car).trim() : '';
             var spanG = teamRowspanGtwce[trix];
             var teamTdGtwce = spanG > 0
@@ -3199,9 +3237,9 @@
               driverCellsGtwce +
               '</tr>';
           }).join('');
-          var sectionTitle = gtwceClassLabels[clsKey] || clsKey;
-          var gtwceEntryListHead = '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>Car</th><th>Driver 1</th><th>Driver 2</th>' +
-            (gtwceSprintTwoDrivers ? '' : '<th>Driver 3</th>') + '</tr></thead>';
+          var sectionTitle = gtwceClassKeys[clsKey] ? t(gtwceClassKeys[clsKey]) : clsKey;
+          var gtwceEntryListHead = '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver1') + '</th><th>' + t('th.driver2') + '</th>' +
+            (gtwceSprintTwoDrivers ? '' : '<th>' + t('th.driver3') + '</th>') + '</tr></thead>';
           htmlGtwce += '<h4 class="table-section-title">' + esc(sectionTitle) + '</h4>' +
             '<div class="table-wrap"><table class="data-table entry-list-table">' +
             gtwceEntryListHead +
@@ -3254,10 +3292,7 @@
             });
           }
           if (!names.length) return '—';
-          return names.map(function (name) {
-            var display = driverDisplayName(name);
-            return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>' : esc(name);
-          }).join(' / ');
+          return names.map(function (name) { return renderDriverCell(name); }).join(' / ');
         }
         var htmlSuperGt = '';
         for (var sci = 0; sci < superGtClassOrder.length; sci++) {
@@ -3296,9 +3331,7 @@
           }
           var bodySuperGt = rowsSuperGt.map(function (row, idx) {
             var teamName = (row && row.team != null) ? String(row.team).trim() : '';
-            var teamCell = teamName
-              ? '<a href="/team/' + encodeURIComponent(slugify(teamName)) + '" class="track-link">' + esc(teamName) + '</a>'
-              : '—';
+            var teamCell = teamName ? teamLink(teamName) : '—';
             var makeVal = (row && row.make != null) ? String(row.make).trim() : '';
             var carVal = (row && row.car != null) ? String(row.car).trim() : '';
             var tireVal = (row && row.tire != null) ? String(row.tire).trim() : '';
@@ -3321,7 +3354,7 @@
           }).join('');
           htmlSuperGt += '<h4 class="table-section-title">' + esc(clsSuperGt) + '</h4>' +
             '<div class="table-wrap"><table class="data-table entry-list-table">' +
-            '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>Make</th><th>Car</th><th>' + t('th.driver') + '</th><th>Tire</th></tr></thead>' +
+            '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>' + t('th.make') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.tire') + '</th></tr></thead>' +
             '<tbody>' + bodySuperGt + '</tbody></table></div>';
         }
         contentEl.innerHTML = htmlSuperGt || ('<p class="empty-msg">' + t('error.no_entry_list') + '</p>');
@@ -3358,7 +3391,7 @@
             var teamDisplay = String((row && row.team) || '');
             var isFirstTeam = (idx === 0 || String((arr[idx - 1] && arr[idx - 1].team) || '') !== teamDisplay);
             var teamCell = (isFirstTeam && spans[idx] > 0)
-              ? '<td rowspan="' + spans[idx] + '" class="entry-list-team-cell">' + (teamDisplay ? '<a href="/team/' + encodeURIComponent(slugify(teamDisplay)) + '" class="track-link">' + esc(teamDisplay) + '</a>' : '—') + '</td>'
+              ? '<td rowspan="' + spans[idx] + '" class="entry-list-team-cell">' + (teamDisplay ? teamLink(teamDisplay) : '—') + '</td>'
               : '';
             var driverCell = entryListDriverCell(row, guestCars);
             return '<tr>' + teamCell + '<td>' + esc(dash(row && row.number)) + '</td><td>' + driverCell + '</td></tr>';
@@ -3391,12 +3424,11 @@
             spans.push(ts);
           }
           return arr.map(function (row, idx) {
-            var driverDisplay = driverDisplayName(row.driver);
-            var driverCell = driverDisplay ? '<a href="/driver/' + encodeURIComponent(slugify(driverDisplay)) + '" class="track-link">' + esc(driverDisplay) + '</a>' : '—';
+            var driverCell = renderDriverCell(row.driver);
             var teamDisplay = safeTeamStr(row);
             var isFirstInTeam = (idx === 0 || safeTeamStr(arr[idx - 1]) !== teamDisplay);
             var teamCell = (isFirstInTeam && spans[idx] > 0)
-              ? '<td rowspan="' + spans[idx] + '" class="entry-list-team-cell">' + (teamDisplay ? '<a href="/team/' + encodeURIComponent(slugify(teamDisplay)) + '" class="track-link">' + esc(teamDisplay) + '</a>' : '—') + '</td>'
+              ? '<td rowspan="' + spans[idx] + '" class="entry-list-team-cell">' + (teamDisplay ? teamLink(teamDisplay) : '—') + '</td>'
               : '';
             return '<tr><td>' + esc(dash(row.number)) + '</td>' + teamCell + '<td>' + driverCell + '</td></tr>';
           }).join('');
@@ -3435,7 +3467,7 @@
       var head = (isIndyCar || isSuperFormulaEntry)
         ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.engine') + '</th>' + (isStockCar ? '<th>' + t('th.crew_chief') + '</th>' : '')
         : isDtmEntry
-          ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>Car</th>'
+          ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th>'
         : isSupercarsEntry
           ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.manufacturer') + '</th>' + (isStockCar ? '<th>' + t('th.crew_chief') + '</th>' : '')
           : isStockCar
@@ -3500,10 +3532,7 @@
           return true;
         });
         if (!names.length) return '—';
-        return names.map(function (name) {
-          var display = driverDisplayName(name);
-          return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>' : esc(name);
-        }).join(' / ');
+        return names.map(function (name) { return renderDriverCell(name); }).join(' / ');
       }
       function getCarDisplay(r) {
         if (r && r.car != null && String(r.car).trim() !== '') return String(r.car).trim();
@@ -3525,7 +3554,7 @@
       var entryRowFn = function (row) {
         var driverCell = renderEntryDriversCell(row);
         var teamDisplay = getTeamDisplay(row);
-        var teamCell = teamDisplay ? '<a href="/team/' + encodeURIComponent(slugify(teamDisplay)) + '" class="track-link">' + esc(teamDisplay) + '</a>' : '—';
+        var teamCell = teamDisplay ? teamLink(teamDisplay) : '—';
         if (isIndyCar || isSuperFormulaEntry) {
           var engineDisplay = getEngineDisplay(row);
           var cells = '<td>' + esc(dash(row.number)) + '</td><td>' + driverCell + '</td><td>' + teamCell + '</td><td>' + esc(dash(engineDisplay)) + '</td>';
@@ -3605,7 +3634,7 @@
           var isFirstTeam = (idx === 0 || getTeamDisplay(arr[idx - 1]) !== teamDisplay);
           var isFirstEngine = (idx === 0 || getTeamDisplay(arr[idx - 1]) !== teamDisplay || getEngineDisplay(arr[idx - 1]) !== engineDisplay);
           var teamCell = isFirstTeam && tSpan > 0
-            ? '<td rowspan="' + tSpan + '" class="entry-list-team-cell">' + (teamDisplay ? '<a href="/team/' + encodeURIComponent(slugify(teamDisplay)) + '" class="track-link">' + esc(teamDisplay) + '</a>' : '—') + '</td>'
+            ? '<td rowspan="' + tSpan + '" class="entry-list-team-cell">' + (teamDisplay ? teamLink(teamDisplay) : '—') + '</td>'
             : '';
           var engineCell = isFirstEngine && eSpan > 0
             ? '<td rowspan="' + eSpan + '">' + esc(dash(engineDisplay)) + '</td>'
@@ -3620,7 +3649,7 @@
           var isFirstTeam = (idx === 0 || getTeamDisplay(arr[idx - 1]) !== teamDisplay);
           var isFirstCar = (idx === 0 || getTeamDisplay(arr[idx - 1]) !== teamDisplay || getCarDisplay(arr[idx - 1]) !== carDisplay);
           var teamCell = isFirstTeam && tSpan > 0
-            ? '<td rowspan="' + tSpan + '" class="entry-list-team-cell">' + (teamDisplay ? '<a href="/team/' + encodeURIComponent(slugify(teamDisplay)) + '" class="track-link">' + esc(teamDisplay) + '</a>' : '—') + '</td>'
+            ? '<td rowspan="' + tSpan + '" class="entry-list-team-cell">' + (teamDisplay ? teamLink(teamDisplay) : '—') + '</td>'
             : '';
           var carCell = isFirstCar && cSpan > 0
             ? '<td rowspan="' + cSpan + '" class="entry-list-team-cell">' + esc(dash(carDisplay)) + '</td>'
@@ -3635,7 +3664,7 @@
           var isFirstTeam = (idx === 0 || getTeamDisplay(arr[idx - 1]) !== teamDisplay);
           var isFirstManu = (idx === 0 || getTeamDisplay(arr[idx - 1]) !== teamDisplay || getManufacturerDisplay(arr[idx - 1]) !== manufacturerDisplay);
           var teamCell = isFirstTeam && tSpan > 0
-            ? '<td rowspan="' + tSpan + '" class="entry-list-team-cell">' + (teamDisplay ? '<a href="/team/' + encodeURIComponent(slugify(teamDisplay)) + '" class="track-link">' + esc(teamDisplay) + '</a>' : '—') + '</td>'
+            ? '<td rowspan="' + tSpan + '" class="entry-list-team-cell">' + (teamDisplay ? teamLink(teamDisplay) : '—') + '</td>'
             : '';
           var manufacturerCell = isFirstManu && manuSpan > 0
             ? '<td rowspan="' + manuSpan + '" class="entry-list-team-cell">' + esc(dash(manufacturerDisplay)) + '</td>'
@@ -4098,18 +4127,12 @@
 
             function driversToLinks(s) {
               if (s == null || String(s).trim() === '') return '—';
-              if (window.TGA && window.TGA.driversCellHtml) return window.TGA.driversCellHtml(s);
-              return String(s).split(/\s*;\s*/).map(function (p) {
-                var t = p.trim();
-                if (!t) return '';
-                var d = driverDisplayName(t);
-                return '<a href="/driver/' + encodeURIComponent(slugify(d)) + '" class="track-link">' + esc(d) + '</a>';
-              }).filter(Boolean).join('; ');
+              return renderDriverCell(s, '; ');
             }
             function teamToLink(s) {
               if (s == null || String(s).trim() === '') return '—';
               var t = String(s).trim();
-              return '<a href="/team/' + encodeURIComponent(slugify(t)) + '" class="track-link">' + esc(t) + '</a>';
+              return teamLink(t);
             }
             displayOrder.forEach(function (item) {
               var row = item.row;
@@ -4300,7 +4323,7 @@
             appendTable(qTitle, { headers: qBase.headers, rows: qualRowsWithTeamNames(segmentsQ[0]) }, qExtraClass, null, false);
             // others — by headings from separator rows
             for (var si = 1; si < segmentsQ.length; si++) {
-              var lbl = labelsQ[si - 1] || t('table.qualifying');
+              var lbl = localizeQualifyingSeparator(labelsQ[si - 1] || t('table.qualifying'));
               appendTable(lbl, { headers: qBase.headers, rows: qualRowsWithTeamNames(segmentsQ[si]) }, qExtraClass, null, false);
             }
           }

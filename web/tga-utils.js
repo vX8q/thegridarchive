@@ -7,6 +7,8 @@
   window.TGA = window.TGA || {};
   var t      = function (k) { return window.TGA.t(k); };
   var getLang = function () { return window.TGA.getLang(); };
+  var localizeSpecKey = function (k) { return window.TGA.localizeSpecKey(k); };
+  var localizeSpecValue = function (v) { return window.TGA.localizeSpecValue(v); };
 
   // ─── HTML escaping ──────────────────────────────────────────────────
   function esc(s) {
@@ -20,7 +22,18 @@
   function dash(val) {
     if (val == null || val === '') return '—';
     if (typeof val === 'string' && val.trim() === '') return '—';
+    if (typeof val === 'string' && isTeamsPlaceholder(val)) return '—';
     return val;
+  }
+
+  /** TBD/TBA/TBC and similar — not valid driver or rounds values in teams tables. */
+  function isTeamsPlaceholder(val) {
+    if (val == null) return true;
+    var s = String(val).trim();
+    if (!s) return true;
+    if (/^(tbd|tba|tbc)$/i.test(s)) return true;
+    if (/^tba\b/i.test(s)) return true;
+    return false;
   }
 
   // F4 standings: race position only (drop legacy "1*30").
@@ -32,7 +45,7 @@
   }
 
   // ─── Driver names ───────────────────────────────────────────────────────
-  var driverDisplayNames = { 'Cleetus Mitchell': 'Garrett Mitchell', 'Woohyun Shin': 'Michael Shin' };
+  var driverDisplayNames = { 'Woohyun Shin': 'Michael Shin' };
 
   /** Latin diacritics → ASCII (mirrors internal/driverutil/slug.go). */
   function foldDiacritics(value) {
@@ -66,12 +79,47 @@
 
   function driverNameKey(name) {
     if (name == null) return '';
-    return foldDiacritics(name).toLowerCase().replace(/\s+/g, ' ').trim();
+    return foldDiacritics(name)
+      .toLowerCase()
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  var driverArtifactAliases = {
+    'romanDe Angelis': 'Roman De Angelis',
+    'antonioFelixda Costa': 'Antonio Felix da Costa',
+    'paulDi Resta': 'Paul di Resta',
+    'davidHeinemeier Hansson': 'David Heinemeier Hansson',
+    'manuelEspirito Santo': 'Manuel Espirito Santo',
+    'jobVan Uitert': 'Job Van Uitert',
+    'connorDe Phillippi': 'Connor De Phillippi',
+    'valentinHasse Clot': 'Valentin Hasse Clot',
+    'roryvander Steur': 'Rory van der Steur',
+    'lilouWadoux Ducellier': 'Lilou Wadoux Ducellier',
+    'daveMusial Jr.': 'Dave Musial Jr.',
+    'daveMusial Jr': 'Dave Musial Jr.',
+    'alessandroPier Guidi': 'Alessandro Pier Guidi'
+  };
+
+  function normalizeDriverFragment(name) {
+    var s = String(name == null ? '' : name).trim();
+    if (!s) return s;
+    // NASCAR provisional / substitute markers (* prefix or suffix).
+    s = s.replace(/^\*+\s*/, '').replace(/\s*\*+$/, '').trim();
+    var aliasKey;
+    for (aliasKey in driverArtifactAliases) {
+      if (Object.prototype.hasOwnProperty.call(driverArtifactAliases, aliasKey) && s.indexOf(aliasKey) >= 0) {
+        s = s.split(aliasKey).join(driverArtifactAliases[aliasKey]);
+      }
+    }
+    return foldDiacritics(s).replace(/([a-z])([A-Z])/g, '$1 $2').replace(/\s+/g, ' ').trim();
   }
 
   function driverDisplayName(name) {
     if (name == null || typeof name !== 'string') return name;
-    var trimmed = name.trim();
+    var trimmed = normalizeDriverFragment(name);
+    if (isTeamsPlaceholder(trimmed)) return '';
     if (trimmed.indexOf('/') >= 0) {
       var parts = trimmed.split(/\s*\/\s*/);
       var seen = {};
@@ -96,6 +144,20 @@
     return normalized;
   }
 
+  function driverLabel(name) {
+    var display = driverDisplayName(name);
+    if (!display) return display;
+    if (typeof window !== 'undefined' && window.TGA && window.TGA.getLang && window.TGA.getLang() === 'ru' && typeof window.TGA.localizeDriverName === 'function') {
+      return window.TGA.localizeDriverName(display);
+    }
+    return display;
+  }
+
+  function teamLabel(name) {
+    if (name == null) return '';
+    return String(name).trim();
+  }
+
   function slugify(str) {
     return resolveDriverSlug(foldDiacritics(String(str)).toLowerCase()
       .replace(/[^a-z0-9\u0400-\u04ff]+/g, '-')
@@ -108,6 +170,9 @@
     if (!slug) return '';
     var seen = {};
     var map = redirects && typeof redirects === 'object' ? redirects : null;
+    if (!map && typeof window !== 'undefined' && window.TGA && window.TGA.driverProfileRedirects) {
+      map = window.TGA.driverProfileRedirects;
+    }
     while (slug) {
       var next = map ? map[slug] : '';
       if (!next) {
@@ -134,7 +199,6 @@
     return true;
   }
 
-  // Endurance / Super GT / GTWCE: "A / B / C", "A; B", "A, B".
   function splitDriverNames(raw) {
     var s = String(raw == null ? '' : raw).trim();
     if (!s) return [];
@@ -155,13 +219,39 @@
     var seen = {};
     var out = [];
     parts.forEach(function (p) {
-      p = foldDiacritics(p);
+      p = normalizeDriverFragment(p);
       var k = driverNameKey(p);
       if (seen[k]) return;
       seen[k] = true;
       out.push(p);
     });
     return out;
+  }
+
+  /** Pit-stop tables often store surname only — match entry list for full driver name. */
+  function resolveDriverFromEntryList(name, entryList) {
+    var trimmed = name == null ? '' : String(name).trim();
+    if (!trimmed || trimmed.indexOf(' ') >= 0) return trimmed;
+    if (!entryList || !entryList.length) return trimmed;
+    var want = driverNameKey(trimmed);
+    for (var i = 0; i < entryList.length; i++) {
+      var entry = entryList[i];
+      if (!entry || typeof entry !== 'object') continue;
+      var fields = ['driver', 'driver1', 'driver2', 'driver3'];
+      for (var f = 0; f < fields.length; f++) {
+        var raw = entry[fields[f]];
+        if (raw == null || String(raw).trim() === '') continue;
+        var names = splitDriverNames(raw);
+        for (var n = 0; n < names.length; n++) {
+          var full = String(names[n] || '').trim();
+          if (!full) continue;
+          var parts = full.split(/\s+/);
+          var surname = parts[parts.length - 1] || '';
+          if (driverNameKey(surname) === want) return full;
+        }
+      }
+    }
+    return trimmed;
   }
 
   function isGuestEntryRow(row) {
@@ -187,7 +277,8 @@
     var car = row && row.number != null ? String(row.number).trim() : '';
     var guests = guestCars || guestCarNumberSet([row]);
     var isGuest = isGuestEntryRow(row) || !!(car && guests[car]);
-    var link = '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>';
+    var label = driverLabel(row && row.driver);
+    var link = '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(label) + '</a>';
     return isGuest ? link + ' (G)' : link;
   }
 
@@ -197,7 +288,8 @@
     var car = row && row.number != null ? String(row.number).trim() : '';
     var guests = guestCars || guestCarNumberSet([row]);
     var isGuest = isGuestEntryRow(row) || !!(car && guests[car]);
-    return isGuest ? display + ' (G)' : display;
+    var label = driverLabel(row && row.driver);
+    return isGuest ? label + ' (G)' : label;
   }
 
   function driverLinkHtml(name) {
@@ -207,7 +299,21 @@
     if (raw.indexOf('/') >= 0 || raw.indexOf(';') >= 0 || isCommaSeparatedCrew(raw)) return driversCellHtml(raw);
     var display = driverDisplayName(raw);
     if (!display || dash(display) === '—') return '—';
-    return '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>';
+    if (/^[^,]+\s*,\s*[^,]+$/.test(display)) {
+      var parts = display.split(/\s*,\s*/);
+      display = (parts[1] + ' ' + parts[0]).trim();
+    }
+    var label = driverLabel(raw);
+    return '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(label) + '</a>';
+  }
+
+  function driverTableCell(raw, joiner) {
+    var s = raw != null ? String(raw).trim() : '';
+    if (!s || dash(s) === '—') return null;
+    if (joiner || s.indexOf('/') >= 0 || s.indexOf(';') >= 0 || isCommaSeparatedCrew(s) || splitDriverNames(s).length > 1) {
+      return driversCellHtml(s, joiner);
+    }
+    return driverLinkHtml(s);
   }
 
   function driversCellHtml(raw, joinerOverride) {
@@ -301,7 +407,7 @@
       '<th>' + t('th.value') + '</th>' +
       '</tr></thead><tbody>' +
       techSpec.map(function (s) {
-        var rawVal = dash(s.value);
+        var rawVal = dash(localizeSpecValue(s.value));
         var cellVal;
         if (String(s.key || '').toLowerCase().trim() === 'estimated season cost') {
           var idx = rawVal.indexOf(' (');
@@ -313,7 +419,7 @@
         } else {
           cellVal = esc(rawVal);
         }
-        return '<tr><td class="col-field">' + esc(dash(s.key)) + '</td><td>' + cellVal + '</td></tr>';
+        return '<tr><td class="col-field">' + esc(dash(localizeSpecKey(s.key))) + '</td><td>' + cellVal + '</td></tr>';
       }).join('') +
       '</tbody></table>';
     if (typeof makeTableSortable === 'function') {
@@ -325,9 +431,9 @@
       enginesWrap.classList.remove('hidden');
       enginesTitle.classList.remove('hidden');
       enginesWrap.innerHTML =
-        '<table class="data-table"><thead><tr><th>Car model</th><th>Engine specification</th></tr></thead><tbody>' +
+        '<table class="data-table"><thead><tr><th>' + t('th.model') + '</th><th>' + t('th.engine') + '</th></tr></thead><tbody>' +
         engines.map(function (e) {
-          return '<tr><td>' + esc(dash(e.model)) + '</td><td>' + esc(dash(e.spec)) + '</td></tr>';
+          return '<tr><td>' + esc(dash(e.model)) + '</td><td>' + esc(dash(localizeSpecValue(e.spec))) + '</td></tr>';
         }).join('') +
         '</tbody></table>';
       if (typeof makeTableSortable === 'function') {
@@ -340,7 +446,7 @@
       homologWrap.classList.remove('hidden');
       homologTitle.classList.remove('hidden');
       homologWrap.innerHTML =
-        '<table class="data-table"><thead><tr><th>Manufacturer</th><th>Homologating team</th></tr></thead><tbody>' +
+        '<table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('th.team') + '</th></tr></thead><tbody>' +
         homologation.map(function (h) {
           return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(h.team)) + '</td></tr>';
         }).join('') +
@@ -424,17 +530,36 @@
   // ─── Countries ──────────────────────────────────────────────────────────────
   function countryDisplay(country) {
     if (!country) return { icon: '', label: '—' };
-    var c = String(country).toUpperCase();
-    if (c === 'USA')    return { icon: '\uD83C\uDDFA\uD83C\uDDF8', label: 'USA' };
-    if (c === 'ITALY')  return { icon: '\uD83C\uDDEE\uD83C\uDDF9', label: 'Italy' };
-    if (c === 'FIA')    return { icon: '\uD83C\uDF10', label: 'World' };
-    if (c === 'EUROPE') return { icon: '', label: 'Europe' };
-    return { icon: '', label: country };
+    var c = String(country).trim();
+    var u = c.toUpperCase();
+    if (u === 'USA')       return { icon: '\uD83C\uDDFA\uD83C\uDDF8', label: 'USA' };
+    if (u === 'ITALY')     return { icon: '\uD83C\uDDEE\uD83C\uDDF9', label: 'Italy' };
+    if (u === 'FIA' || u === 'WORLD') return { icon: '\uD83C\uDF10', label: 'World' };
+    if (u === 'EUROPE')    return { icon: '\uD83C\uDDEA\uD83C\uDDFA', label: 'Europe' };
+    if (u === 'JAPAN')     return { icon: '\uD83C\uDDEF\uD83C\uDDF5', label: 'Japan' };
+    if (u === 'AUSTRALIA') return { icon: '\uD83C\uDDE6\uD83C\uDDFA', label: 'Australia' };
+    if (u === 'GERMANY')   return { icon: '\uD83C\uDDE9\uD83C\uDDEA', label: 'Germany' };
+    return { icon: '', label: c };
+  }
+
+  function localizeCountryLabel(label) {
+    if (!label || label === '—' || getLang() !== 'ru') return label;
+    var lc = String(label).trim().toLowerCase();
+    if (lc === 'world' || lc === 'fia') {
+      var worldRu = t('series.world');
+      return (worldRu && worldRu !== 'series.world') ? worldRu : label;
+    }
+    var localizeFn = window.TGA && window.TGA.localizeCountryName;
+    if (typeof localizeFn === 'function') {
+      var ru = localizeFn(label);
+      if (ru && ru !== label) return ru;
+    }
+    return label;
   }
 
   function countryHtml(country) {
     var d = countryDisplay(country);
-    return esc(d.label);
+    return esc(localizeCountryLabel(d.label));
   }
 
   function syncStandingsScrollBars() { /* top bar removed */ }
@@ -1001,6 +1126,8 @@
   window.TGA.dash                     = dash;
   window.TGA.standingsRacePosOnly     = standingsRacePosOnly;
   window.TGA.driverDisplayName        = driverDisplayName;
+  window.TGA.driverLabel              = driverLabel;
+  window.TGA.teamLabel                = teamLabel;
   window.TGA.foldDiacritics           = foldDiacritics;
   window.TGA.isGuestEntryRow          = isGuestEntryRow;
   window.TGA.guestCarNumberSet        = guestCarNumberSet;
@@ -1009,8 +1136,10 @@
   window.TGA.slugify                  = slugify;
   window.TGA.resolveDriverSlug        = resolveDriverSlug;
   window.TGA.driverLinkHtml           = driverLinkHtml;
+  window.TGA.driverTableCell          = driverTableCell;
   window.TGA.driversCellHtml          = driversCellHtml;
   window.TGA.splitDriverNames         = splitDriverNames;
+  window.TGA.resolveDriverFromEntryList = resolveDriverFromEntryList;
   window.TGA.isSeriesId               = isSeriesId;
   window.TGA.adjustEventPanelPadding  = adjustEventPanelPadding;
   window.TGA.adjustDetailPanelPadding = adjustDetailPanelPadding;

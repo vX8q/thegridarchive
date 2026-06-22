@@ -18,6 +18,7 @@
     }
   ],
   "event_preview": "Circuit de Barcelona-Catalunya is a 4.657 km (2.894 mi) permanent road course in Montmeló, north of Barcelona, built in 1991. The 14-corner layout is considered the ultimate test of overall car balance, with low-speed technical sections balanced by high-speed sweepers and medium-speed corners — making it the traditional venue for Formula One pre-season testing. The 2026 Barcelona-Catalunya Grand Prix is the seventh round of the season, held June 12-14.\n\nKimi Antonelli leads the championship with 156 points, 66 ahead of Lewis Hamilton and 68 ahead of George Russell. Mercedes leads the constructors' standings with 244 points, ahead of Ferrari with 165 and McLaren with 118. Hamilton, now driving for Ferrari, carries momentum from his prior success here — he holds the record for most wins at the circuit with six victories. Antonelli will seek to extend his championship lead, while Lando Norris and McLaren will target additional points in their push forward in both championships. Max Verstappen's Red Bull faces continued pressure on a circuit where precision and consistency determine success.\n\nThe all-time qualifying record at Circuit de Barcelona-Catalunya belongs to Lando Norris, who set a 1:11.383 during qualifying in 2024. The race lap record is held by Oscar Piastri, who clocked a 1:15.743 during the 2025 race.",
+  "event_preview_ru": "Circuit de Barcelona-Catalunya — постоянная трасса протяжённостью 4.657 km (2.894 mi) в Montmeló, к северу от Барселоны, построенная в 1991 году. 14-поворотная конфигурация считается главным испытанием общего баланса машины: медленные технические участки сочетаются с высокоскоростными поворотами и секторами средней скорости — традиционная площадка предсезонных тестов Формулы-1. Гран-при Barcelona-Catalunya 2026 года — седьмой этап сезона, 12–14 июня.\n\nKimi Antonelli лидирует в чемпионате с 156 очками, опережая Lewis Hamilton на 66 и George Russell на 68. Mercedes лидирует в зачёте конструкторов с 244 очками, впереди Ferrari с 165 и McLaren с 118. Hamilton, теперь за Ferrari, опирается на прошлые успехи здесь — у него рекорд шести побед на трассе. Antonelli будет стремиться увеличить отрыв в чемпионате, а Lando Norris и McLaren нацелены на дополнительные очки в продвижении в обоих зачётах. Red Bull Max Verstappen по-прежнему под давлением на трассе, где успех определяют точность и стабильность.\n\nАбсолютный рекорд квалификации на Circuit de Barcelona-Catalunya принадлежит Lando Norris — 1:11.383 в квалификации 2024 года. Рекорд гоночного круга принадлежит Oscar Piastri — 1:15.743 на гонке 2025 года.",
   "entry_list": [
     {
       "number": "10",
@@ -1350,28 +1351,204 @@
         "Laps"
       ],
       "rows": [
-        ["Hamilton", "S 1–10", "H 11–26", "M 27–40", "H 41–66", "", "66"],
-        ["Russell", "M 1–11", "H 12–35", "H 36–66", "", "", "66"],
-        ["Norris", "M 1–12", "H 13–34", "H 35–66", "", "", "66"],
-        ["Verstappen", "S 1–11", "M 12–28", "H 29–39", "M 40–66", "", "66"],
-        ["Piastri", "M 1–13", "H 14–35", "H 36–66", "", "", "66"],
-        ["Hadjar", "M 1–14", "H 15–31", "H 32–57", "S 58–65", "", "65"],
-        ["Gasly", "M 1–13", "H 14–39", "H 40–65", "", "", "65"],
-        ["Lawson", "M 1–10", "H 11–34", "H 35–65", "", "", "65"],
-        ["Lindblad", "M 1–21", "H 22–36", "H 37–65", "", "", "65"],
-        ["Colapinto", "S 1–11", "H 12–33", "H 34–65", "", "", "65"],
-        ["Bortoleto", "M 1–14", "H 15–32", "H 33–52", "S 53–64", "", "64"],
-        ["Sainz", "S 1–13", "H 14–29", "H 30–54", "M 55–64", "", "64"],
-        ["Ocon", "S 1–12", "H 13–33", "M 34–57", "S 58–64", "", "64"],
-        ["Perez", "S 1–11", "H 12–30", "H 31–38", "M 39–63", "", "63"],
-        ["Leclerc", "M 1–15", "H 16–38", "H 39–62", "", "", "62"],
-        ["Antonelli", "M 1–13", "H 14–36", "H 37–61", "", "", "61"],
-        ["Bearman", "M 1–17", "H 18–38", "S 39–60", "", "", "60"],
-        ["Albon", "M 1–12", "H 13–28", "H 29–33", "S 34–55", "", "55"],
-        ["Alonso", "H 1–20", "H 21–37", "", "", "", "37"],
-        ["Hulkenberg", "S 1–12", "H 13–38", "", "", "", "38"],
-        ["Bottas", "M 1–13", "H 14–28", "", "", "", "28"],
-        ["Stroll", "M 1–5", "", "", "", "", "5"]
+        [
+          "Hamilton",
+          "S 1–10",
+          "H 11–26",
+          "M 27–40",
+          "H 41–66",
+          "",
+          "66"
+        ],
+        [
+          "Russell",
+          "M 1–11",
+          "H 12–35",
+          "H 36–66",
+          "",
+          "",
+          "66"
+        ],
+        [
+          "Norris",
+          "M 1–12",
+          "H 13–34",
+          "H 35–66",
+          "",
+          "",
+          "66"
+        ],
+        [
+          "Verstappen",
+          "S 1–11",
+          "M 12–28",
+          "H 29–39",
+          "M 40–66",
+          "",
+          "66"
+        ],
+        [
+          "Piastri",
+          "M 1–13",
+          "H 14–35",
+          "H 36–66",
+          "",
+          "",
+          "66"
+        ],
+        [
+          "Hadjar",
+          "M 1–14",
+          "H 15–31",
+          "H 32–57",
+          "S 58–65",
+          "",
+          "65"
+        ],
+        [
+          "Gasly",
+          "M 1–13",
+          "H 14–39",
+          "H 40–65",
+          "",
+          "",
+          "65"
+        ],
+        [
+          "Lawson",
+          "M 1–10",
+          "H 11–34",
+          "H 35–65",
+          "",
+          "",
+          "65"
+        ],
+        [
+          "Lindblad",
+          "M 1–21",
+          "H 22–36",
+          "H 37–65",
+          "",
+          "",
+          "65"
+        ],
+        [
+          "Colapinto",
+          "S 1–11",
+          "H 12–33",
+          "H 34–65",
+          "",
+          "",
+          "65"
+        ],
+        [
+          "Bortoleto",
+          "M 1–14",
+          "H 15–32",
+          "H 33–52",
+          "S 53–64",
+          "",
+          "64"
+        ],
+        [
+          "Sainz",
+          "S 1–13",
+          "H 14–29",
+          "H 30–54",
+          "M 55–64",
+          "",
+          "64"
+        ],
+        [
+          "Ocon",
+          "S 1–12",
+          "H 13–33",
+          "M 34–57",
+          "S 58–64",
+          "",
+          "64"
+        ],
+        [
+          "Perez",
+          "S 1–11",
+          "H 12–30",
+          "H 31–38",
+          "M 39–63",
+          "",
+          "63"
+        ],
+        [
+          "Leclerc",
+          "M 1–15",
+          "H 16–38",
+          "H 39–62",
+          "",
+          "",
+          "62"
+        ],
+        [
+          "Antonelli",
+          "M 1–13",
+          "H 14–36",
+          "H 37–61",
+          "",
+          "",
+          "61"
+        ],
+        [
+          "Bearman",
+          "M 1–17",
+          "H 18–38",
+          "S 39–60",
+          "",
+          "",
+          "60"
+        ],
+        [
+          "Albon",
+          "M 1–12",
+          "H 13–28",
+          "H 29–33",
+          "S 34–55",
+          "",
+          "55"
+        ],
+        [
+          "Alonso",
+          "H 1–20",
+          "H 21–37",
+          "",
+          "",
+          "",
+          "37"
+        ],
+        [
+          "Hulkenberg",
+          "S 1–12",
+          "H 13–38",
+          "",
+          "",
+          "",
+          "38"
+        ],
+        [
+          "Bottas",
+          "M 1–13",
+          "H 14–28",
+          "",
+          "",
+          "",
+          "28"
+        ],
+        [
+          "Stroll",
+          "M 1–5",
+          "",
+          "",
+          "",
+          "",
+          "5"
+        ]
       ]
     },
     "penalties_after": {
@@ -1408,28 +1585,226 @@
         "Avg. Speed"
       ],
       "rows": [
-        ["1", "44", "Lewis Hamilton", "Ferrari", "44", "16:05:14", "1:20.122", "209.245"],
-        ["2", "6", "Isack Hadjar", "Red Bull Racing", "61", "16:28:35", "1:20.150", "209.172"],
-        ["3", "3", "Max Verstappen", "Red Bull Racing", "42", "16:02:59", "1:20.230", "208.964"],
-        ["4", "1", "Lando Norris", "McLaren", "37", "15:55:17", "1:20.232", "208.959"],
-        ["5", "16", "Charles Leclerc", "Ferrari", "47", "16:09:44", "1:20.379", "208.576"],
-        ["6", "63", "George Russell", "Mercedes", "43", "16:03:57", "1:20.640", "207.901"],
-        ["7", "12", "Kimi Antonelli", "Mercedes", "46", "16:08:01", "1:20.704", "207.736"],
-        ["8", "81", "Oscar Piastri", "McLaren", "46", "16:08:30", "1:20.835", "207.400"],
-        ["9", "5", "Gabriel Bortoleto", "Audi", "57", "16:23:03", "1:21.446", "205.844"],
-        ["10", "31", "Esteban Ocon", "Haas F1 Team", "65", "16:35:31", "1:21.643", "205.347"],
-        ["11", "23", "Alexander Albon", "Williams", "65", "16:35:13", "1:21.744", "205.093"],
-        ["12", "41", "Arvid Lindblad", "Racing Bulls", "46", "16:08:34", "1:21.914", "204.668"],
-        ["13", "10", "Pierre Gasly", "Alpine", "44", "16:05:25", "1:21.960", "204.553"],
-        ["14", "55", "Carlos Sainz", "Williams", "60", "16:27:12", "1:22.061", "204.301"],
-        ["15", "87", "Oliver Bearman", "Haas F1 Team", "44", "16:05:53", "1:22.419", "203.414"],
-        ["16", "43", "Franco Colapinto", "Alpine", "44", "16:05:29", "1:22.449", "203.340"],
-        ["17", "30", "Liam Lawson", "Racing Bulls", "46", "16:08:18", "1:22.691", "202.745"],
-        ["18", "11", "Sergio Perez", "Cadillac", "45", "16:06:46", "1:22.820", "202.429"],
-        ["19", "27", "Nico Hulkenberg", "Audi", "2", "15:06:22", "1:23.447", "200.908"],
-        ["20", "14", "Fernando Alonso", "Aston Martin", "28", "15:43:07", "1:25.366", "196.392"],
-        ["21", "77", "Valtteri Bottas", "Cadillac", "3", "15:07:54", "1:25.745", "195.523"],
-        ["22", "18", "Lance Stroll", "Aston Martin", "3", "15:07:56", "1:25.904", "195.162"]
+        [
+          "1",
+          "44",
+          "Lewis Hamilton",
+          "Ferrari",
+          "44",
+          "16:05:14",
+          "1:20.122",
+          "209.245"
+        ],
+        [
+          "2",
+          "6",
+          "Isack Hadjar",
+          "Red Bull Racing",
+          "61",
+          "16:28:35",
+          "1:20.150",
+          "209.172"
+        ],
+        [
+          "3",
+          "3",
+          "Max Verstappen",
+          "Red Bull Racing",
+          "42",
+          "16:02:59",
+          "1:20.230",
+          "208.964"
+        ],
+        [
+          "4",
+          "1",
+          "Lando Norris",
+          "McLaren",
+          "37",
+          "15:55:17",
+          "1:20.232",
+          "208.959"
+        ],
+        [
+          "5",
+          "16",
+          "Charles Leclerc",
+          "Ferrari",
+          "47",
+          "16:09:44",
+          "1:20.379",
+          "208.576"
+        ],
+        [
+          "6",
+          "63",
+          "George Russell",
+          "Mercedes",
+          "43",
+          "16:03:57",
+          "1:20.640",
+          "207.901"
+        ],
+        [
+          "7",
+          "12",
+          "Kimi Antonelli",
+          "Mercedes",
+          "46",
+          "16:08:01",
+          "1:20.704",
+          "207.736"
+        ],
+        [
+          "8",
+          "81",
+          "Oscar Piastri",
+          "McLaren",
+          "46",
+          "16:08:30",
+          "1:20.835",
+          "207.400"
+        ],
+        [
+          "9",
+          "5",
+          "Gabriel Bortoleto",
+          "Audi",
+          "57",
+          "16:23:03",
+          "1:21.446",
+          "205.844"
+        ],
+        [
+          "10",
+          "31",
+          "Esteban Ocon",
+          "Haas F1 Team",
+          "65",
+          "16:35:31",
+          "1:21.643",
+          "205.347"
+        ],
+        [
+          "11",
+          "23",
+          "Alexander Albon",
+          "Williams",
+          "65",
+          "16:35:13",
+          "1:21.744",
+          "205.093"
+        ],
+        [
+          "12",
+          "41",
+          "Arvid Lindblad",
+          "Racing Bulls",
+          "46",
+          "16:08:34",
+          "1:21.914",
+          "204.668"
+        ],
+        [
+          "13",
+          "10",
+          "Pierre Gasly",
+          "Alpine",
+          "44",
+          "16:05:25",
+          "1:21.960",
+          "204.553"
+        ],
+        [
+          "14",
+          "55",
+          "Carlos Sainz",
+          "Williams",
+          "60",
+          "16:27:12",
+          "1:22.061",
+          "204.301"
+        ],
+        [
+          "15",
+          "87",
+          "Oliver Bearman",
+          "Haas F1 Team",
+          "44",
+          "16:05:53",
+          "1:22.419",
+          "203.414"
+        ],
+        [
+          "16",
+          "43",
+          "Franco Colapinto",
+          "Alpine",
+          "44",
+          "16:05:29",
+          "1:22.449",
+          "203.340"
+        ],
+        [
+          "17",
+          "30",
+          "Liam Lawson",
+          "Racing Bulls",
+          "46",
+          "16:08:18",
+          "1:22.691",
+          "202.745"
+        ],
+        [
+          "18",
+          "11",
+          "Sergio Perez",
+          "Cadillac",
+          "45",
+          "16:06:46",
+          "1:22.820",
+          "202.429"
+        ],
+        [
+          "19",
+          "27",
+          "Nico Hulkenberg",
+          "Audi",
+          "2",
+          "15:06:22",
+          "1:23.447",
+          "200.908"
+        ],
+        [
+          "20",
+          "14",
+          "Fernando Alonso",
+          "Aston Martin",
+          "28",
+          "15:43:07",
+          "1:25.366",
+          "196.392"
+        ],
+        [
+          "21",
+          "77",
+          "Valtteri Bottas",
+          "Cadillac",
+          "3",
+          "15:07:54",
+          "1:25.745",
+          "195.523"
+        ],
+        [
+          "22",
+          "18",
+          "Lance Stroll",
+          "Aston Martin",
+          "3",
+          "15:07:56",
+          "1:25.904",
+          "195.162"
+        ]
       ]
     },
     "vsc": {

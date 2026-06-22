@@ -46,6 +46,7 @@ var dropPlaceholderSeries = map[string]bool{
 	"arca":            true,
 	"nascar_modified": true,
 	"imsa":            true,
+	"supercars":       true,
 }
 
 // placeholderText reports whether a value is a placeholder (TBA/TBC etc.), not real data.

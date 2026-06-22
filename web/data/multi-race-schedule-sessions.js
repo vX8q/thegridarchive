@@ -533,100 +533,100 @@
   "F4_IT_2026_2": [
     {
       "label": "Race 1",
-      "date": "2026-05-23",
-      "time_msk": "12:30",
+      "date": "2026-05-22",
+      "time_msk": "09:30",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-05-23",
-      "time_msk": "18:15",
+      "time_msk": "12:30",
       "kind": ""
     },
     {
       "label": "Race 3",
-      "date": "2026-05-22",
-      "time_msk": "09:30",
+      "date": "2026-05-23",
+      "time_msk": "18:15",
       "kind": ""
     }
   ],
   "F4_IT_2026_3": [
     {
       "label": "Race 1",
-      "date": "2026-06-21",
-      "time_msk": "12:30",
+      "date": "2026-06-20",
+      "time_msk": "09:30",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-06-21",
-      "time_msk": "18:15",
+      "time_msk": "12:30",
       "kind": ""
     },
     {
       "label": "Race 3",
-      "date": "2026-06-20",
-      "time_msk": "09:30",
+      "date": "2026-06-21",
+      "time_msk": "18:15",
       "kind": ""
     }
   ],
   "F4_IT_2026_4": [
     {
       "label": "Race 1",
-      "date": "2026-07-26",
-      "time_msk": "12:30",
+      "date": "2026-07-25",
+      "time_msk": "09:30",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-07-26",
-      "time_msk": "18:15",
+      "time_msk": "12:30",
       "kind": ""
     },
     {
       "label": "Race 3",
-      "date": "2026-07-25",
-      "time_msk": "09:30",
+      "date": "2026-07-26",
+      "time_msk": "18:15",
       "kind": ""
     }
   ],
   "F4_IT_2026_5": [
     {
       "label": "Race 1",
-      "date": "2026-09-06",
-      "time_msk": "12:30",
+      "date": "2026-09-05",
+      "time_msk": "09:30",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-09-06",
-      "time_msk": "18:15",
+      "time_msk": "12:30",
       "kind": ""
     },
     {
       "label": "Race 3",
-      "date": "2026-09-05",
-      "time_msk": "09:30",
+      "date": "2026-09-06",
+      "time_msk": "18:15",
       "kind": ""
     }
   ],
   "F4_IT_2026_7": [
     {
       "label": "Race 1",
-      "date": "2026-10-25",
-      "time_msk": "12:30",
+      "date": "2026-10-24",
+      "time_msk": "09:30",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-10-25",
-      "time_msk": "18:15",
+      "time_msk": "12:30",
       "kind": ""
     },
     {
       "label": "Race 3",
-      "date": "2026-10-24",
-      "time_msk": "09:30",
+      "date": "2026-10-25",
+      "time_msk": "18:15",
       "kind": ""
     }
   ],

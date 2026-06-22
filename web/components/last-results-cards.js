@@ -3,6 +3,16 @@
   if (typeof window === 'undefined') return;
   window.TGA = window.TGA || {};
 
+  function localizeWinnerCardLabel(label) {
+    var fn = window.TGA && window.TGA.localizeWinnerCardLabel;
+    return fn ? fn(label) : (label == null ? '' : String(label).trim());
+  }
+
+  function winnerDriverLabel(name) {
+    if (!name) return '';
+    return (window.TGA && window.TGA.driverLabel) ? window.TGA.driverLabel(name) : String(name);
+  }
+
   function renderLastResultsCards(allEvents) {
     var t = window.TGA.t;
     var esc = window.TGA.esc;
@@ -766,7 +776,7 @@
             } else {
               label = label.replace(/\s*Race$/i, '');
             }
-            return label;
+            return localizeWinnerCardLabel(label);
           }
 
           var seriesIdForSessions = String(e._seriesId || '').toUpperCase();
@@ -1064,7 +1074,7 @@
           var endIso = pickIsoDate(card.rangeEnd) || pickIsoDate(e.end_date) || startIso;
           var rangeStart = startIso || card.dateStr || '';
           var rangeEnd = endIso || rangeStart;
-          var name = e.name || '—';
+          var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
           var seriesIdUpper = String(e._seriesId || e.series_id || '').toUpperCase();
           // For F2/F3 strip "(Sprint)/(Feature)" from event name — already in labels.
           if (seriesIdUpper === 'F2' || seriesIdUpper === 'F3') {
@@ -1175,6 +1185,9 @@
           if (trackKey.indexOf('laguna seca') >= 0 || trackKey.indexOf('weathertech raceway') >= 0 || trackKey.indexOf('monterey') >= 0) {
             extraClass += ' lrc-card--laguna-seca';
           }
+          if (trackKey.indexOf('sonoma raceway') >= 0 || (trackKey.indexOf('sonoma') >= 0 && trackKey.indexOf('california') >= 0)) {
+            extraClass += ' lrc-card--sonoma-raceway';
+          }
           if (trackKey.indexOf('misano world circuit') >= 0 || trackKey.indexOf('circuit marco simoncelli') >= 0) {
             extraClass += ' lrc-card--misano';
           }
@@ -1260,6 +1273,9 @@
           if (trackKey.indexOf('berlin raceway') >= 0) {
             extraClass += ' lrc-card--berlin-raceway';
           }
+          if (trackKey.indexOf('elko speedway') >= 0 || (trackKey.indexOf('elko') >= 0 && trackKey.indexOf('minnesota') >= 0)) {
+            extraClass += ' lrc-card--elko-speedway';
+          }
           if (trackKey.indexOf('lausitzring') >= 0 || trackKey.indexOf('lausitz') >= 0) {
             extraClass += ' lrc-card--lausitzring';
           }
@@ -1316,6 +1332,9 @@
           }
           if (eventNameLc.indexOf('laguna seca') >= 0 || eventNameLc.indexOf('weathertech raceway') >= 0 || eventNameLc.indexOf('monterey') >= 0) {
             extraClass += ' lrc-card--laguna-seca';
+          }
+          if (eventNameLc.indexOf('sonoma raceway') >= 0 || eventNameLc.indexOf('save mart 350') >= 0 || eventNameLc.indexOf('toyota/save mart') >= 0) {
+            extraClass += ' lrc-card--sonoma-raceway';
           }
           if (eventNameLc.indexOf('misano') >= 0 && (
             eventNameLc.indexOf('marco simoncelli') >= 0 ||
@@ -1410,6 +1429,9 @@
           if (eventNameLc.indexOf('berlin raceway') >= 0) {
             extraClass += ' lrc-card--berlin-raceway';
           }
+          if (eventNameLc.indexOf('elko speedway') >= 0 || eventNameLc.indexOf('shore lunch') >= 0) {
+            extraClass += ' lrc-card--elko-speedway';
+          }
           if (eventNameLc.indexOf('lausitzring') >= 0 || eventNameLc.indexOf('lausitz') >= 0) {
             extraClass += ' lrc-card--lausitzring';
           }
@@ -1471,6 +1493,10 @@
               extraClass += ' lrc-card--montreal';
             } else if (eventSlug.indexOf('laguna-seca') >= 0 || eventSlug.indexOf('laguna_seca') >= 0 || eventSlug.indexOf('monterey') >= 0) {
               extraClass += ' lrc-card--laguna-seca';
+            } else if (eventSlug.indexOf('sonoma') >= 0 || eventSlug === 'nascar-cup-2026-18') {
+              extraClass += ' lrc-card--sonoma-raceway';
+            } else if (eventSlug.indexOf('elko') >= 0 || eventSlug === 'arca-2026-10') {
+              extraClass += ' lrc-card--elko-speedway';
             } else if (
               eventSlug === 'gtwce-sprint-2026-2' ||
               eventSlug === 'f4-it-2026-1' ||
@@ -1584,7 +1610,7 @@
               winnerHtml = list.slice(0, 4).map(function (w) {
                 var line = w.name || '';
                 if (w.car) line = '#' + w.car + ' ' + line;
-                var label = (w.label || '').trim();
+                var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = line + ' — ' + label;
                 return esc(line);
               }).join('<br>');
@@ -1593,7 +1619,7 @@
               winnerHtml = list.slice(0, 4).map(function (w) {
                 var crew = w.name || '';
                 if (w.car) crew = '#' + w.car + ' ' + crew;
-                var label = (w.label || '').trim();
+                var label = localizeWinnerCardLabel((w.label || '').trim());
                 var line = label ? label + ' — ' + crew : crew;
                 return '<span class="lrc-winner-line">' + esc(line) + '</span>';
               }).join('');
@@ -1602,7 +1628,7 @@
               winnerHtml = list.slice(0, 4).map(function (w) {
                 var line = w.name || '';
                 if (w.car) line = line + ' #' + w.car;
-                var label = (w.label || '').trim();
+                var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = label + ' - ' + line;
                 return '<span class="lrc-winner-line">' + esc(line) + '</span>';
               }).join('');
@@ -1611,7 +1637,7 @@
               winnerHtml = list.slice(0, 4).map(function (w) {
                 var crew = w.name || '';
                 var line = w.car ? '#' + w.car + ' ' + crew : crew;
-                var label = (w.label || '').trim();
+                var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = label + ' - ' + line;
                 return '<span class="lrc-winner-line">' + esc(line) + '</span>';
               }).join('');
@@ -1620,26 +1646,26 @@
               winnerHtml = list.slice(0, 2).map(function (w) {
                 var line = w.name || '';
                 if (w.car) line = line + ' #' + w.car;
-                var label = (w.label || '').trim();
+                var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = label + ' - ' + line;
                 return '<span class="lrc-winner-line">' + esc(line) + '</span>';
               }).join('');
             } else if (seriesIdUpper === 'FREC') {
               // FREC: compact 3-line format to fit Race 1/2/3 winners.
               winnerHtml = list.slice(0, 3).map(function (w) {
-                var line = w.name || '';
+                var line = winnerDriverLabel(w.name || '');
                 if (w.car) line = '#' + w.car + ' ' + line;
-                var label = String(w.label || '').trim();
-                var rm = label.match(/race\s*(\d+)/i);
-                if (rm && rm[1]) label = 'R' + rm[1];
+                var rawLabel = String(w.label || '').trim();
+                var rm = rawLabel.match(/race\s*(\d+)/i);
+                var label = rm && rm[1] ? ('R' + rm[1]) : localizeWinnerCardLabel(rawLabel);
                 if (label) line = label + ': ' + line;
                 return esc(line);
               }).join('<br>');
             } else if (seriesIdUpper === 'F1' && card.isF1SprintWeekend) {
               // F1 sprint weekends only: "Sprint - #1 …" / "Feature - #12 …".
               winnerHtml = list.slice(0, 4).map(function (w) {
-                var label = (w.label || '').trim();
-                var line = w.name || '';
+                var label = localizeWinnerCardLabel((w.label || '').trim());
+                var line = winnerDriverLabel(w.name || '');
                 if (w.car) line = '#' + w.car + ' ' + line;
                 if (label) line = label + ' - ' + line;
                 return esc(line);
@@ -1649,11 +1675,11 @@
               // Super GT: two winners by class (GT500 + GT300). DTM: Race 1 + Race 2.
               // Limit to first four so card does not grow too large.
               winnerHtml = list.slice(0, 4).map(function (w) {
-                var line = w.name || '';
+                var line = winnerDriverLabel(w.name || '');
                 if (w.car) {
                   line = '#' + w.car + ' ' + line;
                 }
-                var label = (w.label || '').trim();
+                var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) {
                   line = line + ' — ' + label;
                 }
@@ -1661,7 +1687,7 @@
               }).join('<br>');
             } else if (list.length === 1) {
               var w1 = list[0] || {};
-              var line1 = w1.name || '';
+              var line1 = winnerDriverLabel(w1.name || '');
               if (w1.car) {
                 line1 = '#' + w1.car + ' ' + line1;
               }
@@ -1678,7 +1704,7 @@
           var pendingHtml = noDataYet
             ? (isPrologueOrPreSeason
               ? ''
-              : '<div class="lrc-winner lrc-winner--pending">' + esc(card.raceWasCancelled ? 'Race was cancelled' : (t('home.awaiting_results') || 'Results pending')) + '</div>')
+              : '<div class="lrc-winner lrc-winner--pending">' + esc(card.raceWasCancelled ? t('home.race_cancelled') : (t('home.awaiting_results') || 'Results pending')) + '</div>')
             : '';
 
           return (

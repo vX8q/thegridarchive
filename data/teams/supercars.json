@@ -7,7 +7,6 @@
       "number": "4",
       "driver": "Jack Le Brocq",
       "rounds": "1",
-      "co_driver": "TBA",
       "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
@@ -19,7 +18,6 @@
       "number": "10",
       "driver": "Zach Bates",
       "rounds": "1",
-      "co_driver": "TBA",
       "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
@@ -223,7 +221,6 @@
       "number": "26",
       "driver": "Kai Allen",
       "rounds": "1",
-      "co_driver": "TBA",
       "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
@@ -259,7 +256,6 @@
       "number": "8",
       "driver": "Andre Heimgartner",
       "rounds": "1",
-      "co_driver": "TBA",
       "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
@@ -271,7 +267,6 @@
       "number": "14",
       "driver": "Cameron Hill",
       "rounds": "1",
-      "co_driver": "TBA",
       "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
@@ -283,62 +278,153 @@
       "number": "96",
       "driver": "Macauley Jones",
       "rounds": "1",
-      "co_driver": "TBA",
       "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
-    },
-    {
-      "manufacturer": "Chevrolet",
-      "model": "Camaro",
-      "team": "Team 18",
-      "number": "15",
-      "driver": "Craig Lowndes",
-      "rounds": "TBD",
-      "co_driver": "Bayley Hall",
-      "co_rounds": "10–11",
-      "crew_chief": "",
-      "full_time": false
     }
   ],
   "car_models": [
-    { "manufacturer": "Ford", "model": "Mustang GT" },
-    { "manufacturer": "Chevrolet", "model": "Camaro ZL1" },
-    { "manufacturer": "Toyota", "model": "GR Supra" }
+    {
+      "manufacturer": "Ford",
+      "model": "Mustang GT"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "model": "Camaro ZL1"
+    },
+    {
+      "manufacturer": "Toyota",
+      "model": "GR Supra"
+    }
   ],
   "technical_spec": [
-    { "key": "Competition principle", "value": "Technical parity" },
-    { "key": "Drive layout", "value": "Front-engine, rear-wheel drive" },
-    { "key": "Engine configuration", "value": "Naturally aspirated V8" },
-    { "key": "Power output", "value": "~600 hp (≈447 kW)" },
-    { "key": "Maximum torque", "value": "690 Nm" },
-    { "key": "Body shell", "value": "Production-based RHD body, homologated" },
-    { "key": "Body materials", "value": "Steel body, composites/exotics restricted" },
-    { "key": "Chassis", "value": "Standardised tubular steel frame" },
-    { "key": "Aerodynamics", "value": "Homologated splitter & rear wing" },
-    { "key": "Downforce level", "value": "~170 kg @ 200 km/h (2024+ aero spec)" },
-    { "key": "Minimum weight", "value": "1,335 kg (with driver, no fuel)" },
-    { "key": "Minimum front axle load", "value": "725 kg" },
-    { "key": "Fuel", "value": "E75" },
-    { "key": "Fuel tank capacity", "value": "~130 L" },
-    { "key": "Transmission", "value": "6-speed sequential transaxle" },
-    { "key": "Differential", "value": "Spool (locked)" },
-    { "key": "Clutch", "value": "Triple-plate" },
-    { "key": "Front suspension", "value": "Double wishbone" },
-    { "key": "Rear suspension", "value": "Independent" },
-    { "key": "Dampers", "value": "Adjustable (not driver-adjustable)" },
-    { "key": "Brakes (front)", "value": "395 mm discs, 6-piston calipers" },
-    { "key": "Brakes (rear)", "value": "355 mm discs, 4-piston calipers" },
-    { "key": "Wheels", "value": "18-inch control wheels" },
-    { "key": "Tyres", "value": "Dunlop (Soft / Supersoft / Hard / Wet)" },
-    { "key": "ECU", "value": "MoTeC (control)" },
-    { "key": "Engine allocation", "value": "Single builder per model" },
-    { "key": "Engines per season", "value": "Max 2 new engines per car" },
-    { "key": "Top speed (historical max)", "value": "300.5 km/h" },
-    { "key": "Expected 2026 top speed", "value": "~290 km/h" },
-    { "key": "Relative performance", "value": "Comparable to Porsche 992 GT3 Cup" },
-    { "key": "Target build cost (no engine)", "value": "~AUD 250,000" },
-    { "key": "Estimated season cost", "value": "AUD 1.2–3.0 million per car (staff, logistics, tyres, fuel, spares, race ops)" }
+    {
+      "key": "Competition principle",
+      "value": "Technical parity"
+    },
+    {
+      "key": "Drive layout",
+      "value": "Front-engine, rear-wheel drive"
+    },
+    {
+      "key": "Engine configuration",
+      "value": "Naturally aspirated V8"
+    },
+    {
+      "key": "Power output",
+      "value": "~600 hp (≈447 kW)"
+    },
+    {
+      "key": "Maximum torque",
+      "value": "690 Nm"
+    },
+    {
+      "key": "Body shell",
+      "value": "Production-based RHD body, homologated"
+    },
+    {
+      "key": "Body materials",
+      "value": "Steel body, composites/exotics restricted"
+    },
+    {
+      "key": "Chassis",
+      "value": "Standardised tubular steel frame"
+    },
+    {
+      "key": "Aerodynamics",
+      "value": "Homologated splitter & rear wing"
+    },
+    {
+      "key": "Downforce level",
+      "value": "~170 kg @ 200 km/h (2024+ aero spec)"
+    },
+    {
+      "key": "Minimum weight",
+      "value": "1,335 kg (with driver, no fuel)"
+    },
+    {
+      "key": "Minimum front axle load",
+      "value": "725 kg"
+    },
+    {
+      "key": "Fuel",
+      "value": "E75"
+    },
+    {
+      "key": "Fuel tank capacity",
+      "value": "~130 L"
+    },
+    {
+      "key": "Transmission",
+      "value": "6-speed sequential transaxle"
+    },
+    {
+      "key": "Differential",
+      "value": "Spool (locked)"
+    },
+    {
+      "key": "Clutch",
+      "value": "Triple-plate"
+    },
+    {
+      "key": "Front suspension",
+      "value": "Double wishbone"
+    },
+    {
+      "key": "Rear suspension",
+      "value": "Independent"
+    },
+    {
+      "key": "Dampers",
+      "value": "Adjustable (not driver-adjustable)"
+    },
+    {
+      "key": "Brakes (front)",
+      "value": "395 mm discs, 6-piston calipers"
+    },
+    {
+      "key": "Brakes (rear)",
+      "value": "355 mm discs, 4-piston calipers"
+    },
+    {
+      "key": "Wheels",
+      "value": "18-inch control wheels"
+    },
+    {
+      "key": "Tyres",
+      "value": "Dunlop (Soft / Supersoft / Hard / Wet)"
+    },
+    {
+      "key": "ECU",
+      "value": "MoTeC (control)"
+    },
+    {
+      "key": "Engine allocation",
+      "value": "Single builder per model"
+    },
+    {
+      "key": "Engines per season",
+      "value": "Max 2 new engines per car"
+    },
+    {
+      "key": "Top speed (historical max)",
+      "value": "300.5 km/h"
+    },
+    {
+      "key": "Expected 2026 top speed",
+      "value": "~290 km/h"
+    },
+    {
+      "key": "Relative performance",
+      "value": "Comparable to Porsche 992 GT3 Cup"
+    },
+    {
+      "key": "Target build cost (no engine)",
+      "value": "~AUD 250,000"
+    },
+    {
+      "key": "Estimated season cost",
+      "value": "AUD 1.2–3.0 million per car (staff, logistics, tyres, fuel, spares, race ops)"
+    }
   ]
 }
-

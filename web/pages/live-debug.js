@@ -90,12 +90,16 @@
     return fetchDebug()
       .then(renderDebugPayload)
       .catch(function (err) {
-        root.innerHTML = '<p class="live-debug-error">Failed to load debug: ' + esc(err && err.message ? err.message : err) + '</p>';
+        var t = window.TGA && window.TGA.t;
+        var msg = (t && t('live.debug_load_failed')) || 'Failed to load debug';
+        root.innerHTML = '<p class="live-debug-error">' + esc(msg) + ': ' + esc(err && err.message ? err.message : err) + '</p>';
       });
   }
 
   function renderLiveDebugPage() {
-    document.title = 'Live — The Grid Archive (TGA)';
+    document.title = (window.TGA.documentTitle || function (m) { return m + ' — The Grid Archive (TGA)'; })(
+      (window.TGA.t && window.TGA.t('live.title')) || 'Live'
+    );
     setHomeFeedTab('live');
     stopLiveDebugRefresh();
     if (window.TGA.renderNASCARLive) window.TGA.renderNASCARLive();

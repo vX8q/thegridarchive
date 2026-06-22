@@ -126,6 +126,21 @@ func ReadEventDetailFile(dataDir, eventID string) ([]byte, error) {
 	return nil, os.ErrNotExist
 }
 
+// PreferredEventDetailPath returns the canonical write path for new event JSON
+// (series/year subfolder when mapped, otherwise flat data/events).
+func PreferredEventDetailPath(dataDir, eventID string) string {
+	paths := eventDetailPathCandidates(dataDir, eventID)
+	if len(paths) == 0 {
+		return eventDetailPath(dataDir, eventID)
+	}
+	return paths[0]
+}
+
+// SaveEventDetailAtPreferredPath writes event JSON to PreferredEventDetailPath.
+func SaveEventDetailAtPreferredPath(dataDir, eventID string, detail any) error {
+	return saveJSONFile(PreferredEventDetailPath(dataDir, eventID), detail)
+}
+
 // EventDetailExists returns true if event JSON exists in data/events/{Series}/{Year} or the flat directory.
 func EventDetailExists(dataDir, eventID string) bool {
 	resolvedID := ResolveEventDetailID(dataDir, eventID)

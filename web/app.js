@@ -39,6 +39,7 @@
   var dash = P.dash;
   var slugify = P.slugify;
   var driverDisplayName = P.driverDisplayName;
+  var driverLabel = P.driverLabel;
   var isGuestEntryRow = P.isGuestEntryRow;
   var guestCarNumberSet = P.guestCarNumberSet;
   var entryListDriverCell = P.entryListDriverCell;
@@ -74,6 +75,13 @@
   var adjustDetailPanelPadding = P.adjustDetailPanelPadding;
   var renderSupercarsStaticSpecs = P.renderSupercarsStaticSpecs;
   var translateStaticUI = P.translateStaticUI;
+  var localizeDriverName = P.localizeDriverName;
+  var localizeCountryName = function (n) {
+    return (window.TGA && typeof window.TGA.localizeCountryName === 'function')
+      ? window.TGA.localizeCountryName(n)
+      : n;
+  };
+  var localizeSeriesName = P.localizeSeriesName;
 
   var renderNextRaceCards = (window.TGA && window.TGA.renderNextRaceCards) || function () {};
   var stopNextRaceTimers = (window.TGA && window.TGA.stopNextRaceTimers) || function () {};
@@ -144,6 +152,36 @@
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/\s+/g, ' ')
       .trim();
+  }
+
+  function driverSearchTitleRu(displayName) {
+    var en = String(displayName || '').trim();
+    if (!en) return en;
+    var lookup = (window.TGA && window.TGA.lookupDriverNameRu);
+    if (typeof lookup === 'function') return lookup(en) || en;
+    return localizeDriverName(en) || en;
+  }
+
+  function searchItemTitle(item) {
+    if (!item) return '';
+    return getLang() === 'ru'
+      ? String(item.titleRu || item.title || '').trim()
+      : String(item.titleEn || item.title || '').trim();
+  }
+
+  function searchItemHaystack(item) {
+    if (!item) return '';
+    return getLang() === 'ru'
+      ? (item.haystackRu || item.haystack || '')
+      : (item.haystackEn || item.haystack || '');
+  }
+
+  function localizeNationList(nation) {
+    var s = String(nation || '').trim();
+    if (!s || s === '—') return s;
+    return s.split(',')
+      .map(function (part) { return localizeCountryName(part.trim()); })
+      .join(', ');
   }
 
   function seriesPopularityScore(seriesID) {
@@ -260,32 +298,50 @@
     });
   }
 
-  function pushSearchItem(list, dedupe, title, kind, href, extra, subtext, seriesID, teamName, seriesName, meta) {
-    var cleanTitle = String(title || '').trim();
-    if (!cleanTitle || !href) return;
+  function pushSearchItem(list, dedupe, title, kind, href, extra, subtext, seriesID, teamName, seriesName, meta, titleRu) {
+    var cleanTitleEn = String(title || '').trim();
+    var cleanTitleRu = String(titleRu != null ? titleRu : title || '').trim();
+    if (!cleanTitleEn || !href) return;
+    if (kind === 'driver') {
+      var rawSlug = String(href || '').replace(/^\/driver\//, '');
+      try { rawSlug = decodeURIComponent(rawSlug); } catch (e) { /* ignore */ }
+      var canonSlug = (window.TGA && typeof window.TGA.resolveDriverSlug === 'function')
+        ? window.TGA.resolveDriverSlug(rawSlug)
+        : rawSlug;
+      if (canonSlug) href = '/driver/' + encodeURIComponent(canonSlug);
+    }
     var key = (kind === 'driver')
       ? kind + '|' + href
-      : kind + '|' + href + '|' + cleanTitle.toLowerCase();
+      : kind + '|' + href + '|' + cleanTitleEn.toLowerCase();
     if (dedupe[key]) {
       if (kind === 'driver') {
         var existing = list.find(function (item) {
           return item.kind === 'driver' && item.href === href;
         });
-        if (existing && cleanTitle.length > String(existing.title || '').length) {
-          existing.title = cleanTitle;
-          existing.haystack = normalizeSearchText(cleanTitle + ' ' + (extra || ''));
+        if (existing && cleanTitleEn.length > String(existing.titleEn || existing.title || '').length) {
+          existing.titleEn = cleanTitleEn;
+          existing.titleRu = cleanTitleRu;
+          existing.title = cleanTitleEn;
+          existing.haystackEn = normalizeSearchText(cleanTitleEn + ' ' + (extra || ''));
+          existing.haystackRu = normalizeSearchText(cleanTitleRu + ' ' + (extra || ''));
+          existing.haystack = existing.haystackEn;
         }
       }
       return;
     }
     dedupe[key] = true;
-    var hay = normalizeSearchText(cleanTitle + ' ' + (extra || ''));
+    var hayEn = normalizeSearchText(cleanTitleEn + ' ' + (extra || ''));
+    var hayRu = normalizeSearchText(cleanTitleRu + ' ' + (extra || ''));
     var pop = seriesPopularityScore(seriesID) + teamPopularityBoost(teamName);
     list.push({
-      title: cleanTitle,
+      title: cleanTitleEn,
+      titleEn: cleanTitleEn,
+      titleRu: cleanTitleRu,
       kind: kind,
       href: href,
-      haystack: hay,
+      haystack: hayEn,
+      haystackEn: hayEn,
+      haystackRu: hayRu,
       subtext: subtext || '',
       popularity: pop,
       seriesID: seriesID || '',
@@ -296,13 +352,15 @@
   }
 
   function rankSearchItems(queryNorm, a, b) {
-    var aStarts = a.haystack.indexOf(queryNorm) === 0 ? 0 : 1;
-    var bStarts = b.haystack.indexOf(queryNorm) === 0 ? 0 : 1;
+    var aHay = searchItemHaystack(a);
+    var bHay = searchItemHaystack(b);
+    var aStarts = aHay.indexOf(queryNorm) === 0 ? 0 : 1;
+    var bStarts = bHay.indexOf(queryNorm) === 0 ? 0 : 1;
     if (aStarts !== bStarts) return aStarts - bStarts;
     var aPop = a.popularity || 0;
     var bPop = b.popularity || 0;
     if (aPop !== bPop) return bPop - aPop;
-    return a.title.localeCompare(b.title);
+    return searchItemTitle(a).localeCompare(searchItemTitle(b));
   }
 
   function pickPrimaryDriverContext(agg, primaryBySlug, slugKey) {
@@ -350,6 +408,12 @@
   }
 
   function ensureSearchIndex() {
+    var SEARCH_INDEX_VERSION = 3;
+    if (state.searchIndexVersion !== SEARCH_INDEX_VERSION) {
+      state.searchIndexVersion = SEARCH_INDEX_VERSION;
+      state.searchIndexReady = false;
+      state.searchIndexItems = [];
+    }
     if (state.searchIndexReady) return Promise.resolve(state.searchIndexItems);
     if (state.searchIndexLoading) return Promise.resolve(state.searchIndexItems);
     state.searchIndexLoading = true;
@@ -357,7 +421,13 @@
     var dedupe = {};
     var driverAggBySlug = {};
     var legalNameBySlug = {};
-    return API.getDriversPrimaryContext()
+    return API.getDriverProfileRedirects()
+      .catch(function () { return {}; })
+      .then(function (redirects) {
+        window.TGA = window.TGA || {};
+        window.TGA.driverProfileRedirects = (redirects && typeof redirects === 'object') ? redirects : {};
+        return API.getDriversPrimaryContext();
+      })
       .catch(function () { return {}; })
       .then(function (primaryBySlug) {
         if (!primaryBySlug || typeof primaryBySlug !== 'object') primaryBySlug = {};
@@ -422,12 +492,15 @@
                     }
                     drivers.forEach(function (driverNameRaw) {
                       var driverName = driverDisplayName(String(driverNameRaw || '').trim());
+                      var driverTitleEn = driverName;
+                      var driverTitleRu = driverSearchTitleRu(driverName);
                       if (!driverName || /^(?:tba|tbc|tbd)$/i.test(driverName)) return;
                       var dSlug = slugify(driverName);
                       if (!dSlug) return;
                       if (!driverAggBySlug[dSlug]) {
                         driverAggBySlug[dSlug] = {
-                          title: driverName,
+                          titleEn: driverTitleEn,
+                          titleRu: driverTitleRu,
                           href: '/driver/' + encodeURIComponent(dSlug),
                           seriesCounts: {},
                           seriesNames: {},
@@ -472,7 +545,7 @@
           pushSearchItem(
             items,
             dedupe,
-            agg.title,
+            agg.titleEn,
             'driver',
             agg.href,
             [primary.seriesName, primary.teamName, legalExtra].filter(Boolean).join(' '),
@@ -480,7 +553,8 @@
             primary.seriesID,
             primary.teamName,
             primary.seriesName,
-            null
+            null,
+            agg.titleRu
           );
         });
         return API.getDrivers()
@@ -489,16 +563,21 @@
             drivers.forEach(function (d) {
               if (!d || typeof d !== 'object') return;
               var driverName = driverDisplayName(String(d.name || '').trim());
+              var driverTitleEn = driverName;
+              var driverTitleRu = driverSearchTitleRu(driverName);
               var dSlug = String(d.slug || '').trim();
               if (!driverName) return;
               if (!dSlug) dSlug = slugify(driverName);
+              else if (window.TGA && typeof window.TGA.resolveDriverSlug === 'function') {
+                dSlug = window.TGA.resolveDriverSlug(dSlug);
+              }
               if (!dSlug) return;
               if (driverAggBySlug[dSlug]) return;
               var searchExtra = String(d.search_extra || '').trim();
               pushSearchItem(
                 items,
                 dedupe,
-                driverName,
+                driverTitleEn,
                 'driver',
                 '/driver/' + encodeURIComponent(dSlug),
                 searchExtra,
@@ -506,7 +585,8 @@
                 '',
                 '',
                 '',
-                null
+                null,
+                driverTitleRu
               );
             });
           })
@@ -599,35 +679,35 @@
     var breadcrumbEl = document.getElementById('search-breadcrumb');
     var contentEl = document.getElementById('search-results-content');
     if (!contentEl) return;
-    if (titleEl) titleEl.textContent = 'Search results';
+    if (titleEl) titleEl.textContent = t('search.title');
     if (breadcrumbEl) {
       breadcrumbEl.innerHTML =
         '<a href="/">' + (t('breadcrumb.all') || 'All series') + '</a>' +
-        '<span class="breadcrumb-sep">/</span><span>' + esc(q || 'Search') + '</span>';
+        '<span class="breadcrumb-sep">/</span><span>' + esc(q || t('search.title')) + '</span>';
     }
     if (!q) {
-      if (metaEl) metaEl.textContent = 'Type query in search box';
-      contentEl.innerHTML = '<p class="empty-msg">No query provided.</p>';
-      document.title = 'Search — The Grid Archive (TGA)';
+      if (metaEl) metaEl.textContent = t('search.type_query');
+      contentEl.innerHTML = '<p class="empty-msg">' + esc(t('search.no_query')) + '</p>';
+      document.title = (window.TGA.documentTitle || function (m) { return m + ' — TGA'; })(t('search.title'));
       translateStaticUI();
       state.loadedSeriesId = null;
       return;
     }
 
     var groupsMeta = [
-      { key: 'driver', label: 'Drivers' },
-      { key: 'team', label: 'Teams' },
-      { key: 'team_principal', label: 'Team principals' },
-      { key: 'crew_chief', label: 'Crew chiefs' },
-      { key: 'Championship', label: 'Championships' },
-      { key: 'Season', label: 'Seasons' }
+      { key: 'driver', labelKey: 'search.group.driver' },
+      { key: 'team', labelKey: 'search.group.team' },
+      { key: 'team_principal', labelKey: 'search.group.team_principal' },
+      { key: 'crew_chief', labelKey: 'search.group.crew_chief' },
+      { key: 'Championship', labelKey: 'search.group.championship' },
+      { key: 'Season', labelKey: 'search.group.season' }
     ];
 
     function renderFromMatches(matches, driverMetaBySlug, driverPhotoOkBySlug) {
       var total = matches.length;
       if (metaEl) metaEl.textContent = '';
       if (total === 0) {
-        contentEl.innerHTML = '<p class="empty-msg">No matches found.</p>';
+        contentEl.innerHTML = '<p class="empty-msg">' + esc(t('search.no_matches')) + '</p>';
         translateStaticUI();
         return;
       }
@@ -641,10 +721,10 @@
         var list = byKind[g.key] || [];
         if (!list.length) return;
         html += '<section class="search-group">';
-        html += '<div class="search-group-header"><span>' + esc(g.label) + '</span><span class="search-group-count">' + list.length + ' matches</span></div>';
+        html += '<div class="search-group-header"><span>' + esc(t(g.labelKey)) + '</span><span class="search-group-count">' + list.length + ' ' + esc(t('search.matches')) + '</span></div>';
         if (g.key === 'driver') {
           html += '<div class="table-wrap"><table class="data-table"><thead><tr>' +
-            '<th>name</th><th>nation</th><th>series</th><th>team</th><th>age</th>' +
+            '<th>' + esc(t('search.th.name')) + '</th><th>' + esc(t('search.th.nation')) + '</th><th>' + esc(t('search.th.series')) + '</th><th>' + esc(t('search.th.team')) + '</th><th>' + esc(t('search.th.age')) + '</th>' +
             '</tr></thead><tbody>';
           list.forEach(function (item) {
             var slug = decodeURIComponent((item.href || '').replace(/^\/driver\//, ''));
@@ -699,9 +779,9 @@
                 ' alt="" loading="lazy" decoding="async">'
               : '<span class="search-driver-photo search-driver-photo--empty" aria-hidden="true"></span>';
             html += '<tr>' +
-              '<td><a class="search-page-link search-driver-link" href="' + item.href + '">' + photoHtml + '<span class="search-page-title">' + esc(item.title) + '</span></a></td>' +
-              '<td>' + esc(String(nation)) + '</td>' +
-              '<td>' + esc(item.seriesName || inferredSeries || '—') + '</td>' +
+              '<td><a class="search-page-link search-driver-link" href="' + item.href + '">' + photoHtml + '<span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
+              '<td>' + esc(localizeNationList(nation)) + '</td>' +
+              '<td>' + esc(localizeSeriesName(item.seriesName || inferredSeries, item.seriesID) || '—') + '</td>' +
               '<td>' + esc(normalizeDisplayTeamName(item.teamName || inferredTeam) || '—') + '</td>' +
               '<td class="col-num">' + esc(age) + '</td>' +
               '</tr>';
@@ -709,15 +789,15 @@
           html += '</tbody></table></div>';
         } else if (g.key === 'team') {
           html += '<div class="table-wrap"><table class="data-table"><thead><tr>' +
-            '<th>name</th><th>series</th><th>base</th><th>licence</th><th>age</th>' +
+            '<th>' + esc(t('search.th.name')) + '</th><th>' + esc(t('search.th.series')) + '</th><th>' + esc(t('search.th.base')) + '</th><th>' + esc(t('search.th.licence')) + '</th><th>' + esc(t('search.th.age')) + '</th>' +
             '</tr></thead><tbody>';
           list.forEach(function (item) {
             var meta = item.meta || {};
             var teamSlugFromHref = decodeURIComponent((item.href || '').replace(/^\/team\//, ''));
             var teamLogoURL = '/api/team-logo/' + encodeURIComponent(teamSlugFromHref) + '?_=team-logo-v1';
             html += '<tr>' +
-              '<td><a class="search-page-link search-team-link" href="' + item.href + '"><img class="search-team-logo" src="' + esc(teamLogoURL) + '" alt="" loading="lazy" decoding="async"><span class="search-page-title">' + esc(item.title) + '</span></a></td>' +
-              '<td>' + esc(item.seriesName || '—') + '</td>' +
+              '<td><a class="search-page-link search-team-link" href="' + item.href + '"><img class="search-team-logo" src="' + esc(teamLogoURL) + '" alt="" loading="lazy" decoding="async"><span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
+              '<td>' + esc(localizeSeriesName(item.seriesName, item.seriesID) || '—') + '</td>' +
               '<td>' + esc(meta.base || '—') + '</td>' +
               '<td>' + esc(meta.licence || '—') + '</td>' +
               '<td class="col-num">' + esc(meta.age || '—') + '</td>' +
@@ -726,38 +806,38 @@
           html += '</tbody></table></div>';
         } else if (g.key === 'team_principal') {
           html += '<div class="table-wrap"><table class="data-table"><thead><tr>' +
-            '<th>name</th><th>team</th><th>series</th>' +
+            '<th>' + esc(t('search.th.name')) + '</th><th>' + esc(t('search.th.team')) + '</th><th>' + esc(t('search.th.series')) + '</th>' +
             '</tr></thead><tbody>';
           list.forEach(function (item) {
             html += '<tr>' +
-              '<td><a class="search-page-link" href="' + item.href + '"><span class="search-page-title">' + esc(item.title) + '</span></a></td>' +
+              '<td><a class="search-page-link" href="' + item.href + '"><span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
               '<td>' + esc(normalizeDisplayTeamName(item.teamName) || '—') + '</td>' +
-              '<td>' + esc(item.seriesName || '—') + '</td>' +
+              '<td>' + esc(localizeSeriesName(item.seriesName, item.seriesID) || '—') + '</td>' +
               '</tr>';
           });
           html += '</tbody></table></div>';
         } else if (g.key === 'crew_chief') {
           html += '<div class="table-wrap"><table class="data-table"><thead><tr>' +
-            '<th>name</th><th>team</th><th>series</th><th>nationality</th><th>age</th>' +
+            '<th>' + esc(t('search.th.name')) + '</th><th>' + esc(t('search.th.team')) + '</th><th>' + esc(t('search.th.series')) + '</th><th>' + esc(t('search.th.nation')) + '</th><th>' + esc(t('search.th.age')) + '</th>' +
             '</tr></thead><tbody>';
           list.forEach(function (item) {
             var metaCrew = item.meta || {};
             html += '<tr>' +
-              '<td><a class="search-page-link" href="' + item.href + '"><span class="search-page-title">' + esc(item.title) + '</span></a></td>' +
+              '<td><a class="search-page-link" href="' + item.href + '"><span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
               '<td>' + esc(normalizeDisplayTeamName(item.teamName) || '—') + '</td>' +
-              '<td>' + esc(item.seriesName || '—') + '</td>' +
-              '<td>' + esc(metaCrew.nationality || '—') + '</td>' +
+              '<td>' + esc(localizeSeriesName(item.seriesName, item.seriesID) || '—') + '</td>' +
+              '<td>' + esc(localizeNationList(metaCrew.nationality || '—')) + '</td>' +
               '<td class="col-num">' + esc(metaCrew.age || '—') + '</td>' +
               '</tr>';
           });
           html += '</tbody></table></div>';
         } else if (g.key === 'Championship' || g.key === 'Season') {
           html += '<div class="table-wrap"><table class="data-table"><thead><tr>' +
-            '<th>name</th>' +
+            '<th>' + esc(t('search.th.name')) + '</th>' +
             '</tr></thead><tbody>';
           list.forEach(function (item) {
             html += '<tr>' +
-              '<td><a class="search-page-link" href="' + item.href + '"><span class="search-page-title">' + esc(item.title) + '</span></a></td>' +
+              '<td><a class="search-page-link" href="' + item.href + '"><span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
               '</tr>';
           });
           html += '</tbody></table></div>';
@@ -765,7 +845,7 @@
           html += '<ul class="search-group-list">';
           list.forEach(function (item) {
             var sub = item.subtext ? '<div class="search-page-sub">' + esc(item.subtext) + '</div>' : '';
-            html += '<li><a class="search-page-link" href="' + item.href + '"><span><span class="search-page-title">' + esc(item.title) + '</span>' + sub + '</span></a></li>';
+            html += '<li><a class="search-page-link" href="' + item.href + '"><span><span class="search-page-title">' + esc(searchItemTitle(item)) + '</span>' + sub + '</span></a></li>';
           });
           html += '</ul>';
         }
@@ -779,7 +859,7 @@
     ensureSearchIndex().then(function () {
       var qNorm = normalizeSearchText(q);
       var matches = state.searchIndexItems
-        .filter(function (item) { return item.haystack.indexOf(qNorm) !== -1; })
+        .filter(function (item) { return searchItemHaystack(item).indexOf(qNorm) !== -1; })
         .sort(function (a, b) { return rankSearchItems(qNorm, a, b); });
       var drivers = matches.filter(function (m) { return m.kind === 'driver'; });
       var driverReqs = drivers.map(function (m) {
@@ -814,16 +894,19 @@
       });
     }).catch(function () {
       if (metaEl) metaEl.textContent = '"' + q + '"';
-      contentEl.innerHTML = '<p class="empty-msg">Failed to load search index.</p>';
+      contentEl.innerHTML = '<p class="empty-msg">' + esc(t('search.load_failed')) + '</p>';
       translateStaticUI();
     });
-    document.title = 'Search: ' + q + ' — The Grid Archive (TGA)';
+    document.title = (window.TGA.documentTitle || function (m) { return m + ' — TGA'; })(t('search.title') + ': ' + q);
     state.loadedSeriesId = null;
   }
 
   function renderEntityPage(type, slug, placeholder) {
     showView('view-' + type);
     var name = decodeURIComponent(slug).replace(/-+/g, ' ');
+    if (type === 'track' && window.TGA && typeof window.TGA.localizeCircuitName === 'function') {
+      name = window.TGA.localizeCircuitName(name);
+    }
     document.getElementById(type + '-title').textContent = name;
     document.getElementById(type + '-meta').textContent = '';
     document.getElementById(type + '-breadcrumb').innerHTML =
@@ -831,7 +914,7 @@
       '<span class="breadcrumb-sep">/</span>' +
       '<span>' + esc(name) + '</span>';
     document.getElementById(type + '-content').innerHTML = '<p class="empty-msg">' + placeholder + '</p>';
-    document.title = name + ' — The Grid Archive (TGA)';
+    document.title = (window.TGA.documentTitle || function (m) { return m + ' — The Grid Archive (TGA)'; })(name);
     translateStaticUI();
     state.loadedSeriesId = null;
   }
@@ -844,6 +927,8 @@
     'misano-world-circuit-marco-simoncelli': '/web/images/misano.jpg',
     'watkins-glen-international': '/web/images/watkins-glen-international.png',
     'watkins-glen-international-watkins-glen-new-york': '/web/images/watkins-glen-international.png',
+    'sonoma-raceway': '/web/images/sonoma-raceway.jpg',
+    'sonoma-raceway-sonoma-california': '/web/images/sonoma-raceway.jpg',
     'indianapolis-motor-speedway-road-course': '/web/images/IndyRoadCourse.jpg',
     'circuit-de-spa-francorchamps': '/web/images/Circuit-de-Spa-Francorchamps19.jpg',
     'dover-motor-speedway': '/web/images/Dover-Motor-Speedway.jpg',
@@ -894,6 +979,8 @@
     'white-mountain-motorsports-park-north-woodstock-new-hampshire': '/web/images/White-Mountain-Motorsports-Park.jpg',
     'berlin-raceway': '/web/images/Berlin-Raceway.jpg',
     'berlin-raceway-marne-michigan': '/web/images/Berlin-Raceway.jpg',
+    'elko-speedway': '/web/images/elko-speedway.jpg',
+    'elko-speedway-elko-new-market-minnesota': '/web/images/elko-speedway.jpg',
     'lausitzring': '/web/images/Lausitzring.jpg',
     'hidden-valley-raceway': '/web/images/hidden-valley-raceway.jpg',
     'sepang-international-circuit': '/web/images/sepang.jpg',
@@ -1020,13 +1107,13 @@
           );
         }
         if (legalFullName) {
-          metaPartsHtml.push('Full name: ' + esc(legalFullName));
+          metaPartsHtml.push(esc(t('driver.full_name')) + ': ' + esc(driverLabel(legalFullName)));
         }
         var titleEl = document.getElementById('driver-title');
         if (titleEl && displayName) {
-          titleEl.textContent = displayName;
+          titleEl.textContent = driverLabel(displayName);
         } else if (titleEl && legalFullName) {
-          titleEl.textContent = legalFullName.split(/\s+/).slice(0, 1).concat(legalFullName.split(/\s+/).slice(-1)).join(' ');
+          titleEl.textContent = driverLabel(legalFullName.split(/\s+/).slice(0, 1).concat(legalFullName.split(/\s+/).slice(-1)).join(' '));
         }
         if (data.citizenship && data.citizenship.trim()) {
           function isoFromCountry(country) {
@@ -1125,7 +1212,10 @@
               var iso = isoFromCountry(country);
               prefetchFlagIso(iso);
               var flagHtml = flagHtmlFromIso(iso);
-              return (flagHtml ? flagHtml + ' ' : '') + esc(country);
+              var countryLabel = (window.TGA && typeof window.TGA.localizeCountryName === 'function')
+                ? window.TGA.localizeCountryName(country)
+                : country;
+              return (flagHtml ? flagHtml + ' ' : '') + esc(countryLabel);
             });
 
             if (citizenshipCountries.length > 1) {
@@ -1136,7 +1226,10 @@
           }
         } else if (data.nationality && data.nationality.trim()) {
           // fallback when citizenship not yet filled
-          metaPartsHtml.push(esc(data.nationality.trim()));
+          var nationalityLabel = (window.TGA && typeof window.TGA.localizeCountryName === 'function')
+            ? window.TGA.localizeCountryName(data.nationality.trim())
+            : data.nationality.trim();
+          metaPartsHtml.push(esc(nationalityLabel));
         }
         function formatBirthDate(dateStr) {
           // API usually returns YYYY-MM-DD. Driver page needs DD-MM-YYYY.
@@ -1181,22 +1274,25 @@
           var formattedBirth = formatBirthDate(birthDateStr);
           var birthAge = calcBirthAge(birthDateStr);
           metaPartsHtml.push(
-            'Born: ' +
+            esc(t('driver.born')) + ': ' +
             esc(formattedBirth) +
             (birthAge !== null && birthAge !== undefined && !data.death_date ? ' (' + esc(String(birthAge)) + ')' : '')
           );
         }
         if (data.birth_place && data.birth_place.trim()) {
-          metaPartsHtml.push('Home town: ' + esc(data.birth_place.trim()));
+          var birthPlaceLabel = (window.TGA && typeof window.TGA.localizeBirthPlace === 'function')
+            ? window.TGA.localizeBirthPlace(data.birth_place.trim())
+            : data.birth_place.trim();
+          metaPartsHtml.push(esc(t('driver.home_town')) + ': ' + esc(birthPlaceLabel));
         }
         if (data.death_date && data.death_date.trim()) {
           var deathDateStr = data.death_date.trim();
           var formattedDeath = formatBirthDate(deathDateStr);
           var deathAge = calcAgeAt(data.birth_date, deathDateStr);
           metaPartsHtml.push(
-            'Died: ' +
+            esc(t('driver.died')) + ': ' +
             esc(formattedDeath) +
-            (deathAge !== null && deathAge !== undefined ? ' (aged ' + esc(String(deathAge)) + ')' : '')
+            (deathAge !== null && deathAge !== undefined ? ' (' + esc(t('driver.aged')) + ' ' + esc(String(deathAge)) + ')' : '')
           );
         }
         // Vertical list of rows.
@@ -1215,7 +1311,7 @@
           commitDriverMetaHtml();
         }
         if (!driverDetailIsCurrent(reqToken)) return;
-        document.title = (data.name || nameFromSlug) + ' — The Grid Archive (TGA)';
+        document.title = (window.TGA.documentTitle || function (m) { return m + ' — The Grid Archive (TGA)'; })(data.name || nameFromSlug);
 
         // Driver photo (placeholder when not provided)
         var photoEl = document.getElementById('driver-photo');
@@ -1258,8 +1354,14 @@
               hasSprintByEvent[r.event_id] = true;
             }
           });
+          var localizeSeriesName = (window.TGA && window.TGA.localizeSeriesName) || function (n, id) { return (n || id || '—'); };
+          var localizeEventName = (window.TGA && window.TGA.localizeEventName) || function (n) { return n || '—'; };
+          var localizeDriverRaceLabel = (window.TGA && window.TGA.localizeDriverRaceLabel) || function (n) { return n || ''; };
+          var localizeDriverStatus = (window.TGA && window.TGA.localizeDriverStatus) || function (n) { return n || ''; };
           var tableRows = results.map(function (row) {
-            var eventName = (row.event_name && row.event_name.trim()) ? esc(row.event_name) : (row.event_id || '—');
+            var seriesLabel = esc(localizeSeriesName(row.series_name, row.series_id));
+            var eventDisplay = localizeEventName(row.event_name && row.event_name.trim() ? row.event_name : '');
+            var eventName = eventDisplay ? esc(eventDisplay) : (row.event_id || '—');
             var eventHref = (row.event_id) ? '/event/' + encodeURIComponent((row.event_id + '').toLowerCase().replace(/_/g, '-')) : '#';
             var eventCell = eventHref !== '#' ? '<a href="' + eventHref + '" class="event-link">' + eventName + '</a>' : eventName;
             var raceCell = '';
@@ -1272,26 +1374,26 @@
                   // For F1 want short label: "Sprint" instead of "Sprint Results",
                   // main race may stay unlabeled.
                   if (/sprint/i.test(rawRaceName)) {
-                    raceLabel = 'Sprint';
+                    raceLabel = localizeDriverRaceLabel('Sprint');
                   } else {
                     // Show Feature only if sprint exists in same event_id.
-                    raceLabel = hasSprintByEvent[row.event_id] ? 'Feature' : '';
+                    raceLabel = hasSprintByEvent[row.event_id] ? localizeDriverRaceLabel('Feature') : '';
                   }
                 } else {
-                  raceLabel = rawRaceName;
+                  raceLabel = localizeDriverRaceLabel(rawRaceName);
                 }
               }
               raceCell = '<td>' + esc(raceLabel) + '</td>';
             }
             return '<tr data-series-id="' + esc(row.series_id || '') + '" data-event-id="' + esc(row.event_id || '') + '">' +
-              '<td>' + esc(row.series_name || row.series_id || '—') + '</td>' +
+              '<td>' + seriesLabel + '</td>' +
               '<td>' + eventCell + '</td>' +
               raceCell +
               '<td class="col-num">' + (row.position != null ? row.position : '—') + '</td>' +
               '<td class="col-num">' + (row.points != null ? row.points : '—') + '</td>' +
               (row.car_number ? '<td class="col-num">' + esc(row.car_number) + '</td>' : '') +
               '<td>' + (row.laps != null ? row.laps : '') + '</td>' +
-              (row.status ? '<td>' + esc(row.status) + '</td>' : '') +
+              (row.status ? '<td>' + esc(localizeDriverStatus(row.status)) + '</td>' : '') +
               '</tr>';
           });
           var carHeader = results.some(function (r) { return r.car_number; }) ? '<th class="col-num">' + t('th.no') + '</th>' : '';

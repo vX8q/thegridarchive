@@ -1,0 +1,92 @@
+{
+  "event_id": "NASCAR_MODIFIED_2026_7",
+  "series": "NASCAR Whelen Modified Tour",
+  "race": "Thunder in the Mountains 200",
+  "date": "Saturday, June 20, 2026",
+  "start_date": "2026-06-20",
+  "end_date": "2026-06-20",
+  "track": "White Mountain Motorsports Park",
+  "location": "White Mountain Motorsports Park, North Woodstock, New Hampshire",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Trk",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed",
+        "Lap #",
+        "# Laps",
+        "-Fastest",
+        "-Next"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Fin",
+        "St",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Laps",
+        "Led",
+        "Status",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "stage_1": {
+      "title": "Stage 1",
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "stage_2": {
+      "title": "Stage 2",
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "stage_3": {
+      "title": "Stage 3",
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

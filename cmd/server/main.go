@@ -17,6 +17,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/vX8q/tga/config"
 	"github.com/vX8q/tga/internal/appenv"
+	"github.com/vX8q/tga/internal/eventscaffold"
 	"github.com/vX8q/tga/internal/livesync"
 	"github.com/vX8q/tga/internal/store"
 )
@@ -87,6 +88,8 @@ func main() {
 		slog.Error("bootstrap failed", "err", err)
 		os.Exit(1)
 	}
+
+	eventscaffold.RunAtStartup(dataDir)
 
 	// Context to stop background goroutines on shutdown
 	appCtx, cancelApp := context.WithCancel(context.Background())

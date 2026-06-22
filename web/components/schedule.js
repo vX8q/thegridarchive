@@ -16,8 +16,13 @@
   function superFormulaVenueLine(e) {
     var c = (e && e.circuit_name && String(e.circuit_name).trim()) || '';
     var l = (e && e.location && String(e.location).trim()) || '';
-    if (c && l) return c + ' — ' + l;
-    return c || l || '—';
+    if (c && l) {
+      var locRu = (window.TGA && window.TGA.localizeLocation) ? window.TGA.localizeLocation(l) : l;
+      return c + ' — ' + locRu;
+    }
+    if (c) return c;
+    if (l && window.TGA && window.TGA.localizeLocation) return window.TGA.localizeLocation(l);
+    return l || '—';
   }
 
   /**
@@ -208,14 +213,15 @@
 
         var seriesSlug = (e._seriesId || e.series_id || '').toLowerCase().replace(/_+/g, '-');
         var link;
+        var localizeEventFromData = (window.TGA && window.TGA.localizeEventFromData) || function (d) { return (d && d.name) || '—'; };
         if (e.has_detail && e.id) {
           var eventSlug = (e.id || '').toLowerCase().replace(/_+/g, '-');
-          link = '<a href="/event/' + encodeURIComponent(eventSlug) + '" class="event-link">' + esc(e.name || '—') + '</a>';
+          link = '<a href="/event/' + encodeURIComponent(eventSlug) + '" class="event-link">' + esc(localizeEventFromData(e)) + '</a>';
         } else if (seriesSlug) {
           // No event detail file but series exists — link to series page.
-          link = '<a href="/series/' + encodeURIComponent(seriesSlug) + '" class="event-link event-link--series">' + esc(e.name || '—') + '</a>';
+          link = '<a href="/series/' + encodeURIComponent(seriesSlug) + '" class="event-link event-link--series">' + esc(localizeEventFromData(e)) + '</a>';
         } else {
-          link = '<span class="event-no-data">' + esc(e.name || '—') + '</span>';
+          link = '<span class="event-no-data">' + esc(localizeEventFromData(e)) + '</span>';
         }
 
         var dateShort = (ds && endDs && ds !== endDs && formatDateRangeLong)
@@ -236,9 +242,19 @@
           if (rawTime && rawTime.toUpperCase() !== 'TBD') timeOnlyLabel = rawTime;
         }
 
-        var locCombined = seriesIdUpper === 'SUPER_FORMULA'
-          ? superFormulaVenueLine(e)
-          : (e.circuit_name || e.location || '—');
+        var locCombined;
+        if (seriesIdUpper === 'SUPER_FORMULA') {
+          locCombined = superFormulaVenueLine(e);
+        } else if (e.circuit_name) {
+          locCombined = (window.TGA && window.TGA.localizeVenueLine)
+            ? window.TGA.localizeVenueLine(e.circuit_name)
+            : e.circuit_name;
+        } else {
+          locCombined = e.location || '—';
+          if (locCombined !== '—' && window.TGA && window.TGA.localizeLocation) {
+            locCombined = window.TGA.localizeLocation(locCombined);
+          }
+        }
         html += '<tr class="sched-row' + (isPast ? ' sched-past' : isNext ? ' sched-next' : '') + '">' +
           '<td class="sched-series">'  + seriesBadge(e._seriesId || e.series_id || '') + '</td>' +
           '<td class="sched-race">'    + link + '</td>' +

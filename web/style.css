@@ -33,6 +33,10 @@
   --text-2: #c8c8d0;
   --text-3: #a0a0ac;
   --table-row-bg: #121214;
+  --scrollbar-size: 8px;
+  --scrollbar-track: var(--bg);
+  --scrollbar-thumb: #3a3a42;
+  --scrollbar-thumb-hover: #555;
 }
 
 :root[data-theme="light"] {
@@ -56,6 +60,80 @@
   --text-2: #3a3a44;
   --text-3: #6a6a76;
   --table-row-bg: #ffffff;
+  --scrollbar-track: var(--bg-2);
+  --scrollbar-thumb: #b8b8c0;
+  --scrollbar-thumb-hover: #90909a;
+}
+
+/* Dark scrollbars for tables, cards, and other overflow containers */
+.table-wrap,
+.standings-section .standings-scroll-bottom,
+#standings-imsa-wrap .table-wrap,
+.nlb-table-wrap,
+.event-section-nav,
+.nrc-cards,
+.lrc-cards,
+.live-debug-pre,
+.search-results {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+.table-wrap::-webkit-scrollbar,
+.standings-section .standings-scroll-bottom::-webkit-scrollbar,
+#standings-imsa-wrap .table-wrap::-webkit-scrollbar,
+.nlb-table-wrap::-webkit-scrollbar,
+.event-section-nav::-webkit-scrollbar,
+.nrc-cards::-webkit-scrollbar,
+.lrc-cards::-webkit-scrollbar,
+.live-debug-pre::-webkit-scrollbar,
+.search-results::-webkit-scrollbar {
+  height: var(--scrollbar-size);
+  width: var(--scrollbar-size);
+}
+.table-wrap::-webkit-scrollbar-track,
+.standings-section .standings-scroll-bottom::-webkit-scrollbar-track,
+#standings-imsa-wrap .table-wrap::-webkit-scrollbar-track,
+.nlb-table-wrap::-webkit-scrollbar-track,
+.event-section-nav::-webkit-scrollbar-track,
+.nrc-cards::-webkit-scrollbar-track,
+.lrc-cards::-webkit-scrollbar-track,
+.live-debug-pre::-webkit-scrollbar-track,
+.search-results::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+.table-wrap::-webkit-scrollbar-thumb,
+.standings-section .standings-scroll-bottom::-webkit-scrollbar-thumb,
+#standings-imsa-wrap .table-wrap::-webkit-scrollbar-thumb,
+.nlb-table-wrap::-webkit-scrollbar-thumb,
+.event-section-nav::-webkit-scrollbar-thumb,
+.nrc-cards::-webkit-scrollbar-thumb,
+.lrc-cards::-webkit-scrollbar-thumb,
+.live-debug-pre::-webkit-scrollbar-thumb,
+.search-results::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+}
+.table-wrap::-webkit-scrollbar-thumb:hover,
+.standings-section .standings-scroll-bottom::-webkit-scrollbar-thumb:hover,
+#standings-imsa-wrap .table-wrap::-webkit-scrollbar-thumb:hover,
+.nlb-table-wrap::-webkit-scrollbar-thumb:hover,
+.event-section-nav::-webkit-scrollbar-thumb:hover,
+.nrc-cards::-webkit-scrollbar-thumb:hover,
+.lrc-cards::-webkit-scrollbar-thumb:hover,
+.live-debug-pre::-webkit-scrollbar-thumb:hover,
+.search-results::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+.table-wrap::-webkit-scrollbar-button,
+.standings-section .standings-scroll-bottom::-webkit-scrollbar-button,
+#standings-imsa-wrap .table-wrap::-webkit-scrollbar-button,
+.nlb-table-wrap::-webkit-scrollbar-button,
+.event-section-nav::-webkit-scrollbar-button,
+.nrc-cards::-webkit-scrollbar-button,
+.lrc-cards::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 html {
@@ -63,12 +141,14 @@ html {
   scrollbar-gutter: stable;
   /* iOS Safari: prevent elastic bounce on body, keep scroll on content */
   -webkit-text-size-adjust: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 /* Тонкий скроллбар — резервирует место, без горизонтальных прыжков */
 html::-webkit-scrollbar { width: 6px; }
-html::-webkit-scrollbar-track { background: transparent; }
-html::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-html::-webkit-scrollbar-thumb:hover { background: #555; }
+html::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+html::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+html::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
 * { box-sizing: border-box; }
 
@@ -131,6 +211,9 @@ body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) main.c
   pointer-events: none;
 }
 .header-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.header-inner .lang-flag-toggle {
+  flex-shrink: 0;
+}
 .header-search {
   margin-left: auto;
   position: relative;
@@ -2412,42 +2495,9 @@ body.series-imsa #view-event #event-content:is([data-event-section="practice"], 
   overflow-x: auto;
   max-width: 100%;
   display: block;
-  /* Тёмный фон и тонкий ползунок для всех браузеров */
-  scrollbar-width: thin;
-  scrollbar-color: var(--muted) var(--bg); /* thumb, track */
-}
-.standings-section .standings-scroll-bottom::-webkit-scrollbar {
-  height: 8px;
-}
-.standings-section .standings-scroll-bottom::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-.standings-section .standings-scroll-bottom::-webkit-scrollbar-thumb {
-  background: #555;
-  border-radius: 999px;
-}
-.standings-section .standings-scroll-bottom::-webkit-scrollbar-thumb:hover {
-  background: #777;
 }
 
-/* IMSA standings: тёмный горизонтальный скролл */
-#standings-imsa-wrap .table-wrap {
-  scrollbar-width: thin;
-  scrollbar-color: var(--muted) var(--bg); /* thumb, track */
-}
-#standings-imsa-wrap .table-wrap::-webkit-scrollbar {
-  height: 8px;
-}
-#standings-imsa-wrap .table-wrap::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-#standings-imsa-wrap .table-wrap::-webkit-scrollbar-thumb {
-  background: #555;
-  border-radius: 999px;
-}
-#standings-imsa-wrap .table-wrap::-webkit-scrollbar-thumb:hover {
-  background: #777;
-}
+/* IMSA standings: horizontal scroll inherits global dark scrollbar */
 .standings-section .data-table {
   table-layout: auto;
   min-width: max-content;
@@ -3305,10 +3355,54 @@ tr.table-separator-row td {
 }
 
 /* ── Home feed tabs (Race | Live debug) ───────────────────────────────────── */
+.home-feed-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
 .home-feed-nav {
   display: flex;
   gap: 0.35rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+}
+.lang-flag-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  flex-shrink: 0;
+}
+.lang-flag-opt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.22rem 0.32rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.lang-flag-opt:hover {
+  opacity: 0.82;
+}
+.lang-flag-opt.active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+.lang-flag-opt img {
+  display: block;
+  width: 22px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
 }
 .home-feed-nav-link {
   display: inline-flex;
@@ -3650,23 +3744,8 @@ tr.table-separator-row td {
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-2) transparent;
   padding-bottom: 6px;
   min-width: 0;
-}
-.nrc-cards::-webkit-scrollbar {
-  height: 6px;
-}
-.nrc-cards::-webkit-scrollbar-track {
-  background: transparent;
-}
-.nrc-cards::-webkit-scrollbar-thumb {
-  background: var(--border-2);
-  border-radius: 3px;
-}
-.nrc-cards::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
 }
 
 /* ── Last results cards (weekend winners) ─────────────────────────────────── */
@@ -3706,23 +3785,8 @@ tr.table-separator-row td {
   overflow-x: auto;
   overflow-y: visible;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-2) transparent;
   padding-bottom: 6px;
   min-width: 0;
-}
-.lrc-cards::-webkit-scrollbar {
-  height: 6px;
-}
-.lrc-cards::-webkit-scrollbar-track {
-  background: transparent;
-}
-.lrc-cards::-webkit-scrollbar-thumb {
-  background: var(--border-2);
-  border-radius: 3px;
-}
-.lrc-cards::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
 }
 
 @keyframes lrc-appear {
@@ -4584,6 +4648,35 @@ tr.table-separator-row td {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
+.lrc-card--sonoma-raceway {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background-image: url('/api/card-bg/sonoma-raceway.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.lrc-card--sonoma-raceway::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.lrc-card--sonoma-raceway > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
 /* Misano World Circuit Marco Simoncelli */
 .lrc-card--misano {
   position: relative;
@@ -5253,6 +5346,7 @@ tr.table-separator-row td {
 .lrc-card--road-america,
 .lrc-card--white-mountain-motorsports-park,
 .lrc-card--berlin-raceway,
+.lrc-card--elko-speedway,
 .lrc-card--lausitzring,
 .lrc-card--hidden-valley-raceway,
 .lrc-card--sepang,
@@ -5272,6 +5366,9 @@ tr.table-separator-row td {
 .lrc-card--berlin-raceway {
   background-image: url('/api/card-bg/Berlin-Raceway.jpg');
 }
+.lrc-card--elko-speedway {
+  background-image: url('/api/card-bg/elko-speedway.jpg');
+}
 .lrc-card--lausitzring {
   background-image: url('/api/card-bg/Lausitzring.jpg');
 }
@@ -5287,6 +5384,7 @@ tr.table-separator-row td {
 .lrc-card--road-america::after,
 .lrc-card--white-mountain-motorsports-park::after,
 .lrc-card--berlin-raceway::after,
+.lrc-card--elko-speedway::after,
 .lrc-card--lausitzring::after,
 .lrc-card--hidden-valley-raceway::after,
 .lrc-card--sepang::after,
@@ -5308,6 +5406,7 @@ tr.table-separator-row td {
 .lrc-card--road-america > *,
 .lrc-card--white-mountain-motorsports-park > *,
 .lrc-card--berlin-raceway > *,
+.lrc-card--elko-speedway > *,
 .lrc-card--lausitzring > *,
 .lrc-card--hidden-valley-raceway > *,
 .lrc-card--sepang > *,
@@ -6879,6 +6978,47 @@ tr.table-separator-row td {
   transform: none;
 }
 
+.nrc-card--sonoma-raceway {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.nrc-card--sonoma-raceway::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/api/card-bg/sonoma-raceway.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: 0;
+  transition: transform 0.2s ease;
+}
+.nrc-card--sonoma-raceway::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.nrc-card--sonoma-raceway > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+.nrc-card--sonoma-raceway:hover::before {
+  transform: none;
+}
+
 .nrc-card--misano {
   position: relative;
   overflow: hidden;
@@ -7538,6 +7678,7 @@ tr.table-separator-row td {
 .nrc-card--road-america,
 .nrc-card--white-mountain-motorsports-park,
 .nrc-card--berlin-raceway,
+.nrc-card--elko-speedway,
 .nrc-card--lausitzring,
 .nrc-card--hidden-valley-raceway,
 .nrc-card--sepang,
@@ -7555,6 +7696,9 @@ tr.table-separator-row td {
 .nrc-card--berlin-raceway::before {
   background-image: url('/api/card-bg/Berlin-Raceway.jpg');
 }
+.nrc-card--elko-speedway::before {
+  background-image: url('/api/card-bg/elko-speedway.jpg');
+}
 .nrc-card--lausitzring::before {
   background-image: url('/api/card-bg/Lausitzring.jpg');
 }
@@ -7570,6 +7714,7 @@ tr.table-separator-row td {
 .nrc-card--road-america::before,
 .nrc-card--white-mountain-motorsports-park::before,
 .nrc-card--berlin-raceway::before,
+.nrc-card--elko-speedway::before,
 .nrc-card--lausitzring::before,
 .nrc-card--hidden-valley-raceway::before,
 .nrc-card--sepang::before,
@@ -7587,6 +7732,7 @@ tr.table-separator-row td {
 .nrc-card--road-america::after,
 .nrc-card--white-mountain-motorsports-park::after,
 .nrc-card--berlin-raceway::after,
+.nrc-card--elko-speedway::after,
 .nrc-card--lausitzring::after,
 .nrc-card--hidden-valley-raceway::after,
 .nrc-card--sepang::after,
@@ -7608,6 +7754,7 @@ tr.table-separator-row td {
 .nrc-card--road-america > *,
 .nrc-card--white-mountain-motorsports-park > *,
 .nrc-card--berlin-raceway > *,
+.nrc-card--elko-speedway > *,
 .nrc-card--lausitzring > *,
 .nrc-card--hidden-valley-raceway > *,
 .nrc-card--sepang > *,
@@ -7619,6 +7766,7 @@ tr.table-separator-row td {
 .nrc-card--road-america:hover::before,
 .nrc-card--white-mountain-motorsports-park:hover::before,
 .nrc-card--berlin-raceway:hover::before,
+.nrc-card--elko-speedway:hover::before,
 .nrc-card--lausitzring:hover::before,
 .nrc-card--hidden-valley-raceway:hover::before,
 .nrc-card--sepang:hover::before,

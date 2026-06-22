@@ -198,11 +198,12 @@
           var dateDisplay = (dateStr && endStr && dateStr !== endStr && formatDateRangeLong)
             ? formatDateRangeLong(e.start_date, e.end_date)
             : formatShortDate(dateStr);
-          var name = e.name || '—';
+          var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
           // Always strip title sponsor "Java House" from event name,
           // so UI shows just "Grand Prix of Arlington".
           if (name && name.indexOf('Java House') === 0) {
             name = name.replace(/^Java House\s+/i, '');
+            name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(Object.assign({}, e, { name: name }));
           }
           var eventSlug = (e.id || '').toLowerCase().replace(/_+/g, '-');
           var seriesSlug = (e._seriesId || e.series_id || '').toLowerCase().replace(/_+/g, '-');
@@ -302,6 +303,9 @@
           if (trackKey.indexOf('laguna seca') >= 0 || trackKey.indexOf('weathertech raceway') >= 0 || trackKey.indexOf('monterey') >= 0) {
             extraClass += ' nrc-card--laguna-seca';
           }
+          if (trackKey.indexOf('sonoma raceway') >= 0 || (trackKey.indexOf('sonoma') >= 0 && trackKey.indexOf('california') >= 0)) {
+            extraClass += ' nrc-card--sonoma-raceway';
+          }
           if (trackKey.indexOf('misano world circuit') >= 0 || trackKey.indexOf('circuit marco simoncelli') >= 0) {
             extraClass += ' nrc-card--misano';
           }
@@ -387,6 +391,9 @@
           if (trackKey.indexOf('berlin raceway') >= 0) {
             extraClass += ' nrc-card--berlin-raceway';
           }
+          if (trackKey.indexOf('elko speedway') >= 0 || (trackKey.indexOf('elko') >= 0 && trackKey.indexOf('minnesota') >= 0)) {
+            extraClass += ' nrc-card--elko-speedway';
+          }
           if (trackKey.indexOf('lausitzring') >= 0 || trackKey.indexOf('lausitz') >= 0) {
             extraClass += ' nrc-card--lausitzring';
           }
@@ -443,6 +450,9 @@
           }
           if (eventNameLc.indexOf('laguna seca') >= 0 || eventNameLc.indexOf('weathertech raceway') >= 0 || eventNameLc.indexOf('monterey') >= 0) {
             extraClass += ' nrc-card--laguna-seca';
+          }
+          if (eventNameLc.indexOf('sonoma raceway') >= 0 || eventNameLc.indexOf('save mart 350') >= 0 || eventNameLc.indexOf('toyota/save mart') >= 0) {
+            extraClass += ' nrc-card--sonoma-raceway';
           }
           if (eventNameLc.indexOf('misano') >= 0 && (
             eventNameLc.indexOf('marco simoncelli') >= 0 ||
@@ -537,6 +547,9 @@
           if (eventNameLc.indexOf('berlin raceway') >= 0) {
             extraClass += ' nrc-card--berlin-raceway';
           }
+          if (eventNameLc.indexOf('elko speedway') >= 0 || eventNameLc.indexOf('shore lunch') >= 0) {
+            extraClass += ' nrc-card--elko-speedway';
+          }
           if (eventNameLc.indexOf('lausitzring') >= 0 || eventNameLc.indexOf('lausitz') >= 0) {
             extraClass += ' nrc-card--lausitzring';
           }
@@ -599,6 +612,10 @@
               extraClass += ' nrc-card--montreal';
             } else if (eventSlug.indexOf('laguna-seca') >= 0 || eventSlug.indexOf('laguna_seca') >= 0 || eventSlug.indexOf('monterey') >= 0) {
               extraClass += ' nrc-card--laguna-seca';
+            } else if (eventSlug.indexOf('sonoma') >= 0 || eventSlug === 'nascar-cup-2026-18') {
+              extraClass += ' nrc-card--sonoma-raceway';
+            } else if (eventSlug.indexOf('elko') >= 0 || eventSlug === 'arca-2026-10') {
+              extraClass += ' nrc-card--elko-speedway';
             } else if (
               eventSlug === 'gtwce-sprint-2026-2' ||
               eventSlug === 'f4-it-2026-1' ||
@@ -683,7 +700,7 @@
             '<a href="' + href + '" class="nrc-card nrc-card-enter' + extraClass + '" style="animation-delay: ' + delayMs + 'ms">' +
               '<div class="nrc-top">' + seriesBadge(e._seriesId || e.series_id || '') +
                 '<span class="nrc-date">' + esc(dateDisplay) + '</span>' +
-                '<span class="nrc-live" data-nrc-live="' + idx + '" aria-hidden="true">LIVE</span>' +
+                '<span class="nrc-live" data-nrc-live="' + idx + '" aria-hidden="true">' + esc((window.TGA.t && window.TGA.t('live.badge')) || 'LIVE') + '</span>' +
               '</div>' +
               '<div class="nrc-name">' + esc(name) + '</div>' +
               '<div class="nrc-timer" data-nrc="' + idx + '">—</div>' +
@@ -747,7 +764,7 @@
             }
           }
           if (isLive) {
-            c.el.textContent = 'LIVE';
+            c.el.textContent = (window.TGA.t && window.TGA.t('live.badge')) || 'LIVE';
             return;
           }
           var diff = startTs - now2;

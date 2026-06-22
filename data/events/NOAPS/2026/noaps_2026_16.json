@@ -21,6 +21,7 @@
     "Average speed": "132.452 miles per hour (213.161 km/h)"
   },
   "event_preview": "Nashville Superspeedway is a 1.333-mile (2.145 km) D-shaped concrete oval in Lebanon, Tennessee, featuring 14 degrees of banking in the turns. The Sports Illustrated Resorts 250 is the sixteenth race of the 2026 NASCAR O'Reilly Auto Parts Series season, run over 188 laps (250 miles) with stage breaks at laps 45 and 95. Qualifying was cancelled due to inclement weather, with the lineup set by the NASCAR Rule Book, placing Jesse Love and Austin Hill on the front row.\n\nChampionship points leader Justin Allgaier returns to Nashville as the defending winner of Saturday night's Sports Illustrated Resorts 250, with a points lead over second-place Jesse Love greater than the margin between Love and eighth place. Allgaier is a two-time Nashville winner in the O'Reilly Series and the only former winner in Saturday's field. This will mark Hendrick Motorsports' Corey Day's second Nashville start in the series. The O'Reilly Auto Parts Series returned to Nashville in 2021 after not racing there since 2011, with six runnings of the Sports Illustrated Resorts 250 scheduled through this weekend.",
+  "event_preview_ru": "Nashville Superspeedway — D-образный бетонный овал длиной 1,333 мили (2,145 км) в Lebanon, Tennessee, с уклоном 14 градусов в поворотах. Sports Illustrated Resorts 250 — шестнадцатый этап сезона NASCAR O'Reilly Auto Parts Series 2026, на 188 кругов (250 миль) со стейдж-брейками на 45-м и 95-м кругах. Квалификация отменена из-за непогоды, состав определён NASCAR Rule Book, Jesse Love и Austin Hill — в первом ряду.\n\nЛидер зачёта Justin Allgaier возвращается в Nashville действующим победителем субботнего вечернего Sports Illustrated Resorts 250 с преимуществом над вторым Jesse Love больше, чем разрыв между Love и восьмым местом. Allgaier — двукратный победитель Nashville в O'Reilly Series и единственный бывший победитель в субботнем составе. Corey Day Hendrick Motorsports проведёт второй старт серии на Nashville. O'Reilly Auto Parts Series вернулась на Nashville в 2021 после перерыва с 2011 года; к этим выходным запланировано шесть проведений Sports Illustrated Resorts 250.",
   "entry_list": [
     {
       "number": "00",
@@ -339,7 +340,7 @@
     },
     {
       "number": "92",
-      "driver": "Leland Honeyman (i)",
+      "driver": "Leland Honeyman Jr. (i)",
       "team": "DGM Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Steve Addington",
@@ -722,7 +723,7 @@
         [
           "27",
           "92",
-          "Leland Honeyman (i)",
+          "Leland Honeyman Jr. (i)",
           "DGM Racing",
           "Chevrolet",
           "31.618",
@@ -1341,7 +1342,7 @@
           "22",
           "15",
           "92",
-          "Leland Honeyman (i)",
+          "Leland Honeyman Jr. (i)",
           "DGM Racing",
           "Chevrolet",
           "187",

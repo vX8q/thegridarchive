@@ -184,6 +184,10 @@ func searchDriverSlug(name string) string {
 	if n == "" {
 		return ""
 	}
+	n = strings.TrimLeft(n, "*")
+	n = strings.TrimSpace(n)
+	n = strings.TrimRight(n, "*")
+	n = strings.TrimSpace(n)
 	lower := strings.ToLower(n)
 	for _, suf := range []string{"(i)", "(r)", "(g)"} {
 		if strings.HasSuffix(lower, suf) {

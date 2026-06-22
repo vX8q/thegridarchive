@@ -57,11 +57,11 @@
     },
     {
       "number": "5",
-      "driver": "Teddy Hodgdon",
+      "driver": "Teddy Hodgdon IV",
       "team": "Teddy Hodgdon Racing",
       "manufacturer": "LFR",
       "crew_chief": "Ted Hodgdon",
-      "driver_slug": "teddy-hodgdon"
+      "driver_slug": "teddy-hodgdon-iv"
     },
     {
       "number": "7",
@@ -145,7 +145,7 @@
     },
     {
       "number": "31",
-      "driver": "Mike Christopher Jr.",
+      "driver": "Michael Christopher Jr.",
       "team": "Elite Racing",
       "manufacturer": "LFR",
       "crew_chief": "Eugene Orlando",
@@ -554,7 +554,7 @@
         [
           "3",
           "31",
-          "Mike Christopher Jr.",
+          "Michael Christopher Jr.",
           "Elite Racing",
           "LFR",
           "18.101",
@@ -710,7 +710,7 @@
         [
           "16",
           "5",
-          "Teddy Hodgdon",
+          "Teddy Hodgdon IV",
           "Teddy Hodgdon Racing",
           "LFR",
           "18.234",
@@ -1050,7 +1050,7 @@
         [
           "6",
           "5",
-          "Teddy Hodgdon",
+          "Teddy Hodgdon IV",
           "Teddy Hodgdon Racing",
           "LFR",
           "18.021",
@@ -1098,7 +1098,7 @@
         [
           "10",
           "31",
-          "Mike Christopher Jr.",
+          "Michael Christopher Jr.",
           "Elite Racing",
           "LFR",
           "18.067",
@@ -1501,7 +1501,7 @@
         [
           "7",
           "31",
-          "Mike Christopher Jr.",
+          "Michael Christopher Jr.",
           "Elite Racing",
           "LFR",
           "17.951",
@@ -1600,7 +1600,7 @@
         [
           "18",
           "5",
-          "Teddy Hodgdon",
+          "Teddy Hodgdon IV",
           "Teddy Hodgdon Racing",
           "LFR",
           "18.073",
@@ -1963,7 +1963,7 @@
           "11",
           "18",
           "5",
-          "Teddy Hodgdon",
+          "Teddy Hodgdon IV",
           "Teddy Hodgdon Racing",
           "LFR",
           "203",
@@ -2059,7 +2059,7 @@
           "19",
           "7",
           "31",
-          "Mike Christopher Jr.",
+          "Michael Christopher Jr.",
           "Elite Racing",
           "LFR",
           "203",
@@ -2227,5 +2227,6 @@
     }
   },
   "event_preview": "The New Smyrna Speedway is a high-banked, half-mile oval racetrack located near New Smyrna Beach, Florida. The 0.500-mile (0.805 km) asphalt surface features four turns with 23-degree banking, making it one of the faster short tracks in the United States. The straightaways are relatively flat compared to the corners, while the turns' steep banking helps maintain speed through each lap and promotes close, competitive racing.",
+  "event_preview_ru": "New Smyrna Speedway — высокобанковый полумильный овал, расположенный недалеко от New Smyrna Beach, Florida. Асфальтовая трасса длиной 0,500 мили (0,805 км) имеет четыре поворота с уклоном 23°, что делает её одной из быстрейших коротких трасс в Соединённых Штатах. Прямые относительно плоские по сравнению с поворотами, а крутой уклон в виражах помогает сохранять скорость на каждом круге и способствует плотной конкурентной борьбе.",
   "youtube_id": "A3cH4JyaCDE"
 }

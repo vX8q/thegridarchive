@@ -49,6 +49,15 @@ func TestSearchDriverSlug_stripsGuestMarker(t *testing.T) {
 	}
 }
 
+func TestSearchDriverSlug_stripsProvisionalMarker(t *testing.T) {
+	if got := searchDriverSlug("Teddy Hodgdon *"); got != "teddy-hodgdon" {
+		t.Fatalf("searchDriverSlug = %q, want teddy-hodgdon", got)
+	}
+	if got := searchDriverSlug("* Casey Mears"); got != "casey-mears" {
+		t.Fatalf("searchDriverSlug = %q, want casey-mears", got)
+	}
+}
+
 func TestDriverMatchKey_stripsGuestMarker(t *testing.T) {
 	a := DriverMatchKey("Taichi Watarai")
 	b := DriverMatchKey("Taichi Watarai (G)")

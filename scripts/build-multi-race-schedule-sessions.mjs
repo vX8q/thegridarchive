@@ -166,12 +166,12 @@ const f4FourRace = {
 Object.assign(sessions, f4FourRace);
 
 function f4Three(start, end) {
-  const sat = isoAddDays(start, 1);
-  const sun = end || isoAddDays(start, 2);
+  const day1 = start;
+  const day2 = end && end !== start ? end : isoAddDays(start, 1);
   return [
-    sess('Race 1', sat, '12:30'),
-    sess('Race 2', sat, '18:15'),
-    sess('Race 3', sun, '09:30'),
+    sess('Race 1', day1, '09:30'),
+    sess('Race 2', day2, '12:30'),
+    sess('Race 3', day2, '18:15'),
   ];
 }
 const f4Sched = JSON.parse(fs.readFileSync(path.join(root, 'data/schedules/f4_it.json'), 'utf8'));

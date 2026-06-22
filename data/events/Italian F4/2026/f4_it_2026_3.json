@@ -1,0 +1,85 @@
+{
+  "event_id": "F4_IT_2026_3",
+  "series": "Italian F4 Championship",
+  "race": "Monza",
+  "date": "20–21 June 2026",
+  "start_date": "2026-06-20",
+  "end_date": "2026-06-21",
+  "track": "Autodromo Nazionale di Monza",
+  "location": "Monza",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "race": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Race 1",
+          "headers": [
+            "Fin / ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time/Retired",
+            "Pts"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Race 2",
+          "headers": [
+            "Fin / ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time/Retired",
+            "Pts"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Race 3",
+          "headers": [
+            "Fin / ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time/Retired",
+            "Pts"
+          ],
+          "rows": []
+        }
+      ]
+    }
+  }
+}

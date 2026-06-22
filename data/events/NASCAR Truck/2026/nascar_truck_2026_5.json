@@ -239,7 +239,7 @@
     },
     {
       "number": "62",
-      "driver": "Mike Christopher Jr.",
+      "driver": "Michael Christopher Jr.",
       "team": "Halmar Friesen Racing",
       "manufacturer": "Toyota",
       "crew_chief": "James Villeneuve",
@@ -723,7 +723,7 @@
         [
           "30",
           "62",
-          "Mike Christopher Jr.",
+          "Michael Christopher Jr.",
           "Halmar Friesen Racing",
           "Toyota",
           "23.569",
@@ -1114,7 +1114,7 @@
         [
           "30",
           "62",
-          "Mike Christopher Jr.",
+          "Michael Christopher Jr.",
           "Halmar Friesen Racing",
           "Toyota",
           "22.844",
@@ -1762,7 +1762,7 @@
           "23",
           "30",
           "62",
-          "Mike Christopher Jr.",
+          "Michael Christopher Jr.",
           "Halmar Friesen Racing",
           "Toyota",
           "197",
@@ -1929,5 +1929,6 @@
       ]
     }
   },
-  "event_preview": "Rockingham Speedway is a 0.940-mile (1.513 km) D-shaped oval in Rockingham, North Carolina, featuring 22–25 degrees of banking in the turns and 8 degrees on the straights. Opened in 1965, it hosted NASCAR Cup Series racing from its inaugural season through 2004 before falling dormant for most of the following decade. The track was repaved in 2022 and NASCAR returned in 2025, with the Craftsman Truck Series making its first appearance there since 2013. The Black's Tire 200 is the fifth race of the 2026 NASCAR Craftsman Truck Series season and just the fourth Truck Series event in track history. The all-time qualifying lap record belongs to Jake Garcia, who turned a 22.050-second lap (153.469 mph) in April 2025. The fastest lap in race conditions also belongs to Garcia - a 23.00-second effort from that same 2025 race, set en route to a second-place finish behind Tyler Ankrum."
+  "event_preview": "Rockingham Speedway is a 0.940-mile (1.513 km) D-shaped oval in Rockingham, North Carolina, featuring 22–25 degrees of banking in the turns and 8 degrees on the straights. Opened in 1965, it hosted NASCAR Cup Series racing from its inaugural season through 2004 before falling dormant for most of the following decade. The track was repaved in 2022 and NASCAR returned in 2025, with the Craftsman Truck Series making its first appearance there since 2013. The Black's Tire 200 is the fifth race of the 2026 NASCAR Craftsman Truck Series season and just the fourth Truck Series event in track history. The all-time qualifying lap record belongs to Jake Garcia, who turned a 22.050-second lap (153.469 mph) in April 2025. The fastest lap in race conditions also belongs to Garcia - a 23.00-second effort from that same 2025 race, set en route to a second-place finish behind Tyler Ankrum.",
+  "event_preview_ru": "Rockingham Speedway — D-образный овал длиной 0,940 мили (1,513 км) в Rockingham, North Carolina, с уклоном 22–25 градусов в поворотах и 8 градусов на прямых. Открытая в 1965 году, принимала NASCAR Cup Series с первого сезона до 2004 года, затем большую часть следующего десятилетия простаивала. Трасса была реконструирована в 2022 году, NASCAR вернулась в 2025, Craftsman Truck Series впервые с 2013 года. Black's Tire 200 — пятый этап сезона NASCAR Craftsman Truck Series 2026 и лишь четвёртое событие Truck Series в истории трассы. Абсолютный квалификационный рекорд круга принадлежит Jake Garcia — 22,050 секунды (153,469 mph) в апреле 2025. Самый быстрый круг в гонке тоже у Garcia — 23,00 секунды в той же гонке 2025 года на пути ко второму месту за Tyler Ankrum."
 }

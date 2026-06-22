@@ -266,8 +266,10 @@
       return name ? '<a href="/team/' + encodeURIComponent(slugify(name)) + '" class="track-link">' + esc(name) + '</a>' : '—';
     }
     function driverLink(name) {
+      if (window.TGA && window.TGA.driverLinkHtml) return window.TGA.driverLinkHtml(name);
       var display = driverDisplayName(name);
-      return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>' : '—';
+      var label = (window.TGA && window.TGA.driverLabel) ? window.TGA.driverLabel(name) : display;
+      return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(label) + '</a>' : '—';
     }
     var len = teamsArr.length;
     var rows = [];
@@ -321,8 +323,10 @@
       return name ? '<a href="/team/' + encodeURIComponent(slugify(name)) + '" class="track-link">' + esc(name) + '</a>' : '—';
     }
     function driverLink(name) {
+      if (window.TGA && window.TGA.driverLinkHtml) return window.TGA.driverLinkHtml(name);
       var display = driverDisplayName(name);
-      return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>' : '—';
+      var label = (window.TGA && window.TGA.driverLabel) ? window.TGA.driverLabel(name) : display;
+      return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(label) + '</a>' : '—';
     }
     var len = teamsArr.length;
     var rows = [];

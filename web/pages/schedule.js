@@ -450,7 +450,7 @@ function renderSchedulePage() {
     if (!showView || !t || !API) return;
   showView('view-schedule');
   window.scrollTo(0, 0);
-  document.title = t('home.full_schedule') + ' — TGA';
+  document.title = (window.TGA.documentTitle || function (m) { return m + ' — TGA'; })(t('home.full_schedule'));
 
   var titleEl = document.getElementById('sched-page-title');
   var breadEl = document.getElementById('sched-page-breadcrumb');
@@ -471,7 +471,7 @@ function renderSchedulePage() {
     var map = {
       series: t('home.series_col'),
       race: t('th.race_col'),
-      date: 'Date',
+      date: t('th.date'),
       location: t('th.location'),
       time: t('th.time')
     };
@@ -508,6 +508,7 @@ function renderSchedulePage() {
     .catch(function () {
       if (body) body.innerHTML = '<tr><td colspan="5">' + t('error.no_data') + '</td></tr>';
     });
+  if (typeof window.TGA.translateStaticUI === 'function') window.TGA.translateStaticUI();
 }
 
   window.TGA.formatDateRangeLong = formatDateRangeLong;

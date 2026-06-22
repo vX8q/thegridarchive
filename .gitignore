@@ -75,3 +75,8 @@ node_modules/
 * (1).jpg
 * (1).jpeg
 * (1).png
+# Local i18n working exports (canonical: web/utils/*-ru.js, event JSON)
+data/driver-names-full-en.txt
+data/driver-names-full-ru-dict.txt
+data/event_previews_ru.json
+data/event_previews_ru/

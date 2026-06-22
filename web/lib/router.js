@@ -36,7 +36,7 @@
         return;
       }
       state.loadedSeriesId = null;
-      document.title = 'The Grid Archive (TGA) — 2026';
+      document.title = (window.TGA.t && window.TGA.t('app.title_year')) || 'The Grid Archive (TGA) — 2026';
       showView('view-list');
       renderHomeRaceFeed();
       renderList(seriesList);
@@ -44,7 +44,9 @@
     }
     if (path === '/live') {
       state.loadedSeriesId = null;
-      document.title = 'Live debug — The Grid Archive (TGA)';
+      document.title = (window.TGA.documentTitle || function (m) { return m + ' — The Grid Archive (TGA)'; })(
+        (window.TGA.t && window.TGA.t('live.debug_title')) || 'Live debug'
+      );
       showView('view-list');
       renderLiveDebugPage();
       return;

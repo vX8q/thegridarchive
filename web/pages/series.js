@@ -18,6 +18,7 @@
   var localizeStatKey = P.localizeStatKey;
   var localizeStatValue = P.localizeStatValue;
   var localizeSpecKey = P.localizeSpecKey;
+  var localizeSpecSection = P.localizeSpecSection;
   var localizeSpecValue = P.localizeSpecValue;
   var normalizeSpecKey = P.normalizeSpecKey;
   var specKeySkip = P.specKeySkip;
@@ -29,6 +30,16 @@
   var localizeDate = P.localizeDate;
   var localizeDistance = P.localizeDistance;
   var localizeEventPreview = P.localizeEventPreview;
+  var localizeEventName = P.localizeEventName;
+  var localizeEventFromData = P.localizeEventFromData;
+  var localizeRacingClass = P.localizeRacingClass;
+  var localizeImsaScheduleLength = P.localizeImsaScheduleLength || function (v) { return v; };
+  var localizeImsaScheduleClasses = P.localizeImsaScheduleClasses || function (v) { return v; };
+  var teamLabel = P.teamLabel;
+  var documentTitle = P.documentTitle;
+  var localizeCircuitName = P.localizeCircuitName;
+  var localizeVenueLine = P.localizeVenueLine;
+  var localizeLocation = P.localizeLocation;
   var trimTrailingZeros = P.trimTrailingZeros;
   var countryHtml = P.countryHtml;
   var seriesBadge = P.seriesBadge;
@@ -266,12 +277,17 @@ function renderDetail(seriesId, subPath) {
   var hasStats = isStockCarSeries || isIndyCarSeries || isSupercarsSeries || isF1;
 
   function teamLink(name) {
-    return name ? '<a href="/team/' + encodeURIComponent(slugify(name)) + '" class="track-link">' + esc(name) + '</a>' : '—';
+    if (!name) return '—';
+    var raw = String(name).trim();
+    if (!raw) return '—';
+    var label = teamLabel ? teamLabel(raw) : raw;
+    return '<a href="/team/' + encodeURIComponent(slugify(raw)) + '" class="track-link">' + esc(label) + '</a>';
   }
   function driverLink(name) {
-    if (window.TGA && window.TGA.driversCellHtml) return window.TGA.driversCellHtml(name);
+    if (window.TGA && window.TGA.driverLinkHtml) return window.TGA.driverLinkHtml(name);
     var display = driverDisplayName(name);
-    return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(display) + '</a>' : '—';
+    var label = (window.TGA && window.TGA.driverLabel) ? window.TGA.driverLabel(name) : display;
+    return display ? '<a href="/driver/' + encodeURIComponent(slugify(display)) + '" class="track-link">' + esc(label) + '</a>' : '—';
   }
 
   // Special labels for some series
@@ -279,7 +295,7 @@ function renderDetail(seriesId, subPath) {
   if (teamsHeaderEl) {
     var sidLower = (seriesId || '').toLowerCase();
     if (sidLower === 'supercars') {
-      teamsHeaderEl.textContent = 'Championship entries';
+      teamsHeaderEl.textContent = t('teams.championship_entries');
     } else if (sidLower === 'imsa') {
       teamsHeaderEl.textContent = t('nav.classes');
     } else {
@@ -316,6 +332,7 @@ function renderDetail(seriesId, subPath) {
       if (subPath === 'classes') {
         if (carSpecSame) carSpecSame.classList.add('hidden');
         if (imsaClassesSame) imsaClassesSame.classList.remove('hidden');
+        if (typeof renderImsaClassesSpecIfNeeded === 'function') renderImsaClassesSpecIfNeeded();
       } else {
         if (imsaClassesSame) imsaClassesSame.classList.add('hidden');
         if (carSpecSame) carSpecSame.classList.remove('hidden');
@@ -347,8 +364,8 @@ function renderDetail(seriesId, subPath) {
     var seasonYear = seriesIdLower.replace(/^f1[-_]/, '') || seriesIdLower.slice(4);
     var seasonTitle = 'Formula 1 ' + seasonYear;
     detailTitle.textContent = seasonTitle;
-    detailMeta.textContent = 'World';
-    document.title = seasonTitle + ' — The Grid Archive (TGA)';
+    detailMeta.textContent = t('series.world');
+    document.title = documentTitle(seasonTitle);
     detailBreadcrumb.innerHTML =
       '<a href="/">' + esc(t('breadcrumb.all')) + '</a>' +
       '<span class="breadcrumb-sep">/</span>' +
@@ -384,6 +401,7 @@ function renderDetail(seriesId, subPath) {
     if (subPath === 'classes') {
       if (carSpecBlock) carSpecBlock.classList.add('hidden');
       if (imsaClassesBlock) imsaClassesBlock.classList.remove('hidden');
+      if (typeof renderImsaClassesSpecIfNeeded === 'function') renderImsaClassesSpecIfNeeded();
     } else {
       if (imsaClassesBlock) imsaClassesBlock.classList.add('hidden');
     }
@@ -425,7 +443,7 @@ function renderDetail(seriesId, subPath) {
       state.loadedSeriesId = seriesId;
       if (!isF1SeasonSlug) {
         detailTitle.textContent = s.name;
-        document.title = s.name + ' — The Grid Archive (TGA)';
+        document.title = documentTitle(s.name);
         var metaText = esc(s.season) + ' · ' + countryHtml((seriesId || '').toLowerCase() === 'psc' ? 'Europe' : s.country);
         detailMeta.textContent = metaText;
         detailBreadcrumb.textContent = '';
@@ -438,7 +456,7 @@ function renderDetail(seriesId, subPath) {
       adjustDetailPanelPadding();
     })
     .catch(function () {
-      if (!isF1SeasonSlug) detailTitle.textContent = 'Series not found';
+      if (!isF1SeasonSlug) detailTitle.textContent = t('error.series_not_found');
       adjustDetailPanelPadding();
     });
 
@@ -631,7 +649,7 @@ function renderDetail(seriesId, subPath) {
           techSpecWrapIndy.innerHTML =
             '<table class="data-table"><thead><tr><th>' + t('th.field') + '</th><th>' + t('th.value') + '</th></tr></thead><tbody>' +
             indySpec.map(function (s) {
-              return '<tr><td class="col-field">' + esc(dash(s.key)) + '</td><td>' + esc(dash(s.value)) + '</td></tr>';
+              return '<tr><td class="col-field">' + esc(dash(localizeSpecKey(s.key))) + '</td><td>' + esc(dash(localizeSpecValue(s.value))) + '</td></tr>';
             }).join('') +
             '</tbody></table>';
         }
@@ -762,9 +780,9 @@ function renderDetail(seriesId, subPath) {
           '<thead><tr>' +
             '<th>#</th>' +
             '<th>' + esc(t('th.team')) + '</th>' +
-            '<th>Constructor</th>' +
-            '<th>Chassis</th>' +
-            '<th>Power unit</th>' +
+            '<th>' + esc(t('th.constructor')) + '</th>' +
+            '<th>' + esc(t('th.chassis')) + '</th>' +
+            '<th>' + esc(t('th.power_unit')) + '</th>' +
             '<th>' + esc(t('th.no')) + '</th>' +
             '<th>' + esc(t('th.driver')) + '</th>' +
             '<th>' + esc(t('th.rounds')) + '</th>' +
@@ -1059,7 +1077,7 @@ function renderDetail(seriesId, subPath) {
             + '</div>';
         }).join('');
 
-        tableWrapImsa.innerHTML = sectionsHtml || '<p class="empty-msg">No IMSA teams data.</p>';
+        tableWrapImsa.innerHTML = sectionsHtml || '<p class="empty-msg">' + t('error.no_imsa_teams') + '</p>';
         if (sectionsHtml) {
           var tablesImsa = tableWrapImsa.querySelectorAll('.imsa-teams-table');
           [].forEach.call(tablesImsa, function (tbl, idx) {
@@ -1120,7 +1138,7 @@ function renderDetail(seriesId, subPath) {
         tableWrap.innerHTML =
           '<table class="data-table indycar-teams-table">' +
           '<thead><tr>' +
-          '<th>Team</th><th>Engine</th><th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.rounds') + '</th>' +
+          '<th>' + t('th.team') + '</th><th>' + t('th.engine') + '</th><th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.rounds') + '</th>' +
           '</tr></thead><tbody>' + indyRows.join('') + '</tbody></table>';
         return;
       }
@@ -1225,7 +1243,7 @@ function renderDetail(seriesId, subPath) {
         }
 
         var frecTable = '<table class="data-table frec-teams-table" id="teams-table">' +
-          '<thead><tr><th>Team</th><th>No.</th><th>Driver</th><th>' + t('th.rounds') + '</th></tr></thead>' +
+          '<thead><tr><th>' + t('th.team') + '</th><th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.rounds') + '</th></tr></thead>' +
           '<tbody>' + buildFrecTeamsBody(teams) + '</tbody></table>';
         tableWrapFrec.innerHTML = frecTable;
 
@@ -1392,7 +1410,7 @@ function renderDetail(seriesId, subPath) {
           return '<tr>' +
             '<td>' + teamLink(tm.team) + '</td>' +
             '<td>' + esc(dash(dtmCarValue(tm))) + '</td>' +
-            '<td>' + esc(dash(tm.power_unit)) + '</td>' +
+            '<td>' + esc(dash(localizeSpecValue(tm.power_unit))) + '</td>' +
             '<td class="col-num">' + esc(dash(tm.number)) + '</td>' +
             '<td>' + driverLink(tm.driver) + '</td>' +
             '<td>' + esc(dash(tm.rounds)) + '</td>' +
@@ -1401,7 +1419,7 @@ function renderDetail(seriesId, subPath) {
 
         var dtmTable = '<table class="data-table dtm-teams-table" id="teams-table">' +
           '<thead><tr>' +
-          '<th>Team</th><th>Car</th><th>Engine</th><th>No.</th><th>Driver</th><th>' + t('th.rounds') + '</th>' +
+          '<th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.engine') + '</th><th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.rounds') + '</th>' +
           '</tr></thead>' +
           '<tbody>' + buildDtmTeamsBody(teams) + '</tbody></table>';
         tableWrapDtm.innerHTML = dtmTable;
@@ -1543,7 +1561,7 @@ function renderDetail(seriesId, subPath) {
                 '<td>' + teamLink(w.team || '') + '</td>' +
                 '<td class="col-num">' + esc(dash(w.number)) + '</td>' +
                 '<td>' + driverLink(w.driver || '') + '</td>' +
-                '<td>' + esc(dash(w.rounds || 'TBD')) + '</td>' +
+                '<td>' + esc(dash(w.rounds)) + '</td>' +
                 '<td class="supercars-col-divider"></td>' +
                 '<td>' + (w.co_driver ? driverLink(w.co_driver) : '—') + '</td>' +
                 '<td>' + esc(dash(w.co_rounds || '—')) + '</td>' +
@@ -1576,7 +1594,7 @@ function renderDetail(seriesId, subPath) {
         if (wrapF1) {
           wrapF1.classList.remove('hidden');
           wrapF1.innerHTML = '<table class="data-table f1-teams-table" id="teams-table">' +
-            '<thead><tr><th>#</th><th>Team</th><th>Constructor</th><th>Chassis</th><th>Engine</th><th data-i18n="th.no">No.</th><th data-i18n="th.driver">Driver</th><th data-i18n="th.rounds">Rounds</th></tr></thead>' +
+            '<thead><tr><th>#</th><th>' + t('th.team') + '</th><th>' + t('th.constructor') + '</th><th>' + t('th.chassis') + '</th><th>' + t('th.engine') + '</th><th data-i18n="th.no">' + t('th.no') + '</th><th data-i18n="th.driver">' + t('th.driver') + '</th><th data-i18n="th.rounds">' + t('th.rounds') + '</th></tr></thead>' +
             '<tbody>' + buildF1TeamsBody(teams) + '</tbody></table>';
           addObjectTableSort(
             wrapF1.querySelector('.data-table'),
@@ -1673,7 +1691,7 @@ function renderDetail(seriesId, subPath) {
           var lmgt3Teams = teams.filter(function (tm) { return String(tm.class || '').trim() === 'LMGT3'; });
           var lmp2Teams = teams.filter(function (tm) { return String(tm.class || '').trim() === 'LMP2'; });
           function wecTableBlock(title, teamList) {
-            return '<h4 class="table-section-title">' + esc(title) + '</h4>' +
+            return '<h4 class="table-section-title">' + esc(localizeRacingClass(title)) + '</h4>' +
               '<div class="table-wrap">' +
               '<table class="data-table gt-endurance-teams-table">' +
               gtTheadNoClass +
@@ -1841,7 +1859,7 @@ function renderDetail(seriesId, subPath) {
             var wrapF1 = document.getElementById('teams-table-wrap');
             if (wrapF1) {
               wrapF1.innerHTML = '<table class="data-table f1-teams-table" id="teams-table">' +
-                '<thead><tr><th>#</th><th>Team</th><th>Constructor</th><th>Chassis</th><th>Engine</th><th data-i18n="th.no">No.</th><th data-i18n="th.driver">Driver</th></tr></thead>' +
+                '<thead><tr><th>#</th><th>' + t('th.team') + '</th><th>' + t('th.constructor') + '</th><th>' + t('th.chassis') + '</th><th>' + t('th.engine') + '</th><th data-i18n="th.no">' + t('th.no') + '</th><th data-i18n="th.driver">' + t('th.driver') + '</th></tr></thead>' +
                 '<tbody>' + buildF1TeamsBody(teams) + '</tbody></table>';
               addObjectTableSort(wrapF1.querySelector('.data-table'), teams, null, [null, 'team', 'manufacturer', 'chassis', 'power_unit', 'number', 'driver'], function (dataCopy) { return buildF1TeamsBody(dataCopy); });
             }
@@ -1871,7 +1889,7 @@ function renderDetail(seriesId, subPath) {
         var specsPanelStatic = document.getElementById('specs-panel');
         if (specsPanelStatic) {
           var specsTitleStatic = specsPanelStatic.querySelector('h3[data-i18n="section.h3.specs"]');
-          if (specsTitleStatic) specsTitleStatic.textContent = 'Technical regulations 2026';
+          if (specsTitleStatic) specsTitleStatic.textContent = t('specs.tech_regulations_2026');
         }
         var techSpecTitleStatic = carWrap.querySelector('h4[data-i18n="specs.tech_spec"]');
         if (techSpecTitleStatic) techSpecTitleStatic.classList.add('hidden');
@@ -1901,7 +1919,7 @@ function renderDetail(seriesId, subPath) {
               : esc(dash(val));
             return '<tr><td class="col-field">' + esc(dash(key)) + '</td><td class="col-spec-value">' + cellVal + '</td></tr>';
           }).join('');
-          return '<h4 class="table-section-title">' + esc(sec.title) + '</h4>' +
+          return '<h4 class="table-section-title">' + esc(localizeSpecSection(sec.title)) + '</h4>' +
                  '<div class="table-wrap tech-spec-section-table">' +
                    '<table class="data-table table-field-value"><tbody>' + body + '</tbody></table>' +
                  '</div>';
@@ -1964,7 +1982,7 @@ function renderDetail(seriesId, subPath) {
         if (techSpecWrap) {
           function specCellVal(s, val) {
             if (s.key && s.key.toLowerCase().trim() === 'power output') {
-              return esc(dash(val)) + '<br>' + esc('750 hp at tracks under 1.5 miles and road courses.');
+              return esc(dash(val)) + '<br>' + esc(localizeSpecValue('750 hp at tracks under 1.5 miles and road courses.'));
             }
             return (val || '').indexOf('\n') >= 0
               ? (val || '').split('\n').map(function (p) { return esc(p); }).join('<br>')
@@ -2008,7 +2026,7 @@ function renderDetail(seriesId, subPath) {
         var specRowsForSort = hasSpecSections ? specRows.filter(function (s) { return (s.key || '') !== '__SECTION__'; }) : specRows;
         if (specTbl && specRowsForSort.length > 0 && !hasSpecSections) makeTableSortable(specTbl, specRowsForSort.map(function (s) {
           var val = localizeSpecValue(s.value);
-          if (s.key && s.key.toLowerCase().trim() === 'power output') val += '\n750 hp at tracks under 1.5 miles and road courses.';
+          if (s.key && s.key.toLowerCase().trim() === 'power output') val += '\n' + localizeSpecValue('750 hp at tracks under 1.5 miles and road courses.');
           return [localizeSpecKey(s.key), val];
         }), esc);
         if (hasSpecSections && techSpecWrap) {
@@ -2019,7 +2037,7 @@ function renderDetail(seriesId, subPath) {
             var rowsSlice = specRowsForSort.slice(start, start + (sections[idx] ? sections[idx].rows.length : 0));
             if (tbl && rowsSlice.length > 0) makeTableSortable(tbl, rowsSlice.map(function (s) {
               var val = localizeSpecValue(s.value);
-              if (s.key && s.key.toLowerCase().trim() === 'power output') val += '\n750 hp at tracks under 1.5 miles and road courses.';
+              if (s.key && s.key.toLowerCase().trim() === 'power output') val += '\n' + localizeSpecValue('750 hp at tracks under 1.5 miles and road courses.');
               return [localizeSpecKey(s.key), val];
             }), esc);
           });
@@ -2036,7 +2054,7 @@ function renderDetail(seriesId, subPath) {
           var scSpec = window.tgaSeries && window.tgaSeries.supercars;
           var scEngines = scSpec && scSpec.engines ? scSpec.engines : [];
           if (scEngines.length > 0 && enginesWrap) {
-            var enginesTableHtml = '<div class="table-wrap"><table class="data-table"><thead><tr><th>Car model</th><th>Engine specification</th></tr></thead><tbody>' +
+            var enginesTableHtml = '<div class="table-wrap"><table class="data-table"><thead><tr><th>' + t('specs.car_model') + '</th><th>' + t('specs.engine_spec') + '</th></tr></thead><tbody>' +
               scEngines.map(function (e) {
                 return '<tr><td>' + esc(dash(e.model)) + '</td><td>' + esc(dash(e.spec)) + '</td></tr>';
               }).join('') +
@@ -2054,7 +2072,7 @@ function renderDetail(seriesId, subPath) {
           if (homologationTitle) homologationTitle.classList.add('hidden');
           var scHomolog = scSpec && scSpec.homologation ? scSpec.homologation : [];
           if (scHomolog.length > 0 && homologationWrap) {
-            var homologTableHtml = '<div class="table-wrap"><table class="data-table"><thead><tr><th>Manufacturer</th><th>Homologating team</th></tr></thead><tbody>' +
+            var homologTableHtml = '<div class="table-wrap"><table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('specs.homologating_team') + '</th></tr></thead><tbody>' +
               scHomolog.map(function (h) {
                 return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(h.team)) + '</td></tr>';
               }).join('') +
@@ -2098,7 +2116,7 @@ function renderDetail(seriesId, subPath) {
       if (currentSeriesSlug === 'imsa') {
         var specsPanelEl = document.getElementById('specs-panel');
         var specsTitleEl = specsPanelEl && specsPanelEl.querySelector('h3[data-i18n="section.h3.specs"]');
-        if (specsTitleEl) specsTitleEl.textContent = 'Classes';
+        if (specsTitleEl) specsTitleEl.textContent = t('nav.classes');
 
         var specsSectionEl = specsPanelEl && specsPanelEl.querySelector('.specs-section');
         // If section missing yet (e.g. IMSA without car specs) — create it
@@ -2117,13 +2135,13 @@ function renderDetail(seriesId, subPath) {
             'GT Daytona (GTD)'
           ];
           var imsaHtml =
-            '<h4 class="table-section-title">Classes</h4>' +
+            '<h4 class="table-section-title">' + t('nav.classes') + '</h4>' +
             '<div class="table-wrap">' +
               '<table class="data-table">' +
-                '<thead><tr><th>Class</th></tr></thead>' +
+                '<thead><tr><th>' + t('th.class') + '</th></tr></thead>' +
                 '<tbody>' +
                   imsaClasses.map(function (name) {
-                    return '<tr><td>' + esc(name) + '</td></tr>';
+                    return '<tr><td>' + esc(localizeSpecValue(name)) + '</td></tr>';
                   }).join('') +
                 '</tbody>' +
               '</table>' +
@@ -2280,12 +2298,12 @@ function renderDetail(seriesId, subPath) {
                 if (en === prevName) {
                   colSpan++;
                 } else {
-                  if (prevName != null) eventRow += '<th class="col-race-group" colspan="' + colSpan + '">' + esc(prevName) + '</th>';
+                  if (prevName != null) eventRow += '<th class="col-race-group" colspan="' + colSpan + '">' + esc(localizeEventName(prevName)) + '</th>';
                   prevName = en;
                   colSpan = 1;
                 }
               }
-              if (prevName != null) eventRow += '<th class="col-race-group" colspan="' + colSpan + '">' + esc(prevName) + '</th>';
+              if (prevName != null) eventRow += '<th class="col-race-group" colspan="' + colSpan + '">' + esc(localizeEventName(prevName)) + '</th>';
               var topRowF1 = '<tr class="standings-header-row-top">' +
                 '<th class="col-num" rowspan="2">' + t('th.pos') + '</th>' +
                 '<th class="col-car" rowspan="2">#</th>' +
@@ -2521,7 +2539,7 @@ function renderDetail(seriesId, subPath) {
           var rowClass = (playoffCutline > 0 && posNum === playoffCutline + 1) ? ' standings-playoff-cutline' : '';
             var td = '<td class="col-num">' + posDisplay + '</td>';
             if (hasCar) td += '<td class="col-car">' + esc(dash(row.car)) + '</td>';
-            td += '<td>' + driverLink(row.driver) + '</td><td>' + esc(dash(row.team)) + '</td>';
+            td += '<td>' + driverLink(row.driver) + '</td><td>' + teamLink(row.team) + '</td>';
             if (includeManufacturer) td += '<td>' + esc(dash(row.manufacturer)) + '</td>';
           for (var j = 0; j < raceOrder.length; j++) {
               var rval = row.races && row.races[raceOrder[j]] ? String(row.races[raceOrder[j]]).trim() : '';
@@ -2629,7 +2647,7 @@ function renderDetail(seriesId, subPath) {
                   var posDisplay = (row.pos === 0 || row.pos === null || row.pos === undefined) ? '—' : row.pos;
                   var td = '<td class="col-num">' + posDisplay + '</td>';
                   if (hasCar) td += '<td class="col-car">' + esc(dash(row.car)) + '</td>';
-                  td += '<td>' + driverLink(row.driver) + '</td><td>' + esc(dash(row.team)) + '</td>';
+                  td += '<td>' + driverLink(row.driver) + '</td><td>' + teamLink(row.team) + '</td>';
                   if (includeManufacturer) td += '<td>' + esc(dash(row.manufacturer)) + '</td>';
                   for (var j = 0; j < raceOrder.length; j++) {
                     var rval = row.races && row.races[raceOrder[j]] ? String(row.races[raceOrder[j]]).trim() : '';
@@ -2648,7 +2666,7 @@ function renderDetail(seriesId, subPath) {
               }
             } else if (standingsIneligibleBody) {
               standingsIneligibleBody.innerHTML = ineligible.map(function (row) {
-                return '<tr><td>' + esc(dash(row.team)) + '</td><td>' + esc(dash(row.manufacturer)) + '</td><td>' + esc(dash(row.status)) + '</td></tr>';
+                return '<tr><td>' + teamLink(row.team) + '</td><td>' + esc(dash(row.manufacturer)) + '</td><td>' + esc(dash(row.status)) + '</td></tr>';
               }).join('');
               var ineligibleThead = document.getElementById('standings-ineligible-thead');
               if (ineligibleThead) ineligibleThead.innerHTML = '<th data-i18n="th.team">Team</th><th data-i18n="th.manufacturer">Manufacturer</th><th data-i18n="th.status">Status</th>';
@@ -2837,25 +2855,25 @@ function renderDetail(seriesId, subPath) {
           if (statsEmpty) statsEmpty.classList.add('hidden');
 
           thead.innerHTML =
-            '<th>Pos</th>' +
-            '<th>#</th>' +
-            '<th>Driver</th>' +
-            '<th>Team</th>' +
-            '<th>Starts</th>' +
-            '<th>Wins</th>' +
-            '<th>Top-2</th>' +
-            '<th>Top-3</th>' +
-            '<th>Podiums</th>' +
-            '<th>Top-5</th>' +
-            '<th>Top-10</th>' +
-            '<th>Avg. Start</th>' +
-            '<th>Avg. Qualifying</th>' +
-            '<th>Poles</th>' +
-            '<th>Avg. Finish</th>' +
-            '<th>Q2</th>' +
-            '<th>Q3</th>' +
-            '<th>Laps Led</th>' +
-            '<th>Laps Completed</th>';
+            '<th>' + t('th.pos') + '</th>' +
+            '<th>' + t('th.no') + '</th>' +
+            '<th>' + t('th.driver') + '</th>' +
+            '<th>' + t('th.team') + '</th>' +
+            '<th>' + t('stats.starts') + '</th>' +
+            '<th>' + t('standings.wins') + '</th>' +
+            '<th>' + t('stats.top2') + '</th>' +
+            '<th>' + t('stats.top3') + '</th>' +
+            '<th>' + t('stats.podiums') + '</th>' +
+            '<th>' + t('standings.top5') + '</th>' +
+            '<th>' + t('standings.top10') + '</th>' +
+            '<th>' + t('standings.avg_start') + '</th>' +
+            '<th>' + t('stats.avg_qualifying') + '</th>' +
+            '<th>' + t('standings.poles') + '</th>' +
+            '<th>' + t('standings.avg_finish') + '</th>' +
+            '<th>' + t('stats.q2') + '</th>' +
+            '<th>' + t('stats.q3') + '</th>' +
+            '<th>' + t('standings.laps_led') + '</th>' +
+            '<th>' + t('stats.laps_completed') + '</th>';
 
           var html = rows.map(function (row, idx) {
             var pos = idx + 1;
@@ -3043,7 +3061,7 @@ function renderDetail(seriesId, subPath) {
             return;
           }
 
-          var allLabel = 'All starts';
+          var allLabel = t('stats.all_starts');
 
           var optionsHtml = '<option value="0">' + allLabel + '</option>' +
             config.map(function (v) {
@@ -3173,7 +3191,7 @@ function renderDetail(seriesId, subPath) {
               ths[4].textContent = t('th.engine');
             }
             if (sidLowerStats === 'supercars' && ths.length > 10) {
-              ths[10].textContent = 'Avg. Qualifying';
+              ths[10].textContent = t('stats.avg_qualifying');
             }
             var keys = ['pos', 'car', 'driver', 'team', 'manufacturer', 'races', 'wins', 'poles', 'top5', 'top10', 'top15', 'top20', 'avg_start', 'avg_finish', 'stage_wins', 'stage_points', 'avg_stage_points', 'laps_led', 'laps_completed_pct', 'pos_diff'];
             function isNumericKey(k) {
@@ -3311,7 +3329,7 @@ function renderDetail(seriesId, subPath) {
               // For Supercars Avg. Start column is actually Avg. Qualifying.
               var sidLowerTeam = (seriesId || '').toLowerCase();
               if (sidLowerTeam === 'supercars' && teamThs.length > 7) {
-                teamThs[7].textContent = 'Avg. Qualifying';
+                teamThs[7].textContent = t('stats.avg_qualifying');
               }
               function isTeamNumeric(k) {
                 return ['pos', 'races', 'wins', 'poles', 'top5', 'top10', 'top15', 'top20', 'avg_start', 'avg_finish', 'stage_wins', 'stage_points', 'avg_stage_points', 'laps_led', 'laps_completed_pct', 'pos_diff'].indexOf(k) >= 0;
@@ -3548,9 +3566,9 @@ function renderDetail(seriesId, subPath) {
         var playoffsBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.playoffs')) + '</td></tr>';
         var cupChaseBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.cup_series_chase')) + '</td></tr>';
         var theChaseBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.the_chase')) + '</td></tr>';
-        var supercarsSprintBanner = '<tr class="schedule-section-banner"><td colspan="7">Sprint Cup</td></tr>';
-        var supercarsEnduroBanner  = '<tr class="schedule-section-banner"><td colspan="7">Enduro Cup</td></tr>';
-        var supercarsFinalsBanner  = '<tr class="schedule-section-banner"><td colspan="7">Finals Series</td></tr>';
+        var supercarsSprintBanner = '<tr class="schedule-section-banner"><td colspan="7">' + esc(t('schedule.supercars_sprint')) + '</td></tr>';
+        var supercarsEnduroBanner  = '<tr class="schedule-section-banner"><td colspan="7">' + esc(t('schedule.supercars_enduro')) + '</td></tr>';
+        var supercarsFinalsBanner  = '<tr class="schedule-section-banner"><td colspan="7">' + esc(t('schedule.supercars_finals')) + '</td></tr>';
         var seriesKeySched = (seriesId || '').toLowerCase();
         var pathSeriesSlug = (window.location.pathname.split('/')[2] || '').toLowerCase();
         var isCup = (seriesKeySched === 'nascar_cup');
@@ -3612,59 +3630,59 @@ function renderDetail(seriesId, subPath) {
               '<th>' + esc(t('th.event')) + '</th>' +
               '<th>' + esc(t('th.circuit')) + '</th>' +
               '<th>' + esc(t('th.location')) + '</th>' +
-              '<th>date</th>' +
+              '<th>' + esc(t('th.date')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else if (seriesKey === 'imsa') {
             // IMSA: Rnd. | Race | Length | Classes | Circuit | Location | Date
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.round')) + '</th>' +
               '<th>' + esc(t('th.race_col')) + '</th>' +
-              '<th>Length</th>' +
-              '<th>Classes</th>' +
+              '<th>' + esc(t('schedule.length')) + '</th>' +
+              '<th>' + esc(t('schedule.classes')) + '</th>' +
               '<th>' + esc(t('th.circuit')) + '</th>' +
               '<th>' + esc(t('th.location')) + '</th>' +
-              '<th>date</th>';
+              '<th>' + esc(t('th.date')) + '</th>';
           } else if (isIndycar) {
             schedHeadRow.innerHTML =
-              '<th>Rd.</th>' +
-              '<th>Date</th>' +
-              '<th>Race name</th>' +
-              '<th>Track</th>' +
+              '<th>' + esc(t('th.rd')) + '</th>' +
+              '<th>' + esc(t('th.date')) + '</th>' +
+              '<th>' + esc(t('th.race_col')) + '</th>' +
+              '<th>' + esc(t('th.track')) + '</th>' +
               '<th>' + esc(t('th.location')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else if (isSuperFormula) {
             schedHeadRow.innerHTML =
-              '<th>Rd.</th>' +
-              '<th>Date</th>' +
-              '<th>Venue</th>' +
+              '<th>' + esc(t('th.rd')) + '</th>' +
+              '<th>' + esc(t('th.date')) + '</th>' +
+              '<th>' + esc(t('th.venue')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else if (isF1 && !isMultiRaceSchedule) {
             // F1 (current season): Round | Grand Prix | Circuit | Date | Time
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.round')) + '</th>' +
-              '<th>Grand Prix</th>' +
+              '<th>' + esc(t('standings.grand_prix')) + '</th>' +
               '<th>' + esc(t('th.circuit')) + '</th>' +
-              '<th>date</th>' +
+              '<th>' + esc(t('th.date')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else if (isF1Season) {
             // Historical F1 seasons: Round | Grand Prix | Circuit | Race date (no Time column)
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.round')) + '</th>' +
-              '<th>Grand Prix</th>' +
+              '<th>' + esc(t('standings.grand_prix')) + '</th>' +
               '<th>' + esc(t('th.circuit')) + '</th>' +
-              '<th>Race date</th>';
+              '<th>' + esc(t('th.race_date')) + '</th>';
           } else if (isStockCarSeries) {
             schedHeadRow.innerHTML =
-              '<th>#</th>' +
+              '<th>' + esc(t('th.no')) + '</th>' +
               '<th>' + esc(t('th.race_col')) + '</th>' +
               '<th>' + esc(t('th.track')) + '</th>' +
               '<th>' + esc(t('th.location')) + '</th>' +
-              '<th>date</th>' +
+              '<th>' + esc(t('th.date')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else {
             schedHeadRow.innerHTML =
-              '<th>#</th>' +
-              '<th>date</th>' +
+              '<th>' + esc(t('th.no')) + '</th>' +
+              '<th>' + esc(t('th.date')) + '</th>' +
               '<th>' + esc(t('th.race_col')) + '</th>' +
               '<th class="col-location">' + esc(t('th.location')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
@@ -3716,8 +3734,8 @@ function renderDetail(seriesId, subPath) {
                 '<td>' + r.rd + '</td>' +
                 '<td>' + esc(r.date) + '</td>' +
                 '<td>' + raceCell + '</td>' +
-                '<td>' + esc(r.track) + '</td>' +
-                '<td>' + esc(r.location) + '</td>' +
+                '<td>' + esc(localizeVenueLine(r.track)) + '</td>' +
+                '<td>' + esc(localizeLocation(r.location)) + '</td>' +
                 '<td class="col-time">' + esc(timeLabel) + '</td>' +
                 '</tr>';
             }).join('');
@@ -3733,8 +3751,8 @@ function renderDetail(seriesId, subPath) {
             schedBody.innerHTML = f1Sched.map(function (r) {
               return '<tr>' +
                 '<td class="col-num">' + r.rd + '</td>' +
-                '<td>' + esc(r.grand_prix) + '</td>' +
-                '<td>' + esc(r.circuit) + '</td>' +
+                '<td>' + esc(localizeEventName(r.grand_prix)) + '</td>' +
+                '<td>' + esc(localizeVenueLine(r.circuit)) + '</td>' +
                 '<td>' + esc(r.date) + '</td>' +
                 '</tr>';
             }).join('');
@@ -3749,8 +3767,8 @@ function renderDetail(seriesId, subPath) {
             schedBody.innerHTML = f1SeasonSched.map(function (r) {
               return '<tr>' +
                 '<td class="col-num">' + r.rd + '</td>' +
-                '<td>' + esc(r.grand_prix) + '</td>' +
-                '<td>' + esc(r.circuit) + '</td>' +
+                '<td>' + esc(localizeEventName(r.grand_prix)) + '</td>' +
+                '<td>' + esc(localizeVenueLine(r.circuit)) + '</td>' +
                 '<td>' + esc(r.date) + '</td>' +
                 '</tr>';
             }).join('');
@@ -3769,11 +3787,12 @@ function renderDetail(seriesId, subPath) {
           var date = (startIso && endIso && startIso !== endIso && formatDateRangeLong)
             ? formatDateRangeLong(e.start_date, e.end_date)
             : (formatShortDate ? formatShortDate(startIso) : startIso);
-          var eventName = e.name || '—';
+          var eventName = localizeEventFromData(Object.assign({}, e, { name: e.name || '—' }));
           if (isGroupedRaceSchedule) {
-            eventName = (window.TGA && window.TGA.normalizeSeriesScheduleBaseName)
-              ? window.TGA.normalizeSeriesScheduleBaseName(eventName)
-              : eventName.replace(/\s+Race\s+\d+$/i, '').trim();
+            var strippedName = (window.TGA && window.TGA.normalizeSeriesScheduleBaseName)
+              ? window.TGA.normalizeSeriesScheduleBaseName(e.name || '')
+              : String(e.name || '').replace(/\s+Race\s+\d+$/i, '').trim();
+            eventName = localizeEventFromData(Object.assign({}, e, { name: strippedName })) || strippedName || '—';
           }
           var link = e.has_detail
             ? '<a href="/event/' + encodeURIComponent((e.id || '').toLowerCase().replace(/_/g, '-')) + '" class="event-link">' + esc(eventName) + '</a>'
@@ -3797,10 +3816,12 @@ function renderDetail(seriesId, subPath) {
               dateCell = '<td>' + esc(date) + '</td>';
             }
           }
-          var trackName = e.circuit_name || e.location || '—';
+          var trackNameRaw = e.circuit_name || e.location || '—';
+          var trackName = trackNameRaw;
           if (isStockCarSeries && trackName !== '—' && trackName.indexOf(', ') >= 0) {
             trackName = trackName.split(', ')[0];
           }
+          var trackNameDisplay = trackName === '—' ? '—' : localizeVenueLine(trackName);
           var trackSlug = slugify(e.circuit_name || e.location || trackName);
           var trackCell;
           var seriesKeyRow = (seriesId || '').toLowerCase();
@@ -3809,25 +3830,25 @@ function renderDetail(seriesId, subPath) {
             if (opts.circuitContinuation) {
               trackCell = '';
             } else if (opts.circuitFirst && opts.circuitRowSpan && opts.circuitRowSpan > 1 && trackName !== '—') {
-              trackCell = '<td rowspan="' + opts.circuitRowSpan + '" class="col-circuit-span"><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackName) + '</a></td>';
+              trackCell = '<td rowspan="' + opts.circuitRowSpan + '" class="col-circuit-span"><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackNameDisplay) + '</a></td>';
             } else if (opts.circuitFirst && opts.circuitRowSpan && opts.circuitRowSpan > 1 && trackName === '—') {
               trackCell = '<td rowspan="' + opts.circuitRowSpan + '" class="col-circuit-span">' + esc(trackName) + '</td>';
             } else if (trackName === '—') {
               trackCell = '<td>' + esc(trackName) + '</td>';
             } else {
-              trackCell = '<td><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackName) + '</a></td>';
+              trackCell = '<td><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackNameDisplay) + '</a></td>';
             }
           } else {
             if (opts.continuation || opts.groupContinuation) {
               trackCell = '';
             } else if (opts.groupFirst && opts.groupRowSpan > 1 && trackName !== '—') {
-              trackCell = '<td rowspan="' + opts.groupRowSpan + '" class="col-circuit-span"><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackName) + '</a></td>';
+              trackCell = '<td rowspan="' + opts.groupRowSpan + '" class="col-circuit-span"><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackNameDisplay) + '</a></td>';
             } else if (opts.groupFirst && opts.groupRowSpan > 1 && trackName === '—') {
               trackCell = '<td rowspan="' + opts.groupRowSpan + '" class="col-circuit-span">' + esc(trackName) + '</td>';
             } else if (trackName === '—') {
               trackCell = '<td>' + esc(trackName) + '</td>';
             } else {
-              trackCell = '<td><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackName) + '</a></td>';
+              trackCell = '<td><a href="/track/' + encodeURIComponent(trackSlug) + '" class="track-link" data-track-name="' + esc(trackName) + '">' + esc(trackNameDisplay) + '</a></td>';
             }
           }
           var numCell;
@@ -3871,7 +3892,7 @@ function renderDetail(seriesId, subPath) {
               raceColText = String(opts.raceInRound || '');
             }
             var raceCell = '<td>' + esc(raceColText) + '</td>';
-            var locText = e.location || '—';
+            var locText = e.location ? localizeLocation(e.location) : '—';
             var locationCell;
             if (opts.groupContinuation) {
               locationCell = '';
@@ -3912,9 +3933,9 @@ function renderDetail(seriesId, subPath) {
               'IMSA_2026_11': { length: '10 hours', classes: 'All' }
             };
             var meta = imsaMeta[e.id] || {};
-            var lengthCell = '<td>' + esc(meta.length || '—') + '</td>';
-            var classesCell = '<td>' + esc(meta.classes || '—') + '</td>';
-            var locTextImsa = e.location || '—';
+            var lengthCell = '<td>' + esc(localizeImsaScheduleLength(meta.length || '—')) + '</td>';
+            var classesCell = '<td>' + esc(localizeImsaScheduleClasses(meta.classes || '—')) + '</td>';
+            var locTextImsa = e.location ? localizeLocation(e.location) : '—';
             var locationCellImsa = '<td>' + esc(locTextImsa) + '</td>';
             var dateLabelImsa = (startIso && endIso && startIso !== endIso && formatDateRangeLong)
               ? formatDateRangeLong(e.start_date, e.end_date)
@@ -3960,7 +3981,7 @@ function renderDetail(seriesId, subPath) {
           }
 
           if (seriesKeyRow === 'indycar') {
-            var locCellIndy = '<td>' + esc(e.location || '—') + '</td>';
+            var locCellIndy = '<td>' + esc(e.location ? localizeLocation(e.location) : '—') + '</td>';
             var timeLabelIndy = getScheduleTimeLabel(e, seriesKeyRow);
             return (
               '<tr>' +
@@ -3975,12 +3996,13 @@ function renderDetail(seriesId, subPath) {
           }
 
           if (seriesKeyRow === 'super_formula') {
-            var venueSf = (window.TGA && window.TGA.superFormulaVenueLine)
+            var venueSfRaw = (window.TGA && window.TGA.superFormulaVenueLine)
               ? window.TGA.superFormulaVenueLine(e)
               : ((e.circuit_name || '') + (e.location ? ' — ' + e.location : '') || '—');
+            var venueSf = venueSfRaw === '—' ? '—' : venueSfRaw;
             var trackSlugSf = slugify(e.circuit_name || e.location || venueSf);
             var venueCellSf = trackSlugSf && trackSlugSf !== '—'
-              ? '<td><a href="/track/' + encodeURIComponent(trackSlugSf) + '" class="track-link" data-track-name="' + esc(e.circuit_name || venueSf) + '">' + esc(venueSf) + '</a></td>'
+              ? '<td><a href="/track/' + encodeURIComponent(trackSlugSf) + '" class="track-link" data-track-name="' + esc(e.circuit_name || venueSfRaw) + '">' + esc(venueSf) + '</a></td>'
               : '<td>' + esc(venueSf) + '</td>';
             var timeLabelSf = getScheduleTimeLabel(e, seriesKeyRow);
             return (
@@ -3997,9 +4019,10 @@ function renderDetail(seriesId, subPath) {
             // NASCAR: # | Race | Track | Location | Date | Local (date + time) | MSK (date + time)
             // Track — track name only; Location — city/state only, no duplication
             var raceCellStock = '<td>' + link + '</td>';
-            var locTextStock = (e.circuit_name && e.circuit_name.indexOf(', ') >= 0)
+            var locTextStockRaw = (e.circuit_name && e.circuit_name.indexOf(', ') >= 0)
               ? e.circuit_name.slice(e.circuit_name.indexOf(', ') + 2).trim()
               : (e.location || '—');
+            var locTextStock = locTextStockRaw === '—' ? '—' : localizeLocation(locTextStockRaw);
             var locationCellStock;
             if (opts.continuation || opts.groupContinuation) {
               locationCellStock = '';
@@ -4206,7 +4229,7 @@ function renderDetail(seriesId, subPath) {
               note.className = 'schedule-note';
               schedSection.appendChild(note);
             }
-            note.textContent = 'All classes: races that are part of the Michelin Endurance Cup.';
+            note.textContent = t('imsa.endurance_cup_note');
           }
         }
       }
@@ -4372,7 +4395,7 @@ function renderF1HistoryFromStatic() {
   if (lastSeason < earliestSeason) return;
   var thead = historyTable.querySelector('thead tr');
   if (thead) {
-    thead.innerHTML = '<th>Season</th><th>Races</th><th>Driver champion</th><th>Pts</th><th>Team</th><th>Chassis</th><th>Engine</th><th>Constructors champion</th><th>Pts</th>';
+    thead.innerHTML = '<th>' + t('history.season') + '</th><th>' + t('history.races') + '</th><th>' + t('history.driver_champion') + '</th><th>' + t('th.pts') + '</th><th>' + t('th.team') + '</th><th>' + t('th.chassis') + '</th><th>' + t('th.engine') + '</th><th>' + t('history.constructors_champion') + '</th><th>' + t('th.pts') + '</th>';
   }
   var rowsHtml = '';
   for (var season = lastSeason; season >= earliestSeason; season--) {
@@ -4396,7 +4419,7 @@ function renderF1HistoryFromStatic() {
       '<td>' + races + '</td>' +
       '<td>' + esc(driver) + '</td>' +
       '<td>' + driverPtsCell + '</td>' +
-      '<td>' + esc(team) + '</td>' +
+      '<td>' + teamLink(team) + '</td>' +
       '<td>' + esc(chassis) + '</td>' +
       '<td>' + esc(engine) + '</td>' +
       '<td>' + esc(constructor) + '</td>' +
@@ -4462,6 +4485,55 @@ function rebuildNascarCupDayFromDaytona(baseData) {
     .catch(function () { return baseData; });
 }
 
+// ─── IMSA static class/regulations tables (/series/imsa/classes) ─────────────
+function renderImsaClassesSpecIfNeeded() {
+  var path = (window.location && window.location.pathname) || '';
+  if (path.indexOf('/series/imsa/classes') !== 0) return;
+  var el = document.getElementById('imsa-classes-static');
+  var spec = window.IMSA_CLASSES_SPEC;
+  if (!el || !spec) return;
+
+  var locHeader = (typeof localizeTableHeader === 'function') ? localizeTableHeader : function (h) { return h; };
+  var locKey = (typeof localizeSpecKey === 'function') ? localizeSpecKey : function (k) { return k; };
+  var locVal = (typeof localizeSpecValue === 'function') ? localizeSpecValue : function (v) { return v; };
+  var locSec = (typeof localizeSpecSection === 'function') ? localizeSpecSection : function (s) { return s; };
+
+  var html = '';
+  if (spec.classes && spec.classes.length) {
+    html += '<div class="table-wrap"><table class="data-table"><thead><tr><th>' +
+      esc(locHeader('Class')) + '</th></tr></thead><tbody>' +
+      spec.classes.map(function (c) {
+        return '<tr><td>' + esc(locVal(c)) + '</td></tr>';
+      }).join('') +
+      '</tbody></table></div>';
+  }
+  (spec.sections || []).forEach(function (sec) {
+    html += '<h4 class="table-section-title">' + esc(locSec(sec.title)) + '</h4><div class="table-wrap"><table class="data-table">';
+    if (sec.layout === 'compare') {
+      html += '<thead><tr><th>' + esc(locHeader('Parameter')) + '</th>';
+      (sec.columns || []).forEach(function (col) {
+        html += '<th>' + esc(locHeader(col)) + '</th>';
+      });
+      html += '</tr></thead><tbody>';
+      (sec.rows || []).forEach(function (row) {
+        html += '<tr><td>' + esc(locKey(row.key)) + '</td>';
+        (row.values || []).forEach(function (v) {
+          html += '<td>' + esc(locVal(v)) + '</td>';
+        });
+        html += '</tr>';
+      });
+    } else {
+      html += '<thead><tr><th>' + esc(locHeader('Parameter')) + '</th><th>' +
+        esc(locHeader(sec.valueHeader || 'Value')) + '</th></tr></thead><tbody>';
+      (sec.rows || []).forEach(function (row) {
+        html += '<tr><td>' + esc(locKey(row.key)) + '</td><td>' + esc(locVal(row.value)) + '</td></tr>';
+      });
+    }
+    html += '</tbody></table></div>';
+  });
+  el.innerHTML = html;
+}
+
 // ─── F1 static specs fallback (/series/f1/specs + /season/f1-{year}/specs) ─
 function renderF1StaticSpecsIfNeeded() {
   var path = (window.location && window.location.pathname) || '';
@@ -4485,8 +4557,8 @@ function renderF1StaticSpecsIfNeeded() {
     var specsTitle = specsPanel.querySelector('h3[data-i18n="section.h3.specs"]');
     if (specsTitle) {
       specsTitle.textContent = seasonYear === '2025'
-        ? 'Technical regulations 2025'
-        : 'Technical regulations 2026';
+        ? t('specs.tech_regulations_2025')
+        : t('specs.tech_regulations_2026');
     }
   }
 
@@ -4523,7 +4595,7 @@ function renderF1StaticSpecsIfNeeded() {
       return '<tr><td class="col-field">' + esc(key || '—') + '</td>' +
              '<td class="col-spec-value">' + cellVal + '</td></tr>';
     }).join('');
-    return '<h4 class="table-section-title">' + esc(sec.title) + '</h4>' +
+    return '<h4 class="table-section-title">' + esc((typeof localizeSpecSection === 'function') ? localizeSpecSection(sec.title) : sec.title) + '</h4>' +
            '<div class="table-wrap tech-spec-section-table">' +
              '<table class="data-table table-field-value"><tbody>' + body + '</tbody></table>' +
            '</div>';
@@ -4533,5 +4605,7 @@ function renderF1StaticSpecsIfNeeded() {
   window.TGA.renderDetail = renderDetail;
   window.TGA.rebuildNascarCupDayFromDaytona = rebuildNascarCupDayFromDaytona;
   window.TGA.renderF1StaticSpecsIfNeeded = renderF1StaticSpecsIfNeeded;
+  window.TGA.renderImsaClassesSpecIfNeeded = renderImsaClassesSpecIfNeeded;
   window.addEventListener('load', renderF1StaticSpecsIfNeeded);
+  window.addEventListener('load', renderImsaClassesSpecIfNeeded);
 })();

@@ -73,7 +73,7 @@ func handleCardBackground(w http.ResponseWriter, r *http.Request, webDir, dataDi
 		http.NotFound(w, r)
 		return
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	src, _, err := image.Decode(f)
 	if err != nil {

@@ -28,17 +28,17 @@ func TestBuildDriverSeasonResultsFromEvents_F1PosDotHeader(t *testing.T) {
 		if strings.EqualFold(strings.TrimSpace(r.RaceName), "Entry list") {
 			continue
 		}
-		copy := r
+		rowCopy := r
 		barcelona = &struct {
 			position int
 			laps     int
 			points   float64
 			status   string
 		}{
-			position: copy.Position,
-			laps:     copy.Laps,
-			points:   copy.Points,
-			status:   copy.Status,
+			position: rowCopy.Position,
+			laps:     rowCopy.Laps,
+			points:   rowCopy.Points,
+			status:   rowCopy.Status,
 		}
 		break
 	}

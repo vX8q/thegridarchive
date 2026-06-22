@@ -21,6 +21,7 @@ type DebugReport struct {
 	SuperFormula  SuperFormulaDebug  `json:"super_formula"`
 }
 
+// NASCARDebug holds NASCAR live sync debug fields for DebugReport.
 type NASCARDebug struct {
 	LiveFeedURL      string                   `json:"live_feed_url"`
 	LegacyFeedURL    string                   `json:"legacy_feed_url,omitempty"`
@@ -36,6 +37,7 @@ type NASCARDebug struct {
 	MappedEventID    string                   `json:"mapped_event_id,omitempty"`
 }
 
+// OpenF1Debug holds OpenF1 live sync debug fields for DebugReport.
 type OpenF1Debug struct {
 	URL           string              `json:"url"`
 	Sessions      []openF1SessionFull `json:"sessions,omitempty"`
@@ -46,6 +48,7 @@ type OpenF1Debug struct {
 	InLiveWindow  *bool               `json:"in_live_window,omitempty"`
 }
 
+// WECDebug holds WEC live sync debug fields for DebugReport.
 type WECDebug struct {
 	URL           string           `json:"url"`
 	Snapshot      *wecLiveSnapshot `json:"snapshot,omitempty"`
@@ -55,6 +58,7 @@ type WECDebug struct {
 	InLiveWindow  *bool            `json:"in_live_window,omitempty"`
 }
 
+// SuperFormulaDebug holds Super Formula live sync debug fields for DebugReport.
 type SuperFormulaDebug struct {
 	URL           string              `json:"url"`
 	WebSocketURL  string              `json:"websocket_url"`

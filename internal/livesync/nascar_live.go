@@ -237,8 +237,8 @@ func nascarBoardFromFeed(feed *nascarCFLiveFeedJSON, dataDir string, limit int) 
 func nascarRaceFromList(races []nascarRace, raceID int) *nascarRace {
 	for _, r := range races {
 		if r.RaceID == raceID {
-			copy := r
-			return &copy
+			raceCopy := r
+			return &raceCopy
 		}
 	}
 	return nil

@@ -10,10 +10,11 @@
 - Расписания этапов, результаты гонок и квалификаций, сессии
 - Турнирные таблицы (личный и командный зачёт)
 - Статистика пилотов, команд, трасс и Head-to-Head сравнения
-- Live-данные из NASCAR Feed и OpenF1 API (синхронизация каждые 2 минуты)
+- Live-данные: NASCAR Feed, OpenF1 API, WEC и Super Formula (синхронизация каждые 2 минуты)
 - История F1 (чемпионы 1950–2025, очки, шасси, моторы)
 - Prometheus-метрики и admin-эндпоинты для мониторинга
-- Интернационализация (EN / RU), тёмная и светлая тема
+- Интернационализация **EN / RU** (переключатель в шапке), тёмная и светлая тема
+- Русская локализация контента: имена пилотов, географические названия, названия этапов, превью гонок, статистика гонки, спецификации машин и UI-строки (названия команд и конструкторов остаются на английском)
 
 ## Чемпионаты
 
@@ -53,12 +54,18 @@ TGA/
 ├── internal/
 │   ├── store/                   # Интерфейс Store + SQLite-реализация
 │   ├── schedulefile/            # Загрузка JSON-данных: расписания, результаты, standings
-│   ├── livesync/                # Live-синхронизация NASCAR + OpenF1 с Prometheus-метриками
+│   ├── eventscaffold/           # Автосоздание пустых JSON-скелетов этапов при старте сервера
+│   ├── livesync/                # Live-синхронизация NASCAR, OpenF1, WEC, Super Formula
 │   ├── driverutil/              # Slug-генерация для пилотов
 │   ├── tableutil/               # Вспомогательные функции для таблиц
 │   ├── appenv/                  # Поиск data-директории (TGA_DATA, CWD, рядом с бинарником)
 │   └── cache/                   # TTL-кэш
 ├── web/                         # Фронтенд: index.html, style.css, app.js, компоненты
+│   ├── utils/                   # Словари RU (пилоты, места, этапы), translit, spec-маппинги
+│   ├── data/                    # Статические справочники (translations, IMSA classes и т.д.)
+│   ├── components/              # Переиспользуемые UI-блоки (карточки, расписание)
+│   ├── pages/                   # Страницы SPA (series, event, schedule, list)
+│   └── lib/                     # api.js, router.js, state.js, deps.js
 ├── data/                        # JSON-данные проекта
 │   ├── schedules/               # Расписания серий (JSON)
 │   ├── events/                  # Детали этапов: SeriesName/year/eventID.json
@@ -100,6 +107,11 @@ go run ./cmd/server
 ```
 
 Сервер запустится на **http://localhost:8080**.
+
+При старте сервер:
+1. Загружает JSON из `data/` в SQLite (`bootstrapStoreFromFiles`)
+2. Создаёт пустые скелеты недавних этапов без файла результатов (`internal/eventscaffold`, окно «Last Results» + 7 дней)
+3. Запускает фоновую live-синхронизацию (`internal/livesync`, каждые 2 минуты)
 
 ### Сборка и запуск бинарника
 
@@ -221,15 +233,17 @@ Compose запускает два сервиса:
 ┌─────────────────────────────────────────────────────────┐
 │                     web/ (SPA)                          │
 │  Vanilla JS · Client-side routing · i18n (EN/RU)       │
+│  web/utils/*-ru.js · tga-i18n.js · localize-ru-data   │
 └────────────────────────┬────────────────────────────────┘
                          │ HTTP
 ┌────────────────────────▼────────────────────────────────┐
 │                  cmd/server (Go)                        │
 │  net/http · middleware (CORS, rate limit, trace ID,     │
-│  panic recovery) · handlers · static file server        │
+│  panic recovery) · handlers · eventscaffold · static  │
 ├─────────────────────┬──────────────────┬────────────────┤
 │  internal/store     │  schedulefile    │  livesync      │
 │  SQLite (R/W)       │  JSON files (RO) │  NASCAR+OpenF1 │
+│                     │  + scaffold    │  +WEC+Super F1 │
 └─────────┬───────────┴────────┬─────────┴────────┬───────┘
           │                    │                   │
     ┌─────▼──────┐    ┌───────▼────────┐   ┌──────▼──────┐
@@ -241,18 +255,46 @@ Compose запускает два сервиса:
 SQLite (`data/tga.sqlite`) используется для быстрых запросов и обновляется при старте через `bootstrapStoreFromFiles`.
 Live-данные обновляются из внешних API фоновым циклом внутри `cmd/server`.
 
+## Интернационализация (RU)
+
+Переключатель языка в шапке (`EN` / `RU`). Логика — в `web/tga-i18n.js`, статические UI-строки — в `web/data/translations.js`.
+
+### Что переводится на русский
+
+| Область | Источник |
+|---------|----------|
+| UI (кнопки, заголовки, таблицы) | `web/data/translations.js`, атрибуты `data-i18n` в `index.html` |
+| Имена пилотов | `web/utils/driver-names-ru.js` + `driver-name-ru-resolve.js` (сокращения, суффиксы `(i)` / `(R)`, транслит через `name-translit-ru.js`) |
+| Города, штаты, регионы | `web/utils/place-names-ru.js` (названия трасс остаются на английском) |
+| Названия этапов / уик-эндов | `web/utils/event-names-ru.js`, `driver-season-ru.js` |
+| Превью гонки | поле `event_preview_ru` в JSON этапа (fallback — `event_preview` с подстановкой имён пилотов) |
+| Статистика гонки, статусы, причины схода | `web/utils/localize-ru-data.js` |
+| Спецификации машин (ключи и значения) | `web/utils/spec-*-ru.js`, `spec-value-*.js` |
+
+### Что остаётся на английском
+
+- Названия команд, конструкторов, производителей в таблицах и entry list
+- Названия трасс / circuit name
+- Имена пилотов в API (`/api/drivers`, `/api/driver/{slug}`) — канонические латинские
+
+Словари редактируются напрямую в `web/utils/`. Локальные рабочие экспорты (`data/driver-names-full-*.txt`, `data/event_previews_ru*`) в `.gitignore` и в репозиторий не попадают.
+
+Подробнее о фронтенд-API: `docs/WEB_TGA_API.md`.
+
 ## Данные
 
 Данные хранятся в JSON-файлах и редактируются напрямую:
 
 - `data/schedules/{seriesID}.json` — расписания этапов
-- `data/events/{SeriesName}/{year}/{eventID}.json` — детали этапов (результаты, сессии, таблицы)
+- `data/events/{seriesID}_{year}_{n}.json` **или** `data/events/{SeriesName}/{year}/{eventID}.json` — детали этапов (результаты, сессии, таблицы). Для новых файлов предпочтителен вложенный путь по серии; часть серий (например IndyCar) ещё использует плоские имена в корне `data/events/`
 - `data/teams/{seriesID}.json` — составы команд
 - `data/standings/{seriesID}.json` — **опциональные** снимки standings (Cup, Truck, Supercars и др.); у большинства серий таблица **считается** из `events/` через `internal/schedulefile`
 - `data/driver_profiles.json` — профили пилотов
 - `data/driver_profile_redirects.json` — старые slug → канонический профиль
 - `data/live.json` — live-данные (пишет `livesync` в `cmd/server` или CLI `sync-*-live`)
 - `data/tga.sqlite` — кэш БД (создаётся при старте, не редактировать вручную)
+
+Поле `event_preview_ru` в JSON этапа — русский текст превью гонки (см. раздел «Интернационализация»).
 
 ## Мониторинг
 
@@ -273,7 +315,7 @@ Live-данные обновляются из внешних API фоновым 
 | `tga_api_errors_total{endpoint,status_class}` | Ошибки API по endpoint и классу статуса |
 | `tga_api_business_request_duration_seconds{endpoint}` | Latency ключевых продуктовых endpoint |
 
-Где `source` — `nascar` или `openf1`, `reason` — тип ошибки (`live_feed`, `no_events`, `write_live_json` и т.д.).
+Где `source` — `nascar`, `openf1`, `wec` или `super_formula`; `reason` — тип ошибки (`live_feed`, `no_events`, `write_live_json` и т.д.).
 
 Подробное описание и примеры проверки — в `docs/METRICS.md`.
 

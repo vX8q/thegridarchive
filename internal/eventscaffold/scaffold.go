@@ -22,8 +22,11 @@ const lastResultsDays = 7
 type Mode int
 
 const (
+	// ModeLastResults scaffolds past events still in the Last Results window.
 	ModeLastResults Mode = iota
+	// ModeMissing scaffolds all current-season events without a detail file.
 	ModeMissing
+	// ModeUpcoming scaffolds future events within the upcoming window.
 	ModeUpcoming
 )
 

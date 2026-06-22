@@ -74,18 +74,18 @@ func TestCollectSuperFormulaLiveBoards_Mock(t *testing.T) {
 	defer func() { fetchSuperFormulaSnapshotFunc = orig }()
 
 	snap := sfSnapshotFromMessages(t)
-	fetchSuperFormulaSnapshotFunc = func(ctx context.Context) (*sfRaceNowSnapshot, error) {
-		copy := *snap
-		copy.Rows = append([]sfRaceNowRow(nil), snap.Rows...)
+	fetchSuperFormulaSnapshotFunc = func(_ context.Context) (*sfRaceNowSnapshot, error) {
+		snapCopy := *snap
+		snapCopy.Rows = append([]sfRaceNowRow(nil), snap.Rows...)
 		if snap.Schedule != nil {
 			s := *snap.Schedule
-			copy.Schedule = &s
+			snapCopy.Schedule = &s
 		}
 		if snap.Heartbeat != nil {
 			h := *snap.Heartbeat
-			copy.Heartbeat = &h
+			snapCopy.Heartbeat = &h
 		}
-		return &copy, nil
+		return &snapCopy, nil
 	}
 	refreshSuperFormulaCache(context.Background())
 
@@ -106,7 +106,7 @@ func TestSyncSuperFormula_Merge(t *testing.T) {
 	day := time.Date(2026, 4, 5, 10, 0, 0, 0, time.UTC)
 	superFormulaNowFunc = func() time.Time { return day }
 	snap := sfSnapshotFromMessages(t)
-	fetchSuperFormulaSnapshotFunc = func(ctx context.Context) (*sfRaceNowSnapshot, error) {
+	fetchSuperFormulaSnapshotFunc = func(_ context.Context) (*sfRaceNowSnapshot, error) {
 		return snap, nil
 	}
 	refreshSuperFormulaCache(context.Background())

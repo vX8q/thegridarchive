@@ -74,8 +74,7 @@ var (
 	fetchOpenF1SessionsLatestRawFunc     = fetchOpenF1SessionsLatestRaw
 	fetchOpenF1DriversFunc               = fetchOpenF1Drivers
 	fetchOpenF1PositionsFunc             = fetchOpenF1Positions
-	fetchOpenF1IntervalsFunc           = fetchOpenF1Intervals
-	fetchOpenF1IntervalsForDriverFunc  = fetchOpenF1IntervalsForDriver
+	fetchOpenF1IntervalsForDriverFunc    = fetchOpenF1IntervalsForDriver
 	fetchOpenF1StartingGridFunc        = fetchOpenF1StartingGrid
 	fetchOpenF1LapsFunc                  = fetchOpenF1Laps
 	openF1NowFunc                        = func() time.Time { return time.Now().UTC() }
@@ -93,11 +92,11 @@ func parseOpenF1Time(s string) (time.Time, error) {
 	}
 	var lastErr error
 	for _, layout := range layouts {
-		if t, err := time.Parse(layout, s); err == nil {
+		t, err := time.Parse(layout, s)
+		if err == nil {
 			return t.UTC(), nil
-		} else {
-			lastErr = err
 		}
+		lastErr = err
 	}
 	if lastErr != nil {
 		return time.Time{}, lastErr
@@ -195,15 +194,6 @@ func fetchOpenF1Drivers(sessionKey int) ([]openF1Driver, error) {
 func fetchOpenF1Positions(sessionKey int) ([]openF1PositionRow, error) {
 	var out []openF1PositionRow
 	url := fmt.Sprintf("%s/v1/position?session_key=%d", openF1Base, sessionKey)
-	if err := livesyncGetJSON(url, &out); err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func fetchOpenF1Intervals(sessionKey int) ([]openF1IntervalRow, error) {
-	var out []openF1IntervalRow
-	url := fmt.Sprintf("%s/v1/intervals?session_key=%d", openF1Base, sessionKey)
 	if err := livesyncGetJSON(url, &out); err != nil {
 		return nil, err
 	}
@@ -568,7 +558,7 @@ func f1BoardFromSession(session *openF1SessionFull, dataDir string, limit int) (
 	}
 	driverMap := openF1DriversMap(drivers)
 
-	grid := openF1StartingGridMap(nil)
+	var grid map[int]int
 	if gridRows, err := fetchOpenF1StartingGridFunc(session.SessionKey); err == nil && len(gridRows) > 0 {
 		grid = openF1StartingGridMap(gridRows)
 	} else {

@@ -1,6 +1,7 @@
-# Binaries
+# Build artifacts (Windows/Linux/macOS)
 bin/
 *.exe
+*.exe~
 *.dll
 *.so
 *.dylib
@@ -40,15 +41,15 @@ ehthumbs.db
 *.xlsx
 !**/testdata/*.xlsx
 
-# App data: DB is local / rebuilt; live.json is overwritten by sync jobs
+# Runtime DB (rebuilt from JSON on server start) + WAL sidecars
 data/tga.sqlite
 data/tga.sqlite-*
 data/**/*.sqlite
 data/**/*.sqlite-*
+
+# Live state + downloaded image cache (regenerated at runtime)
 data/live.json
 data/cache/
-
-# Runtime live state / local fetch scratch (not data/live.json)
 /live.json
 /tmp_nascar_feed.json
 /tmp_series_feed.json
@@ -57,16 +58,15 @@ data/cache/
 server_err.log
 server_out.log
 
-# Scratch PDFs / parse outputs for one-off data imports
+# Local scratch + backup trees (never canonical)
 agent-tools/
-
-# Backup copies and extracts (not the canonical tree)
 backups/
 
 # Secrets and local overrides (keep .env.example in repo)
 .env
 .env.local
 .env.*.local
+.env.example
 
 # Optional: Node if you add tooling under the repo
 node_modules/

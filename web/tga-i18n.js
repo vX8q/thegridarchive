@@ -450,7 +450,8 @@
     val = val.replace(/\blaps\b/gi, 'кругов');
     val = val.replace(/\bcaution\b/gi, 'SC');
     val = val.replace(/\bcautions\b/gi, 'машины безопасности');
-    val = val.replace(/\bred flag(s?)\b/gi, 'красн$1 флаг$1');
+    val = val.replace(/\bred flags\b/gi, 'красные флаги');
+    val = val.replace(/\bred flag\b/gi, 'красный флаг');
     val = val.replace(/\b°\s*F\b/gi, '°F');
     val = val.replace(/\b°\s*C\b/gi, '°C');
     return val;
@@ -624,7 +625,16 @@
   }
 
   var translateValueHeaders = ['value'];
-  var translateReasonHeaders = ['reason'];
+  var translateReasonHeaders = ['reason', 'причина'];
+  var translateFreePassHeaders = ['free pass'];
+
+  function localizeFreePass(v) {
+    if (v == null) return '';
+    var text = String(v).trim();
+    if (!text || lang !== 'ru') return text;
+    if (/^none$/i.test(text)) return 'никто';
+    return text;
+  }
 
   function localizeDate(s) {
     if (s == null || typeof s !== 'string') return '';
@@ -743,9 +753,14 @@
     return key ? t(key) : val;
   }
 
+  var teamNameRu = (typeof window !== 'undefined' && window.TGA_RU && window.TGA_RU.teamNameRu) || {};
   function localizeTeamName(name) {
     if (name == null) return '';
-    return String(name).trim();
+    var val = String(name).trim();
+    if (!val || lang !== 'ru') return val;
+    var map = (typeof window !== 'undefined' && window.TGA_RU && window.TGA_RU.teamNameRu) || teamNameRu;
+    var ru = map[val.toLowerCase()];
+    return ru != null ? ru : val;
   }
 
   function localizeImsaScheduleLength(length) {
@@ -828,7 +843,6 @@
     return fromCell !== text ? fromCell : text;
   }
 
-  var degRu = { '°': '°', 'degrees': 'градусы', 'degree': 'градус' };
   function localizeDriverNamesInText(text) {
     if (text == null) return '';
     if (lang !== 'ru') return String(text);
@@ -837,15 +851,20 @@
     var keys = Object.keys(map).filter(function (k) { return k && k.length > 2; });
     keys.sort(function (a, b) { return b.length - a.length; });
     keys.forEach(function (key) {
-      var escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      var re = new RegExp('\\b' + escaped + '(?:\\s*\\((?:i|r|g)\\))?\\b', 'gi');
+      var matchKey = key.replace(/\s*\((?:i|r|g)\)\s*$/i, '').trim();
+      var escaped = matchKey.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      var re = new RegExp('(?<![A-Za-zÀ-ÿ])' + escaped + '(?:\\s*\\((?:i|r|g)\\))?(?![A-Za-zÀ-ÿ])', 'gi');
       str = str.replace(re, function (match) { return localizeDriverName(match); });
     });
     str = str.replace(
-      /\b((?:[A-Z]\.\s*){1,3}(?:van|von|de|da|di|del|la|le|st\s+)?[A-Z][A-Za-zÀ-ÿ'’-]+(?:\s+(?:van|von|de|da|di|del|der|la|le|st)\s+[A-Za-zÀ-ÿ'’-]+)*)\b/g,
+      /(?<![A-Za-zÀ-ÿ])((?:[A-Z]\.\s*){0,3}[A-Z][A-Za-zÀ-ÿ'’-]+(?:\s+(?:(?:van|von|de|da|di|del|der|la|le|st)\s+)?[A-Z][A-Za-zÀ-ÿ'’-]+){1,3})(?![A-Za-zÀ-ÿ])/g,
       function (match) {
-        var ru = localizeDriverName(match);
-        return ru && ru !== match ? ru : match;
+        var resolveFn = (typeof window !== 'undefined' && window.TGA_RU && window.TGA_RU.resolveDriverNameRu);
+        if (typeof resolveFn === 'function') {
+          var resolved = resolveFn(match, map);
+          if (resolved) return resolved;
+        }
+        return match;
       }
     );
     return str;
@@ -1132,10 +1151,11 @@
   window.TGA.localizeTableHeader = localizeTableHeader;
   window.TGA.localizeCellNote = localizeCellNote;
   window.TGA.localizeRaceReason = localizeRaceReason;
-  window.TGA.localizeCautionFlagLabel = localizeCautionFlagLabel;
+  window.TGA.localizeFreePass = localizeFreePass;
   window.TGA.localizeCautionFlagLabel = localizeCautionFlagLabel;
   window.TGA.translateValueHeaders = translateValueHeaders;
   window.TGA.translateReasonHeaders = translateReasonHeaders;
+  window.TGA.translateFreePassHeaders = translateFreePassHeaders;
   window.TGA.localizeStatKey = localizeStatKey;
   window.TGA.localizeStatValue = localizeStatValue;
   window.TGA.localizeSpecKey = localizeSpecKey;

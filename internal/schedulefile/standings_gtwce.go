@@ -251,6 +251,16 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 	if err != nil || len(events) == 0 {
 		return emptyGtwceStandings(), nil
 	}
+	sessionsByEvent := make(map[string][]RaceSession)
+	loadSessions := func(eventID string) []RaceSession {
+		key := strings.ToLower(strings.TrimSpace(eventID))
+		if sessions, ok := sessionsByEvent[key]; ok {
+			return sessions
+		}
+		sessions, _ := LoadEventRaceSessions(dataDir, eventID)
+		sessionsByEvent[key] = sessions
+		return sessions
+	}
 
 	var raceOrder []string
 	var eventNames []string
@@ -260,7 +270,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 			continue
 		}
 		round++
-		sessions, _ := LoadEventRaceSessions(dataDir, ev.ID)
+		sessions := loadSessions(ev.ID)
 		n := gtwceRaceSlotsPerEvent(isSprint, sessions)
 		evName := strings.TrimSpace(ev.Name)
 		for si := 0; si < n; si++ {
@@ -292,7 +302,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 			continue
 		}
 		round++
-		sessions, _ := LoadEventRaceSessions(dataDir, ev.ID)
+		sessions := loadSessions(ev.ID)
 		n := gtwceRaceSlotsPerEvent(isSprint, sessions)
 		for si := 0; si < n; si++ {
 			if rIdx >= len(raceOrder) {

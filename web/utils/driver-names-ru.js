@@ -14,6 +14,8 @@
     'adrien closmenil': 'Адриан Клосмениль',
     'ahmad al harthy': 'Ахмад Аль-Харси',
     'aj muss': 'Эй-Джей Масс',
+    'a. j. allmendinger': 'Эй. Джей. Аллмендингер',
+    'aj allmendinger': 'Эй. Джей. Аллмендингер',
     'albert costa': 'Альберт Коста',
     'alberto di folco': 'Альберто Ди Фолько',
     'aldo festante': 'Альдо Фестанте',
@@ -103,11 +105,12 @@
     'austin beers': 'Остин Бирс',
     'austin cindric': 'Остин Синдрик',
     'austin dillon': 'Остин Диллон',
-    'austin edward hill': 'Остин Едвард Хилл',
+    'austin edward hill': 'Остин Хилл',
     'austin green': 'Остин Грин',
+    'austin hill': 'Остин Хилл',
     'austin hill (i)': 'Остин Хилл',
-    'austin j hill': 'Остин Джей Хилл',
-    'austin j. hill': 'Остин Хилл',
+    'austin j hill': 'Остин Джей. Хилл',
+    'austin j. hill': 'Остин Джей. Хилл',
     'austin louis cindric': 'Остин Луи Синдрик',
     'austin varco': 'Остин Варко',
     'austin vaughn': 'Остин Вон',
@@ -165,7 +168,7 @@
     'bryce haugeberg': 'Брайс Хаугеберг',
     'bubba wallace': 'Бабба Уоллас',
     'burt myers': 'Бёрт Майерс',
-    'caden kvapil': 'Кейден Квапил',
+    'caden kvapil': 'Кейден Квопил',
     'caesar bacarella': 'Сизар Бакарелла',
     'caio collet': 'Кайо Коллет',
     'caio jotta collet': 'Кайо Джотта Коллет',
@@ -181,7 +184,7 @@
     'carson brown (r)': 'Карсон Браун',
     'carson ferguson': 'Карсон Фергюсон',
     'carson hocevar (i)': 'Карсон Хосевар',
-    'carson kvapil': 'Карсон Квапил',
+    'carson kvapil': 'Карсон Квопил',
     'carson loftin': 'Карсон Лофтин',
     'carson ware': 'Карсон Уэр',
     'carter fartuch': 'Картер Фартух',
@@ -631,6 +634,7 @@
     'kenzo craigie': 'Кензо Крейги',
     'kevin campbell': 'Кевин Кэмпбелл',
     'kevin estre': 'Кевин Эстр',
+    'kevin harvick': 'Кевин Харвик',
     'kevin magnussen': 'Кевин Магнуссен',
     'kiern jewiss': 'Кирн Джюисс',
     'kimi antonelli': 'Кими Антонелли',
@@ -780,6 +784,7 @@
     'max hofer': 'Макс Хофер',
     'max lynn': 'Макс Линн',
     'max moritz': 'Макс Мориц',
+    'max reaves': 'Макс Ривс',
     'max reaves (r)': 'Макс Ривс',
     'max van der snel': 'Макс ван дер Снел',
     'max verstappen': 'Макс Ферстаппен',
@@ -798,6 +803,7 @@
     'michael jensen': 'Майкл Йенсен',
     'michael maples': 'Майкл Мэйплс',
     'michael mc dowell': 'Майкл Макдауэлл',
+    'michael mcdowell': 'Майкл Макдауэлл',
     'michael shin': 'Майкл Шин',
     'michael wainwright': 'Майкл Уэйнрайт',
     'mick schumacher': 'Мик Шумахер',
@@ -1206,4 +1212,12 @@
     'zane smith': 'Зейн Смит',
     'zhenrui chi': 'Чжэньжуй Чи'
   };
+
+  // Base keys without (i)/(r)/(g) for names stored only with eligibility markers.
+  Object.keys(window.TGA_RU.driverNameRu).forEach(function (key) {
+    var base = key.replace(/\s*\((?:i|r|g)\)\s*$/i, '').trim();
+    if (base !== key && !window.TGA_RU.driverNameRu[base]) {
+      window.TGA_RU.driverNameRu[base] = window.TGA_RU.driverNameRu[key];
+    }
+  });
 })();

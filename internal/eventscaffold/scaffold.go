@@ -518,7 +518,6 @@ func buildTables(template string) map[string]schedulefile.EventTable {
 			"qualifying":   emptyTable(stockcarQualHeaders, ""),
 			"stage_1":      emptyTable(stockcarStageHeaders, "Stage 1"),
 			"stage_2":      emptyTable(stockcarStageHeaders, "Stage 2"),
-			"stage_3":      emptyTable(stockcarStageHeaders, "Stage 3"),
 			"race_results": emptyTable(stockcarRaceHeaders, ""),
 		}
 	case "stockcar_arca":

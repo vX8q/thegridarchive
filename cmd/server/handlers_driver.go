@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"hash/fnv"
 	"image"
 	"image/color"
 	_ "image/gif"
@@ -38,17 +40,38 @@ type driverProfile struct {
 	PhotoURL    string `json:"photo_url"`
 }
 
+type driverThumbnailSpec struct {
+	name    string
+	width   int
+	height  int
+	quality int
+}
+
 var (
-	driverProfilesMu           sync.RWMutex
-	driverProfiles             map[string]driverProfile
-	driverProfilesErr          error
-	driverProfilesMTime        time.Time
-	driverProfileRedirectsMu   sync.RWMutex
-	driverProfileRedirects     map[string]string
-	driverProfileRedirectsErr  error
+	driverProfilesMu            sync.RWMutex
+	driverProfiles              map[string]driverProfile
+	driverProfilesErr           error
+	driverProfilesMTime         time.Time
+	driverProfileRedirectsMu    sync.RWMutex
+	driverProfileRedirects      map[string]string
+	driverProfileRedirectsErr   error
 	driverProfileRedirectsMTime time.Time
-	driverThumbsMu              sync.Mutex
 )
+
+func driverThumbnailSpecForRequest(r *http.Request) driverThumbnailSpec {
+	switch strings.ToLower(strings.TrimSpace(r.URL.Query().Get("size"))) {
+	case "profile", "detail", "hero":
+		return driverThumbnailSpec{name: "profile", width: 520, height: 390, quality: 88}
+	default:
+		return driverThumbnailSpec{name: "search", width: 88, height: 112, quality: 90}
+	}
+}
+
+func driverPhotoCacheHash(photoURL string) string {
+	h := fnv.New64a()
+	_, _ = h.Write([]byte(strings.TrimSpace(photoURL)))
+	return fmt.Sprintf("%016x", h.Sum64())
+}
 
 func loadDriverProfiles(dataDir string) (map[string]driverProfile, error) {
 	path := filepath.Join(dataDir, "driver_profiles.json")
@@ -603,12 +626,12 @@ func handleDriverBySlug(w http.ResponseWriter, r *http.Request, dataDir string, 
 	}
 
 	resp := map[string]interface{}{
-		"name":            displayName,
-		"nationality":     found.Nationality,
-		"citizenship":     found.Nationality,
-		"birth_date":      birthStr,
-		"birth_place":     found.BirthPlace,
-		"canonical_slug":  canonicalSlug,
+		"name":           displayName,
+		"nationality":    found.Nationality,
+		"citizenship":    found.Nationality,
+		"birth_date":     birthStr,
+		"birth_place":    found.BirthPlace,
+		"canonical_slug": canonicalSlug,
 		"photo_url": func() string {
 			if profiles == nil {
 				return ""
@@ -673,10 +696,10 @@ func attachDriverPrimaryContext(resp map[string]interface{}, seasonResults []mod
 }
 
 var (
-	driverPrimaryContextMu    sync.RWMutex
-	driverPrimaryContext      map[string]schedulefile.DriverPrimaryContext
-	driverPrimaryContextKey   string
-	driverPrimaryContextErr   error
+	driverPrimaryContextMu  sync.RWMutex
+	driverPrimaryContext    map[string]schedulefile.DriverPrimaryContext
+	driverPrimaryContextKey string
+	driverPrimaryContextErr error
 )
 
 func loadDriverPrimaryContext(dataDir, season string) (map[string]schedulefile.DriverPrimaryContext, error) {
@@ -751,17 +774,10 @@ func handleDriverThumbnail(w http.ResponseWriter, r *http.Request, dataDir strin
 		return
 	}
 
+	spec := driverThumbnailSpecForRequest(r)
 	cacheDir := filepath.Join(dataDir, "cache", "driver_thumbs")
-	cachePath := filepath.Join(cacheDir, driverutil.Slug(slug)+".v2.jpg")
-	if b, err := os.ReadFile(cachePath); err == nil && len(b) > 0 { //nolint:gosec
-		w.Header().Set("Content-Type", "image/jpeg")
-		w.Header().Set("Cache-Control", "public, max-age=86400")
-		_, _ = w.Write(b)
-		return
-	}
-
-	driverThumbsMu.Lock()
-	defer driverThumbsMu.Unlock()
+	cacheName := fmt.Sprintf("%s.%s.%s.jpg", driverutil.Slug(slug), spec.name, driverPhotoCacheHash(photoURL))
+	cachePath := filepath.Join(cacheDir, cacheName)
 	if b, err := os.ReadFile(cachePath); err == nil && len(b) > 0 { //nolint:gosec
 		w.Header().Set("Content-Type", "image/jpeg")
 		w.Header().Set("Cache-Control", "public, max-age=86400")
@@ -775,8 +791,8 @@ func handleDriverThumbnail(w http.ResponseWriter, r *http.Request, dataDir strin
 		return
 	}
 
-	const outW = 88
-	const outH = 112
+	outW := spec.width
+	outH := spec.height
 	bounds := src.Bounds()
 	srcW := bounds.Dx()
 	srcH := bounds.Dy()
@@ -807,7 +823,7 @@ func handleDriverThumbnail(w http.ResponseWriter, r *http.Request, dataDir strin
 	draw.CatmullRom.Scale(dst, dstRect, src, bounds, draw.Over, nil)
 
 	var out bytes.Buffer
-	if err := jpeg.Encode(&out, dst, &jpeg.Options{Quality: 90}); err != nil {
+	if err := jpeg.Encode(&out, dst, &jpeg.Options{Quality: spec.quality}); err != nil {
 		http.NotFound(w, r)
 		return
 	}
@@ -835,8 +851,14 @@ func loadDriverSourceImage(photoURL, dataDir string) (image.Image, error) {
 		return src, err
 	}
 
-	client := &http.Client{Timeout: 4 * time.Second}
-	resp, err := client.Get(raw) // #nosec G107 -- URL is controlled by local driver profiles
+	client := &http.Client{Timeout: 15 * time.Second}
+	req, err := http.NewRequest(http.MethodGet, raw, nil) // #nosec G107 -- URL is controlled by local driver profiles
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Accept", "image/png,image/jpeg,image/*;q=0.8,*/*;q=0.5")
+	req.Header.Set("User-Agent", "TGA/1.0 (+https://thegridarchive.local)")
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}

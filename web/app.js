@@ -87,7 +87,7 @@
   var stopNextRaceTimers = (window.TGA && window.TGA.stopNextRaceTimers) || function () {};
   var renderList = (window.TGA && window.TGA.renderList) || function () {};
 
-  var allViewIds = ['view-list', 'view-search', 'view-detail', 'view-event', 'view-track', 'view-driver', 'view-team', 'view-crew-chief', 'view-schedule'];
+  var allViewIds = ['view-list', 'view-search', 'view-detail', 'view-event', 'view-track', 'view-driver', 'view-team', 'view-crew-chief', 'view-schedule', 'view-feedback'];
   function showView(activeId) {
     if (activeId !== 'view-list') {
       stopNextRaceTimers();
@@ -245,57 +245,6 @@
     var md = now.getMonth() + 1 - bm;
     if (md < 0 || (md === 0 && now.getDate() < bd)) age--;
     return isNaN(age) ? '' : String(age);
-  }
-
-  function getBestDriverPhotoURL(rawURL) {
-    var src = String(rawURL || '').trim();
-    if (!src) return '';
-    // Prefer one high-quality source and let browser downscale it.
-    // Wikimedia thumb URL example:
-    // https://.../thumb/.../320px-File.jpg
-    // Convert to original file URL:
-    // https://.../.../File.jpg
-    var wm = src.match(/^(.*\/thumb\/.*\/)(\d+)px-([^/?#]+)(.*)$/i);
-    if (wm) {
-      return wm[1].replace('/thumb/', '/') + wm[3];
-    }
-    return src;
-  }
-
-  function isSearchPhotoHighQuality(url) {
-    var src = String(url || '').trim();
-    if (!src) return Promise.resolve(false);
-    if (state.driverPhotoQualityCache[src] != null) {
-      return Promise.resolve(!!state.driverPhotoQualityCache[src]);
-    }
-    return new Promise(function (resolve) {
-      var img = new Image();
-      var done = false;
-      var timer = setTimeout(function () {
-        if (done) return;
-        done = true;
-        state.driverPhotoQualityCache[src] = false;
-        resolve(false);
-      }, 3500);
-      img.onload = function () {
-        if (done) return;
-        clearTimeout(timer);
-        done = true;
-        var w = img.naturalWidth || 0;
-        var h = img.naturalHeight || 0;
-        var ok = w >= 180 && h >= 180;
-        state.driverPhotoQualityCache[src] = ok;
-        resolve(ok);
-      };
-      img.onerror = function () {
-        if (done) return;
-        clearTimeout(timer);
-        done = true;
-        state.driverPhotoQualityCache[src] = false;
-        resolve(false);
-      };
-      img.src = src;
-    });
   }
 
   function pushSearchItem(list, dedupe, title, kind, href, extra, subtext, seriesID, teamName, seriesName, meta, titleRu) {
@@ -772,11 +721,10 @@
               age = isNaN(a) ? '—' : String(a);
             }
             var photoUrl = (m.photo_url && String(m.photo_url).trim()) ? String(m.photo_url).trim() : '';
-            var photoOk = !!(driverPhotoOkBySlug && driverPhotoOkBySlug[slug]);
-            var photoSrc = '/api/driver-thumb/' + encodeURIComponent(slug) + '?_=search-thumb-v4';
-            var photoHtml = (photoUrl && photoOk)
+            var photoSrc = '/api/driver-thumb/' + encodeURIComponent(slug) + '?size=search&_=search-thumb-v5';
+            var photoHtml = photoUrl
               ? '<img class="search-driver-photo" src="' + esc(photoSrc) + '"' +
-                ' alt="" loading="lazy" decoding="async">'
+                ' width="44" height="56" alt="" loading="lazy" decoding="async">'
               : '<span class="search-driver-photo search-driver-photo--empty" aria-hidden="true"></span>';
             html += '<tr>' +
               '<td><a class="search-page-link search-driver-link" href="' + item.href + '">' + photoHtml + '<span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
@@ -853,6 +801,7 @@
       });
       html += '</div>';
       contentEl.innerHTML = html;
+      wireSearchDriverPhotoFallbacks(contentEl);
       translateStaticUI();
     }
 
@@ -871,24 +820,7 @@
       Promise.all(driverReqs).then(function (arr) {
         var bySlug = {};
         arr.forEach(function (x) { bySlug[x.slug] = x.data || {}; });
-        var photoChecks = drivers.map(function (m) {
-          var slug = decodeURIComponent((m.href || '').replace(/^\/driver\//, ''));
-          var d = bySlug[slug] || {};
-          var photoUrl = (d.photo_url && String(d.photo_url).trim()) ? String(d.photo_url).trim() : '';
-          photoUrl = getBestDriverPhotoURL(photoUrl);
-          return isSearchPhotoHighQuality(photoUrl).then(function (ok) {
-            return { slug: slug, ok: ok };
-          }).catch(function () {
-            return { slug: slug, ok: false };
-          });
-        });
-        Promise.all(photoChecks).then(function (photoArr) {
-          var photoBySlug = {};
-          photoArr.forEach(function (p) { photoBySlug[p.slug] = !!p.ok; });
-          renderFromMatches(matches, bySlug, photoBySlug);
-        }).catch(function () {
-          renderFromMatches(matches, bySlug, {});
-        });
+        renderFromMatches(matches, bySlug, {});
       }).catch(function () {
         renderFromMatches(matches, {}, {});
       });
@@ -1014,6 +946,23 @@
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   }
 
+  function wireSearchDriverPhotoFallbacks(root) {
+    if (!root) return;
+    var imgs = root.querySelectorAll('img.search-driver-photo');
+    for (var i = 0; i < imgs.length; i++) {
+      (function (img) {
+        if (img.getAttribute('data-photo-fallback-wired') === '1') return;
+        img.setAttribute('data-photo-fallback-wired', '1');
+        img.addEventListener('error', function () {
+          var span = document.createElement('span');
+          span.className = 'search-driver-photo search-driver-photo--empty';
+          span.setAttribute('aria-hidden', 'true');
+          if (img.parentNode) img.parentNode.replaceChild(span, img);
+        });
+      })(imgs[i]);
+    }
+  }
+
   function resetDriverDetailShell(nameFromSlug) {
     var viewEl = document.getElementById('view-driver');
     if (viewEl) viewEl.classList.add('driver-loading');
@@ -1026,6 +975,7 @@
     document.getElementById('driver-content').innerHTML = '<p class="empty-msg">' + t('coming_soon.driver') + '</p>';
     var photoEl = document.getElementById('driver-photo');
     if (photoEl) {
+      photoEl.onerror = null;
       photoEl.removeAttribute('src');
       photoEl.src = driverDetailPhotoPlaceholderSrc();
       photoEl.alt = '';
@@ -1320,15 +1270,16 @@
           if (!photoUrl) {
             photoEl.src = driverDetailPhotoPlaceholderSrc();
           } else {
-            // Cache-buster ensures new request on each SPA navigation.
-            // Do not reset src to '' to avoid extra request to current page
-            // and avoid "batching" two assignments in a row.
-            var sep = photoUrl.indexOf('?') >= 0 ? '&' : '?';
-            var newSrc = photoUrl + sep + '_=' + Date.now();
-            // Full reset without side-effect request.
+            var photoSlug = canonicalSlug || slug;
+            var newSrc = '/api/driver-thumb/' + encodeURIComponent(photoSlug) + '?size=profile&_=driver-profile-v1';
             photoEl.removeAttribute('src');
-            // Just in case: prevent browser from deferring load.
             photoEl.loading = 'eager';
+            photoEl.decoding = 'async';
+            photoEl.fetchPriority = 'high';
+            photoEl.onerror = function () {
+              photoEl.onerror = null;
+              photoEl.src = driverDetailPhotoPlaceholderSrc();
+            };
             photoEl.src = newSrc;
           }
           photoEl.alt = data.name ? (data.name + ' photo') : 'Driver photo';
@@ -1469,6 +1420,147 @@
     renderEntityPage('crew-chief', slug, t('coming_soon.crew_chief'));
   }
 
+  function feedbackEmailAddress() {
+    return ['bobbtga', '@', 'gmail', '.', 'com'].join('');
+  }
+
+  function setFeedbackStatus(message, kind) {
+    var statusEl = document.getElementById('feedback-status');
+    if (!statusEl) return;
+    statusEl.textContent = message || '';
+    statusEl.classList.remove('feedback-status--ok', 'feedback-status--error');
+    if (kind) statusEl.classList.add('feedback-status--' + kind);
+  }
+
+  function initFeedbackForm() {
+    var form = document.getElementById('feedback-form');
+    if (!form || form.getAttribute('data-feedback-wired') === '1') return;
+    form.setAttribute('data-feedback-wired', '1');
+    initFeedbackTurnstile();
+
+    var copyBtn = document.getElementById('feedback-copy-email');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        var email = feedbackEmailAddress();
+        function copied() {
+          setFeedbackStatus(t('feedback.copy_success') || 'Email copied.', 'ok');
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(copied).catch(function () {
+            setFeedbackStatus(email, 'ok');
+          });
+        } else {
+          setFeedbackStatus(email, 'ok');
+        }
+      });
+    }
+
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var submitBtn = document.getElementById('feedback-submit');
+      var messageEl = document.getElementById('feedback-message');
+      var message = messageEl ? String(messageEl.value || '').trim() : '';
+      if (message.length < 10) {
+        setFeedbackStatus(t('feedback.error_short') || 'Please add a little more detail.', 'error');
+        if (messageEl) messageEl.focus();
+        return;
+      }
+
+      var payload = {
+        name: String((document.getElementById('feedback-name') || {}).value || '').trim(),
+        email: String((document.getElementById('feedback-email') || {}).value || '').trim(),
+        message: message,
+        page_url: window.location.href,
+        lang: getLang ? getLang() : '',
+        website: String((document.getElementById('feedback-website') || {}).value || '').trim(),
+        turnstile_token: String((document.getElementById('feedback-turnstile-token') || {}).value || '').trim()
+      };
+
+      if (submitBtn) submitBtn.disabled = true;
+      setFeedbackStatus(t('feedback.sending') || 'Sending...', '');
+      fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
+      }).then(function (resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.json().catch(function () { return {}; });
+      }).then(function (data) {
+        form.reset();
+        var tokenEl = document.getElementById('feedback-turnstile-token');
+        if (tokenEl) tokenEl.value = '';
+        if (window.turnstile && window.TGA && window.TGA._feedbackTurnstileWidgetId != null) {
+          try { window.turnstile.reset(window.TGA._feedbackTurnstileWidgetId); } catch (e) {}
+        }
+        var successMessage = (data && data.email_status === 'not_configured')
+          ? (t('feedback.success_saved') || 'Thanks, feedback saved. Email notifications are not configured.')
+          : (data && data.email_status === 'failed')
+            ? (t('feedback.success_email_failed') || 'Thanks, feedback saved. Email sending failed; check server logs.')
+            : (t('feedback.success') || 'Thanks, feedback sent.');
+        setFeedbackStatus(successMessage, 'ok');
+      }).catch(function () {
+        setFeedbackStatus(t('feedback.error_submit') || 'Could not send feedback. You can copy the email and send it manually.', 'error');
+      }).finally(function () {
+        if (submitBtn) submitBtn.disabled = false;
+      });
+    });
+  }
+
+  function initFeedbackTurnstile() {
+    var root = document.getElementById('feedback-turnstile');
+    if (!root || root.getAttribute('data-turnstile-init') === '1') return;
+    root.setAttribute('data-turnstile-init', '1');
+    fetch('/api/feedback/config', { credentials: 'same-origin' })
+      .then(function (resp) { return resp.ok ? resp.json() : {}; })
+      .then(function (cfg) {
+        if (!cfg || !cfg.turnstile_enabled || !cfg.turnstile_site_key) return;
+        root.classList.remove('hidden');
+        function renderWidget() {
+          if (!window.turnstile || !window.turnstile.render) return;
+          window.TGA = window.TGA || {};
+          if (window.TGA._feedbackTurnstileWidgetId != null) return;
+          window.TGA._feedbackTurnstileWidgetId = window.turnstile.render(root, {
+            sitekey: cfg.turnstile_site_key,
+            callback: function (token) {
+              var tokenEl = document.getElementById('feedback-turnstile-token');
+              if (tokenEl) tokenEl.value = token || '';
+            },
+            'expired-callback': function () {
+              var tokenEl = document.getElementById('feedback-turnstile-token');
+              if (tokenEl) tokenEl.value = '';
+            }
+          });
+        }
+        if (window.turnstile && window.turnstile.render) {
+          renderWidget();
+          return;
+        }
+        var script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        script.onload = renderWidget;
+        document.head.appendChild(script);
+      })
+      .catch(function () {});
+  }
+
+  function renderFeedbackPage() {
+    state.loadedSeriesId = null;
+    showView('view-feedback');
+    document.title = (window.TGA.documentTitle || function (m) { return m + ' — The Grid Archive (TGA)'; })(t('feedback.title') || 'Feedback');
+    var breadcrumbEl = document.getElementById('feedback-breadcrumb');
+    if (breadcrumbEl) {
+      breadcrumbEl.innerHTML =
+        '<a href="/">' + t('breadcrumb.all') + '</a>' +
+        '<span class="breadcrumb-sep">/</span>' +
+        '<span>' + t('feedback.title') + '</span>';
+    }
+    translateStaticUI();
+    initFeedbackForm();
+  }
+
   // Page handlers for lib/router.js (registered before initRouter)
   window.TGA.showView = showView;
   window.TGA.renderSearchPage = renderSearchPage;
@@ -1476,6 +1568,7 @@
   window.TGA.renderDriverDetail = renderDriverDetail;
   window.TGA.renderTeamDetail = renderTeamDetail;
   window.TGA.renderCrewChiefDetail = renderCrewChiefDetail;
+  window.TGA.renderFeedbackPage = renderFeedbackPage;
 
   // Initialize static translations
   if (window.TGA.updateLangUI) window.TGA.updateLangUI();

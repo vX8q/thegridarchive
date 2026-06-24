@@ -9,34 +9,40 @@ import (
 // aggregateByManufacturer aggregates driver rows by manufacturer.
 func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 	type manAcc struct {
-		man           string
-		races         int
-		wins          int
-		top2          int
-		top3          int
-		podiums       int
-		poles         int
-		top5          int
-		top10         int
-		top15         int
-		top20         int
-		fastestLaps   int
-		q2Passes      int
-		q3Passes      int
-		stageWins     int
-		stagePoints   int
-		lapsLed       int
-		lapsCompleted int
-		sumFinish     float64
-		finishWeight  int
-		sumStart      float64
-		startWeight   int
-		sumQual       float64
-		qualWeight    int
-		sumLapsPct    float64
-		lapsWeight    int
-		sumPosDiff    float64
-		posDiffWeight int
+		man            string
+		races          int
+		wins           int
+		points         float64
+		top2           int
+		top3           int
+		podiums        int
+		poles          int
+		top5           int
+		top10          int
+		top15          int
+		top20          int
+		fastestLaps    int
+		dnfs           int
+		sprintWins     int
+		sprintPodiums  int
+		featureWins    int
+		featurePodiums int
+		q2Passes       int
+		q3Passes       int
+		stageWins      int
+		stagePoints    int
+		lapsLed        int
+		lapsCompleted  int
+		sumFinish      float64
+		finishWeight   int
+		sumStart       float64
+		startWeight    int
+		sumQual        float64
+		qualWeight     int
+		sumLapsPct     float64
+		lapsWeight     int
+		sumPosDiff     float64
+		posDiffWeight  int
 	}
 
 	byMan := make(map[string]*manAcc)
@@ -52,6 +58,7 @@ func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 		}
 		a.races += d.Races
 		a.wins += d.Wins
+		a.points += d.Points
 		a.top2 += d.Top2
 		a.top3 += d.Top3
 		a.podiums += d.Podiums
@@ -61,6 +68,11 @@ func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 		a.top15 += d.Top15
 		a.top20 += d.Top20
 		a.fastestLaps += d.FastestLaps
+		a.dnfs += d.DNFs
+		a.sprintWins += d.SprintWins
+		a.sprintPodiums += d.SprintPodiums
+		a.featureWins += d.FeatureWins
+		a.featurePodiums += d.FeaturePodiums
 		a.q2Passes += d.Q2Passes
 		a.q3Passes += d.Q3Passes
 		a.stageWins += d.StageWins
@@ -98,6 +110,7 @@ func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 			Manufacturer:     a.man,
 			Races:            a.races,
 			Wins:             a.wins,
+			Points:           roundTo(a.points, 2),
 			Top2:             a.top2,
 			Top3:             a.top3,
 			Podiums:          a.podiums,
@@ -107,6 +120,11 @@ func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 			Top15:            a.top15,
 			Top20:            a.top20,
 			FastestLaps:      a.fastestLaps,
+			DNFs:             a.dnfs,
+			SprintWins:       a.sprintWins,
+			SprintPodiums:    a.sprintPodiums,
+			FeatureWins:      a.featureWins,
+			FeaturePodiums:   a.featurePodiums,
 			AvgFinish:        roundTo(divSafe(a.sumFinish, float64(a.finishWeight)), 2),
 			AvgStart:         roundTo(divSafe(a.sumStart, float64(a.startWeight)), 2),
 			AvgQualifying:    roundTo(divSafe(a.sumQual, float64(a.qualWeight)), 2),
@@ -145,25 +163,35 @@ func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 // aggregateByTeam aggregates driver rows by team.
 func aggregateByTeam(rows []DriverStatsRow) []TeamStatsRow {
 	type teamAcc struct {
-		team             string
-		races            int
-		wins             int
-		poles            int
-		top5             int
-		top10            int
-		top15            int
-		top20            int
-		stageWins        int
-		stagePoints      int
-		lapsLed          int
-		sumFinish        float64
-		finishWeight     int
-		sumStart         float64
-		startWeight      int
-		sumLapsPct       float64
-		lapsWeight       int
-		sumPosDiff       float64
-		posDiffWeight    int
+		team           string
+		races          int
+		wins           int
+		points         float64
+		poles          int
+		top2           int
+		top3           int
+		podiums        int
+		top5           int
+		top10          int
+		top15          int
+		top20          int
+		stageWins      int
+		stagePoints    int
+		fastestLaps    int
+		dnfs           int
+		sprintWins     int
+		sprintPodiums  int
+		featureWins    int
+		featurePodiums int
+		lapsLed        int
+		sumFinish      float64
+		finishWeight   int
+		sumStart       float64
+		startWeight    int
+		sumLapsPct     float64
+		lapsWeight     int
+		sumPosDiff     float64
+		posDiffWeight  int
 	}
 
 	byTeam := make(map[string]*teamAcc)
@@ -179,13 +207,23 @@ func aggregateByTeam(rows []DriverStatsRow) []TeamStatsRow {
 		}
 		a.races += d.Races
 		a.wins += d.Wins
+		a.points += d.Points
 		a.poles += d.Poles
+		a.top2 += d.Top2
+		a.top3 += d.Top3
+		a.podiums += d.Podiums
 		a.top5 += d.Top5
 		a.top10 += d.Top10
 		a.top15 += d.Top15
 		a.top20 += d.Top20
 		a.stageWins += d.StageWins
 		a.stagePoints += d.StagePoints
+		a.fastestLaps += d.FastestLaps
+		a.dnfs += d.DNFs
+		a.sprintWins += d.SprintWins
+		a.sprintPodiums += d.SprintPodiums
+		a.featureWins += d.FeatureWins
+		a.featurePodiums += d.FeaturePodiums
 		a.lapsLed += d.LapsLed
 		if d.AvgFinish > 0 && d.Races > 0 {
 			a.sumFinish += d.AvgFinish * float64(d.Races)
@@ -214,13 +252,23 @@ func aggregateByTeam(rows []DriverStatsRow) []TeamStatsRow {
 			Team:             a.team,
 			Races:            a.races,
 			Wins:             a.wins,
+			Points:           roundTo(a.points, 2),
 			Poles:            a.poles,
+			Top2:             a.top2,
+			Top3:             a.top3,
+			Podiums:          a.podiums,
 			Top5:             a.top5,
 			Top10:            a.top10,
 			Top15:            a.top15,
 			Top20:            a.top20,
 			AvgFinish:        roundTo(divSafe(a.sumFinish, float64(a.finishWeight)), 2),
 			AvgStart:         roundTo(divSafe(a.sumStart, float64(a.startWeight)), 2),
+			FastestLaps:      a.fastestLaps,
+			DNFs:             a.dnfs,
+			SprintWins:       a.sprintWins,
+			SprintPodiums:    a.sprintPodiums,
+			FeatureWins:      a.featureWins,
+			FeaturePodiums:   a.featurePodiums,
 			StageWins:        a.stageWins,
 			StagePoints:      a.stagePoints,
 			AvgStagePoints:   roundTo(divSafe(float64(a.stagePoints), float64(a.races)), 2),
@@ -245,4 +293,3 @@ func aggregateByTeam(rows []DriverStatsRow) []TeamStatsRow {
 
 	return out
 }
-

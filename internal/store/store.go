@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"errors"
 
 	"github.com/vX8q/tga/models"
 )
@@ -40,6 +41,9 @@ type Store interface {
 	// Stage Results
 	UpsertStageResult(ctx context.Context, r *models.StageResult) error
 
+	// Feedback
+	SaveFeedback(ctx context.Context, msg *models.FeedbackMessage) error
+
 	// RunInTransaction runs fn in a single transaction. Rolls back on error from fn.
 	// NoopStore runs fn without a transaction.
 	RunInTransaction(ctx context.Context, fn func(Store) error) error
@@ -53,49 +57,68 @@ func (NoopStore) Health(_ context.Context) error { return nil }
 
 // UpsertSeries is a no-op for NoopStore.
 func (NoopStore) UpsertSeries(_ context.Context, _ *models.Series) error { return nil }
+
 // ListSeries returns no rows for NoopStore.
 func (NoopStore) ListSeries(_ context.Context, _ string) ([]models.Series, error) {
 	return nil, nil
 }
+
 // UpsertEvent is a no-op for NoopStore.
 func (NoopStore) UpsertEvent(_ context.Context, _ *models.Event) error { return nil }
+
 // ListEvents returns no rows for NoopStore.
 func (NoopStore) ListEvents(_ context.Context, _, _ string) ([]models.Event, error) {
 	return nil, nil
 }
+
 // UpsertRace is a no-op for NoopStore.
 func (NoopStore) UpsertRace(_ context.Context, _ *models.Race) error { return nil }
+
 // ListRacesByEvent returns no rows for NoopStore.
 func (NoopStore) ListRacesByEvent(_ context.Context, _ string) ([]models.Race, error) {
 	return nil, nil
 }
+
 // UpsertDriver is a no-op for NoopStore.
 func (NoopStore) UpsertDriver(_ context.Context, _ *models.Driver) error { return nil }
+
 // ListDrivers returns no rows for NoopStore.
 func (NoopStore) ListDrivers(_ context.Context) ([]models.Driver, error) { return nil, nil }
+
 // GetDriversBySlug returns no rows for NoopStore.
 func (NoopStore) GetDriversBySlug(_ context.Context, _ string) ([]models.Driver, error) {
 	return nil, nil
 }
+
 // UpsertTeam is a no-op for NoopStore.
 func (NoopStore) UpsertTeam(_ context.Context, _ *models.Team) error { return nil }
+
 // ListTeams returns no rows for NoopStore.
 func (NoopStore) ListTeams(_ context.Context, _ string) ([]models.Team, error) {
 	return nil, nil
 }
+
 // UpsertResult is a no-op for NoopStore.
 func (NoopStore) UpsertResult(_ context.Context, _ *models.Result) error { return nil }
+
 // ListResultsByRace returns no rows for NoopStore.
 func (NoopStore) ListResultsByRace(_ context.Context, _ string) ([]models.Result, error) {
 	return nil, nil
 }
+
 // ListDriverSeasonResults returns no rows for NoopStore.
 func (NoopStore) ListDriverSeasonResults(_ context.Context, _ []string, _ string) ([]models.DriverSeasonResult, error) {
 	return nil, nil
 }
+
 // UpsertStageResult is a no-op for NoopStore.
 func (NoopStore) UpsertStageResult(_ context.Context, _ *models.StageResult) error {
 	return nil
+}
+
+// SaveFeedback requires a writable store.
+func (NoopStore) SaveFeedback(_ context.Context, _ *models.FeedbackMessage) error {
+	return errors.New("feedback store unavailable")
 }
 
 // RunInTransaction executes callback directly for NoopStore.

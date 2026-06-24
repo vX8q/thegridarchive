@@ -9,7 +9,7 @@ import (
 // RaceSession is one race session from event JSON (tables.race.sessions or tables.race with headers/rows).
 // The same format is used for F1, F2, F3, Supercars, etc.
 type RaceSession struct {
-	Title   string     // "Sprint Race Results", "Race 4", ...
+	Title   string // "Sprint Race Results", "Race 4", ...
 	Headers []string
 	Rows    [][]string
 }
@@ -55,8 +55,12 @@ func LoadEventPointsEligibleByCar(dataDir, eventID string) (map[string]bool, err
 	if err != nil || detail == nil {
 		return nil, err
 	}
+	return pointsEligibleByCarFromEntryList(detail.EntryList), nil
+}
+
+func pointsEligibleByCarFromEntryList(entries []EntryListRow) map[string]bool {
 	out := make(map[string]bool)
-	for _, e := range detail.EntryList {
+	for _, e := range entries {
 		num := strings.TrimSpace(e.Number)
 		if num == "" {
 			continue
@@ -68,9 +72,9 @@ func LoadEventPointsEligibleByCar(dataDir, eventID string) (map[string]bool, err
 		out[num] = eligible
 	}
 	if len(out) == 0 {
-		return nil, nil
+		return nil
 	}
-	return out, nil
+	return out
 }
 
 // stockCarIneligibleDriver marks driver as ineligible when entry_list says so or name has (i).

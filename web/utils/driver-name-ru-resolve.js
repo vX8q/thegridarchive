@@ -23,7 +23,8 @@
   }
 
   function driverSurnameLatin(base) {
-    var words = String(base || '').trim().split(/\s+/).filter(Boolean);
+    var stripped = stripMarkers(base);
+    var words = String(stripped || '').trim().split(/\s+/).filter(Boolean);
     if (!words.length) return '';
     if (words.length === 1) return words[0];
     var start = words.length - 1;
@@ -169,7 +170,10 @@
     var wordCount = stripped.split(/\s+/).filter(Boolean).length;
     if (wordCount >= 3) {
       var short = findShortEntry(stripped, map);
-      if (short) return buildFullLegalRu(stripped, short.ru);
+      if (short) {
+        if (foldKey(stripped) === short.key) return short.ru;
+        return buildFullLegalRu(stripped, short.ru);
+      }
     }
 
     if (wordCount === 2 || wordCount === 1) {
@@ -184,7 +188,11 @@
         if (!Object.prototype.hasOwnProperty.call(map, k2)) continue;
         if (driverSurnameLatin(k2).toLowerCase() === want) hits.push(map[k2]);
       }
-      if (hits.length === 1) return hits[0];
+      var unique = [];
+      for (var h = 0; h < hits.length; h++) {
+        if (unique.indexOf(hits[h]) < 0) unique.push(hits[h]);
+      }
+      if (unique.length === 1) return unique[0];
     }
 
     return '';

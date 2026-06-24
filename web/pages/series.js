@@ -73,6 +73,14 @@
 
   function showView(activeId) { P.showView(activeId); }
 
+  function teamLink(name) {
+    if (!name) return '—';
+    var raw = String(name).trim();
+    if (!raw || raw === '—') return '—';
+    var label = teamLabel ? teamLabel(raw) : raw;
+    return '<a href="/team/' + encodeURIComponent(slugify(raw)) + '" class="track-link">' + esc(label) + '</a>';
+  }
+
   function filterVisibleEvents(events) {
     if (window.TGA && typeof window.TGA.filterVisibleEvents === 'function') {
       return window.TGA.filterVisibleEvents(events);
@@ -271,18 +279,8 @@ function renderDetail(seriesId, subPath) {
     });
     if (seriesIdLower) bodyEl.classList.add('series-' + (isF1 ? 'f1' : seriesIdLower));
   }
-  var isStockCarSeries = catKey === 'stockcar';
-  var isIndyCarSeries = seriesIdUpper === 'INDYCAR';
-  var isSupercarsSeries = seriesIdUpper === 'SUPERCARS';
-  var hasStats = isStockCarSeries || isIndyCarSeries || isSupercarsSeries || isF1;
+  var hasStats = true;
 
-  function teamLink(name) {
-    if (!name) return '—';
-    var raw = String(name).trim();
-    if (!raw) return '—';
-    var label = teamLabel ? teamLabel(raw) : raw;
-    return '<a href="/team/' + encodeURIComponent(slugify(raw)) + '" class="track-link">' + esc(label) + '</a>';
-  }
   function driverLink(name) {
     if (window.TGA && window.TGA.driverLinkHtml) return window.TGA.driverLinkHtml(name);
     var display = driverDisplayName(name);
@@ -342,6 +340,9 @@ function renderDetail(seriesId, subPath) {
     // apply static regulations (otherwise table stays empty).
     if (!isImsaSeriesSame && subPath === 'specs' && typeof renderF1StaticSpecsIfNeeded === 'function') {
       renderF1StaticSpecsIfNeeded();
+    }
+    if (subPath === 'history' && typeof renderF1HistoryFromStatic === 'function') {
+      renderF1HistoryFromStatic();
     }
     translateStaticUI();
     return;
@@ -437,6 +438,12 @@ function renderDetail(seriesId, subPath) {
   if (statsEmpty) statsEmpty.classList.add('hidden');
   var statsBody = document.querySelector('#stats-table tbody');
   if (statsBody) statsBody.innerHTML = '';
+  var manufacturerStatsWrapInit = document.getElementById('manufacturer-stats-wrap');
+  var manufacturerStatsBodyInit = document.querySelector('#manufacturer-stats-table tbody');
+  var manufacturerStatsEmptyInit = document.getElementById('manufacturer-stats-empty');
+  if (manufacturerStatsWrapInit) manufacturerStatsWrapInit.classList.add('hidden');
+  if (manufacturerStatsBodyInit) manufacturerStatsBodyInit.innerHTML = '';
+  if (manufacturerStatsEmptyInit) manufacturerStatsEmptyInit.classList.add('hidden');
 
   API.getSeriesMeta(seriesId)
     .then(function (s) {
@@ -3040,6 +3047,11 @@ function renderDetail(seriesId, subPath) {
           if (!selectEl) return;
 
           var config = null;
+          var labelEl = selectEl.parentNode;
+          if (selectEl.closest) {
+            var closestLabel = selectEl.closest('label');
+            if (closestLabel) labelEl = closestLabel;
+          }
           if (seriesKeyStats === 'nascar_cup' || seriesKeyStats === 'noaps') {
             config = [5, 10, 20, 30];
           } else if (seriesKeyStats === 'nascar_truck') {
@@ -3050,15 +3062,13 @@ function renderDetail(seriesId, subPath) {
 
           if (!config) {
             // For other series temporarily hide minimum starts filter.
-            var labelEl = selectEl.parentNode;
-            if (selectEl.closest) {
-              var closestLabel = selectEl.closest('label');
-              if (closestLabel) labelEl = closestLabel;
-            }
             if (labelEl && labelEl.style) {
               labelEl.style.display = 'none';
             }
             return;
+          }
+          if (labelEl && labelEl.style) {
+            labelEl.style.display = '';
           }
 
           var allLabel = t('stats.all_starts');
@@ -3078,6 +3088,72 @@ function renderDetail(seriesId, subPath) {
           return String(num);
         }
 
+        function hasAnyValue(list, key) {
+          return list.some(function (row) {
+            var v = row && row[key];
+            if (v == null || v === '' || v === '—') return false;
+            if (typeof v === 'number') return v !== 0;
+            var num = parseFloat(String(v));
+            if (!isNaN(num)) return num !== 0;
+            return String(v).trim() !== '';
+          });
+        }
+
+        function hasAnyText(list, key) {
+          return list.some(function (row) {
+            var v = row && row[key];
+            return v != null && String(v).trim() !== '' && String(v).trim() !== '—';
+          });
+        }
+
+        function makeStatsColumn(key, label, render, className) {
+          return { key: key, label: label, render: render, className: className || '' };
+        }
+
+        function setStatsHead(table, columns) {
+          var headRow = table && table.querySelector('thead tr');
+          if (!headRow) return null;
+          headRow.innerHTML = columns.map(function (col) {
+            return '<th>' + esc(col.label) + '</th>';
+          }).join('');
+          return headRow;
+        }
+
+        function attachStatsSort(table, columns, dataArray, renderFn, numericKeys) {
+          var headRow = table && table.querySelector('thead tr');
+          if (!headRow) return;
+          var ths = headRow.querySelectorAll('th');
+          for (var c = 0; c < ths.length; c++) {
+            (function (colIndex) {
+              var col = columns[colIndex];
+              if (!col || !col.key) return;
+              ths[colIndex].classList.add('sortable');
+              ths[colIndex].addEventListener('click', function () {
+                var dir = ths[colIndex].dataset.sortDir === 'asc' ? -1 : 1;
+                dataArray.sort(function (a, b) {
+                  var va = a[col.key];
+                  var vb = b[col.key];
+                  var ae = (va === null || va === undefined || va === '');
+                  var be = (vb === null || vb === undefined || vb === '');
+                  if (ae && be) return 0;
+                  if (ae) return 1;
+                  if (be) return -1;
+                  if (numericKeys.indexOf(col.key) >= 0) {
+                    var na = parseFloat(va);
+                    var nb = parseFloat(vb);
+                    if (!isNaN(na) && !isNaN(nb)) return dir * (na - nb);
+                  }
+                  return dir * String(va).localeCompare(String(vb), undefined, { numeric: true });
+                });
+                [].forEach.call(ths, function (th) { th.classList.remove('sort-asc', 'sort-desc'); th.removeAttribute('data-sort-dir'); });
+                ths[colIndex].classList.add(dir === 1 ? 'sort-asc' : 'sort-desc');
+                ths[colIndex].dataset.sortDir = (dir === 1 ? 'asc' : 'desc');
+                renderFn(dataArray);
+              });
+            })(c);
+          }
+        }
+
         // Prepare object array for sorting and render.
         // For F1 use single template for current and historical seasons (f1-YYYY).
         var isF1Stats = (seriesKeyStats === 'f1' || seriesKeyStats.indexOf('f1-') === 0);
@@ -3092,9 +3168,11 @@ function renderDetail(seriesId, subPath) {
             driver: row.driver || '',
             team: row.team || '',
             manufacturer: row.manufacturer || '',
+            class: row.class || '',
             chassis: row.chassis || '',
             races: row.races || 0,
             wins: row.wins || 0,
+            points: row.points || 0,
             top2: row.top2 || 0,
             top3: row.top3 || 0,
             podiums: row.podiums != null ? row.podiums : (row.wins || 0) + (row.top2 || 0) + (row.top3 || 0),
@@ -3104,6 +3182,11 @@ function renderDetail(seriesId, subPath) {
             top15: row.top15 || 0,
             top20: row.top20 || 0,
             fastest_laps: row.fastest_laps || 0,
+            dnfs: row.dnfs || 0,
+            sprint_wins: row.sprint_wins || 0,
+            sprint_podiums: row.sprint_podiums || 0,
+            feature_wins: row.feature_wins || 0,
+            feature_podiums: row.feature_podiums || 0,
             avg_start: row.avg_start,
             avg_qualifying: row.avg_qualifying,
             avg_finish: row.avg_finish,
@@ -3122,7 +3205,34 @@ function renderDetail(seriesId, subPath) {
 
         var statsFilterInput = document.getElementById('stats-filter');
         var statsMinStartsSelect = document.getElementById('stats-min-starts');
+        var statsClassControl = document.getElementById('stats-class-control');
+        var statsClassSelect = document.getElementById('stats-class-filter');
         setupMinStartsSelect(statsMinStartsSelect, 'driver');
+        var isStockCarStatsSeries = ['nascar_cup', 'noaps', 'nascar_truck', 'arca', 'nascar_modified'].indexOf(seriesKeyStats) >= 0;
+        var isEngineStatsSeries = (seriesKeyStats === 'indycar' || seriesKeyStats === 'super_formula');
+        function shouldShowManufacturerStats(seriesKey) {
+          var key = String(seriesKey || '').toLowerCase();
+          if (key.indexOf('f1-') === 0) return true;
+          return [
+            'f1', 'indycar', 'super_formula',
+            'nascar_cup', 'noaps', 'nascar_truck', 'arca', 'nascar_modified',
+            'supercars', 'dtm', 'wec', 'imsa', 'elms',
+            'gtwce_end', 'gtwce_sprint', 'gtwc_america', 'super_gt'
+          ].indexOf(key) >= 0;
+        }
+        var hasClassStats = data && Array.isArray(data.classes) && data.classes.length > 0;
+        if (statsClassControl) statsClassControl.classList.toggle('hidden', !hasClassStats);
+        if (statsClassSelect && hasClassStats) {
+          statsClassSelect.innerHTML = '<option value="">' + esc(t('stats.all_classes') || 'All classes') + '</option>' + data.classes.map(function (cls) {
+            return '<option value="' + esc(cls.name || cls.id || '') + '">' + esc(cls.name || cls.id || '') + '</option>';
+          }).join('');
+          if (['imsa', 'wec', 'elms', 'gtwce_end', 'gtwce_sprint', 'gtwc_america', 'super_gt'].indexOf(seriesKeyStats) >= 0 && data.classes[0]) {
+            statsClassSelect.value = data.classes[0].name || data.classes[0].id || '';
+          }
+        } else if (statsClassSelect) {
+          statsClassSelect.innerHTML = '';
+        }
+        var avgStartLabel = seriesKeyStats === 'supercars' ? t('stats.avg_qualifying') : t('standings.avg_start');
 
         function passesStatsFilter(row) {
           var minStarts = 0;
@@ -3131,6 +3241,7 @@ function renderDetail(seriesId, subPath) {
             if (!isNaN(parsed) && parsed > 0) minStarts = parsed;
           }
           if (minStarts && (row.races || 0) < minStarts) return false;
+          if (statsClassSelect && statsClassSelect.value && row.class !== statsClassSelect.value) return false;
           var q = statsFilterInput && statsFilterInput.value
             ? statsFilterInput.value.trim().toLowerCase()
             : '';
@@ -3138,95 +3249,120 @@ function renderDetail(seriesId, subPath) {
           var haystack = [
             row.driver || '',
             row.team || '',
-            row.manufacturer || ''
+            row.manufacturer || '',
+            row.class || ''
           ].join(' ').toLowerCase();
           return haystack.indexOf(q) !== -1;
         }
 
+        var driverNumericKeys = [
+          'pos', 'car', 'races', 'wins', 'top2', 'top3', 'podiums', 'poles', 'top5', 'top10', 'top15', 'top20',
+          'points', 'fastest_laps', 'dnfs', 'sprint_wins', 'sprint_podiums', 'feature_wins', 'feature_podiums',
+          'avg_start', 'avg_qualifying', 'avg_finish', 'q2_passes', 'q3_passes', 'stage_wins', 'stage_points', 'avg_stage_points', 'laps_led',
+          'laps_completed', 'laps_completed_pct', 'pos_diff'
+        ];
+        var avgStartFmt = function (row) {
+          return (row.avg_start == null || row.avg_start === 0 || row.avg_start === '0') ? '—' : fmtNum(row.avg_start, 2);
+        };
+        var avgFinishFmt = function (row) { return fmtNum(row.avg_finish, 2); };
+        var lapsPct = function (row) { return row.laps_completed_pct != null ? fmtNum(row.laps_completed_pct, 1) + '%' : '—'; };
+        var posDiff = function (row) { return row.pos_diff != null ? fmtNum(row.pos_diff, 1) : '—'; };
+        var avgStagePts = function (row) { return (row.avg_stage_points == null || row.avg_stage_points === 0 || row.avg_stage_points === '0') ? '—' : fmtNum(row.avg_stage_points, 2); };
+        var driverColumns = [
+          makeStatsColumn('pos', t('th.pos'), function (row) { return row.pos; }, 'col-num')
+        ];
+        if (hasAnyText(statsRows, 'car')) {
+          driverColumns.push(makeStatsColumn('car', t('th.no'), function (row) { return esc(dash(row.car)); }, 'col-car'));
+        }
+        driverColumns.push(makeStatsColumn('driver', t('th.driver'), function (row) { return driverLink(row.driver); }));
+        if (hasAnyText(statsRows, 'team')) {
+          driverColumns.push(makeStatsColumn('team', t('th.team'), function (row) { return teamLink(row.team); }));
+        }
+        if (hasAnyText(statsRows, 'manufacturer')) {
+          driverColumns.push(makeStatsColumn('manufacturer', isEngineStatsSeries ? t('th.engine') : t('th.manufacturer'), function (row) { return esc(dash(row.manufacturer || '')); }));
+        }
+        if (hasClassStats && hasAnyText(statsRows, 'class')) {
+          driverColumns.push(makeStatsColumn('class', 'Class', function (row) { return esc(dash(row.class || '')); }));
+        }
+        driverColumns.push(makeStatsColumn('races', t('stats.starts_short'), function (row) { return row.races; }));
+        driverColumns.push(makeStatsColumn('wins', t('standings.wins'), function (row) { return row.wins; }));
+        if (hasAnyValue(statsRows, 'points')) {
+          driverColumns.push(makeStatsColumn('points', t('standings.points'), function (row) { return fmtNum(row.points, 1); }));
+        }
+        if (hasAnyValue(statsRows, 'sprint_wins') || hasAnyValue(statsRows, 'sprint_podiums')) {
+          driverColumns.push(makeStatsColumn('sprint_wins', 'Sprint W', function (row) { return row.sprint_wins; }));
+          driverColumns.push(makeStatsColumn('sprint_podiums', 'Sprint Pod', function (row) { return row.sprint_podiums; }));
+        }
+        if (hasAnyValue(statsRows, 'feature_wins') || hasAnyValue(statsRows, 'feature_podiums')) {
+          driverColumns.push(makeStatsColumn('feature_wins', 'Feature W', function (row) { return row.feature_wins; }));
+          driverColumns.push(makeStatsColumn('feature_podiums', 'Feature Pod', function (row) { return row.feature_podiums; }));
+        }
+        if (!isStockCarStatsSeries && (hasAnyValue(statsRows, 'top2') || hasAnyValue(statsRows, 'top3'))) {
+          driverColumns.push(makeStatsColumn('top2', t('stats.top2'), function (row) { return row.top2; }));
+          driverColumns.push(makeStatsColumn('top3', t('stats.top3'), function (row) { return row.top3; }));
+          driverColumns.push(makeStatsColumn('podiums', t('stats.podiums'), function (row) { return row.podiums; }));
+        }
+        if (hasAnyValue(statsRows, 'poles')) {
+          driverColumns.push(makeStatsColumn('poles', t('standings.poles'), function (row) { return row.poles; }));
+        }
+        driverColumns.push(makeStatsColumn('top5', t('standings.top5'), function (row) { return row.top5; }));
+        driverColumns.push(makeStatsColumn('top10', t('standings.top10'), function (row) { return row.top10; }));
+        if (isStockCarStatsSeries) {
+          driverColumns.push(makeStatsColumn('top15', t('standings.top15'), function (row) { return row.top15; }));
+          driverColumns.push(makeStatsColumn('top20', t('standings.top20'), function (row) { return row.top20; }));
+        }
+        if (hasAnyValue(statsRows, 'avg_start')) {
+          driverColumns.push(makeStatsColumn('avg_start', avgStartLabel, avgStartFmt));
+        }
+        if (isF1Stats && hasAnyValue(statsRows, 'avg_qualifying')) {
+          driverColumns.push(makeStatsColumn('avg_qualifying', t('stats.avg_qualifying'), function (row) {
+            return (row.avg_qualifying == null || row.avg_qualifying === 0 || row.avg_qualifying === '') ? '—' : fmtNum(row.avg_qualifying, 2);
+          }));
+        }
+        driverColumns.push(makeStatsColumn('avg_finish', t('standings.avg_finish'), avgFinishFmt));
+        if (isF1Stats && hasAnyValue(statsRows, 'q2_passes')) {
+          driverColumns.push(makeStatsColumn('q2_passes', t('stats.q2'), function (row) { return row.q2_passes; }));
+        }
+        if (isF1Stats && hasAnyValue(statsRows, 'q3_passes')) {
+          driverColumns.push(makeStatsColumn('q3_passes', t('stats.q3'), function (row) { return row.q3_passes; }));
+        }
+        if (hasAnyValue(statsRows, 'fastest_laps')) {
+          driverColumns.push(makeStatsColumn('fastest_laps', t('stats.fastest_laps'), function (row) { return row.fastest_laps; }));
+        }
+        if (isEngineStatsSeries && hasAnyValue(statsRows, 'dnfs')) {
+          driverColumns.push(makeStatsColumn('dnfs', 'DNF', function (row) { return row.dnfs; }));
+        }
+        if (hasAnyValue(statsRows, 'stage_wins') || hasAnyValue(statsRows, 'stage_points')) {
+          driverColumns.push(makeStatsColumn('stage_wins', t('standings.stage_wins'), function (row) { return row.stage_wins; }));
+          driverColumns.push(makeStatsColumn('stage_points', t('standings.stage_points'), function (row) { return row.stage_points; }));
+          driverColumns.push(makeStatsColumn('avg_stage_points', t('standings.avg_stage_points'), avgStagePts));
+        }
+        if (hasAnyValue(statsRows, 'laps_led')) {
+          driverColumns.push(makeStatsColumn('laps_led', t('stats.laps_led_short'), function (row) { return row.laps_led; }));
+        }
+        if (isStockCarStatsSeries && hasAnyValue(statsRows, 'laps_completed_pct')) {
+          driverColumns.push(makeStatsColumn('laps_completed_pct', t('stats.laps_completed_pct'), lapsPct));
+        } else if (!isStockCarStatsSeries && hasAnyValue(statsRows, 'laps_completed')) {
+          driverColumns.push(makeStatsColumn('laps_completed', t('stats.laps_completed'), function (row) { return row.laps_completed; }));
+        }
+        if (hasAnyValue(statsRows, 'avg_start') && hasAnyValue(statsRows, 'pos_diff')) {
+          driverColumns.push(makeStatsColumn('pos_diff', t('stats.pos_diff'), posDiff));
+        }
+
         function renderStatsTable(dataArray) {
           var filtered = dataArray.filter(passesStatsFilter);
-          var avgStartFmt = function (row) {
-            return (row.avg_start == null || row.avg_start === 0 || row.avg_start === '0') ? '—' : fmtNum(row.avg_start, 2);
-          };
-          var avgFinishFmt = function (row) { return fmtNum(row.avg_finish, 2); };
-          var lapsPct = function (row) { return row.laps_completed_pct != null ? fmtNum(row.laps_completed_pct, 1) + '%' : '—'; };
-          var posDiff = function (row) { return row.pos_diff != null ? fmtNum(row.pos_diff, 1) : '—'; };
-          var avgStagePts = function (row) { return (row.avg_stage_points == null || row.avg_stage_points === 0 || row.avg_stage_points === '0') ? '—' : fmtNum(row.avg_stage_points, 2); };
           tbody.innerHTML = filtered.map(function (row) {
-            var td = '';
-            td += '<td class="col-num">' + row.pos + '</td>';
-            td += '<td class="col-car">' + esc(dash(row.car)) + '</td>';
-            td += '<td>' + driverLink(row.driver) + '</td>';
-            td += '<td>' + teamLink(row.team) + '</td>';
-            td += '<td>' + esc(dash(row.manufacturer || '')) + '</td>';
-            td += '<td>' + row.races + '</td>';
-            td += '<td>' + row.wins + '</td>';
-            td += '<td>' + row.poles + '</td>';
-            td += '<td>' + row.top5 + '</td>';
-            td += '<td>' + row.top10 + '</td>';
-            td += '<td>' + row.top15 + '</td>';
-            td += '<td>' + row.top20 + '</td>';
-            td += '<td>' + avgStartFmt(row) + '</td>';
-            td += '<td>' + avgFinishFmt(row) + '</td>';
-            td += '<td>' + row.stage_wins + '</td>';
-            td += '<td>' + row.stage_points + '</td>';
-            td += '<td>' + avgStagePts(row) + '</td>';
-            td += '<td>' + row.laps_led + '</td>';
-            td += '<td>' + lapsPct(row) + '</td>';
-            td += '<td>' + posDiff(row) + '</td>';
+            var td = driverColumns.map(function (col) {
+              return '<td' + (col.className ? ' class="' + col.className + '"' : '') + '>' + col.render(row) + '</td>';
+            }).join('');
             return '<tr>' + td + '</tr>';
           }).join('');
         }
 
-        // Initialize sort on table header click.
         var statsTable = document.getElementById('stats-table');
         if (statsTable) {
-          var headRow = statsTable.querySelector('thead tr');
-          if (headRow) {
-            var ths = headRow.querySelectorAll('th');
-            var sidLowerStats = (seriesId || '').toLowerCase();
-              var manWrap = document.getElementById('manufacturer-stats-wrap');
-              if (manWrap) manWrap.classList.remove('hidden');
-            if (sidLowerStats === 'indycar' && ths.length > 4 && !isF1Stats) {
-              ths[4].textContent = t('th.engine');
-            }
-            if (sidLowerStats === 'supercars' && ths.length > 10) {
-              ths[10].textContent = t('stats.avg_qualifying');
-            }
-            var keys = ['pos', 'car', 'driver', 'team', 'manufacturer', 'races', 'wins', 'poles', 'top5', 'top10', 'top15', 'top20', 'avg_start', 'avg_finish', 'stage_wins', 'stage_points', 'avg_stage_points', 'laps_led', 'laps_completed_pct', 'pos_diff'];
-            function isNumericKey(k) {
-              return ['pos', 'car', 'races', 'wins', 'poles', 'top5', 'top10', 'top15', 'top20', 'avg_start', 'avg_finish', 'stage_wins', 'stage_points', 'avg_stage_points', 'laps_led', 'laps_completed_pct', 'pos_diff'].indexOf(k) >= 0;
-            }
-            for (var c = 0; c < ths.length; c++) {
-              (function (colIndex) {
-                var key = keys[colIndex];
-                if (!key) return;
-                ths[colIndex].classList.add('sortable');
-                ths[colIndex].addEventListener('click', function () {
-                  var dir = ths[colIndex].dataset.sortDir === 'asc' ? -1 : 1;
-                  statsRows.sort(function (a, b) {
-                    var va = a[key];
-                    var vb = b[key];
-                    var ae = (va === null || va === undefined || va === '');
-                    var be = (vb === null || vb === undefined || vb === '');
-                    if (ae && be) return 0;
-                    if (ae) return 1;
-                    if (be) return -1;
-                    if (isNumericKey(key)) {
-                      var na = parseFloat(va);
-                      var nb = parseFloat(vb);
-                      if (!isNaN(na) && !isNaN(nb)) return dir * (na - nb);
-                    }
-                    return dir * String(va).localeCompare(String(vb), undefined, { numeric: true });
-                  });
-                  [].forEach.call(ths, function (th) { th.classList.remove('sort-asc', 'sort-desc'); th.removeAttribute('data-sort-dir'); });
-                  ths[colIndex].classList.add(dir === 1 ? 'sort-asc' : 'sort-desc');
-                  ths[colIndex].dataset.sortDir = (dir === 1 ? 'asc' : 'desc');
-                  renderStatsTable(statsRows);
-                });
-              })(c);
-            }
-          }
+          setStatsHead(statsTable, driverColumns);
+          attachStatsSort(statsTable, driverColumns, statsRows, renderStatsTable, driverNumericKeys);
         }
 
         if (statsFilterInput) {
@@ -3236,6 +3372,11 @@ function renderDetail(seriesId, subPath) {
         }
         if (statsMinStartsSelect) {
           statsMinStartsSelect.addEventListener('change', function () {
+            renderStatsTable(statsRows);
+          });
+        }
+        if (statsClassSelect) {
+          statsClassSelect.addEventListener('change', function () {
             renderStatsTable(statsRows);
           });
         }
@@ -3259,11 +3400,21 @@ function renderDetail(seriesId, subPath) {
                 team: row.team || '',
                 races: row.races || 0,
                 wins: row.wins || 0,
-              poles: row.poles || 0,
+                points: row.points || 0,
+                poles: row.poles || 0,
+                top2: row.top2 || 0,
+                top3: row.top3 || 0,
+                podiums: row.podiums != null ? row.podiums : (row.wins || 0) + (row.top2 || 0) + (row.top3 || 0),
                 top5: row.top5 || 0,
                 top10: row.top10 || 0,
                 top15: row.top15 || 0,
                 top20: row.top20 || 0,
+                fastest_laps: row.fastest_laps || 0,
+                dnfs: row.dnfs || 0,
+                sprint_wins: row.sprint_wins || 0,
+                sprint_podiums: row.sprint_podiums || 0,
+                feature_wins: row.feature_wins || 0,
+                feature_podiums: row.feature_podiums || 0,
                 avg_start: row.avg_start,
                 avg_finish: row.avg_finish,
                 stage_wins: row.stage_wins || 0,
@@ -3292,77 +3443,80 @@ function renderDetail(seriesId, subPath) {
             function renderTeamTable(list) {
               var filtered = list.filter(teamPassesFilter);
               teamTbody.innerHTML = filtered.map(function (row) {
-                var lapsPct = row.laps_completed_pct != null ? fmtNum(row.laps_completed_pct, 1) + '%' : '—';
-                var posDiff = row.pos_diff != null ? fmtNum(row.pos_diff, 1) : '—';
-                var avgStart = (row.avg_start == null || row.avg_start === 0 || row.avg_start === '0') ? '—' : fmtNum(row.avg_start, 2);
-                var avgFinish = fmtNum(row.avg_finish, 2);
-                var avgStagePts = (row.avg_stage_points == null || row.avg_stage_points === 0 || row.avg_stage_points === '0') ? '—' : fmtNum(row.avg_stage_points, 2);
-                var td = '';
-                td += '<td class="col-num">' + row.pos + '</td>';
-                td += '<td>' + (row.team === '—' ? '—' : teamLink(row.team)) + '</td>';
-                td += '<td>' + row.races + '</td>';
-                td += '<td>' + row.wins + '</td>';
-                td += '<td>' + row.poles + '</td>';
-                td += '<td>' + row.top5 + '</td>';
-                td += '<td>' + row.top10 + '</td>';
-                td += '<td>' + row.top15 + '</td>';
-                td += '<td>' + row.top20 + '</td>';
-                td += '<td>' + avgStart + '</td>';
-                td += '<td>' + avgFinish + '</td>';
-                td += '<td>' + row.stage_wins + '</td>';
-                td += '<td>' + row.stage_points + '</td>';
-                td += '<td>' + avgStagePts + '</td>';
-                td += '<td>' + row.laps_led + '</td>';
-                td += '<td>' + lapsPct + '</td>';
-                td += '<td>' + posDiff + '</td>';
+                var td = teamColumns.map(function (col) {
+                  return '<td' + (col.className ? ' class="' + col.className + '"' : '') + '>' + col.render(row) + '</td>';
+                }).join('');
                 return '<tr>' + td + '</tr>';
               }).join('');
             }
 
             var teamHeadRow = teamTable.querySelector('thead tr');
+            var teamColumns = [
+              makeStatsColumn('pos', t('th.pos'), function (row) { return row.pos; }, 'col-num'),
+              makeStatsColumn('team', t('th.team'), function (row) { return row.team === '—' ? '—' : teamLink(row.team); }),
+              makeStatsColumn('races', t('stats.starts_short'), function (row) { return row.races; }),
+              makeStatsColumn('wins', t('standings.wins'), function (row) { return row.wins; })
+            ];
+            if (hasAnyValue(teamData, 'points')) {
+              teamColumns.push(makeStatsColumn('points', t('standings.points'), function (row) { return fmtNum(row.points, 1); }));
+            }
+            if (hasAnyValue(teamData, 'poles')) {
+              teamColumns.push(makeStatsColumn('poles', t('standings.poles'), function (row) { return row.poles; }));
+            }
+            if (!isStockCarStatsSeries && (hasAnyValue(teamData, 'top2') || hasAnyValue(teamData, 'top3'))) {
+              teamColumns.push(makeStatsColumn('top2', t('stats.top2'), function (row) { return row.top2; }));
+              teamColumns.push(makeStatsColumn('top3', t('stats.top3'), function (row) { return row.top3; }));
+              teamColumns.push(makeStatsColumn('podiums', t('stats.podiums'), function (row) { return row.podiums; }));
+            }
+            teamColumns.push(makeStatsColumn('top5', t('standings.top5'), function (row) { return row.top5; }));
+            teamColumns.push(makeStatsColumn('top10', t('standings.top10'), function (row) { return row.top10; }));
+            if (isStockCarStatsSeries) {
+              teamColumns.push(makeStatsColumn('top15', t('standings.top15'), function (row) { return row.top15; }));
+              teamColumns.push(makeStatsColumn('top20', t('standings.top20'), function (row) { return row.top20; }));
+            }
+            if (hasAnyValue(teamData, 'avg_start')) {
+              teamColumns.push(makeStatsColumn('avg_start', avgStartLabel, function (row) {
+                return (row.avg_start == null || row.avg_start === 0 || row.avg_start === '0') ? '—' : fmtNum(row.avg_start, 2);
+              }));
+            }
+            teamColumns.push(makeStatsColumn('avg_finish', t('standings.avg_finish'), function (row) { return fmtNum(row.avg_finish, 2); }));
+            if (hasAnyValue(teamData, 'fastest_laps')) {
+              teamColumns.push(makeStatsColumn('fastest_laps', t('stats.fastest_laps'), function (row) { return row.fastest_laps; }));
+            }
+            if (hasAnyValue(teamData, 'dnfs')) {
+              teamColumns.push(makeStatsColumn('dnfs', 'DNF', function (row) { return row.dnfs; }));
+            }
+            if (hasAnyValue(teamData, 'sprint_wins') || hasAnyValue(teamData, 'sprint_podiums')) {
+              teamColumns.push(makeStatsColumn('sprint_wins', 'Sprint W', function (row) { return row.sprint_wins; }));
+              teamColumns.push(makeStatsColumn('sprint_podiums', 'Sprint Pod', function (row) { return row.sprint_podiums; }));
+            }
+            if (hasAnyValue(teamData, 'feature_wins') || hasAnyValue(teamData, 'feature_podiums')) {
+              teamColumns.push(makeStatsColumn('feature_wins', 'Feature W', function (row) { return row.feature_wins; }));
+              teamColumns.push(makeStatsColumn('feature_podiums', 'Feature Pod', function (row) { return row.feature_podiums; }));
+            }
+            if (hasAnyValue(teamData, 'stage_wins') || hasAnyValue(teamData, 'stage_points')) {
+              teamColumns.push(makeStatsColumn('stage_wins', t('standings.stage_wins'), function (row) { return row.stage_wins; }));
+              teamColumns.push(makeStatsColumn('stage_points', t('standings.stage_points'), function (row) { return row.stage_points; }));
+              teamColumns.push(makeStatsColumn('avg_stage_points', t('standings.avg_stage_points'), function (row) {
+                return (row.avg_stage_points == null || row.avg_stage_points === 0 || row.avg_stage_points === '0') ? '—' : fmtNum(row.avg_stage_points, 2);
+              }));
+            }
+            if (hasAnyValue(teamData, 'laps_led')) {
+              teamColumns.push(makeStatsColumn('laps_led', t('stats.laps_led_short'), function (row) { return row.laps_led; }));
+            }
+            if (isStockCarStatsSeries && hasAnyValue(teamData, 'laps_completed_pct')) {
+              teamColumns.push(makeStatsColumn('laps_completed_pct', t('stats.laps_completed_pct'), function (row) {
+                return row.laps_completed_pct != null ? fmtNum(row.laps_completed_pct, 1) + '%' : '—';
+              }));
+            }
+            if (hasAnyValue(teamData, 'avg_start') && hasAnyValue(teamData, 'pos_diff')) {
+              teamColumns.push(makeStatsColumn('pos_diff', t('stats.pos_diff'), function (row) {
+                return row.pos_diff != null ? fmtNum(row.pos_diff, 1) : '—';
+              }));
+            }
             if (teamHeadRow) {
-              var teamThs = teamHeadRow.querySelectorAll('th');
-              var teamKeys = [
-                'pos', 'team', 'races', 'wins', 'poles', 'top5', 'top10', 'top15', 'top20',
-                'avg_start', 'avg_finish', 'stage_wins', 'stage_points', 'avg_stage_points', 'laps_led', 'laps_completed_pct', 'pos_diff'
-              ];
-              // For Supercars Avg. Start column is actually Avg. Qualifying.
-              var sidLowerTeam = (seriesId || '').toLowerCase();
-              if (sidLowerTeam === 'supercars' && teamThs.length > 7) {
-                teamThs[7].textContent = t('stats.avg_qualifying');
-              }
-              function isTeamNumeric(k) {
-                return ['pos', 'races', 'wins', 'poles', 'top5', 'top10', 'top15', 'top20', 'avg_start', 'avg_finish', 'stage_wins', 'stage_points', 'avg_stage_points', 'laps_led', 'laps_completed_pct', 'pos_diff'].indexOf(k) >= 0;
-              }
-              for (var tc = 0; tc < teamThs.length; tc++) {
-                (function (colIndex) {
-                  var key = teamKeys[colIndex];
-                  if (!key) return;
-                  teamThs[colIndex].classList.add('sortable');
-                  teamThs[colIndex].addEventListener('click', function () {
-                    var dir = teamThs[colIndex].dataset.sortDir === 'asc' ? -1 : 1;
-                    teamData.sort(function (a, b) {
-                      var va = a[key];
-                      var vb = b[key];
-                      var ae = (va === null || va === undefined || va === '');
-                      var be = (vb === null || vb === undefined || vb === '');
-                      if (ae && be) return 0;
-                      if (ae) return 1;
-                      if (be) return -1;
-                      if (isTeamNumeric(key)) {
-                        var na = parseFloat(va);
-                        var nb = parseFloat(vb);
-                        if (!isNaN(na) && !isNaN(nb)) return dir * (na - nb);
-                      }
-                      return dir * String(va).localeCompare(String(vb), undefined, { numeric: true });
-                    });
-                    [].forEach.call(teamThs, function (th) { th.classList.remove('sort-asc', 'sort-desc'); th.removeAttribute('data-sort-dir'); });
-                    teamThs[colIndex].classList.add(dir === 1 ? 'sort-asc' : 'sort-desc');
-                    teamThs[colIndex].dataset.sortDir = (dir === 1 ? 'asc' : 'desc');
-                    renderTeamTable(teamData);
-                  });
-                })(tc);
-              }
+              setStatsHead(teamTable, teamColumns);
+              attachStatsSort(teamTable, teamColumns, teamData, renderTeamTable, driverNumericKeys);
             }
 
             renderTeamTable(teamData);
@@ -3388,7 +3542,16 @@ function renderDetail(seriesId, subPath) {
         var manStatsFilterInput = document.getElementById('manufacturer-stats-filter');
         var manStatsMinStartsSelect = document.getElementById('manufacturer-stats-min-starts');
         setupMinStartsSelect(manStatsMinStartsSelect, 'manufacturer');
-        if (manTable) {
+        var manWrap = document.getElementById('manufacturer-stats-wrap');
+        var showManufacturerStats = shouldShowManufacturerStats(seriesKeyStats);
+        if (manWrap) manWrap.classList.toggle('hidden', !showManufacturerStats);
+        if (!showManufacturerStats) {
+          if (manTable) {
+            var hiddenManTbody = manTable.querySelector('tbody');
+            if (hiddenManTbody) hiddenManTbody.innerHTML = '';
+          }
+          if (manEmpty) manEmpty.classList.add('hidden');
+        } else if (manTable) {
           var manTbody = manTable.querySelector('tbody');
           if (manRowsRaw && manRowsRaw.length > 0 && manTbody) {
             if (manEmpty) manEmpty.classList.add('hidden');
@@ -3398,18 +3561,33 @@ function renderDetail(seriesId, subPath) {
                 manufacturer: row.manufacturer || '',
                 races: row.races || 0,
                 wins: row.wins || 0,
+                points: row.points || 0,
+                poles: row.poles || 0,
                 top2: row.top2 || 0,
                 top3: row.top3 || 0,
                 podiums: row.podiums != null ? row.podiums : (row.wins || 0) + (row.top2 || 0) + (row.top3 || 0),
                 top5: row.top5 || 0,
                 top10: row.top10 || 0,
+                top15: row.top15 || 0,
+                top20: row.top20 || 0,
+                fastest_laps: row.fastest_laps || 0,
+                dnfs: row.dnfs || 0,
+                sprint_wins: row.sprint_wins || 0,
+                sprint_podiums: row.sprint_podiums || 0,
+                feature_wins: row.feature_wins || 0,
+                feature_podiums: row.feature_podiums || 0,
                 avg_start: row.avg_start,
                 avg_qualifying: row.avg_qualifying,
                 avg_finish: row.avg_finish,
+                stage_wins: row.stage_wins || 0,
+                stage_points: row.stage_points || 0,
+                avg_stage_points: row.avg_stage_points,
                 q2_passes: row.q2_passes != null ? row.q2_passes : 0,
                 q3_passes: row.q3_passes != null ? row.q3_passes : 0,
                 laps_led: row.laps_led || 0,
-                laps_completed: row.laps_completed != null ? row.laps_completed : 0
+                laps_completed: row.laps_completed != null ? row.laps_completed : 0,
+                laps_completed_pct: row.laps_completed_pct,
+                pos_diff: row.pos_diff
               };
             });
             function manPassesFilter(row) {
@@ -3430,72 +3608,92 @@ function renderDetail(seriesId, subPath) {
             function renderManTable(list) {
               var filtered = list.filter(manPassesFilter);
               manTbody.innerHTML = filtered.map(function (row) {
-                var avgStart = (row.avg_start == null || row.avg_start === 0 || row.avg_start === '0') ? '—' : fmtNum(row.avg_start, 2);
-                var avgQual = (row.avg_qualifying == null || row.avg_qualifying === 0 || row.avg_qualifying === '') ? '—' : fmtNum(row.avg_qualifying, 2);
-                var avgFinish = fmtNum(row.avg_finish, 2);
-                var td = '';
-                td += '<td class="col-num">' + row.pos + '</td>';
-                td += '<td>' + esc(dash(row.manufacturer || '')) + '</td>';
-                td += '<td>' + row.races + '</td>';
-                td += '<td>' + row.wins + '</td>';
-                td += '<td>' + row.top2 + '</td>';
-                td += '<td>' + row.top3 + '</td>';
-                td += '<td>' + row.podiums + '</td>';
-                td += '<td>' + row.top5 + '</td>';
-                td += '<td>' + row.top10 + '</td>';
-                td += '<td>' + avgStart + '</td>';
-                td += '<td>' + avgQual + '</td>';
-                td += '<td>' + avgFinish + '</td>';
-                td += '<td>' + (row.q2_passes != null ? row.q2_passes : 0) + '</td>';
-                td += '<td>' + (row.q3_passes != null ? row.q3_passes : 0) + '</td>';
-                td += '<td>' + row.laps_led + '</td>';
-                td += '<td>' + (row.laps_completed != null ? row.laps_completed : '—') + '</td>';
+                var td = manColumns.map(function (col) {
+                  return '<td' + (col.className ? ' class="' + col.className + '"' : '') + '>' + col.render(row) + '</td>';
+                }).join('');
                 return '<tr>' + td + '</tr>';
               }).join('');
             }
 
             var manHeadRow = manTable.querySelector('thead tr');
+            var manColumns = [
+              makeStatsColumn('pos', t('th.pos'), function (row) { return row.pos; }, 'col-num'),
+              makeStatsColumn('manufacturer', isEngineStatsSeries ? t('th.engine') : t('th.manufacturer'), function (row) { return esc(dash(row.manufacturer || '')); }),
+              makeStatsColumn('races', t('stats.starts'), function (row) { return row.races; }),
+              makeStatsColumn('wins', t('standings.wins'), function (row) { return row.wins; })
+            ];
+            if (hasAnyValue(manData, 'points')) {
+              manColumns.push(makeStatsColumn('points', t('standings.points'), function (row) { return fmtNum(row.points, 1); }));
+            }
+            if (hasAnyValue(manData, 'poles')) {
+              manColumns.push(makeStatsColumn('poles', t('standings.poles'), function (row) { return row.poles; }));
+            }
+            if (!isStockCarStatsSeries && (hasAnyValue(manData, 'top2') || hasAnyValue(manData, 'top3'))) {
+              manColumns.push(makeStatsColumn('top2', t('stats.top2'), function (row) { return row.top2; }));
+              manColumns.push(makeStatsColumn('top3', t('stats.top3'), function (row) { return row.top3; }));
+              manColumns.push(makeStatsColumn('podiums', t('stats.podiums'), function (row) { return row.podiums; }));
+            }
+            manColumns.push(makeStatsColumn('top5', t('standings.top5'), function (row) { return row.top5; }));
+            manColumns.push(makeStatsColumn('top10', t('standings.top10'), function (row) { return row.top10; }));
+            if (isStockCarStatsSeries) {
+              manColumns.push(makeStatsColumn('top15', t('standings.top15'), function (row) { return row.top15; }));
+              manColumns.push(makeStatsColumn('top20', t('standings.top20'), function (row) { return row.top20; }));
+            }
+            if (hasAnyValue(manData, 'avg_start')) {
+              manColumns.push(makeStatsColumn('avg_start', avgStartLabel, function (row) {
+                return (row.avg_start == null || row.avg_start === 0 || row.avg_start === '0') ? '—' : fmtNum(row.avg_start, 2);
+              }));
+            }
+            if (hasAnyValue(manData, 'avg_qualifying')) {
+              manColumns.push(makeStatsColumn('avg_qualifying', t('stats.avg_qualifying'), function (row) {
+                return (row.avg_qualifying == null || row.avg_qualifying === 0 || row.avg_qualifying === '') ? '—' : fmtNum(row.avg_qualifying, 2);
+              }));
+            }
+            manColumns.push(makeStatsColumn('avg_finish', t('standings.avg_finish'), function (row) { return fmtNum(row.avg_finish, 2); }));
+            if (hasAnyValue(manData, 'fastest_laps')) {
+              manColumns.push(makeStatsColumn('fastest_laps', t('stats.fastest_laps'), function (row) { return row.fastest_laps; }));
+            }
+            if (hasAnyValue(manData, 'dnfs')) {
+              manColumns.push(makeStatsColumn('dnfs', 'DNF', function (row) { return row.dnfs; }));
+            }
+            if (hasAnyValue(manData, 'sprint_wins') || hasAnyValue(manData, 'sprint_podiums')) {
+              manColumns.push(makeStatsColumn('sprint_wins', 'Sprint W', function (row) { return row.sprint_wins; }));
+              manColumns.push(makeStatsColumn('sprint_podiums', 'Sprint Pod', function (row) { return row.sprint_podiums; }));
+            }
+            if (hasAnyValue(manData, 'feature_wins') || hasAnyValue(manData, 'feature_podiums')) {
+              manColumns.push(makeStatsColumn('feature_wins', 'Feature W', function (row) { return row.feature_wins; }));
+              manColumns.push(makeStatsColumn('feature_podiums', 'Feature Pod', function (row) { return row.feature_podiums; }));
+            }
+            if (hasAnyValue(manData, 'stage_wins') || hasAnyValue(manData, 'stage_points')) {
+              manColumns.push(makeStatsColumn('stage_wins', t('standings.stage_wins'), function (row) { return row.stage_wins; }));
+              manColumns.push(makeStatsColumn('stage_points', t('standings.stage_points'), function (row) { return row.stage_points; }));
+            }
+            if (hasAnyValue(manData, 'q2_passes')) {
+              manColumns.push(makeStatsColumn('q2_passes', t('stats.q2'), function (row) { return row.q2_passes; }));
+            }
+            if (hasAnyValue(manData, 'q3_passes')) {
+              manColumns.push(makeStatsColumn('q3_passes', t('stats.q3'), function (row) { return row.q3_passes; }));
+            }
+            if (hasAnyValue(manData, 'laps_led')) {
+              manColumns.push(makeStatsColumn('laps_led', t('standings.laps_led'), function (row) { return row.laps_led; }));
+            }
+            if (isStockCarStatsSeries && hasAnyValue(manData, 'laps_completed_pct')) {
+              manColumns.push(makeStatsColumn('laps_completed_pct', t('stats.laps_completed_pct'), function (row) {
+                return row.laps_completed_pct != null ? fmtNum(row.laps_completed_pct, 1) + '%' : '—';
+              }));
+            } else if (!isStockCarStatsSeries && hasAnyValue(manData, 'laps_completed')) {
+              manColumns.push(makeStatsColumn('laps_completed', t('stats.laps_completed'), function (row) {
+                return row.laps_completed != null ? row.laps_completed : '—';
+              }));
+            }
+            if (hasAnyValue(manData, 'avg_start') && hasAnyValue(manData, 'pos_diff')) {
+              manColumns.push(makeStatsColumn('pos_diff', t('stats.pos_diff'), function (row) {
+                return row.pos_diff != null ? fmtNum(row.pos_diff, 1) : '—';
+              }));
+            }
             if (manHeadRow) {
-              var manThs = manHeadRow.querySelectorAll('th');
-              var manKeys = [
-                'pos', 'manufacturer', 'races', 'wins', 'top2', 'top3', 'podiums', 'top5', 'top10',
-                'avg_start', 'avg_qualifying', 'avg_finish', 'q2_passes', 'q3_passes',
-                'laps_led', 'laps_completed'
-              ];
-              function isManNumeric(k) {
-                return ['pos', 'races', 'wins', 'top2', 'top3', 'podiums', 'top5', 'top10',
-                  'avg_start', 'avg_qualifying', 'avg_finish', 'q2_passes', 'q3_passes',
-                  'laps_led', 'laps_completed'].indexOf(k) >= 0;
-              }
-              for (var mc = 0; mc < manThs.length; mc++) {
-                (function (colIndex) {
-                  var key = manKeys[colIndex];
-                  if (!key) return;
-                  manThs[colIndex].classList.add('sortable');
-                  manThs[colIndex].addEventListener('click', function () {
-                    var dir = manThs[colIndex].dataset.sortDir === 'asc' ? -1 : 1;
-                    manData.sort(function (a, b) {
-                      var va = a[key];
-                      var vb = b[key];
-                      var ae = (va === null || va === undefined || va === '');
-                      var be = (vb === null || vb === undefined || vb === '');
-                      if (ae && be) return 0;
-                      if (ae) return 1;
-                      if (be) return -1;
-                      if (isManNumeric(key)) {
-                        var na = parseFloat(va);
-                        var nb = parseFloat(vb);
-                        if (!isNaN(na) && !isNaN(nb)) return dir * (na - nb);
-                      }
-                      return dir * String(va).localeCompare(String(vb), undefined, { numeric: true });
-                    });
-                    [].forEach.call(manThs, function (th) { th.classList.remove('sort-asc', 'sort-desc'); th.removeAttribute('data-sort-dir'); });
-                    manThs[colIndex].classList.add(dir === 1 ? 'sort-asc' : 'sort-desc');
-                    manThs[colIndex].dataset.sortDir = (dir === 1 ? 'asc' : 'desc');
-                    renderManTable(manData);
-                  });
-                })(mc);
-              }
+              setStatsHead(manTable, manColumns);
+              attachStatsSort(manTable, manColumns, manData, renderManTable, driverNumericKeys);
             }
 
             renderManTable(manData);

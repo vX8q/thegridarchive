@@ -108,6 +108,8 @@ go run ./cmd/server
 
 Сервер запустится на **http://localhost:8080**.
 
+Если в корне проекта есть `.env`, сервер загрузит его автоматически. Для отправки писем с формы фидбека скопируйте значения из `.env.example` в `.env` и замените `TGA_FEEDBACK_SMTP_PASS` на Google App Password. Для публичного сайта можно также заполнить `TGA_TURNSTILE_SITE_KEY` и `TGA_TURNSTILE_SECRET_KEY`, тогда форма фидбека будет проверять Cloudflare Turnstile.
+
 При старте сервер:
 1. Загружает JSON из `data/` в SQLite (`bootstrapStoreFromFiles`)
 2. Создаёт пустые скелеты недавних этапов без файла результатов (`internal/eventscaffold`, окно «Last Results» + 7 дней)

@@ -379,6 +379,14 @@ ON CONFLICT(id) DO UPDATE SET
 	return err
 }
 
+func (s *sqliteTxStore) SaveFeedback(ctx context.Context, msg *models.FeedbackMessage) error {
+	_, err := s.tx.ExecContext(ctx, `
+INSERT INTO feedback_messages (id, name, email, message, page_url, lang, user_agent, ip_hash, status, created_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`, msg.ID, msg.Name, msg.Email, msg.Message, msg.PageURL, msg.Lang, msg.UserAgent, msg.IPHash, msg.Status, msg.CreatedAt.UTC().Format(time.RFC3339))
+	return err
+}
+
 func (s *sqliteTxStore) RunInTransaction(_ context.Context, fn func(Store) error) error {
 	return fn(s)
 }
@@ -471,6 +479,19 @@ CREATE TABLE IF NOT EXISTS stage_results (
   laps INTEGER,
   status TEXT,
   points INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS feedback_messages (
+  id TEXT PRIMARY KEY,
+  name TEXT,
+  email TEXT,
+  message TEXT NOT NULL,
+  page_url TEXT,
+  lang TEXT,
+  user_agent TEXT,
+  ip_hash TEXT,
+  status TEXT NOT NULL DEFAULT 'new',
+  created_at TEXT NOT NULL
 );
 
 	DROP VIEW IF EXISTS driver_stats_stockcar;
@@ -1148,3 +1169,11 @@ ON CONFLICT(id) DO UPDATE SET
 	return err
 }
 
+// SaveFeedback stores a user feedback submission.
+func (s *SQLiteStore) SaveFeedback(ctx context.Context, msg *models.FeedbackMessage) error {
+	_, err := s.db.ExecContext(ctx, `
+INSERT INTO feedback_messages (id, name, email, message, page_url, lang, user_agent, ip_hash, status, created_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`, msg.ID, msg.Name, msg.Email, msg.Message, msg.PageURL, msg.Lang, msg.UserAgent, msg.IPHash, msg.Status, msg.CreatedAt.UTC().Format(time.RFC3339))
+	return err
+}

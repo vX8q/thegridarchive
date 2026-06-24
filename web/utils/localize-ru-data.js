@@ -265,6 +265,8 @@
     'brake failure':                               'Отказ тормозов',
     'tire failure':                                'Прокол шины',
     'crash':                                       'Авария',
+    'engine':                                      'Отказ двигателя',
+    'radiator':                                    'Радиатор',
     'contact':                                     'Контакт',
     'overheating':                                 'Перегрев',
     'power steering failure':                      'Отказ ГУР',
@@ -287,7 +289,7 @@
     'tire': 'Шина',
     'debris': 'Обломки',
     'accident': 'Авария',
-    'none': '—'
+    'none': 'никто'
   };
   window.TGA_RU.raceReasonParts = [
     // IndyCar-style prefixes
@@ -361,7 +363,7 @@
     [/\bfrontstretch\b/gi, 'финишная прямая'],
     [/\bbackstretch\b/gi, 'задняя прямая'],
     [/\bturn (\d+)/gi, 'поворот $1'],
-    [/\bnone\b/gi, '—']
+    [/\bnone\b/gi, 'никто']
   ];
 
   // Country / territory names for driver profiles (English key, lowercase -> ru).

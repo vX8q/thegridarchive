@@ -155,7 +155,13 @@
 
   function teamLabel(name) {
     if (name == null) return '';
-    return String(name).trim();
+    var raw = String(name).trim();
+    if (!raw) return '';
+    if (typeof window !== 'undefined' && window.TGA && window.TGA.getLang &&
+        window.TGA.getLang() === 'ru' && typeof window.TGA.localizeTeamName === 'function') {
+      return window.TGA.localizeTeamName(raw);
+    }
+    return raw;
   }
 
   function slugify(str) {

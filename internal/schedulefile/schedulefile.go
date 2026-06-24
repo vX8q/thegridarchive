@@ -109,63 +109,76 @@ func LoadTeams(dataDir string, seriesID string) (*TeamsWithSpec, error) {
 
 // DriverStatsRow contains per-driver statistics for season pages.
 type DriverStatsRow struct {
-	Driver            string  `json:"driver"`
-	Team              string  `json:"team"`
-	Manufacturer      string  `json:"manufacturer"`
-	Chassis           string  `json:"chassis,omitempty"` // chassis (F1, etc.)
-	Car               string  `json:"car,omitempty"`
-	Races             int     `json:"races"`
-	Wins              int     `json:"wins"`
-	Top2              int     `json:"top2,omitempty"`
-	Top3              int     `json:"top3,omitempty"`
-	Podiums           int     `json:"podiums,omitempty"` // wins + top2 + top3 (all podium finishes)
-	Poles             int     `json:"poles"`
-	Top5              int     `json:"top5"`
-	Top10             int     `json:"top10"`
-	Top15             int     `json:"top15"`
-	Top20             int     `json:"top20"`
-	FastestLaps       int     `json:"fastest_laps,omitempty"`
-	BestLap           string  `json:"best_lap,omitempty"` // best lap of season (string, from results.fastest_lap)
-	AvgFinish         float64 `json:"avg_finish"`
-	AvgStart          float64 `json:"avg_start"`
-	AvgQualifying     float64 `json:"avg_qualifying,omitempty"` // average qualifying position (F1)
-	Q2Passes          int     `json:"q2_passes,omitempty"`      // Q2 passes (F1)
-	Q3Passes          int     `json:"q3_passes,omitempty"`     // Q3 passes (F1)
-	StageWins         int     `json:"stage_wins"`
-	StagePoints       int     `json:"stage_points,omitempty"`
-	AvgStagePoints    float64 `json:"avg_stage_points,omitempty"`
-	LapsLed           int     `json:"laps_led"`
-	LapsCompleted     int     `json:"laps_completed,omitempty"`
-	LapsCompletedPct  float64 `json:"laps_completed_pct"`
-	PositionDiff      float64 `json:"pos_diff"`
+	Driver           string  `json:"driver"`
+	Team             string  `json:"team"`
+	Manufacturer     string  `json:"manufacturer"`
+	Class            string  `json:"class,omitempty"`
+	Chassis          string  `json:"chassis,omitempty"` // chassis (F1, etc.)
+	Car              string  `json:"car,omitempty"`
+	Races            int     `json:"races"`
+	Wins             int     `json:"wins"`
+	Points           float64 `json:"points,omitempty"`
+	Top2             int     `json:"top2,omitempty"`
+	Top3             int     `json:"top3,omitempty"`
+	Podiums          int     `json:"podiums,omitempty"` // wins + top2 + top3 (all podium finishes)
+	Poles            int     `json:"poles"`
+	Top5             int     `json:"top5"`
+	Top10            int     `json:"top10"`
+	Top15            int     `json:"top15"`
+	Top20            int     `json:"top20"`
+	FastestLaps      int     `json:"fastest_laps,omitempty"`
+	BestLap          string  `json:"best_lap,omitempty"` // best lap of season (string, from results.fastest_lap)
+	DNFs             int     `json:"dnfs,omitempty"`
+	SprintWins       int     `json:"sprint_wins,omitempty"`
+	SprintPodiums    int     `json:"sprint_podiums,omitempty"`
+	FeatureWins      int     `json:"feature_wins,omitempty"`
+	FeaturePodiums   int     `json:"feature_podiums,omitempty"`
+	AvgFinish        float64 `json:"avg_finish"`
+	AvgStart         float64 `json:"avg_start"`
+	AvgQualifying    float64 `json:"avg_qualifying,omitempty"` // average qualifying position (F1)
+	Q2Passes         int     `json:"q2_passes,omitempty"`      // Q2 passes (F1)
+	Q3Passes         int     `json:"q3_passes,omitempty"`      // Q3 passes (F1)
+	StageWins        int     `json:"stage_wins"`
+	StagePoints      int     `json:"stage_points,omitempty"`
+	AvgStagePoints   float64 `json:"avg_stage_points,omitempty"`
+	LapsLed          int     `json:"laps_led"`
+	LapsCompleted    int     `json:"laps_completed,omitempty"`
+	LapsCompletedPct float64 `json:"laps_completed_pct"`
+	PositionDiff     float64 `json:"pos_diff"`
 }
 
 // ManufacturerStatsRow is aggregated stats by make/manufacturer.
 type ManufacturerStatsRow struct {
-	Manufacturer string  `json:"manufacturer"`
-	Races        int     `json:"races"`
-	Wins         int     `json:"wins"`
-	Top2         int     `json:"top2,omitempty"`
-	Top3         int     `json:"top3,omitempty"`
-	Podiums      int     `json:"podiums,omitempty"`
-	Poles        int     `json:"poles,omitempty"`
-	Top5         int     `json:"top5,omitempty"`
-	Top10        int     `json:"top10,omitempty"`
-	Top15        int     `json:"top15,omitempty"`
-	Top20        int     `json:"top20,omitempty"`
-	FastestLaps  int     `json:"fastest_laps,omitempty"`
-	AvgFinish    float64 `json:"avg_finish"`
-	AvgStart     float64 `json:"avg_start"`
-	AvgQualifying float64 `json:"avg_qualifying,omitempty"`
-	Q2Passes     int     `json:"q2_passes,omitempty"`
-	Q3Passes     int     `json:"q3_passes,omitempty"`
-	StageWins    int     `json:"stage_wins,omitempty"`
-	StagePoints  int     `json:"stage_points,omitempty"`
-	AvgStagePoints float64 `json:"avg_stage_points,omitempty"`
-	LapsLed      int     `json:"laps_led"`
-	LapsCompleted int    `json:"laps_completed,omitempty"`
+	Manufacturer     string  `json:"manufacturer"`
+	Races            int     `json:"races"`
+	Wins             int     `json:"wins"`
+	Points           float64 `json:"points,omitempty"`
+	Top2             int     `json:"top2,omitempty"`
+	Top3             int     `json:"top3,omitempty"`
+	Podiums          int     `json:"podiums,omitempty"`
+	Poles            int     `json:"poles,omitempty"`
+	Top5             int     `json:"top5,omitempty"`
+	Top10            int     `json:"top10,omitempty"`
+	Top15            int     `json:"top15,omitempty"`
+	Top20            int     `json:"top20,omitempty"`
+	FastestLaps      int     `json:"fastest_laps,omitempty"`
+	DNFs             int     `json:"dnfs,omitempty"`
+	SprintWins       int     `json:"sprint_wins,omitempty"`
+	SprintPodiums    int     `json:"sprint_podiums,omitempty"`
+	FeatureWins      int     `json:"feature_wins,omitempty"`
+	FeaturePodiums   int     `json:"feature_podiums,omitempty"`
+	AvgFinish        float64 `json:"avg_finish"`
+	AvgStart         float64 `json:"avg_start"`
+	AvgQualifying    float64 `json:"avg_qualifying,omitempty"`
+	Q2Passes         int     `json:"q2_passes,omitempty"`
+	Q3Passes         int     `json:"q3_passes,omitempty"`
+	StageWins        int     `json:"stage_wins,omitempty"`
+	StagePoints      int     `json:"stage_points,omitempty"`
+	AvgStagePoints   float64 `json:"avg_stage_points,omitempty"`
+	LapsLed          int     `json:"laps_led"`
+	LapsCompleted    int     `json:"laps_completed,omitempty"`
 	LapsCompletedPct float64 `json:"laps_completed_pct,omitempty"`
-	PositionDiff float64 `json:"pos_diff,omitempty"`
+	PositionDiff     float64 `json:"pos_diff,omitempty"`
 }
 
 // TeamStatsRow is aggregated stats by team.
@@ -173,13 +186,23 @@ type TeamStatsRow struct {
 	Team             string  `json:"team"`
 	Races            int     `json:"races"`
 	Wins             int     `json:"wins"`
+	Points           float64 `json:"points,omitempty"`
 	Poles            int     `json:"poles"`
+	Top2             int     `json:"top2,omitempty"`
+	Top3             int     `json:"top3,omitempty"`
+	Podiums          int     `json:"podiums,omitempty"`
 	Top5             int     `json:"top5"`
 	Top10            int     `json:"top10"`
 	Top15            int     `json:"top15"`
 	Top20            int     `json:"top20"`
 	AvgFinish        float64 `json:"avg_finish"`
 	AvgStart         float64 `json:"avg_start"`
+	FastestLaps      int     `json:"fastest_laps,omitempty"`
+	DNFs             int     `json:"dnfs,omitempty"`
+	SprintWins       int     `json:"sprint_wins,omitempty"`
+	SprintPodiums    int     `json:"sprint_podiums,omitempty"`
+	FeatureWins      int     `json:"feature_wins,omitempty"`
+	FeaturePodiums   int     `json:"feature_podiums,omitempty"`
 	StageWins        int     `json:"stage_wins"`
 	StagePoints      int     `json:"stage_points,omitempty"`
 	AvgStagePoints   float64 `json:"avg_stage_points,omitempty"`
@@ -188,11 +211,21 @@ type TeamStatsRow struct {
 	PositionDiff     float64 `json:"pos_diff"`
 }
 
+// DriverStatsClass groups stats rows by class for multiclass championships.
+type DriverStatsClass struct {
+	ID            string                 `json:"id"`
+	Name          string                 `json:"name"`
+	Rows          []DriverStatsRow       `json:"rows"`
+	Teams         []TeamStatsRow         `json:"teams,omitempty"`
+	Manufacturers []ManufacturerStatsRow `json:"manufacturers,omitempty"`
+}
+
 // DriverStatsData is a collection of driver, team, and manufacturer stats.
 type DriverStatsData struct {
 	Rows          []DriverStatsRow       `json:"rows"`
 	Teams         []TeamStatsRow         `json:"teams,omitempty"`
 	Manufacturers []ManufacturerStatsRow `json:"manufacturers,omitempty"`
+	Classes       []DriverStatsClass     `json:"classes,omitempty"`
 }
 
 // SaveStandings saves standings data for a series.

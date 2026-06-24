@@ -10,22 +10,6 @@ func isF1PreSeasonEvent(eventID string) bool {
 	return strings.Contains(u, "PRE_SEASON") || strings.Contains(u, "PRESEASON")
 }
 
-// eventHasSprintRaceSession returns true if tables.race.sessions contains
-// at least one sprint race results session (title contains "sprint").
-func eventHasSprintRaceSession(dataDir, eventID string) bool {
-	sessions, err := loadEventRaceSessionsFromRaceTable(dataDir, eventID)
-	if err != nil || len(sessions) == 0 {
-		return false
-	}
-	for _, s := range sessions {
-		title := strings.ToLower(strings.TrimSpace(s.Title))
-		if strings.Contains(title, "sprint") && len(s.Headers) > 0 && len(s.Rows) > 0 {
-			return true
-		}
-	}
-	return false
-}
-
 // f1SprintWeekendTables returns sprint and feature race tables for F1/F2/F3 sprint weekends.
 // Sprint from tables.race.sessions (title with "sprint"); feature from race_results or Race/Grand Prix session.
 func f1SprintWeekendTables(dataDir, eventID string) (sprintTable, featureTable EventTable, detail *EventDetailJSON, ok bool) {
@@ -70,4 +54,3 @@ func f1SprintWeekendTables(dataDir, eventID string) (sprintTable, featureTable E
 	}
 	return sprintTable, featureTable, detail, true
 }
-

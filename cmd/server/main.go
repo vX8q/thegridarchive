@@ -90,6 +90,8 @@ func main() {
 	}
 
 	eventscaffold.RunAtStartup(dataDir)
+	feedbackNotifier := newFeedbackNotifier(cfg.FeedbackSMTP)
+	feedbackCaptcha := newFeedbackCaptchaVerifier(cfg.Turnstile)
 
 	// Context to stop background goroutines on shutdown
 	appCtx, cancelApp := context.WithCancel(context.Background())
@@ -104,6 +106,10 @@ func main() {
 	}
 	apiWrap := func(h http.HandlerFunc) http.HandlerFunc {
 		return chain(h, wrapWithCORS, wrapWithRecovery, wrapWithTraceID, wrapWithRateLimit(rateLimiter), wrapWithLogging)
+	}
+	feedbackLimiter := newRateLimiter(1.0/60.0, 3)
+	feedbackWrap := func(h http.HandlerFunc) http.HandlerFunc {
+		return chain(h, wrapWithCORS, wrapWithRecovery, wrapWithTraceID, wrapWithRateLimit(rateLimiter), wrapWithRateLimit(feedbackLimiter), wrapWithLogging)
 	}
 	staticWrap := func(h http.HandlerFunc) http.HandlerFunc {
 		return chain(h, wrapWithRecovery, wrapWithLogging)
@@ -136,7 +142,7 @@ func main() {
 			http.Redirect(w, r, "/season/f1-"+config.CurrentSeason, http.StatusMovedPermanently)
 			return
 		}
-		if p == "/" || p == "/schedule" || p == "/live" || strings.HasPrefix(p, "/search") || strings.HasPrefix(p, "/series") || strings.HasPrefix(p, "/season") || strings.HasPrefix(p, "/track") || strings.HasPrefix(p, "/driver") || strings.HasPrefix(p, "/team") || strings.HasPrefix(p, "/crew-chief") {
+		if p == "/" || p == "/schedule" || p == "/live" || p == "/feedback" || strings.HasPrefix(p, "/search") || strings.HasPrefix(p, "/series") || strings.HasPrefix(p, "/season") || strings.HasPrefix(p, "/track") || strings.HasPrefix(p, "/driver") || strings.HasPrefix(p, "/team") || strings.HasPrefix(p, "/crew-chief") {
 			http.ServeFile(w, r, indexPath)
 			return
 		}
@@ -220,6 +226,20 @@ func main() {
 	}))
 	http.HandleFunc("/api/team-logo/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleTeamLogo(w, r, dataDir)
+	}))
+	http.HandleFunc("/api/feedback", feedbackWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleFeedback(w, r, st, feedbackNotifier, feedbackCaptcha)
+	}))
+	http.HandleFunc("/api/feedback/config", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			w.Header().Set("Allow", http.MethodGet)
+			writeError(w, http.StatusMethodNotAllowed, "method not allowed")
+			return
+		}
+		writeJSON(w, http.StatusOK, map[string]interface{}{
+			"turnstile_enabled":  cfg.Turnstile.SiteKey != "" && cfg.Turnstile.SecretKey != "",
+			"turnstile_site_key": cfg.Turnstile.SiteKey,
+		})
 	}))
 
 	if cfg.EnableAdmin {

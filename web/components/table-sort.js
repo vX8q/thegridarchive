@@ -55,7 +55,10 @@ function makeTableSortable(tableEl, rows, escapeFn, getRowClass) {
     if (m) return parseInt(m[1], 10) * 60 + parseFloat(m[2] + '.' + m[3]);
     return parseFloat(s) || 0;
   }
-  renderBody(rowsCopy);
+  // Keep pre-rendered tbody (localized labels, driver links, etc.); re-render only on sort.
+  if (!tbody.querySelector('tr')) {
+    renderBody(rowsCopy);
+  }
   for (var c = 0; c < ths.length; c++) {
     (function (colIndex) {
       var dir = 1;

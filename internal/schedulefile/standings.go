@@ -67,7 +67,7 @@ func EnsureCompletedRaces(dataDir string, seriesID string, data *StandingsData) 
 			}
 		}
 		if !ok || len(rr.Rows) == 0 {
-			if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
+			if ra, okRace := detail.Tables["race"]; okRace && len(ra.Sessions) > 0 {
 				ok = true
 			}
 		}
@@ -166,6 +166,133 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		}
 		return b.String()
 	}
+	type cachedDetail struct {
+		detail *EventDetailJSON
+		err    error
+	}
+	detailCache := make(map[string]cachedDetail)
+	loadDetail := func(eventID string) (*EventDetailJSON, error) {
+		key := strings.ToLower(strings.TrimSpace(eventID))
+		if cached, ok := detailCache[key]; ok {
+			return cached.detail, cached.err
+		}
+		detail, err := LoadEventDetail(dataDir, eventID)
+		detailCache[key] = cachedDetail{detail: detail, err: err}
+		return detail, err
+	}
+	raceSessionsCache := make(map[string][]RaceSession)
+	loadRaceSessions := func(eventID string) ([]RaceSession, error) {
+		key := strings.ToLower(strings.TrimSpace(eventID))
+		if sessions, ok := raceSessionsCache[key]; ok {
+			return sessions, nil
+		}
+		detail, err := loadDetail(eventID)
+		if err != nil || detail == nil || detail.Tables == nil {
+			raceSessionsCache[key] = nil
+			return nil, err
+		}
+		var out []RaceSession
+		raceAny, ok := detail.Tables["race"]
+		if !ok {
+			raceAny, ok = detail.Tables["race_results"]
+			if !ok {
+				raceSessionsCache[key] = nil
+				return nil, nil
+			}
+		}
+		if len(raceAny.Sessions) > 0 {
+			out = make([]RaceSession, 0, len(raceAny.Sessions))
+			for _, session := range raceAny.Sessions {
+				out = append(out, RaceSession(session))
+			}
+		} else if len(raceAny.Headers) > 0 && len(raceAny.Rows) > 0 {
+			title := strings.TrimSpace(raceAny.Title)
+			if title == "" {
+				title = "Race"
+			}
+			out = []RaceSession{{Title: title, Headers: raceAny.Headers, Rows: raceAny.Rows}}
+		}
+		raceSessionsCache[key] = out
+		return out, nil
+	}
+	entryByCarCache := make(map[string]map[string]string)
+	loadEntryByCar := func(eventID string) (map[string]string, error) {
+		key := strings.ToLower(strings.TrimSpace(eventID))
+		if entries, ok := entryByCarCache[key]; ok {
+			return entries, nil
+		}
+		detail, err := loadDetail(eventID)
+		if err != nil || detail == nil {
+			entryByCarCache[key] = nil
+			return nil, err
+		}
+		out := make(map[string]string)
+		for _, entry := range detail.EntryList {
+			num := strings.TrimSpace(entry.Number)
+			driver := strings.TrimSpace(entry.Driver)
+			if num != "" && driver != "" {
+				out[num] = driver
+			}
+		}
+		if len(out) == 0 {
+			out = nil
+		}
+		entryByCarCache[key] = out
+		return out, nil
+	}
+	hasSprintRaceSession := func(eventID string) bool {
+		sessions, err := loadRaceSessions(eventID)
+		if err != nil || len(sessions) == 0 {
+			return false
+		}
+		for _, s := range sessions {
+			title := strings.ToLower(strings.TrimSpace(s.Title))
+			if strings.Contains(title, "sprint") && len(s.Headers) > 0 && len(s.Rows) > 0 {
+				return true
+			}
+		}
+		return false
+	}
+	sprintWeekendTables := func(eventID string) (sprintTable, featureTable EventTable, detail *EventDetailJSON, ok bool) {
+		sessions, err := loadRaceSessions(eventID)
+		if err != nil || len(sessions) == 0 {
+			return EventTable{}, EventTable{}, nil, false
+		}
+		var sprintSess, featureSess *RaceSession
+		for i := range sessions {
+			titleLower := strings.ToLower(strings.TrimSpace(sessions[i].Title))
+			if strings.Contains(titleLower, "sprint") {
+				if sprintSess == nil || strings.Contains(titleLower, "race") {
+					sprintSess = &sessions[i]
+				}
+				continue
+			}
+			if strings.Contains(titleLower, "race") || strings.Contains(titleLower, "grand prix") {
+				if featureSess == nil {
+					featureSess = &sessions[i]
+				}
+			}
+		}
+		if sprintSess == nil || len(sprintSess.Headers) == 0 || len(sprintSess.Rows) == 0 {
+			return EventTable{}, EventTable{}, nil, false
+		}
+		detail, err = loadDetail(eventID)
+		if err != nil || detail == nil || detail.Tables == nil {
+			return EventTable{}, EventTable{}, nil, false
+		}
+		sprintTable = EventTable{Headers: sprintSess.Headers, Rows: sprintSess.Rows}
+		if featureSess != nil && len(featureSess.Headers) > 0 && len(featureSess.Rows) > 0 {
+			featureTable = EventTable{Headers: featureSess.Headers, Rows: featureSess.Rows}
+		} else if rr, hasRR := detail.Tables["race_results"]; hasRR && len(rr.Headers) > 0 && len(rr.Rows) > 0 {
+			featureTable = rr
+		} else if ra, hasRace := detail.Tables["race"]; hasRace && len(ra.Headers) > 0 && len(ra.Rows) > 0 {
+			featureTable = ra
+		}
+		if len(featureTable.Headers) == 0 || len(featureTable.Rows) == 0 {
+			return EventTable{}, EventTable{}, nil, false
+		}
+		return sprintTable, featureTable, detail, true
+	}
 	base, err := LoadStandings(dataDir, seriesID)
 	if err != nil {
 		return nil, err
@@ -194,7 +321,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				eventNames = append(eventNames, name, name)
 			} else if isMultiRacePerEvent && !strings.EqualFold(seriesID, "SUPER_FORMULA") {
 				sessCount := 1
-				if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
+				if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 0 {
 					sessCount = len(sessions)
 				}
 				if sessCount < 1 {
@@ -243,7 +370,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 			round++
 			name := strings.TrimSpace(ev.Name)
-			if eventHasSprintRaceSession(dataDir, ev.ID) {
+			if hasSprintRaceSession(ev.ID) {
 				baseCode := "R" + strconv.Itoa(round)
 				ro = append(ro, baseCode+"S", baseCode+"F")
 				names = append(names, name, name)
@@ -272,7 +399,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			name := strings.TrimSpace(ev.Name)
 			baseCode := dtmEventCode(name, round)
 			sessCount := 1
-			if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
+			if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 0 {
 				sessCount = len(sessions)
 			}
 			if sessCount < 1 {
@@ -302,7 +429,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			round++
 			name := strings.TrimSpace(ev.Name)
 			sessCount := 1
-			if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
+			if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 0 {
 				sessCount = len(sessions)
 			}
 			if sessCount < 1 {
@@ -620,13 +747,13 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 			roundSets := eventRoundSets("super_formula", events, season)
 			eventRounds := roundSets[ev.ID]
-			sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID)
+			sessions, errSess := loadRaceSessions(ev.ID)
 			if errSess != nil || len(sessions) == 0 {
 				continue
 			}
-			entryByCarForEvent, _ = LoadEventEntryList(dataDir, ev.ID)
+			entryByCarForEvent, _ = loadEntryByCar(ev.ID)
 			var detail *EventDetailJSON
-			if det, errDet := LoadEventDetail(dataDir, ev.ID); errDet == nil {
+			if det, errDet := loadDetail(ev.ID); errDet == nil {
 				detail = det
 			}
 			for si, rs := range sessions {
@@ -683,10 +810,10 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 
 		// DTM / FREC / F4: one event may contain multiple races (race.sessions).
 		if isDTMSeries || isMultiRacePerEvent {
-			if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
-				entryByCarForEvent, _ = LoadEventEntryList(dataDir, ev.ID)
+			if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 0 {
+				entryByCarForEvent, _ = loadEntryByCar(ev.ID)
 				var detail *EventDetailJSON
-				if det, errDet := LoadEventDetail(dataDir, ev.ID); errDet == nil {
+				if det, errDet := loadDetail(ev.ID); errDet == nil {
 					detail = det
 				}
 				used := false
@@ -747,8 +874,8 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 
 		// F1/F2/F3: sprint weekend — two columns (Sprint and feature),
 		// race codes in race_order: RnS and RnF.
-		if isSprintFeatureSeries && eventHasSprintRaceSession(dataDir, ev.ID) && raceIdx+1 < len(raceOrder) {
-			if sprintTbl, featureTbl, sprintDetail, ok := f1SprintWeekendTables(dataDir, ev.ID); ok {
+		if isSprintFeatureSeries && hasSprintRaceSession(ev.ID) && raceIdx+1 < len(raceOrder) {
+			if sprintTbl, featureTbl, sprintDetail, ok := sprintWeekendTables(ev.ID); ok {
 				sprintCode := raceOrder[raceIdx]
 				featureCode := raceOrder[raceIdx+1]
 				applyEventTable(sprintTbl, sprintCode, nil, false)
@@ -760,12 +887,12 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		}
 
 		raceCode := raceOrder[raceIdx]
-		detail, err := LoadEventDetail(dataDir, ev.ID)
+		detail, err := loadDetail(ev.ID)
 		if err != nil || detail == nil || detail.Tables == nil {
 			continue
 		}
 		if isStockCarSeries {
-			eligibleByCarForEvent, _ = LoadEventPointsEligibleByCar(dataDir, ev.ID)
+			eligibleByCarForEvent = pointsEligibleByCarFromEntryList(detail.EntryList)
 		} else {
 			eligibleByCarForEvent = nil
 		}
@@ -786,7 +913,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 		}
 		if !ok || len(rr.Headers) == 0 || len(rr.Rows) == 0 {
-			if sessions, errSess := LoadEventRaceSessions(dataDir, ev.ID); errSess == nil && len(sessions) > 0 {
+			if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 0 {
 				// Take first session as feature race (F1 2025 has a single "Race").
 				rs := sessions[0]
 				rr = EventTable{Headers: rs.Headers, Rows: rs.Rows}

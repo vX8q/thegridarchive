@@ -16,6 +16,7 @@
     var renderDriverDetail = T.renderDriverDetail || function () {};
     var renderTeamDetail = T.renderTeamDetail || function () {};
     var renderCrewChiefDetail = T.renderCrewChiefDetail || function () {};
+    var renderFeedbackPage = T.renderFeedbackPage || function () {};
     var renderDetail = T.renderDetail || function () {};
     var renderLiveDebugPage = T.renderLiveDebugPage || function () {};
     var renderHomeRaceFeed = T.renderHomeRaceFeed || function () {};
@@ -60,6 +61,10 @@
       var params = new URLSearchParams(search || '');
       var q = params.get('q') || '';
       renderSearchPage(q);
+      return;
+    }
+    if (path === '/feedback') {
+      renderFeedbackPage();
       return;
     }
     if (path.indexOf('/event/') === 0) {

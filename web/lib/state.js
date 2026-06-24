@@ -14,5 +14,4 @@
   if (s.searchIndexLoading === undefined) s.searchIndexLoading = false;
   if (s.searchInitDone === undefined) s.searchInitDone = false;
   if (!s.searchIndexItems) s.searchIndexItems = [];
-  if (!s.driverPhotoQualityCache) s.driverPhotoQualityCache = {};
 })();

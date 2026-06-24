@@ -31,6 +31,7 @@ func mergeOpenWheelDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 			}
 			existing.Races = totalRaces
 			existing.Wins += r.Wins
+			existing.Points += r.Points
 			existing.Poles += r.Poles
 			// Open‑wheel specific podium granularity.
 			existing.Top2 += r.Top2
@@ -42,6 +43,11 @@ func mergeOpenWheelDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 			existing.Top20 += r.Top20
 			// Fastest laps and laps completed.
 			existing.FastestLaps += r.FastestLaps
+			existing.DNFs += r.DNFs
+			existing.SprintWins += r.SprintWins
+			existing.SprintPodiums += r.SprintPodiums
+			existing.FeatureWins += r.FeatureWins
+			existing.FeaturePodiums += r.FeaturePodiums
 			existing.StageWins += r.StageWins
 			existing.StagePoints += r.StagePoints
 			existing.LapsLed += r.LapsLed
@@ -82,6 +88,9 @@ func mergeOpenWheelDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 			}
 			if r.Manufacturer != "" && (existing.Manufacturer == "" || r.Races > prevRaces) {
 				existing.Manufacturer = r.Manufacturer
+			}
+			if r.Class != "" && (existing.Class == "" || r.Races > prevRaces) {
+				existing.Class = r.Class
 			}
 			if strings.TrimSpace(r.Car) != "" && (strings.TrimSpace(existing.Car) == "" || r.Races > prevRaces) {
 				existing.Car = strings.TrimSpace(r.Car)
@@ -156,4 +165,3 @@ func parseLapTimeSeconds(s string) (float64, bool) {
 	}
 	return secs, true
 }
-

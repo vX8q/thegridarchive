@@ -44,7 +44,6 @@ Wraps `window.TGA.fetchJSON` with typed methods. All `/api/*` fetches should go 
 | `searchIndexReady` | app.js | Search index loaded flag |
 | `searchIndexLoading` | app.js | Search index in-flight |
 | `searchInitDone` | app.js | Header search wired |
-| `driverPhotoQualityCache` | app.js | Driver thumb quality cache |
 
 ## `tga-i18n.js` — i18n, theme, time, localization
 

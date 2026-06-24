@@ -40,7 +40,7 @@ type TurnstileConfig struct {
 
 // LoadConfig reads config from environment variables (defaults: port 8080, reset_db and admin disabled).
 func LoadConfig() Config {
-	loadDotEnv(".env")
+	loadDotEnv()
 	cfg := Config{
 		DataDir:     "",
 		WebDir:      "web",
@@ -110,8 +110,8 @@ func envOrDefault(key, fallback string) string {
 	return fallback
 }
 
-func loadDotEnv(path string) {
-	f, err := os.Open(path)
+func loadDotEnv() {
+	f, err := os.Open(".env") //nolint:gosec // fixed local secrets file beside the binary/CWD
 	if err != nil {
 		return
 	}

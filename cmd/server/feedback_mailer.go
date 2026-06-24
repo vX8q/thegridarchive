@@ -69,7 +69,6 @@ func (n smtpFeedbackNotifier) NotifyFeedback(_ context.Context, msg *models.Feed
 		"\r\n" +
 		body
 
-	var auth smtp.Auth
-	auth = smtp.PlainAuth("", username, password, host)
+	auth := smtp.PlainAuth("", username, password, host)
 	return smtp.SendMail(host+":"+port, auth, from, []string{to}, []byte(raw))
 }

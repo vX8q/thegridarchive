@@ -110,6 +110,16 @@ func eventDetailFileIsPlaceholder(b []byte) bool {
 // Reads event JSON from data/events/{Series}/{Year} or flat data/events.
 func ReadEventDetailFile(dataDir, eventID string) ([]byte, error) {
 	resolvedID := ResolveEventDetailID(dataDir, eventID)
+	return readEventDetailBytesAtID(dataDir, resolvedID)
+}
+
+// ReadEventDetailFileAtID reads a weekend bundle or event file by its on-disk id
+// without schedule race remapping (used for Supercars HTTP URLs).
+func ReadEventDetailFileAtID(dataDir, fileID string) ([]byte, error) {
+	return readEventDetailBytesAtID(dataDir, strings.ToLower(strings.TrimSpace(fileID)))
+}
+
+func readEventDetailBytesAtID(dataDir, resolvedID string) ([]byte, error) {
 	for _, path := range eventDetailPathCandidates(dataDir, resolvedID) {
 		b, err := os.ReadFile(path) //nolint:gosec
 		if err == nil {
@@ -124,6 +134,13 @@ func ReadEventDetailFile(dataDir, eventID string) ([]byte, error) {
 		}
 	}
 	return nil, os.ErrNotExist
+}
+
+// eventDetailFileExistsRaw reports whether a file exists at the exact on-disk id
+// (no schedule race remapping). Used for Supercars weekend URL slugs.
+func eventDetailFileExistsRaw(dataDir, fileID string) bool {
+	b, err := readEventDetailBytesAtID(dataDir, strings.ToLower(strings.TrimSpace(fileID)))
+	return err == nil && b != nil
 }
 
 // PreferredEventDetailPath returns the canonical write path for new event JSON

@@ -61,6 +61,8 @@ server_out.log
 # Local scratch + backup trees (never canonical)
 agent-tools/
 backups/
+*.traineddata
+/_gtwce*.json
 
 # Secrets and local overrides (keep .env.example in repo)
 .env

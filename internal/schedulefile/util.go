@@ -94,12 +94,29 @@ func collapseSpacedInitials(sLower string) string {
 
 // preferredDriverName normalizes a few known variants so that merged rows
 // keep a consistent display name (instead of picking an arbitrary variant).
+// supercarsStandingsDriverKey normalizes driver names for Supercars standings aggregation
+// (drivers championship — substitutes get their own row; nicknames merge with full names).
+func supercarsStandingsDriverKey(driver string) string {
+	k := canonicalDriverKey(driver)
+	switch k {
+	case "cam waters":
+		return canonicalDriverKey("Cameron Waters")
+	}
+	return k
+}
+
 // standingsAggregateKey is the standings row key: for F4 by car number (one driver
-// may be "A. Aksoy" and "Alp Aksoy" across races), otherwise canonicalDriverKey.
+// may be "A. Aksoy" and "Alp Aksoy" across races), for Supercars by driver name
+// (weekend substitutes each earn their own row), otherwise canonicalDriverKey.
 func standingsAggregateKey(seriesID, driver, car string) string {
 	car = strings.TrimSpace(car)
 	if strings.EqualFold(seriesID, "F4_IT") && car != "" {
 		return "#" + car
+	}
+	if strings.EqualFold(seriesID, "SUPERCARS") {
+		if k := supercarsStandingsDriverKey(driver); k != "" {
+			return k
+		}
 	}
 	key := canonicalDriverKey(driver)
 	if key == "" {
@@ -161,6 +178,10 @@ func preferredDriverName(name string) string {
 		return "B. J. McLeod"
 	case "jj yeley":
 		return "J. J. Yeley"
+	case "matt payne":
+		return "Matthew Payne"
+	case "cam waters":
+		return "Cameron Waters"
 	}
 	return raw
 }

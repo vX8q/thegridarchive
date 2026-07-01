@@ -1,0 +1,56 @@
+{
+  "event_id": "ARCA_2026_10",
+  "series": "ARCA Menards Series",
+  "race": "Shore Lunch 250 presented by Dutch Boy",
+  "date": "Saturday, June 27, 2026",
+  "start_date": "2026-06-27",
+  "end_date": "2026-06-27",
+  "track": "Elko Speedway",
+  "location": "Elko Speedway, Elko New Market, Minnesota",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Trk",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed",
+        "Lap #",
+        "# Laps",
+        "-Fastest",
+        "-Next"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Fin",
+        "St",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Laps",
+        "Led",
+        "Status",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

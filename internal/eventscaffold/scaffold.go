@@ -309,6 +309,25 @@ func isSkeleton(d *schedulefile.EventDetailJSON) bool {
 
 func previousRoundEntryList(dataDir, eventID string) []schedulefile.EntryListRow {
 	idU := strings.ToUpper(strings.TrimSpace(eventID))
+	if strings.HasPrefix(idU, "SUPERCARS_") {
+		weekend := schedulefile.SupercarsWeekendNumber(dataDir, idU)
+		if weekend <= 1 {
+			return nil
+		}
+		parts := strings.Split(idU, "_")
+		if len(parts) < 3 {
+			return nil
+		}
+		prevID := schedulefile.SupercarsWeekendFileID(parts[1], weekend-1)
+		detail, err := schedulefile.LoadEventDetail(dataDir, prevID)
+		if err != nil || detail == nil || len(detail.EntryList) == 0 {
+			return nil
+		}
+		out := make([]schedulefile.EntryListRow, len(detail.EntryList))
+		copy(out, detail.EntryList)
+		return out
+	}
+
 	m := eventRoundRe.FindStringSubmatch(idU)
 	if len(m) < 4 {
 		return nil

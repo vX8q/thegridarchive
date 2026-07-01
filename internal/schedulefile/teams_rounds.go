@@ -325,23 +325,30 @@ func teamsAreFlatDriver(data *TeamsWithSpec) bool {
 }
 
 // entryDrivers returns the driver list from an entry_list row: driver1/2/3 first,
-// else slash-separated driver ("A / B / C"), else single driver.
+// else slash-separated driver ("A / B / C"), else single driver. When driver and
+// driver2 are both set (Supercars weekend substitutes), both are included.
 func entryDrivers(e EntryListRow) []string {
-	var ds []string
-	for _, d := range []string{e.Driver1, e.Driver2, e.Driver3} {
-		if v := strings.TrimSpace(d); v != "" {
-			ds = append(ds, v)
-		}
+	primary := strings.TrimSpace(e.Driver)
+	if primary != "" && strings.ContainsAny(primary, "/;,") && strings.TrimSpace(e.Driver1) == "" {
+		return splitDriversCell(primary)
 	}
-	if len(ds) == 0 {
-		drv := strings.TrimSpace(e.Driver)
-		if drv == "" {
-			return nil
+	var ds []string
+	seen := map[string]bool{}
+	add := func(name string) {
+		v := strings.TrimSpace(name)
+		if v == "" {
+			return
 		}
-		if strings.ContainsAny(drv, "/;,") {
-			return splitDriversCell(drv)
+		k := driverMatchKey(v)
+		if k == "" || seen[k] {
+			return
 		}
-		ds = append(ds, drv)
+		seen[k] = true
+		ds = append(ds, v)
+	}
+	add(primary)
+	for _, d := range []string{e.Driver1, e.Driver2, e.Driver3} {
+		add(d)
 	}
 	return ds
 }
@@ -513,7 +520,22 @@ func EnrichTeamsRoundsFromEvents(dataDir, seriesID, season string, data *TeamsWi
 			if single == "" && len(drivers) == 1 {
 				single = drivers[0]
 			}
-			if num != "" || single != "" {
+			if substituteInsertSeries[sid] && len(drivers) > 0 {
+				// One car may list multiple drivers at a round (weekend substitutes sharing
+				// the entry, or separate entry_list rows with the same number).
+				for _, drv := range drivers {
+					drv = strings.TrimSpace(drv)
+					if drv == "" {
+						continue
+					}
+					key := num + "|" + driverMatchKey(drv)
+					a := getOrCreate(byKey, &keyOrder, key)
+					for _, r := range rounds {
+						a.rounds[r] = true
+					}
+					a.update(e, []string{drv}, drv, minRound)
+				}
+			} else if num != "" || single != "" {
 				a := getOrCreate(byKey, &keyOrder, num+"|"+driverMatchKey(single))
 				for _, r := range rounds {
 					a.rounds[r] = true
@@ -546,7 +568,29 @@ func EnrichTeamsRoundsFromEvents(dataDir, seriesID, season string, data *TeamsWi
 		for i := range rows {
 			drv := strings.TrimSpace(rows[i].Driver)
 			if drv != "" {
-				key := strings.TrimSpace(rows[i].Number) + "|" + driverMatchKey(drv)
+				dk := driverMatchKey(drv)
+				if sid == "supercars" {
+					// Full-time entries keep one car number; alternate livery numbers
+					// (e.g. #500 at one round) merge into the curated driver's rounds.
+					merged := map[int]bool{}
+					for _, k := range keyOrder {
+						parts := strings.SplitN(k, "|", 2)
+						if len(parts) != 2 || parts[1] != dk {
+							continue
+						}
+						if a := byKey[k]; a != nil {
+							for r := range a.rounds {
+								merged[r] = true
+							}
+							matched[k] = true
+						}
+					}
+					if len(merged) > 0 {
+						rows[i].Rounds = compressRounds(merged)
+					}
+					continue
+				}
+				key := strings.TrimSpace(rows[i].Number) + "|" + dk
 				if a := byKey[key]; a != nil {
 					matched[key] = true
 					rows[i].Rounds = compressRounds(a.rounds)
@@ -665,7 +709,7 @@ func insertAfterNumber(rows *[]TeamJSON, sub TeamJSON) bool {
 	// manufacturer, crew chief, chassis, engine, class) are taken CANONICALLY from the matched row —
 	// overwriting possible entry_list mismatches (e.g. team name hyphen/dash spelling)
 	// so the driver is guaranteed to group under that car.
-	sub.FullTime = matchRow.FullTime
+	// FullTime is left as set by the caller (substitutes stay part-time).
 	if matchRow.Team != "" {
 		sub.Team = matchRow.Team
 	}

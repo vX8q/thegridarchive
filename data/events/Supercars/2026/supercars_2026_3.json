@@ -2,7 +2,9 @@
   "event_id": "SUPERCARS_2026_3",
   "series": "Supercars Championship",
   "race": "Taupō Super 440",
-  "date": "Saturday, April 11, 2026",
+  "date": "10–11 April 2026",
+  "start_date": "2026-04-10",
+  "end_date": "2026-04-11",
   "track": "Taupō International Motorsport Park",
   "location": "Taupō, Waikato Region, New Zealand",
   "laps": "37",
@@ -252,7 +254,7 @@
               "5",
               "55",
               "Thomas Randle",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:27.579",
               "2",
               "9"
@@ -333,7 +335,7 @@
               "14",
               "6",
               "Cam Waters",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:27.888",
               "2",
               "8"
@@ -517,7 +519,7 @@
               "8",
               "6",
               "Cam Waters",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:26.767",
               "7",
               "8"
@@ -634,7 +636,7 @@
               "21",
               "55",
               "Thomas Randle",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:27.669",
               "8",
               "8"
@@ -767,7 +769,7 @@
               "8",
               "55",
               "Thomas Randle",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:27.679",
               "0.7826",
               "9",
@@ -817,7 +819,7 @@
               "13",
               "6",
               "Cam Waters",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:27.636",
               "0.7398",
               "4",
@@ -1050,7 +1052,7 @@
               "10",
               "6",
               "Cam Waters",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:26.434",
               "0.5603",
               "9",
@@ -1070,7 +1072,7 @@
               "12",
               "55",
               "Thomas Randle",
-              "Monster Castrol Racing",
+              "Tickford Racing",
               "1:26.762",
               "0.8885",
               "4",
@@ -1200,324 +1202,6 @@
         }
       ]
     },
-    "starting_lineup": {
-      "sessions": [
-        {
-          "meta": {
-            "race_no": 8
-          },
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team"
-          ],
-          "rows": [
-            [
-              "1",
-              "17",
-              "Brodie Kostecki",
-              "Dick Johnson Racing"
-            ],
-            [
-              "2",
-              "88",
-              "Broc Feeney",
-              "Triple Eight Race Engineering"
-            ],
-            [
-              "3",
-              "19",
-              "Matt Payne",
-              "Grove Racing"
-            ],
-            [
-              "4",
-              "888",
-              "Will Brown",
-              "Triple Eight Race Engineering"
-            ],
-            [
-              "5",
-              "2",
-              "Ryan Wood",
-              "Walkinshaw TWG Racing"
-            ],
-            [
-              "6",
-              "26",
-              "Kai Allen",
-              "Grove Racing"
-            ],
-            [
-              "7",
-              "1",
-              "Chaz Mostert",
-              "Walkinshaw TWG Racing"
-            ],
-            [
-              "8",
-              "55",
-              "Thomas Randle",
-              "Tickford Racing"
-            ],
-            [
-              "9",
-              "8",
-              "Andre Heimgartner",
-              "Brad Jones Racing"
-            ],
-            [
-              "10",
-              "7",
-              "James Golding",
-              "Blanchard Racing Team"
-            ],
-            [
-              "11",
-              "4",
-              "Jack Le Brocq",
-              "Matt Stone Racing"
-            ],
-            [
-              "12",
-              "3",
-              "Aaron Cameron",
-              "Blanchard Racing Team"
-            ],
-            [
-              "13",
-              "6",
-              "Cam Waters",
-              "Tickford Racing"
-            ],
-            [
-              "14",
-              "11",
-              "Jackson Walls",
-              "Triple Eight Race Engineering"
-            ],
-            [
-              "15",
-              "18",
-              "Anton de Pasquale",
-              "Team 18"
-            ],
-            [
-              "16",
-              "20",
-              "David Reynolds",
-              "Team 18"
-            ],
-            [
-              "17",
-              "14",
-              "Cameron Hill",
-              "Brad Jones Racing"
-            ],
-            [
-              "18",
-              "31",
-              "Jayden Ojeda",
-              "PremiAir Racing"
-            ],
-            [
-              "19",
-              "99",
-              "Cooper Murray",
-              "Erebus Motorsport"
-            ],
-            [
-              "20",
-              "777",
-              "Declan Fraser",
-              "PremiAir Racing"
-            ],
-            [
-              "21",
-              "9",
-              "Jobe Stewart",
-              "Erebus Motorsport"
-            ],
-            [
-              "22",
-              "96",
-              "Macauley Jones",
-              "Brad Jones Racing"
-            ],
-            [
-              "23",
-              "10",
-              "Zach Bates",
-              "Matt Stone Racing"
-            ],
-            [
-              "24",
-              "38",
-              "Rylan Gray",
-              "Dick Johnson Racing"
-            ]
-          ]
-        },
-        {
-          "meta": {
-            "race_no": 9
-          },
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team"
-          ],
-          "rows": [
-            [
-              "1",
-              "2",
-              "Ryan Wood",
-              "Walkinshaw TWG Racing"
-            ],
-            [
-              "2",
-              "888",
-              "Will Brown",
-              "Triple Eight Race Engineering"
-            ],
-            [
-              "3",
-              "88",
-              "Broc Feeney",
-              "Triple Eight Race Engineering"
-            ],
-            [
-              "4",
-              "17",
-              "Brodie Kostecki",
-              "Dick Johnson Racing"
-            ],
-            [
-              "5",
-              "7",
-              "James Golding",
-              "Blanchard Racing Team"
-            ],
-            [
-              "6",
-              "1",
-              "Chaz Mostert",
-              "Walkinshaw TWG Racing"
-            ],
-            [
-              "7",
-              "18",
-              "Anton de Pasquale",
-              "Team 18"
-            ],
-            [
-              "8",
-              "19",
-              "Matt Payne",
-              "Grove Racing"
-            ],
-            [
-              "9",
-              "26",
-              "Kai Allen",
-              "Grove Racing"
-            ],
-            [
-              "10",
-              "6",
-              "Cam Waters",
-              "Tickford Racing"
-            ],
-            [
-              "11",
-              "4",
-              "Jack Le Brocq",
-              "Matt Stone Racing"
-            ],
-            [
-              "12",
-              "55",
-              "Thomas Randle",
-              "Tickford Racing"
-            ],
-            [
-              "13",
-              "20",
-              "David Reynolds",
-              "Team 18"
-            ],
-            [
-              "14",
-              "3",
-              "Aaron Cameron",
-              "Blanchard Racing Team"
-            ],
-            [
-              "15",
-              "31",
-              "Jayden Ojeda",
-              "PremiAir Racing"
-            ],
-            [
-              "16",
-              "8",
-              "Andre Heimgartner",
-              "Brad Jones Racing"
-            ],
-            [
-              "17",
-              "9",
-              "Jobe Stewart",
-              "Erebus Motorsport"
-            ],
-            [
-              "18",
-              "10",
-              "Zach Bates",
-              "Matt Stone Racing"
-            ],
-            [
-              "19",
-              "14",
-              "Cameron Hill",
-              "Brad Jones Racing"
-            ],
-            [
-              "20",
-              "99",
-              "Cooper Murray",
-              "Erebus Motorsport"
-            ],
-            [
-              "21",
-              "777",
-              "Declan Fraser",
-              "PremiAir Racing"
-            ],
-            [
-              "22",
-              "38",
-              "Rylan Gray",
-              "Dick Johnson Racing"
-            ],
-            [
-              "23",
-              "96",
-              "Macauley Jones",
-              "Brad Jones Racing"
-            ],
-            [
-              "24",
-              "11",
-              "Jackson Walls",
-              "Triple Eight Race Engineering"
-            ]
-          ]
-        }
-      ]
-    },
     "race": {
       "sessions": [
         {
@@ -1532,10 +1216,10 @@
           },
           "headers": [
             "Pos",
+            "ST",
             "No.",
             "Driver",
             "Team",
-            "Grid Δ",
             "Race time",
             "Laps",
             "Pts"
@@ -1543,240 +1227,240 @@
           "rows": [
             [
               "1",
+              "1",
               "17",
               "Brodie Kostecki",
               "Shell V-Power Racing Team",
-              "−",
               "56:28.991",
               "37",
               "+80"
             ],
             [
               "2",
+              "4",
               "888",
               "Will Brown",
               "Red Bull Ampol Racing",
-              "2",
               "56:45.176",
               "37",
               "+74"
             ],
             [
               "3",
+              "5",
               "2",
               "Ryan Wood",
               "Mobil1 Truck Assist Racing",
-              "2",
               "56:45.523",
               "37",
               "+73"
             ],
             [
               "4",
+              "2",
               "88",
               "Broc Feeney",
               "Red Bull Ampol Racing",
-              "2",
               "56:52.437",
               "37",
               "+62"
             ],
             [
               "5",
+              "3",
               "19",
               "Matthew Payne",
               "Penrite Racing",
-              "2",
               "56:53.834",
               "37",
               "+57"
             ],
             [
               "6",
+              "10",
               "7",
               "James Golding",
               "CoolDrive Racing",
-              "4",
               "56:55.099",
               "37",
               "+53"
             ],
             [
               "7",
+              "7",
               "1",
               "Chaz Mostert",
               "Mobil1 Optus Racing",
-              "−",
               "56:57.300",
               "37",
               "+49"
             ],
             [
               "8",
+              "15",
               "18",
               "Anton de Pasquale",
               "DEWALT Racing",
-              "7",
               "57:00.291",
               "37",
               "+45"
             ],
             [
               "9",
+              "11",
               "4",
               "Jack Le Brocq",
               "Sherrin Rentals Racing",
-              "2",
               "57:06.299",
               "37",
               "+41"
             ],
             [
               "10",
+              "16",
               "20",
               "David Reynolds",
               "Snowy River Caravans Racing",
-              "6",
               "57:12.744",
               "37",
               "+38"
             ],
             [
               "11",
+              "17",
               "14",
               "Cameron Hill",
               "Brad Jones Racing",
-              "6",
               "57:15.011",
               "37",
               "+35"
             ],
             [
               "12",
+              "9",
               "8",
               "Andre Heimgartner",
               "R&J Batteries Racing",
-              "3",
               "57:15.781",
               "37",
               "+32"
             ],
             [
               "13",
+              "19",
               "99",
               "Cooper Murray",
               "Erebus Motorsport",
-              "6",
               "57:26.956",
               "37",
               "+29"
             ],
             [
               "14",
+              "20",
               "777",
               "Declan Fraser",
               "PremiAir Racing",
-              "6",
               "57:31.324",
               "37",
               "+27"
             ],
             [
               "15",
+              "24",
               "38",
               "Rylan Gray",
               "Shell V-Power Racing Team",
-              "9",
               "57:33.407",
               "37",
               "+25"
             ],
             [
               "16",
+              "22",
               "96",
               "Macauley Jones",
               "Brad Jones Racing",
-              "6",
               "57:35.320",
               "37",
               "+23"
             ],
             [
               "17",
+              "23",
               "10",
               "Zach Bates",
               "Bendix Racing",
-              "6",
               "57:36.474",
               "37",
               "+21"
             ],
             [
               "18",
+              "18",
               "31",
               "Jayden Ojeda",
               "PremiAir Racing",
-              "−",
               "57:38.817",
               "37",
               "+19"
             ],
             [
               "19",
+              "8",
               "55",
               "Thomas Randle",
-              "Monster Castrol Racing",
-              "11",
+              "Tickford Racing",
               "57:49.793",
               "37",
               "+18"
             ],
             [
               "20",
+              "12",
               "3",
               "Aaron Cameron",
               "LIQUI MOLY BLAHST Racing",
-              "8",
               "57:59.249",
               "37",
               "+16"
             ],
             [
               "21",
+              "13",
               "6",
               "Cam Waters",
-              "Monster Castrol Racing",
-              "8",
+              "Tickford Racing",
               "58:14.936",
               "37",
               "+15"
             ],
             [
               "22",
+              "14",
               "11",
               "Jackson Walls",
               "Objective Racing",
-              "8",
               "56:34.958",
               "36",
               "+14"
             ],
             [
               "23",
+              "6",
               "26",
               "Kai Allen",
               "Penrite Racing",
-              "17",
               "57:50.663",
               "32",
               "+13"
             ],
             [
               "NC",
+              "21",
               "9",
               "Jobe Stewart",
               "Erebus Motorsport",
-              "−",
               "3:37.266",
               "2",
               "+0"
@@ -1795,10 +1479,10 @@
           },
           "headers": [
             "Pos",
+            "ST",
             "No.",
             "Driver",
             "Team",
-            "Grid Δ",
             "Race time",
             "Laps",
             "Pts"
@@ -1806,240 +1490,240 @@
           "rows": [
             [
               "1",
+              "1",
               "2",
               "Ryan Wood",
               "Mobil1 Truck Assist Racing",
-              "−",
               "1:30:28.703",
               "60",
               "+140"
             ],
             [
               "2",
+              "3",
               "88",
               "Broc Feeney",
               "Red Bull Ampol Racing",
-              "1",
               "1:30:31.739",
               "60",
               "+134"
             ],
             [
               "3",
+              "6",
               "1",
               "Chaz Mostert",
               "Mobil1 Optus Racing",
-              "3",
               "1:30:34.215",
               "60",
               "+118"
             ],
             [
               "4",
+              "2",
               "888",
               "Will Brown",
               "Red Bull Ampol Racing",
-              "2",
               "1:30:35.708",
               "60",
               "+109"
             ],
             [
               "5",
+              "8",
               "19",
               "Matthew Payne",
               "Penrite Racing",
-              "3",
               "1:30:37.523",
               "60",
               "+100"
             ],
             [
               "6",
+              "4",
               "17",
               "Brodie Kostecki",
               "Shell V-Power Racing Team",
-              "2",
               "1:30:40.757",
               "60",
               "+92"
             ],
             [
               "7",
+              "5",
               "7",
               "James Golding",
               "CoolDrive Racing",
-              "2",
               "1:30:45.479",
               "60",
               "+85"
             ],
             [
               "8",
+              "9",
               "26",
               "Kai Allen",
               "Penrite Racing",
-              "1",
               "1:30:45.707",
               "60",
               "+78"
             ],
             [
               "9",
+              "10",
               "6",
               "Cam Waters",
-              "Monster Castrol Racing",
-              "1",
+              "Tickford Racing",
               "1:31:05.730",
               "60",
               "+72"
             ],
             [
               "10",
+              "7",
               "18",
               "Anton de Pasquale",
               "DEWALT Racing",
-              "3",
               "1:31:06.415",
               "60",
               "+66"
             ],
             [
               "11",
+              "11",
               "4",
               "Jack Le Brocq",
               "Sherrin Rentals Racing",
-              "−",
               "1:31:07.009",
               "60",
               "+61"
             ],
             [
               "12",
+              "16",
               "8",
               "Andre Heimgartner",
               "R&J Batteries Racing",
-              "4",
               "1:31:16.736",
               "60",
               "+56"
             ],
             [
               "13",
+              "12",
               "55",
               "Thomas Randle",
-              "Monster Castrol Racing",
-              "1",
+              "Tickford Racing",
               "1:31:20.235",
               "60",
               "+51"
             ],
             [
               "14",
+              "15",
               "31",
               "Jayden Ojeda",
               "PremiAir Racing",
-              "1",
               "1:31:20.736",
               "60",
               "+47"
             ],
             [
               "15",
+              "14",
               "3",
               "Aaron Cameron",
               "LIQUI MOLY BLAHST Racing",
-              "1",
               "1:31:21.167",
               "60",
-              "+44"
+              "+0"
             ],
             [
               "16",
+              "19",
               "14",
               "Cameron Hill",
               "Brad Jones Racing",
-              "3",
               "1:31:23.730",
               "60",
               "+40"
             ],
             [
               "17",
+              "18",
               "10",
               "Zach Bates",
               "Bendix Racing",
-              "1",
               "1:31:26.596",
               "60",
               "+37"
             ],
             [
               "18",
+              "23",
               "96",
               "Macauley Jones",
               "Brad Jones Racing",
-              "5",
               "1:31:28.280",
               "60",
               "+34"
             ],
             [
               "19",
+              "13",
               "20",
               "David Reynolds",
               "Snowy River Caravans Racing",
-              "6",
               "1:31:31.686",
               "60",
               "+31"
             ],
             [
               "20",
+              "20",
               "99",
               "Cooper Murray",
               "Erebus Motorsport",
-              "−",
               "1:31:32.516",
               "60",
               "+29"
             ],
             [
               "21",
+              "22",
               "38",
               "Rylan Gray",
               "Shell V-Power Racing Team",
-              "1",
               "1:31:35.828",
               "60",
               "+26"
             ],
             [
               "22",
+              "17",
               "9",
               "Jobe Stewart",
               "Erebus Motorsport",
-              "5",
               "1:31:56.883",
               "60",
               "+24"
             ],
             [
               "23",
+              "21",
               "777",
               "Declan Fraser",
               "PremiAir Racing",
-              "2",
               "1:30:38.455",
               "59",
               "+22"
             ],
             [
               "NC",
+              "24",
               "11",
               "Jackson Walls",
               "Objective Racing",
-              "−",
               "1:18:19.506",
               "50",
               "+0"

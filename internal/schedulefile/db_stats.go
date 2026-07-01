@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -108,7 +109,7 @@ func BuildDriverStatsFromDB(db *sql.DB, dataDir string, seriesID string, season 
 				}
 			}
 
-			teams := aggregateByTeam(data.Rows)
+			teams := aggregateByTeam(data.Rows, nil)
 			mans := aggregateByManufacturer(data.Rows)
 			return &DriverStatsData{Rows: data.Rows, Teams: teams, Manufacturers: mans}, nil
 		}
@@ -257,10 +258,15 @@ ORDER BY wins DESC, top5 DESC, top10 DESC, driver_name
 	switch strings.ToUpper(seriesID) {
 	case "NASCAR_CUP", "NASCAR_TRUCK", "NASCAR_MODIFIED", "ARCA", "NOAPS":
 		out = mergeStockCarDriverStatsRows(out)
+		enrichStockCarDriverStatsCars(dataDir, seriesID, season, out)
+		sort.Slice(out, func(i, j int) bool {
+			return stockCarDriverStatsRowLess(out[i], out[j])
+		})
 	}
 
 	mans := aggregateByManufacturer(out)
-	teams := aggregateByTeam(out)
+	teamCanon := stockCarTeamCanonByFoldKey(dataDir, seriesID)
+	teams := aggregateByTeam(out, teamCanon)
 
 	// Supercars: if Manufacturer Stats empty (view uses teams.car manufacturer, empty for Supercars),
 	// fill manufacturer from teams file by car number and rebuild manufacturers.

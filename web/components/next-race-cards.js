@@ -183,21 +183,19 @@
       return;
     }
 
+    // Render cards and start countdown + LIVE polling, without waiting for /api/live-events
     function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
-    // Render cards and start countdown immediately, without waiting for /api/live-events
     function renderWithLiveSet() {
       container.innerHTML =
         '<div class="nrc-label">' + t('home.next_race') + '</div>' +
         '<div class="nrc-cards">' +
         weekEntries.map(function (entry, idx) {
           var e = entry.event;
-          var dateStr = (e.start_date || e.date || '').slice(0, 10);
-          var endStr = (e.end_date || '').slice(0, 10);
-          var formatDateRangeLong = window.TGA && window.TGA.formatDateRangeLong;
-          var dateDisplay = (dateStr && endStr && dateStr !== endStr && formatDateRangeLong)
-            ? formatDateRangeLong(e.start_date, e.end_date)
-            : formatShortDate(dateStr);
+          var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
+          var dateDisplay = formatEventRaceStartDate
+            ? formatEventRaceStartDate(e)
+            : formatShortDate((e.start_date || e.date || '').slice(0, 10));
           var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
           // Always strip title sponsor "Java House" from event name,
           // so UI shows just "Grand Prix of Arlington".
@@ -272,6 +270,15 @@
           }
           if (trackKey.indexOf('imola') >= 0) {
             extraClass += ' nrc-card--imola';
+          }
+          if (trackKey.indexOf('silverstone') >= 0) {
+            extraClass += ' nrc-card--silverstone';
+          }
+          if (trackKey.indexOf('mid-ohio') >= 0 || trackKey.indexOf('mid ohio') >= 0) {
+            extraClass += ' nrc-card--mid-ohio';
+          }
+          if (trackKey.indexOf('chicagoland') >= 0) {
+            extraClass += ' nrc-card--chicagoland';
           }
           if (trackKey.indexOf('kansas speedway') >= 0 || trackKey.indexOf('kansas city, kansas') >= 0) {
             extraClass += ' nrc-card--kansas';
@@ -405,6 +412,15 @@
           }
           if (trackKey.indexOf('coronado') >= 0) {
             extraClass += ' nrc-card--coronado-street';
+          }
+          if (trackKey.indexOf('silverstone') >= 0) {
+            extraClass += ' nrc-card--silverstone';
+          }
+          if (trackKey.indexOf('mid-ohio') >= 0 || trackKey.indexOf('mid ohio') >= 0) {
+            extraClass += ' nrc-card--mid-ohio';
+          }
+          if (trackKey.indexOf('chicagoland') >= 0) {
+            extraClass += ' nrc-card--chicagoland';
           }
           if (eventNameLc.indexOf('taupo') >= 0 || eventNameLc.indexOf('taupō') >= 0) {
             extraClass += ' nrc-card--taupo';
@@ -562,6 +578,15 @@
           if (eventNameLc.indexOf('coronado') >= 0) {
             extraClass += ' nrc-card--coronado-street';
           }
+          if (eventNameLc.indexOf('silverstone') >= 0) {
+            extraClass += ' nrc-card--silverstone';
+          }
+          if (eventNameLc.indexOf('mid-ohio') >= 0 || eventNameLc.indexOf('mid ohio') >= 0) {
+            extraClass += ' nrc-card--mid-ohio';
+          }
+          if (eventNameLc.indexOf('chicagoland') >= 0) {
+            extraClass += ' nrc-card--chicagoland';
+          }
           if (trackKey.indexOf('pocono raceway') >= 0) {
             extraClass += ' nrc-card--pocono';
           }
@@ -592,6 +617,12 @@
               extraClass += ' nrc-card--thompson';
             } else if (eventSlug.indexOf('imola') >= 0) {
               extraClass += ' nrc-card--imola';
+            } else if (eventSlug.indexOf('silverstone') >= 0) {
+              extraClass += ' nrc-card--silverstone';
+            } else if (eventSlug.indexOf('mid-ohio') >= 0 || eventSlug.indexOf('mid_ohio') >= 0) {
+              extraClass += ' nrc-card--mid-ohio';
+            } else if (eventSlug.indexOf('chicagoland') >= 0) {
+              extraClass += ' nrc-card--chicagoland';
             } else if (eventSlug.indexOf('kansas') >= 0) {
               extraClass += ' nrc-card--kansas';
             } else if (eventSlug.indexOf('autopolis') >= 0) {
@@ -737,23 +768,52 @@
 
       nrcCards = weekEntries.map(function (entry, idx) {
         var e = entry.event;
+        var raceUtc = (window.TGA && window.TGA.getEventRaceUtcMs) ? window.TGA.getEventRaceUtcMs(e) : 0;
+        var cardAnchor = container.querySelectorAll('.nrc-cards .nrc-card')[idx];
         return {
           el: container.querySelector('[data-nrc="' + idx + '"]'),
+          cardEl: cardAnchor,
           liveEl: container.querySelector('[data-nrc-live="' + idx + '"]'),
           date: entry.date,
+          raceUtcMs: raceUtc || (entry.date && entry.date.getTime ? entry.date.getTime() : 0),
           liveEndTs: entry.liveEndTs != null ? entry.liveEndTs : entry.endTs,
-          eventId: (e.id || '').toUpperCase()
+          endTs: entry.endTs,
+          eventId: (e.id || '').toUpperCase(),
+          expired: false
         };
       });
 
+      var nrcRefreshPending = false;
+      function scheduleNextRaceRefresh() {
+        if (nrcRefreshPending) return;
+        nrcRefreshPending = true;
+        setTimeout(function () {
+          nrcRefreshPending = false;
+          var cache = window.TGA && window.TGA.getGlobalEventsCache && window.TGA.getGlobalEventsCache();
+          if (!cache) return;
+          renderNextRaceCards(cache);
+          if (window.TGA && typeof window.TGA.renderLastResultsCards === 'function') {
+            window.TGA.renderLastResultsCards(cache);
+          }
+        }, 200);
+      }
+
       function tick() {
         var now2 = Date.now();
+        var needRefresh = false;
         nrcCards.forEach(function (c) {
-          if (!c.el) return;
-          var startTs = c.date.getTime();
+          if (!c.el || c.expired) return;
+          if (c.endTs && now2 > c.endTs) {
+            c.expired = true;
+            if (c.cardEl) c.cardEl.style.display = 'none';
+            needRefresh = true;
+            return;
+          }
+          var startTs = c.raceUtcMs || (c.date && c.date.getTime ? c.date.getTime() : 0);
           var fromApi = c.eventId && nrcLiveSet[c.eventId];
-          var fromTime = !eventUsesLiveSync(c.eventId) && now2 >= startTs && now2 <= c.liveEndTs;
-          var isLive = fromApi || fromTime;
+          var inLiveWindow = startTs && now2 >= startTs && c.liveEndTs && now2 <= c.liveEndTs;
+          // Live-sync series prefer API; fall back to schedule window when sync is offline.
+          var isLive = fromApi || inLiveWindow;
           if (c.liveEl) {
             if (isLive) {
               c.liveEl.classList.add('nrc-live-visible');
@@ -768,15 +828,23 @@
             return;
           }
           var diff = startTs - now2;
-          if (diff <= 0) { c.el.textContent = '0' + window.TGA.t('cd.secs'); return; }
+          if (!startTs || diff <= 0) {
+            if (inLiveWindow) {
+              c.el.textContent = (window.TGA.t && window.TGA.t('live.badge')) || 'LIVE';
+            } else {
+              c.el.textContent = '0' + ((window.TGA.t && window.TGA.t('cd.secs')) || 's');
+            }
+            return;
+          }
           var days  = Math.floor(diff / 86400000);
           var hours = Math.floor((diff % 86400000) / 3600000);
           var mins  = Math.floor((diff % 3600000)  / 60000);
           var secs  = Math.floor((diff % 60000)    / 1000);
           c.el.textContent = days > 0
-            ? pad(days) + window.TGA.t('cd.days') + ' ' + pad(hours) + window.TGA.t('cd.hours') + ' ' + pad(mins) + window.TGA.t('cd.mins')
+            ? pad(days) + (window.TGA.t('cd.days') || 'd') + ' ' + pad(hours) + (window.TGA.t('cd.hours') || 'h') + ' ' + pad(mins) + (window.TGA.t('cd.mins') || 'm')
             : pad(hours) + ':' + pad(mins) + ':' + pad(secs);
         });
+        if (needRefresh) scheduleNextRaceRefresh();
       }
 
       container.classList.remove('hidden');

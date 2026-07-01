@@ -1,0 +1,40 @@
+{
+  "event_id": "PSC_2026_3",
+  "series": "Porsche Supercup",
+  "race": "Porsche Supercup — Red Bull Ring",
+  "date": "26–28 June 2026",
+  "start_date": "2026-06-26",
+  "end_date": "2026-06-28",
+  "track": "Red Bull Ring",
+  "location": "Spielberg",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

@@ -67,6 +67,8 @@
       categoryBySeriesId: T.categoryBySeriesId,
       seriesBadge: wrap('seriesBadge', function (id) { return T.seriesBadge(id); }),
       formatShortDate: wrap('formatShortDate', function (s) { return T.formatShortDate(s); }),
+      formatEventRaceStartDate: wrap('formatEventRaceStartDate', function (e) { return T.formatEventRaceStartDate(e); }),
+      buildEventMetaDate: wrap('buildEventMetaDate', function (d) { return T.buildEventMetaDate(d); }),
       formatDateRange: wrap('formatDateRange', function (a, b) { return T.formatDateRange(a, b); }),
       parseEventDate: wrap('parseEventDate', function (a, b, c) { return T.parseEventDate(a, b, c); }),
       formatDateRangeLong: wrap('formatDateRangeLong', function (a, b) { return T.formatDateRangeLong(a, b); }),

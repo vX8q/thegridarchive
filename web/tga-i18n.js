@@ -164,9 +164,26 @@
     return String((e && (e._seriesId || e.series_id)) || '').toUpperCase();
   }
 
+  /** ISO YYYY-MM-DD from start_date or parseable date string (not slice(0,10) on prose). */
+  function parseIsoDatePrefix(s) {
+    if (s == null) return '';
+    var str = String(s).trim();
+    if (!str) return '';
+    if (/^\d{4}-\d{2}-\d{2}/.test(str)) return str.slice(0, 10);
+    var d = new Date(str);
+    if (!isNaN(d.getTime())) {
+      var y = d.getFullYear();
+      var m = ('0' + (d.getMonth() + 1)).slice(-2);
+      var da = ('0' + d.getDate()).slice(-2);
+      return y + '-' + m + '-' + da;
+    }
+    return '';
+  }
+
   /** Local calendar race date (weekend), not shifted to MSK midnight.  */
   function getEventScheduleLocalDate(e) {
-    return String((e && (e.start_date || e.date)) || '').slice(0, 10);
+    if (!e) return '';
+    return parseIsoDatePrefix(e.start_date || e.startDate) || parseIsoDatePrefix(e.date) || '';
   }
 
   /**
@@ -278,16 +295,41 @@
     if (!e) return 0;
     if (e._raceUtcMs) return e._raceUtcMs;
     var localDs = getEventScheduleLocalDate(e);
-    return computeEventRaceUtcMs(e, localDs, parseMskDateTime(e.time_msk, localDs));
+    var mskRaw = e._time_msk_raw != null ? e._time_msk_raw : e.time_msk;
+    return computeEventRaceUtcMs(e, localDs, parseMskDateTime(mskRaw, localDs));
+  }
+
+  /** MSK calendar date (YYYY-MM-DD) for a UTC race-start moment. */
+  function isoDateFromUtcMsMsk(utcMs) {
+    if (!utcMs) return '';
+    var t = utcMs + 3 * 3600000;
+    var d = new Date(t);
+    var y = d.getUTCFullYear();
+    var mo = ('0' + (d.getUTCMonth() + 1)).slice(-2);
+    var da = ('0' + d.getUTCDate()).slice(-2);
+    return y + '-' + mo + '-' + da;
+  }
+
+  /** Local calendar date of race start (not weekend start_date). */
+  function getEventRaceStartDateIso(e) {
+    if (!e) return '';
+    if (e._raceStartDate) return String(e._raceStartDate).slice(0, 10);
+    var utc = getEventRaceUtcMs(e);
+    return isoDateFromUtcMsMsk(utc) || getEventScheduleLocalDate(e);
   }
 
   /** Normalizes event: time_msk → HH:MM, _raceUtcMs, local date for grouping.  */
   function normalizeScheduleEvent(e) {
     if (!e || typeof e !== 'object') return e;
     var localDs = getEventScheduleLocalDate(e);
-    var mskParsed = parseMskDateTime(e.time_msk, localDs);
+    if (e._time_msk_raw == null && e.time_msk != null && String(e.time_msk).trim() !== '') {
+      e._time_msk_raw = e.time_msk;
+    }
+    var mskRaw = e._time_msk_raw != null ? e._time_msk_raw : e.time_msk;
+    var mskParsed = parseMskDateTime(mskRaw, localDs);
     e._scheduleDate = localDs;
     e._raceUtcMs = computeEventRaceUtcMs(e, localDs, mskParsed);
+    e._raceStartDate = isoDateFromUtcMsMsk(e._raceUtcMs) || localDs;
     if (mskParsed.timeStr) e.time_msk = mskParsed.timeStr;
     return e;
   }
@@ -1140,8 +1182,10 @@
   window.TGA.estToUtcMs = estToUtcMs;
   window.TGA.mskToUtcMs = mskToUtcMs;
   window.TGA.parseMskDateTime = parseMskDateTime;
+  window.TGA.parseIsoDatePrefix = parseIsoDatePrefix;
   window.TGA.getEventScheduleLocalDate = getEventScheduleLocalDate;
   window.TGA.getEventRaceUtcMs = getEventRaceUtcMs;
+  window.TGA.getEventRaceStartDateIso = getEventRaceStartDateIso;
   window.TGA.normalizeScheduleEvent = normalizeScheduleEvent;
   window.TGA.scheduleSeriesUpper = scheduleSeriesUpper;
   window.TGA.formatRaceUtcForDisplay = formatRaceUtcForDisplay;

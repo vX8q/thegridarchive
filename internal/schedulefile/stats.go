@@ -126,7 +126,7 @@ func parseStatsPoints(s string) float64 {
 	return f
 }
 
-func buildDriverStatsClasses(rows []DriverStatsRow) []DriverStatsClass {
+func buildDriverStatsClasses(rows []DriverStatsRow, teamCanonByKey map[string]string) []DriverStatsClass {
 	byClass := make(map[string][]DriverStatsRow)
 	var order []string
 	for _, row := range rows {
@@ -147,11 +147,11 @@ func buildDriverStatsClasses(rows []DriverStatsRow) []DriverStatsClass {
 	for _, className := range order {
 		rows := byClass[className]
 		sort.Slice(rows, func(i, j int) bool {
+			if rows[i].Points != rows[j].Points && (rows[i].Points > 0 || rows[j].Points > 0) {
+				return rows[i].Points > rows[j].Points
+			}
 			if rows[i].Wins != rows[j].Wins {
 				return rows[i].Wins > rows[j].Wins
-			}
-			if rows[i].Points != rows[j].Points {
-				return rows[i].Points > rows[j].Points
 			}
 			if rows[i].Podiums != rows[j].Podiums {
 				return rows[i].Podiums > rows[j].Podiums
@@ -165,7 +165,7 @@ func buildDriverStatsClasses(rows []DriverStatsRow) []DriverStatsClass {
 			ID:            strings.ToLower(strings.ReplaceAll(className, " ", "-")),
 			Name:          className,
 			Rows:          rows,
-			Teams:         aggregateByTeam(rows),
+			Teams:         aggregateByTeam(rows, teamCanonByKey),
 			Manufacturers: aggregateByManufacturer(rows),
 		})
 	}
@@ -560,18 +560,15 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 			PositionDiff:     roundTo(posDiff, 2),
 		})
 	}
-	sort.Slice(out, func(i, j int) bool {
-		if out[i].Wins != out[j].Wins {
-			return out[i].Wins > out[j].Wins
-		}
-		if out[i].Top5 != out[j].Top5 {
-			return out[i].Top5 > out[j].Top5
-		}
-		if out[i].Top10 != out[j].Top10 {
-			return out[i].Top10 > out[j].Top10
-		}
-		return out[i].Driver < out[j].Driver
-	})
+	if isStockCarStatsSeries(seriesID) {
+		sort.Slice(out, func(i, j int) bool {
+			return stockCarDriverStatsRowLess(out[i], out[j])
+		})
+	} else {
+		sort.Slice(out, func(i, j int) bool {
+			return defaultDriverStatsRowLess(seriesID, out[i], out[j])
+		})
+	}
 
 	// F1: also load manufacturer, Q2/Q3, and average qualifying.
 	var f1Qual map[string]q2q3Count
@@ -660,12 +657,25 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 		strings.EqualFold(seriesID, "NASCAR_MODIFIED") {
 		teamSourceRows = append([]DriverStatsRow(nil), out...)
 		out = mergeStockCarDriverStatsRows(out)
+		enrichStockCarDriverStatsCars(dataDir, seriesID, season, out)
 	}
 
 	mans := aggregateByManufacturer(out)
-	teams := aggregateByTeam(teamSourceRows)
+	var teamCanon map[string]string
+	if isStockCarTeamStatsSeries(seriesID) {
+		teamCanon = stockCarTeamCanonByFoldKey(dataDir, seriesID)
+	}
+	teams := aggregateByTeam(teamSourceRows, teamCanon)
 
-	return &DriverStatsData{Rows: out, Teams: teams, Manufacturers: mans, Classes: buildDriverStatsClasses(out)}, nil
+	return &DriverStatsData{Rows: out, Teams: teams, Manufacturers: mans, Classes: buildDriverStatsClasses(out, teamCanon)}, nil
+}
+
+func supercarsStatsDriverName(driver string) string {
+	return preferredDriverName(driver)
+}
+
+func supercarsStatsAccKey(driver, car string) string {
+	return canonicalDriverKey(supercarsStatsDriverName(driver)) + "\t" + SupercarsCarToCanonical(car)
 }
 
 // buildSupercarsDriverStatsFromJSON builds Supercars driver stats from JSON,
@@ -726,8 +736,7 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 		top10     int
 		sumFinish float64
 		// Supercars race.sessions lack explicit start position, so
-		// sumStart/posDiffCount as total qualifying position
-		// and qualifying appearances — for Avg. Qualifying.
+		// sumStart/posDiffCount hold qualifying positions (avg qualifying column).
 		sumStart     float64
 		posDiffCount int
 	}
@@ -752,105 +761,10 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 		raceAny, ok := tables["race"]
 		if ok {
 			raceMap, ok := raceAny.(map[string]interface{})
-			if !ok {
-				goto QUALIFYING_ONLY
-			}
-			sessionsAny, ok := raceMap["sessions"].([]interface{})
-			if !ok {
-				goto QUALIFYING_ONLY
-			}
-			for _, sessAny := range sessionsAny {
-				sessMap, ok := sessAny.(map[string]interface{})
-				if !ok {
-					continue
-				}
-				headersAny, ok := sessMap["headers"].([]interface{})
-				if !ok {
-					continue
-				}
-				var headers []string
-				for _, h := range headersAny {
-					headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
-				}
-				rowsAny, ok := sessMap["rows"].([]interface{})
-				if !ok {
-					continue
-				}
-				colPos := firstColIndex(headers, "Pos", "Fin")
-				colNo := firstColIndex(headers, "No", "No.", "#", "Car")
-				colDriver := firstColIndex(headers, "Driver")
-				colTeam := firstColIndex(headers, "Team")
-				if colDriver < 0 || colPos < 0 {
-					continue
-				}
-				for rowIdx, rAny := range rowsAny {
-					rSlice, ok := rAny.([]interface{})
-					if !ok {
-						continue
-					}
-					row := make([]string, len(rSlice))
-					for i := range rSlice {
-						row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
-					}
-					posStr := valueAt(row, colPos)
-					pos := atoiSafe(posStr)
-					if pos <= 0 {
-						// Supercars: rows with Pos="NC" count as last in the race.
-						if strings.EqualFold(strings.TrimSpace(posStr), "NC") {
-							pos = rowIdx + 1
-						} else {
-							continue
-						}
-					}
-					driver := valueAt(row, colDriver)
-					if driver == "" {
-						continue
-					}
-					car := SupercarsCarToCanonical(valueAt(row, colNo))
-					team := ""
-					if colTeam >= 0 {
-						team = valueAt(row, colTeam)
-					}
-					engine := ""
-					if car != "" {
-						engine = engineByCar[car]
-						// Team and manufacturer names always from Teams (as on /series/supercars/teams).
-						if tName, ok := teamByCar[car]; ok && tName != "" {
-							team = tName
-						}
-					}
-					key := canonicalDriverKey(driver) + "\t" + car
-					a := byKey[key]
-					if a == nil {
-						a = &acc{driver: driver, team: team, engine: engine, car: car}
-						byKey[key] = a
-					}
-					if a.team == "" {
-						a.team = team
-					}
-					if a.engine == "" {
-						a.engine = engine
-					}
-					a.races++
-					if pos == 1 {
-						a.wins++
-					}
-					if pos >= 1 && pos <= 5 {
-						a.top5++
-					}
-					if pos >= 1 && pos <= 10 {
-						a.top10++
-					}
-					a.sumFinish += float64(pos)
-				}
-			}
-		}
-
-		// Supercars Avg. Start from starting_lineup tables (grid), not qualifying.
-		if slAny, ok := tables["starting_lineup"]; ok {
-			if slMap, ok := slAny.(map[string]interface{}); ok {
-				if sessList, ok := slMap["sessions"].([]interface{}); ok {
-					for _, sessAny := range sessList {
+			if ok {
+				sessionsAny, ok := raceMap["sessions"].([]interface{})
+				if ok {
+					for _, sessAny := range sessionsAny {
 						sessMap, ok := sessAny.(map[string]interface{})
 						if !ok {
 							continue
@@ -870,10 +784,11 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 						colPos := firstColIndex(headers, "Pos", "Fin")
 						colNo := firstColIndex(headers, "No", "No.", "#", "Car")
 						colDriver := firstColIndex(headers, "Driver")
-						if colPos < 0 || colDriver < 0 {
+						colTeam := firstColIndex(headers, "Team")
+						if colDriver < 0 || colPos < 0 {
 							continue
 						}
-						for _, rAny := range rowsAny {
+						for rowIdx, rAny := range rowsAny {
 							rSlice, ok := rAny.([]interface{})
 							if !ok {
 								continue
@@ -882,166 +797,205 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 							for i := range rSlice {
 								row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
 							}
-							pos := atoiSafe(valueAt(row, colPos))
+							posStr := valueAt(row, colPos)
+							pos := atoiSafe(posStr)
 							if pos <= 0 {
-								continue
+								// Supercars: rows with Pos="NC" count as last in the race.
+								if strings.EqualFold(strings.TrimSpace(posStr), "NC") {
+									pos = rowIdx + 1
+								} else {
+									continue
+								}
 							}
-							driver := valueAt(row, colDriver)
+							driver := supercarsStatsDriverName(valueAt(row, colDriver))
 							if driver == "" {
 								continue
 							}
 							car := SupercarsCarToCanonical(valueAt(row, colNo))
-							key := canonicalDriverKey(driver) + "\t" + car
+							team := ""
+							if colTeam >= 0 {
+								team = valueAt(row, colTeam)
+							}
+							engine := ""
+							if car != "" {
+								engine = engineByCar[car]
+								// Team and manufacturer names always from Teams (as on /series/supercars/teams).
+								if tName, ok := teamByCar[car]; ok && tName != "" {
+									team = tName
+								}
+							}
+							key := supercarsStatsAccKey(driver, car)
 							a := byKey[key]
 							if a == nil {
-								continue
+								a = &acc{driver: driver, team: team, engine: engine, car: car}
+								byKey[key] = a
 							}
-							a.sumStart += float64(pos)
-							a.posDiffCount++
+							if a.team == "" {
+								a.team = team
+							}
+							if a.engine == "" {
+								a.engine = engine
+							}
+							a.races++
+							if pos == 1 {
+								a.wins++
+							}
+							if pos >= 1 && pos <= 5 {
+								a.top5++
+							}
+							if pos >= 1 && pos <= 10 {
+								a.top10++
+							}
+							a.sumFinish += float64(pos)
 						}
 					}
 				}
 			}
 		}
 
-	QUALIFYING_ONLY:
-		// Supercars avg_start already from starting_lineup; skip qualifying.
-		if _, usedSL := tables["starting_lineup"]; !usedSL {
-			if qualAny, ok := tables["qualifying"]; ok {
-				qualMap, ok := qualAny.(map[string]interface{})
-				if ok {
-					// Either sessions array or a single table.
-					if sessListAny, ok := qualMap["sessions"]; ok {
-						if sessSlice, ok := sessListAny.([]interface{}); ok {
-							for _, sessAny := range sessSlice {
-								sessMap, ok := sessAny.(map[string]interface{})
-								if !ok {
-									continue
-								}
-								headersAny, ok := sessMap["headers"].([]interface{})
-								if !ok {
-									continue
-								}
-								var headers []string
-								for _, h := range headersAny {
-									headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
-								}
-								rowsAny, ok := sessMap["rows"].([]interface{})
-								if !ok {
-									continue
-								}
-								colPos := firstColIndex(headers, "Pos")
-								colNo := firstColIndex(headers, "No", "No.", "#", "Car")
-								colDriver := firstColIndex(headers, "Driver")
-								colTeam := firstColIndex(headers, "Team")
-								if colDriver < 0 || colPos < 0 {
-									continue
-								}
-								for _, rAny := range rowsAny {
-									rSlice, ok := rAny.([]interface{})
-									if !ok {
-										continue
-									}
-									row := make([]string, len(rSlice))
-									for i := range rSlice {
-										row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
-									}
-									// Skip separator rows like "Shoot Out Race 2".
-									pos := atoiSafe(valueAt(row, colPos))
-									if pos <= 0 {
-										continue
-									}
-									driver := valueAt(row, colDriver)
-									if driver == "" {
-										continue
-									}
-									car := SupercarsCarToCanonical(valueAt(row, colNo))
-									team := ""
-									if colTeam >= 0 {
-										team = valueAt(row, colTeam)
-									}
-									engine := ""
-									if car != "" {
-										engine = engineByCar[car]
-										// For qualifying also substitute team by number from Teams.
-										if tName, ok := teamByCar[car]; ok && tName != "" {
-											team = tName
-										}
-									}
-									key := driver + "\t" + car
-									a := byKey[key]
-									if a == nil {
-										a = &acc{driver: driver, team: team, engine: engine, car: car}
-										byKey[key] = a
-									}
-									if a.team == "" {
-										a.team = team
-									}
-									if a.engine == "" {
-										a.engine = engine
-									}
-									a.sumStart += float64(pos)
-									a.posDiffCount++
-								}
+		eventQualAdds := 0
+		// Avg. Qualifying from qualifying sessions (primary); starting_lineup only if no qualifying in event.
+		if qualAny, ok := tables["qualifying"]; ok {
+			qualMap, ok := qualAny.(map[string]interface{})
+			if ok {
+				accumulateSupercarsQualSession := func(headers []string, rowsAny []interface{}) {
+					colPos := firstColIndex(headers, "Pos")
+					colNo := firstColIndex(headers, "No", "No.", "#", "Car")
+					colDriver := firstColIndex(headers, "Driver")
+					colTeam := firstColIndex(headers, "Team")
+					if colDriver < 0 || colPos < 0 {
+						return
+					}
+					for _, rAny := range rowsAny {
+						rSlice, ok := rAny.([]interface{})
+						if !ok {
+							continue
+						}
+						row := make([]string, len(rSlice))
+						for i := range rSlice {
+							row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
+						}
+						pos := atoiSafe(valueAt(row, colPos))
+						if pos <= 0 {
+							continue
+						}
+						driver := supercarsStatsDriverName(valueAt(row, colDriver))
+						if driver == "" {
+							continue
+						}
+						car := SupercarsCarToCanonical(valueAt(row, colNo))
+						team := ""
+						if colTeam >= 0 {
+							team = valueAt(row, colTeam)
+						}
+						engine := ""
+						if car != "" {
+							engine = engineByCar[car]
+							if tName, ok := teamByCar[car]; ok && tName != "" {
+								team = tName
 							}
 						}
-					} else {
-						// Variant: qualifying as one top-level headers/rows table.
-						headersAny, ok := qualMap["headers"].([]interface{})
-						if ok {
+						key := supercarsStatsAccKey(driver, car)
+						a := byKey[key]
+						if a == nil {
+							continue
+						}
+						if a.team == "" {
+							a.team = team
+						}
+						if a.engine == "" {
+							a.engine = engine
+						}
+						a.sumStart += float64(pos)
+						a.posDiffCount++
+						eventQualAdds++
+					}
+				}
+				if sessListAny, ok := qualMap["sessions"]; ok {
+					if sessSlice, ok := sessListAny.([]interface{}); ok {
+						for _, sessAny := range sessSlice {
+							sessMap, ok := sessAny.(map[string]interface{})
+							if !ok {
+								continue
+							}
+							headersAny, ok := sessMap["headers"].([]interface{})
+							if !ok {
+								continue
+							}
 							var headers []string
 							for _, h := range headersAny {
 								headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
 							}
-							rowsAny, ok := qualMap["rows"].([]interface{})
-							if ok {
-								colPos := firstColIndex(headers, "Pos")
-								colNo := firstColIndex(headers, "No", "No.", "#", "Car")
-								colDriver := firstColIndex(headers, "Driver")
-								colTeam := firstColIndex(headers, "Team")
-								if colDriver >= 0 && colPos >= 0 {
-									for _, rAny := range rowsAny {
-										rSlice, ok := rAny.([]interface{})
-										if !ok {
-											continue
-										}
-										row := make([]string, len(rSlice))
-										for i := range rSlice {
-											row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
-										}
-										pos := atoiSafe(valueAt(row, colPos))
-										if pos <= 0 {
-											continue
-										}
-										driver := valueAt(row, colDriver)
-										if driver == "" {
-											continue
-										}
-										car := SupercarsCarToCanonical(valueAt(row, colNo))
-										team := ""
-										if colTeam >= 0 {
-											team = valueAt(row, colTeam)
-										}
-										engine := ""
-										if car != "" {
-											engine = engineByCar[car]
-										}
-										key := driver + "\t" + car
-										a := byKey[key]
-										if a == nil {
-											a = &acc{driver: driver, team: team, engine: engine, car: car}
-											byKey[key] = a
-										}
-										if a.team == "" {
-											a.team = team
-										}
-										if a.engine == "" {
-											a.engine = engine
-										}
-										a.sumStart += float64(pos)
-										a.posDiffCount++
-									}
+							rowsAny, ok := sessMap["rows"].([]interface{})
+							if !ok {
+								continue
+							}
+							accumulateSupercarsQualSession(headers, rowsAny)
+						}
+					}
+				} else if headersAny, ok := qualMap["headers"].([]interface{}); ok {
+					var headers []string
+					for _, h := range headersAny {
+						headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
+					}
+					if rowsAny, ok := qualMap["rows"].([]interface{}); ok {
+						accumulateSupercarsQualSession(headers, rowsAny)
+					}
+				}
+			}
+		}
+
+		if eventQualAdds == 0 {
+			if slAny, ok := tables["starting_lineup"]; ok {
+				if slMap, ok := slAny.(map[string]interface{}); ok {
+					if sessList, ok := slMap["sessions"].([]interface{}); ok {
+						for _, sessAny := range sessList {
+							sessMap, ok := sessAny.(map[string]interface{})
+							if !ok {
+								continue
+							}
+							headersAny, ok := sessMap["headers"].([]interface{})
+							if !ok {
+								continue
+							}
+							var headers []string
+							for _, h := range headersAny {
+								headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
+							}
+							rowsAny, ok := sessMap["rows"].([]interface{})
+							if !ok {
+								continue
+							}
+							colPos := firstColIndex(headers, "Pos", "Fin")
+							colNo := firstColIndex(headers, "No", "No.", "#", "Car")
+							colDriver := firstColIndex(headers, "Driver")
+							if colPos < 0 || colDriver < 0 {
+								continue
+							}
+							for _, rAny := range rowsAny {
+								rSlice, ok := rAny.([]interface{})
+								if !ok {
+									continue
 								}
+								row := make([]string, len(rSlice))
+								for i := range rSlice {
+									row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
+								}
+								pos := atoiSafe(valueAt(row, colPos))
+								if pos <= 0 {
+									continue
+								}
+								driver := supercarsStatsDriverName(valueAt(row, colDriver))
+								if driver == "" {
+									continue
+								}
+								car := SupercarsCarToCanonical(valueAt(row, colNo))
+								a := byKey[supercarsStatsAccKey(driver, car)]
+								if a == nil {
+									continue
+								}
+								a.sumStart += float64(pos)
+								a.posDiffCount++
 							}
 						}
 					}
@@ -1064,36 +1018,28 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 			avgStart = a.sumStart / float64(a.posDiffCount)
 		}
 		rows = append(rows, DriverStatsRow{
-			Driver:       a.driver,
-			Team:         a.team,
-			Manufacturer: a.engine,
-			Car:          a.car,
-			Races:        a.races,
-			Wins:         a.wins,
-			Top5:         a.top5,
-			Top10:        a.top10,
-			AvgStart:     roundTo(avgStart, 2),
-			AvgFinish:    roundTo(avgFinish, 2),
+			Driver:           a.driver,
+			Team:             a.team,
+			Manufacturer:     a.engine,
+			Car:              a.car,
+			Races:            a.races,
+			Wins:             a.wins,
+			Top5:             a.top5,
+			Top10:            a.top10,
+			AvgStart:         roundTo(avgStart, 2),
+			QualAppearances:  a.posDiffCount,
+			AvgFinish:        roundTo(avgFinish, 2),
 		})
 	}
 	// Merge duplicates: one driver may be spelled differently across events (Matthew Payne / Matt Payne).
 	// Group by canonical car number and merge stats.
 	rows = mergeSupercarsStatsRowsByCar(rows)
 	sort.Slice(rows, func(i, j int) bool {
-		if rows[i].Wins != rows[j].Wins {
-			return rows[i].Wins > rows[j].Wins
-		}
-		if rows[i].Top5 != rows[j].Top5 {
-			return rows[i].Top5 > rows[j].Top5
-		}
-		if rows[i].Top10 != rows[j].Top10 {
-			return rows[i].Top10 > rows[j].Top10
-		}
-		return rows[i].Driver < rows[j].Driver
+		return defaultDriverStatsRowLess("SUPERCARS", rows[i], rows[j])
 	})
 
 	mans := aggregateByManufacturer(rows)
-	teams := aggregateByTeam(rows)
+	teams := aggregateByTeam(rows, nil)
 
 	return &DriverStatsData{Rows: rows, Teams: teams, Manufacturers: mans}, nil
 }
@@ -1109,13 +1055,20 @@ func mergeSupercarsStatsRowsByCar(rows []DriverStatsRow) []DriverStatsRow {
 		car := SupercarsCarToCanonical(strings.TrimSpace(r.Car))
 		if existing, ok := byCar[car]; ok {
 			prevRaces := existing.Races
+			prevQual := existing.QualAppearances
 			totalRaces := prevRaces + r.Races
+			totalQual := prevQual + r.QualAppearances
 			existing.Races = totalRaces
 			existing.Wins += r.Wins
 			existing.Top5 += r.Top5
 			existing.Top10 += r.Top10
+			existing.QualAppearances = totalQual
 			existing.AvgFinish = (existing.AvgFinish*float64(prevRaces) + r.AvgFinish*float64(r.Races)) / float64(totalRaces)
-			existing.AvgStart = (existing.AvgStart*float64(prevRaces) + r.AvgStart*float64(r.Races)) / float64(totalRaces)
+			if totalQual > 0 {
+				existing.AvgStart = (existing.AvgStart*float64(prevQual) + r.AvgStart*float64(r.QualAppearances)) / float64(totalQual)
+			} else if existing.AvgStart == 0 && r.AvgStart > 0 {
+				existing.AvgStart = r.AvgStart
+			}
 			if r.Team != "" && existing.Team == "" {
 				existing.Team = r.Team
 			}
@@ -1214,16 +1167,7 @@ func MergeSupercarsDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 		out = append(out, *merged[k])
 	}
 	sort.Slice(out, func(i, j int) bool {
-		if out[i].Wins != out[j].Wins {
-			return out[i].Wins > out[j].Wins
-		}
-		if out[i].Top5 != out[j].Top5 {
-			return out[i].Top5 > out[j].Top5
-		}
-		if out[i].Top10 != out[j].Top10 {
-			return out[i].Top10 > out[j].Top10
-		}
-		return out[i].Driver < out[j].Driver
+		return openWheelDriverStatsRowLess(out[i], out[j])
 	})
 	return out
 }
@@ -1307,7 +1251,87 @@ func mergeStockCarDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 	for _, k := range order {
 		out = append(out, *merged[k])
 	}
+	sort.Slice(out, func(i, j int) bool {
+		return stockCarDriverStatsRowLess(out[i], out[j])
+	})
 	return out
+}
+
+func stockCarDriverStatsRowLess(a, b DriverStatsRow) bool {
+	if a.Points != b.Points {
+		return a.Points > b.Points
+	}
+	if a.Wins != b.Wins {
+		return a.Wins > b.Wins
+	}
+	if a.Top5 != b.Top5 {
+		return a.Top5 > b.Top5
+	}
+	if a.Top10 != b.Top10 {
+		return a.Top10 > b.Top10
+	}
+	return a.Driver < b.Driver
+}
+
+func openWheelDriverStatsRowLess(a, b DriverStatsRow) bool {
+	if a.Wins != b.Wins {
+		return a.Wins > b.Wins
+	}
+	if a.Podiums != b.Podiums {
+		return a.Podiums > b.Podiums
+	}
+	if a.Top5 != b.Top5 {
+		return a.Top5 > b.Top5
+	}
+	if a.Top10 != b.Top10 {
+		return a.Top10 > b.Top10
+	}
+	return a.Driver < b.Driver
+}
+
+func supercarsDriverStatsRowLess(a, b DriverStatsRow) bool {
+	if a.Wins != b.Wins {
+		return a.Wins > b.Wins
+	}
+	if a.Top5 != b.Top5 {
+		return a.Top5 > b.Top5
+	}
+	if a.Top10 != b.Top10 {
+		return a.Top10 > b.Top10
+	}
+	return a.Driver < b.Driver
+}
+
+func genericChampionshipDriverStatsRowLess(a, b DriverStatsRow) bool {
+	if a.Points != b.Points && (a.Points > 0 || b.Points > 0) {
+		return a.Points > b.Points
+	}
+	if a.Wins != b.Wins {
+		return a.Wins > b.Wins
+	}
+	if a.Podiums != b.Podiums {
+		return a.Podiums > b.Podiums
+	}
+	if a.Top5 != b.Top5 {
+		return a.Top5 > b.Top5
+	}
+	if a.Top10 != b.Top10 {
+		return a.Top10 > b.Top10
+	}
+	return a.Driver < b.Driver
+}
+
+func defaultDriverStatsRowLess(seriesID string, a, b DriverStatsRow) bool {
+	switch strings.ToUpper(strings.TrimSpace(seriesID)) {
+	case "NASCAR_CUP", "NOAPS", "NASCAR_TRUCK", "ARCA", "NASCAR_MODIFIED":
+		return stockCarDriverStatsRowLess(a, b)
+	case "F1", "F2", "F3":
+		return openWheelDriverStatsRowLess(a, b)
+	case "SUPERCARS":
+		return supercarsDriverStatsRowLess(a, b)
+	default:
+		return genericChampionshipDriverStatsRowLess(a, b)
+	}
 }
 
 func isStockCarStatsSeries(seriesID string) bool {

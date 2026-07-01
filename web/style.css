@@ -1342,122 +1342,42 @@ body.series-f3 #car-models-table-wrap:has(.specs-chassis-line) {
   overflow-wrap: normal;
 }
 
-/* Stats (Driver / Team / Manufacturer): числа по центру ячейки */
-.stats-section .data-table#stats-table th:nth-child(1),
-.stats-section .data-table#stats-table th:nth-child(2),
-.stats-section .data-table#stats-table th:nth-child(6),
-.stats-section .data-table#stats-table th:nth-child(7),
-.stats-section .data-table#stats-table th:nth-child(8),
-.stats-section .data-table#stats-table th:nth-child(9),
-.stats-section .data-table#stats-table th:nth-child(10),
-.stats-section .data-table#stats-table th:nth-child(11),
-.stats-section .data-table#stats-table th:nth-child(12),
-.stats-section .data-table#stats-table th:nth-child(13),
-.stats-section .data-table#stats-table th:nth-child(14),
-.stats-section .data-table#stats-table th:nth-child(15),
-.stats-section .data-table#stats-table th:nth-child(16),
-.stats-section .data-table#stats-table th:nth-child(17),
-.stats-section .data-table#stats-table th:nth-child(18),
-.stats-section .data-table#stats-table th:nth-child(19),
-.stats-section .data-table#stats-table th:nth-child(20),
-.stats-section .data-table#stats-table td:nth-child(1),
-.stats-section .data-table#stats-table td:nth-child(2),
-.stats-section .data-table#stats-table td:nth-child(6),
-.stats-section .data-table#stats-table td:nth-child(7),
-.stats-section .data-table#stats-table td:nth-child(8),
-.stats-section .data-table#stats-table td:nth-child(9),
-.stats-section .data-table#stats-table td:nth-child(10),
-.stats-section .data-table#stats-table td:nth-child(11),
-.stats-section .data-table#stats-table td:nth-child(12),
-.stats-section .data-table#stats-table td:nth-child(13),
-.stats-section .data-table#stats-table td:nth-child(14),
-.stats-section .data-table#stats-table td:nth-child(15),
-.stats-section .data-table#stats-table td:nth-child(16),
-.stats-section .data-table#stats-table td:nth-child(17),
-.stats-section .data-table#stats-table td:nth-child(18),
-.stats-section .data-table#stats-table td:nth-child(19),
-.stats-section .data-table#stats-table td:nth-child(20) { text-align: center; }
-.stats-section .data-table#team-stats-table th:nth-child(1),
-.stats-section .data-table#team-stats-table th:nth-child(n+3),
-.stats-section .data-table#team-stats-table td:nth-child(1),
-.stats-section .data-table#team-stats-table td:nth-child(n+3) { text-align: center; }
-.stats-section .data-table#manufacturer-stats-table th:nth-child(1),
-.stats-section .data-table#manufacturer-stats-table th:nth-child(n+3),
-.stats-section .data-table#manufacturer-stats-table td:nth-child(1),
-.stats-section .data-table#manufacturer-stats-table td:nth-child(n+3) { text-align: center; }
+/* Stats (Driver / Team / Manufacturer): class-based alignment — columns are dynamic per series */
+.stats-section .data-table th.col-stat-text,
+.stats-section .data-table td.col-stat-text {
+  text-align: left;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+.stats-section .data-table th.col-stat-num,
+.stats-section .data-table td.col-stat-num {
+  text-align: center;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  font-variant-numeric: tabular-nums;
+}
 
-/* Supercars stats: hide Top 20 and advanced columns we don't track (Stage Wins, Stage Points, Led, Laps %, Pos. Diff) */
-.series-supercars .stats-section .data-table#stats-table th:nth-child(12),
-.series-supercars .stats-section .data-table#stats-table th:nth-child(15),
-.series-supercars .stats-section .data-table#stats-table th:nth-child(16),
-.series-supercars .stats-section .data-table#stats-table th:nth-child(17),
-.series-supercars .stats-section .data-table#stats-table th:nth-child(18),
-.series-supercars .stats-section .data-table#stats-table th:nth-child(19),
-.series-supercars .stats-section .data-table#stats-table th:nth-child(20),
-.series-supercars .stats-section .data-table#stats-table td:nth-child(12),
-.series-supercars .stats-section .data-table#stats-table td:nth-child(15),
-.series-supercars .stats-section .data-table#stats-table td:nth-child(16),
-.series-supercars .stats-section .data-table#stats-table td:nth-child(17),
-.series-supercars .stats-section .data-table#stats-table td:nth-child(18),
-.series-supercars .stats-section .data-table#stats-table td:nth-child(19),
-.series-supercars .stats-section .data-table#stats-table td:nth-child(20) { display: none; }
-
-/* ARCA & NASCAR Modified: hide stage points columns (no stages in series) */
-.series-arca .stats-section .data-table#stats-table th:nth-child(16),
-.series-arca .stats-section .data-table#stats-table th:nth-child(17),
-.series-arca .stats-section .data-table#stats-table td:nth-child(16),
-.series-arca .stats-section .data-table#stats-table td:nth-child(17),
-.series-nascar_modified .stats-section .data-table#stats-table th:nth-child(16),
-.series-nascar_modified .stats-section .data-table#stats-table th:nth-child(17),
-.series-nascar_modified .stats-section .data-table#stats-table td:nth-child(16),
-.series-nascar_modified .stats-section .data-table#stats-table td:nth-child(17),
-.series-arca .stats-section .data-table#team-stats-table th:nth-child(13),
-.series-arca .stats-section .data-table#team-stats-table th:nth-child(14),
-.series-arca .stats-section .data-table#team-stats-table td:nth-child(13),
-.series-arca .stats-section .data-table#team-stats-table td:nth-child(14),
-.series-nascar_modified .stats-section .data-table#team-stats-table th:nth-child(13),
-.series-nascar_modified .stats-section .data-table#team-stats-table th:nth-child(14),
-.series-nascar_modified .stats-section .data-table#team-stats-table td:nth-child(13),
-.series-nascar_modified .stats-section .data-table#team-stats-table td:nth-child(14),
-.series-arca .stats-section .data-table#manufacturer-stats-table th:nth-child(13),
-.series-arca .stats-section .data-table#manufacturer-stats-table th:nth-child(14),
-.series-arca .stats-section .data-table#manufacturer-stats-table td:nth-child(13),
-.series-arca .stats-section .data-table#manufacturer-stats-table td:nth-child(14),
-.series-nascar_modified .stats-section .data-table#manufacturer-stats-table th:nth-child(13),
-.series-nascar_modified .stats-section .data-table#manufacturer-stats-table th:nth-child(14),
-.series-nascar_modified .stats-section .data-table#manufacturer-stats-table td:nth-child(13),
-.series-nascar_modified .stats-section .data-table#manufacturer-stats-table td:nth-child(14) { display: none; }
-
-/* Supercars team/manufacturer stats: hide Top 20 (col 9) and stage/led/laps/pos diff columns */
-.series-supercars .stats-section .data-table#team-stats-table th:nth-child(9),
-.series-supercars .stats-section .data-table#team-stats-table th:nth-child(12),
-.series-supercars .stats-section .data-table#team-stats-table th:nth-child(13),
-.series-supercars .stats-section .data-table#team-stats-table th:nth-child(14),
-.series-supercars .stats-section .data-table#team-stats-table th:nth-child(15),
-.series-supercars .stats-section .data-table#team-stats-table th:nth-child(16),
-.series-supercars .stats-section .data-table#team-stats-table th:nth-child(17),
-.series-supercars .stats-section .data-table#team-stats-table td:nth-child(9),
-.series-supercars .stats-section .data-table#team-stats-table td:nth-child(12),
-.series-supercars .stats-section .data-table#team-stats-table td:nth-child(13),
-.series-supercars .stats-section .data-table#team-stats-table td:nth-child(14),
-.series-supercars .stats-section .data-table#team-stats-table td:nth-child(15),
-.series-supercars .stats-section .data-table#team-stats-table td:nth-child(16),
-.series-supercars .stats-section .data-table#team-stats-table td:nth-child(17) { display: none; }
-
-.series-supercars .stats-section .data-table#manufacturer-stats-table th:nth-child(9),
-.series-supercars .stats-section .data-table#manufacturer-stats-table th:nth-child(12),
-.series-supercars .stats-section .data-table#manufacturer-stats-table th:nth-child(13),
-.series-supercars .stats-section .data-table#manufacturer-stats-table th:nth-child(14),
-.series-supercars .stats-section .data-table#manufacturer-stats-table th:nth-child(15),
-.series-supercars .stats-section .data-table#manufacturer-stats-table th:nth-child(16),
-.series-supercars .stats-section .data-table#manufacturer-stats-table th:nth-child(17),
-.series-supercars .stats-section .data-table#manufacturer-stats-table td:nth-child(9),
-.series-supercars .stats-section .data-table#manufacturer-stats-table td:nth-child(12),
-.series-supercars .stats-section .data-table#manufacturer-stats-table td:nth-child(13),
-.series-supercars .stats-section .data-table#manufacturer-stats-table td:nth-child(14),
-.series-supercars .stats-section .data-table#manufacturer-stats-table td:nth-child(15),
-.series-supercars .stats-section .data-table#manufacturer-stats-table td:nth-child(16),
-.series-supercars .stats-section .data-table#manufacturer-stats-table td:nth-child(17) { display: none; }
+/* Stats: multiple # or teams — each value in its own column, stacked per stint */
+.stats-stint-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+}
+.stats-section .data-table td.col-car .stats-stint-stack,
+.stats-section .data-table td.col-stat-num .stats-stint-stack {
+  align-items: center;
+}
+.stats-stint-line {
+  display: block;
+  white-space: nowrap;
+}
+.stats-section .data-table td.col-car .stats-slash {
+  opacity: 0.55;
+  padding: 0 0.12rem;
+}
 
 /* Stats filters (driver / team / manufacturer, min starts) */
 .stats-controls {
@@ -1621,12 +1541,10 @@ body.cat-openwheel #stats-panel .stats-controls-left {
   background: var(--card);
 }
 .feedback-card h3 {
-  margin: 0 0 0.65rem;
-}
-.feedback-card p {
   margin: 0 0 0.85rem;
-  color: var(--text-2);
+  color: var(--text);
   line-height: 1.55;
+  font-weight: 600;
 }
 .feedback-form {
   display: grid;
@@ -1635,7 +1553,7 @@ body.cat-openwheel #stats-panel .stats-controls-left {
 .feedback-form label {
   display: grid;
   gap: 0.35rem;
-  color: var(--text-2);
+  color: var(--text);
   font-weight: 600;
 }
 .feedback-form input,
@@ -1980,14 +1898,20 @@ body.series-elms #view-event #event-content[data-event-section="practice"] .data
   white-space: nowrap;
 }
 /* GTWCE Endurance practice & qualifying: Time & Gap stay on one line (no Laps column) */
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table th:nth-child(7),
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table td:nth-child(7),
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table th:nth-child(8),
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table td:nth-child(8),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table th:nth-child(7),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table td:nth-child(7),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table th:nth-child(8),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table td:nth-child(8),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table th:nth-child(7),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(7),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table th:nth-child(8),
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(8) {
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(8),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table th:nth-child(9),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(9),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table th:nth-child(10),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(10),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table th:nth-child(11),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(11) {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
@@ -1998,8 +1922,8 @@ body.series-gtwce_sprint #view-event #event-content[data-event-section="practice
   font-variant-numeric: tabular-nums;
 }
 /* GTWCE Endurance: Drivers on one line (column 4: Pos, #, Class, Drivers, …) */
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table th:nth-child(4),
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table td:nth-child(4),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table th:nth-child(4),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table td:nth-child(4),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table th:nth-child(4),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(4),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .gtwce-race-results-table th:nth-child(4),
@@ -2009,8 +1933,8 @@ body.series-gtwce_sprint #view-event #event-content[data-event-section="practice
   overflow-wrap: normal;
 }
 /* GTWCE Endurance: Class (Pro Cup, Bronze Cup, …) on one line — column 3 */
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table th:nth-child(3),
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .data-table td:nth-child(3),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table th:nth-child(3),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table td:nth-child(3),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table th:nth-child(3),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table td:nth-child(3),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .gtwce-race-results-table th:nth-child(3),
@@ -2020,26 +1944,47 @@ body.series-gtwce_sprint #view-event #event-content[data-event-section="practice
   overflow-wrap: normal;
 }
 /* GTWCE Endurance: pre-season block was capped at 1100px — wide tables were squeezed/clipped; use full main width, no inner scroll */
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .event-pre-season-block,
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .event-pre-season-block,
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block,
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .event-pre-season-block {
   max-width: none;
+  margin-left: auto;
+  margin-right: auto;
 }
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"] .event-pre-season-block .table-wrap:not(.event-pre-season-meta-wrap),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .event-pre-season-block .table-wrap:not(.event-pre-season-meta-wrap),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block .table-wrap:not(.event-pre-season-meta-wrap),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .event-pre-season-block .table-wrap:not(.event-pre-season-meta-wrap) {
-  max-width: none;
-  width: 100%;
-  overflow-x: visible;
+  max-width: 100%;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
 }
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content .event-pre-season-block .event-pre-season-meta-wrap.table-wrap {
   width: fit-content;
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .table-wrap:has(.qualifying-results-table),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .table-wrap:has(.gtwce-race-results-table) {
-  /* Базовый .table-wrap и #view-event … race-session дают overflow-x: auto — выглядит как «приклеенная» правая половина */
-  overflow-x: visible !important;
+  overflow-x: auto;
+}
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"], [data-event-section="qualifying"]) .data-table.pre-season-results-table.qualifying-results-table th,
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"], [data-event-section="qualifying"]) .data-table.pre-season-results-table.qualifying-results-table td,
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table.pre-season-results-table.practice-results-table th,
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"]) .data-table.pre-season-results-table.practice-results-table td {
+  /* pre-season-results-table nth-child % widths target ≤10 cols — breaks Qualifying Combined (11 cols) */
+  width: auto !important;
+  min-width: 0;
+}
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block .table-section-title {
+  align-self: stretch;
 }
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .data-table.pre-season-results-table.qualifying-results-table {
   /* Две декларации pre-season (fixed/100%) и qualifying (auto/max-content) — фиксируем одну модель */
@@ -2463,6 +2408,13 @@ body.series-super_gt #view-event #event-content[data-event-section="race"] .data
 .table-wrap:has(.pre-season-results-table) {
   width: 100%;
 }
+/* GTWCE: обёртка = ширина таблицы (как IMSA), иначе width:100% + max-content таблица = «приклеенный» правый край */
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content:is([data-event-section="practice"], [data-event-section="test"], [data-event-section="qualifying"], [data-event-section="race"]) .table-wrap:has(.pre-season-results-table) {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
 /* IMSA: ширина обёртки = ширина таблицы (перебивает правило выше для pre-season после каскада). Иначе width:100% + узкая таблица даёт пустую полосу справа на фоне --card. */
 body.series-imsa #view-event #event-content:is([data-event-section="practice"], [data-event-section="qualifying"], [data-event-section="race"], [data-event-section="pre_season_tests"]) .table-wrap:has(.pre-season-results-table) {
   width: fit-content;
@@ -2644,6 +2596,12 @@ body.series-imsa #view-event #event-content:is([data-event-section="practice"], 
 .standings-section .data-table .col-pts { min-width: 2.5rem; }
 .standings-section .data-table .col-race { min-width: 2rem; text-align: center; }
 .standings-section .data-table.imsa-standings-split thead .col-imsa-qr {
+  font-size: 0.76rem;
+  min-width: 1.65rem;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+.standings-section .data-table.gtwce-standings-split thead .col-gtwce-spa {
   font-size: 0.76rem;
   min-width: 1.65rem;
   padding-left: 0.2rem;
@@ -3116,7 +3074,7 @@ body.ev-supercars-2026-8 .video-embed-wrap:has(.video-facade-wrap) {
 .race-results-table th:nth-child(1),
 .race-results-table td:nth-child(1) { width: 6%; min-width: 5rem; text-align: right; white-space: nowrap; }
 .race-results-table th:nth-child(2),
-.race-results-table td:nth-child(2) { width: 6%; min-width: 5rem; text-align: right; white-space: nowrap; }
+.race-results-table td:nth-child(2) { width: 4%; min-width: 2rem; text-align: right; white-space: nowrap; }
 .race-results-table th:nth-child(3),
 .race-results-table td:nth-child(3) { width: 4%; min-width: 2rem; text-align: right; white-space: nowrap; }
 .race-results-table th:nth-child(4),
@@ -3241,6 +3199,15 @@ body.ev-supercars-2026-8 .video-embed-wrap:has(.video-facade-wrap) {
 .event-stage-block .table-wrap {
   max-width: 1100px;
   margin-left: 0;
+  margin-right: auto;
+}
+/* GTWCE: широкие таблицы — по центру main, не влево */
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content .event-pre-season-block,
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content .event-pre-season-block .table-wrap:not(.event-pre-season-meta-wrap),
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content .event-race-block .table-wrap,
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content .event-stage-block .table-wrap {
+  max-width: none;
+  margin-left: auto;
   margin-right: auto;
 }
 .event-pre-season-block .event-pre-season-meta-wrap {
@@ -3395,9 +3362,10 @@ body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) .event
 }
 /* GTWCE Endurance: широкие таблицы — иначе #event-content (1200px) уже самой таблицы, «панель» обрезается */
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"],
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="test"],
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"],
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] {
-  max-width: 1600px;
+  max-width: min(100%, 2200px);
 }
 /* IMSA: та же логика — таблицы практик/квалификации/гонки широкие, не должны
    упираться в 1200px у #event-content. */
@@ -4011,6 +3979,24 @@ tr.table-separator-row td {
   line-height: 1.12;
   margin-top: 0.2rem;
   max-height: 3.6em;
+}
+
+/* Italian F4: four race winners (R1–R3 + Final) in standard card height */
+.lrc-card--f4 {
+  padding: 1.15rem 1.55rem;
+  gap: 0.22rem;
+}
+.lrc-card--f4 .lrc-name {
+  font-size: 0.94rem;
+  line-height: 1.08;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.lrc-card--f4 .lrc-winner {
+  font-size: 0.67rem;
+  line-height: 1.08;
+  margin-top: 0.08rem;
+  max-height: 4.35em;
 }
 
 /* IMSA: 4 строки победителей по классам должны помещаться */
@@ -5474,7 +5460,10 @@ tr.table-separator-row td {
 .lrc-card--lausitzring,
 .lrc-card--hidden-valley-raceway,
 .lrc-card--sepang,
-.lrc-card--coronado-street {
+.lrc-card--coronado-street,
+.lrc-card--silverstone,
+.lrc-card--mid-ohio,
+.lrc-card--chicagoland {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -5505,6 +5494,15 @@ tr.table-separator-row td {
 .lrc-card--coronado-street {
   background-image: url('/api/card-bg/Coronado-street.jpg');
 }
+.lrc-card--silverstone {
+  background-image: url('/api/card-bg/silverstone.jpg');
+}
+.lrc-card--mid-ohio {
+  background-image: url('/api/card-bg/mid-ohio-sports-car-course.jpg');
+}
+.lrc-card--chicagoland {
+  background-image: url('/api/card-bg/chicagoland-speedway.jpg');
+}
 .lrc-card--road-america::after,
 .lrc-card--white-mountain-motorsports-park::after,
 .lrc-card--berlin-raceway::after,
@@ -5512,7 +5510,10 @@ tr.table-separator-row td {
 .lrc-card--lausitzring::after,
 .lrc-card--hidden-valley-raceway::after,
 .lrc-card--sepang::after,
-.lrc-card--coronado-street::after {
+.lrc-card--coronado-street::after,
+.lrc-card--silverstone::after,
+.lrc-card--mid-ohio::after,
+.lrc-card--chicagoland::after {
   content: '';
   position: absolute;
   left: 0;
@@ -5534,7 +5535,10 @@ tr.table-separator-row td {
 .lrc-card--lausitzring > *,
 .lrc-card--hidden-valley-raceway > *,
 .lrc-card--sepang > *,
-.lrc-card--coronado-street > * {
+.lrc-card--coronado-street > *,
+.lrc-card--silverstone > *,
+.lrc-card--mid-ohio > *,
+.lrc-card--chicagoland > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -7806,7 +7810,10 @@ tr.table-separator-row td {
 .nrc-card--lausitzring,
 .nrc-card--hidden-valley-raceway,
 .nrc-card--sepang,
-.nrc-card--coronado-street {
+.nrc-card--coronado-street,
+.nrc-card--silverstone,
+.nrc-card--mid-ohio,
+.nrc-card--chicagoland {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -7835,6 +7842,15 @@ tr.table-separator-row td {
 .nrc-card--coronado-street::before {
   background-image: url('/api/card-bg/Coronado-street.jpg');
 }
+.nrc-card--silverstone::before {
+  background-image: url('/api/card-bg/silverstone.jpg');
+}
+.nrc-card--mid-ohio::before {
+  background-image: url('/api/card-bg/mid-ohio-sports-car-course.jpg');
+}
+.nrc-card--chicagoland::before {
+  background-image: url('/api/card-bg/chicagoland-speedway.jpg');
+}
 .nrc-card--road-america::before,
 .nrc-card--white-mountain-motorsports-park::before,
 .nrc-card--berlin-raceway::before,
@@ -7842,7 +7858,10 @@ tr.table-separator-row td {
 .nrc-card--lausitzring::before,
 .nrc-card--hidden-valley-raceway::before,
 .nrc-card--sepang::before,
-.nrc-card--coronado-street::before {
+.nrc-card--coronado-street::before,
+.nrc-card--silverstone::before,
+.nrc-card--mid-ohio::before,
+.nrc-card--chicagoland::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -7860,7 +7879,10 @@ tr.table-separator-row td {
 .nrc-card--lausitzring::after,
 .nrc-card--hidden-valley-raceway::after,
 .nrc-card--sepang::after,
-.nrc-card--coronado-street::after {
+.nrc-card--coronado-street::after,
+.nrc-card--silverstone::after,
+.nrc-card--mid-ohio::after,
+.nrc-card--chicagoland::after {
   content: '';
   position: absolute;
   left: 0;
@@ -7882,7 +7904,10 @@ tr.table-separator-row td {
 .nrc-card--lausitzring > *,
 .nrc-card--hidden-valley-raceway > *,
 .nrc-card--sepang > *,
-.nrc-card--coronado-street > * {
+.nrc-card--coronado-street > *,
+.nrc-card--silverstone > *,
+.nrc-card--mid-ohio > *,
+.nrc-card--chicagoland > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);

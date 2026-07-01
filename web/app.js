@@ -918,7 +918,16 @@
     'sepang-international-circuit': '/web/images/sepang.jpg',
     'sepang': '/web/images/sepang.jpg',
     'coronado-street-course': '/web/images/Coronado-street.jpg',
-    'coronado-street-course-san-diego-california': '/web/images/Coronado-street.jpg'
+    'coronado-street-course-san-diego-california': '/web/images/Coronado-street.jpg',
+    'silverstone-circuit': '/web/images/silverstone.jpg',
+    'silverstone-circuit-silverstone': '/web/images/silverstone.jpg',
+    'silverstone': '/web/images/silverstone.jpg',
+    'mid-ohio-sports-car-course': '/web/images/mid-ohio-sports-car-course.jpg',
+    'mid-ohio-sports-car-course-lexington-ohio': '/web/images/mid-ohio-sports-car-course.jpg',
+    'chicagoland-speedway': '/web/images/chicagoland-speedway.jpg',
+    'chicagoland-speedway-joliet-illinois': '/web/images/chicagoland-speedway.jpg',
+    'imola-circuit': '/web/images/imola-bg.jpg',
+    'imola-circuit-imola': '/web/images/imola-bg.jpg'
   };
 
   function renderTrackDetail(slug) {
@@ -1493,12 +1502,7 @@
         if (window.turnstile && window.TGA && window.TGA._feedbackTurnstileWidgetId != null) {
           try { window.turnstile.reset(window.TGA._feedbackTurnstileWidgetId); } catch (e) {}
         }
-        var successMessage = (data && data.email_status === 'not_configured')
-          ? (t('feedback.success_saved') || 'Thanks, feedback saved. Email notifications are not configured.')
-          : (data && data.email_status === 'failed')
-            ? (t('feedback.success_email_failed') || 'Thanks, feedback saved. Email sending failed; check server logs.')
-            : (t('feedback.success') || 'Thanks, feedback sent.');
-        setFeedbackStatus(successMessage, 'ok');
+        setFeedbackStatus(t('feedback.success') || 'Thanks, feedback sent.', 'ok');
       }).catch(function () {
         setFeedbackStatus(t('feedback.error_submit') || 'Could not send feedback. You can copy the email and send it manually.', 'error');
       }).finally(function () {

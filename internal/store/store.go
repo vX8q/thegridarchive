@@ -33,12 +33,14 @@ type Store interface {
 	ListTeams(ctx context.Context, idPrefix string) ([]models.Team, error)
 
 	// Results
+	DeleteResultsByRace(ctx context.Context, raceID string) error
 	UpsertResult(ctx context.Context, r *models.Result) error
 	ListResultsByRace(ctx context.Context, raceID string) ([]models.Result, error)
 	// ListDriverSeasonResults returns a driver's race results for a season (by driver_id list, since one person may appear in multiple series).
 	ListDriverSeasonResults(ctx context.Context, driverIDs []string, season string) ([]models.DriverSeasonResult, error)
 
 	// Stage Results
+	DeleteStageResultsByRace(ctx context.Context, raceID string) error
 	UpsertStageResult(ctx context.Context, r *models.StageResult) error
 
 	// Feedback
@@ -98,6 +100,9 @@ func (NoopStore) ListTeams(_ context.Context, _ string) ([]models.Team, error) {
 	return nil, nil
 }
 
+// DeleteResultsByRace is a no-op for NoopStore.
+func (NoopStore) DeleteResultsByRace(_ context.Context, _ string) error { return nil }
+
 // UpsertResult is a no-op for NoopStore.
 func (NoopStore) UpsertResult(_ context.Context, _ *models.Result) error { return nil }
 
@@ -110,6 +115,9 @@ func (NoopStore) ListResultsByRace(_ context.Context, _ string) ([]models.Result
 func (NoopStore) ListDriverSeasonResults(_ context.Context, _ []string, _ string) ([]models.DriverSeasonResult, error) {
 	return nil, nil
 }
+
+// DeleteStageResultsByRace is a no-op for NoopStore.
+func (NoopStore) DeleteStageResultsByRace(_ context.Context, _ string) error { return nil }
 
 // UpsertStageResult is a no-op for NoopStore.
 func (NoopStore) UpsertStageResult(_ context.Context, _ *models.StageResult) error {

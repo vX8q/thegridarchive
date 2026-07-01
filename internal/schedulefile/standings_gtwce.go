@@ -1,7 +1,6 @@
 package schedulefile
 
 import (
-	"encoding/json"
 	"fmt"
 	"math"
 	"sort"
@@ -11,75 +10,84 @@ import (
 	"github.com/vX8q/tga/config"
 )
 
-type gtwceEntryBrief struct {
-	number, team, drivers, car string
+// gtwceSpaCheckpointIndices locates Spa 24H interim + Main Race sessions.
+func gtwceSpaCheckpointIndices(sessions []RaceSession) (sixH, twelveH, main int, ok bool) {
+	sixH, twelveH, main = -1, -1, -1
+	for i, s := range sessions {
+		t := strings.ToLower(strings.TrimSpace(s.Title))
+		switch {
+		case strings.Contains(t, "after 6 hour"):
+			sixH = i
+		case strings.Contains(t, "after 12 hour"):
+			twelveH = i
+		case s.Title == "Main Race" || (strings.Contains(t, "main race") && !strings.Contains(t, "after")):
+			main = i
+		}
+	}
+	ok = sixH >= 0 && twelveH >= 0 && main >= 0
+	return
 }
 
-func loadGtwceEntryBriefs(dataDir, eventID string) []gtwceEntryBrief {
-	raw, err := ReadEventDetailFile(dataDir, eventID)
-	if err != nil || len(raw) == 0 {
-		return nil
-	}
-	var root struct {
-		EntryList []map[string]any `json:"entry_list"`
-	}
-	if err := json.Unmarshal(raw, &root); err != nil || len(root.EntryList) == 0 {
-		return nil
-	}
-	var out []gtwceEntryBrief
-	for _, m := range root.EntryList {
-		num := strings.TrimSpace(fmt.Sprint(m["number"]))
-		if num == "" {
-			continue
-		}
-		var parts []string
-		for _, k := range []string{"driver1", "driver2", "driver3"} {
-			s := strings.TrimSpace(fmt.Sprint(m[k]))
-			if s != "" {
-				parts = append(parts, s)
-			}
-		}
-		out = append(out, gtwceEntryBrief{
-			number:  num,
-			team:    strings.TrimSpace(fmt.Sprint(m["team"])),
-			car:     strings.TrimSpace(fmt.Sprint(m["car"])),
-			drivers: strings.Join(parts, ", "),
-		})
-	}
-	return out
+type gtwceRoundSlot struct {
+	code     string
+	sess     RaceSession
+	countPts bool
 }
 
-// gtwceMergeEntryListIntoOverall adds to Overall crews from season round entry_list
-// missing from race results (0 points, empty round cells → frontend "—" for completed races).
-func gtwceMergeEntryListIntoOverall(dataDir string, events []EventJSON, season string, overall map[string]*gtwceAcc) {
-	for _, ev := range events {
-		if ev.Season != season {
-			continue
-		}
-		for _, e := range loadGtwceEntryBriefs(dataDir, ev.ID) {
-			if overall[e.number] != nil {
-				continue
-			}
-			overall[e.number] = &gtwceAcc{
-				racePos:  make(map[string]string),
-				team:     e.team,
-				drivers:  e.drivers,
-				carModel: e.car,
-			}
-		}
-	}
-}
-
-// gtwceRaceSlots returns standings column count per round (2 Sprint races or 1 Endurance).
-func gtwceRaceSlotsPerEvent(isSprint bool, sessions []RaceSession) int {
-	n := len(sessions)
-	if n > 0 {
-		return n
-	}
+func gtwceBuildRoundSlots(isSprint bool, round int, sessions []RaceSession) []gtwceRoundSlot {
 	if isSprint {
-		return 2
+		scored := gtwceStandingsRaceSessions(true, sessions)
+		out := make([]gtwceRoundSlot, 0, len(scored))
+		for i := range scored {
+			out = append(out, gtwceRoundSlot{
+				code:     fmt.Sprintf("R%d-%d", round, i+1),
+				sess:     scored[i],
+				countPts: true,
+			})
+		}
+		return out
 	}
-	return 1
+	if sixH, twelveH, main, ok := gtwceSpaCheckpointIndices(sessions); ok {
+		return []gtwceRoundSlot{
+			{code: fmt.Sprintf("R%d-6h", round), sess: sessions[sixH], countPts: false},
+			{code: fmt.Sprintf("R%d-12h", round), sess: sessions[twelveH], countPts: false},
+			{code: fmt.Sprintf("R%d-24h", round), sess: sessions[main], countPts: true},
+		}
+	}
+	scored := gtwceStandingsRaceSessions(false, sessions)
+	if len(scored) == 0 {
+		return nil
+	}
+	return []gtwceRoundSlot{{
+		code:     "R" + strconv.Itoa(round),
+		sess:     scored[0],
+		countPts: true,
+	}}
+}
+
+// gtwceStandingsRaceSessions returns race sessions that carry championship points.
+// Endurance rounds may include interim checkpoints (6h/12h) for display only; only
+// sessions with a Cup pts column count toward standings (Spa 24H totals on Main Race).
+func gtwceStandingsRaceSessions(isSprint bool, sessions []RaceSession) []RaceSession {
+	if isSprint {
+		if len(sessions) > 0 {
+			return sessions
+		}
+		return nil
+	}
+	var scored []RaceSession
+	for _, s := range sessions {
+		if colIndex(s.Headers, "Cup pts") >= 0 {
+			scored = append(scored, s)
+		}
+	}
+	if len(scored) > 0 {
+		return scored
+	}
+	if len(sessions) > 0 {
+		return []RaceSession{sessions[len(sessions)-1]}
+	}
+	return nil
 }
 
 type gtwceAcc struct {
@@ -171,18 +179,18 @@ func gtwceClassRankInSession(rows []gtwceSessRow, bucket string) map[string]stri
 }
 
 func gtwceSessionPositionsByCar(sessRows []gtwceSessRow) map[string]map[string]string {
-	out := map[string]map[string]string{
-		"overall": make(map[string]string),
-		"gold":    gtwceClassRankInSession(sessRows, "gold"),
-		"silver":  gtwceClassRankInSession(sessRows, "silver"),
-		"bronze":  gtwceClassRankInSession(sessRows, "bronze"),
-	}
+	abs := make(map[string]string)
 	for i := range sessRows {
 		r := &sessRows[i]
-		// Absolute finish position for championship Overall — all classes.
-		out["overall"][r.carNum] = gtwceDisplayAbsPos(r.posRaw, r.posIsNC)
+		abs[r.carNum] = gtwceDisplayAbsPos(r.posRaw, r.posIsNC)
 	}
-	return out
+	// Championship tables show absolute classification in every class (per SRO/Wikipedia).
+	return map[string]map[string]string{
+		"overall": abs,
+		"gold":    abs,
+		"silver":  abs,
+		"bronze":  abs,
+	}
 }
 
 func formatGtwcePtsTotal(v float64) string {
@@ -230,6 +238,8 @@ func gtwceBucketForClass(class string) string {
 		return "silver"
 	case strings.EqualFold(c, "Bronze Cup"):
 		return "bronze"
+	case strings.EqualFold(c, "Pro-AM Cup"), strings.EqualFold(c, "Pro-Am Cup"):
+		return "pro_am"
 	default:
 		return ""
 	}
@@ -270,19 +280,10 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 			continue
 		}
 		round++
-		sessions := loadSessions(ev.ID)
-		n := gtwceRaceSlotsPerEvent(isSprint, sessions)
+		slots := gtwceBuildRoundSlots(isSprint, round, loadSessions(ev.ID))
 		evName := strings.TrimSpace(ev.Name)
-		for si := 0; si < n; si++ {
-			var code string
-			if isSprint {
-				code = fmt.Sprintf("R%d-%d", round, si+1)
-			} else if n > 1 {
-				code = fmt.Sprintf("R%d-%d", round, si+1)
-			} else {
-				code = "R" + strconv.Itoa(round)
-			}
-			raceOrder = append(raceOrder, code)
+		for _, slot := range slots {
+			raceOrder = append(raceOrder, slot.code)
 			eventNames = append(eventNames, evName)
 		}
 	}
@@ -302,19 +303,15 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 			continue
 		}
 		round++
-		sessions := loadSessions(ev.ID)
-		n := gtwceRaceSlotsPerEvent(isSprint, sessions)
-		for si := 0; si < n; si++ {
+		slots := gtwceBuildRoundSlots(isSprint, round, loadSessions(ev.ID))
+		for _, slot := range slots {
 			if rIdx >= len(raceOrder) {
 				break
 			}
 			code := raceOrder[rIdx]
 			rIdx++
-			var sess *RaceSession
-			if si < len(sessions) {
-				sess = &sessions[si]
-			}
-			if sess == nil || len(sess.Headers) == 0 || len(sess.Rows) == 0 {
+			sess := slot.sess
+			if len(sess.Headers) == 0 || len(sess.Rows) == 0 {
 				continue
 			}
 			completedSet[code] = true
@@ -408,7 +405,9 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 					ao.carModel = sr.chassis
 				}
 				ao.racePos[code] = cell
-				ao.points += sr.overallPts
+				if slot.countPts {
+					ao.points += sr.overallPts
+				}
 			}
 			// Gold / Silver / Bronze: own-class crews only, Cup pts, class place.
 			for _, sr := range sessRows {
@@ -434,12 +433,12 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 					a.carModel = sr.chassis
 				}
 				a.racePos[code] = cell
-				a.points += sr.cupPts
+				if slot.countPts {
+					a.points += sr.cupPts
+				}
 			}
 		}
 	}
-
-	gtwceMergeEntryListIntoOverall(dataDir, events, season, buckets["overall"])
 
 	// completed order matches race_order
 	completedOrdered := make([]string, 0, len(raceOrder))
@@ -502,6 +501,9 @@ func gtwceStandingRowsFromBucket(byCar map[string]*gtwceAcc, raceOrder []string)
 	var list []kv
 	for car, a := range byCar {
 		if a == nil {
+			continue
+		}
+		if a.points == 0 && len(a.racePos) == 0 {
 			continue
 		}
 		list = append(list, kv{car: car, a: a})

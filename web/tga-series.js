@@ -354,11 +354,10 @@
 
   function eventRow(e, roundNum, seriesId) {
     if (isSeriesId(seriesId, 'super_formula')) {
-      var startIsoSf = (e.start_date || e.date || '').slice(0, 10);
-      var endIsoSf = (e.end_date || '').slice(0, 10);
-      var dateLabelSf = (startIsoSf && endIsoSf && startIsoSf !== endIsoSf && formatDateRangeLong)
-        ? formatDateRangeLong(e.start_date || e.date, e.end_date)
-        : (formatShortDate ? formatShortDate(startIsoSf) : startIsoSf);
+      var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
+      var dateLabelSf = formatEventRaceStartDate
+        ? formatEventRaceStartDate(e)
+        : (formatShortDate ? formatShortDate((e.start_date || e.date || '').slice(0, 10)) : (e.start_date || e.date || ''));
       var rdSf = e._sfRdLabel ? String(e._sfRdLabel) : String(roundNum);
       var venueSf = (window.TGA && window.TGA.superFormulaVenueLine)
         ? window.TGA.superFormulaVenueLine(e)
@@ -366,11 +365,10 @@
       var timeLabelSf = getScheduleTimeLabel(e, seriesId);
       return '<tr><td class="col-num">' + esc(rdSf) + '</td><td>' + esc(dateLabelSf || '—') + '</td><td class="col-location">' + esc(venueSf) + '</td><td class="col-time">' + esc(timeLabelSf || '—') + '</td></tr>';
     }
-    var startIso = (e.start_date || e.date || '').slice(0, 10);
-    var endIso = (e.end_date || '').slice(0, 10);
-    var dateLabel = (startIso && endIso && startIso !== endIso && formatDateRangeLong)
-      ? formatDateRangeLong(e.start_date || e.date, e.end_date)
-      : (formatShortDate ? formatShortDate(startIso) : startIso);
+    var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
+    var dateLabel = formatEventRaceStartDate
+      ? formatEventRaceStartDate(e)
+      : (formatShortDate ? formatShortDate((e.start_date || e.date || '').slice(0, 10)) : (e.start_date || e.date || ''));
     var name = e.name || '—';
     var eventSlug = (e.id || '').toLowerCase().replace(/_+/g, '-');
     var link = e.has_detail

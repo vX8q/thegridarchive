@@ -297,6 +297,12 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	if err != nil {
 		return nil, err
 	}
+	if strings.EqualFold(seriesID, "SUPERCARS") && base != nil {
+		base.Rows = nil
+		base.RaceOrder = nil
+		base.EventNames = nil
+		base.CompletedRaces = nil
+	}
 	// If standings JSON is missing (base == nil) — build base race_order from schedule.
 	if base == nil {
 		events, err := LoadEvents(dataDir, seriesID)
@@ -345,7 +351,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		base = &StandingsData{RaceOrder: raceOrder, EventNames: eventNames}
 	}
 	raceOrder := base.RaceOrder
-	if len(raceOrder) == 0 {
+	if len(raceOrder) == 0 && !strings.EqualFold(seriesID, "SUPERCARS") {
 		SplitBaseIneligible(base)
 		return base, nil
 	}
@@ -446,6 +452,14 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			raceOrder = ro
 		}
 	}
+	// Supercars: columns appear only for races with results (no future rounds).
+	if strings.EqualFold(seriesID, "SUPERCARS") {
+		raceOrder = nil
+		if base != nil {
+			base.RaceOrder = nil
+			base.EventNames = nil
+		}
+	}
 	// Super Formula: R1..Rn columns by championship round numbers (not calendar rows).
 	if strings.EqualFold(seriesID, "SUPER_FORMULA") {
 		if ro, names := buildSuperFormulaRaceOrder(events, season); len(ro) > 0 {
@@ -492,6 +506,11 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		if s == "" {
 			return 0
 		}
+		neg := false
+		if strings.HasPrefix(s, "-") || strings.HasPrefix(s, "−") {
+			neg = true
+			s = strings.TrimSpace(s[1:])
+		}
 		var b strings.Builder
 		started := false
 		for _, c := range s {
@@ -510,6 +529,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		v, err := strconv.ParseFloat(b.String(), 64)
 		if err != nil {
 			return 0
+		}
+		if neg {
+			v = -v
 		}
 		return v
 	}
@@ -659,6 +681,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if carCol >= 0 && carCol < len(row) {
 				carNum = strings.TrimSpace(row[carCol])
 			}
+			if strings.EqualFold(seriesID, "SUPERCARS") && carNum != "" {
+				carNum = SupercarsCarToCanonical(carNum)
+			}
 			rawPos := ""
 			if posCol >= 0 && posCol < len(row) {
 				rawPos = strings.TrimSpace(row[posCol])
@@ -718,6 +743,11 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		}
 	}
 
+	var supercarsWeekendSessIdx map[string]int
+	if strings.EqualFold(seriesID, "SUPERCARS") {
+		supercarsWeekendSessIdx = make(map[string]int)
+	}
+
 	for _, ev := range events {
 		if ev.Season != season {
 			continue
@@ -728,6 +758,57 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			continue
 		}
 		if strings.EqualFold(seriesID, "F1") && isF1PreSeasonEvent(ev.ID) {
+			continue
+		}
+		if strings.EqualFold(seriesID, "SUPERCARS") {
+			bundleID := strings.ToLower(ResolveEventDetailID(dataDir, ev.ID))
+			sessions, errSess := loadRaceSessions(ev.ID)
+			if errSess != nil || len(sessions) == 0 {
+				continue
+			}
+			si := supercarsWeekendSessIdx[bundleID]
+			if si >= len(sessions) {
+				continue
+			}
+			rs := sessions[si]
+			supercarsWeekendSessIdx[bundleID] = si + 1
+			raceCode := supercarsStandingsRaceCode(ev, si+1)
+			if !supercarsRaceOrderContains(raceOrder, raceCode) {
+				raceOrder = append(raceOrder, raceCode)
+				base.RaceOrder = raceOrder
+				base.EventNames = append(base.EventNames, supercarsStandingsEventName(ev.Name))
+			}
+			detail, _ := loadDetail(ev.ID)
+			if len(rs.Headers) == 0 || len(rs.Rows) == 0 {
+				if detail != nil {
+					for _, e := range detail.EntryList {
+						driver := strings.TrimSpace(e.Driver)
+						if driver == "" {
+							continue
+						}
+						carNum := SupercarsCarToCanonical(strings.TrimSpace(e.Number))
+						key := standingsAggregateKey(seriesID, driver, carNum)
+						if key == "" {
+							key = driver
+						}
+						if byDriver[key] == nil {
+							byDriver[key] = &accRow{
+								driver: driver, car: carNum,
+								team: strings.TrimSpace(e.Team), manufacturer: strings.TrimSpace(e.Manufacturer),
+								races: make(map[string]string),
+							}
+						}
+						if byDriver[key].races == nil {
+							byDriver[key].races = make(map[string]string)
+						}
+						byDriver[key].races[raceCode] = "—"
+					}
+				}
+				completedRaces = append(completedRaces, raceCode)
+				continue
+			}
+			applyEventTable(EventTable{Headers: rs.Headers, Rows: rs.Rows}, raceCode, detail, false)
+			completedRaces = append(completedRaces, raceCode)
 			continue
 		}
 		// Cup: also skip events not yet past on the calendar.
@@ -1004,6 +1085,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if carCol >= 0 && carCol < len(row) {
 				carNum = strings.TrimSpace(row[carCol])
 			}
+			if strings.EqualFold(seriesID, "SUPERCARS") && carNum != "" {
+				carNum = SupercarsCarToCanonical(carNum)
+			}
 			rawPos := ""
 			if posCol >= 0 && posCol < len(row) {
 				rawPos = strings.TrimSpace(row[posCol])
@@ -1074,6 +1158,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		// Did Not Qualify: add drivers from did_not_qualify table with DNQ for this race
 		if dnq, ok := detail.Tables["did_not_qualify"]; ok && len(dnq.Headers) > 0 && len(dnq.Rows) > 0 {
 			dnqDriverCol := colIndex(dnq.Headers, "Driver")
+			dnqCarCol := firstColIndex(dnq.Headers, "No", "No.", "#", "Car")
 			dnqTeamCol := colIndex(dnq.Headers, "Team")
 			dnqManuCol := colIndex(dnq.Headers, "Manufacturer")
 			// Modified and some series: chassis may be in "Chassis" or "Make" column.
@@ -1091,6 +1176,10 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				if driver == "" {
 					continue
 				}
+				carNum := ""
+				if dnqCarCol >= 0 && dnqCarCol < len(row) {
+					carNum = strings.TrimSpace(row[dnqCarCol])
+				}
 				key := canonicalDriverKey(driver)
 				if key == "" {
 					key = driver
@@ -1104,9 +1193,12 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 					if dnqManuCol >= 0 && dnqManuCol < len(row) {
 						manu = strings.TrimSpace(row[dnqManuCol])
 					}
-					byDriver[key] = &accRow{driver: driver, team: team, manufacturer: manu, races: make(map[string]string)}
+					byDriver[key] = &accRow{driver: driver, car: carNum, team: team, manufacturer: manu, races: make(map[string]string)}
 				}
 				r := byDriver[key]
+				if r.car == "" && carNum != "" {
+					r.car = carNum
+				}
 				if _, has := r.races[raceCode]; !has {
 					r.races[raceCode] = "DNQ"
 				}
@@ -1129,6 +1221,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			Points:       formatPointsValue(r.points),
 			Stages:       itoa(r.stages),
 		})
+	}
+	if isStockCarSeries {
+		enrichStockCarStandingRowsCars(dataDir, seriesID, season, rows)
 	}
 	sort.Slice(rows, func(i, j int) bool {
 		pi := parsePointsValue(rows[i].Points)
@@ -1257,10 +1352,21 @@ func EnrichStagesFromEvents(dataDir string, seriesID string, data *StandingsData
 	}
 }
 
-// SupercarsCarToCanonical normalizes Supercars car number: 800 (Sydney) → 8.
+// SupercarsCarToCanonical normalizes Supercars car number: 800 (Sydney) → 8,
+// and strips redundant leading zeros (08 → 8).
 func SupercarsCarToCanonical(car string) string {
-	if strings.TrimSpace(car) == "800" {
+	car = strings.TrimSpace(car)
+	if car == "800" {
 		return "8"
+	}
+	if car == "" {
+		return car
+	}
+	if n, err := strconv.Atoi(strings.TrimLeft(car, "0")); err == nil {
+		if strings.TrimLeft(car, "0") == "" {
+			return "0"
+		}
+		return strconv.Itoa(n)
 	}
 	return car
 }

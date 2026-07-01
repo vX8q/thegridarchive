@@ -142,6 +142,9 @@ func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 
 	// sort the same way as before
 	sort.Slice(out, func(i, j int) bool {
+		if out[i].Points != out[j].Points {
+			return out[i].Points > out[j].Points
+		}
 		if out[i].Wins != out[j].Wins {
 			return out[i].Wins > out[j].Wins
 		}
@@ -161,7 +164,8 @@ func aggregateByManufacturer(rows []DriverStatsRow) []ManufacturerStatsRow {
 }
 
 // aggregateByTeam aggregates driver rows by team.
-func aggregateByTeam(rows []DriverStatsRow) []TeamStatsRow {
+// teamCanonByKey maps foldStockCarTeamKey → display name; pass nil for exact-string grouping.
+func aggregateByTeam(rows []DriverStatsRow, teamCanonByKey map[string]string) []TeamStatsRow {
 	type teamAcc struct {
 		team           string
 		races          int
@@ -196,14 +200,31 @@ func aggregateByTeam(rows []DriverStatsRow) []TeamStatsRow {
 
 	byTeam := make(map[string]*teamAcc)
 	for _, d := range rows {
-		team := strings.TrimSpace(d.Team)
-		if team == "" {
-			team = "—"
+		rawTeam := strings.TrimSpace(d.Team)
+		if rawTeam == "" {
+			rawTeam = "—"
 		}
-		a := byTeam[team]
+		var mapKey string
+		team := rawTeam
+		if rawTeam == "—" {
+			mapKey = "—"
+		} else if teamCanonByKey != nil {
+			team = canonicalStockCarTeamName(rawTeam, teamCanonByKey)
+			mapKey = foldStockCarTeamKey(team)
+			if mapKey == "" {
+				mapKey = rawTeam
+			}
+		} else {
+			mapKey = rawTeam
+		}
+		a := byTeam[mapKey]
 		if a == nil {
 			a = &teamAcc{team: team}
-			byTeam[team] = a
+			byTeam[mapKey] = a
+		} else if teamCanonByKey != nil {
+			if canon, ok := teamCanonByKey[mapKey]; ok && strings.TrimSpace(canon) != "" {
+				a.team = canon
+			}
 		}
 		a.races += d.Races
 		a.wins += d.Wins
@@ -279,6 +300,9 @@ func aggregateByTeam(rows []DriverStatsRow) []TeamStatsRow {
 	}
 
 	sort.Slice(out, func(i, j int) bool {
+		if out[i].Points != out[j].Points {
+			return out[i].Points > out[j].Points
+		}
 		if out[i].Wins != out[j].Wins {
 			return out[i].Wins > out[j].Wins
 		}

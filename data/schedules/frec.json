@@ -40,13 +40,12 @@
     "series_id": "FREC",
     "season": "2026",
     "name": "FREC — Monza",
-    "location": "Monza",
-    "circuit_name": "Monza Circuit",
-    "start_date": "2026-06-20",
-    "end_date": "2026-06-20",
+    "location": "Monza, Italy",
+    "circuit_name": "Autodromo Nazionale di Monza",
+    "start_date": "2026-06-19",
+    "end_date": "2026-06-21",
     "time_est": "11:35",
-    "time_msk": "12:35",
-    "date": "2026-06-20"
+    "time_msk": "12:35"
   },
   {
     "id": "FREC_2026_5",

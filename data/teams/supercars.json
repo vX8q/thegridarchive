@@ -7,7 +7,6 @@
       "number": "4",
       "driver": "Jack Le Brocq",
       "rounds": "1",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -18,7 +17,6 @@
       "number": "10",
       "driver": "Zach Bates",
       "rounds": "1",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -29,8 +27,6 @@
       "number": "9",
       "driver": "Jobe Stewart",
       "rounds": "1",
-      "co_driver": "Jarrod Hughes",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -41,8 +37,6 @@
       "number": "99",
       "driver": "Cooper Murray",
       "rounds": "1",
-      "co_driver": "Lochie Dalton",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -53,8 +47,6 @@
       "number": "18",
       "driver": "Anton de Pasquale",
       "rounds": "1",
-      "co_driver": "Lee Holdsworth",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -65,8 +57,6 @@
       "number": "20",
       "driver": "David Reynolds",
       "rounds": "1",
-      "co_driver": "James Courtney",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -77,8 +67,6 @@
       "number": "31",
       "driver": "Jayden Ojeda",
       "rounds": "1",
-      "co_driver": "David Russell",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -89,8 +77,6 @@
       "number": "777",
       "driver": "Declan Fraser",
       "rounds": "1",
-      "co_driver": "Nash Morris",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -101,8 +87,6 @@
       "number": "3",
       "driver": "Aaron Cameron",
       "rounds": "1",
-      "co_driver": "Zak Best",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -113,8 +97,6 @@
       "number": "7",
       "driver": "James Golding",
       "rounds": "1",
-      "co_driver": "Richie Stanaway",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -125,8 +107,6 @@
       "number": "6",
       "driver": "Cameron Waters",
       "rounds": "1",
-      "co_driver": "Mark Winterbottom",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -137,8 +117,6 @@
       "number": "55",
       "driver": "Thomas Randle",
       "rounds": "1",
-      "co_driver": "Reuben Goodall",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -149,8 +127,6 @@
       "number": "11",
       "driver": "Jackson Walls",
       "rounds": "1",
-      "co_driver": "Jack Perkins",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -161,8 +137,6 @@
       "number": "88",
       "driver": "Broc Feeney",
       "rounds": "1",
-      "co_driver": "Nick Percat",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -173,8 +147,6 @@
       "number": "888",
       "driver": "Will Brown",
       "rounds": "1",
-      "co_driver": "Scott Pye",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -185,8 +157,6 @@
       "number": "17",
       "driver": "Brodie Kostecki",
       "rounds": "1",
-      "co_driver": "Todd Hazelwood",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -197,8 +167,6 @@
       "number": "38",
       "driver": "Rylan Gray",
       "rounds": "1",
-      "co_driver": "Tony D'Alberto",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -209,8 +177,6 @@
       "number": "19",
       "driver": "Matt Payne",
       "rounds": "1",
-      "co_driver": "Tim Slade / Will Davison",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -221,7 +187,6 @@
       "number": "26",
       "driver": "Kai Allen",
       "rounds": "1",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -232,8 +197,6 @@
       "number": "1",
       "driver": "Chaz Mostert",
       "rounds": "1",
-      "co_driver": "Fabian Coulthard",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -244,8 +207,6 @@
       "number": "2",
       "driver": "Ryan Wood",
       "rounds": "1",
-      "co_driver": "Jaxon Evans",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -256,7 +217,6 @@
       "number": "8",
       "driver": "Andre Heimgartner",
       "rounds": "1",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -267,7 +227,6 @@
       "number": "14",
       "driver": "Cameron Hill",
       "rounds": "1",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     },
@@ -278,7 +237,6 @@
       "number": "96",
       "driver": "Macauley Jones",
       "rounds": "1",
-      "co_rounds": "10–11",
       "crew_chief": "",
       "full_time": true
     }

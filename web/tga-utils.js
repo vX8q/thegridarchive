@@ -620,6 +620,51 @@
     return getLang() === 'ru' ? day + ' ' + mon : mon + ' ' + day;
   }
 
+  /** Calendar date of race start, or first–last range when the event has multiple races. */
+  function formatEventRaceStartDate(e) {
+    if (!e) return '—';
+    var isSessionRow = window.TGA && window.TGA.isExpandedScheduleSessionRow;
+    if (!isSessionRow || !isSessionRow(e)) {
+      var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+      if (getRange) {
+        var range = getRange(e);
+        if (range.start && range.end && range.start !== range.end) {
+          return formatDateRange(range.start, range.end);
+        }
+        if (range.start) return formatShortDate(range.start) || range.start;
+      }
+    }
+    var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
+    var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+    var iso = getIso ? getIso(e) : '';
+    if (!iso && parseIso) iso = parseIso(e.start_date || e.date);
+    if (!iso) return '—';
+    return formatShortDate(iso) || iso;
+  }
+
+  /** Date line for event page header (range from start_date/end_date, or prose date field). */
+  function buildEventMetaDate(d) {
+    if (!d) return '';
+    var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
+    var iso = parseIso || function () { return ''; };
+    var startIso = iso(d.start_date || d.startDate);
+    var endIso = iso(d.end_date || d.endDate);
+    if (startIso && endIso && endIso > startIso) {
+      return formatDateRange(startIso, endIso);
+    }
+    if (startIso) {
+      var localizeDateFn = window.TGA && window.TGA.localizeDate;
+      return typeof localizeDateFn === 'function' ? localizeDateFn(startIso) : formatShortDate(startIso);
+    }
+    var dateStr = String(d.date || '').trim();
+    if (!dateStr) return '';
+    if (/^\d{4}-\d{2}-\d{2}/.test(dateStr)) {
+      var localizeDateFn2 = window.TGA && window.TGA.localizeDate;
+      return typeof localizeDateFn2 === 'function' ? localizeDateFn2(dateStr.slice(0, 10)) : dateStr.slice(0, 10);
+    }
+    return dateStr;
+  }
+
   function formatDateRange(startDs, endDs) {
     if (!startDs) return '—';
     var months_en = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -666,11 +711,15 @@
     return null;
   }
 
-  /** LIVE badge end: named race duration (+2 h buffer) or fallbackEndTs when unknown. */
+  /** LIVE badge end: estimated chequered flag (+30 min) or named endurance duration (+2 h). */
   function liveEndTsForEvent(ev, startTs, fallbackEndTs) {
     var hours = parseNamedRaceDurationHours(ev && ev.name);
     if (hours != null && startTs) {
       return startTs + (hours + 2) * 3600000;
+    }
+    var finMs = estimateLiveFinishedUtcMs(ev);
+    if (finMs != null) {
+      return finMs + 30 * 60000;
     }
     return fallbackEndTs != null ? fallbackEndTs : (startTs ? startTs + 3 * 3600000 : null);
   }
@@ -708,6 +757,24 @@
     return defaultRaceDurationHours(ev);
   }
 
+  /** Shorter finish estimate for LIVE badge (real GP ~2 h, not schedule block). */
+  function liveRaceDurationHours(ev) {
+    var sid = String((ev && (ev._seriesId || ev.series_id)) || '').toUpperCase();
+    var hours = raceDurationHours(ev);
+    if (sid === 'F1') return Math.min(hours, 2.5);
+    if (sid === 'F2' || sid === 'F3') return Math.min(hours, 2.25);
+    if (sid === 'INDYCAR') return Math.min(hours, 2.75);
+    return hours;
+  }
+
+  function estimateLiveFinishedUtcMs(ev) {
+    if (!ev) return null;
+    var getRaceUtc = window.TGA.getEventRaceUtcMs;
+    var startUtc = getRaceUtc ? getRaceUtc(ev) : 0;
+    if (!startUtc) return null;
+    return startUtc + liveRaceDurationHours(ev) * 3600000;
+  }
+
   /**
    * Estimated UTC moment when the race is over (uses getEventRaceUtcMs + duration from title).
    * Shared by Last Results and Next Race cards.
@@ -729,8 +796,15 @@
       ('0' + today.getDate()).slice(-2);
     var startStr = (ev.start_date || ev.date || '').slice(0, 10);
     var endStr = (ev.end_date || startStr || '').slice(0, 10);
+    var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+    if (getRange) {
+      var range = getRange(ev);
+      if (range.start) startStr = range.start;
+      if (range.end) endStr = range.end;
+    }
     if (!isIsoYmdDate(endStr)) return false;
     if (isIsoYmdDate(startStr) && startStr > todayISO) return false;
+    if (isIsoYmdDate(endStr) && endStr > todayISO) return false;
     if (endStr < todayISO) return true;
     var finMs = estimateRaceFinishedUtcMs(ev);
     if (finMs == null) return endStr <= todayISO;
@@ -858,6 +932,12 @@
         if (b._pointsNum !== a._pointsNum) return b._pointsNum - a._pointsNum;
         return String(a.driver || '').localeCompare(String(b.driver || ''), undefined, { sensitivity: 'base' });
       });
+      rows = rows.filter(function (r) {
+        if (r._pointsNum > 0) return true;
+        return raceOrder.some(function (code) {
+          return r.races && r.races[code] != null && String(r.races[code]).trim() !== '';
+        });
+      });
       rows.forEach(function (r, i) {
         r.pos = i + 1;
         delete r._pointsNum;
@@ -952,6 +1032,58 @@
   }
 
   /** IMSA / GTWCE / ELMS / WEC / Super GT: per-class tables in #standings-imsa-wrap  */
+  function gtwceEnduranceEventAbbrev(evName) {
+    var lc = String(evName || '').toLowerCase();
+    if (lc.indexOf('paul ricard') >= 0 || lc.indexOf('castellet') >= 0) return 'LEC';
+    if (lc.indexOf('monza') >= 0) return 'MNZ';
+    if (lc.indexOf('spa') >= 0) return 'SPA';
+    if (lc.indexOf('nürburgring') >= 0 || lc.indexOf('nurburgring') >= 0) return 'NÜR';
+    if (lc.indexOf('portim') >= 0 || lc.indexOf('algarve') >= 0) return 'ALG';
+    return 'R';
+  }
+
+  function gtwceSpaCheckpointSubLabel(code, lang) {
+    if (!code || typeof code !== 'string') return null;
+    var m = code.match(/^R\d+-(6h|12h|24h)$/);
+    if (!m) return null;
+    if (lang === 'ru') {
+      if (m[1] === '6h') return '6ч';
+      if (m[1] === '12h') return '12ч';
+      if (m[1] === '24h') return '24ч';
+    }
+    return m[1];
+  }
+
+  function buildGtwceEnduranceHeaderGroups(raceOrder, eventNames, lang) {
+    var groups = [];
+    var i = 0;
+    while (i < raceOrder.length) {
+      var sub0 = gtwceSpaCheckpointSubLabel(raceOrder[i], lang);
+      if (sub0 && i + 2 < raceOrder.length &&
+          gtwceSpaCheckpointSubLabel(raceOrder[i + 1], lang) &&
+          gtwceSpaCheckpointSubLabel(raceOrder[i + 2], lang)) {
+        groups.push({
+          colspan: 3,
+          top: gtwceEnduranceEventAbbrev(eventNames[i] || ''),
+          subs: [
+            gtwceSpaCheckpointSubLabel(raceOrder[i], lang),
+            gtwceSpaCheckpointSubLabel(raceOrder[i + 1], lang),
+            gtwceSpaCheckpointSubLabel(raceOrder[i + 2], lang)
+          ]
+        });
+        i += 3;
+        continue;
+      }
+      groups.push({
+        colspan: 1,
+        top: gtwceEnduranceEventAbbrev(eventNames[i] || ''),
+        subs: null
+      });
+      i += 1;
+    }
+    return groups;
+  }
+
   function buildImsaGtwceClassStandingsHtml(dataObj, seriesKey, mode) {
     var tFn = function (k) { return window.TGA.t(k); };
     mode = mode || getStandingsMode(seriesKey);
@@ -976,6 +1108,9 @@
         return wecStandingsRoundLabel(eventNamesForStandings, idx);
       }
       if (sk === 'gtwce_end' || sk === 'gtwce_sprint') {
+        if (sk === 'gtwce_end') {
+          return gtwceEnduranceEventAbbrev(eventNamesForStandings[idx] || '');
+        }
         return code;
       }
       if (sk === 'super_formula') {
@@ -1004,6 +1139,9 @@
       return label;
     }
     var isGtwce = sk === 'gtwce_end' || sk === 'gtwce_sprint';
+    var isGtwceEnd = sk === 'gtwce_end';
+    var gtwceHeaderGroups = isGtwceEnd ? buildGtwceEnduranceHeaderGroups(raceOrder, eventNamesForStandings, lang) : null;
+    var useGtwceSpaSplit = gtwceHeaderGroups && gtwceHeaderGroups.some(function (g) { return g.subs && g.subs.length; });
     var html = '<div class="imsa-standings-by-class' + (isGtwce ? ' gtwce-standings-by-class' : '') + '">';
     classes.forEach(function (cls) {
       var classRows = cls.rows || [];
@@ -1011,6 +1149,8 @@
       var th;
       var body;
       var tableExtraClass = '';
+      var tableExtraClassGtwce = '';
+      var theadSplit = '';
       function carCell(row) {
         return esc(dash(row.manufacturer || row.car || ''));
       }
@@ -1026,15 +1166,39 @@
         return td;
       }
       if (isGtwce) {
-        th = '<th class="col-num">' + esc(tFn('th.pos') || 'Pos') + '</th>';
-        if (!isCrewMode) th += '<th>' + esc(tFn('th.driver') || 'Driver') + '</th>';
-        th += '<th class="col-car">' + esc(tFn('th.no') || '#') + '</th>' +
-          '<th>' + esc(tFn('th.team') || 'Team') + '</th>' +
-          '<th>' + esc(carLabel) + '</th>';
-        for (var gi = 0; gi < raceOrder.length; gi++) {
-          th += '<th class="col-race">' + esc(raceHeaderLabel(raceOrder[gi], gi)) + '</th>';
+        var tableExtraClassGtwce = '';
+        if (useGtwceSpaSplit) {
+          tableExtraClassGtwce = ' gtwce-standings-split';
+          var tr1g = '<th class="col-num" rowspan="2">' + esc(tFn('th.pos') || 'Pos') + '</th>';
+          if (!isCrewMode) tr1g += '<th rowspan="2">' + esc(tFn('th.driver') || 'Driver') + '</th>';
+          tr1g += '<th class="col-car" rowspan="2">' + esc(tFn('th.no') || '#') + '</th>' +
+            '<th rowspan="2">' + esc(tFn('th.team') || 'Team') + '</th>' +
+            '<th rowspan="2">' + esc(carLabel) + '</th>';
+          var tr2g = '';
+          for (var gg = 0; gg < gtwceHeaderGroups.length; gg++) {
+            var grp = gtwceHeaderGroups[gg];
+            if (grp.subs) {
+              tr1g += '<th class="col-race" colspan="' + grp.colspan + '">' + esc(grp.top) + '</th>';
+              for (var gs = 0; gs < grp.subs.length; gs++) {
+                tr2g += '<th class="col-race col-gtwce-spa">' + esc(grp.subs[gs]) + '</th>';
+              }
+            } else {
+              tr1g += '<th class="col-race" rowspan="2">' + esc(grp.top) + '</th>';
+            }
+          }
+          tr1g += '<th class="col-pts" rowspan="2">' + esc(tFn('th.pts') || 'Pts') + '</th>';
+          theadSplit = '<thead><tr>' + tr1g + '</tr><tr>' + tr2g + '</tr></thead>';
+        } else {
+          th = '<th class="col-num">' + esc(tFn('th.pos') || 'Pos') + '</th>';
+          if (!isCrewMode) th += '<th>' + esc(tFn('th.driver') || 'Driver') + '</th>';
+          th += '<th class="col-car">' + esc(tFn('th.no') || '#') + '</th>' +
+            '<th>' + esc(tFn('th.team') || 'Team') + '</th>' +
+            '<th>' + esc(carLabel) + '</th>';
+          for (var gi = 0; gi < raceOrder.length; gi++) {
+            th += '<th class="col-race">' + esc(raceHeaderLabel(raceOrder[gi], gi)) + '</th>';
+          }
+          th += '<th class="col-pts">' + esc(tFn('th.pts') || 'Pts') + '</th>';
         }
-        th += '<th class="col-pts">' + esc(tFn('th.pts') || 'Pts') + '</th>';
         body = classRows.map(function (row) {
           var posDisplay = (row.pos === 0 || row.pos === null || row.pos === undefined) ? '—' : row.pos;
           var td = '<td class="col-num">' + posDisplay + '</td>';
@@ -1116,15 +1280,28 @@
         }
       }
       html += '<h4 class="table-section-title">' + esc(cls.name || cls.id || '') + '</h4>';
-      html += '<div class="table-wrap"><table class="data-table standings-class-table' + (isGtwce ? '' : tableExtraClass) + '">';
+      html += '<div class="table-wrap"><table class="data-table standings-class-table' + (isGtwce ? tableExtraClassGtwce || '' : tableExtraClass) + '">';
       if (isGtwce) {
-        html += '<thead><tr>' + th + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+        if (useGtwceSpaSplit) {
+          html += theadSplit + '<tbody>' + body + '</tbody></table></div>';
+        } else {
+          html += '<thead><tr>' + th + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+        }
       } else {
         html += theadHtml + '<tbody>' + body + '</tbody></table></div>';
       }
     });
     html += '</div>';
     return html;
+  }
+
+  /** Supercars site URLs use championship weekend number (file suffix), not schedule race number. */
+  function supercarsWeekendEventSlug(e, weekendRound) {
+    if (weekendRound == null || weekendRound === '') return '';
+    var id = String((e && e.id) || '');
+    var m = id.match(/_(\d{4})_/i);
+    var season = (m && m[1]) ? m[1] : '2026';
+    return 'supercars-' + season + '-' + String(weekendRound);
   }
 
   // ─── Export ─────────────────────────────────────────────────────────────
@@ -1151,6 +1328,7 @@
   window.TGA.adjustDetailPanelPadding = adjustDetailPanelPadding;
   window.TGA.adjustSeasonPanelPadding = adjustSeasonPanelPadding;
   window.TGA.renderSupercarsStaticSpecs = renderSupercarsStaticSpecs;
+  window.TGA.supercarsWeekendEventSlug = supercarsWeekendEventSlug;
   window.TGA.addObjectTableSort       = addObjectTableSort;
   window.TGA.typeLabel                = typeLabel;
   window.TGA.countryDisplay           = countryDisplay;
@@ -1169,6 +1347,8 @@
   window.TGA.hexRgb                   = hexRgb;
   window.TGA.seriesBadge              = seriesBadge;
   window.TGA.formatShortDate          = formatShortDate;
+  window.TGA.formatEventRaceStartDate = formatEventRaceStartDate;
+  window.TGA.buildEventMetaDate = buildEventMetaDate;
   window.TGA.formatDateRange          = formatDateRange;
   window.TGA.parseEventDate           = parseEventDate;
   window.TGA.parseNamedRaceDurationHours = parseNamedRaceDurationHours;

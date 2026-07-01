@@ -28,9 +28,10 @@ func handleEvent(w http.ResponseWriter, r *http.Request, dataDir string, _ *cach
 		return
 	}
 	cacheKey := strings.ToLower(eventID)
+	fileID := schedulefile.ResolveSupercarsHTTPFileID(dataDir, cacheKey)
 	// Do not cache event responses so JSON edits (laps, distance, tables) show up immediately.
 	// schedulefile reads from data/events/{Series}/{Year} and the flat directory.
-	body, err := schedulefile.ReadEventDetailFile(dataDir, cacheKey)
+	body, err := schedulefile.ReadEventDetailFileAtID(dataDir, fileID)
 	if err != nil {
 		if os.IsNotExist(err) {
 			writeError(w, http.StatusNotFound, "not found")
@@ -57,6 +58,7 @@ func handleEvent(w http.ResponseWriter, r *http.Request, dataDir string, _ *cach
 	if enriched, err := schedulefile.EnrichStockCarEventTeamNames(body, dataDir, seriesID); err == nil {
 		body = enriched
 	}
+	body = schedulefile.PatchSupercarsEventIDFromRequest(body, eventID, fileID)
 	_, _ = w.Write(body)
 }
 

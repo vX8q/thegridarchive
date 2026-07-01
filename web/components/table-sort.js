@@ -95,8 +95,9 @@ function makeTableSortable(tableEl, rows, escapeFn, getRowClass) {
 }
 
 // Simple sorter for pre-built tables (schedules / Full Schedule)
-function makeSimpleTableSortable(tableEl) {
+function makeSimpleTableSortable(tableEl, options) {
   if (!tableEl || tableEl._simpleSortable) return;
+  options = options || {};
   var thead = tableEl.querySelector('thead');
   var tbody = tableEl.querySelector('tbody');
   if (!thead || !tbody) return;
@@ -134,6 +135,11 @@ function makeSimpleTableSortable(tableEl) {
         return dir * ta.localeCompare(tb, undefined, { numeric: true });
       });
       rows.forEach(function (row) { tbody.appendChild(row); });
+      if (options && options.renumberFirstColumn) {
+        rows.forEach(function (row, idx) {
+          if (row.cells[0]) row.cells[0].textContent = String(idx + 1);
+        });
+      }
       [].forEach.call(ths, function (th2) { th2.classList.remove('sort-asc', 'sort-desc'); });
       th.classList.add(dir === 1 ? 'sort-asc' : 'sort-desc');
       dir = -dir;

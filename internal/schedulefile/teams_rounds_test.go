@@ -1,6 +1,7 @@
 package schedulefile
 
 import (
+	"fmt"
 	"path/filepath"
 	"testing"
 )
@@ -429,6 +430,14 @@ func TestEntryDrivers_SplitsCrewStrings(t *testing.T) {
 	if len(gotSlots) != 3 {
 		t.Fatalf("driver1/2/3: got %#v", gotSlots)
 	}
+
+	gotSub := entryDrivers(EntryListRow{
+		Driver:  "Brodie Kostecki",
+		Driver2: "Todd Hazelwood",
+	})
+	if len(gotSub) != 2 || gotSub[0] != "Brodie Kostecki" || gotSub[1] != "Todd Hazelwood" {
+		t.Fatalf("driver+driver2 substitute: got %#v", gotSub)
+	}
 }
 
 func TestEnrichTeamsRoundsFromEvents_SupercarsDropsUnenteredWildcard(t *testing.T) {
@@ -467,5 +476,116 @@ func TestEnrichTeamsRoundsFromEvents_SupercarsDropsUnenteredWildcard(t *testing.
 	}
 	if !found {
 		t.Fatal("expected Anton de Pasquale row")
+	}
+}
+
+func TestEnrichTeamsRoundsFromEvents_SupercarsMergesAlternateCarNumber(t *testing.T) {
+	dataDir := t.TempDir()
+	writeJSON(t, filepath.Join(dataDir, "schedules", "supercars.json"), []EventJSON{
+		{ID: "SUPERCARS_2026_1", SeriesID: "SUPERCARS", Season: "2026", StartDate: "2026-02-20", CircuitName: "Sydney"},
+		{ID: "SUPERCARS_2026_2", SeriesID: "SUPERCARS", Season: "2026", StartDate: "2026-03-01", CircuitName: "Melbourne"},
+		{ID: "SUPERCARS_2026_3", SeriesID: "SUPERCARS", Season: "2026", StartDate: "2026-03-15", CircuitName: "Taupo"},
+		{ID: "SUPERCARS_2026_4", SeriesID: "SUPERCARS", Season: "2026", StartDate: "2026-04-17", CircuitName: "Christchurch"},
+	})
+	writeJSON(t, filepath.Join(dataDir, "teams", "supercars.json"), &TeamsWithSpec{
+		Teams: []TeamJSON{
+			{Manufacturer: "Chevrolet", Team: "Team 18", Number: "20", Driver: "David Reynolds", Rounds: "1", FullTime: true},
+		},
+	})
+	writeJSON(t, filepath.Join(dataDir, "events", "Supercars", "2026", "supercars_2026_1.json"), &EventDetailJSON{
+		EntryList: []EntryListRow{{Number: "20", Driver: "David Reynolds", Team: "Team 18", Manufacturer: "Chevrolet"}},
+	})
+	writeJSON(t, filepath.Join(dataDir, "events", "Supercars", "2026", "supercars_2026_4.json"), &EventDetailJSON{
+		EntryList: []EntryListRow{{Number: "500", Driver: "David Reynolds", Team: "Team 18", Manufacturer: "Chevrolet"}},
+	})
+
+	data, err := LoadTeams(dataDir, "supercars")
+	if err != nil {
+		t.Fatal(err)
+	}
+	EnrichTeamsRoundsFromEvents(dataDir, "supercars", "2026", data)
+	for _, row := range data.Teams {
+		if row.Number == "500" {
+			t.Fatalf("alternate livery number should not create a teams row, still have #500")
+		}
+	}
+	var reynolds *TeamJSON
+	for i := range data.Teams {
+		if data.Teams[i].Driver == "David Reynolds" {
+			reynolds = &data.Teams[i]
+			break
+		}
+	}
+	if reynolds == nil {
+		t.Fatal("expected David Reynolds row")
+	}
+	if reynolds.Rounds != "1, 4" {
+		t.Fatalf("David Reynolds rounds = %q, want 1, 4", reynolds.Rounds)
+	}
+}
+
+func TestEnrichTeamsRoundsFromEvents_SupercarsWeekendSubstitutes(t *testing.T) {
+	dataDir := t.TempDir()
+	sched := make([]EventJSON, 6)
+	for i := 0; i < 6; i++ {
+		sched[i] = EventJSON{
+			ID:       fmt.Sprintf("SUPERCARS_2026_%d", i+1),
+			SeriesID: "SUPERCARS",
+			Season:   "2026",
+		}
+	}
+	writeJSON(t, filepath.Join(dataDir, "schedules", "supercars.json"), sched)
+	writeJSON(t, filepath.Join(dataDir, "teams", "supercars.json"), &TeamsWithSpec{
+		Teams: []TeamJSON{
+			{Manufacturer: "Ford", Team: "Dick Johnson Racing", Number: "17", Driver: "Brodie Kostecki", Rounds: "1", FullTime: true},
+			{Manufacturer: "Ford", Team: "Tickford Racing", Number: "55", Driver: "Thomas Randle", Rounds: "1", FullTime: true},
+		},
+	})
+	mk := func(drv, drv2 string) *EventDetailJSON {
+		row := EntryListRow{Number: "17", Driver: drv, Team: "Dick Johnson Racing", Manufacturer: "Ford"}
+		if drv2 != "" {
+			row.Driver2 = drv2
+		}
+		return &EventDetailJSON{EntryList: []EntryListRow{row}}
+	}
+	for i := 1; i <= 5; i++ {
+		writeJSON(t, filepath.Join(dataDir, "events", "Supercars", "2026", fmt.Sprintf("supercars_2026_%d.json", i)),
+			mk("Brodie Kostecki", ""))
+	}
+	writeJSON(t, filepath.Join(dataDir, "events", "Supercars", "2026", "supercars_2026_6.json"),
+		mk("Brodie Kostecki", "Todd Hazelwood"))
+
+	data, err := LoadTeams(dataDir, "supercars")
+	if err != nil {
+		t.Fatal(err)
+	}
+	EnrichTeamsRoundsFromEvents(dataDir, "supercars", "2026", data)
+
+	var kostecki, hazelwood *TeamJSON
+	for i := range data.Teams {
+		switch data.Teams[i].Driver {
+		case "Brodie Kostecki":
+			kostecki = &data.Teams[i]
+		case "Todd Hazelwood":
+			hazelwood = &data.Teams[i]
+		}
+	}
+	if kostecki == nil {
+		t.Fatal("expected Brodie Kostecki row")
+	}
+	if kostecki.Rounds != "1–6" {
+		t.Fatalf("Kostecki rounds = %q, want 1–6", kostecki.Rounds)
+	}
+	if hazelwood == nil {
+		t.Fatal("expected Todd Hazelwood substitute row")
+	}
+	if hazelwood.Number != "17" {
+		t.Fatalf("Hazelwood number = %q, want 17", hazelwood.Number)
+	}
+	if hazelwood.Rounds != "6" {
+		t.Fatalf("Hazelwood rounds = %q, want 6", hazelwood.Rounds)
+	}
+	if hazelwood.FullTime {
+		t.Fatal("substitute should be part-time")
 	}
 }

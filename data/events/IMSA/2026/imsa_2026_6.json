@@ -1,0 +1,40 @@
+{
+  "event_id": "IMSA_2026_6",
+  "series": "IMSA WeatherTech SportsCar Championship",
+  "race": "Sahlen's Six Hours of The Glen",
+  "date": "Sunday, June 28, 2026",
+  "start_date": "2026-06-28",
+  "end_date": "2026-06-28",
+  "track": "Watkins Glen International",
+  "location": "Watkins Glen, New York",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

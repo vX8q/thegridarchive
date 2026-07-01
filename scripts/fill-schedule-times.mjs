@@ -274,7 +274,7 @@ patchSchedule('frec.json', [
 patchSchedule('f4_it.json', [
   ['F4_IT_2026_1', '2026-05-09', '12:30', 'Europe/Rome'],
   ['F4_IT_2026_2', '2026-05-22', '12:30', 'Europe/Rome'],
-  ['F4_IT_2026_3', '2026-06-20', '12:30', 'Europe/Rome'],
+  ['F4_IT_2026_3', '2026-06-21', '12:30', 'Europe/Rome'],
   ['F4_IT_2026_4', '2026-07-25', '12:30', 'Europe/Rome'],
   ['F4_IT_2026_5', '2026-09-05', '12:30', 'Europe/Rome'],
   ['F4_IT_2026_6', '2026-09-19', '12:30', 'Europe/Rome'],

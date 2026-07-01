@@ -174,6 +174,14 @@
         feature: '13 September', featureLocal: '09:55', featureMsk: '10:55' }
     ],
 
+    // F1 2025 sprint weekends: Saturday sprint times (MSK) + dates.
+    f1Sprint2025: {
+      F1_2025_2:  { sprintDate: '2025-03-22', sprintLocal: '11:00', sprintMsk: '06:00' },
+      F1_2025_6:  { sprintDate: '2025-05-03', sprintLocal: '12:00', sprintMsk: '19:00' },
+      F1_2025_13: { sprintDate: '2025-07-26', sprintLocal: '12:00', sprintMsk: '13:00' },
+      F1_2025_19: { sprintDate: '2025-10-18', sprintLocal: '12:00', sprintMsk: '20:00' }
+    },
+
     // F1 2026 sprint weekends: Saturday sprint times (MSK) + dates.
     f1Sprint2026: {
       F1_2026_2:  { sprintDate: '2026-03-14', sprintLocal: '11:00', sprintMsk: '06:00' },

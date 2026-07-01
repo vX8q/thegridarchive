@@ -328,8 +328,9 @@ func LoadEventQualifyingSessions(dataDir, eventID string) ([]RaceSession, error)
 	return out, nil
 }
 
-// LoadSupercarsStartingGridByRace reads tables.starting_lineup.sessions from event JSON.
-// Returns per race (race_no 1..7) a map: canonical car number -> starting position (Pos).
+// LoadSupercarsStartingGridByRace reads starting positions for each race session.
+// Primary source: ST column in tables.race.sessions; legacy fallback: tables.starting_lineup.sessions.
+// Returns per session index (1-based) a map: canonical car number -> starting position.
 // Used to fill results.grid_position on import and for Avg. Start in stats.
 func LoadSupercarsStartingGridByRace(dataDir, eventID string) (map[int]map[string]int, error) {
 	raw, err := readEventDetailFile(dataDir, eventID)
@@ -344,6 +345,76 @@ func LoadSupercarsStartingGridByRace(dataDir, eventID string) (map[int]map[strin
 	if !ok {
 		return nil, nil
 	}
+	if out := supercarsGridFromRaceSessions(tables); len(out) > 0 {
+		return out, nil
+	}
+	return supercarsGridFromStartingLineup(tables)
+}
+
+func supercarsGridFromRaceSessions(tables map[string]interface{}) map[int]map[string]int {
+	raceAny, ok := tables["race"]
+	if !ok {
+		return nil
+	}
+	raceMap, ok := raceAny.(map[string]interface{})
+	if !ok {
+		return nil
+	}
+	sessList, ok := raceMap["sessions"].([]interface{})
+	if !ok || len(sessList) == 0 {
+		return nil
+	}
+	out := make(map[int]map[string]int)
+	for idx, sessAny := range sessList {
+		sessMap, ok := sessAny.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		headersAny, ok := sessMap["headers"].([]interface{})
+		if !ok {
+			continue
+		}
+		var headers []string
+		for _, h := range headersAny {
+			headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
+		}
+		rowsAny, ok := sessMap["rows"].([]interface{})
+		if !ok {
+			continue
+		}
+		colSt := firstColIndex(headers, "ST", "St.", "St", "Grid", "Start")
+		colNo := firstColIndex(headers, "No", "No.", "#", "Car")
+		if colSt < 0 || colNo < 0 {
+			continue
+		}
+		byCar := make(map[string]int)
+		for _, rAny := range rowsAny {
+			rSlice, ok := rAny.([]interface{})
+			if !ok {
+				continue
+			}
+			row := make([]string, len(rSlice))
+			for i := range rSlice {
+				row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
+			}
+			pos := atoiSafe(valueAt(row, colSt))
+			if pos <= 0 {
+				continue
+			}
+			car := SupercarsCarToCanonical(valueAt(row, colNo))
+			if car == "" {
+				continue
+			}
+			byCar[car] = pos
+		}
+		if len(byCar) > 0 {
+			out[idx+1] = byCar
+		}
+	}
+	return out
+}
+
+func supercarsGridFromStartingLineup(tables map[string]interface{}) (map[int]map[string]int, error) {
 	slAny, ok := tables["starting_lineup"]
 	if !ok {
 		return nil, nil

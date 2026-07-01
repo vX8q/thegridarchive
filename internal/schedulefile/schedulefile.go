@@ -135,6 +135,7 @@ type DriverStatsRow struct {
 	FeaturePodiums   int     `json:"feature_podiums,omitempty"`
 	AvgFinish        float64 `json:"avg_finish"`
 	AvgStart         float64 `json:"avg_start"`
+	QualAppearances  int     `json:"-"` // qualifying/grid samples (Supercars stats merge)
 	AvgQualifying    float64 `json:"avg_qualifying,omitempty"` // average qualifying position (F1)
 	Q2Passes         int     `json:"q2_passes,omitempty"`      // Q2 passes (F1)
 	Q3Passes         int     `json:"q3_passes,omitempty"`      // Q3 passes (F1)

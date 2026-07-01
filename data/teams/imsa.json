@@ -179,20 +179,6 @@
     },
     {
       "class": "LMP2",
-      "team": "Tower Motorsports",
-      "chassis": "Oreca 07",
-      "number": "8",
-      "drivers": [
-        "Sebastian alvarez",
-        "Sebastien Bourdais",
-        "John Farano",
-        "Kyffin Simpson",
-        "Tristan Vautier"
-      ],
-      "rounds": "TBC"
-    },
-    {
-      "class": "LMP2",
       "team": "TDS Racing",
       "chassis": "Oreca 07",
       "number": "11",
@@ -268,16 +254,6 @@
         "Harry Tincknell"
       ],
       "rounds": "Rolex 24"
-    },
-    {
-      "class": "LMP2",
-      "team": "Team Tonis",
-      "chassis": "Oreca 07",
-      "number": "61",
-      "drivers": [
-        "Tonis Kasemets"
-      ],
-      "rounds": "TBC"
     },
     {
       "class": "LMP2",

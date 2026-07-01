@@ -311,16 +311,6 @@ func handleSeriesStandings(w http.ResponseWriter, _ *http.Request, dataDir, data
 			writeError(w, http.StatusInternalServerError, "failed to build standings")
 			return
 		}
-	} else if strings.EqualFold(dataSeriesID, "SUPERCARS") {
-		data, err = loadSupercarsStandings(dataDir, season)
-		if err != nil {
-			slog.Error("supercars standings failed",
-				"series", dataSeriesID,
-				"err", err,
-			)
-			writeError(w, http.StatusInternalServerError, "failed to load standings")
-			return
-		}
 	} else {
 		data, err = schedulefile.BuildStandingsFromEvents(dataDir, dataSeriesID, season)
 		if err != nil {
@@ -432,31 +422,7 @@ func driverNameKey(name string) string {
 	return name
 }
 
-// loadSupercarsStandings builds the Supercars table with this priority:
-//  1. data/standings/supercars.json — primary source (maintained manually, all completed races);
-//  2. BuildStandingsFromEvents — if the file is missing or empty;
-//  3. BuildSupercarsStandingsFromFiles — legacy Sydney/Melbourne builder (emergency fallback only).
-func loadSupercarsStandings(dataDir, season string) (*schedulefile.StandingsData, error) {
-	if fileData, err := schedulefile.LoadStandings(dataDir, "SUPERCARS"); err != nil {
-		return nil, err
-	} else if fileData != nil && len(fileData.Rows) > 0 {
-		schedulefile.SplitBaseIneligible(fileData)
-		return fileData, nil
-	}
-	if built, err := schedulefile.BuildStandingsFromEvents(dataDir, "SUPERCARS", season); err != nil {
-		return nil, err
-	} else if built != nil && len(built.Rows) > 0 {
-		return built, nil
-	}
-	if built, err := schedulefile.BuildSupercarsStandingsFromFiles(dataDir); err == nil && built != nil && len(built.Rows) > 0 {
-		return built, nil
-	}
-	return nil, nil
-}
-
-// finalizeSupercarsStandings applies Supercars-specific post-processing:
-// normalize <7 columns (emergency path), merge duplicates (car 800 ↔ 8),
-// and recompute completed_races from actually filled columns.
+// finalizeSupercarsStandings applies Supercars-specific post-processing after auto-build.
 func finalizeSupercarsStandings(dataDir string, data *schedulefile.StandingsData) {
 	if len(data.RaceOrder) < 7 {
 		was := len(data.RaceOrder)
@@ -469,6 +435,7 @@ func finalizeSupercarsStandings(dataDir string, data *schedulefile.StandingsData
 	}
 	schedulefile.MergeSupercarsCar800Into8(data)
 	schedulefile.RecomputeCompletedRacesFromFilled(data)
+	schedulefile.EnrichSupercarsStandingsFromTeams(dataDir, data)
 }
 
 func handleSeriesStats(w http.ResponseWriter, r *http.Request, dataDir, dataSeriesID, season string) {

@@ -232,6 +232,12 @@ func importStockCarSeries(ctx context.Context, st store.Store, dataDir, seriesID
 		if err := st.UpsertRace(ctx, race); err != nil {
 			return err
 		}
+		if err := st.DeleteResultsByRace(ctx, raceID); err != nil {
+			return err
+		}
+		if err := st.DeleteStageResultsByRace(ctx, raceID); err != nil {
+			return err
+		}
 
 		// 4) Race results
 		colPos := firstHeaderIndex(rr.Headers, "Pos", "Fin")
@@ -262,10 +268,7 @@ func importStockCarSeries(ctx context.Context, st store.Store, dataDir, seriesID
 			manufacturer := valueOrEmpty(row, colManu)
 			status := valueOrEmpty(row, colStatus)
 
-			carForDriverID := carNumber
-			if strings.EqualFold(seriesID, "SUPERCARS") {
-				carForDriverID = schedulefile.SupercarsCarToCanonical(carNumber)
-			}
+			carForDriverID := bootstrapCarForDriverID(seriesID, carNumber)
 			driverID := driverutil.MakeDriverID(seriesID, driverName, carForDriverID)
 			teamID := makeTeamID(seriesID, teamName)
 
@@ -297,10 +300,7 @@ func importStockCarSeries(ctx context.Context, st store.Store, dataDir, seriesID
 			}
 			points := float64(atoiSafe(valueOrEmpty(row, colPts)))
 
-			resID := raceID + ":" + driverID
-			if carNumber != "" {
-				resID = raceID + ":" + carNumber
-			}
+			resID := bootstrapResultID(seriesID, raceID, driverID, carNumber)
 
 			if err := st.UpsertResult(ctx, &models.Result{
 				ID:           resID,
@@ -351,10 +351,7 @@ func importStockCarSeries(ctx context.Context, st store.Store, dataDir, seriesID
 				manufacturer := valueOrEmpty(row, colManuS)
 				status := valueOrEmpty(row, colStatusS)
 
-				carForDriverID := carNumber
-				if strings.EqualFold(seriesID, "SUPERCARS") {
-					carForDriverID = schedulefile.SupercarsCarToCanonical(carNumber)
-				}
+				carForDriverID := bootstrapCarForDriverID(seriesID, carNumber)
 				driverID := driverutil.MakeDriverID(seriesID, driverName, carForDriverID)
 				teamID := makeTeamID(seriesID, teamName)
 
@@ -457,6 +454,9 @@ func importSupercarsFromRaceSessions(ctx context.Context, st store.Store, dataDi
 			if err := st.UpsertRace(ctx, race); err != nil {
 				return err
 			}
+			if err := st.DeleteResultsByRace(ctx, raceID); err != nil {
+				return err
+			}
 			colPos := firstHeaderIndex(sess.Headers, "Pos", "Fin")
 			colNo := firstHeaderIndex(sess.Headers, "No", "No.", "#", "Car")
 			colDriver := firstHeaderIndex(sess.Headers, "Driver")
@@ -475,10 +475,7 @@ func importSupercarsFromRaceSessions(ctx context.Context, st store.Store, dataDi
 				}
 				carNumber := valueOrEmpty(row, colNo)
 				teamName := valueOrEmpty(row, colTeam)
-				carForDriverID := carNumber
-				if strings.EqualFold(seriesID, "SUPERCARS") {
-					carForDriverID = schedulefile.SupercarsCarToCanonical(carNumber)
-				}
+				carForDriverID := bootstrapCarForDriverID(seriesID, carNumber)
 				driverID := driverutil.MakeDriverID(seriesID, driverName, carForDriverID)
 				teamID := makeTeamID(seriesID, teamName)
 				if err := st.UpsertDriver(ctx, &models.Driver{
@@ -506,10 +503,7 @@ func importSupercarsFromRaceSessions(ctx context.Context, st store.Store, dataDi
 				}
 				ptsStr := valueOrEmpty(row, colPts)
 				points := float64(atoiSafe(strings.TrimPrefix(strings.TrimSpace(ptsStr), "+")))
-				resID := raceID + ":" + driverID
-				if carNumber != "" {
-					resID = raceID + ":" + carNumber
-				}
+				resID := bootstrapResultID(seriesID, raceID, driverID, carNumber)
 				status := ""
 				if strings.EqualFold(posStr, "DNF") {
 					status = "DNF"
@@ -597,6 +591,9 @@ func importOpenwheelSeries(ctx context.Context, st store.Store, dataDir, seriesI
 			if err := st.UpsertRace(ctx, race); err != nil {
 				return err
 			}
+			if err := st.DeleteResultsByRace(ctx, raceID); err != nil {
+				return err
+			}
 			colPos := firstHeaderIndex(sess.Headers, "Pos", "Fin")
 			colNo := firstHeaderIndex(sess.Headers, "No", "No.", "#", "Car")
 			colDriver := firstHeaderIndex(sess.Headers, "Driver")
@@ -653,10 +650,7 @@ func importOpenwheelSeries(ctx context.Context, st store.Store, dataDir, seriesI
 					pos = rowIdx + 1
 				}
 				points := float64(atoiSafe(valueOrEmpty(row, colPts)))
-				resID := raceID + ":" + driverID
-				if carNumber != "" {
-					resID = raceID + ":" + carNumber
-				}
+				resID := bootstrapResultID(seriesID, raceID, driverID, carNumber)
 				status := ""
 				switch strings.ToUpper(strings.TrimSpace(posStr)) {
 				case "DNF":
@@ -735,4 +729,26 @@ func makeTeamID(seriesID, teamName string) string {
 		return ""
 	}
 	return strings.ToUpper(seriesID) + ":TEAM:" + driverutil.NormalizeKey(teamName)
+}
+
+func bootstrapCarForDriverID(seriesID, carNumber string) string {
+	if strings.EqualFold(seriesID, "SUPERCARS") {
+		return schedulefile.SupercarsCarToCanonical(carNumber)
+	}
+	return carNumber
+}
+
+// bootstrapResultID builds a stable result row id. Supercars car numbers are
+// canonicalized so "6" and "06" map to the same row.
+func bootstrapResultID(seriesID, raceID, driverID, carNumber string) string {
+	if strings.TrimSpace(carNumber) == "" {
+		return raceID + ":" + driverID
+	}
+	carKey := carNumber
+	if strings.EqualFold(seriesID, "SUPERCARS") {
+		if c := schedulefile.SupercarsCarToCanonical(carNumber); c != "" {
+			carKey = c
+		}
+	}
+	return raceID + ":" + carKey
 }

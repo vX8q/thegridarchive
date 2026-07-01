@@ -52,6 +52,7 @@
   var formatDateRange = P.formatDateRange;
   var parseEventDate = P.parseEventDate;
   var formatDateRangeLong = P.formatDateRangeLong;
+  var buildEventMetaDate = P.buildEventMetaDate || (window.TGA && window.TGA.buildEventMetaDate);
   var getEventSessionDateRange = P.getEventSessionDateRange;
   var addObjectTableSort = P.addObjectTableSort;
   var typeLabel = P.typeLabel;
@@ -110,6 +111,23 @@
     return s === 'f4_it';
   }
 
+  /** Spa 24H interim checkpoints — stored for standings/points, hidden on Race tab. */
+  function isGtwceSpaCheckpointRaceSession(sess) {
+    if (!sess) return false;
+    var title = String(sess.title || '').toLowerCase();
+    if (title.indexOf('after 6 hour') >= 0 || title.indexOf('after 12 hour') >= 0) return true;
+    if (sess.meta && String(sess.meta.Length || '').toLowerCase() === 'checkpoint') return true;
+    return false;
+  }
+
+  function visibleRaceSessionsForDisplay(raceBlock, seriesIdLower) {
+    if (!raceBlock || !Array.isArray(raceBlock.sessions)) return [];
+    if (String(seriesIdLower || '').toLowerCase() !== 'gtwce_end') return raceBlock.sessions;
+    return raceBlock.sessions.filter(function (sess) {
+      return !isGtwceSpaCheckpointRaceSession(sess);
+    });
+  }
+
   /** Double-header weekends (e.g. Super Formula R1–2): no laps/distance table on overview; nav blocks in a row. */
   function eventIsMultiRoundWeekend(d) {
     if (!d || typeof d !== 'object') return false;
@@ -118,7 +136,11 @@
       : null;
     if (!tables) return false;
     var race = tables.race;
-    if (race && Array.isArray(race.sessions) && race.sessions.length > 1) return true;
+    if (race && Array.isArray(race.sessions)) {
+      var sid = eventSeriesId(d.event_id || '').toLowerCase();
+      var n = visibleRaceSessionsForDisplay(race, sid).length;
+      if (n > 1) return true;
+    }
     var qual = tables.qualifying;
     if (qual && Array.isArray(qual.sessions) && qual.sessions.length > 1) return true;
     return false;
@@ -201,7 +223,7 @@
       check: function (d) {
         var tables = d.tables || {};
         if (tables.qualifying && Array.isArray(tables.qualifying.sessions) && tables.qualifying.sessions.length > 0) return true;
-        return !!(tables.qualifying || tables.duel1 || tables.duel2 || tables.last_chance || tables.did_not_qualify) ||
+        return !!(tables.qualifying || tables.superpole || tables.duel1 || tables.duel2 || tables.last_chance || tables.did_not_qualify) ||
           (d.event_id && (eventSeriesId(d.event_id) || '').toLowerCase() === 'supercars');
       },
       meta:  function (d) {
@@ -210,6 +232,7 @@
         if (tables.duel1)           s.push(t('meta.duel1'));
         if (tables.duel2)           s.push(t('meta.duel2'));
         if (tables.last_chance)     s.push(t('meta.last_chance'));
+        if (tables.superpole)       s.push(t('meta.superpole'));
         if (tables.qualifying && Array.isArray(tables.qualifying.sessions) && tables.qualifying.sessions.length) {
           tables.qualifying.sessions.forEach(function (sess) {
             if (sess && sess.title) s.push(String(sess.title).trim());
@@ -450,17 +473,9 @@
         if (!metaEl) return;
         if (metaEl.textContent && metaEl.textContent.trim()) return;
 
-        var formatDateRangeLongFn = (window.TGA && window.TGA.formatDateRangeLong) || (typeof formatDateRangeLong === 'function' ? formatDateRangeLong : null);
-        var localizeDateFn = (typeof localizeDate === 'function' ? localizeDate : (window.TGA && window.TGA.localizeDate)) || null;
-        var startIso = (match.start_date || '').slice(0, 10) || (match.date || '').slice(0, 10);
-        var endIso = (match.end_date || '').slice(0, 10);
-        var datePart = '';
-        if (startIso && endIso && startIso !== endIso && typeof formatDateRangeLongFn === 'function') {
-          datePart = formatDateRangeLongFn(startIso, endIso);
-        } else if (startIso) {
-          datePart = typeof localizeDateFn === 'function' ? localizeDateFn(startIso) : startIso;
-        } else if (match.date) {
-          datePart = typeof localizeDateFn === 'function' ? localizeDateFn(match.date) : match.date;
+        var datePart = typeof buildEventMetaDate === 'function' ? buildEventMetaDate(match) : '';
+        if (!datePart && match.date) {
+          datePart = String(match.date).trim();
         }
         var circuit = match.circuit_name || match.track || '';
         var location = match.location || '';
@@ -549,6 +564,19 @@
     applyScheduleHeaderFallback(apiEventId.toUpperCase(), titleEl, metaEl);
 
     function renderWithData(d) {
+      if (d.canonical_event_id && (eventSeriesId(d.canonical_event_id) || '').toLowerCase() === 'supercars') {
+        var canonSlug = String(d.canonical_event_id).toLowerCase().replace(/_/g, '-');
+        var routeSlug = (eventId || '').toLowerCase();
+        if (canonSlug && canonSlug !== routeSlug) {
+          var newPath = '/event/' + encodeURIComponent(canonSlug);
+          if (section) newPath += '/' + encodeURIComponent(section);
+          if (window.location.pathname !== newPath) {
+            history.replaceState(null, '', newPath);
+            eventId = canonSlug;
+            apiEventId = canonSlug.replace(/-/g, '_');
+          }
+        }
+      }
       var rawEventIdUpper = String(d.event_id || apiEventId || '').toUpperCase();
       var isElmsPrologue = rawEventIdUpper === 'ELMS_2026_PROLOGUE';
       var isWecPrologue = rawEventIdUpper === 'WEC_2026_PROLOGUE';
@@ -581,9 +609,14 @@
       }
       var rawName = (d.name && String(d.name).trim()) || d.race || d.event_id || 'Event';
       var seriesIdForName = eventSeriesId(d.event_id || apiEventId);
-      // For F1: strip "F1 — " / "F1 - " prefix from event name.
-      if (seriesIdForName && seriesIdForName.toUpperCase() === 'F1' && typeof rawName === 'string') {
-        rawName = rawName.replace(/^F1\s*[—-]\s*/i, '');
+      // Strip series prefix from event name when breadcrumb already shows the series (F1, DTM, …).
+      if (seriesIdForName && typeof rawName === 'string') {
+        var sidUpperName = seriesIdForName.toUpperCase();
+        if (sidUpperName === 'F1') {
+          rawName = rawName.replace(/^F1\s*[—-]\s*/i, '');
+        } else if (sidUpperName === 'DTM') {
+          rawName = rawName.replace(/^DTM\s*[—-]\s*/i, '');
+        }
       }
       var eventName = localizeEventFromData(Object.assign({}, d, { name: rawName }));
       var seriesId    = eventSeriesId(d.event_id || apiEventId);
@@ -621,21 +654,8 @@
         sectionLabel = blockDef ? t('block.' + blockDef.id) : '';
       }
       titleEl.textContent = activeSection ? sectionLabel : eventName;
-      var datePart = '';
-      var sessionRange = typeof getEventSessionDateRange === 'function' ? getEventSessionDateRange(d) : null;
-      var startIso, endIso;
-      if (sessionRange && sessionRange.minIso) {
-        startIso = sessionRange.minIso;
-        endIso = sessionRange.maxIso || startIso;
-      } else {
-        startIso = (d.start_date || '').slice(0, 10);
-        endIso = (d.end_date || '').slice(0, 10);
-      }
-      if (startIso && endIso && startIso !== endIso && typeof formatDateRangeLong === 'function') {
-        datePart = formatDateRangeLong(startIso, endIso);
-      } else if (startIso) {
-        datePart = typeof localizeDate === 'function' ? localizeDate(startIso) : startIso;
-      } else {
+      var datePart = typeof buildEventMetaDate === 'function' ? buildEventMetaDate(d) : '';
+      if (!datePart && d.date) {
         datePart = typeof localizeDate === 'function' ? localizeDate(d.date || '') : String(d.date || '').trim();
       }
       if (d.track) datePart += (datePart ? ' · ' : '') + localizeCircuitName(d.track);
@@ -651,7 +671,9 @@
       }
       metaEl.textContent = datePart;
       document.title = documentTitle((activeSection ? sectionLabel + ' — ' : '') + eventName);
-      var eventSlugForUrl = (d.event_id || eventId || '').toLowerCase().replace(/_/g, '-');
+      // Section nav uses the canonical weekend slug from the URL (supercars-2026-2, not race number).
+      var routeEventSlug = (eventId || '').toLowerCase().replace(/_/g, '-');
+      var eventSlugForUrl = routeEventSlug || (d.event_id || '').toLowerCase().replace(/_/g, '-');
 
       // Breadcrumbs: All series / F1 / (optional F1 20XX) / Event / Section
       var crumb = '<a href="/">' + t('breadcrumb.all') + '</a><span class="breadcrumb-sep">/</span>' +
@@ -913,7 +935,8 @@
     if (highlightsList.length > 0) {
       var hasSingleRaceSession = false;
       if (tablesOverview && tablesOverview.race && Array.isArray(tablesOverview.race.sessions)) {
-        hasSingleRaceSession = tablesOverview.race.sessions.length === 1;
+        var overviewSid = eventSeriesId(d.event_id || '').toLowerCase();
+        hasSingleRaceSession = visibleRaceSessionsForDisplay(tablesOverview.race, overviewSid).length === 1;
       } else if (tablesOverview && tablesOverview.race_results &&
                  !tgaStageTable(tablesOverview, 1) && !tgaStageTable(tablesOverview, 2) && !tgaStageTable(tablesOverview, 3)) {
         hasSingleRaceSession = true;
@@ -1080,28 +1103,37 @@
     }
     // Temporarily disable Grid/Pos special columns (arrows) in races
     var enableGridDelta = false;
-
-    // Starting grid maps (Starting Grid) per Supercars race: raceIndex -> { carNo -> gridPos }
-    var supercarsGridByRace = {};
-    if (isSupercars && tables && tables.starting_lineup) {
-      var sl = tables.starting_lineup;
-      function buildGridFromStartingSession(sess, raceIndex) {
-        if (!sess || !Array.isArray(sess.rows)) return;
-        var grid = {};
-        (sess.rows || []).forEach(function (row, idx) {
-          var num = String(row[1] || '').trim();
-          var pos = parseInt(row[0], 10);
-          if (!num) return;
-          if (isNaN(pos)) pos = idx + 1;
-          grid[num] = pos;
-        });
-        if (Object.keys(grid).length > 0) supercarsGridByRace[raceIndex] = grid;
+    function normalizeF1RaceGridColumn(tbl) {
+      if (!tbl || !Array.isArray(tbl.headers) || !Array.isArray(tbl.rows)) return tbl;
+      var headers = tbl.headers.map(function (h) { return String(h || '').trim(); });
+      var lower = headers.map(function (h) { return h.toLowerCase(); });
+      var gridIdx = -1;
+      for (var gi = 0; gi < lower.length; gi++) {
+        if (lower[gi] === 'grid') { gridIdx = gi; break; }
       }
-      if (Array.isArray(sl.sessions) && sl.sessions.length > 0) {
-        sl.sessions.forEach(function (sess, idx) { buildGridFromStartingSession(sess, idx + 1); });
-      } else {
-        buildGridFromStartingSession(sl, 1);
+      if (gridIdx < 0) return tbl;
+      if (lower.indexOf('q1') >= 0 || lower.indexOf('final grid') >= 0 || lower.indexOf('sprint grid') >= 0) return tbl;
+      if (lower[0] !== 'pos' && lower[0] !== 'pos.') return tbl;
+      var isRaceTable = false;
+      for (var ri = 0; ri < lower.length; ri++) {
+        var lh = lower[ri];
+        if (lh === 'laps' || lh.indexOf('time') >= 0 || lh.indexOf('laps led') >= 0 || lh === 'points' || lh.indexOf('pts') >= 0) {
+          isRaceTable = true;
+          break;
+        }
       }
+      if (!isRaceTable) return tbl;
+      var newHeaders = headers.filter(function (_h, idx) { return idx !== gridIdx; });
+      newHeaders.splice(1, 0, 'St');
+      var rows = tbl.rows.map(function (row) {
+        if (!Array.isArray(row)) return row;
+        var r = row.slice();
+        var gridVal = gridIdx < r.length ? r[gridIdx] : '';
+        r.splice(gridIdx, 1);
+        r.splice(1, 0, gridVal);
+        return r;
+      });
+      return { headers: newHeaders, rows: rows };
     }
 
     function renderOneRaceSession(sess, eventData) {
@@ -1150,8 +1182,9 @@
       var skipVenueSubtitle = (seriesIdLower === 'f2' || seriesIdLower === 'f3');
       var isSuperGtRaceClassTitle = seriesIdLower === 'super_gt' && (titleText === 'GT500' || titleText === 'GT300');
       var isF1Event = evKeyEvent && evKeyEvent.indexOf('F1_') === 0;
+      var skipSessionMetaTable = seriesIdLower === 'gtwce_end' || seriesIdLower === 'gtwce_sprint';
       if (isSuperGtRaceClassTitle) {
-        if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event) {
+        if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event && !skipSessionMetaTable) {
           out += buildSessionMetaTable(sess.meta);
         }
         if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(localizeSectionTitle(titleText)) + '</h3>';
@@ -1159,7 +1192,7 @@
       } else {
         if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(localizeSectionTitle(titleText)) + '</h3>';
         if (!skipVenueSubtitle && sess.subtitle) out += '<p class="event-pre-season-subtitle">' + esc(sess.subtitle) + '</p>';
-        if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event) {
+        if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event && !skipSessionMetaTable) {
           out += buildSessionMetaTable(sess.meta);
         }
       }
@@ -1169,28 +1202,29 @@
         var raceHeaders;
 
         if (isSupercars && Array.isArray(h) && h.length >= 8) {
-          // Supercars: drop Stops column, keep Pos, No., Driver, Team, Race time, Laps, Pts
-          raceRows = applyTeamNameByNumber((sess.rows || []), 1, 3).map(function (r) {
-            // [Pos, No, Driver, Team, Race time, Laps, Pts]
+          // Supercars race: Pos, ST, No., Driver, Team, Race time, Laps, Pts
+          raceRows = applyTeamNameByNumber((sess.rows || []), 2, 4).map(function (r) {
             return [
               r[0],
               r[1],
               r[2],
               r[3],
+              r[4],
               r[5],
               r[6],
               r[7]
             ];
           });
-          raceHeaders = [
-            h[0],   // Pos
-            h[1],   // No.
-            h[2],   // Driver
-            h[3],   // Team
-            h[5],   // Race time
-            h[6],   // Laps
-            h[7]    // Pts
-          ];
+          raceHeaders = ['Pos', 'ST', 'No.', 'Driver', 'Team', 'Race time', 'Laps', 'Pts'];
+          if (String(h[1] || '').trim().toLowerCase() !== 'st') {
+            // Legacy layout: Pos, No., Driver, Team, ST, …
+            var legacySt = String(h[4] || '').trim().toLowerCase();
+            if (legacySt === 'st' || legacySt === 'grid δ' || legacySt === 'grid delta') {
+              raceRows = applyTeamNameByNumber((sess.rows || []), 1, 3).map(function (r) {
+                return [r[0], r[4], r[1], r[2], r[3], r[5], r[6], r[7]];
+              });
+            }
+          }
         } else {
           // Other series/races — team lookup by car number only
           var teamColIdxRace = (evKeyEvent && (evKeyEvent.indexOf('GTWCE_END_') === 0 || evKeyEvent.indexOf('GTWCE_SPRINT_') === 0)) ? 4 : 3;
@@ -1321,6 +1355,12 @@
           }
         }
 
+        if (evKeyEvent && evKeyEvent.indexOf('F1_') === 0) {
+          var f1GridNorm = normalizeF1RaceGridColumn({ headers: raceHeaders, rows: raceRows });
+          raceHeaders = f1GridNorm.headers;
+          raceRows = f1GridNorm.rows;
+        }
+
         // F1_2025_2 … F1_2025_11: add Laps Led and Best Lap columns directly in result tables.
         // Also normalize points and laps led: if driver scored no points or led no laps, show 0.
         if ((evKeyEvent === 'F1_2025_2' || evKeyEvent === 'F1_2025_3' || evKeyEvent === 'F1_2025_4' || evKeyEvent === 'F1_2025_5' || evKeyEvent === 'F1_2025_6' || evKeyEvent === 'F1_2025_7' || evKeyEvent === 'F1_2025_8' || evKeyEvent === 'F1_2025_9' || evKeyEvent === 'F1_2025_10' || evKeyEvent === 'F1_2025_11') && eventData && eventData.tables) {
@@ -1412,7 +1452,7 @@
           // Extend headers and rows.
           if (ptsColIdx >= 0) {
             // For F1_2025_2 and F1_2025_3 insert Laps Led and Best Lap BEFORE Pts. column,
-            // so order matches F1_2025_1 template: ... Grid, Laps Led, Best Lap, Pts.
+            // so order matches F1_2025_1 template: ... St, Laps Led, Best Lap, Pts.
             var newHeaders = [];
             for (var hi2 = 0; hi2 < raceHeaders.length; hi2++) {
               if (hi2 === ptsColIdx) {
@@ -1565,7 +1605,7 @@
     var stagePointsWidths = ['4%', '4%', '22%', '34%', '16%', '10%'];
     var stageNotesWidths  = ['4%', '4%', '22%', '34%', '14%', '22%'];
     var raceResultsWidths8  = ['5%', '5%', '4%', '22%', '36%', '14%', '8%', '8%'];
-    var raceResultsWidths10 = ['6%', '6%', '4%', '18%', '24%', '10%', '6%', '6%', '12%', '6%'];
+    var raceResultsWidths10 = ['5%', '4%', '4%', '18%', '24%', '6%', '12%', '6%', '12%', '6%'];
 
     function add(title, data, cssClass, getRowClass, colWidths, subtitle, titleClass, mergeTeamCells) {
       var r = buildTableSection(title, data, cssClass, getRowClass, colWidths, subtitle, titleClass, mergeTeamCells);
@@ -1627,7 +1667,7 @@
       rrAllstar.stages.forEach(function (stage) { renderAllstarStageRace(stage); });
     }
 
-    var hideStartingLineupOnRace = seriesIdLower === 'f4_it';
+    var hideStartingLineupOnRace = seriesIdLower === 'f4_it' || seriesIdLower === 'supercars';
     var slSessions = (!hideStartingLineupOnRace && tables.starting_lineup && Array.isArray(tables.starting_lineup.sessions)) ? tables.starting_lineup.sessions : [];
     var slFlat = !hideStartingLineupOnRace && tables.starting_lineup && tables.starting_lineup.headers && Array.isArray(tables.starting_lineup.rows) && tables.starting_lineup.rows.length > 0;
 
@@ -1638,8 +1678,10 @@
     }
     var penaltiesAndVscAddedAfterSprint = false;
     if (raceBlock && Array.isArray(raceBlock.sessions) && raceBlock.sessions.length > 0) {
+      var raceSessionsDisplay = visibleRaceSessionsForDisplay(raceBlock, seriesIdLower);
+      if (raceSessionsDisplay.length > 0) {
       html += '<div class="event-pre-season-block">';
-      raceBlock.sessions.forEach(function (sess, idx) {
+      raceSessionsDisplay.forEach(function (sess, idx) {
         if (idx > 0) html += '<hr class="event-pre-season-divider">';
         // Starting Grid N before Race N
         var slSess = slSessions[idx];
@@ -1692,7 +1734,7 @@
         }
       });
       // Grids without race (e.g. Starting Grid 7 when Race 7 results not yet available)
-      for (var j = raceBlock.sessions.length; j < slSessions.length; j++) {
+      for (var j = raceSessionsDisplay.length; j < slSessions.length; j++) {
         var slSess = slSessions[j];
         if (slSess && slSess.headers && Array.isArray(slSess.rows) && slSess.rows.length > 0) {
           html += '<hr class="event-pre-season-divider">';
@@ -1705,6 +1747,7 @@
         }
       }
       html += '</div>';
+      }
     } else if (raceBlock && raceBlock.headers && Array.isArray(raceBlock.rows)) {
       html += '<div class="event-pre-season-block">';
       if (slFlat && !isNascarModified) {
@@ -1818,6 +1861,9 @@
         // For all F1 events normalize empty points and laps led
         // in race_results table: show 0 instead of empty cell.
         var isF1SeriesForResults = (evKeyEvent && evKeyEvent.indexOf('F1_') === 0);
+        if (isF1SeriesForResults) {
+          rr = normalizeF1RaceGridColumn(rr);
+        }
         if (isF1SeriesForResults && Array.isArray(rr.headers) && Array.isArray(rr.rows)) {
           var ptsColIdxRr = -1;
           var lapsLedColIdxRr = -1;
@@ -1880,7 +1926,7 @@
       if (isStockCarSeriesRace) raceResultsSubtitle = null;
       var raceResultsColWidths = null;
       // For all F1 events whose race result table has 10 columns
-      // (Pos | No. | Driver | Team/Constructor | Laps | Time | Grid | Laps Led | Best Lap | Pts/Points),
+      // (Pos | St | No. | Driver | Team/Constructor | Laps | Time | Laps Led | Best Lap | Pts/Points),
       // use single fixed layout like Australian GP 2026 template.
       var isF1SeriesForResults2 = (evKeyEvent && evKeyEvent.indexOf('F1_') === 0);
       if (isF1SeriesForResults2 && rr && Array.isArray(rr.headers) && rr.headers.length === 10) {
@@ -1983,7 +2029,8 @@
           F1_2025_1: true, F1_2025_2: true, F1_2025_3: true, F1_2025_4: true, F1_2025_5: true,
           F1_2025_6: true, F1_2025_7: true, F1_2025_8: true, F1_2025_9: true, F1_2025_10: true,
           F1_2025_11: true, F1_2025_12: true, F1_2025_14: true, F1_2025_16: true, F1_2025_18: true,
-          F1_2025_19: true, F1_2025_20: true, F1_2026_1: true, F1_2026_2: true, F1_2026_3: true, F1_2026_4: true
+          F1_2025_19: true, F1_2025_20: true, F1_2026_1: true, F1_2026_2: true, F1_2026_3: true, F1_2026_4: true,
+          F1_2026_5: true, F1_2026_6: true, F1_2026_7: true, F1_2026_8: true
         };
         if (legacyEmbedded[evKey]) return true;
         var rrTbl = tbls && tbls.race_results;
@@ -2453,6 +2500,28 @@
           return r.slice(0, idx).concat([team, car], r.slice(idx + 1));
         })
       };
+    }
+
+    function dropColumnsByHeader(tableData, names) {
+      if (!tableData || !Array.isArray(tableData.headers) || !Array.isArray(tableData.rows)) return tableData;
+      var targets = (names || []).map(function (n) { return String(n || '').trim().toLowerCase(); });
+      var dropIdx = [];
+      for (var i = 0; i < tableData.headers.length; i++) {
+        var h = String(tableData.headers[i] || '').trim().toLowerCase();
+        if (targets.indexOf(h) >= 0) dropIdx.push(i);
+      }
+      if (!dropIdx.length) return tableData;
+      return {
+        headers: tableData.headers.filter(function (_h, idx) { return dropIdx.indexOf(idx) < 0; }),
+        rows: tableData.rows.map(function (r) {
+          return Array.isArray(r) ? r.filter(function (_c, idx) { return dropIdx.indexOf(idx) < 0; }) : r;
+        })
+      };
+    }
+
+    function gtwceEndTimedSessionTableData(tableData) {
+      if (!tableData || evKeyEvent.indexOf('GTWCE_END_') !== 0) return tableData;
+      return dropColumnsByHeader(dropStartPosColumn(splitTeamCarDropSponsor(tableData)), ['Laps']);
     }
 
     function applyClassFromEntryList(tableData, entryList) {
@@ -3169,14 +3238,17 @@
         && entryCopy.some(function (e) { return e && (e.driver1 != null || e.driver2 != null || e.driver3 != null); });
       if (isGtwceEndEntry) {
         var gtwceSprintTwoDrivers = seriesLowerEntry === 'gtwce_sprint';
-        var gtwceClassOrder = ['PRO', 'GOLD', 'SILVER', 'BRONZE'];
-        var gtwceClassKeys = { PRO: 'class.gtwce_pro', GOLD: 'class.gtwce_gold', SILVER: 'class.gtwce_silver', BRONZE: 'class.gtwce_bronze' };
+        var gtwceEndFourDrivers = seriesLowerEntry === 'gtwce_end';
+        var gtwceClassOrder = ['PRO', 'GOLD', 'SILVER', 'BRONZE', 'PRO-AM'];
+        var gtwceClassKeys = { PRO: 'class.gtwce_pro', GOLD: 'class.gtwce_gold', SILVER: 'class.gtwce_silver', BRONZE: 'class.gtwce_bronze', 'PRO-AM': 'class.gtwce_pro_am' };
         function normGtwceClass(v) {
           return String(v || '')
             .replace(/\u00a0/g, ' ')
             .replace(/\s+/g, ' ')
             .trim()
-            .toUpperCase();
+            .toUpperCase()
+            .replace(/^PROAM$/, 'PRO-AM')
+            .replace(/^PRO AM$/, 'PRO-AM');
         }
         function sortByCarNumberGtwce(a, b) {
           var na = parseInt(String((a && a.number) || '').replace(/[^\d]/g, ''), 10);
@@ -3203,6 +3275,7 @@
             .filter(function (r) { return normGtwceClass(r && r.class) === clsKey; })
             .sort(sortByTeamThenCarGtwce);
           if (!clsRowsGtwce.length) continue;
+          var gtwceClassFourDrivers = gtwceEndFourDrivers && clsKey !== 'PRO';
           var teamValsGtwce = clsRowsGtwce.map(function (row) {
             return (row && row.team != null) ? String(row.team).trim() : '';
           });
@@ -3227,9 +3300,14 @@
             var driverCellsGtwce = gtwceSprintTwoDrivers
               ? '<td>' + renderGtwceDriverCell(row && row.driver1) + '</td>' +
                 '<td>' + renderGtwceDriverCell(row && row.driver2) + '</td>'
-              : '<td>' + renderGtwceDriverCell(row && row.driver1) + '</td>' +
-                '<td>' + renderGtwceDriverCell(row && row.driver2) + '</td>' +
-                '<td>' + renderGtwceDriverCell(row && row.driver3) + '</td>';
+              : gtwceClassFourDrivers
+                ? '<td>' + renderGtwceDriverCell(row && row.driver1) + '</td>' +
+                  '<td>' + renderGtwceDriverCell(row && row.driver2) + '</td>' +
+                  '<td>' + renderGtwceDriverCell(row && row.driver3) + '</td>' +
+                  '<td>' + renderGtwceDriverCell(row && row.driver4) + '</td>'
+                : '<td>' + renderGtwceDriverCell(row && row.driver1) + '</td>' +
+                  '<td>' + renderGtwceDriverCell(row && row.driver2) + '</td>' +
+                  '<td>' + renderGtwceDriverCell(row && row.driver3) + '</td>';
             return '<tr>' +
               '<td>' + esc(dash(row && row.number)) + '</td>' +
               teamTdGtwce +
@@ -3239,7 +3317,7 @@
           }).join('');
           var sectionTitle = gtwceClassKeys[clsKey] ? t(gtwceClassKeys[clsKey]) : clsKey;
           var gtwceEntryListHead = '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver1') + '</th><th>' + t('th.driver2') + '</th>' +
-            (gtwceSprintTwoDrivers ? '' : '<th>' + t('th.driver3') + '</th>') + '</tr></thead>';
+            (gtwceSprintTwoDrivers ? '' : '<th>' + t('th.driver3') + '</th>' + (gtwceClassFourDrivers ? '<th>' + t('th.driver4') + '</th>' : '')) + '</tr></thead>';
           htmlGtwce += '<h4 class="table-section-title">' + esc(sectionTitle) + '</h4>' +
             '<div class="table-wrap"><table class="data-table entry-list-table">' +
             gtwceEntryListHead +
@@ -3449,6 +3527,9 @@
         || /^super_formula_/.test((d.event_id || '').toLowerCase());
       var isSupercarsEntry = seriesLower === 'supercars';
       var isDtmEntry = seriesLower === 'dtm';
+      if (isSupercarsEntry) {
+        entryCopy = expandSupercarsSubstituteEntryRows(entryCopy);
+      }
       var isF1Entry = seriesLower === 'f1' || (String(d.series || '').toLowerCase().indexOf('formula 1') >= 0);
       // F1 2025, Australian GP: "constructor → chassis" mapping for entry list.
       var F1_2025_ENTRY_CHASSIS = {
@@ -3507,6 +3588,50 @@
       }
       function getEngineDisplay(r) {
         return (r.manufacturer != null ? String(r.manufacturer) : '') || (r.engine != null ? String(r.engine) : '');
+      }
+      function collectEntryDriverNames(row) {
+        var names = [];
+        function addName(v) {
+          var raw = (v == null) ? '' : String(v).trim();
+          if (!raw || raw === '-' || /^tbc$/i.test(raw)) return;
+          names.push(raw);
+        }
+        addName(row && row.driver);
+        ['driver1', 'driver2', 'driver3', 'driver4'].forEach(function (k) {
+          addName(row && row[k]);
+        });
+        if (row && Array.isArray(row.drivers)) {
+          row.drivers.forEach(function (v) { addName(v); });
+        }
+        var seen = {};
+        return names.filter(function (name) {
+          var key = String(name).toLowerCase();
+          if (seen[key]) return false;
+          seen[key] = true;
+          return true;
+        });
+      }
+      function expandSupercarsSubstituteEntryRows(rows) {
+        var out = [];
+        rows.forEach(function (row) {
+          var names = collectEntryDriverNames(row);
+          if (names.length <= 1) {
+            out.push(row);
+            return;
+          }
+          names.forEach(function (name, idx) {
+            var copy = Object.assign({}, row);
+            copy.driver = name;
+            delete copy.driver1;
+            delete copy.driver2;
+            delete copy.driver3;
+            delete copy.driver4;
+            copy._substituteGroupSize = names.length;
+            copy._substituteGroupIndex = idx;
+            out.push(copy);
+          });
+        });
+        return out;
       }
       function renderEntryDriversCell(row) {
         var names = [];
@@ -3669,7 +3794,18 @@
           var manufacturerCell = isFirstManu && manuSpan > 0
             ? '<td rowspan="' + manuSpan + '" class="entry-list-team-cell">' + esc(dash(manufacturerDisplay)) + '</td>'
             : '';
-          return '<tr><td>' + esc(dash(row.number)) + '</td><td>' + driverCell + '</td>' + teamCell + manufacturerCell + '</tr>';
+          var driverCell = renderDriverCell(row && row.driver);
+          var subSize = row && row._substituteGroupSize;
+          var subIdx = row && row._substituteGroupIndex;
+          var numberCell;
+          if (subSize > 1) {
+            numberCell = subIdx === 0
+              ? '<td rowspan="' + subSize + '" class="col-num">' + esc(dash(row.number)) + '</td>'
+              : '';
+          } else {
+            numberCell = '<td class="col-num">' + esc(dash(row.number)) + '</td>';
+          }
+          return '<tr>' + numberCell + '<td>' + driverCell + '</td>' + teamCell + manufacturerCell + '</tr>';
         }
         var manufacturerDisplay = getManufacturerDisplay(row);
         var chassisDisplay = getChassisDisplay(row);
@@ -3698,13 +3834,16 @@
 
     if (section === 'test') {
       var testTbl = d.tables && d.tables.test;
+      function testSessionTableData(sess) {
+        return gtwceEndTimedSessionTableData({ headers: sess.headers, rows: sess.rows });
+      }
       if (testTbl && Array.isArray(testTbl.sessions) && testTbl.sessions.length > 0) {
         testTbl.sessions.forEach(function (sess) {
           if (!sess || !sess.headers || !Array.isArray(sess.rows) || !sess.rows.length) return;
           var title = (sess.title && String(sess.title).trim())
             ? sess.title
             : (t('block.test') || 'Test');
-          appendTable(title, { headers: sess.headers, rows: sess.rows });
+          appendTable(title, testSessionTableData(sess));
         });
         if (!html) {
           contentEl.innerHTML = '<p class="empty-msg">' + t('error.no_section_data') + '</p>';
@@ -3752,22 +3891,6 @@
         return dropStartPosColumn(splitTeamCarDropSponsor(t));
       }
       function practiceDataWithClass(t) {
-        function dropColumnsByHeader(tableData, names) {
-          if (!tableData || !Array.isArray(tableData.headers) || !Array.isArray(tableData.rows)) return tableData;
-          var targets = (names || []).map(function (n) { return String(n || '').trim().toLowerCase(); });
-          var dropIdx = [];
-          for (var i = 0; i < tableData.headers.length; i++) {
-            var h = String(tableData.headers[i] || '').trim().toLowerCase();
-            if (targets.indexOf(h) >= 0) dropIdx.push(i);
-          }
-          if (!dropIdx.length) return tableData;
-          return {
-            headers: tableData.headers.filter(function (_h, idx) { return dropIdx.indexOf(idx) < 0; }),
-            rows: tableData.rows.map(function (r) {
-              return Array.isArray(r) ? r.filter(function (_c, idx) { return dropIdx.indexOf(idx) < 0; }) : r;
-            })
-          };
-        }
         var data = ensureClassColumn(practiceTableData(t));
         data = ((seriesId || '').toLowerCase() === 'imsa' && d.entry_list && d.entry_list.length)
           ? applyClassFromEntryList(data, d.entry_list)
@@ -3792,7 +3915,7 @@
         if (/^ELMS_\d{4}_\d+$/.test(evKeyEvent || '')) {
           data = dropColumnsByHeader(data, ['Driver', 'Drivers', 'Time of the day']);
         }
-        // GTWCE Endurance: empty Laps column removed — more room for Time. Sprint practice keeps Laps.
+        // GTWCE Endurance: same table shape as test (no Laps column).
         if (evKeyEvent.indexOf('GTWCE_END_') === 0) {
           data = dropColumnsByHeader(data, ['Laps']);
         }
@@ -4331,6 +4454,13 @@
       }
       if (q && q.note && typeof q.note === 'string' && q.note.trim() && !(q.sessions && Array.isArray(q.sessions) && q.sessions.length > 0)) {
         html += '<p class="race-note">' + esc(q.note.trim()) + '</p>';
+      }
+      var superpoleTbl = d.tables && d.tables.superpole;
+      if (superpoleTbl && Array.isArray(superpoleTbl.rows) && superpoleTbl.rows.length > 0) {
+        var superpoleTitle = (superpoleTbl.title && String(superpoleTbl.title).trim())
+          ? String(superpoleTbl.title).trim()
+          : t('table.superpole');
+        appendTable(superpoleTitle, superpoleTbl, null, null, false);
       }
       appendTable(t('table.last_chance'),     d.tables && d.tables.last_chance, null, null, false);
       var dnqTable = d.tables && d.tables.did_not_qualify;

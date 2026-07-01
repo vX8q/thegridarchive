@@ -1,0 +1,68 @@
+{
+  "event_id": "F2_2026_6",
+  "series": "FIA Formula 2 Championship",
+  "race": "Spielberg",
+  "date": "27–28 June 2026",
+  "start_date": "2026-06-27",
+  "end_date": "2026-06-28",
+  "track": "Red Bull Ring",
+  "location": "Spielberg",
+  "entry_list": [],
+  "tables": {
+    "feature": {
+      "title": "Feature Race Results",
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "practice": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "sprint": {
+      "title": "Sprint Race Results",
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

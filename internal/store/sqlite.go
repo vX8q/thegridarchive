@@ -299,6 +299,11 @@ func (s *sqliteTxStore) ListTeams(ctx context.Context, idPrefix string) ([]model
 	return scanTeams(rows)
 }
 
+func (s *sqliteTxStore) DeleteResultsByRace(ctx context.Context, raceID string) error {
+	_, err := s.tx.ExecContext(ctx, `DELETE FROM results WHERE race_id = ?`, raceID)
+	return err
+}
+
 func (s *sqliteTxStore) UpsertResult(ctx context.Context, r *models.Result) error {
 	_, err := s.tx.ExecContext(ctx, `
 INSERT INTO results (id, race_id, driver_id, team_id, car_number, position, grid_position, laps, laps_led, status, points, fastest_lap)
@@ -364,6 +369,11 @@ ORDER BY e.start_date, ra.id`
 		out = append(out, row)
 	}
 	return out, rows.Err()
+}
+
+func (s *sqliteTxStore) DeleteStageResultsByRace(ctx context.Context, raceID string) error {
+	_, err := s.tx.ExecContext(ctx, `DELETE FROM stage_results WHERE race_id = ?`, raceID)
+	return err
 }
 
 func (s *sqliteTxStore) UpsertStageResult(ctx context.Context, r *models.StageResult) error {
@@ -1062,6 +1072,12 @@ func scanTeams(rows *sql.Rows) ([]models.Team, error) {
 
 // --- Results ---
 
+// DeleteResultsByRace removes all results for a race (used before JSON re-import).
+func (s *SQLiteStore) DeleteResultsByRace(ctx context.Context, raceID string) error {
+	_, err := s.db.ExecContext(ctx, `DELETE FROM results WHERE race_id = ?`, raceID)
+	return err
+}
+
 // UpsertResult inserts or updates a race result.
 func (s *SQLiteStore) UpsertResult(ctx context.Context, r *models.Result) error {
 	_, err := s.db.ExecContext(ctx, `
@@ -1147,6 +1163,12 @@ ORDER BY e.start_date, ra.id`
 }
 
 // --- Stage Results ---
+
+// DeleteStageResultsByRace removes all stage results for a race.
+func (s *SQLiteStore) DeleteStageResultsByRace(ctx context.Context, raceID string) error {
+	_, err := s.db.ExecContext(ctx, `DELETE FROM stage_results WHERE race_id = ?`, raceID)
+	return err
+}
 
 // UpsertStageResult inserts or updates a stage result.
 func (s *SQLiteStore) UpsertStageResult(ctx context.Context, r *models.StageResult) error {

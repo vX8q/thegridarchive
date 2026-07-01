@@ -13,7 +13,11 @@
     f1: true
   };
 
-  var F1_SPRINT_2026 = {
+  var F1_SPRINT_WEEKENDS = {
+    F1_2025_2: true,
+    F1_2025_6: true,
+    F1_2025_13: true,
+    F1_2025_19: true,
     F1_2026_2: true,
     F1_2026_4: true,
     F1_2026_5: true,
@@ -60,7 +64,7 @@
       return trLabel('schedule.test', 'Test');
     }
     var sk = String(seriesKey || '').toLowerCase();
-    if (sk === 'f1' || sk === 'f1-2026') {
+    if (sk === 'f1' || sk === 'f1-2026' || sk === 'f1-2025') {
       return trLabel('standings.feature_race', 'Feature Race');
     }
     return e._sessionLabel ? String(e._sessionLabel) : '';
@@ -96,11 +100,21 @@
     });
   }
 
+  function f1SprintMetaForEvent(idU) {
+    var staticSched = (typeof window !== 'undefined' && window.TGA_STATIC_SCHEDULES) || {};
+    var byYear = {
+      '2025': staticSched.f1Sprint2025 || {},
+      '2026': staticSched.f1Sprint2026 || {}
+    };
+    var year = (String(idU).match(/_(\d{4})_/) || [])[1] || '';
+    return (byYear[year] || {})[idU] || {};
+  }
+
   function buildF1SprintSessions(e) {
     var idU = String(e.id || '').toUpperCase();
-    if (!F1_SPRINT_2026[idU]) return [];
+    if (!F1_SPRINT_WEEKENDS[idU]) return [];
     var gpDate = String(e.start_date || e.date || '').slice(0, 10);
-    var meta = ((window.TGA_STATIC_SCHEDULES && window.TGA_STATIC_SCHEDULES.f1Sprint2026) || {})[idU] || {};
+    var meta = f1SprintMetaForEvent(idU);
     var sprintDate = meta.sprintDate || isoAddDays(gpDate, -1);
     return [
       sessionRow('Sprint', sprintDate, meta.sprintLocal || '', meta.sprintMsk || '', 'sprint'),
@@ -136,7 +150,7 @@
   function isMultiRaceSeriesSchedule(seriesId) {
     var raw = String(seriesId || '').toLowerCase();
     var k = seriesKeyNorm(seriesId);
-    if (k === 'f1') return raw === 'f1' || raw === 'f1-2026';
+    if (k === 'f1') return raw === 'f1' || raw === 'f1-2026' || raw === 'f1-2025';
     return !!MULTI_RACE_SERIES[k];
   }
 
@@ -173,6 +187,8 @@
         });
         delete row._raceUtcMs;
         delete row._scheduleDate;
+        delete row._time_msk_raw;
+        delete row._raceStartDate;
         out.push(row);
       });
     });
@@ -213,6 +229,8 @@
       });
       delete row._raceUtcMs;
       delete row._scheduleDate;
+      delete row._time_msk_raw;
+      delete row._raceStartDate;
       return row;
     });
   }
@@ -226,7 +244,48 @@
     return out;
   }
 
+  function isExpandedScheduleSessionRow(e) {
+    if (!e) return false;
+    if (e._scheduleSessionKind || e._scheduleSessionLabel) return true;
+    var sid = seriesKeyNorm(e._seriesId || e.series_id || '');
+    return isAlreadyExpandedForFullSchedule(e, sid);
+  }
+
+  /** First and last race calendar dates for an event weekend (not per expanded session row). */
+  function getEventRaceDateRangeIso(e) {
+    if (!e) return { start: '', end: '' };
+    var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
+    var iso = parseIso || function (s) {
+      var str = String(s || '').trim();
+      return /^\d{4}-\d{2}-\d{2}/.test(str) ? str.slice(0, 10) : '';
+    };
+    var start = iso(e.start_date || e.startDate) || iso(e.date);
+    var end = iso(e.end_date || e.endDate);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(start) && /^\d{4}-\d{2}-\d{2}$/.test(end) && end > start) {
+      return { start: start, end: end };
+    }
+    var sid = seriesKeyNorm(e._seriesId || e.series_id || '');
+    var sessions = buildSessionsForEvent(sid, e);
+    if (sessions && sessions.length > 1) {
+      var dates = sessions.map(function (s) {
+        return String(s.start_date || '').slice(0, 10);
+      }).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d); }).sort();
+      if (dates.length > 1) {
+        return { start: dates[0], end: dates[dates.length - 1] };
+      }
+      if (dates.length === 1) {
+        return { start: dates[0], end: dates[0] };
+      }
+    }
+    var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+    var raceStart = getIso ? getIso(e) : '';
+    if (!raceStart) raceStart = start;
+    return { start: raceStart, end: raceStart || end || start };
+  }
+
   window.TGA.isMultiRaceSeriesSchedule = isMultiRaceSeriesSchedule;
+  window.TGA.isExpandedScheduleSessionRow = isExpandedScheduleSessionRow;
+  window.TGA.getEventRaceDateRangeIso = getEventRaceDateRangeIso;
   window.TGA.expandSeriesScheduleEvents = expandSeriesScheduleEvents;
   window.TGA.expandFullScheduleEvents = expandFullScheduleEvents;
   window.TGA.normalizeSeriesScheduleBaseName = normalizeEventBaseName;

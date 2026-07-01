@@ -2,6 +2,7 @@ package schedulefile
 
 import (
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -48,11 +49,11 @@ func TestBuildGtwceStandingsFromEvents_Endurance2026(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(data.Classes) != 4 {
-		t.Fatalf("classes: want 4 got %d", len(data.Classes))
-	}
 	if len(data.RaceOrder) < 1 {
 		t.Fatal("expected at least one race column")
+	}
+	if len(data.Classes) != 4 {
+		t.Fatalf("classes: want 4 got %d", len(data.Classes))
 	}
 	var overall, gold, silver, bronze *StandingsClass
 	for i := range data.Classes {
@@ -70,17 +71,33 @@ func TestBuildGtwceStandingsFromEvents_Endurance2026(t *testing.T) {
 	if overall == nil || gold == nil || silver == nil || bronze == nil {
 		t.Fatal("missing championship class tables")
 	}
-	if r := gtwceRowByCar(overall.Rows, "48"); r == nil || r.Points != "43" {
-		t.Fatalf("overall #48: want 43 pts after Paul Ricard + Monza, got %v", r)
+	if r := gtwceRowByCar(overall.Rows, "48"); r == nil || r.Points != "74" {
+		t.Fatalf("overall #48: want 74 pts (official), got %v", r)
 	}
-	if r := gtwceRowByCar(gold.Rows, "58"); r == nil || r.Points != "52" {
-		t.Fatalf("gold #58: want 52 pts, got %v", r)
+	if r := gtwceRowByCar(overall.Rows, "80"); r == nil || r.Points != "30" {
+		t.Fatalf("overall #80: want 30 pts (official), got %v", r)
+	}
+	if r := gtwceRowByCar(gold.Rows, "58"); r == nil || r.Points != "85" {
+		t.Fatalf("gold #58: want 85 pts (official), got %v", r)
 	}
 	if r := gtwceRowByCar(silver.Rows, "66"); r == nil || r.Points != "40" {
-		t.Fatalf("silver #66: want 40 pts, got %v", r)
+		t.Fatalf("silver #66: want 40 pts (official), got %v", r)
 	}
-	if r := gtwceRowByCar(bronze.Rows, "74"); r == nil || r.Points != "37" {
-		t.Fatalf("bronze #74: want 37 pts, got %v", r)
+	if r := gtwceRowByCar(bronze.Rows, "74"); r == nil || r.Points != "86" {
+		t.Fatalf("bronze #74: want 86 pts (official), got %v", r)
+	}
+	hasSpaSplit := false
+	for _, code := range data.RaceOrder {
+		if strings.Contains(code, "-6h") {
+			hasSpaSplit = true
+			break
+		}
+	}
+	if !hasSpaSplit {
+		t.Fatal("expected Spa checkpoint columns (R*-6h) in race_order")
+	}
+	if r := gtwceRowByCar(overall.Rows, "48"); r == nil || r.Races["R3-6h"] != "3" || r.Races["R3-12h"] != "4" || r.Races["R3-24h"] != "2" {
+		t.Fatalf("overall #48 Spa positions: want 3/4/2, got %v", r)
 	}
 }
 

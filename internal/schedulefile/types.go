@@ -204,7 +204,7 @@ type EntryListRow struct {
 	Car           string `json:"car,omitempty"`         // car model
 	Make          string `json:"make,omitempty"`        // Super GT (manufacturer)
 	Driver1       string `json:"driver1,omitempty"`     // multi-driver GT/endurance
-	Driver2       string `json:"driver2,omitempty"`
+	Driver2       string `json:"driver2,omitempty"`     // Supercars: weekend substitute / co-driver on same car
 	Driver3       string `json:"driver3,omitempty"`
 	DriverCountry string `json:"driver_country,omitempty"` // Super Formula
 	PowerUnit     string `json:"power_unit,omitempty"`     // DTM

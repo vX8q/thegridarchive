@@ -13,13 +13,22 @@
     return (window.TGA && window.TGA.driverLabel) ? window.TGA.driverLabel(name) : String(name);
   }
 
+  function isGtwceSpa24HoursEvent(meta) {
+    if (!meta || typeof meta !== 'object') return false;
+    var race = String(meta.race || meta.name || '').trim();
+    var track = String(meta.track || meta.circuit_name || '').trim().toLowerCase();
+    return /24\s*hours?\s*of\s*spa/i.test(race) ||
+      (/crowdstrike/i.test(race) && /spa/i.test(race) && /24/i.test(race)) ||
+      (track.indexOf('spa') >= 0 && /24\s*hours?/i.test(race));
+  }
+
   function renderLastResultsCards(allEvents) {
     var t = window.TGA.t;
     var esc = window.TGA.esc;
     var seriesBadge = window.TGA.seriesBadge;
     var formatShortDate = window.TGA.formatShortDate;
     var formatDateRange = window.TGA.formatDateRange;
-    if (!t || !esc || !seriesBadge || !formatShortDate) return;
+    if (!t || !esc || !seriesBadge || !formatShortDate || !formatDateRange) return;
 
     var container = document.getElementById('last-results-row');
     if (!container) return;
@@ -40,20 +49,133 @@
       return isIsoYMD(x) ? x : '';
     }
 
-    /** Last Results card: show only while "today" is not later than last race day + 7 calendar days.  */
-    var LAST_RESULTS_DAYS_AFTER_END = 7;
-    function isWithinLastResultsWindowByEndDate(endStr) {
+    /** Last Results card date: range for multi-race weekends, single date for one race. */
+    function isoAddDaysLrc(iso, delta) {
+      if (!isIsoYMD(iso)) return iso;
+      var t = new Date(iso + 'T12:00:00').getTime() + delta * 86400000;
+      var d = new Date(t);
+      return d.getFullYear() + '-' +
+        ('0' + (d.getMonth() + 1)).slice(-2) + '-' +
+        ('0' + d.getDate()).slice(-2);
+    }
+
+    function lastResultsCardIs24HourRace(card) {
+      if (!card) return false;
+      if (card.gtwceSpa24Hours) return true;
+      var e = card.event || {};
+      var parseHours = window.TGA && window.TGA.parseNamedRaceDurationHours;
+      if (!parseHours) return false;
+      var name = String(e.name || e.race || '').trim();
+      return parseHours(name) === 24;
+    }
+
+    /** First/last calendar day shown on card (24h races span two days). */
+    function lastResultsCardRaceDateRange(card) {
+      var e = (card && card.event) || {};
+      var rs = pickIsoDate(card && card.rangeStart);
+      var re = pickIsoDate(card && card.rangeEnd);
+      if (lastResultsCardIs24HourRace(card)) {
+        var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+        var raceStart = pickIsoDate(getIso ? getIso(e) : '') || rs || re;
+        if (raceStart) {
+          var raceEnd = isoAddDaysLrc(raceStart, 1);
+          return { start: raceStart, end: raceEnd };
+        }
+      }
+      if (lastResultsCardHasMultipleRaces(card)) {
+        var getRangeMr = window.TGA && window.TGA.getEventRaceDateRangeIso;
+        if (getRangeMr) {
+          var schedMr = getRangeMr(e);
+          var ss = pickIsoDate(schedMr.start);
+          var se = pickIsoDate(schedMr.end);
+          if (ss && se && se > ss && (!rs || !re || rs === re)) {
+            rs = ss;
+            re = se;
+          }
+        }
+      }
+      if (rs && re) return { start: rs, end: re };
+      if (rs) return { start: rs, end: rs };
+      if (re) return { start: re, end: re };
+      return { start: '', end: '' };
+    }
+
+    function lastResultsCardHasMultipleRaces(card) {
+      if (!card) return false;
+      if (card.isF1SprintWeekend) return true;
+      var sid = eventSeriesUpperLrc(card.event);
+      if (sid === 'F2' || sid === 'F3') return true;
+      if (sid === 'FREC' || sid === 'F4_IT') return true;
+      if (sid === 'GTWCE_SPRINT' || sid === 'DTM') return true;
+      if (sid === 'PSC' || sid === 'SUPER_FORMULA') return true;
+      if (sid === 'SUPERCARS') {
+        var w = card.winners;
+        return Array.isArray(w) && w.length > 1;
+      }
+      return false;
+    }
+
+    function formatLastResultsCardDate(card) {
+      if (!card) return '—';
+      var e = card.event || {};
+      var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
+      if (formatEventRaceStartDate) {
+        var primary = formatEventRaceStartDate(e);
+        if (primary && primary !== '—') return primary;
+      }
+      var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+      if (getRange) {
+        var schedRange = getRange(e);
+        var spanStart = pickIsoDate(schedRange.start);
+        var spanEnd = pickIsoDate(schedRange.end);
+        if (spanStart && spanEnd && spanEnd > spanStart) {
+          return formatDateRange(spanStart, spanEnd);
+        }
+      }
+      var range = lastResultsCardRaceDateRange(card);
+      var rs = range.start;
+      var re = range.end;
+      if (lastResultsCardHasMultipleRaces(card) || lastResultsCardIs24HourRace(card)) {
+        if (!rs || !re || rs === re) {
+          var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+          if (getRange) {
+            var schedRange = getRange(e);
+            rs = rs || pickIsoDate(schedRange.start);
+            re = re || pickIsoDate(schedRange.end);
+          }
+        }
+        if (rs) return formatDateRange(rs, re || rs);
+      }
+      var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+      var raceIso = (getIso ? getIso(e) : '') ||
+        re || rs ||
+        pickIsoDate(e.end_date) ||
+        pickIsoDate(e.start_date) ||
+        pickIsoDate(card.dateStr);
+      return formatShortDate(raceIso) || raceIso || '—';
+    }
+
+    /** Last Results card: show only while within 7 days after last race finish. */
+    function isWithinLastResultsWindowForItem(item) {
+      var ev = (item && item.event) || item || {};
+      var lastIso = cardLastRaceDateIso(item);
+      if (lastIso) {
+        ev = Object.assign({}, ev, {
+          end_date: lastIso,
+          start_date: pickIsoDate(item && item.rangeStart) || ev.start_date || ev.date
+        });
+      }
+      if (window.TGA && typeof window.TGA.isWithinLastResultsWindow === 'function') {
+        return window.TGA.isWithinLastResultsWindow(ev);
+      }
+      var endStr = lastIso || eventLastRaceDateIso(ev, item);
       if (!isIsoYMD(endStr)) return false;
       var parts = endStr.split('-');
       var y = parseInt(parts[0], 10);
       var mo = parseInt(parts[1], 10) - 1;
       var da = parseInt(parts[2], 10);
-      var limit = new Date(y, mo, da + LAST_RESULTS_DAYS_AFTER_END);
-      var ly = limit.getFullYear();
-      var lm = ('0' + (limit.getMonth() + 1)).slice(-2);
-      var ld = ('0' + limit.getDate()).slice(-2);
-      var limitISO = ly + '-' + lm + '-' + ld;
-      return todayISO <= limitISO;
+      var limit = new Date(y, mo, da + 7, 23, 59, 59, 999);
+      return Date.now() <= limit.getTime();
     }
 
     /**
@@ -139,10 +261,35 @@
 
     function cardLastRaceDateIso(card) {
       if (!card) return '';
+      var range = lastResultsCardRaceDateRange(card);
+      if (range.end) return pickIsoDate(range.end);
       var e = card.event || {};
-      var endIso = pickIsoDate(card.rangeEnd);
-      if (endIso) return endIso;
       return eventLastRaceDateIso(e, card);
+    }
+
+    function cardFirstRaceSortKey(card) {
+      var e = (card && card.event) || {};
+      var getFirst = window.TGA && window.TGA.getEventFirstRaceStartUtcMs;
+      if (getFirst) {
+        var ms = getFirst(e);
+        if (ms) return ms;
+      }
+      var iso = cardFirstRaceDateIso(card);
+      return iso ? new Date(iso + 'T12:00:00').getTime() : 0;
+    }
+
+    function cardFirstRaceDateIso(card) {
+      if (!card) return '';
+      var range = lastResultsCardRaceDateRange(card);
+      var rs = pickIsoDate(range.start);
+      var re = pickIsoDate(range.end);
+      if (lastResultsCardHasMultipleRaces(card) || lastResultsCardIs24HourRace(card)) {
+        if (rs && re && rs !== re) return rs;
+        if (rs) return rs;
+      }
+      var e = card.event || {};
+      var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+      return pickIsoDate(getIso ? getIso(e) : '') || rs || re || cardLastRaceDateIso(card);
     }
 
     function isPastForLastResultsCard(card) {
@@ -226,17 +373,9 @@
       recent = pastDetailed.slice();
     }
 
-    // Card hidden if more than 7 calendar days since the last race day.
-    var groupedWeekendLastRaceById = buildGroupedWeekendLastRaceByEventId(recent.length ? recent : pastDetailed);
-    function scheduleItemEndDateStr(p) {
-      if (!p) return '';
-      var ev = p.event || {};
-      var id = String(ev.id || '').toUpperCase();
-      if (id && groupedWeekendLastRaceById[id]) return groupedWeekendLastRaceById[id];
-      return eventLastRaceDateIso(ev, p);
-    }
+    // Card hidden if more than 7 days since the last race finish.
     recent = recent.filter(function (p) {
-      return isWithinLastResultsWindowByEndDate(scheduleItemEndDateStr(p));
+      return isWithinLastResultsWindowForItem(p);
     });
 
     // If no recent events with detail files — exit.
@@ -248,16 +387,10 @@
       return;
     }
 
-    // Collapse multiple schedule rows pointing to same event.id into one card.
-    var byEventId = {};
-    recent.forEach(function (p) {
-      var eid = String(p.event.id || '').toUpperCase();
-      if (!eid) return;
-      if (!byEventId[eid]) {
-        byEventId[eid] = p;
-      }
-    });
-    var recentUnique = Object.keys(byEventId).map(function (k) { return byEventId[k]; });
+    // Collapse F2/F3 per-race schedule rows → one card per event.id (weekend span from event-card-date).
+    var recentUnique = (window.TGA && window.TGA.collapseLastResultsByEventId)
+      ? window.TGA.collapseLastResultsByEventId(recent, ['F2', 'F3'])
+      : recent;
 
     if (recentUnique.length === 0) {
       container.innerHTML =
@@ -283,7 +416,7 @@
           winners: [],
           rangeStart: (e.start_date || e.date || item.dateStr || '').slice(0, 10),
           rangeEnd: eventLastRaceDateIso(e, item),
-          isF1SprintWeekend: false
+          isF1SprintWeekend: !!(window.TGA && window.TGA.isF1SprintWeekendEvent && window.TGA.isF1SprintWeekendEvent(e))
         };
         if (isPastForLastResultsCard(pendingCard)) {
           return Promise.resolve(pendingCard);
@@ -360,18 +493,9 @@
             return false;
           }
 
-          // Event date range: prefer the event's own start/end (schedule),
-          // not cross-series weekend group bounds from buildScheduleGroups.
+          // Race date range for Last Results cards: first race day → last race day only.
           var evStart = '';
           var evEnd = '';
-          var scheduleStart = '';
-          var scheduleEnd = '';
-          scheduleStart = pickIsoDate(e.start_date);
-          scheduleEnd = pickIsoDate(e.end_date);
-          evStart = scheduleStart || pickIsoDate(item.weekendStart) || pickIsoDate(item.dateStr);
-          evEnd = scheduleEnd || pickIsoDate(e.start_date) || pickIsoDate(item.weekendEnd) || pickIsoDate(item.dateStr);
-          if (evStart && !evEnd) evEnd = evStart;
-          if (evEnd && !evStart) evStart = evEnd;
 
           function parseMetaDateToISO(str) {
             if (!str || typeof str !== 'string') return null;
@@ -390,25 +514,40 @@
             return year + '-' + mm + '-' + day;
           }
 
-          function updateRangeFromMetaDate(metaDate) {
-            if (scheduleStart && scheduleEnd) return;
+          function bumpRaceRangeFromMetaDate(metaDate) {
             var iso = parseMetaDateToISO(metaDate);
             if (!iso) return;
             if (!evStart || iso < evStart) evStart = iso;
             if (!evEnd || iso > evEnd) evEnd = iso;
           }
 
-          // Collect dates from all sessions (practice, qualifying, race, etc.), not only race.sessions.
-          Object.keys(tables).forEach(function (key) {
-            var tbl = tables[key];
-            if (!tbl) return;
-            if (tbl.meta && typeof tbl.meta.Date === 'string') updateRangeFromMetaDate(tbl.meta.Date);
-            if (Array.isArray(tbl.sessions)) {
-              tbl.sessions.forEach(function (sess) {
-                if (sess && sess.meta && typeof sess.meta.Date === 'string') updateRangeFromMetaDate(sess.meta.Date);
-              });
+          if (tables.race && Array.isArray(tables.race.sessions)) {
+            tables.race.sessions.forEach(function (sess) {
+              if (sess && sess.meta && typeof sess.meta.Date === 'string') {
+                bumpRaceRangeFromMetaDate(sess.meta.Date);
+              }
+            });
+          }
+          if (tables.race_results && tables.race_results.meta &&
+              typeof tables.race_results.meta.Date === 'string') {
+            bumpRaceRangeFromMetaDate(tables.race_results.meta.Date);
+          }
+          if (!evStart) {
+            var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+            if (getRange) {
+              var schedRange = getRange(e);
+              evStart = pickIsoDate(schedRange.start);
+              evEnd = pickIsoDate(schedRange.end);
             }
-          });
+          }
+          if (!evStart) {
+            evStart = pickIsoDate(e.start_date) || pickIsoDate(item.weekendStart) || pickIsoDate(item.dateStr);
+          }
+          if (!evEnd) {
+            evEnd = pickIsoDate(e.end_date) || evStart || pickIsoDate(item.weekendEnd) || pickIsoDate(item.dateStr);
+          }
+          if (evStart && !evEnd) evEnd = evStart;
+          if (evEnd && !evStart) evStart = evEnd;
 
           // GTWCE Sprint: card shows absolute race winner only (Pos 1) — team and number, no driver names.
           function extractGtwceSprintOverallWinnerFromSession(table, label) {
@@ -686,7 +825,8 @@
 
           // GTWCE Endurance card: Overall = race winner (P1); Gold/Silver/Bronze = class winners
           // unless the overall winner already won that class (no duplicate line).
-          function extractGtwceClassWinnersFromRace(raceBlock, entryList) {
+          // CrowdStrike 24 Hours of Spa also shows Pro-Am class winner (# + team).
+          function extractGtwceClassWinnersFromRace(raceBlock, entryList, includeProAm) {
             if (!raceBlock) return;
             var table = raceBlock;
             if (Array.isArray(raceBlock.sessions) &&
@@ -734,11 +874,20 @@
             }
             if (clsCol < 0) return;
 
+            function gtwceCupClassKey(cls) {
+              var c = String(cls || '').trim();
+              if (/^pro-?am\s+cup$/i.test(c)) return 'Pro-AM Cup';
+              if (c === 'Gold Cup' || c === 'Silver Cup' || c === 'Bronze Cup') return c;
+              return '';
+            }
+
             var cupClassOrder = ['Gold Cup', 'Silver Cup', 'Bronze Cup'];
+            if (includeProAm) cupClassOrder.push('Pro-AM Cup');
             var cupCardLabel = {
               'Gold Cup': 'Gold',
               'Silver Cup': 'Silver',
-              'Bronze Cup': 'Bronze'
+              'Bronze Cup': 'Bronze',
+              'Pro-AM Cup': 'Pro-Am'
             };
 
             function rowPosVal(row) {
@@ -791,17 +940,17 @@
               });
             }
 
-            var overallClass = String(overallRow[clsCol] || '').trim();
+            var overallClass = gtwceCupClassKey(overallRow[clsCol]) || String(overallRow[clsCol] || '').trim();
             pushWinner(overallRow, 'Overall');
 
             var winnerByCup = {};
             for (var ri = 0; ri < table.rows.length; ri++) {
               var row = table.rows[ri] || [];
-              var cls = String(row[clsCol] || '').trim();
-              if (cupClassOrder.indexOf(cls) < 0) continue;
+              var cupKey = gtwceCupClassKey(row[clsCol]);
+              if (!cupKey || cupClassOrder.indexOf(cupKey) < 0) continue;
               if (!isClassifiedRow(row)) continue;
-              if (winnerByCup[cls]) continue;
-              winnerByCup[cls] = row;
+              if (winnerByCup[cupKey]) continue;
+              winnerByCup[cupKey] = row;
             }
 
             cupClassOrder.forEach(function (cls) {
@@ -870,23 +1019,14 @@
           var seriesIdForSessions = String(e._seriesId || '').toUpperCase();
 
           // GTWCE Endurance: class-winning crews from Main Race (Overall / Gold / Silver / Bronze).
+          var gtwceSpa24Hours = isGtwceSpa24HoursEvent(d) || isGtwceSpa24HoursEvent(e);
           if (seriesIdForSessions === 'GTWCE_END' && tables.race) {
-            if (Array.isArray(tables.race.sessions)) {
-              tables.race.sessions.forEach(function (sess) {
-                if (sess.meta && typeof sess.meta.Date === 'string') {
-                  updateRangeFromMetaDate(sess.meta.Date);
-                }
-              });
-            }
-            extractGtwceClassWinnersFromRace(tables.race, d.entry_list || []);
+            extractGtwceClassWinnersFromRace(tables.race, d.entry_list || [], gtwceSpa24Hours);
           } else if (tables.race && Array.isArray(tables.race.sessions)) {
             // If split into separate races in tables.race.sessions (Supercars, F2/F3, etc.),
             // take winners from there only.
             tables.race.sessions.forEach(function (sess) {
               var label = lastResultsRaceSessionLabel(sess);
-              if (sess.meta && typeof sess.meta.Date === 'string') {
-                updateRangeFromMetaDate(sess.meta.Date);
-              }
               if (seriesIdForSessions === 'GTWCE_SPRINT') {
                 extractGtwceSprintOverallWinnerFromSession(sess, label);
               } else {
@@ -929,23 +1069,30 @@
             }
           }
           var sidUpperF1Check = String(e._seriesId || '').toUpperCase();
-          var isF1SprintWeekend = sidUpperF1Check === 'F1' && !!tables.race_results &&
-            f1RaceBlockIsSprintSessionsOnly(tables.race);
+          var isF1SprintWeekend = sidUpperF1Check === 'F1' && (
+            (window.TGA && window.TGA.isF1SprintWeekendEvent && window.TGA.isF1SprintWeekendEvent(e)) ||
+            (!!tables.race_results && f1RaceBlockIsSprintSessionsOnly(tables.race))
+          );
           if (isF1SprintWeekend) {
             if (winners[0]) winners[0].label = 'Sprint';
             if (winners[1]) winners[1].label = 'Feature';
           }
           raceWasCancelled = detectCancelledRace(tables);
 
-          return {
+          var cardOut = {
             event: e,
             dateStr: item.dateStr,
             winners: winners,
             raceWasCancelled: raceWasCancelled,
             rangeStart: evStart,
             rangeEnd: evEnd,
-            isF1SprintWeekend: isF1SprintWeekend
+            isF1SprintWeekend: isF1SprintWeekend,
+            gtwceSpa24Hours: gtwceSpa24Hours
           };
+          var raceDates = lastResultsCardRaceDateRange(cardOut);
+          if (raceDates.start) cardOut.rangeStart = raceDates.start;
+          if (raceDates.end) cardOut.rangeEnd = raceDates.end;
+          return cardOut;
         })
         .catch(function () {
           if (isPastForLastResults(e)) {
@@ -967,161 +1114,17 @@
       var cards = results.filter(Boolean);
 
       function mergeSuperFormulaLastResultCards(arr) {
-        if (!Array.isArray(arr) || arr.length === 0) return arr;
-        var sf = [];
-        var rest = [];
-        arr.forEach(function (c) {
-          if (eventSeriesUpperLrc(c.event) === 'SUPER_FORMULA') sf.push(c);
-          else rest.push(c);
-        });
-        sf.sort(function (a, b) {
-          var da = (a.rangeStart || a.dateStr || '').slice(0, 10);
-          var db = (b.rangeStart || b.dateStr || '').slice(0, 10);
-          return da < db ? -1 : da > db ? 1 : 0;
-        });
-        var outSf = [];
-        for (var i = 0; i < sf.length; i++) {
-          var c = sf[i];
-          var e = c.event;
-          var run = [c];
-          var c0 = String(e.circuit_name || '').trim();
-          var l0 = String(e.location || '').trim();
-          var prev = (c.rangeEnd || c.rangeStart || c.dateStr || '').slice(0, 10);
-          var j = i + 1;
-          while (j < sf.length) {
-            var c2 = sf[j];
-            var e2 = c2.event;
-            if (String(e2.circuit_name || '').trim() !== c0 || String(e2.location || '').trim() !== l0) break;
-            var d2 = (c2.rangeStart || c2.dateStr || '').slice(0, 10);
-            var diffMs = new Date(d2 + 'T12:00:00').getTime() - new Date(prev + 'T12:00:00').getTime();
-            if (diffMs !== 86400000) break;
-            run.push(c2);
-            prev = (c2.rangeEnd || c2.dateStr || d2).slice(0, 10);
-            j++;
-          }
-          if (run.length === 1) {
-            outSf.push(c);
-          } else {
-            var first = run[0];
-            var last = run[run.length - 1];
-            var fe = first.event;
-            var rs = (first.rangeStart || first.dateStr || '').slice(0, 10);
-            var re = (last.rangeEnd || last.dateStr || '').slice(0, 10);
-            var allWinners = [];
-            run.forEach(function (x) {
-              var w = x.winners;
-              if (Array.isArray(w)) {
-                for (var wi = 0; wi < w.length; wi++) allWinners.push(w[wi]);
-              }
-            });
-            outSf.push({
-              event: Object.assign({}, fe, {
-                start_date: rs,
-                end_date: re,
-                name: String(fe.circuit_name || fe.name || '').trim(),
-                _seriesId: fe._seriesId || fe.series_id || 'SUPER_FORMULA'
-              }),
-              dateStr: re,
-              rangeStart: rs,
-              rangeEnd: re,
-              winners: allWinners
-            });
-          }
-          i = j - 1;
+        if (window.TGA && window.TGA.mergeLastResultsWeekendCards) {
+          return window.TGA.mergeLastResultsWeekendCards(arr, 'SUPER_FORMULA');
         }
-        var merged = rest.concat(outSf);
-        merged.sort(function (a, b) {
-          var ka = (a.rangeStart || a.dateStr || '').slice(0, 10);
-          var kb = (b.rangeStart || b.dateStr || '').slice(0, 10);
-          return ka < kb ? -1 : ka > kb ? 1 : 0;
-        });
-        return merged;
+        return arr;
       }
 
       function mergeSupercarsLastResultCards(arr) {
-        if (!Array.isArray(arr) || arr.length === 0) return arr;
-        var sc = [];
-        var rest = [];
-        arr.forEach(function (c) {
-          if (eventSeriesUpperLrc(c.event) === 'SUPERCARS') sc.push(c);
-          else rest.push(c);
-        });
-        sc.sort(function (a, b) {
-          var da = (a.rangeStart || a.dateStr || '').slice(0, 10);
-          var db = (b.rangeStart || b.dateStr || '').slice(0, 10);
-          return da < db ? -1 : da > db ? 1 : 0;
-        });
-        var outSc = [];
-        for (var i = 0; i < sc.length; i++) {
-          var c = sc[i];
-          var e = c.event || {};
-          var run = [c];
-          var c0 = String(e.circuit_name || '').trim();
-          var l0 = String(e.location || '').trim();
-          var prev = (c.rangeEnd || c.rangeStart || c.dateStr || '').slice(0, 10);
-          var j = i + 1;
-          while (j < sc.length) {
-            var c2 = sc[j];
-            var e2 = c2.event || {};
-            if (String(e2.circuit_name || '').trim() !== c0 || String(e2.location || '').trim() !== l0) break;
-            var d2 = (c2.rangeStart || c2.dateStr || '').slice(0, 10);
-            var diffMs = new Date(d2 + 'T12:00:00').getTime() - new Date(prev + 'T12:00:00').getTime();
-            // Same/next day and also overlapping ranges (diff < 0 when one card already spans
-            // more days from detailed session metadata) belong to one merged weekend card.
-            if (diffMs > 86400000) break;
-            run.push(c2);
-            var c2End = (c2.rangeEnd || c2.dateStr || d2).slice(0, 10);
-            if (!prev || c2End > prev) prev = c2End;
-            j++;
-          }
-          if (run.length === 1) {
-            outSc.push(c);
-          } else {
-            var first = run[0];
-            var last = run[run.length - 1];
-            var fe = first.event || {};
-            var rs = (first.rangeStart || first.dateStr || '').slice(0, 10);
-            var re = (last.rangeEnd || last.dateStr || '').slice(0, 10);
-            var allWinners = [];
-            run.forEach(function (x) {
-              var w = x.winners;
-              if (Array.isArray(w)) {
-                for (var wi = 0; wi < w.length; wi++) allWinners.push(w[wi]);
-              }
-            });
-            // Dedupe winners: same winner sometimes appears twice when building sessions.
-            (function () {
-              var seen = {};
-              allWinners = allWinners.filter(function (w) {
-                var key = String((w && w.label) || '') + '|' + String((w && w.car) || '') + '|' + String((w && w.name) || '');
-                if (seen[key]) return false;
-                seen[key] = true;
-                return true;
-              });
-            })();
-            outSc.push({
-              event: Object.assign({}, fe, {
-                start_date: rs,
-                end_date: re,
-                // Drop trailing race number in merged card title.
-                name: String(fe.name || fe.circuit_name || '').replace(/\s*Race\s*\d+\s*$/i, '').trim() || String(fe.circuit_name || '').trim(),
-                _seriesId: fe._seriesId || fe.series_id || 'SUPERCARS'
-              }),
-              dateStr: re,
-              rangeStart: rs,
-              rangeEnd: re,
-              winners: allWinners
-            });
-          }
-          i = j - 1;
+        if (window.TGA && window.TGA.mergeLastResultsWeekendCards) {
+          return window.TGA.mergeLastResultsWeekendCards(arr, 'SUPERCARS');
         }
-        var merged = rest.concat(outSc);
-        merged.sort(function (a, b) {
-          var ka = (a.rangeStart || a.dateStr || '').slice(0, 10);
-          var kb = (b.rangeStart || b.dateStr || '').slice(0, 10);
-          return ka < kb ? -1 : ka > kb ? 1 : 0;
-        });
-        return merged;
+        return arr;
       }
 
       cards = mergeSuperFormulaLastResultCards(cards);
@@ -1131,9 +1134,9 @@
       // at most 7 days passed (otherwise card "sticks" in feed).
       // Show when finished (start + duration) or winners already loaded.
       cards = cards.filter(function (card) {
+        if (!isWithinLastResultsWindowForItem(card)) return false;
         var endIso = cardLastRaceDateIso(card);
         if (!isIsoYMD(endIso)) return false;
-        if (!isWithinLastResultsWindowByEndDate(endIso)) return false;
         var w = card.winners;
         if (w && w.length > 0) return true;
         return isPastForLastResultsCard(card);
@@ -1147,19 +1150,21 @@
         return;
       }
 
+      // Left → right: earlier first race start first (UTC, then calendar date).
+      cards.sort(function (a, b) {
+        var ka = cardFirstRaceSortKey(a);
+        var kb = cardFirstRaceSortKey(b);
+        if (ka !== kb) return ka - kb;
+        var cmp = window.TGA && window.TGA.compareEventsByFirstRaceStart;
+        return cmp ? cmp(a.event, b.event) : 0;
+      });
+
       container.innerHTML =
         '<div class="lrc-label">' + esc(t('home.last_results') || 'Last Results') + '</div>' +
         '<div class="lrc-cards">' +
         cards.map(function (card, idx) {
           var e = card.event;
-          // For each card show its own event date range (not cross-series group bounds).
-          var startIso = pickIsoDate(card.rangeStart) || pickIsoDate(e.start_date) || pickIsoDate(card.dateStr);
-          var endIso = pickIsoDate(card.rangeEnd) || pickIsoDate(e.end_date) || startIso;
-          var rangeStart = startIso || card.dateStr || '';
-          var rangeEnd = endIso || rangeStart;
-          var dateDisplay = (rangeStart && rangeEnd && rangeStart !== rangeEnd && formatDateRange)
-            ? formatDateRange(rangeStart, rangeEnd)
-            : ((window.TGA.formatEventRaceStartDate ? window.TGA.formatEventRaceStartDate(e) : formatShortDate((e.start_date || e.date || '').slice(0, 10))));
+          var dateDisplay = formatLastResultsCardDate(card);
           var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
           var seriesIdUpper = String(e._seriesId || e.series_id || '').toUpperCase();
           // For F2/F3 strip "(Sprint)/(Feature)" from event name — already in labels.
@@ -1240,6 +1245,30 @@
           }
           if (trackKey.indexOf('imola') >= 0) {
             extraClass += ' lrc-card--imola';
+          }
+          if (trackKey.indexOf('echopark speedway') >= 0 || trackKey.indexOf('echo park speedway') >= 0) {
+            extraClass += ' lrc-card--echopark-speedway';
+          }
+          if (trackKey.indexOf('interlagos') >= 0) {
+            extraClass += ' lrc-card--interlagos';
+          }
+          if (trackKey.indexOf('hungaroring') >= 0 || trackKey.indexOf('mogyor') >= 0) {
+            extraClass += ' lrc-card--hungaroring';
+          }
+          if (trackKey.indexOf('canadian tire motorsport') >= 0 || trackKey.indexOf('mosport') >= 0) {
+            extraClass += ' lrc-card--canadian-tire-motorsport-park';
+          }
+          if (trackKey.indexOf('claremont motorsports') >= 0) {
+            extraClass += ' lrc-card--claremont-motorsports-park';
+          }
+          if (trackKey.indexOf('lime rock') >= 0) {
+            extraClass += ' lrc-card--lime-rock';
+          }
+          if (trackKey.indexOf('norisring') >= 0) {
+            extraClass += ' lrc-card--norisring';
+          }
+          if (trackKey.indexOf('reid park') >= 0) {
+            extraClass += ' lrc-card--reid-park-street-circuit';
           }
           if (trackKey.indexOf('silverstone') >= 0) {
             extraClass += ' lrc-card--silverstone';
@@ -1406,6 +1435,30 @@
           }
           if (eventNameLc.indexOf('imola') >= 0) {
             extraClass += ' lrc-card--imola';
+          }
+          if (eventNameLc.indexOf('echopark') >= 0 || eventNameLc.indexOf('echo park') >= 0) {
+            extraClass += ' lrc-card--echopark-speedway';
+          }
+          if (eventNameLc.indexOf('interlagos') >= 0 || eventNameLc.indexOf('são paulo grand prix') >= 0) {
+            extraClass += ' lrc-card--interlagos';
+          }
+          if (eventNameLc.indexOf('hungaroring') >= 0 || eventNameLc.indexOf('hungarian grand prix') >= 0) {
+            extraClass += ' lrc-card--hungaroring';
+          }
+          if (eventNameLc.indexOf('canadian tire motorsport') >= 0 || eventNameLc.indexOf('mosport') >= 0) {
+            extraClass += ' lrc-card--canadian-tire-motorsport-park';
+          }
+          if (eventNameLc.indexOf('claremont motorsports') >= 0) {
+            extraClass += ' lrc-card--claremont-motorsports-park';
+          }
+          if (eventNameLc.indexOf('lime rock') >= 0) {
+            extraClass += ' lrc-card--lime-rock';
+          }
+          if (eventNameLc.indexOf('norisring') >= 0) {
+            extraClass += ' lrc-card--norisring';
+          }
+          if (eventNameLc.indexOf('reid park') >= 0) {
+            extraClass += ' lrc-card--reid-park-street-circuit';
           }
           if (eventNameLc.indexOf('kansas') >= 0) {
             extraClass += ' lrc-card--kansas';
@@ -1586,6 +1639,22 @@
               extraClass += ' lrc-card--thompson';
             } else if (eventSlug.indexOf('imola') >= 0) {
               extraClass += ' lrc-card--imola';
+            } else if (eventSlug.indexOf('echopark') >= 0 || eventSlug.indexOf('echo-park') >= 0) {
+              extraClass += ' lrc-card--echopark-speedway';
+            } else if (eventSlug.indexOf('interlagos') >= 0 || eventSlug.indexOf('sao-paulo') >= 0) {
+              extraClass += ' lrc-card--interlagos';
+            } else if (eventSlug.indexOf('hungaroring') >= 0 || eventSlug.indexOf('hungarian') >= 0) {
+              extraClass += ' lrc-card--hungaroring';
+            } else if (eventSlug.indexOf('canadian-tire') >= 0 || eventSlug.indexOf('mosport') >= 0) {
+              extraClass += ' lrc-card--canadian-tire-motorsport-park';
+            } else if (eventSlug.indexOf('claremont') >= 0) {
+              extraClass += ' lrc-card--claremont-motorsports-park';
+            } else if (eventSlug.indexOf('lime-rock') >= 0 || eventSlug.indexOf('lime_rock') >= 0) {
+              extraClass += ' lrc-card--lime-rock';
+            } else if (eventSlug.indexOf('norisring') >= 0) {
+              extraClass += ' lrc-card--norisring';
+            } else if (eventSlug.indexOf('reid-park') >= 0 || eventSlug.indexOf('reid_park') >= 0) {
+              extraClass += ' lrc-card--reid-park-street-circuit';
             } else if (eventSlug.indexOf('silverstone') >= 0) {
               extraClass += ' lrc-card--silverstone';
             } else if (eventSlug.indexOf('mid-ohio') >= 0 || eventSlug.indexOf('mid_ohio') >= 0) {
@@ -1716,6 +1785,7 @@
             extraClass += ' lrc-card--elms';
           } else if (seriesIdUpper === 'GTWCE_END' || seriesIdUpper === 'GTWCE_SPRINT') {
             extraClass += ' lrc-card--gtwce';
+            if (card.gtwceSpa24Hours) extraClass += ' lrc-card--gtwce-spa24';
           } else if (seriesIdUpper === 'SUPER_GT') {
             extraClass += ' lrc-card--super-gt';
           }
@@ -1754,7 +1824,8 @@
               }).join('');
             } else if (seriesIdUpper === 'GTWCE_END') {
               // GTWCE Endurance: "Label - #no Team" (crew = number + team).
-              winnerHtml = list.slice(0, 4).map(function (w) {
+              var gtwceWinnerLimit = card.gtwceSpa24Hours ? 5 : 4;
+              winnerHtml = list.slice(0, gtwceWinnerLimit).map(function (w) {
                 var crew = w.name || '';
                 var line = w.car ? '#' + w.car + ' ' + crew : crew;
                 var label = localizeWinnerCardLabel((w.label || '').trim());

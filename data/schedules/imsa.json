@@ -9,7 +9,7 @@
     "start_date": "2025-11-14",
     "end_date": "2025-11-16",
     "time_est": "10:00",
-    "time_msk": "18:00"
+    "time_msk": "11/16/25 18:00"
   },
   {
     "id": "IMSA_2026_1",
@@ -21,7 +21,7 @@
     "start_date": "2026-01-24",
     "end_date": "2026-01-25",
     "time_est": "1:40 PM",
-    "time_msk": "21:40"
+    "time_msk": "1/24/26 21:40"
   },
   {
     "id": "IMSA_2026_2",
@@ -33,7 +33,7 @@
     "start_date": "2026-03-21",
     "end_date": "2026-03-21",
     "time_est": "10:40 AM",
-    "time_msk": "18:40"
+    "time_msk": "3/21/26 17:40"
   },
   {
     "id": "IMSA_2026_3",
@@ -45,7 +45,7 @@
     "start_date": "2026-04-18",
     "end_date": "2026-04-19",
     "time_est": "4:00 PM",
-    "time_msk": "01:00"
+    "time_msk": "4/20/26 02:00"
   },
   {
     "id": "IMSA_2026_4",
@@ -57,7 +57,7 @@
     "start_date": "2026-05-03",
     "end_date": "2026-05-03",
     "time_est": "3:00 PM",
-    "time_msk": "23:00"
+    "time_msk": "5/4/26 01:00"
   },
   {
     "id": "IMSA_2026_5",
@@ -69,7 +69,7 @@
     "start_date": "2026-05-30",
     "end_date": "2026-05-30",
     "time_est": "12:40 PM",
-    "time_msk": "19:40"
+    "time_msk": "5/30/26 19:40"
   },
   {
     "id": "IMSA_2026_6",
@@ -78,10 +78,10 @@
     "name": "Sahlen's Six Hours of The Glen",
     "location": "Watkins Glen, New York",
     "circuit_name": "Watkins Glen International",
-    "start_date": "2026-06-28",
+    "start_date": "2026-06-25",
     "end_date": "2026-06-28",
     "time_est": "12:10 PM",
-    "time_msk": "19:10"
+    "time_msk": "6/28/26 19:10"
   },
   {
     "id": "IMSA_2026_7",
@@ -90,10 +90,10 @@
     "name": "Chevrolet Grand Prix",
     "location": "Bowmanville, Ontario",
     "circuit_name": "Canadian Tire Motorsport Park",
-    "start_date": "2026-07-12",
+    "start_date": "2026-07-10",
     "end_date": "2026-07-12",
-    "time_est": "1:05 PM",
-    "time_msk": "20:05"
+    "time_est": "2:05 PM",
+    "time_msk": "7/12/26 21:05"
   },
   {
     "id": "IMSA_2026_8",
@@ -105,7 +105,7 @@
     "start_date": "2026-08-02",
     "end_date": "2026-08-02",
     "time_est": "2:10 PM",
-    "time_msk": "21:10"
+    "time_msk": "8/2/26 22:10"
   },
   {
     "id": "IMSA_2026_9",
@@ -117,7 +117,7 @@
     "start_date": "2026-08-23",
     "end_date": "2026-08-23",
     "time_est": "2:05 PM",
-    "time_msk": "21:05"
+    "time_msk": "8/23/26 21:05"
   },
   {
     "id": "IMSA_2026_10",
@@ -129,7 +129,7 @@
     "start_date": "2026-09-20",
     "end_date": "2026-09-20",
     "time_est": "1:10 PM",
-    "time_msk": "20:10"
+    "time_msk": "9/20/26 20:10"
   },
   {
     "id": "IMSA_2026_11",
@@ -141,6 +141,6 @@
     "start_date": "2026-10-03",
     "end_date": "2026-10-03",
     "time_est": "12:10 PM",
-    "time_msk": "19:10"
+    "time_msk": "10/3/26 19:10"
   }
 ]

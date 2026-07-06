@@ -45,7 +45,10 @@
   }
 
   // ─── Driver names ───────────────────────────────────────────────────────
-  var driverDisplayNames = { 'Woohyun Shin': 'Michael Shin' };
+  var driverDisplayNames = {
+    'Woohyun Shin': 'Michael Shin',
+    'W. Shin': 'M. Shin'
+  };
 
   /** Latin diacritics → ASCII (mirrors internal/driverutil/slug.go). */
   function foldDiacritics(value) {
@@ -620,26 +623,58 @@
     return getLang() === 'ru' ? day + ' ' + mon : mon + ' ' + day;
   }
 
-  /** Calendar date of race start, or first–last range when the event has multiple races. */
+  /** Calendar date of race start; range start–end for multi-race weekends and 24-hour races. */
   function formatEventRaceStartDate(e) {
     if (!e) return '—';
     var isSessionRow = window.TGA && window.TGA.isExpandedScheduleSessionRow;
-    if (!isSessionRow || !isSessionRow(e)) {
-      var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
-      if (getRange) {
-        var range = getRange(e);
-        if (range.start && range.end && range.start !== range.end) {
-          return formatDateRange(range.start, range.end);
-        }
-        if (range.start) return formatShortDate(range.start) || range.start;
+    if (isSessionRow && isSessionRow(e)) {
+      var getIsoSession = window.TGA && window.TGA.getEventRaceStartDateIso;
+      var sessionIso = getIsoSession ? getIsoSession(e) : '';
+      if (!sessionIso) {
+        var parseIsoSession = window.TGA && window.TGA.parseIsoDatePrefix;
+        sessionIso = parseIsoSession ? parseIsoSession(e.start_date || e.date) : '';
+      }
+      if (sessionIso) return formatShortDate(sessionIso) || sessionIso;
+      return '—';
+    }
+    var enduranceOnly = window.TGA && window.TGA.enduranceWeekendRaceDayOnly;
+    if (enduranceOnly && enduranceOnly(e)) {
+      var singleDay = window.TGA && window.TGA.singleRaceCardDateIso;
+      var raceDay = singleDay ? singleDay(e) : '';
+      if (raceDay) return formatShortDate(raceDay) || raceDay;
+    }
+    var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+    if (getRange) {
+      var schedRange = getRange(e);
+      if (schedRange.start && schedRange.end && schedRange.end > schedRange.start) {
+        return formatDateRange(schedRange.start, schedRange.end);
       }
     }
     var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
+    if (parseIso) {
+      var spanStart = parseIso(e.start_date || e.startDate || e.date);
+      var spanEnd = parseIso(e.end_date || e.endDate);
+      if (spanStart && spanEnd && spanEnd > spanStart) {
+        return formatDateRange(spanStart, spanEnd);
+      }
+    }
     var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
-    var iso = getIso ? getIso(e) : '';
-    if (!iso && parseIso) iso = parseIso(e.start_date || e.date);
-    if (!iso) return '—';
-    return formatShortDate(iso) || iso;
+    var raceStartIso = getIso ? getIso(e) : '';
+    if (!raceStartIso && parseIso) raceStartIso = parseIso(e.start_date || e.date);
+    if (!raceStartIso) return '—';
+
+    var nameForDuration = String(e.name || e.race || '').trim();
+    if (parseNamedRaceDurationHours(nameForDuration) === 24) {
+      var d = new Date(raceStartIso + 'T12:00:00');
+      d.setDate(d.getDate() + 1);
+      var raceEndIso = d.getFullYear() + '-' +
+        ('0' + (d.getMonth() + 1)).slice(-2) + '-' +
+        ('0' + d.getDate()).slice(-2);
+      if (raceEndIso !== raceStartIso) {
+        return formatDateRange(raceStartIso, raceEndIso);
+      }
+    }
+    return formatShortDate(raceStartIso) || raceStartIso;
   }
 
   /** Date line for event page header (range from start_date/end_date, or prose date field). */
@@ -787,9 +822,101 @@
     return startUtc + raceDurationHours(ev) * 3600000;
   }
 
-  /** Whether the event should appear in Last Results (race window ended). */
+  /** UTC start of the first race session (Sprint / Race 1 / single race). */
+  function sessionRaceStartUtcMs(sess, ev) {
+    if (!sess || !ev) return 0;
+    var dateIso = String(sess.start_date || sess.date || '').slice(0, 10);
+    if (!isIsoYmdDate(dateIso)) return 0;
+
+    var parseMsk = window.TGA && window.TGA.parseMskDateTime;
+    var estToUtc = window.TGA && window.TGA.estToUtcMs;
+    var parseParts = window.TGA && window.TGA.parseTimeStringToParts;
+
+    var timeMsk = String(sess.time_msk || '').trim();
+    if (timeMsk && parseMsk) {
+      var mp = parseMsk(timeMsk, dateIso);
+      if (mp && mp.utcMs) return mp.utcMs;
+    }
+
+    var timeEst = String(sess.time_est || '').trim();
+    if (timeEst && estToUtc && parseParts) {
+      var ep = parseParts(timeEst);
+      if (ep) {
+        return estToUtc(
+          parseInt(dateIso.slice(0, 4), 10),
+          parseInt(dateIso.slice(5, 7), 10),
+          parseInt(dateIso.slice(8, 10), 10),
+          ep.hour,
+          ep.minute
+        );
+      }
+    }
+
+    return 0;
+  }
+
+  function getEventRaceSessionList(ev) {
+    if (!ev) return [];
+    var getSessions = window.TGA && window.TGA.getEventRaceSessions;
+    if (!getSessions) return [];
+    var list = getSessions(ev);
+    return Array.isArray(list) ? list : [];
+  }
+
+  function getEventFirstRaceStartUtcMs(ev) {
+    if (!ev) return 0;
+    var sessions = getEventRaceSessionList(ev);
+    if (sessions.length > 0) {
+      var starts = [];
+      for (var i = 0; i < sessions.length; i++) {
+        var ms = sessionRaceStartUtcMs(sessions[i], ev);
+        if (ms) starts.push(ms);
+      }
+      if (starts.length > 0) return Math.min.apply(null, starts);
+    }
+    var getRaceUtc = window.TGA && window.TGA.getEventRaceUtcMs;
+    return getRaceUtc ? (getRaceUtc(ev) || 0) : 0;
+  }
+
+  /** Lower weight = earlier in card row when first-race UTC ties (feeder formulas before F1). */
+  function seriesScheduleSortWeight(ev) {
+    var sid = String((ev && (ev._seriesId || ev.series_id)) || '').toUpperCase();
+    if (sid === 'F3') return 10;
+    if (sid === 'F2') return 20;
+    if (sid === 'FREC') return 25;
+    if (sid === 'F4_IT' || sid === 'ITALIAN_F4') return 28;
+    if (sid === 'F1') return 40;
+    return 50;
+  }
+
+  function compareEventsByFirstRaceStart(a, b) {
+    var ka = getEventFirstRaceStartUtcMs(a) || 0;
+    var kb = getEventFirstRaceStartUtcMs(b) || 0;
+    if (ka !== kb) return ka - kb;
+    return seriesScheduleSortWeight(a) - seriesScheduleSortWeight(b);
+  }
+
+  function getEventLastRaceFinishUtcMs(ev) {
+    if (!ev) return null;
+    var sessions = getEventRaceSessionList(ev);
+    if (sessions.length > 0) {
+      var lastSess = sessions[sessions.length - 1];
+      var startUtc = sessionRaceStartUtcMs(lastSess, ev);
+      if (startUtc) return startUtc + raceDurationHours(ev) * 3600000;
+    }
+    return estimateRaceFinishedUtcMs(ev);
+  }
+
+  /** Whether the event should appear in Last Results (first race started). */
   function isPastForLastResultsEvent(ev) {
     if (!ev) return false;
+
+    var firstStart = getEventFirstRaceStartUtcMs(ev);
+    var now = Date.now();
+    if (firstStart) {
+      return now >= firstStart;
+    }
+
     var today = new Date();
     var todayISO = today.getFullYear() + '-' +
       ('0' + (today.getMonth() + 1)).slice(-2) + '-' +
@@ -808,7 +935,33 @@
     if (endStr < todayISO) return true;
     var finMs = estimateRaceFinishedUtcMs(ev);
     if (finMs == null) return endStr <= todayISO;
-    return Date.now() >= finMs;
+    return now >= finMs;
+  }
+
+  /** Last Results card visible until this many ms after the last race finishes. */
+  function lastResultsWindowEndUtcMs(ev) {
+    if (!ev) return null;
+    var finishMs = getEventLastRaceFinishUtcMs(ev);
+    if (finishMs != null) return finishMs + 7 * 86400000;
+    var endStr = (ev.end_date || ev.start_date || ev.date || '').slice(0, 10);
+    var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+    if (getRange) {
+      var range = getRange(ev);
+      if (range.end) endStr = range.end;
+    }
+    if (!isIsoYmdDate(endStr)) return null;
+    var parts = endStr.split('-');
+    var y = parseInt(parts[0], 10);
+    var mo = parseInt(parts[1], 10) - 1;
+    var da = parseInt(parts[2], 10);
+    return new Date(y, mo, da + 7, 23, 59, 59, 999).getTime();
+  }
+
+  function isWithinLastResultsWindow(ev) {
+    if (!ev) return false;
+    var limitMs = lastResultsWindowEndUtcMs(ev);
+    if (limitMs == null) return false;
+    return Date.now() <= limitMs;
   }
 
   /** When to drop an event from Next Race cards (after estimated finish + small buffer). */
@@ -1355,6 +1508,10 @@
   window.TGA.liveEndTsForEvent        = liveEndTsForEvent;
   window.TGA.raceDurationHours          = raceDurationHours;
   window.TGA.estimateRaceFinishedUtcMs  = estimateRaceFinishedUtcMs;
+  window.TGA.getEventFirstRaceStartUtcMs = getEventFirstRaceStartUtcMs;
+  window.TGA.compareEventsByFirstRaceStart = compareEventsByFirstRaceStart;
+  window.TGA.getEventLastRaceFinishUtcMs = getEventLastRaceFinishUtcMs;
+  window.TGA.isWithinLastResultsWindow   = isWithinLastResultsWindow;
   window.TGA.isPastForLastResultsEvent  = isPastForLastResultsEvent;
   window.TGA.nextRaceEndTs              = nextRaceEndTs;
 })();

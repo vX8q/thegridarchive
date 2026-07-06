@@ -1,0 +1,40 @@
+{
+  "event_id": "DTM_2026_4",
+  "series": "DTM",
+  "race": "Norisring",
+  "date": "4–5 July 2026",
+  "start_date": "2026-07-04",
+  "end_date": "2026-07-05",
+  "track": "Norisring",
+  "location": "Nuremberg, Bavaria",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

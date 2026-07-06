@@ -163,8 +163,6 @@ func BuildDriverSeasonResultsFromEvents(dataDir string, driverSlug string, seaso
 		out = uniq
 	}
 
-	// Sort: event start time first, then race name (stability).
-	enrichDriverSeasonPointsFromStandings(dataDir, driverSlug, out)
 	sortDriverSeasonResults(out, eventStartByID)
 	return out, nil
 }
@@ -329,7 +327,8 @@ func parseDriverFromRaceTable(
 
 	colDriver := firstColIndex(headers, "Driver", "Drivers", "Driver Name")
 	colNo := firstColIndex(headers, "No", "No.", "#", "Car", "Car No", "CAR NO")
-	colTeam := firstColIndex(headers, "Team", "Entrant", "Constructor")
+	colTeam := firstColIndex(headers, "Team", "Entrant", "Constructor", "TEAM/CAR/SPONSOR")
+	colClassPos := firstColIndex(headers, "CLASS POS", "Class Pos")
 
 	colLaps := firstColIndex(headers, "Laps", "No Laps", "NO LAPS", "Laps Completed")
 
@@ -374,6 +373,11 @@ func parseDriverFromRaceTable(
 
 		posStr := valueAt(row, colPos)
 		pos := atoiSafe(posStr)
+		if strings.EqualFold(seriesID, "IMSA") && colClassPos >= 0 {
+			if cp := atoiSafe(valueAt(row, colClassPos)); cp > 0 {
+				pos = cp
+			}
+		}
 
 		laps := atoiSafe(valueAt(row, colLaps))
 
@@ -422,6 +426,9 @@ func parseDriverFromRaceTable(
 
 		carNumber := valueAt(row, colNo)
 		teamName := valueAt(row, colTeam)
+		if strings.EqualFold(seriesID, "IMSA") {
+			teamName = imsaTeamFromCell(teamName)
+		}
 		out = append(out, models.DriverSeasonResult{
 			SeriesID:   seriesID,
 			SeriesName: seriesName,
@@ -438,6 +445,17 @@ func parseDriverFromRaceTable(
 	}
 
 	return out
+}
+
+func imsaTeamFromCell(cell string) string {
+	cell = strings.TrimSpace(cell)
+	if cell == "" {
+		return ""
+	}
+	if i := strings.Index(cell, " / "); i > 0 {
+		return strings.TrimSpace(cell[:i])
+	}
+	return cell
 }
 
 func parseDriverFromEntryList(
@@ -469,63 +487,6 @@ func parseDriverFromEntryList(
 		}
 	}
 	return nil
-}
-
-func enrichDriverSeasonPointsFromStandings(dataDir, driverSlug string, rows []models.DriverSeasonResult) {
-	if len(rows) == 0 {
-		return
-	}
-	seriesSet := map[string]struct{}{}
-	for _, r := range rows {
-		if strings.TrimSpace(r.SeriesID) != "" {
-			seriesSet[strings.ToUpper(strings.TrimSpace(r.SeriesID))] = struct{}{}
-		}
-	}
-	pointsBySeries := map[string]float64{}
-	for sid := range seriesSet {
-		st, err := LoadStandings(dataDir, sid)
-		if err != nil || st == nil {
-			continue
-		}
-		p := findDriverStandingsPoints(st, driverSlug)
-		if p > 0 {
-			pointsBySeries[sid] = p
-		}
-	}
-	for i := range rows {
-		if rows[i].Points > 0 {
-			continue
-		}
-		sid := strings.ToUpper(strings.TrimSpace(rows[i].SeriesID))
-		if p, ok := pointsBySeries[sid]; ok && p > 0 {
-			rows[i].Points = p
-		}
-	}
-}
-
-func findDriverStandingsPoints(st *StandingsData, driverSlug string) float64 {
-	if st == nil {
-		return 0
-	}
-	best := float64(0)
-	checkRow := func(r StandingRow) {
-		if !driverCellMatchesSlug(r.Driver, driverSlug) {
-			return
-		}
-		p := parseFloatLoose(strings.TrimSpace(r.Points))
-		if p > best {
-			best = p
-		}
-	}
-	for _, r := range st.Rows {
-		checkRow(r)
-	}
-	for _, c := range st.Classes {
-		for _, r := range c.Rows {
-			checkRow(r)
-		}
-	}
-	return best
 }
 
 func applyIMSAPointsFallback(detail *EventDetailJSON, rows []models.DriverSeasonResult) {
@@ -580,44 +541,68 @@ func imsaRacePointsByPos(pos int) float64 {
 	case 5:
 		return 260
 	case 6:
-		return 240
+		return 250
 	case 7:
-		return 220
+		return 240
 	case 8:
-		return 200
+		return 230
 	case 9:
-		return 180
+		return 220
 	case 10:
-		return 170
+		return 210
 	case 11:
-		return 160
+		return 200
 	case 12:
-		return 150
+		return 190
 	case 13:
-		return 140
+		return 180
 	case 14:
-		return 130
+		return 170
 	case 15:
-		return 120
+		return 160
 	case 16:
-		return 110
+		return 150
 	case 17:
-		return 100
+		return 140
 	case 18:
-		return 90
+		return 130
 	case 19:
-		return 80
+		return 120
 	case 20:
+		return 110
+	case 21:
+		return 100
+	case 22:
+		return 90
+	case 23:
+		return 80
+	case 24:
 		return 70
+	case 25:
+		return 60
+	case 26:
+		return 50
+	case 27:
+		return 40
+	case 28:
+		return 30
+	case 29:
+		return 20
+	case 30:
+		return 10
 	default:
-		if pos > 20 {
-			return 60
+		if pos > 30 {
+			return 10
 		}
 		return 0
 	}
 }
 
 func imsaQualifyingPointsByPos(pos int) float64 {
+	if pos <= 0 {
+		return 0
+	}
+	// IMSA IWSC official qualifying points (P1–P29, then 1 for P30+).
 	switch pos {
 	case 1:
 		return 35
@@ -630,40 +615,55 @@ func imsaQualifyingPointsByPos(pos int) float64 {
 	case 5:
 		return 26
 	case 6:
-		return 24
+		return 25
 	case 7:
-		return 22
+		return 24
 	case 8:
-		return 20
+		return 23
 	case 9:
-		return 18
+		return 22
 	case 10:
-		return 17
+		return 21
 	case 11:
-		return 16
+		return 20
 	case 12:
-		return 15
+		return 19
 	case 13:
-		return 14
+		return 18
 	case 14:
-		return 13
+		return 17
 	case 15:
-		return 12
+		return 16
 	case 16:
-		return 11
+		return 15
 	case 17:
-		return 10
+		return 14
 	case 18:
-		return 9
+		return 13
 	case 19:
-		return 8
+		return 12
 	case 20:
+		return 11
+	case 21:
+		return 10
+	case 22:
+		return 9
+	case 23:
+		return 8
+	case 24:
 		return 7
+	case 25:
+		return 6
+	case 26:
+		return 5
+	case 27:
+		return 4
+	case 28:
+		return 3
+	case 29:
+		return 2
 	default:
-		if pos > 20 {
-			return 6
-		}
-		return 0
+		return 1
 	}
 }
 

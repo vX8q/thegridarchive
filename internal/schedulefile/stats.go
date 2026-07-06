@@ -320,7 +320,7 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 		eventsWithResults++
 		entryTeamByCar, entryManufacturerByCar, entryDriverByCar, entryClassByCar := statsEntryLookup(detail.EntryList)
 		poleCarsBySession := statsPoleCars(detail.Tables, len(resultTables))
-		useStockCarStageRules := isStockCarStatsSeries(seriesID)
+		useStockCarStageRules := stockCarSeriesUsesStagePoints(seriesID)
 		var eligibleByCar map[string]bool
 		if useStockCarStageRules {
 			eligibleByCar = pointsEligibleByCarFromEntryList(detail.EntryList)

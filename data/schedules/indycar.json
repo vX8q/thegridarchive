@@ -21,19 +21,19 @@
     "start_date": "2026-03-07",
     "end_date": "2026-03-07",
     "time_est": "3:00 p.m.",
-    "time_msk": "23:00"
+    "time_msk": "3/8/26 01:00"
   },
   {
     "id": "INDYCAR_2026_3",
     "series_id": "INDYCAR",
     "season": "2026",
-    "name": "Grand Prix of Arlington",
+    "name": "Java House Grand Prix of Arlington",
     "location": "Arlington, Texas",
     "circuit_name": "Streets of Arlington",
     "start_date": "2026-03-15",
     "end_date": "2026-03-15",
     "time_est": "12:30 p.m.",
-    "time_msk": "19:30"
+    "time_msk": "20:30"
   },
   {
     "id": "INDYCAR_2026_4",
@@ -45,7 +45,7 @@
     "start_date": "2026-03-29",
     "end_date": "2026-03-29",
     "time_est": "1:00 p.m.",
-    "time_msk": "20:00"
+    "time_msk": "21:00"
   },
   {
     "id": "INDYCAR_2026_5",
@@ -57,7 +57,7 @@
     "start_date": "2026-04-19",
     "end_date": "2026-04-19",
     "time_est": "5:30 p.m.",
-    "time_msk": "00:30"
+    "time_msk": "4/20/26 03:30"
   },
   {
     "id": "INDYCAR_2026_6",
@@ -105,7 +105,7 @@
     "start_date": "2026-06-07",
     "end_date": "2026-06-07",
     "time_est": "9:00 p.m.",
-    "time_msk": "04:00"
+    "time_msk": "6/8/26 05:00"
   },
   {
     "id": "INDYCAR_2026_10",
@@ -117,7 +117,7 @@
     "start_date": "2026-06-21",
     "end_date": "2026-06-21",
     "time_est": "2:00 p.m.",
-    "time_msk": "21:00"
+    "time_msk": "22:00"
   },
   {
     "id": "INDYCAR_2026_11",
@@ -147,13 +147,13 @@
     "id": "INDYCAR_2026_13",
     "series_id": "INDYCAR",
     "season": "2026",
-    "name": "BitNile.com Grand Prix of Portland",
+    "name": "OnlyBulls Grand Prix of Portland",
     "location": "Portland, Oregon",
     "circuit_name": "Portland International Raceway",
     "start_date": "2026-08-09",
     "end_date": "2026-08-09",
     "time_est": "4:00 p.m.",
-    "time_msk": "23:00"
+    "time_msk": "8/10/26 02:00"
   },
   {
     "id": "INDYCAR_2026_14",
@@ -189,7 +189,7 @@
     "start_date": "2026-08-29",
     "end_date": "2026-08-29",
     "time_est": "2:30 p.m.",
-    "time_msk": "21:30"
+    "time_msk": "22:30"
   },
   {
     "id": "INDYCAR_2026_17",
@@ -201,7 +201,7 @@
     "start_date": "2026-08-30",
     "end_date": "2026-08-30",
     "time_est": "1:00 p.m.",
-    "time_msk": "20:00"
+    "time_msk": "21:00"
   },
   {
     "id": "INDYCAR_2026_18",
@@ -213,6 +213,6 @@
     "start_date": "2026-09-06",
     "end_date": "2026-09-06",
     "time_est": "2:30 p.m.",
-    "time_msk": "21:30"
+    "time_msk": "9/7/26 00:30"
   }
 ]

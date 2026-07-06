@@ -1,0 +1,97 @@
+{
+  "event_id": "F1_2026_9",
+  "series": "Formula 1",
+  "race": "British Grand Prix",
+  "date": "3–5 July 2026",
+  "start_date": "2026-07-03",
+  "end_date": "2026-07-05",
+  "track": "Silverstone Circuit",
+  "location": "Silverstone",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Practice 1",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Practice 2",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Practice 3",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        }
+      ]
+    },
+    "qualifying": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Qualifying",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        }
+      ]
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

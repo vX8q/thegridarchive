@@ -91,7 +91,7 @@
   function showView(activeId) {
     if (activeId !== 'view-list') {
       stopNextRaceTimers();
-      if (window.TGA.stopLiveDebugRefresh) window.TGA.stopLiveDebugRefresh();
+      if (window.TGA.stopHomeLiveRefresh) window.TGA.stopHomeLiveRefresh();
     }
     allViewIds.forEach(function (id) {
       var el = document.getElementById(id);
@@ -926,8 +926,10 @@
     'mid-ohio-sports-car-course-lexington-ohio': '/web/images/mid-ohio-sports-car-course.jpg',
     'chicagoland-speedway': '/web/images/chicagoland-speedway.jpg',
     'chicagoland-speedway-joliet-illinois': '/web/images/chicagoland-speedway.jpg',
-    'imola-circuit': '/web/images/imola-bg.jpg',
-    'imola-circuit-imola': '/web/images/imola-bg.jpg'
+    'imola-circuit': '/web/images/imola.jpg',
+    'imola-circuit-imola': '/web/images/imola.jpg',
+    'hungaroring': '/web/images/hungaroring.webp',
+    'hungaroring-mogyorod': '/web/images/hungaroring.webp'
   };
 
   function renderTrackDetail(slug) {

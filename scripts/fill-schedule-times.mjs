@@ -1,54 +1,21 @@
 #!/usr/bin/env node
 /**
  * Compute time_est / time_msk for schedule JSON updates.
+ * Timezone rules: data/timezones-reference.json (see data/TIMEZONES.md)
  * Run: node scripts/fill-schedule-times.mjs
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {
+  formatMskEmbedded,
+  formatMskPlain,
+  mskDateIsoFromUtc,
+  parse12h,
+  utcMsFromLocal,
+} from './lib/timezones.mjs';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-
-function parse12h(t) {
-  const m = String(t).trim().match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-  if (!m) return null;
-  let h = +m[1];
-  const min = +m[2];
-  const ap = m[3].toUpperCase();
-  if (ap === 'PM' && h < 12) h += 12;
-  if (ap === 'AM' && h === 12) h = 0;
-  return { h, min };
-}
-
-function tzOffsetMinutesAt(iso, tz) {
-  const [y, mo, d] = iso.split('-').map(Number);
-  const dtf = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'longOffset' });
-  const offStr = dtf.formatToParts(new Date(Date.UTC(y, mo - 1, d, 12))).find((x) => x.type === 'timeZoneName')?.value || '';
-  const om = offStr.match(/GMT([+-])(\d+)(?::(\d+))?/);
-  if (!om) return 0;
-  const sign = om[1] === '+' ? 1 : -1;
-  return sign * (+om[2] * 60 + (+(om[3] || 0)));
-}
-
-function utcMsFromLocal(iso, h, min, tz) {
-  const [y, mo, d] = iso.split('-').map(Number);
-  const offMin = tzOffsetMinutesAt(iso, tz);
-  return Date.UTC(y, mo - 1, d, h, min) - offMin * 60 * 1000;
-}
-
-function formatMskEmbedded(utcMs) {
-  const mp = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Europe/Moscow',
-    month: 'numeric',
-    day: 'numeric',
-    year: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).formatToParts(new Date(utcMs));
-  const g = (t) => mp.find((x) => x.type === t)?.value;
-  return `${g('month')}/${g('day')}/${g('year')} ${g('hour')}:${g('minute')}`;
-}
 
 function etToNascar(iso, time12) {
   const p = parse12h(time12);
@@ -67,38 +34,31 @@ function localToSupercars(iso, time12, tz) {
 function local24ToF1Style(iso, hhmm, tz) {
   const [h, m] = hhmm.split(':').map(Number);
   const utcMs = utcMsFromLocal(iso, h, m, tz);
-  const mp = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Europe/Moscow',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).formatToParts(new Date(utcMs));
-  const g = (t) => mp.find((x) => x.type === t)?.value;
-  return { time_est: hhmm, time_msk: `${g('hour')}:${g('minute')}` };
+  return { time_est: hhmm, time_msk: formatMskPlain(utcMs) };
 }
 
 function jstToSuperFormula(iso, hhmm) {
   const [h, m] = hhmm.split(':').map(Number);
   const [y, mo, d] = iso.split('-').map(Number);
   const utcMs = Date.UTC(y, mo - 1, d, h - 9, m);
-  const mp = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Europe/Moscow',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).formatToParts(new Date(utcMs));
-  const g = (t) => mp.find((x) => x.type === t)?.value;
-  return { time_est: hhmm, time_msk: `${g('hour')}:${g('minute')}` };
+  return { time_est: hhmm, time_msk: formatMskPlain(utcMs) };
 }
 
 // --- Supercars updates (supercars.com / 2025 templates where 2026 TBC) ---
 const supercars = [
+  ['SUPERCARS_2026_1', '2026-02-20', '7:50 PM', 'Australia/Sydney'],
+  ['SUPERCARS_2026_2', '2026-02-21', '7:35 PM', 'Australia/Sydney'],
+  ['SUPERCARS_2026_3', '2026-02-22', '4:05 PM', 'Australia/Sydney'],
+  ['SUPERCARS_2026_4', '2026-03-05', '5:00 PM', 'Australia/Melbourne'],
+  ['SUPERCARS_2026_5', '2026-03-06', '5:30 PM', 'Australia/Melbourne'],
+  ['SUPERCARS_2026_6', '2026-03-07', '5:35 PM', 'Australia/Melbourne'],
+  ['SUPERCARS_2026_7', '2026-03-07', '10:10 AM', 'Australia/Melbourne'],
   ['SUPERCARS_2026_8', '2026-04-10', '4:03 PM', 'Pacific/Auckland'],
   ['SUPERCARS_2026_9', '2026-04-11', '12:20 PM', 'Pacific/Auckland'],
+  ['SUPERCARS_2026_10', '2026-04-18', '4:10 PM', 'Pacific/Auckland'],
   ['SUPERCARS_2026_11', '2026-04-17', '4:35 PM', 'Pacific/Auckland'],
   ['SUPERCARS_2026_12', '2026-04-18', '12:45 PM', 'Pacific/Auckland'],
   ['SUPERCARS_2026_13', '2026-04-19', '3:05 PM', 'Pacific/Auckland'],
-  ['SUPERCARS_2026_10', '2026-04-18', '4:10 PM', 'Pacific/Auckland'],
   ['SUPERCARS_2026_14', '2026-05-23', '1:00 PM', 'Australia/Hobart'],
   ['SUPERCARS_2026_15', '2026-05-23', '4:00 PM', 'Australia/Hobart'],
   ['SUPERCARS_2026_16', '2026-05-24', '2:45 PM', 'Australia/Hobart'],
@@ -106,8 +66,8 @@ const supercars = [
   ['SUPERCARS_2026_18', '2026-06-20', '3:20 PM', 'Australia/Darwin'],
   ['SUPERCARS_2026_19', '2026-06-21', '2:40 PM', 'Australia/Darwin'],
   ['SUPERCARS_2026_20', '2026-07-10', '4:15 PM', 'Australia/Brisbane'],
-  ['SUPERCARS_2026_21', '2026-07-11', '3:00 PM', 'Australia/Brisbane'],
-  ['SUPERCARS_2026_22', '2026-07-12', '3:00 PM', 'Australia/Brisbane'],
+  ['SUPERCARS_2026_21', '2026-07-11', '3:05 PM', 'Australia/Brisbane'],
+  ['SUPERCARS_2026_22', '2026-07-12', '3:05 PM', 'Australia/Brisbane'],
   ['SUPERCARS_2026_23', '2026-07-31', '6:00 PM', 'Australia/Perth'],
   ['SUPERCARS_2026_24', '2026-08-01', '12:55 PM', 'Australia/Perth'],
   ['SUPERCARS_2026_25', '2026-08-02', '3:15 PM', 'Australia/Perth'],
@@ -149,8 +109,7 @@ const superFormula = [
   ['SUPER_FORMULA_2026_3', '2026-04-25', '14:15'],
   ['SUPER_FORMULA_2026_4', '2026-05-23', '14:45'],
   ['SUPER_FORMULA_2026_5', '2026-05-24', '14:45'],
-  ['SUPER_FORMULA_2026_6', '2026-07-18', '14:45'],
-  ['SUPER_FORMULA_2026_7', '2026-07-19', '14:45'],
+  ['SUPER_FORMULA_2026_6', '2026-07-18', '16:15'],
   ['SUPER_FORMULA_2026_8', '2026-08-09', '14:45'],
   ['SUPER_FORMULA_2026_9', '2026-10-10', '14:45'],
   ['SUPER_FORMULA_2026_10', '2026-10-11', '14:45'],
@@ -179,6 +138,32 @@ function patchSchedule(file, patches, fn) {
   console.log('Updated', file);
 }
 
+/** Recompute time_msk from existing time_est + track timezone. [id, raceDate, tz, time12?] */
+function patchLocal12Times(file, entries, opts = {}) {
+  const plainWhenSameMskDay = opts.plainWhenSameMskDay !== false;
+  const p = path.join(root, 'data', 'schedules', file);
+  const rows = JSON.parse(fs.readFileSync(p, 'utf8'));
+  const byId = Object.fromEntries(entries.map((x) => [x[0], x]));
+  for (const ev of rows) {
+    const ent = byId[ev.id];
+    if (!ent) continue;
+    const raceDate = ent[1];
+    const tz = ent[2];
+    const time12 = ent[3] || ev.time_est;
+    if (!time12 || /^tbd$/i.test(time12)) continue;
+    const parsed = parse12h(time12);
+    if (!parsed) continue;
+    const utcMs = utcMsFromLocal(raceDate, parsed.h, parsed.min, tz);
+    const embedded = formatMskEmbedded(utcMs);
+    const plain = formatMskPlain(utcMs);
+    ev.time_est = time12;
+    const mskDay = mskDateIsoFromUtc(utcMs);
+    ev.time_msk = plainWhenSameMskDay && mskDay === raceDate ? plain : embedded;
+  }
+  fs.writeFileSync(p, JSON.stringify(rows, null, 2) + '\n');
+  console.log('Updated', file);
+}
+
 patchSchedule('supercars.json', supercars, (date, t, tz) => localToSupercars(date, t, tz));
 patchSchedule('nascar_modified.json', nascarMod, (date, t) => etToNascar(date, t));
 patchSchedule('super_formula.json', superFormula, (date, t) => jstToSuperFormula(date, t));
@@ -188,7 +173,7 @@ const wec = [
   ['WEC_2026_1', '2026-04-19', '13:00', 'Europe/Rome'],
   ['WEC_2026_2', '2026-05-09', '14:00', 'Europe/Brussels'],
   ['WEC_2026_3', '2026-06-13', '16:00', 'Europe/Paris'],
-  ['WEC_2026_4', '2026-07-12', '10:30', 'America/Sao_Paulo'],
+  ['WEC_2026_4', '2026-07-12', '11:30', 'America/Sao_Paulo'],
   ['WEC_2026_5', '2026-09-06', '12:00', 'America/Chicago'],
   ['WEC_2026_6', '2026-09-27', '11:00', 'Asia/Tokyo'],
   ['WEC_2026_7', '2026-10-24', '14:00', 'Asia/Qatar'],
@@ -223,7 +208,7 @@ patchRaceTimes('elms.json', [
   ['ELMS_2026_PROLOGUE', '2026-04-06', '09:00', 'Europe/Madrid'],
   ['ELMS_2026_1', '2026-04-12', '12:00', 'Europe/Madrid'],
   ['ELMS_2026_2', '2026-05-03', '12:00', 'Europe/Paris'],
-  ['ELMS_2026_3', '2026-07-05', '12:30', 'Europe/Rome'],
+  ['ELMS_2026_3', '2026-07-05', '13:00', 'Europe/Rome'],
   ['ELMS_2026_4', '2026-08-23', '13:00', 'Europe/Brussels'],
   ['ELMS_2026_5', '2026-09-13', '12:00', 'Europe/London'],
   ['ELMS_2026_6', '2026-10-10', '12:00', 'Europe/Lisbon'],
@@ -253,11 +238,11 @@ patchSchedule('dtm.json', [
   ['DTM_2026_1', '2026-04-25', '13:30', 'Europe/Berlin'],
   ['DTM_2026_2', '2026-05-23', '13:30', 'Europe/Berlin'],
   ['DTM_2026_3', '2026-06-20', '13:30', 'Europe/Berlin'],
-  ['DTM_2026_4', '2026-07-18', '13:30', 'Europe/Berlin'],
-  ['DTM_2026_5', '2026-08-08', '13:30', 'Europe/Berlin'],
-  ['DTM_2026_6', '2026-08-29', '13:30', 'Europe/Berlin'],
-  ['DTM_2026_7', '2026-09-19', '13:30', 'Europe/Berlin'],
-  ['DTM_2026_8', '2026-10-03', '13:30', 'Europe/Berlin'],
+  ['DTM_2026_4', '2026-07-04', '13:30', 'Europe/Berlin'],
+  ['DTM_2026_5', '2026-07-25', '13:30', 'Europe/Berlin'],
+  ['DTM_2026_6', '2026-08-15', '13:30', 'Europe/Berlin'],
+  ['DTM_2026_7', '2026-09-12', '13:30', 'Europe/Berlin'],
+  ['DTM_2026_8', '2026-10-10', '13:30', 'Europe/Berlin'],
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
 
 patchSchedule('frec.json', [
@@ -288,6 +273,53 @@ patchSchedule('gtwce_sprint.json', [
   ['GTWCE_SPRINT_2026_4', '2026-08-21', '15:30', 'Europe/Amsterdam'],
   ['GTWCE_SPRINT_2026_5', '2026-10-02', '15:30', 'Europe/Madrid'],
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
+
+// IMSA / IndyCar — local track time (12h) with correct US/CA timezone per venue.
+const imsaLocal = [
+  ['IMSA_2026_1', '2026-01-24', 'America/New_York'],
+  ['IMSA_2026_2', '2026-03-21', 'America/New_York'],
+  ['IMSA_2026_3', '2026-04-19', 'America/Los_Angeles'],
+  ['IMSA_2026_4', '2026-05-03', 'America/Los_Angeles'],
+  ['IMSA_2026_5', '2026-05-30', 'America/Detroit'],
+  ['IMSA_2026_6', '2026-06-28', 'America/New_York'],
+  ['IMSA_2026_7', '2026-07-12', 'America/Toronto', '2:05 PM'],
+  ['IMSA_2026_8', '2026-08-02', 'America/Chicago'],
+  ['IMSA_2026_9', '2026-08-23', 'America/New_York'],
+  ['IMSA_2026_10', '2026-09-20', 'America/Indiana/Indianapolis'],
+  ['IMSA_2026_11', '2026-10-03', 'America/New_York'],
+];
+patchLocal12Times('imsa.json', imsaLocal, { plainWhenSameMskDay: false });
+
+const indycarLocal = [
+  ['INDYCAR_2026_1', '2026-03-01', 'America/New_York'],
+  ['INDYCAR_2026_2', '2026-03-07', 'America/Phoenix'],
+  ['INDYCAR_2026_3', '2026-03-15', 'America/Chicago'],
+  ['INDYCAR_2026_4', '2026-03-29', 'America/Chicago'],
+  ['INDYCAR_2026_5', '2026-04-19', 'America/Los_Angeles'],
+  ['INDYCAR_2026_6', '2026-05-09', 'America/Indiana/Indianapolis'],
+  ['INDYCAR_2026_7', '2026-05-24', 'America/Indiana/Indianapolis'],
+  ['INDYCAR_2026_8', '2026-05-31', 'America/Detroit'],
+  ['INDYCAR_2026_9', '2026-06-07', 'America/Chicago'],
+  ['INDYCAR_2026_10', '2026-06-21', 'America/Chicago'],
+  ['INDYCAR_2026_11', '2026-07-05', 'America/New_York'],
+  ['INDYCAR_2026_13', '2026-08-09', 'America/Los_Angeles'],
+  ['INDYCAR_2026_14', '2026-08-16', 'America/Toronto'],
+  ['INDYCAR_2026_16', '2026-08-29', 'America/Chicago'],
+  ['INDYCAR_2026_17', '2026-08-30', 'America/Chicago'],
+  ['INDYCAR_2026_18', '2026-09-06', 'America/Los_Angeles'],
+];
+patchLocal12Times('indycar.json', indycarLocal);
+
+// Super GT — races start 14:00 JST (time_est was placeholder 12:00).
+patchRaceTimes('super_gt.json', [
+  ['SUPER_GT_2026_1', '2026-04-12', '14:00', 'Asia/Tokyo'],
+  ['SUPER_GT_2026_2', '2026-05-04', '14:00', 'Asia/Tokyo'],
+  ['SUPER_GT_2026_4', '2026-08-02', '14:00', 'Asia/Tokyo'],
+  ['SUPER_GT_2026_5', '2026-08-23', '14:00', 'Asia/Tokyo'],
+  ['SUPER_GT_2026_6', '2026-09-20', '14:00', 'Asia/Tokyo'],
+  ['SUPER_GT_2026_7', '2026-10-18', '14:00', 'Asia/Tokyo'],
+  ['SUPER_GT_2026_8', '2026-11-08', '14:00', 'Asia/Tokyo'],
+]);
 
 // Fix NASCAR_MODIFIED_2026_1 MSK embedded format
 const nmPath = path.join(root, 'data', 'schedules', 'nascar_modified.json');

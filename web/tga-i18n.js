@@ -139,15 +139,58 @@
     return Date.UTC(Number(y), Number(m) - 1, Number(d), Number(hour) - 3, minute || 0);
   }
 
+  /** Returns local track → UTC offset (hours) for a date in the given IANA timezone. */
+  function getLocalTzToUtcOffsetHours(y, m, d, tz) {
+    if (typeof Intl === 'undefined' || !Intl.DateTimeFormat || !tz) return 0;
+    try {
+      var utcNoon = Date.UTC(Number(y), Number(m) - 1, Number(d), 12, 0);
+      var formatter = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', hour12: false });
+      var parts = formatter.formatToParts(new Date(utcNoon));
+      var hourPart = parts.find(function (p) { return p.type === 'hour'; });
+      var localHour = hourPart ? parseInt(hourPart.value, 10) : 12;
+      return 12 - localHour;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  /** UTC timestamp for (y,m,d, hour, minute) in a track-local IANA timezone (with DST). */
+  function localTrackToUtcMs(y, m, d, hour, minute, tz) {
+    var offset = getLocalTzToUtcOffsetHours(y, m, d, tz);
+    return Date.UTC(Number(y), Number(m) - 1, Number(d), hour + offset, minute || 0);
+  }
+
   var EASTERN_TIME_SERIES = {
     NASCAR_CUP: true,
     NOAPS: true,
     NASCAR_XFINITY: true,
     NASCAR_TRUCK: true,
     ARCA: true,
-    NASCAR_MODIFIED: true,
-    INDYCAR: true
+    NASCAR_MODIFIED: true
   };
+
+  var US_LOCAL_TRACK_SERIES = {
+    INDYCAR: true,
+    IMSA: true
+  };
+
+  function inferUSTrackTimezone(e) {
+    var tzApi = window.TGA_TIMEZONES;
+    if (tzApi && tzApi.inferTrackTimezone) {
+      return tzApi.inferTrackTimezone(e) || 'America/New_York';
+    }
+    return 'America/New_York';
+  }
+
+  function localTrackToUtcMsFromEvent(e, y, m, d, hour, minute) {
+    var tzApi = window.TGA_TIMEZONES;
+    var tz = inferUSTrackTimezone(e);
+    if (tzApi && tzApi.localTrackToUtcMs) {
+      return tzApi.localTrackToUtcMs(y, m, d, hour, minute, tz);
+    }
+    var offset = getLocalTzToUtcOffsetHours(y, m, d, tz);
+    return Date.UTC(Number(y), Number(m) - 1, Number(d), hour + offset, minute || 0);
+  }
 
   var MSK_LOCAL_TRACK_SERIES = {
     F1: true,
@@ -180,10 +223,41 @@
     return '';
   }
 
-  /** Local calendar race date (weekend), not shifted to MSK midnight.  */
+  function is24HourEventName(e) {
+    var parse = window.TGA && window.TGA.parseNamedRaceDurationHours;
+    if (!parse) return false;
+    return parse(String((e && (e.name || e.race)) || '')) === 24;
+  }
+
+  /** Local calendar date when the race starts (not first day of a multi-day weekend). */
+  function getEventRaceLocalDateIso(e) {
+    if (!e) return '';
+    var start = parseIsoDatePrefix(e.start_date || e.startDate);
+    var end = parseIsoDatePrefix(e.end_date || e.endDate);
+    var sid = scheduleSeriesUpper(e);
+    var mskRaw = e._time_msk_raw != null ? e._time_msk_raw : e.time_msk;
+    var mskParsed = parseMskDateTime(mskRaw, start);
+    // US stock-car / Indy / IMSA: track-local race day from schedule dates, not embedded MSK calendar.
+    var useTrackLocal = US_LOCAL_TRACK_SERIES[sid] || EASTERN_TIME_SERIES[sid];
+    if (!useTrackLocal && mskParsed.hasEmbeddedDate && mskParsed.mskDateIso) {
+      return mskParsed.mskDateIso;
+    }
+    if (start && end && end > start) {
+      if (is24HourEventName(e)) {
+        var diffDays = Math.round(
+          (new Date(end + 'T12:00:00').getTime() - new Date(start + 'T12:00:00').getTime()) / 86400000
+        );
+        if (diffDays <= 1) return start;
+      }
+      return end;
+    }
+    return start || parseIsoDatePrefix(e.date) || '';
+  }
+
+  /** Local calendar race date (race day at track), not weekend start_date. */
   function getEventScheduleLocalDate(e) {
     if (!e) return '';
-    return parseIsoDatePrefix(e.start_date || e.startDate) || parseIsoDatePrefix(e.date) || '';
+    return getEventRaceLocalDateIso(e);
   }
 
   /**
@@ -235,21 +309,20 @@
     var estRaw = String(e.time_est || e.timeEst || e.time_et || '').trim();
     mskParsed = mskParsed || parseMskDateTime(e.time_msk, localDs);
 
-    if (mskParsed.hasEmbeddedDate && mskParsed.utcMs) {
-      return mskParsed.utcMs;
+    var y = parseInt(localDs.slice(0, 4), 10);
+    var mo = parseInt(localDs.slice(5, 7), 10);
+    var d = parseInt(localDs.slice(8, 10), 10);
+
+    // time_est is track-local for US stock-car / Indy / IMSA — prefer over embedded MSK date strings.
+    if ((US_LOCAL_TRACK_SERIES[sid] || EASTERN_TIME_SERIES[sid]) && estRaw && !/^tbd$/i.test(estRaw)) {
+      var trackEp = parseTimeStringToParts(estRaw);
+      if (trackEp) {
+        return localTrackToUtcMsFromEvent(e, y, mo, d, trackEp.hour, trackEp.minute);
+      }
     }
 
-    if (EASTERN_TIME_SERIES[sid] && estRaw && !/^tbd$/i.test(estRaw)) {
-      var ep = parseTimeStringToParts(estRaw);
-      if (ep) {
-        return estToUtcMs(
-          parseInt(localDs.slice(0, 4), 10),
-          parseInt(localDs.slice(5, 7), 10),
-          parseInt(localDs.slice(8, 10), 10),
-          ep.hour,
-          ep.minute
-        );
-      }
+    if (mskParsed.hasEmbeddedDate && mskParsed.utcMs) {
+      return mskParsed.utcMs;
     }
 
     if (MSK_LOCAL_TRACK_SERIES[sid] && mskParsed.utcMs) {
@@ -265,9 +338,9 @@
           if (ep2 && ep2.hour >= 17 && mp.hour < 12) dayOffset = 1;
         }
         return mskToUtcMs(
-          parseInt(localDs.slice(0, 4), 10),
-          parseInt(localDs.slice(5, 7), 10),
-          parseInt(localDs.slice(8, 10), 10) + dayOffset,
+          y,
+          mo,
+          d + dayOffset,
           mp.hour,
           mp.minute
         );
@@ -277,13 +350,7 @@
     if (estRaw) {
       var ep3 = parseTimeStringToParts(estRaw);
       if (ep3) {
-        return estToUtcMs(
-          parseInt(localDs.slice(0, 4), 10),
-          parseInt(localDs.slice(5, 7), 10),
-          parseInt(localDs.slice(8, 10), 10),
-          ep3.hour,
-          ep3.minute
-        );
+        return estToUtcMs(y, mo, d, ep3.hour, ep3.minute);
       }
     }
 
@@ -310,12 +377,23 @@
     return y + '-' + mo + '-' + da;
   }
 
-  /** Local calendar date of race start (not weekend start_date). */
+  /** Calendar date (YYYY-MM-DD) in the browser / device timezone. */
+  function isoDateFromUtcMsLocal(utcMs) {
+    if (!utcMs) return '';
+    var d = new Date(utcMs);
+    if (isNaN(d.getTime())) return '';
+    var y = d.getFullYear();
+    var mo = ('0' + (d.getMonth() + 1)).slice(-2);
+    var da = ('0' + d.getDate()).slice(-2);
+    return y + '-' + mo + '-' + da;
+  }
+
+  /** Race calendar date in the user's timezone (matches displayed start time). */
   function getEventRaceStartDateIso(e) {
     if (!e) return '';
-    if (e._raceStartDate) return String(e._raceStartDate).slice(0, 10);
     var utc = getEventRaceUtcMs(e);
-    return isoDateFromUtcMsMsk(utc) || getEventScheduleLocalDate(e);
+    if (utc) return isoDateFromUtcMsLocal(utc);
+    return getEventScheduleLocalDate(e);
   }
 
   /** Normalizes event: time_msk → HH:MM, _raceUtcMs, local date for grouping.  */
@@ -327,9 +405,10 @@
     }
     var mskRaw = e._time_msk_raw != null ? e._time_msk_raw : e.time_msk;
     var mskParsed = parseMskDateTime(mskRaw, localDs);
-    e._scheduleDate = localDs;
     e._raceUtcMs = computeEventRaceUtcMs(e, localDs, mskParsed);
-    e._raceStartDate = isoDateFromUtcMsMsk(e._raceUtcMs) || localDs;
+    var displayDate = isoDateFromUtcMsLocal(e._raceUtcMs) || localDs;
+    e._scheduleDate = displayDate;
+    e._raceStartDate = displayDate;
     if (mskParsed.timeStr) e.time_msk = mskParsed.timeStr;
     return e;
   }
@@ -784,7 +863,8 @@
     'pro': 'class.gtwce_pro',
     'gold': 'class.gtwce_gold',
     'silver': 'class.gtwce_silver',
-    'bronze': 'class.gtwce_bronze'
+    'bronze': 'class.gtwce_bronze',
+    'pro-am': 'class.gtwce_pro_am'
   };
 
   function localizeRacingClass(label) {
@@ -1184,8 +1264,10 @@
   window.TGA.parseMskDateTime = parseMskDateTime;
   window.TGA.parseIsoDatePrefix = parseIsoDatePrefix;
   window.TGA.getEventScheduleLocalDate = getEventScheduleLocalDate;
+  window.TGA.getEventRaceLocalDateIso = getEventRaceLocalDateIso;
   window.TGA.getEventRaceUtcMs = getEventRaceUtcMs;
   window.TGA.getEventRaceStartDateIso = getEventRaceStartDateIso;
+  window.TGA.isoDateFromUtcMsLocal = isoDateFromUtcMsLocal;
   window.TGA.normalizeScheduleEvent = normalizeScheduleEvent;
   window.TGA.scheduleSeriesUpper = scheduleSeriesUpper;
   window.TGA.formatRaceUtcForDisplay = formatRaceUtcForDisplay;

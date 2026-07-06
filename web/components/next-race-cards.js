@@ -28,6 +28,23 @@
     nrcCards = [];
   }
 
+  function weekEntrySortKey(ent) {
+    var getFirst = window.TGA && window.TGA.getEventFirstRaceStartUtcMs;
+    if (getFirst && ent && ent.event) {
+      var ms = getFirst(ent.event);
+      if (ms) return ms;
+    }
+    return ent && ent.date ? ent.date.getTime() : 0;
+  }
+
+  function compareWeekEntries(a, b) {
+    var ka = weekEntrySortKey(a);
+    var kb = weekEntrySortKey(b);
+    if (ka !== kb) return ka - kb;
+    var cmp = window.TGA && window.TGA.compareEventsByFirstRaceStart;
+    return cmp && a.event && b.event ? cmp(a.event, b.event) : 0;
+  }
+
   function applyLiveIds(ids) {
     var k;
     for (k in nrcLiveSet) { delete nrcLiveSet[k]; }
@@ -117,64 +134,12 @@
     // (Previously we forced NASCAR Cup into the row even when it was >7 days away,
     // which caused "next week" cards to appear unexpectedly.)
 
-    weekEntries.sort(function (a, b) { return a.date - b.date; });
+    weekEntries.sort(compareWeekEntries);
 
-    // Super Formula: one card per weekend when two races at same track on consecutive days.
-    // First isolate SF and collapse among themselves — otherwise other series cards appear between days.
-    function collapseSuperFormulaNextRaceWeekEntries(sfEntriesSorted) {
-      if (!Array.isArray(sfEntriesSorted) || sfEntriesSorted.length === 0) return sfEntriesSorted;
-      var out = [];
-      for (var i = 0; i < sfEntriesSorted.length; i++) {
-        var entry = sfEntriesSorted[i];
-        var e = entry.event;
-        var run = [entry];
-        var c0 = String(e.circuit_name || '').trim();
-        var l0 = String(e.location || '').trim();
-        var prevDate = (e.start_date || e.date || '').slice(0, 10);
-        var j = i + 1;
-        while (j < sfEntriesSorted.length) {
-          var e2 = sfEntriesSorted[j].event;
-          if (String(e2.circuit_name || '').trim() !== c0 || String(e2.location || '').trim() !== l0) break;
-          var dn = (e2.start_date || e2.date || '').slice(0, 10);
-          var diff = (new Date(dn + 'T12:00:00').getTime() - new Date(prevDate + 'T12:00:00').getTime()) / 86400000;
-          if (diff !== 1) break;
-          run.push(sfEntriesSorted[j]);
-          prevDate = dn;
-          j++;
-        }
-        if (run.length === 1) {
-          out.push(entry);
-        } else {
-          var first = run[0];
-          var last = run[run.length - 1];
-          var fe = first.event;
-          var le = last.event;
-          var d0 = (fe.start_date || fe.date || '').slice(0, 10);
-          var d1 = (le.start_date || le.date || '').slice(0, 10);
-          var mergedEvent = Object.assign({}, fe, {
-            start_date: d0,
-            end_date: d1,
-            date: d0,
-            name: String(fe.circuit_name || fe.name || '').trim(),
-            id: fe.id,
-            _seriesId: fe._seriesId || fe.series_id || 'SUPER_FORMULA',
-            has_detail: run.some(function (x) { return x.event && x.event.has_detail; })
-          });
-          out.push({ event: mergedEvent, date: first.date, endTs: last.endTs });
-        }
-        i = j - 1;
-      }
-      return out;
+    if (window.TGA && window.TGA.collapseNextRaceWeekends) {
+      weekEntries = window.TGA.collapseNextRaceWeekends(weekEntries, ['SUPER_FORMULA', 'SUPERCARS']);
+      weekEntries.sort(compareWeekEntries);
     }
-    var sfWeek = [];
-    var weekRest = [];
-    weekEntries.forEach(function (ent) {
-      if (eventSeriesUpper(ent.event) === 'SUPER_FORMULA') sfWeek.push(ent);
-      else weekRest.push(ent);
-    });
-    sfWeek.sort(function (a, b) { return a.date - b.date; });
-    weekEntries = weekRest.concat(collapseSuperFormulaNextRaceWeekEntries(sfWeek));
-    weekEntries.sort(function (a, b) { return a.date - b.date; });
 
     if (weekEntries.length === 0) {
       container.innerHTML =
@@ -270,6 +235,30 @@
           }
           if (trackKey.indexOf('imola') >= 0) {
             extraClass += ' nrc-card--imola';
+          }
+          if (trackKey.indexOf('echopark speedway') >= 0 || trackKey.indexOf('echo park speedway') >= 0) {
+            extraClass += ' nrc-card--echopark-speedway';
+          }
+          if (trackKey.indexOf('interlagos') >= 0) {
+            extraClass += ' nrc-card--interlagos';
+          }
+          if (trackKey.indexOf('hungaroring') >= 0 || trackKey.indexOf('mogyor') >= 0) {
+            extraClass += ' nrc-card--hungaroring';
+          }
+          if (trackKey.indexOf('canadian tire motorsport') >= 0 || trackKey.indexOf('mosport') >= 0) {
+            extraClass += ' nrc-card--canadian-tire-motorsport-park';
+          }
+          if (trackKey.indexOf('claremont motorsports') >= 0) {
+            extraClass += ' nrc-card--claremont-motorsports-park';
+          }
+          if (trackKey.indexOf('lime rock') >= 0) {
+            extraClass += ' nrc-card--lime-rock';
+          }
+          if (trackKey.indexOf('norisring') >= 0) {
+            extraClass += ' nrc-card--norisring';
+          }
+          if (trackKey.indexOf('reid park') >= 0) {
+            extraClass += ' nrc-card--reid-park-street-circuit';
           }
           if (trackKey.indexOf('silverstone') >= 0) {
             extraClass += ' nrc-card--silverstone';
@@ -436,6 +425,30 @@
           }
           if (eventNameLc.indexOf('imola') >= 0) {
             extraClass += ' nrc-card--imola';
+          }
+          if (eventNameLc.indexOf('echopark') >= 0 || eventNameLc.indexOf('echo park') >= 0) {
+            extraClass += ' nrc-card--echopark-speedway';
+          }
+          if (eventNameLc.indexOf('interlagos') >= 0 || eventNameLc.indexOf('são paulo grand prix') >= 0) {
+            extraClass += ' nrc-card--interlagos';
+          }
+          if (eventNameLc.indexOf('hungaroring') >= 0 || eventNameLc.indexOf('hungarian grand prix') >= 0) {
+            extraClass += ' nrc-card--hungaroring';
+          }
+          if (eventNameLc.indexOf('canadian tire motorsport') >= 0 || eventNameLc.indexOf('mosport') >= 0) {
+            extraClass += ' nrc-card--canadian-tire-motorsport-park';
+          }
+          if (eventNameLc.indexOf('claremont motorsports') >= 0) {
+            extraClass += ' nrc-card--claremont-motorsports-park';
+          }
+          if (eventNameLc.indexOf('lime rock') >= 0) {
+            extraClass += ' nrc-card--lime-rock';
+          }
+          if (eventNameLc.indexOf('norisring') >= 0) {
+            extraClass += ' nrc-card--norisring';
+          }
+          if (eventNameLc.indexOf('reid park') >= 0) {
+            extraClass += ' nrc-card--reid-park-street-circuit';
           }
           if (eventNameLc.indexOf('kansas') >= 0) {
             extraClass += ' nrc-card--kansas';
@@ -617,6 +630,22 @@
               extraClass += ' nrc-card--thompson';
             } else if (eventSlug.indexOf('imola') >= 0) {
               extraClass += ' nrc-card--imola';
+            } else if (eventSlug.indexOf('echopark') >= 0 || eventSlug.indexOf('echo-park') >= 0) {
+              extraClass += ' nrc-card--echopark-speedway';
+            } else if (eventSlug.indexOf('interlagos') >= 0 || eventSlug.indexOf('sao-paulo') >= 0) {
+              extraClass += ' nrc-card--interlagos';
+            } else if (eventSlug.indexOf('hungaroring') >= 0 || eventSlug.indexOf('hungarian') >= 0) {
+              extraClass += ' nrc-card--hungaroring';
+            } else if (eventSlug.indexOf('canadian-tire') >= 0 || eventSlug.indexOf('mosport') >= 0) {
+              extraClass += ' nrc-card--canadian-tire-motorsport-park';
+            } else if (eventSlug.indexOf('claremont') >= 0) {
+              extraClass += ' nrc-card--claremont-motorsports-park';
+            } else if (eventSlug.indexOf('lime-rock') >= 0 || eventSlug.indexOf('lime_rock') >= 0) {
+              extraClass += ' nrc-card--lime-rock';
+            } else if (eventSlug.indexOf('norisring') >= 0) {
+              extraClass += ' nrc-card--norisring';
+            } else if (eventSlug.indexOf('reid-park') >= 0 || eventSlug.indexOf('reid_park') >= 0) {
+              extraClass += ' nrc-card--reid-park-street-circuit';
             } else if (eventSlug.indexOf('silverstone') >= 0) {
               extraClass += ' nrc-card--silverstone';
             } else if (eventSlug.indexOf('mid-ohio') >= 0 || eventSlug.indexOf('mid_ohio') >= 0) {

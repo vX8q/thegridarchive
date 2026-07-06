@@ -10,6 +10,7 @@ func TestLoadStandings_ELMS_HasClassTables(t *testing.T) {
 	if err != nil {
 		t.Fatalf("abs data dir: %v", err)
 	}
+	// Optional legacy check: data/standings/elms.json is no longer the API source.
 	data, err := LoadStandings(dataDir, "ELMS")
 	if err != nil {
 		t.Fatalf("LoadStandings: %v", err)
@@ -43,17 +44,17 @@ func TestBuildStandingsFromEvents_ELMS_FallsBackToBaseClasses(t *testing.T) {
 	if err != nil {
 		t.Fatalf("abs data dir: %v", err)
 	}
-	data, err := BuildStandingsFromEvents(dataDir, "ELMS", "2026")
+	data, err := BuildElmsStandingsFromEvents(dataDir, "2026")
 	if err != nil {
-		t.Fatalf("BuildStandingsFromEvents: %v", err)
+		t.Fatalf("BuildElmsStandingsFromEvents: %v", err)
 	}
 	if data == nil {
 		t.Fatal("nil standings")
 	}
 	if len(data.Rows) != 0 {
-		t.Fatalf("auto-build should not produce driver rows (race tables lack Driver column), got %d", len(data.Rows))
+		t.Fatalf("ELMS should use class tables, not flat rows (got %d)", len(data.Rows))
 	}
 	if len(data.Classes) == 0 {
-		t.Fatal("when auto-build finds no drivers, standings should fall back to class tables from elms.json")
+		t.Fatal("expected class tables from events")
 	}
 }

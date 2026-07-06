@@ -970,6 +970,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		raceCode := raceOrder[raceIdx]
 		detail, err := loadDetail(ev.ID)
 		if err != nil || detail == nil || detail.Tables == nil {
+			raceIdx++
 			continue
 		}
 		if isStockCarSeries {
@@ -978,9 +979,8 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			eligibleByCarForEvent = nil
 		}
 		rr, ok := detail.Tables["race_results"]
-		// Stock-car series (Cup/Xfinity/Truck/ARCA/Modified): allow format
-		// where full race results live in stage3 and race_results is absent.
-		if (!ok || len(rr.Headers) == 0 || len(rr.Rows) == 0) && isStockCarSeries {
+		// Cup/Xfinity/Truck: allow format where full race results live in stage3 and race_results is absent.
+		if (!ok || len(rr.Headers) == 0 || len(rr.Rows) == 0) && stockCarSeriesUsesStagePoints(seriesID) {
 			if st3, okStage3 := detail.Tables["stage3"]; okStage3 && len(st3.Headers) > 0 && len(st3.Rows) > 0 {
 				rr = st3
 				ok = true
@@ -1002,6 +1002,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 		}
 		if !ok || len(rr.Headers) == 0 || len(rr.Rows) == 0 {
+			raceIdx++
 			continue
 		}
 		var pscGuestCars map[string]bool
@@ -1044,36 +1045,38 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			continue
 		}
 		stagePointsByDriver := make(map[string]int)
-		for sn := 1; sn <= 2; sn++ {
-			st, ok := StageN(detail.Tables, sn)
-			if !ok {
-				continue
-			}
-			sDriverCol := colIndex(st.Headers, "Driver")
-			sPtsCol := colIndex(st.Headers, "Points")
-			if sPtsCol < 0 {
-				sPtsCol = colIndex(st.Headers, "Pts")
-			}
-			if sDriverCol < 0 || sPtsCol < 0 {
-				continue
-			}
-			for _, row := range st.Rows {
-				if sDriverCol >= len(row) || sPtsCol >= len(row) {
+		if stockCarSeriesUsesStagePoints(seriesID) {
+			for sn := 1; sn <= 2; sn++ {
+				st, ok := StageN(detail.Tables, sn)
+				if !ok {
 					continue
 				}
-				d := strings.TrimSpace(row[sDriverCol])
-				if d == "" {
+				sDriverCol := colIndex(st.Headers, "Driver")
+				sPtsCol := colIndex(st.Headers, "Points")
+				if sPtsCol < 0 {
+					sPtsCol = colIndex(st.Headers, "Pts")
+				}
+				if sDriverCol < 0 || sPtsCol < 0 {
 					continue
 				}
-				pts := 0
-				if s := strings.TrimSpace(row[sPtsCol]); s != "" {
-					for _, c := range s {
-						if c >= '0' && c <= '9' {
-							pts = pts*10 + int(c-'0')
+				for _, row := range st.Rows {
+					if sDriverCol >= len(row) || sPtsCol >= len(row) {
+						continue
+					}
+					d := strings.TrimSpace(row[sDriverCol])
+					if d == "" {
+						continue
+					}
+					pts := 0
+					if s := strings.TrimSpace(row[sPtsCol]); s != "" {
+						for _, c := range s {
+							if c >= '0' && c <= '9' {
+								pts = pts*10 + int(c-'0')
+							}
 						}
 					}
+					stagePointsByDriver[canonicalDriverKey(d)] += pts
 				}
-				stagePointsByDriver[canonicalDriverKey(d)] += pts
 			}
 		}
 		for rowIdx, row := range rr.Rows {
@@ -1130,7 +1133,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				if strings.EqualFold(seriesID, "F1") && driver == "Carlos Sainz" {
 					driver = "Carlos Sainz Jr."
 				}
-				key := canonicalDriverKey(driver)
+				key := standingsAggregateKey(seriesID, driver, carNum)
 				if key == "" {
 					key = driver
 				}
@@ -1138,6 +1141,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 					byDriver[key] = &accRow{driver: driver, car: carNum, team: team, manufacturer: manu, races: make(map[string]string)}
 				}
 				r := byDriver[key]
+				r.driver = preferLongerDriverName(r.driver, preferredDriverName(driver))
 				if r.car == "" {
 					r.car = carNum
 				}
@@ -1156,6 +1160,10 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 		}
 		// Did Not Qualify: add drivers from did_not_qualify table with DNQ for this race
+		var modDNQPts map[string]int
+		if strings.EqualFold(seriesID, "NASCAR_MODIFIED") {
+			modDNQPts = nascarModifiedDNQPoints(detail)
+		}
 		if dnq, ok := detail.Tables["did_not_qualify"]; ok && len(dnq.Headers) > 0 && len(dnq.Rows) > 0 {
 			dnqDriverCol := colIndex(dnq.Headers, "Driver")
 			dnqCarCol := firstColIndex(dnq.Headers, "No", "No.", "#", "Car")
@@ -1202,6 +1210,11 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				if _, has := r.races[raceCode]; !has {
 					r.races[raceCode] = "DNQ"
 				}
+				if modDNQPts != nil {
+					if pts, ok := modDNQPts[key]; ok && pts > 0 {
+						r.points += float64(pts)
+					}
+				}
 			}
 		}
 	}
@@ -1214,7 +1227,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	for _, r := range byDriver {
 		rows = append(rows, StandingRow{
 			Car:          r.car,
-			Driver:       r.driver,
+			Driver:       preferredDriverName(r.driver),
 			Team:         r.team,
 			Manufacturer: r.manufacturer,
 			Races:        r.races,

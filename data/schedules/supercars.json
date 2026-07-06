@@ -9,7 +9,7 @@
     "start_date": "2026-02-20",
     "end_date": "2026-02-20",
     "time_est": "7:50 PM",
-    "time_msk": "2/20/26 23:50"
+    "time_msk": "2/20/26 11:50"
   },
   {
     "id": "SUPERCARS_2026_2",
@@ -21,7 +21,7 @@
     "start_date": "2026-02-21",
     "end_date": "2026-02-21",
     "time_est": "7:35 PM",
-    "time_msk": "2/21/26 23:35"
+    "time_msk": "2/21/26 11:35"
   },
   {
     "id": "SUPERCARS_2026_3",
@@ -233,7 +233,7 @@
     "id": "SUPERCARS_2026_20",
     "series_id": "SUPERCARS",
     "season": "2026",
-    "name": "Townsville 500 Race 1",
+    "name": "NTI Townsville 500 Race 1",
     "location": "Townsville, Queensland",
     "circuit_name": "Reid Park Street Circuit",
     "start_date": "2026-07-10",
@@ -245,25 +245,25 @@
     "id": "SUPERCARS_2026_21",
     "series_id": "SUPERCARS",
     "season": "2026",
-    "name": "Townsville 500 Race 2",
+    "name": "NTI Townsville 500 Race 2",
     "location": "Townsville, Queensland",
     "circuit_name": "Reid Park Street Circuit",
     "start_date": "2026-07-11",
     "end_date": "2026-07-11",
-    "time_est": "3:00 PM",
-    "time_msk": "7/11/26 08:00"
+    "time_est": "3:05 PM",
+    "time_msk": "7/11/26 08:05"
   },
   {
     "id": "SUPERCARS_2026_22",
     "series_id": "SUPERCARS",
     "season": "2026",
-    "name": "Townsville 500 Race 3",
+    "name": "NTI Townsville 500 Race 3",
     "location": "Townsville, Queensland",
     "circuit_name": "Reid Park Street Circuit",
     "start_date": "2026-07-12",
     "end_date": "2026-07-12",
-    "time_est": "3:00 PM",
-    "time_msk": "7/12/26 08:00"
+    "time_est": "3:05 PM",
+    "time_msk": "7/12/26 08:05"
   },
   {
     "id": "SUPERCARS_2026_23",

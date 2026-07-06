@@ -60,7 +60,7 @@ go run ./cmd/sync-nascar-live -data-dir=./data
 go run ./cmd/sync-openf1-live -data-dir=./data
 ```
 
-**Проверка на уик-энде:** `/live` и `/api/live-debug` (блок `openf1`: `live_session`, `board`, `mapped_event_id`).
+**Проверка на уик-энде:** вкладка `/live` на главной и `GET /api/live-boards` (позиции, отставания).
 
 Сервер (`cmd/server`) уже синхронизирует NASCAR, F1, WEC и Super Formula в одном фоновом цикле. CLI-утилиты нужны только для ручного прогона или cron без сервера.
 
@@ -76,7 +76,7 @@ go run ./cmd/sync-openf1-live -data-dir=./data
 go run ./cmd/sync-wec-live -data-dir=./data
 ```
 
-**Проверка:** `/api/live-debug` (блок `wec`: `snapshot`, `board`, `mapped_event_id`).
+**Проверка:** вкладка `/live` и `GET /api/live-boards`.
 
 Вне сессии JSON может оставаться «застывшим» с финишным `raceState` (например `Chk`) — LIVE не включается.
 
@@ -92,7 +92,7 @@ go run ./cmd/sync-wec-live -data-dir=./data
 go run ./cmd/sync-superformula-live -data-dir=./data
 ```
 
-**Проверка:** `/api/live-debug` (блок `super_formula`).
+**Проверка:** вкладка `/live` и `GET /api/live-boards`.
 
 WebSocket доступен **только во время сессий**; вне уик-энда соединение отклоняется — это нормально.
 

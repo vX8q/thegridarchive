@@ -21,7 +21,7 @@
     "start_date": "2026-03-05",
     "end_date": "2026-03-05",
     "time_est": "6:00 PM",
-    "time_msk": "3/6/26 02:00"
+    "time_msk": "3/5/26 04:00"
   },
   {
     "id": "ARCA_2026_3",
@@ -33,13 +33,13 @@
     "start_date": "2026-04-18",
     "end_date": "2026-04-19",
     "time_est": "12:30 PM",
-    "time_msk": "4/18/26 19:30"
+    "time_msk": "4/19/26 19:30"
   },
   {
     "id": "ARCA_2026_4",
     "series_id": "ARCA",
     "season": "2026",
-    "name": "Manufactured Housing 200",
+    "name": "Alabama Manufactured Housing 200",
     "location": "Talladega Superspeedway, Lincoln, Alabama",
     "circuit_name": "Talladega Superspeedway, Lincoln, Alabama",
     "start_date": "2026-04-25",
@@ -69,7 +69,7 @@
     "start_date": "2026-05-16",
     "end_date": "2026-05-16",
     "time_est": "7:00 PM",
-    "time_msk": "5/17/26 02:00"
+    "time_msk": "5/16/26 02:00"
   },
   {
     "id": "ARCA_2026_7",
@@ -81,13 +81,13 @@
     "start_date": "2026-06-05",
     "end_date": "2026-06-05",
     "time_est": "5:00 PM",
-    "time_msk": "6/6/26 00:00"
+    "time_msk": "6/5/26 00:00"
   },
   {
     "id": "ARCA_2026_8",
     "series_id": "ARCA",
     "season": "2026",
-    "name": "Pocono ARCA 150",
+    "name": "Sunset Hill Shooting Range 150",
     "location": "Pocono Raceway, Long Pond, Pennsylvania",
     "circuit_name": "Pocono Raceway, Long Pond, Pennsylvania",
     "start_date": "2026-06-12",
@@ -105,7 +105,7 @@
     "start_date": "2026-06-20",
     "end_date": "2026-06-20",
     "time_est": "7:00 PM",
-    "time_msk": "6/21/26 02:00"
+    "time_msk": "6/20/26 02:00"
   },
   {
     "id": "ARCA_2026_10",
@@ -117,7 +117,7 @@
     "start_date": "2026-06-27",
     "end_date": "2026-06-27",
     "time_est": "9:00 PM",
-    "time_msk": "6/28/26 04:00"
+    "time_msk": "6/27/26 04:00"
   },
   {
     "id": "ARCA_2026_11",
@@ -129,13 +129,13 @@
     "start_date": "2026-07-03",
     "end_date": "2026-07-03",
     "time_est": "8:00 PM",
-    "time_msk": "7/4/26 03:00"
+    "time_msk": "7/3/26 04:00"
   },
   {
     "id": "ARCA_2026_12",
     "series_id": "ARCA",
     "season": "2026",
-    "name": "Lime Rock Park 100",
+    "name": "Lime Rock Park ARCA 100",
     "location": "Lime Rock Park, Lakeville, Connecticut",
     "circuit_name": "Lime Rock Park, Lakeville, Connecticut",
     "start_date": "2026-07-10",
@@ -153,19 +153,19 @@
     "start_date": "2026-07-24",
     "end_date": "2026-07-24",
     "time_est": "5:00 PM",
-    "time_msk": "7/25/26 00:00"
+    "time_msk": "7/24/26 00:00"
   },
   {
     "id": "ARCA_2026_14",
     "series_id": "ARCA",
     "season": "2026",
-    "name": "Atlas 150",
+    "name": "JR & CO. 150",
     "location": "Iowa Speedway, Newton, Iowa",
     "circuit_name": "Iowa Speedway, Newton, Iowa",
     "start_date": "2026-08-07",
     "end_date": "2026-08-07",
     "time_est": "7:00 PM",
-    "time_msk": "8/8/26 02:00"
+    "time_msk": "8/7/26 02:00"
   },
   {
     "id": "ARCA_2026_15",
@@ -189,7 +189,7 @@
     "start_date": "2026-08-28",
     "end_date": "2026-08-28",
     "time_est": "9:00 PM",
-    "time_msk": "8/29/26 04:00"
+    "time_msk": "8/28/26 05:00"
   },
   {
     "id": "ARCA_2026_17",
@@ -201,7 +201,7 @@
     "start_date": "2026-09-06",
     "end_date": "2026-09-06",
     "time_est": "8:30 PM",
-    "time_msk": "9/7/26 03:30"
+    "time_msk": "9/6/26 03:30"
   },
   {
     "id": "ARCA_2026_18",
@@ -213,7 +213,7 @@
     "start_date": "2026-09-12",
     "end_date": "2026-09-12",
     "time_est": "6:00 PM",
-    "time_msk": "9/13/26 01:00"
+    "time_msk": "9/12/26 01:00"
   },
   {
     "id": "ARCA_2026_19",
@@ -225,7 +225,7 @@
     "start_date": "2026-09-17",
     "end_date": "2026-09-17",
     "time_est": "5:30 PM",
-    "time_msk": "9/18/26 00:30"
+    "time_msk": "9/17/26 00:30"
   },
   {
     "id": "ARCA_2026_20",
@@ -237,6 +237,6 @@
     "start_date": "2026-09-25",
     "end_date": "2026-09-25",
     "time_est": "8:00 PM",
-    "time_msk": "9/26/26 03:00"
+    "time_msk": "9/25/26 03:00"
   }
 ]

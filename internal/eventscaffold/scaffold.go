@@ -50,7 +50,7 @@ var seriesMetaByDataID = map[string]seriesMeta{
 	"nascar_cup":     {series: "NASCAR Cup Series", template: "stockcar"},
 	"noaps":          {series: "NASCAR O'Reilly Auto Parts Series", template: "stockcar"},
 	"nascar_truck":   {series: "NASCAR Craftsman Truck Series", template: "stockcar"},
-	"nascar_modified": {series: "NASCAR Whelen Modified Tour", template: "stockcar"},
+	"nascar_modified": {series: "NASCAR Whelen Modified Tour", template: "stockcar_arca"},
 	"arca":           {series: "ARCA Menards Series", template: "stockcar_arca"},
 	"f1":             {series: "Formula 1", template: "f1"},
 	"f2":             {series: "FIA Formula 2 Championship", template: "f2f3"},

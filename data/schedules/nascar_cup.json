@@ -9,7 +9,7 @@
     "start_date": "2026-02-04",
     "end_date": "2026-02-04",
     "time_est": "6:00 PM",
-    "time_msk": "2/5/26 02:00"
+    "time_msk": "2/4/26 02:00"
   },
   {
     "id": "NASCAR_CUP_2026_1",
@@ -39,13 +39,13 @@
     "id": "NASCAR_CUP_2026_3",
     "series_id": "NASCAR_CUP",
     "season": "2026",
-    "name": "DuraMAX Grand Prix",
+    "name": "DuraMAX Texas Grand Prix",
     "location": "Circuit of the Americas, Austin, Texas",
     "circuit_name": "Circuit of the Americas, Austin, Texas",
     "start_date": "2026-03-01",
     "end_date": "2026-03-01",
     "time_est": "3:30 PM",
-    "time_msk": "3/1/26 23:30"
+    "time_msk": "3/1/26 00:30"
   },
   {
     "id": "NASCAR_CUP_2026_4",
@@ -57,7 +57,7 @@
     "start_date": "2026-03-08",
     "end_date": "2026-03-08",
     "time_est": "3:30 PM",
-    "time_msk": "3/8/26 22:30"
+    "time_msk": "3/8/26 01:30"
   },
   {
     "id": "NASCAR_CUP_2026_5",
@@ -69,7 +69,7 @@
     "start_date": "2026-03-15",
     "end_date": "2026-03-15",
     "time_est": "4:00 PM",
-    "time_msk": "3/15/26 23:00"
+    "time_msk": "3/15/26 02:00"
   },
   {
     "id": "NASCAR_CUP_2026_6",
@@ -81,7 +81,7 @@
     "start_date": "2026-03-22",
     "end_date": "2026-03-22",
     "time_est": "3:00 PM",
-    "time_msk": "3/22/26 22:00"
+    "time_msk": "3/22/26 23:00"
   },
   {
     "id": "NASCAR_CUP_2026_7",
@@ -177,7 +177,7 @@
     "start_date": "2026-05-24",
     "end_date": "2026-05-24",
     "time_est": "6:00 PM",
-    "time_msk": "5/25/26 01:00"
+    "time_msk": "5/24/26 01:00"
   },
   {
     "id": "NASCAR_CUP_2026_14",
@@ -189,7 +189,7 @@
     "start_date": "2026-05-31",
     "end_date": "2026-05-31",
     "time_est": "7:00 PM",
-    "time_msk": "6/1/26 02:00"
+    "time_msk": "5/31/26 02:00"
   },
   {
     "id": "NASCAR_CUP_2026_15",
@@ -249,7 +249,7 @@
     "start_date": "2026-07-05",
     "end_date": "2026-07-05",
     "time_est": "6:00 PM",
-    "time_msk": "7/6/26 01:00"
+    "time_msk": "7/5/26 02:00"
   },
   {
     "id": "NASCAR_CUP_2026_20",
@@ -261,7 +261,7 @@
     "start_date": "2026-07-12",
     "end_date": "2026-07-12",
     "time_est": "7:00 PM",
-    "time_msk": "7/13/26 02:00"
+    "time_msk": "7/12/26 02:00"
   },
   {
     "id": "NASCAR_CUP_2026_21",
@@ -273,7 +273,7 @@
     "start_date": "2026-07-19",
     "end_date": "2026-07-19",
     "time_est": "7:00 PM",
-    "time_msk": "7/20/26 02:00"
+    "time_msk": "7/19/26 02:00"
   },
   {
     "id": "NASCAR_CUP_2026_22",
@@ -309,13 +309,13 @@
     "start_date": "2026-08-15",
     "end_date": "2026-08-15",
     "time_est": "7:00 PM",
-    "time_msk": "8/16/26 02:00"
+    "time_msk": "8/15/26 02:00"
   },
   {
     "id": "NASCAR_CUP_2026_25",
     "series_id": "NASCAR_CUP",
     "season": "2026",
-    "name": "Mobil 1 301",
+    "name": "Dollar Tree 301",
     "location": "New Hampshire Motor Speedway, Loudon, New Hampshire",
     "circuit_name": "New Hampshire Motor Speedway, Loudon, New Hampshire",
     "start_date": "2026-08-23",
@@ -333,7 +333,7 @@
     "start_date": "2026-08-29",
     "end_date": "2026-08-29",
     "time_est": "7:30 PM",
-    "time_msk": "8/30/26 02:30"
+    "time_msk": "8/29/26 02:30"
   },
   {
     "id": "NASCAR_CUP_2026_27",
@@ -345,7 +345,7 @@
     "start_date": "2026-09-06",
     "end_date": "2026-09-06",
     "time_est": "5:00 PM",
-    "time_msk": "9/7/26 00:00"
+    "time_msk": "9/6/26 01:00"
   },
   {
     "id": "NASCAR_CUP_2026_28",
@@ -357,7 +357,7 @@
     "start_date": "2026-09-13",
     "end_date": "2026-09-13",
     "time_est": "3:00 PM",
-    "time_msk": "9/13/26 22:00"
+    "time_msk": "9/13/26 23:00"
   },
   {
     "id": "NASCAR_CUP_2026_29",
@@ -369,7 +369,7 @@
     "start_date": "2026-09-19",
     "end_date": "2026-09-19",
     "time_est": "7:30 PM",
-    "time_msk": "9/20/26 02:30"
+    "time_msk": "9/19/26 02:30"
   },
   {
     "id": "NASCAR_CUP_2026_30",
@@ -393,7 +393,7 @@
     "start_date": "2026-10-04",
     "end_date": "2026-10-04",
     "time_est": "5:30 PM",
-    "time_msk": "10/5/26 00:30"
+    "time_msk": "10/4/26 03:30"
   },
   {
     "id": "NASCAR_CUP_2026_32",
@@ -417,7 +417,7 @@
     "start_date": "2026-10-18",
     "end_date": "2026-10-18",
     "time_est": "3:00 PM",
-    "time_msk": "10/18/26 22:00"
+    "time_msk": "10/18/26 01:00"
   },
   {
     "id": "NASCAR_CUP_2026_34",

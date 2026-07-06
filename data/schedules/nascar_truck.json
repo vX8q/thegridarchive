@@ -9,7 +9,7 @@
     "start_date": "2026-02-13",
     "end_date": "2026-02-13",
     "time_est": "7:30 PM",
-    "time_msk": "2/14/26 03:30"
+    "time_msk": "2/13/26 03:30"
   },
   {
     "id": "NASCAR_TRUCK_2026_2",
@@ -45,7 +45,7 @@
     "start_date": "2026-03-20",
     "end_date": "2026-03-20",
     "time_est": "7:30 PM",
-    "time_msk": "3/21/26 02:30"
+    "time_msk": "3/20/26 03:30"
   },
   {
     "id": "NASCAR_TRUCK_2026_5",
@@ -69,7 +69,7 @@
     "start_date": "2026-04-10",
     "end_date": "2026-04-10",
     "time_est": "7:30 PM",
-    "time_msk": "4/11/26 02:30"
+    "time_msk": "4/10/26 02:30"
   },
   {
     "id": "NASCAR_TRUCK_2026_7",
@@ -81,7 +81,7 @@
     "start_date": "2026-05-01",
     "end_date": "2026-05-01",
     "time_est": "8:00 PM",
-    "time_msk": "5/2/26 03:00"
+    "time_msk": "5/1/26 03:00"
   },
   {
     "id": "NASCAR_TRUCK_2026_8",
@@ -105,7 +105,7 @@
     "start_date": "2026-05-15",
     "end_date": "2026-05-15",
     "time_est": "5:00 PM",
-    "time_msk": "5/16/26 00:00"
+    "time_msk": "5/15/26 00:00"
   },
   {
     "id": "NASCAR_TRUCK_2026_10",
@@ -117,7 +117,7 @@
     "start_date": "2026-05-22",
     "end_date": "2026-05-22",
     "time_est": "7:30 PM",
-    "time_msk": "5/23/26 02:30"
+    "time_msk": "5/22/26 02:30"
   },
   {
     "id": "NASCAR_TRUCK_2026_11",
@@ -129,13 +129,13 @@
     "start_date": "2026-05-29",
     "end_date": "2026-05-29",
     "time_est": "8:00 PM",
-    "time_msk": "5/30/26 03:00"
+    "time_msk": "5/29/26 03:00"
   },
   {
     "id": "NASCAR_TRUCK_2026_12",
     "series_id": "NASCAR_TRUCK",
     "season": "2026",
-    "name": "DQS Solutions \u0026 Staffing 250",
+    "name": "DQS Solutions & Staffing 250",
     "location": "Michigan International Speedway, Brooklyn, Michigan",
     "circuit_name": "Michigan International Speedway, Brooklyn, Michigan",
     "start_date": "2026-06-06",
@@ -153,7 +153,7 @@
     "start_date": "2026-06-19",
     "end_date": "2026-06-19",
     "time_est": "7:00 PM",
-    "time_msk": "6/20/26 02:00"
+    "time_msk": "6/19/26 02:00"
   },
   {
     "id": "NASCAR_TRUCK_2026_14",
@@ -189,7 +189,7 @@
     "start_date": "2026-07-24",
     "end_date": "2026-07-24",
     "time_est": "8:00 PM",
-    "time_msk": "7/25/26 03:00"
+    "time_msk": "7/24/26 03:00"
   },
   {
     "id": "NASCAR_TRUCK_2026_17",
@@ -201,7 +201,7 @@
     "start_date": "2026-08-14",
     "end_date": "2026-08-14",
     "time_est": "7:30 PM",
-    "time_msk": "8/15/26 02:30"
+    "time_msk": "8/14/26 02:30"
   },
   {
     "id": "NASCAR_TRUCK_2026_18",
@@ -225,7 +225,7 @@
     "start_date": "2026-09-17",
     "end_date": "2026-09-17",
     "time_est": "8:00 PM",
-    "time_msk": "9/18/26 03:00"
+    "time_msk": "9/17/26 03:00"
   },
   {
     "id": "NASCAR_TRUCK_2026_20",
@@ -249,7 +249,7 @@
     "start_date": "2026-10-09",
     "end_date": "2026-10-09",
     "time_est": "5:00 PM",
-    "time_msk": "10/10/26 00:00"
+    "time_msk": "10/9/26 00:00"
   },
   {
     "id": "NASCAR_TRUCK_2026_22",
@@ -261,7 +261,7 @@
     "start_date": "2026-10-16",
     "end_date": "2026-10-16",
     "time_est": "7:30 PM",
-    "time_msk": "10/17/26 02:30"
+    "time_msk": "10/16/26 05:30"
   },
   {
     "id": "NASCAR_TRUCK_2026_23",
@@ -285,7 +285,7 @@
     "start_date": "2026-10-30",
     "end_date": "2026-10-30",
     "time_est": "6:30 PM",
-    "time_msk": "10/31/26 01:30"
+    "time_msk": "10/30/26 01:30"
   },
   {
     "id": "NASCAR_TRUCK_2026_25",
@@ -297,6 +297,6 @@
     "start_date": "2026-11-06",
     "end_date": "2026-11-06",
     "time_est": "7:30 PM",
-    "time_msk": "11/7/26 03:30"
+    "time_msk": "11/6/26 03:30"
   }
 ]

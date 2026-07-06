@@ -65,7 +65,17 @@ func canonicalDriverKey(name string) string {
 
 	// Normalize whitespace.
 	s = strings.Join(strings.Fields(s), " ")
-	return collapseSpacedInitials(strings.ToLower(s))
+	s = strings.ToLower(s)
+	s = collapseSpacedInitials(s)
+	switch s {
+	case "jonathan mckennedy":
+		return "jon mckennedy"
+	case "michael christopher jr":
+		return "mike christopher jr"
+	case "david sapienza":
+		return "dave sapienza"
+	}
+	return s
 }
 
 // collapseSpacedInitials collapses spaced initials at the start of a name: "a j allmendinger" -> "aj allmendinger".
@@ -182,6 +192,12 @@ func preferredDriverName(name string) string {
 		return "Matthew Payne"
 	case "cam waters":
 		return "Cameron Waters"
+	case "jon mckennedy", "jonathan mckennedy":
+		return "Jon McKennedy"
+	case "mike christopher jr", "michael christopher jr":
+		return "Mike Christopher Jr."
+	case "dave sapienza", "david sapienza":
+		return "Dave Sapienza"
 	}
 	return raw
 }

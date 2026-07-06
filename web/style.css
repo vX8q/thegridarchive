@@ -73,7 +73,6 @@
 .event-section-nav,
 .nrc-cards,
 .lrc-cards,
-.live-debug-pre,
 .search-results {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
@@ -85,7 +84,6 @@
 .event-section-nav::-webkit-scrollbar,
 .nrc-cards::-webkit-scrollbar,
 .lrc-cards::-webkit-scrollbar,
-.live-debug-pre::-webkit-scrollbar,
 .search-results::-webkit-scrollbar {
   height: var(--scrollbar-size);
   width: var(--scrollbar-size);
@@ -97,7 +95,6 @@
 .event-section-nav::-webkit-scrollbar-track,
 .nrc-cards::-webkit-scrollbar-track,
 .lrc-cards::-webkit-scrollbar-track,
-.live-debug-pre::-webkit-scrollbar-track,
 .search-results::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
 }
@@ -108,7 +105,6 @@
 .event-section-nav::-webkit-scrollbar-thumb,
 .nrc-cards::-webkit-scrollbar-thumb,
 .lrc-cards::-webkit-scrollbar-thumb,
-.live-debug-pre::-webkit-scrollbar-thumb,
 .search-results::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
   border-radius: 999px;
@@ -120,7 +116,6 @@
 .event-section-nav::-webkit-scrollbar-thumb:hover,
 .nrc-cards::-webkit-scrollbar-thumb:hover,
 .lrc-cards::-webkit-scrollbar-thumb:hover,
-.live-debug-pre::-webkit-scrollbar-thumb:hover,
 .search-results::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
 }
@@ -3521,60 +3516,6 @@ tr.table-separator-row td {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* Temporary live debug page */
-.live-debug-root {
-  margin-bottom: 1.75rem;
-}
-.live-debug-header {
-  margin-bottom: 1rem;
-}
-.live-debug-title {
-  font-size: var(--heading-2-size, 1.25rem);
-  font-weight: 700;
-  margin: 0 0 0.35rem;
-}
-.live-debug-meta,
-.live-debug-note {
-  margin: 0.25rem 0 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-.live-debug-section {
-  margin-bottom: 1.25rem;
-}
-.live-debug-section-title {
-  font-size: var(--heading-4-size, 1rem);
-  font-weight: 600;
-  margin: 0 0 0.5rem;
-}
-.live-debug-url {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-  word-break: break-all;
-}
-.live-debug-error {
-  margin: 0 0 0.5rem;
-  color: #f87171;
-  font-size: 0.9rem;
-}
-.live-debug-pre {
-  margin: 0;
-  padding: 0.85rem 1rem;
-  border-radius: 10px;
-  border: 1px solid var(--border-2);
-  background: rgba(0, 0, 0, 0.25);
-  overflow: auto;
-  max-height: 28rem;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.live-debug-pre--full {
-  max-height: 40rem;
-}
-
 /* ── NASCAR live leaderboards (/live tab) ─────────────────────────────────── */
 .nascar-live-root {
   margin-bottom: 1.5rem;
@@ -3775,32 +3716,6 @@ tr.table-separator-row td {
   margin: 0;
   color: #f87171;
   font-size: 0.88rem;
-}
-
-.live-debug-details {
-  margin-top: 1.25rem;
-  border: 1px solid var(--border-2);
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.15);
-}
-.live-debug-details > summary {
-  cursor: pointer;
-  padding: 0.65rem 0.9rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-  list-style: none;
-}
-.live-debug-details > summary::-webkit-details-marker {
-  display: none;
-}
-.live-debug-details[open] > summary {
-  border-bottom: 1px solid var(--border-2);
-}
-.live-debug-details .live-debug-root {
-  padding: 0.85rem 0.9rem 1rem;
 }
 
 /* ── Next race cards (per series) ─────────────────────────────────────────── */
@@ -4071,6 +3986,21 @@ tr.table-separator-row td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* GTWCE Spa 24H: five class lines (Overall + four cups incl. Pro-Am) */
+.lrc-card--gtwce-spa24 {
+  height: 8.55rem;
+}
+.lrc-card--gtwce-spa24 .lrc-name {
+  font-size: 0.92rem;
+  line-height: 1.04;
+}
+.lrc-card--gtwce-spa24 .lrc-winner {
+  font-size: 0.58rem;
+  line-height: 1.0;
+  margin-top: 0.1rem;
+  max-height: 5.05em;
 }
 
 .lrc-card--supercars .lrc-winner {
@@ -4442,7 +4372,7 @@ tr.table-separator-row td {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background-image: url('/api/card-bg/imola-bg.jpg');
+  background-image: url('/api/card-bg/imola.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -5539,6 +5469,79 @@ tr.table-separator-row td {
 .lrc-card--silverstone > *,
 .lrc-card--mid-ohio > *,
 .lrc-card--chicagoland > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.lrc-card--echopark-speedway,
+.lrc-card--interlagos,
+.lrc-card--hungaroring,
+.lrc-card--canadian-tire-motorsport-park,
+.lrc-card--claremont-motorsports-park,
+.lrc-card--lime-rock,
+.lrc-card--norisring,
+.lrc-card--reid-park-street-circuit {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+}
+.lrc-card--echopark-speedway {
+  background-image: url('/api/card-bg/echopark-speedway.webp');
+}
+.lrc-card--interlagos {
+  background-image: url('/api/card-bg/interlagos.webp');
+}
+.lrc-card--hungaroring {
+  background-image: url('/api/card-bg/hungaroring.webp');
+}
+.lrc-card--canadian-tire-motorsport-park {
+  background-image: url('/api/card-bg/canadian-tire-motorsport-park.jpg');
+}
+.lrc-card--claremont-motorsports-park {
+  background-image: url('/api/card-bg/claremont-motorsports-park.jpg');
+}
+.lrc-card--lime-rock {
+  background-image: url('/api/card-bg/lime-rock.jpg');
+}
+.lrc-card--norisring {
+  background-image: url('/api/card-bg/norisring.jpg');
+}
+.lrc-card--reid-park-street-circuit {
+  background-image: url('/api/card-bg/Reid-Park-Street-Circuit.jpg');
+}
+.lrc-card--echopark-speedway::after,
+.lrc-card--interlagos::after,
+.lrc-card--hungaroring::after,
+.lrc-card--canadian-tire-motorsport-park::after,
+.lrc-card--claremont-motorsports-park::after,
+.lrc-card--lime-rock::after,
+.lrc-card--norisring::after,
+.lrc-card--reid-park-street-circuit::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.lrc-card--echopark-speedway > *,
+.lrc-card--interlagos > *,
+.lrc-card--hungaroring > *,
+.lrc-card--canadian-tire-motorsport-park > *,
+.lrc-card--claremont-motorsports-park > *,
+.lrc-card--lime-rock > *,
+.lrc-card--norisring > *,
+.lrc-card--reid-park-street-circuit > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -6665,7 +6668,7 @@ tr.table-separator-row td {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/api/card-bg/imola-bg.jpg');
+  background-image: url('/api/card-bg/imola.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -7920,6 +7923,105 @@ tr.table-separator-row td {
 .nrc-card--hidden-valley-raceway:hover::before,
 .nrc-card--sepang:hover::before,
 .nrc-card--coronado-street:hover::before {
+  transform: none;
+}
+
+.nrc-card--echopark-speedway,
+.nrc-card--interlagos,
+.nrc-card--hungaroring,
+.nrc-card--canadian-tire-motorsport-park,
+.nrc-card--claremont-motorsports-park,
+.nrc-card--lime-rock,
+.nrc-card--norisring,
+.nrc-card--reid-park-street-circuit {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.nrc-card--echopark-speedway::before {
+  background-image: url('/api/card-bg/echopark-speedway.webp');
+}
+.nrc-card--interlagos::before {
+  background-image: url('/api/card-bg/interlagos.webp');
+}
+.nrc-card--hungaroring::before {
+  background-image: url('/api/card-bg/hungaroring.webp');
+}
+.nrc-card--canadian-tire-motorsport-park::before {
+  background-image: url('/api/card-bg/canadian-tire-motorsport-park.jpg');
+}
+.nrc-card--claremont-motorsports-park::before {
+  background-image: url('/api/card-bg/claremont-motorsports-park.jpg');
+}
+.nrc-card--lime-rock::before {
+  background-image: url('/api/card-bg/lime-rock.jpg');
+}
+.nrc-card--norisring::before {
+  background-image: url('/api/card-bg/norisring.jpg');
+}
+.nrc-card--reid-park-street-circuit::before {
+  background-image: url('/api/card-bg/Reid-Park-Street-Circuit.jpg');
+}
+.nrc-card--echopark-speedway::before,
+.nrc-card--interlagos::before,
+.nrc-card--hungaroring::before,
+.nrc-card--canadian-tire-motorsport-park::before,
+.nrc-card--claremont-motorsports-park::before,
+.nrc-card--lime-rock::before,
+.nrc-card--norisring::before,
+.nrc-card--reid-park-street-circuit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: 0;
+  transition: transform 0.2s ease;
+}
+.nrc-card--echopark-speedway::after,
+.nrc-card--interlagos::after,
+.nrc-card--hungaroring::after,
+.nrc-card--canadian-tire-motorsport-park::after,
+.nrc-card--claremont-motorsports-park::after,
+.nrc-card--lime-rock::after,
+.nrc-card--norisring::after,
+.nrc-card--reid-park-street-circuit::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.nrc-card--echopark-speedway > *,
+.nrc-card--interlagos > *,
+.nrc-card--hungaroring > *,
+.nrc-card--canadian-tire-motorsport-park > *,
+.nrc-card--claremont-motorsports-park > *,
+.nrc-card--lime-rock > *,
+.nrc-card--norisring > *,
+.nrc-card--reid-park-street-circuit > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+.nrc-card--echopark-speedway:hover::before,
+.nrc-card--interlagos:hover::before,
+.nrc-card--hungaroring:hover::before,
+.nrc-card--canadian-tire-motorsport-park:hover::before,
+.nrc-card--claremont-motorsports-park:hover::before,
+.nrc-card--lime-rock:hover::before,
+.nrc-card--norisring:hover::before,
+.nrc-card--reid-park-street-circuit:hover::before {
   transform: none;
 }
 

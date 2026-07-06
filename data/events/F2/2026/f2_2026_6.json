@@ -3,27 +3,169 @@
   "series": "FIA Formula 2 Championship",
   "race": "Spielberg",
   "date": "27–28 June 2026",
-  "start_date": "2026-06-27",
-  "end_date": "2026-06-28",
   "track": "Red Bull Ring",
   "location": "Spielberg",
-  "entry_list": [],
-  "tables": {
-    "feature": {
-      "title": "Feature Race Results",
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Laps",
-        "Time/Retired",
-        "Grid",
-        "Pts"
-      ],
-      "rows": []
+  "start_date": "2026-06-27",
+  "end_date": "2026-06-28",
+  "laps": "",
+  "distance": "",
+  "event_preview": "The Red Bull Ring is a 4.318 km (2.682 mi) permanent road course in Spielberg, Styria, Austria, featuring 10 corners and dramatic elevation changes of 65 metres — the first half rewarding power along three straights, the second half a downhill sequence of quick corners. Round 6 of the 2026 Formula 2 Championship took place at the Red Bull Ring June 26-28, supporting the Austrian Grand Prix. Friday featured Free Practice and Qualifying, with the 28-lap Sprint Race on Saturday and the 40-lap Feature Race on Sunday.\n\nHeading into Austria, Gabriele Minì held a narrow one-point championship lead over Nikola Tsolov following Monaco, with Martinius Stenshorne, Alex Dunne and Noel León rounding out the top five. Rafael Câmara, the former FIA Formula 3 champion in his first full F2 season, remained in close contention after a strong run of results through the opening rounds. Colton Herta, the nine-time IndyCar winner racing for Hitech on a partial schedule, continued his pursuit of a Super Licence.",
+  "event_preview_ru": "Red Bull Ring — постоянная трасса протяжённостью 4.318 km (2.682 mi) в Spielberg, Styria, Austria; 10 поворотов и заметные перепады высот в 65 метров — первая половина круга вознаграждает мощность на трёх прямых, вторая — серия быстрых поворотов на спуске. Шестой этап чемпионата Formula 2 2026 года прошёл на Red Bull Ring 26–28 июня в программе поддержки Гран-при Австрии. В пятницу прошли свободные практики и квалификация, в субботу — 28-круговый спринт, в воскресенье — 40-круговая основная гонка.\n\nПеред Австрией Gabriele Minì удерживал минимальное преимущество в одно очко над Nikola Tsolov после Монако; Martinius Stenshorne, Alex Dunne и Noel León замыкали первую пятёрку. Rafael Câmara, бывший чемпион FIA Formula 3 в первом полном сезоне F2, оставался в числе претендентов после сильной серии результатов на стартовых этапах. Colton Herta, девятикратный победитель IndyCar, выступающий за Hitech по частичному календарю, продолжал погоню за Super Licence.",
+  "youtube_highlights": [
+    {
+      "id": "dF64VgAr_sQ",
+      "title": "Sprint highlights"
     },
+    {
+      "id": "ew9W1YBCu88",
+      "title": "Feature highlights"
+    }
+  ],
+  "entry_list": [
+    {
+      "number": "1",
+      "driver": "Rafael Câmara",
+      "team": "Invicta Racing",
+      "driver_slug": "rafael-camara"
+    },
+    {
+      "number": "2",
+      "driver": "Joshua Dürksen",
+      "team": "Invicta Racing",
+      "driver_slug": "joshua-durksen"
+    },
+    {
+      "number": "3",
+      "driver": "Ritomo Miyata",
+      "team": "Hitech",
+      "driver_slug": "ritomo-miyata"
+    },
+    {
+      "number": "4",
+      "driver": "Colton Herta",
+      "team": "Hitech",
+      "driver_slug": "colton-herta"
+    },
+    {
+      "number": "5",
+      "driver": "Noel León",
+      "team": "Campos Racing",
+      "driver_slug": "noel-leon"
+    },
+    {
+      "number": "6",
+      "driver": "Nikola Tsolov",
+      "team": "Campos Racing",
+      "driver_slug": "nikola-tsolov"
+    },
+    {
+      "number": "7",
+      "driver": "Dino Beganovic",
+      "team": "DAMS Lucas Oil",
+      "driver_slug": "dino-beganovic"
+    },
+    {
+      "number": "8",
+      "driver": "Roman Bilinski",
+      "team": "DAMS Lucas Oil",
+      "driver_slug": "roman-bilinski"
+    },
+    {
+      "number": "9",
+      "driver": "Gabriele Minì",
+      "team": "MP Motorsport",
+      "driver_slug": "gabriele-mini"
+    },
+    {
+      "number": "10",
+      "driver": "Oliver Goethe",
+      "team": "MP Motorsport",
+      "driver_slug": "oliver-goethe"
+    },
+    {
+      "number": "11",
+      "driver": "Sebastián Montoya",
+      "team": "Prema Racing",
+      "driver_slug": "sebastian-montoya"
+    },
+    {
+      "number": "12",
+      "driver": "Mari Boya",
+      "team": "Prema Racing",
+      "driver_slug": "mari-boya"
+    },
+    {
+      "number": "14",
+      "driver": "Martinius Stenshorne",
+      "team": "Rodin Motorsport",
+      "driver_slug": "martinius-stenshorne"
+    },
+    {
+      "number": "15",
+      "driver": "Alex Dunne",
+      "team": "Rodin Motorsport",
+      "driver_slug": "alex-dunne"
+    },
+    {
+      "number": "16",
+      "driver": "Kush Maini",
+      "team": "ART Grand Prix",
+      "driver_slug": "kush-maini"
+    },
+    {
+      "number": "17",
+      "driver": "Tasanapol Inthraphuvasak",
+      "team": "ART Grand Prix",
+      "driver_slug": "tasanapol-inthraphuvasak"
+    },
+    {
+      "number": "20",
+      "driver": "Emerson Fittipaldi Jr.",
+      "team": "AIX Racing",
+      "driver_slug": "emerson-fittipaldi-jr"
+    },
+    {
+      "number": "21",
+      "driver": "Cian Shields",
+      "team": "AIX Racing",
+      "driver_slug": "cian-shields"
+    },
+    {
+      "number": "22",
+      "driver": "Nico Varrone",
+      "team": "Van Amersfoort Racing",
+      "driver_slug": "nico-varrone"
+    },
+    {
+      "number": "23",
+      "driver": "Rafael Villagómez",
+      "team": "Van Amersfoort Racing",
+      "driver_slug": "rafael-villagomez"
+    },
+    {
+      "number": "24",
+      "driver": "Laurens van Hoepen",
+      "team": "Trident",
+      "driver_slug": "laurens-van-hoepen"
+    },
+    {
+      "number": "25",
+      "driver": "John Bennett",
+      "team": "Trident",
+      "driver_slug": "john-bennett"
+    }
+  ],
+  "tables": {
     "practice": {
+      "title": "2026 FIA Formula 2 Championship - Practice",
+      "subtitle": "Spielberg",
+      "meta": {
+        "Championship": "2026 FIA Formula 2 Championship",
+        "Session": "Practice",
+        "Date": "Fri 26 Jun 2026",
+        "Start": "11:05 AM",
+        "Length": "45 mins"
+      },
       "headers": [
         "Pos",
         "No.",
@@ -35,34 +177,1186 @@
         "Int",
         "KPH"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "10",
+          "O. Goethe",
+          "MP Motorsport",
+          "20",
+          "1:16.978",
+          "—",
+          "—",
+          "202.312"
+        ],
+        [
+          "2",
+          "6",
+          "N. Tsolov",
+          "Campos Racing",
+          "23",
+          "1:17.048",
+          "0.070",
+          "0.070",
+          "202.128"
+        ],
+        [
+          "3",
+          "15",
+          "A. Dunne",
+          "Rodin Motorsport",
+          "23",
+          "1:17.158",
+          "0.180",
+          "0.110",
+          "201.840"
+        ],
+        [
+          "4",
+          "5",
+          "N. León",
+          "Campos Racing",
+          "21",
+          "1:17.344",
+          "0.366",
+          "0.186",
+          "201.354"
+        ],
+        [
+          "5",
+          "1",
+          "R. Câmara",
+          "Invicta Racing",
+          "17",
+          "1:17.383",
+          "0.405",
+          "0.039",
+          "201.253"
+        ],
+        [
+          "6",
+          "9",
+          "G. Minì",
+          "MP Motorsport",
+          "21",
+          "1:17.384",
+          "0.406",
+          "0.001",
+          "201.250"
+        ],
+        [
+          "7",
+          "17",
+          "T. Inthraphuvasak",
+          "ART Grand Prix",
+          "21",
+          "1:17.390",
+          "0.412",
+          "0.006",
+          "201.235"
+        ],
+        [
+          "8",
+          "23",
+          "R. Villagómez",
+          "Van Amersfoort Racing",
+          "21",
+          "1:17.421",
+          "0.443",
+          "0.031",
+          "201.154"
+        ],
+        [
+          "9",
+          "4",
+          "C. Herta",
+          "Hitech TGR",
+          "21",
+          "1:17.454",
+          "0.476",
+          "0.033",
+          "201.069"
+        ],
+        [
+          "10",
+          "16",
+          "K. Maini",
+          "ART Grand Prix",
+          "22",
+          "1:17.455",
+          "0.477",
+          "0.001",
+          "201.066"
+        ],
+        [
+          "11",
+          "2",
+          "J. Dürksen",
+          "Invicta Racing",
+          "24",
+          "1:17.490",
+          "0.512",
+          "0.035",
+          "200.975"
+        ],
+        [
+          "12",
+          "24",
+          "L. van Hoepen",
+          "Trident",
+          "22",
+          "1:17.565",
+          "0.587",
+          "0.075",
+          "200.781"
+        ],
+        [
+          "13",
+          "7",
+          "D. Beganovic",
+          "DAMS Lucas Oil",
+          "21",
+          "1:17.571",
+          "0.593",
+          "0.006",
+          "200.765"
+        ],
+        [
+          "14",
+          "20",
+          "E. Fittipaldi",
+          "AIX Racing",
+          "24",
+          "1:17.610",
+          "0.632",
+          "0.039",
+          "200.664"
+        ],
+        [
+          "15",
+          "8",
+          "R. Bilinski",
+          "DAMS Lucas Oil",
+          "22",
+          "1:17.637",
+          "0.659",
+          "0.027",
+          "200.595"
+        ],
+        [
+          "16",
+          "14",
+          "M. Stenshorne",
+          "Rodin Motorsport",
+          "24",
+          "1:17.648",
+          "0.670",
+          "0.011",
+          "200.566"
+        ],
+        [
+          "17",
+          "12",
+          "M. Boya",
+          "Prema Racing",
+          "23",
+          "1:17.665",
+          "0.687",
+          "0.017",
+          "200.522"
+        ],
+        [
+          "18",
+          "11",
+          "S. Montoya",
+          "Prema Racing",
+          "19",
+          "1:17.678",
+          "0.700",
+          "0.013",
+          "200.489"
+        ],
+        [
+          "19",
+          "25",
+          "J. Bennett",
+          "Trident",
+          "23",
+          "1:17.683",
+          "0.705",
+          "0.005",
+          "200.476"
+        ],
+        [
+          "20",
+          "22",
+          "N. Varrone",
+          "Van Amersfoort Racing",
+          "22",
+          "1:17.742",
+          "0.764",
+          "0.059",
+          "200.324"
+        ],
+        [
+          "21",
+          "3",
+          "R. Miyata",
+          "Hitech TGR",
+          "22",
+          "1:17.868",
+          "0.890",
+          "0.126",
+          "200.000"
+        ],
+        [
+          "22",
+          "21",
+          "C. Shields",
+          "AIX Racing",
+          "10",
+          "1:18.244",
+          "1.266",
+          "0.376",
+          "199.038"
+        ]
+      ]
     },
     "qualifying": {
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Time",
-        "Gap",
-        "Int",
-        "KPH"
-      ],
-      "rows": []
-    },
-    "sprint": {
-      "title": "Sprint Race Results",
+      "title": "2026 FIA Formula 2 Championship - Qualifying",
+      "subtitle": "Spielberg",
+      "meta": {
+        "Championship": "2026 FIA Formula 2 Championship",
+        "Session": "Qualifying",
+        "Date": "Fri 26 Jun 2026",
+        "Start": "04:00 PM",
+        "Length": "30 mins"
+      },
       "headers": [
         "Pos",
         "No.",
         "Driver",
         "Team",
         "Laps",
-        "Time/Retired",
-        "Grid",
-        "Pts"
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "5",
+          "N. León",
+          "Campos Racing",
+          "12",
+          "1:15.544",
+          "—",
+          "—",
+          "206.152"
+        ],
+        [
+          "2",
+          "15",
+          "A. Dunne",
+          "Rodin Motorsport",
+          "15",
+          "1:15.673",
+          "0.129",
+          "0.129",
+          "205.801"
+        ],
+        [
+          "3",
+          "6",
+          "N. Tsolov",
+          "Campos Racing",
+          "13",
+          "1:15.730",
+          "0.186",
+          "0.057",
+          "205.646"
+        ],
+        [
+          "4",
+          "9",
+          "G. Minì",
+          "MP Motorsport",
+          "14",
+          "1:15.769",
+          "0.225",
+          "0.039",
+          "205.540"
+        ],
+        [
+          "5",
+          "1",
+          "R. Câmara",
+          "Invicta Racing",
+          "14",
+          "1:15.784",
+          "0.240",
+          "0.015",
+          "205.499"
+        ],
+        [
+          "6",
+          "17",
+          "T. Inthraphuvasak",
+          "ART Grand Prix",
+          "14",
+          "1:15.799",
+          "0.255",
+          "0.015",
+          "205.459"
+        ],
+        [
+          "7",
+          "10",
+          "O. Goethe",
+          "MP Motorsport",
+          "13",
+          "1:15.857",
+          "0.313",
+          "0.058",
+          "205.302"
+        ],
+        [
+          "8",
+          "23",
+          "R. Villagómez",
+          "Van Amersfoort Racing",
+          "13",
+          "1:15.863",
+          "0.319",
+          "0.006",
+          "205.285"
+        ],
+        [
+          "9",
+          "25",
+          "J. Bennett",
+          "Trident",
+          "16",
+          "1:15.896",
+          "0.352",
+          "0.033",
+          "205.196"
+        ],
+        [
+          "10",
+          "11",
+          "S. Montoya",
+          "Prema Racing",
+          "16",
+          "1:15.955",
+          "0.411",
+          "0.059",
+          "205.037"
+        ],
+        [
+          "11",
+          "2",
+          "J. Dürksen",
+          "Invicta Racing",
+          "14",
+          "1:15.969",
+          "0.425",
+          "0.014",
+          "204.999"
+        ],
+        [
+          "12",
+          "16",
+          "K. Maini",
+          "ART Grand Prix",
+          "15",
+          "1:16.063",
+          "0.519",
+          "0.094",
+          "204.746"
+        ],
+        [
+          "13",
+          "8",
+          "R. Bilinski",
+          "DAMS Lucas Oil",
+          "16",
+          "1:16.126",
+          "0.582",
+          "0.063",
+          "204.576"
+        ],
+        [
+          "14",
+          "7",
+          "D. Beganovic",
+          "DAMS Lucas Oil",
+          "16",
+          "1:16.197",
+          "0.653",
+          "0.071",
+          "204.385"
+        ],
+        [
+          "15",
+          "12",
+          "M. Boya",
+          "Prema Racing",
+          "16",
+          "1:16.261",
+          "0.717",
+          "0.064",
+          "204.214"
+        ],
+        [
+          "16",
+          "24",
+          "L. van Hoepen",
+          "Trident",
+          "16",
+          "1:16.269",
+          "0.725",
+          "0.008",
+          "204.193"
+        ],
+        [
+          "17",
+          "3",
+          "R. Miyata",
+          "Hitech TGR",
+          "16",
+          "1:16.277",
+          "0.733",
+          "0.008",
+          "204.171"
+        ],
+        [
+          "18",
+          "20",
+          "E. Fittipaldi",
+          "AIX Racing",
+          "16",
+          "1:16.413",
+          "0.869",
+          "0.136",
+          "203.808"
+        ],
+        [
+          "19",
+          "21",
+          "C. Shields",
+          "AIX Racing",
+          "15",
+          "1:16.571",
+          "1.027",
+          "0.158",
+          "203.387"
+        ],
+        [
+          "20",
+          "4",
+          "C. Herta",
+          "Hitech TGR",
+          "16",
+          "1:16.580",
+          "1.036",
+          "0.009",
+          "203.363"
+        ],
+        [
+          "21",
+          "14",
+          "M. Stenshorne",
+          "Rodin Motorsport",
+          "17",
+          "1:16.608",
+          "1.064",
+          "0.028",
+          "203.289"
+        ],
+        [
+          "22",
+          "22",
+          "N. Varrone",
+          "Van Amersfoort Racing",
+          "16",
+          "1:16.762",
+          "1.218",
+          "0.154",
+          "202.881"
+        ]
+      ]
+    },
+    "race": {
+      "sessions": [
+        {
+          "title": "Sprint Race Results",
+          "subtitle": "Spielberg",
+          "meta": {
+            "Championship": "2026 FIA Formula 2 Championship",
+            "Session": "Sprint Race",
+            "Date": "Sat 27 Jun 2026"
+          },
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH",
+            "Best",
+            "Lap",
+            "Pts"
+          ],
+          "rows": [
+            [
+              "1",
+              "25",
+              "J. Bennett",
+              "Trident",
+              "28",
+              "39:23.246",
+              "—",
+              "—",
+              "184.334",
+              "1:19.161",
+              "6",
+              "10"
+            ],
+            [
+              "2",
+              "11",
+              "S. Montoya",
+              "Prema Racing",
+              "28",
+              "39:24.742",
+              "1.496",
+              "1.496",
+              "184.218",
+              "1:19.066",
+              "6",
+              "8"
+            ],
+            [
+              "3",
+              "23",
+              "R. Villagómez",
+              "Van Amersfoort Racing",
+              "28",
+              "39:24.880",
+              "1.634",
+              "0.138",
+              "184.207",
+              "1:19.002",
+              "6",
+              "6"
+            ],
+            [
+              "4",
+              "15",
+              "A. Dunne",
+              "Rodin Motorsport",
+              "28",
+              "39:25.634",
+              "2.388",
+              "0.754",
+              "184.148",
+              "1:19.105",
+              "7",
+              "5"
+            ],
+            [
+              "5",
+              "9",
+              "G. Minì",
+              "MP Motorsport",
+              "28",
+              "39:25.825",
+              "2.579",
+              "0.191",
+              "184.133",
+              "1:18.989",
+              "7",
+              "4"
+            ],
+            [
+              "6",
+              "8",
+              "R. Bilinski",
+              "DAMS Lucas Oil",
+              "28",
+              "39:28.479",
+              "5.233",
+              "2.654",
+              "183.927",
+              "1:19.174",
+              "9",
+              "3"
+            ],
+            [
+              "7",
+              "16",
+              "K. Maini",
+              "ART Grand Prix",
+              "28",
+              "39:29.344",
+              "6.098",
+              "0.865",
+              "183.860",
+              "1:19.471",
+              "13",
+              "2"
+            ],
+            [
+              "8",
+              "6",
+              "N. Tsolov",
+              "Campos Racing",
+              "28",
+              "39:31.696",
+              "8.450",
+              "2.352",
+              "183.678",
+              "1:19.380",
+              "11",
+              "1"
+            ],
+            [
+              "9",
+              "1",
+              "R. Câmara",
+              "Invicta Racing",
+              "28",
+              "39:33.154",
+              "9.908",
+              "1.458",
+              "183.565",
+              "1:18.962",
+              "7",
+              "1"
+            ],
+            [
+              "10",
+              "5",
+              "N. León",
+              "Campos Racing",
+              "28",
+              "39:36.076",
+              "12.830",
+              "4.380",
+              "183.339",
+              "1:19.302",
+              "6",
+              "0"
+            ],
+            [
+              "11",
+              "12",
+              "M. Boya",
+              "Prema Racing",
+              "28",
+              "39:36.296",
+              "13.050",
+              "0.220",
+              "183.322",
+              "1:19.442",
+              "13",
+              "0"
+            ],
+            [
+              "12",
+              "22",
+              "N. Varrone",
+              "Van Amersfoort Racing",
+              "28",
+              "39:39.187",
+              "15.941",
+              "2.891",
+              "183.099",
+              "1:19.634",
+              "9",
+              "0"
+            ],
+            [
+              "13",
+              "7",
+              "D. Beganovic",
+              "DAMS Lucas Oil",
+              "28",
+              "39:40.570",
+              "17.324",
+              "1.383",
+              "182.993",
+              "1:19.695",
+              "17",
+              "0"
+            ],
+            [
+              "14",
+              "14",
+              "M. Stenshorne",
+              "Rodin Motorsport",
+              "28",
+              "39:41.274",
+              "18.028",
+              "0.704",
+              "182.939",
+              "1:19.641",
+              "9",
+              "0"
+            ],
+            [
+              "15",
+              "24",
+              "L. van Hoepen",
+              "Trident",
+              "28",
+              "39:48.273",
+              "25.027",
+              "6.999",
+              "182.403",
+              "1:19.528",
+              "10",
+              "0"
+            ],
+            [
+              "16",
+              "21",
+              "C. Shields",
+              "AIX Racing",
+              "28",
+              "39:48.857",
+              "25.611",
+              "0.584",
+              "182.358",
+              "1:19.352",
+              "8",
+              "0"
+            ],
+            [
+              "17",
+              "3",
+              "R. Miyata",
+              "Hitech TGR",
+              "28",
+              "39:54.533",
+              "31.287",
+              "5.676",
+              "181.926",
+              "1:19.832",
+              "8",
+              "0"
+            ],
+            [
+              "DNF",
+              "4",
+              "C. Herta",
+              "Hitech TGR",
+              "19",
+              "27:26.947",
+              "DNF",
+              "—",
+              "179.402",
+              "1:19.561",
+              "10",
+              "0"
+            ],
+            [
+              "DNF",
+              "2",
+              "J. Dürksen",
+              "Invicta Racing",
+              "11",
+              "16:41.042",
+              "DNF",
+              "—",
+              "170.699",
+              "1:20.247",
+              "7",
+              "0"
+            ],
+            [
+              "DNF",
+              "17",
+              "T. Inthraphuvasak",
+              "ART Grand Prix",
+              "—",
+              "—",
+              "DNF",
+              "—",
+              "—",
+              "—",
+              "—",
+              "0"
+            ],
+            [
+              "DNF",
+              "10",
+              "O. Goethe",
+              "MP Motorsport",
+              "—",
+              "—",
+              "DNF",
+              "—",
+              "—",
+              "—",
+              "—",
+              "0"
+            ],
+            [
+              "DNF",
+              "20",
+              "E. Fittipaldi",
+              "AIX Racing",
+              "—",
+              "—",
+              "DNF",
+              "—",
+              "—",
+              "—",
+              "—",
+              "0"
+            ]
+          ]
+        },
+        {
+          "title": "Feature Race Results",
+          "subtitle": "Spielberg",
+          "meta": {
+            "Championship": "2026 FIA Formula 2 Championship",
+            "Session": "Feature Race",
+            "Date": "Sun 28 Jun 2026"
+          },
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH",
+            "Best",
+            "Lap",
+            "Pts"
+          ],
+          "rows": [
+            [
+              "1",
+              "6",
+              "N. Tsolov",
+              "Campos Racing",
+              "40",
+              "56:10.538",
+              "—",
+              "—",
+              "184.692",
+              "1:18.961",
+              "7",
+              "25"
+            ],
+            [
+              "2",
+              "9",
+              "G. Minì",
+              "MP Motorsport",
+              "40",
+              "56:14.531",
+              "3.993",
+              "3.993",
+              "184.473",
+              "1:19.063",
+              "11",
+              "18"
+            ],
+            [
+              "3",
+              "10",
+              "O. Goethe",
+              "MP Motorsport",
+              "40",
+              "56:22.736",
+              "12.198",
+              "8.205",
+              "184.026",
+              "1:18.384",
+              "31",
+              "16"
+            ],
+            [
+              "4",
+              "1",
+              "R. Câmara",
+              "Invicta Racing",
+              "40",
+              "56:25.441",
+              "14.903",
+              "2.705",
+              "183.879",
+              "1:18.669",
+              "12",
+              "12"
+            ],
+            [
+              "5",
+              "17",
+              "T. Inthraphuvasak",
+              "ART Grand Prix",
+              "40",
+              "56:26.052",
+              "15.514",
+              "0.611",
+              "183.845",
+              "1:18.560",
+              "34",
+              "10"
+            ],
+            [
+              "6",
+              "15",
+              "A. Dunne",
+              "Rodin Motorsport",
+              "40",
+              "56:31.248",
+              "20.710",
+              "5.196",
+              "183.564",
+              "1:18.975",
+              "12",
+              "8"
+            ],
+            [
+              "7",
+              "5",
+              "N. León",
+              "Campos Racing",
+              "40",
+              "56:31.905",
+              "21.367",
+              "0.657",
+              "183.528",
+              "1:18.960",
+              "12",
+              "8"
+            ],
+            [
+              "8",
+              "24",
+              "L. van Hoepen",
+              "Trident",
+              "40",
+              "56:32.339",
+              "21.801",
+              "0.434",
+              "183.505",
+              "1:18.786",
+              "31",
+              "4"
+            ],
+            [
+              "9",
+              "2",
+              "J. Dürksen",
+              "Invicta Racing",
+              "40",
+              "56:32.987",
+              "22.449",
+              "0.648",
+              "183.470",
+              "1:18.732",
+              "12",
+              "2"
+            ],
+            [
+              "10",
+              "8",
+              "R. Bilinski",
+              "DAMS Lucas Oil",
+              "40",
+              "56:33.310",
+              "22.772",
+              "0.323",
+              "183.452",
+              "1:19.239",
+              "11",
+              "1"
+            ],
+            [
+              "11",
+              "25",
+              "J. Bennett",
+              "Trident",
+              "40",
+              "56:37.319",
+              "26.781",
+              "4.009",
+              "183.236",
+              "1:18.755",
+              "11",
+              "0"
+            ],
+            [
+              "12",
+              "16",
+              "K. Maini",
+              "ART Grand Prix",
+              "40",
+              "56:38.868",
+              "28.330",
+              "1.549",
+              "183.152",
+              "1:18.786",
+              "13",
+              "0"
+            ],
+            [
+              "13",
+              "7",
+              "D. Beganovic",
+              "DAMS Lucas Oil",
+              "40",
+              "56:41.804",
+              "31.266",
+              "2.936",
+              "182.994",
+              "1:18.913",
+              "12",
+              "0"
+            ],
+            [
+              "14",
+              "20",
+              "E. Fittipaldi",
+              "AIX Racing",
+              "40",
+              "56:41.838",
+              "31.300",
+              "0.034",
+              "182.992",
+              "1:18.839",
+              "30",
+              "0"
+            ],
+            [
+              "15",
+              "3",
+              "R. Miyata",
+              "Hitech TGR",
+              "40",
+              "56:43.528",
+              "32.990",
+              "1.690",
+              "182.901",
+              "1:19.533",
+              "13",
+              "0"
+            ],
+            [
+              "16",
+              "22",
+              "N. Varrone",
+              "Van Amersfoort Racing",
+              "40",
+              "56:43.597",
+              "33.059",
+              "0.069",
+              "182.898",
+              "1:19.051",
+              "33",
+              "0"
+            ],
+            [
+              "17",
+              "21",
+              "C. Shields",
+              "AIX Racing",
+              "40",
+              "56:45.164",
+              "34.626",
+              "1.567",
+              "182.814",
+              "1:19.344",
+              "13",
+              "0"
+            ],
+            [
+              "18",
+              "4",
+              "C. Herta",
+              "Hitech TGR",
+              "40",
+              "56:46.161",
+              "35.623",
+              "0.997",
+              "182.760",
+              "1:19.056",
+              "34",
+              "0"
+            ],
+            [
+              "19",
+              "14",
+              "M. Stenshorne",
+              "Rodin Motorsport",
+              "40",
+              "56:30.205",
+              "49.667",
+              "14.044",
+              "183.620",
+              "1:19.044",
+              "29",
+              "0"
+            ],
+            [
+              "DNF",
+              "12",
+              "M. Boya",
+              "Prema Racing",
+              "25",
+              "35:45.626",
+              "DNF",
+              "—",
+              "181.256",
+              "1:19.501",
+              "11",
+              "0"
+            ],
+            [
+              "DNF",
+              "11",
+              "S. Montoya",
+              "Prema Racing",
+              "—",
+              "—",
+              "DNF",
+              "—",
+              "—",
+              "—",
+              "—",
+              "0"
+            ],
+            [
+              "DNF",
+              "23",
+              "R. Villagómez",
+              "Van Amersfoort Racing",
+              "—",
+              "—",
+              "DNF",
+              "—",
+              "—",
+              "—",
+              "—",
+              "0"
+            ]
+          ]
+        }
+      ]
     }
   }
 }

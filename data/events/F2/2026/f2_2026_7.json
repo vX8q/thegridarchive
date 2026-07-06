@@ -1,0 +1,68 @@
+{
+  "event_id": "F2_2026_7",
+  "series": "FIA Formula 2 Championship",
+  "race": "Silverstone",
+  "date": "4–5 July 2026",
+  "start_date": "2026-07-04",
+  "end_date": "2026-07-05",
+  "track": "Silverstone Circuit",
+  "location": "Silverstone",
+  "entry_list": [],
+  "tables": {
+    "feature": {
+      "title": "Feature Race Results",
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "practice": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "sprint": {
+      "title": "Sprint Race Results",
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

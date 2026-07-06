@@ -63,26 +63,13 @@
     "id": "SUPER_FORMULA_2026_6",
     "series_id": "SUPER_FORMULA",
     "season": "2026",
-    "name": "Fuji Speedway — Round 6",
+    "name": "Fuji Speedway",
     "location": "Oyama, Shizuoka",
     "circuit_name": "Fuji Speedway",
     "start_date": "2026-07-18",
     "end_date": "2026-07-19",
-    "time_est": "14:45",
-    "time_msk": "08:45"
-  },
-  {
-    "id": "SUPER_FORMULA_2026_7",
-    "series_id": "SUPER_FORMULA",
-    "season": "2026",
-    "name": "Fuji Speedway — Rounds 3 & 7",
-    "location": "Oyama, Shizuoka",
-    "circuit_name": "Fuji Speedway",
-    "start_date": "2026-07-19",
-    "end_date": "2026-07-19",
-    "time_est": "14:45",
-    "time_msk": "08:45",
-    "date": "2026-07-19"
+    "time_est": "16:15",
+    "time_msk": "10:15"
   },
   {
     "id": "SUPER_FORMULA_2026_8",

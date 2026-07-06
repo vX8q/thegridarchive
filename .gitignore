@@ -64,11 +64,13 @@ backups/
 *.traineddata
 /_gtwce*.json
 
-# Secrets and local overrides (keep .env.example in repo)
+# Secrets and local overrides
 .env
 .env.local
 .env.*.local
-.env.example
+
+# CLI compare scratch output
+*-compare-out.txt
 
 # Optional: Node if you add tooling under the repo
 node_modules/

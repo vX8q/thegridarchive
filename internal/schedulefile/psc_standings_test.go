@@ -16,20 +16,22 @@ func TestBuildStandingsFromEvents_PSC_GuestDriversSplit(t *testing.T) {
 	}
 
 	guestNames := map[string]bool{
-		"Rodin Younessi":      true,
-		"Eugenio Pisani":      true,
-		"Taichi Watarai":      true,
-		"Alexander Tauscher":  true,
-		"Jukka Honkavuori":    true,
-		"Jacques Villeneuve":  true,
+		"Rodin Younessi":       true,
+		"Eugenio Pisani":       true,
+		"Taichi Watarai":       true,
+		"Alexander Tauscher":   true,
+		"Jukka Honkavuori":     true,
+		"Jacques Villeneuve":   true,
+		"Gianmarco Quaresmini": true,
+		"Bert de Heus":         true,
 	}
 	for _, r := range data.Rows {
 		if guestNames[r.Driver] {
 			t.Errorf("guest driver %q in main standings", r.Driver)
 		}
 	}
-	if len(data.Ineligible) != 6 {
-		t.Fatalf("ineligible guests: got %d, want 6", len(data.Ineligible))
+	if len(data.Ineligible) != 8 {
+		t.Fatalf("ineligible guests: got %d, want 8", len(data.Ineligible))
 	}
 	for _, r := range data.Ineligible {
 		if !guestNames[r.Driver] {
@@ -57,9 +59,9 @@ func TestBuildStandingsFromEvents_PSC_ZeroPointsByBestFinish(t *testing.T) {
 	}
 	wantOrder := []string{
 		"Jonas Greif",
+		"Samer Shahin",
 		"Luciano Martinez",
 		"Juan Pablo Vega Dieppa",
-		"Samer Shahin",
 		"Jorge Ramirez",
 		"Kai Pfister",
 	}

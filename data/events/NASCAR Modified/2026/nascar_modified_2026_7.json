@@ -51,42 +51,6 @@
         "Pts"
       ],
       "rows": []
-    },
-    "stage_1": {
-      "title": "Stage 1",
-      "headers": [
-        "Pos",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Pts"
-      ],
-      "rows": []
-    },
-    "stage_2": {
-      "title": "Stage 2",
-      "headers": [
-        "Pos",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Pts"
-      ],
-      "rows": []
-    },
-    "stage_3": {
-      "title": "Stage 3",
-      "headers": [
-        "Pos",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Pts"
-      ],
-      "rows": []
     }
   }
 }

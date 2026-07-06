@@ -18,7 +18,7 @@
     var renderCrewChiefDetail = T.renderCrewChiefDetail || function () {};
     var renderFeedbackPage = T.renderFeedbackPage || function () {};
     var renderDetail = T.renderDetail || function () {};
-    var renderLiveDebugPage = T.renderLiveDebugPage || function () {};
+    var renderLiveFeedPage = T.renderLiveFeedPage || function () {};
     var renderHomeRaceFeed = T.renderHomeRaceFeed || function () {};
 
     var path = window.location.pathname;
@@ -45,11 +45,8 @@
     }
     if (path === '/live') {
       state.loadedSeriesId = null;
-      document.title = (window.TGA.documentTitle || function (m) { return m + ' — The Grid Archive (TGA)'; })(
-        (window.TGA.t && window.TGA.t('live.debug_title')) || 'Live debug'
-      );
       showView('view-list');
-      renderLiveDebugPage();
+      renderLiveFeedPage();
       return;
     }
     if (path === '/schedule') {

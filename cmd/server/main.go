@@ -194,9 +194,6 @@ func main() {
 	http.HandleFunc("/api/live-events", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleLiveEvents(w, r, dataDir, st)
 	}))
-	http.HandleFunc("/api/live-debug", apiWrap(func(w http.ResponseWriter, r *http.Request) {
-		handleLiveDebug(w, r, dataDir, st)
-	}))
 	http.HandleFunc("/api/live-boards", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleLiveBoards(w, r, dataDir)
 	}))

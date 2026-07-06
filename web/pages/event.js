@@ -100,10 +100,10 @@
     return u.replace(/_\d+.*$/, '');
   }
 
-  /** NASCAR national tours use stage points; ARCA Menards Series does not. */
+  /** Cup / Xfinity / Truck use stage points; Whelen Modified and ARCA do not. */
   function seriesUsesStages(seriesId) {
     var s = String(seriesId || '').toLowerCase();
-    return ['nascar_cup', 'noaps', 'nascar_truck', 'nascar_modified'].indexOf(s) >= 0;
+    return ['nascar_cup', 'noaps', 'nascar_truck'].indexOf(s) >= 0;
   }
 
   function isF4SeriesId(seriesId) {
@@ -152,7 +152,7 @@
       id: 'bop', icon: '⚖',
       check: function (d) {
         var ev = ((d.event_id || '') + '').toLowerCase().replace(/\s+/g, '_');
-        return ev === 'imsa_2026_1' || ev === 'imsa_2026_2' || ev === 'imsa_2026_3' || ev === 'imsa_2026_4';
+        return /^imsa_2026_\d+$/.test(ev);
       },
       meta: function (d) { return ''; }
     },
@@ -2254,6 +2254,8 @@
     var isImsa2026Round2 = evKey === 'IMSA_2026_2';
     var isImsa2026Round3 = evKey === 'IMSA_2026_3';
     var isImsa2026Round4 = evKey === 'IMSA_2026_4';
+    var isImsa2026Round5 = evKey === 'IMSA_2026_5';
+    var isImsa2026Round6 = evKey === 'IMSA_2026_6';
     function bopH(key) { return t('event.bop.h.' + key); }
     function bopHeaders(keys) { return keys.map(bopH); }
     function localizeBopCell(val) {
@@ -2283,6 +2285,13 @@
       ['Cadillac', 'V-Series.R', '1058', '8800', '98.3', '97.1', '190', '200', '906', '22.650', 'R80'],
       ['Porsche', '963 (2026 Homologation)', '1100', '8158', '92.3', '100.0', '190', '200', '913', '22.825', 'R80'],
       ['Porsche', '963 (2025 Homologation)', '1060', '8158', '96.0', '96.0', '190', '200', '906', '22.650', 'R80']
+    ] : isImsa2026Round5 ? [
+      ['Acura', 'ARX-06', '1051', '9512', '100.0', '96.2', '190', '200', '907', '22.675', 'R80'],
+      ['Aston Martin', 'Valkyrie', '1030', '8400', '100.0', '100.0', '190', '200', '909', '22.725', 'R80'],
+      ['BMW', 'M Hybrid V8', '1031', '8000', '99.6', '94.0', '190', '200', '896', '22.400', 'R80'],
+      ['Cadillac', 'V-Series.R', '1038', '8800', '98.5', '95.2', '190', '200', '896', '22.400', 'R80'],
+      ['Porsche', '963 (2026 Homologation)', '1100', '8158', '94.0', '100.0', '190', '200', '910', '22.750', 'R80'],
+      ['Porsche', '963 (2025 Homologation)', '1082', '8158', '98.8', '98.3', '190', '200', '914', '22.850', 'R80']
     ] : isImsa2026Round4 ? [
       ['Acura', 'ARX-06', '1056', '9512', '97.7', '97.3', '190', '200', '904', '22.600', 'R80'],
       ['Aston Martin', 'Valkyrie', '1030', '8400', '100.0', '100.0', '190', '200', '913', '22.825', 'R80'],
@@ -2290,6 +2299,13 @@
       ['Cadillac', 'V-Series.R', '1043', '8800', '98.1', '96.0', '190', '200', '901', '22.525', 'R80'],
       ['Porsche', '963 (2026 Homologation)', '1084', '8158', '92.3', '100.0', '190', '200', '891', '22.275', 'R80'],
       ['Porsche', '963 (2025 Homologation)', '1052', '8158', '96.0', '97.3', '190', '200', '895', '22.375', 'R80']
+    ] : isImsa2026Round6 ? [
+      ['Acura', 'ARX-06', '1045', '9512', '98.3', '99.6', '230', '240', '911', '22.775', 'R80'],
+      ['Aston Martin', 'Valkyrie', '1020', '8400', '100.0', '100.0', '230', '240', '914', '22.850', 'R80'],
+      ['BMW', 'M Hybrid V8', '1030', '8000', '98.8', '96.9', '230', '240', '901', '22.525', 'R80'],
+      ['Cadillac', 'V-Series.R', '1032', '8800', '97.1', '99.0', '230', '240', '903', '22.575', 'R80'],
+      ['Porsche', '963 (2026 Homologation)', '1073', '8158', '96.3', '100.0', '230', '240', '913', '22.825', 'R80'],
+      ['Porsche', '963 (2025 Homologation)', '1058', '8158', '100.0', '97.3', '230', '240', '909', '22.725', 'R80']
     ] : [
       ['Acura', 'ARX-06', '1051', '9512', '98.1', '96.3', '230', '240', '898', '22.450', 'R80'],
       ['Aston Martin', 'Valkyrie', '1030', '8400', '100.0', '100.0', '230', '240', '912', '22.800', 'R80'],
@@ -2305,7 +2321,7 @@
       ['TDT_LimitRate_BoP', '10', 'Nm*s'],
       ['TDT_MaxIntegral_BoP', '150', 'Nm*s']
     ];
-    var gtpRegForRender = isImsa2026Round4
+    var gtpRegForRender = (isImsa2026Round4 || isImsa2026Round5 || isImsa2026Round6)
       ? [['PPUEnergyStint_BoP', 'BoP Table', 'MJ'], ['ReplenTime_BoP', '40', 's']].concat(gtpReg)
       : gtpReg;
     var gtdCars = isImsa2026Round3 ? [
@@ -2319,6 +2335,26 @@
       ['Lexus', 'RC F GT3', '1356', '7200', '96.9', '96.8', '190', '200', '4.0', '11.0', '919', '22.975'],
       ['Mercedes-AMG', 'GT3', '1356', '7900', '89.7', '90.9', '190', '200', '0.0', '9.0', '897', '22.425'],
       ['Porsche', '911 GT3 R (992)', '1384', '8950', '89.6', '100.0', '190', '200', '7.3', '9.3', '855', '21.375']
+    ] : isImsa2026Round5 ? [
+      ['BMW', 'M4 GT3 EVO', '1338', '7500', '92.3', '90.3', '170', '180', '-2.0', '5.0', '875', '21.875'],
+      ['Corvette', 'Z06 GT3.R', '1370', '8000', '97.6', '96.1', '170', '180', '-1.8', '6.4', '889', '22.225'],
+      ['Ford', 'Mustang GT3', '1326', '8250', '100.0', '96.5', '170', '180', '-0.4', '7.1', '890', '22.250'],
+      ['Lamborghini', 'Temerario GT3', '1337', '8000', '87.9', '88.0', '170', '180', '1.0', '5.2', '888', '22.200'],
+      ['Lexus', 'RC F GT3', '1356', '7200', '95.6', '95.8', '170', '180', '4.0', '11.0', '914', '22.850'],
+      ['McLaren', '720S GT3 EVO', '1330', '8100', '93.2', '92.3', '170', '180', '3.1', '11.3', '887', '22.175'],
+      ['Porsche', '911 GT3 R (992)', '1384', '8950', '92.7', '97.3', '170', '180', '7.3', '9.3', '874', '21.850']
+    ] : isImsa2026Round6 ? [
+      ['Aston Martin', 'Vantage GT3 EVO', '1287', '7000', '87.6', '86.3', '190', '200', '5.0', '11.1', '858', '21.450'],
+      ['BMW', 'M4 GT3 EVO', '1340', '7500', '91.0', '93.2', '190', '200', '-2.0', '5.0', '890', '22.250'],
+      ['Corvette', 'Z06 GT3.R', '1373', '8000', '98.4', '99.8', '190', '200', '-1.8', '6.4', '926', '23.150'],
+      ['Ferrari', '296 GT3 EVO', '1350', '7750', '83.9', '88.6', '190', '200', '-1.7', '4.1', '875', '21.875'],
+      ['Ford', 'Mustang GT3', '1332', '8250', '99.3', '98.7', '190', '200', '-0.4', '7.1', '932', '23.300'],
+      ['Lamborghini', 'Huracan GT3 EVO2', '1353', '8300', '85.8', '90.8', '190', '200', '2.0', '8.4', '917', '22.925'],
+      ['Lamborghini', 'Temerario GT3', '1340', '8000', '86.3', '91.5', '190', '200', '1.0', '5.2', '923', '23.075'],
+      ['Lexus', 'RC F GT3', '1356', '7200', '96.1', '98.6', '190', '200', '4.0', '11.0', '988', '24.700'],
+      ['McLaren', '720S GT3 EVO', '1330', '8100', '94.6', '94.3', '190', '200', '3.1', '11.3', '924', '23.100'],
+      ['Mercedes-AMG', 'GT3', '1356', '7900', '95.5', '90.9', '190', '200', '0.0', '9.0', '964', '24.100'],
+      ['Porsche', '911 GT3 R (992)', '1374', '8950', '97.1', '100.0', '190', '200', '7.3', '9.3', '887', '22.175']
     ] : isImsa2026Round4 ? [
       ['Aston Martin', 'Vantage GT3 EVO', '1287', '7000', '85.9', '83.4', '170', '180', '5.0', '11.1', '833', '20.825'],
       ['BMW', 'M4 GT3 EVO', '1334', '7500', '90.8', '94.9', '170', '180', '-2.0', '5.0', '864', '21.600'],
@@ -2367,6 +2403,12 @@
     } else if (isImsa2026Round4) {
       bopTitleKey = 'event.bop.title.monterey';
       bopRound = '4';
+    } else if (isImsa2026Round5) {
+      bopTitleKey = 'event.bop.title.detroit';
+      bopRound = '5';
+    } else if (isImsa2026Round6) {
+      bopTitleKey = 'event.bop.title.watkins_glen';
+      bopRound = '6';
     } else if (isImsa2026Round1) {
       bopTitleKey = 'event.bop.title.daytona';
       bopRound = '1';

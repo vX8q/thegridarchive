@@ -42,10 +42,10 @@
     "name": "4 Hours of Imola",
     "location": "Imola",
     "circuit_name": "Imola Circuit",
-    "start_date": "2026-07-05",
+    "start_date": "2026-07-03",
     "end_date": "2026-07-05",
-    "time_est": "12:30",
-    "time_msk": "13:30"
+    "time_est": "13:00",
+    "time_msk": "7/5/26 14:00"
   },
   {
     "id": "ELMS_2026_4",

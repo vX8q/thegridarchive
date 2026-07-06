@@ -95,24 +95,62 @@ function getEventSessionDateRange(d) {
 // ── Global schedule helpers ───────────────────────────────────────────────
 var globalEventsCache = null; // cache of all events
 
+/** Pre-season tests / prologue sessions — excluded from Full Schedule. */
+function isPreSeasonScheduleEvent(e) {
+  if (!e) return false;
+  var id = String(e.id || '').toUpperCase();
+  if (!id) return false;
+  if (id.indexOf('PRE_SEASON') >= 0) return true;
+  if (/_\d{4}_PROLOGUE$/.test(id)) return true;
+  return false;
+}
+
 /** Events hidden from list and Full Schedule (reserved for future; currently hide nothing).  */
 function filterVisibleEvents(events) {
   if (!Array.isArray(events)) return events;
   return events;
 }
 
+function filterFullScheduleEvents(events) {
+  if (!Array.isArray(events)) return events;
+  return events.filter(function (e) { return !isPreSeasonScheduleEvent(e); });
+}
+
 var buildScheduleGroups = (window.TGA && window.TGA.buildScheduleGroups) || function () { return []; };
 var buildScheduleHTML = (window.TGA && window.TGA.buildScheduleHTML) || function () {};
 
-var scheduleHidePast = true;
+var scheduleShowPast = false;
+
+function findScheduleScrollAnchor(root) {
+  if (!root) return null;
+  var candidates = root.querySelectorAll('.weekend-hdr:not(.sched-past), .sched-row:not(.sched-past)');
+  if (!candidates.length) return null;
+  var scrollTop = window.scrollY || window.pageYOffset || 0;
+  for (var i = 0; i < candidates.length; i++) {
+    var el = candidates[i];
+    var elTop = el.getBoundingClientRect().top + scrollTop;
+    if (elTop >= scrollTop - 1) return el;
+  }
+  return candidates[0];
+}
 
 function applySchedulePastVisibility() {
   var root = document.getElementById('view-schedule');
   if (!root) return;
   var pastRows = root.querySelectorAll('.weekend-hdr.sched-past, .sched-row.sched-past');
+  var anchor = null;
+  var anchorTop = 0;
+  if (scheduleShowPast) {
+    anchor = findScheduleScrollAnchor(root);
+    if (anchor) anchorTop = anchor.getBoundingClientRect().top;
+  }
   [].forEach.call(pastRows, function (tr) {
-    tr.style.display = scheduleHidePast ? 'none' : '';
+    tr.style.display = scheduleShowPast ? '' : 'none';
   });
+  if (scheduleShowPast && anchor) {
+    var delta = anchor.getBoundingClientRect().top - anchorTop;
+    if (delta) window.scrollBy(0, delta);
+  }
 }
 
 // month name + day (e.g. "March 1") → ISO date "2026-03-01"
@@ -479,18 +517,18 @@ function renderSchedulePage() {
     if (v) th.textContent = v;
   });
 
-  // Initialize "Hide past races" toggle
-  var hidePastToggle = document.getElementById('sched-hide-past-toggle');
-  if (hidePastToggle && !hidePastToggle._bound) {
-    hidePastToggle._bound = true;
-    hidePastToggle.addEventListener('change', function () {
-      scheduleHidePast = !!hidePastToggle.checked;
+  // Initialize "Show past races" toggle
+  var showPastToggle = document.getElementById('sched-show-past-toggle');
+  if (showPastToggle && !showPastToggle._bound) {
+    showPastToggle._bound = true;
+    showPastToggle.addEventListener('change', function () {
+      scheduleShowPast = !!showPastToggle.checked;
       applySchedulePastVisibility();
     });
   }
-  if (hidePastToggle) {
-    hidePastToggle.checked = true;
-    scheduleHidePast = true;
+  if (showPastToggle) {
+    showPastToggle.checked = false;
+    scheduleShowPast = false;
   }
 
   if (body) body.innerHTML = '<tr><td colspan="5" class="loading">' + t('loading') + '</td></tr>';
@@ -498,7 +536,7 @@ function renderSchedulePage() {
   API.getSeries()
     .then(function (data) { return fetchAllEvents(data); })
     .then(function (all) {
-      var visible = filterVisibleEvents(all);
+      var visible = filterFullScheduleEvents(filterVisibleEvents(all));
       globalEventsCache = visible;
       if (window.TGA && typeof window.TGA.setGlobalEventsCache === 'function') {
         setGlobalEventsCache(visible);
@@ -521,4 +559,6 @@ function renderSchedulePage() {
   window.TGA.setGlobalEventsCache = setGlobalEventsCache;
   window.TGA.getGlobalEventsCache = getGlobalEventsCache;
   window.TGA.filterVisibleEvents = filterVisibleEvents;
+  window.TGA.filterFullScheduleEvents = filterFullScheduleEvents;
+  window.TGA.isPreSeasonScheduleEvent = isPreSeasonScheduleEvent;
 })();

@@ -1,0 +1,56 @@
+{
+  "event_id": "ARCA_2026_11",
+  "series": "ARCA Menards Series",
+  "race": "Ashley Furniture 150",
+  "date": "Friday, July 3, 2026",
+  "start_date": "2026-07-03",
+  "end_date": "2026-07-03",
+  "track": "Chicagoland Speedway",
+  "location": "Chicagoland Speedway, Joliet, Illinois",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Trk",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed",
+        "Lap #",
+        "# Laps",
+        "-Fastest",
+        "-Next"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Fin",
+        "St",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Laps",
+        "Led",
+        "Status",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

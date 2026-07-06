@@ -275,16 +275,25 @@ func handleSeriesStandings(w http.ResponseWriter, _ *http.Request, dataDir, data
 		season = config.CurrentSeason
 	}
 
-	// IMSA / ELMS: standings are fully defined in JSON (including per-class);
-	// event race tables lack a Driver column — auto-build from events does not apply.
-	if strings.EqualFold(dataSeriesID, "IMSA") || strings.EqualFold(dataSeriesID, "ELMS") {
-		data, err = schedulefile.LoadStandings(dataDir, dataSeriesID)
+	// IMSA / ELMS: per-class standings from event race (and IMSA qualifying) tables.
+	if strings.EqualFold(dataSeriesID, "IMSA") {
+		data, err = schedulefile.BuildImsaStandingsFromEvents(dataDir, season)
 		if err != nil {
-			slog.Error("load standings failed",
+			slog.Error("imsa standings failed",
 				"series", dataSeriesID,
 				"err", err,
 			)
-			writeError(w, http.StatusInternalServerError, "failed to load standings")
+			writeError(w, http.StatusInternalServerError, "failed to build standings")
+			return
+		}
+	} else if strings.EqualFold(dataSeriesID, "ELMS") {
+		data, err = schedulefile.BuildElmsStandingsFromEvents(dataDir, season)
+		if err != nil {
+			slog.Error("elms standings failed",
+				"series", dataSeriesID,
+				"err", err,
+			)
+			writeError(w, http.StatusInternalServerError, "failed to build standings")
 			return
 		}
 	} else if strings.EqualFold(dataSeriesID, "WEC") {

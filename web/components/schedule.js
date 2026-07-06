@@ -162,7 +162,6 @@
     if (allEvents.length === 0) { body.innerHTML = ''; return; }
 
     allEvents = prepareScheduleSessionEvents(allEvents);
-    allEvents = collapseSuperFormulaScheduleEvents(allEvents);
 
     var normalizeScheduleEvent = window.TGA.normalizeScheduleEvent;
     if (normalizeScheduleEvent) {

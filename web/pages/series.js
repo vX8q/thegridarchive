@@ -4393,12 +4393,17 @@ function renderDetail(seriesId, subPath) {
           } else {
             numCell = '<td class="col-num">' + esc(showNum) + '</td>';
           }
-          if (seriesKeyRow === 'super_formula' && e._sfRdLabel) {
+          if (seriesKeyRow === 'super_formula') {
+            var sfRd = e._sfRdLabel;
+            if (!sfRd) {
+              var sfIdm = String(e.id || '').match(/_(\d+)$/);
+              sfRd = sfIdm ? sfIdm[1] : (opts.round != null ? String(opts.round) : showNum);
+            }
             if (e.has_detail && e.id) {
               var sfEventSlug = String(e.id || '').toLowerCase().replace(/_/g, '-');
-              numCell = '<td class="col-num"><a href="/event/' + encodeURIComponent(sfEventSlug) + '" class="event-link">' + esc(String(e._sfRdLabel)) + '</a></td>';
+              numCell = '<td class="col-num"><a href="/event/' + encodeURIComponent(sfEventSlug) + '" class="event-link">' + esc(String(sfRd)) + '</a></td>';
             } else {
-              numCell = '<td class="col-num">' + esc(String(e._sfRdLabel)) + '</td>';
+              numCell = '<td class="col-num">' + esc(String(sfRd)) + '</td>';
             }
           }
           var eventCell;
@@ -4680,12 +4685,8 @@ function renderDetail(seriesId, subPath) {
             var getRaceStartDateIsoGroup = window.TGA && window.TGA.getEventRaceStartDateIso;
             var groupDateStart = '';
             var groupDateEnd = '';
-            var f1SplitWeekendDates = isMultiRaceSchedule && (
-              isF1ScheduleWithTime ||
-              seriesKeySched === 'f1' ||
-              pathSeriesSlug === 'f1'
-            );
-            if (size > 1 && !f1SplitWeekendDates) {
+            var splitWeekendDates = isGroupedRaceSchedule;
+            if (size > 1 && !splitWeekendDates) {
               var groupDates = [];
               for (var gd = 0; gd < size; gd++) {
                 var gev = list[start + gd];
@@ -4735,9 +4736,9 @@ function renderDetail(seriesId, subPath) {
                   dateFirst: dateFirst,
                   dateRowSpan: dateRowSpan,
                   dateContinuation: dateContinuation,
-                  groupDateSpan: (!f1SplitWeekendDates && size > 1) ? size : 0,
-                  groupDateContinuation: (!f1SplitWeekendDates && size > 1 && j > 0),
-                  groupDateRange: (!f1SplitWeekendDates && size > 1) ? { start: groupDateStart, end: groupDateEnd } : null
+                  groupDateSpan: (!splitWeekendDates && size > 1) ? size : 0,
+                  groupDateContinuation: (!splitWeekendDates && size > 1 && j > 0),
+                  groupDateRange: (!splitWeekendDates && size > 1) ? { start: groupDateStart, end: groupDateEnd } : null
                 }));
               }
             } catch (rowErr) {
@@ -4845,10 +4846,6 @@ function renderDetail(seriesId, subPath) {
           return !sid || sid === expectedKey || sid === expectedKeyNorm;
         });
         events = filterVisibleEvents(events);
-      }
-
-      if (expectedKey === 'super_formula' && window.TGA && typeof window.TGA.collapseSuperFormulaScheduleEvents === 'function') {
-        events = window.TGA.collapseSuperFormulaScheduleEvents(events);
       }
 
       renderScheduleRows(events);

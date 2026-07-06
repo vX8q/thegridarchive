@@ -42,11 +42,10 @@
     "name": "Norisring",
     "location": "Nuremberg, Bavaria",
     "circuit_name": "Norisring",
-    "start_date": "2026-07-18",
-    "end_date": "2026-07-18",
+    "start_date": "2026-07-04",
+    "end_date": "2026-07-05",
     "time_est": "13:30",
-    "time_msk": "14:30",
-    "date": "2026-07-18"
+    "time_msk": "14:30"
   },
   {
     "id": "DTM_2026_5",
@@ -55,11 +54,10 @@
     "name": "Oschersleben",
     "location": "Oschersleben, Saxony-Anhalt",
     "circuit_name": "Motorsport Arena Oschersleben",
-    "start_date": "2026-08-08",
-    "end_date": "2026-08-08",
+    "start_date": "2026-07-25",
+    "end_date": "2026-07-26",
     "time_est": "13:30",
-    "time_msk": "14:30",
-    "date": "2026-08-08"
+    "time_msk": "14:30"
   },
   {
     "id": "DTM_2026_6",
@@ -68,11 +66,10 @@
     "name": "Nürburgring",
     "location": "Nürburg, Rhineland-Palatinate",
     "circuit_name": "Nürburgring",
-    "start_date": "2026-08-29",
-    "end_date": "2026-08-29",
+    "start_date": "2026-08-15",
+    "end_date": "2026-08-16",
     "time_est": "13:30",
-    "time_msk": "14:30",
-    "date": "2026-08-29"
+    "time_msk": "14:30"
   },
   {
     "id": "DTM_2026_7",
@@ -81,11 +78,10 @@
     "name": "Sachsenring",
     "location": "Hohenstein-Ernstthal, Sachsen",
     "circuit_name": "Sachsenring",
-    "start_date": "2026-09-19",
-    "end_date": "2026-09-19",
+    "start_date": "2026-09-12",
+    "end_date": "2026-09-13",
     "time_est": "13:30",
-    "time_msk": "14:30",
-    "date": "2026-09-19"
+    "time_msk": "14:30"
   },
   {
     "id": "DTM_2026_8",
@@ -94,10 +90,9 @@
     "name": "Hockenheimring",
     "location": "Hockenheim, Baden-Württemberg",
     "circuit_name": "Hockenheimring",
-    "start_date": "2026-10-03",
-    "end_date": "2026-10-03",
+    "start_date": "2026-10-10",
+    "end_date": "2026-10-11",
     "time_est": "13:30",
-    "time_msk": "14:30",
-    "date": "2026-10-03"
+    "time_msk": "14:30"
   }
 ]

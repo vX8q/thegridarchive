@@ -61,10 +61,6 @@
         <div id="nascar-live-root" class="nascar-live-root">
           <p class="loading" data-i18n="loading.live">Loading live…</p>
         </div>
-        <details class="live-debug-details">
-          <summary>API debug</summary>
-          <div id="live-debug-root" class="live-debug-root"></div>
-        </details>
       </div>
 
       <!-- Series navigation -->
@@ -88,8 +84,8 @@
         <h1 id="sched-page-title" data-i18n="home.full_schedule">Full Schedule</h1>
         <div class="schedule-controls">
           <label class="schedule-toggle">
-            <input type="checkbox" id="sched-hide-past-toggle" checked>
-            <span data-i18n="schedule.hide_past">Hide past races</span>
+            <input type="checkbox" id="sched-show-past-toggle">
+            <span data-i18n="schedule.show_past">Show past races</span>
           </label>
         </div>
       </header>
@@ -506,7 +502,11 @@
   <script src="/web/utils/fetch-json.js" defer></script>
   <script src="/web/lib/api.js" defer></script>
   <script src="/web/lib/state.js" defer></script>
+  <script src="/web/data/timezones.js" defer></script>
   <script src="/web/tga-i18n.js" defer></script>
+  <script src="/web/data/multi-race-schedule-sessions.js" defer></script>
+  <script src="/web/lib/event-card-date.js" defer></script>
+  <script src="/web/lib/weekend-card-merge.js" defer></script>
   <script src="/web/tga-utils.js" defer></script>
   <script src="/web/lib/deps.js" defer></script>
   <script src="/web/components/table-sort.js" defer></script>
@@ -514,11 +514,10 @@
   <script src="/web/components/nascar-live.js" defer></script>
   <script src="/web/components/last-results-cards.js" defer></script>
   <script src="/web/components/schedule.js" defer></script>
-  <script src="/web/data/multi-race-schedule-sessions.js" defer></script>
   <script src="/web/components/series-schedule-expand.js" defer></script>
   <script src="/web/pages/schedule.js" defer></script>
   <script src="/web/pages/list.js" defer></script>
-  <script src="/web/pages/live-debug.js" defer></script>
+  <script src="/web/pages/home-feed.js" defer></script>
   <script src="/web/series-supercars.js" defer></script>
   <script src="/web/tga-series.js" defer></script>
   <script src="/web/pages/series.js" defer></script>

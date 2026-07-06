@@ -6,7 +6,52 @@ import (
 	"testing"
 
 	"github.com/vX8q/tga/config"
+	"github.com/vX8q/tga/models"
 )
+
+func TestBuildDriverSeasonResultsFromEvents_IMSAFoleyClassPos(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	results, err := BuildDriverSeasonResultsFromEvents(dataDir, "robby-foley", "2026")
+	if err != nil {
+		t.Fatalf("BuildDriverSeasonResultsFromEvents: %v", err)
+	}
+	want := map[string]int{
+		"IMSA_2026_1": 10, // Daytona GTD class pos
+		"IMSA_2026_2": 5,  // Sebring
+		"IMSA_2026_3": 2,  // Long Beach
+		"IMSA_2026_4": 7,  // Monterey
+		"IMSA_2026_6": 7,  // Watkins Glen
+	}
+	for eventID, wantPos := range want {
+		var row *models.DriverSeasonResult
+		for i := range results {
+			r := &results[i]
+			if r.EventID != eventID || strings.EqualFold(r.RaceName, "Entry list") {
+				continue
+			}
+			if !strings.EqualFold(r.SeriesID, "IMSA") || r.CarNumber != "96" {
+				continue
+			}
+			row = r
+			break
+		}
+		if row == nil {
+			t.Fatalf("missing IMSA result for %s", eventID)
+		}
+		if row.CarNumber != "96" {
+			t.Fatalf("%s car = %q, want 96", eventID, row.CarNumber)
+		}
+		if row.Position != wantPos {
+			t.Fatalf("%s position = %d, want %d (overall vs class pos bug?)", eventID, row.Position, wantPos)
+		}
+		if row.Points <= 0 {
+			t.Fatalf("%s points = %v, want > 0", eventID, row.Points)
+		}
+		if row.Points > 500 {
+			t.Fatalf("%s points = %v looks like season total, want per-event points", eventID, row.Points)
+		}
+	}
+}
 
 func TestBuildDriverSeasonResultsFromEvents_F1PosDotHeader(t *testing.T) {
 	dataDir := filepath.Join("..", "..", "data")

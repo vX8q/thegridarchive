@@ -15,7 +15,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: '1.26'
 
       - name: Cache modules
         uses: actions/cache@v4
@@ -25,6 +25,12 @@ jobs:
 
       - name: Run tests
         run: go test ./... -count=1 -v
+
+      - name: Run event card date tests
+        run: node scripts/event-card-date.test.mjs
+
+      - name: Audit card dates
+        run: node scripts/audit-card-dates.mjs
 
       - name: Run go vet
         run: go vet ./...
@@ -37,7 +43,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: '1.26'
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v4

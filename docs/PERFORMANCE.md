@@ -60,18 +60,7 @@ Result:
 - sustained: `p95 < 250ms`, `error rate < 0.5%`
 - spike-like: `error rate < 1%`
 
-## k6 scenarios
+## Load testing (k6)
 
-Готовые k6-скрипты лежат в `k6/`:
-
-- `k6/smoke.js` (`1 VU`, `30s`)
-- `k6/sustained.js` (`200 VU`, `10m`)
-- `k6/spike.js` (0 -> 500 VU -> 0)
-
-Пример запуска:
-
-```bash
-k6 run k6/smoke.js
-k6 run k6/sustained.js
-k6 run k6/spike.js
-```
+Результаты выше получены сценариями smoke / sustained / spike (1 VU×30s, 200 VU×10m, spike 0→500→0 VU).
+Скрипты k6 в репозитории не хранятся; при необходимости повторить прогон — восстановите сценарии по порогам из раздела «Acceptance gates» или из истории коммитов.

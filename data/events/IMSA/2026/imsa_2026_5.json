@@ -1,0 +1,1267 @@
+{
+  "event_id": "IMSA_2026_5",
+  "series": "IMSA WeatherTech SportsCar Championship",
+  "race": "Chevrolet Detroit Sports Car Classic",
+  "date": "2026-05-30",
+  "track": "Streets of Detroit",
+  "location": "Detroit, Michigan",
+  "distance": "100 minutes",
+  "entry_list": [
+    {
+      "number": "5",
+      "driver": "Tijmen van der Helm / Laurin Heinrich",
+      "team": "JDC-Miller MotorSports",
+      "manufacturer": "Porsche",
+      "class": "GTP",
+      "car": "Porsche 963",
+      "driver_slug": "tijmen-van-der-helm-laurin-heinrich"
+    },
+    {
+      "number": "6",
+      "driver": "Kevin Estre / Laurens Vanthoor",
+      "team": "Porsche Penske Motorsport",
+      "manufacturer": "Porsche",
+      "class": "GTP",
+      "car": "Porsche 963",
+      "driver_slug": "kevin-estre-laurens-vanthoor"
+    },
+    {
+      "number": "7",
+      "driver": "Julien Andlauer / Felipe Nasr",
+      "team": "Porsche Penske Motorsport",
+      "manufacturer": "Porsche",
+      "class": "GTP",
+      "car": "Porsche 963",
+      "driver_slug": "julien-andlauer-felipe-nasr"
+    },
+    {
+      "number": "10",
+      "driver": "Filipe Albuquerque / Ricky Taylor",
+      "team": "Cadillac Wayne Taylor Racing",
+      "manufacturer": "Cadillac",
+      "class": "GTP",
+      "car": "Cadillac V-Series.R",
+      "driver_slug": "filipe-albuquerque-ricky-taylor"
+    },
+    {
+      "number": "23",
+      "driver": "Roman De Angelis / Ross Gunn",
+      "team": "Aston Martin THOR Team",
+      "manufacturer": "Aston Martin",
+      "class": "GTP",
+      "car": "Aston Martin Valkyrie",
+      "driver_slug": "roman-de-angelis-ross-gunn"
+    },
+    {
+      "number": "24",
+      "driver": "Sheldon van der Linde / Dries Vanthoor",
+      "team": "BMW M Team WRT",
+      "manufacturer": "BMW",
+      "class": "GTP",
+      "car": "BMW M Hybrid V8",
+      "driver_slug": "sheldon-van-der-linde-dries-vanthoor"
+    },
+    {
+      "number": "25",
+      "driver": "Philipp Eng / Marco Wittmann",
+      "team": "BMW M Team WRT",
+      "manufacturer": "BMW",
+      "class": "GTP",
+      "car": "BMW M Hybrid V8",
+      "driver_slug": "philipp-eng-marco-wittmann"
+    },
+    {
+      "number": "31",
+      "driver": "Jack Aitken / Earl Bamber",
+      "team": "Cadillac Whelen",
+      "manufacturer": "Cadillac",
+      "class": "GTP",
+      "car": "Cadillac V-Series.R",
+      "driver_slug": "jack-aitken-earl-bamber"
+    },
+    {
+      "number": "40",
+      "driver": "Louis Deletraz / Jordan Taylor",
+      "team": "Cadillac Wayne Taylor Racing",
+      "manufacturer": "Cadillac",
+      "class": "GTP",
+      "car": "Cadillac V-Series.R",
+      "driver_slug": "louis-deletraz-jordan-taylor"
+    },
+    {
+      "number": "60",
+      "driver": "Tom Blomqvist / Colin Braun",
+      "team": "Acura Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Acura",
+      "class": "GTP",
+      "car": "Acura ARX-06",
+      "driver_slug": "tom-blomqvist-colin-braun"
+    },
+    {
+      "number": "93",
+      "driver": "Nick Yelloly / Renger van der Zande",
+      "team": "Acura Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Acura",
+      "class": "GTP",
+      "car": "Acura ARX-06",
+      "driver_slug": "nick-yelloly-renger-van-der-zande"
+    },
+    {
+      "number": "1",
+      "driver": "Connor De Phillippi / Neil Verhagen",
+      "team": "Paul Miller Racing",
+      "manufacturer": "BMW",
+      "class": "GTD Pro",
+      "car": "BMW M4 GT3 Evo",
+      "driver_slug": "connor-de-phillippi-neil-verhagen"
+    },
+    {
+      "number": "3",
+      "driver": "Antonio Garcia / Alexander Sims",
+      "team": "Corvette Racing by Pratt Miller Motorsports",
+      "manufacturer": "Chevrolet",
+      "class": "GTD Pro",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "antonio-garcia-alexander-sims"
+    },
+    {
+      "number": "4",
+      "driver": "Nicky Catsburg / Tommy Milner",
+      "team": "Corvette Racing by Pratt Miller Motorsports",
+      "manufacturer": "Chevrolet",
+      "class": "GTD Pro",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "nicky-catsburg-tommy-milner"
+    },
+    {
+      "number": "9",
+      "driver": "Andrea Caldarelli / Sandy Mitchell",
+      "team": "Pfaff Motorsports",
+      "manufacturer": "Lamborghini",
+      "class": "GTD Pro",
+      "car": "Lamborghini Temerario GT3",
+      "driver_slug": "andrea-caldarelli-sandy-mitchell"
+    },
+    {
+      "number": "14",
+      "driver": "Ben Barnicoat / Jack Hawksworth",
+      "team": "Vasser Sullivan Racing",
+      "manufacturer": "Lexus",
+      "class": "GTD Pro",
+      "car": "Lexus RC F GT3",
+      "driver_slug": "ben-barnicoat-jack-hawksworth"
+    },
+    {
+      "number": "15",
+      "driver": "Chaz Mostert / Aaron Telitz",
+      "team": "Vasser Sullivan Racing",
+      "manufacturer": "Lexus",
+      "class": "GTD Pro",
+      "car": "Lexus RC F GT3",
+      "driver_slug": "chaz-mostert-aaron-telitz"
+    },
+    {
+      "number": "59",
+      "driver": "Max Esterson / Nikita Johnson",
+      "team": "RLL Team McLaren",
+      "manufacturer": "McLaren",
+      "class": "GTD Pro",
+      "car": "McLaren 720S GT3 Evo",
+      "driver_slug": "max-esterson-nikita-johnson"
+    },
+    {
+      "number": "64",
+      "driver": "Ben Barker / Dennis Olsen",
+      "team": "Ford Multimatic Motorsports",
+      "manufacturer": "Ford",
+      "class": "GTD Pro",
+      "car": "Ford Mustang GT3 Evo",
+      "driver_slug": "ben-barker-dennis-olsen"
+    },
+    {
+      "number": "65",
+      "driver": "Christopher Mies / Frederic Vervisch",
+      "team": "Ford Multimatic Motorsports",
+      "manufacturer": "Ford",
+      "class": "GTD Pro",
+      "car": "Ford Mustang GT3 Evo",
+      "driver_slug": "christopher-mies-frederic-vervisch"
+    },
+    {
+      "number": "77",
+      "driver": "Harry King / Nick Tandy",
+      "team": "AO Racing",
+      "manufacturer": "Porsche",
+      "class": "GTD Pro",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "driver_slug": "harry-king-nick-tandy"
+    },
+    {
+      "number": "36",
+      "driver": "Mason Filippi / Robert Wickens",
+      "team": "DXDT Racing",
+      "manufacturer": "Chevrolet",
+      "class": "GTD",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "mason-filippi-robert-wickens"
+    },
+    {
+      "number": "177",
+      "driver": "Harry King / Mikkel O. Pedersen",
+      "team": "AO Racing",
+      "manufacturer": "Porsche",
+      "class": "GTD",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "driver_slug": "harry-king-mikkel-o-pedersen"
+    },
+    {
+      "number": "46",
+      "driver": "Andrea Caldarelli / Zachary Vanier",
+      "team": "Pfaff Motorsports",
+      "manufacturer": "Lamborghini",
+      "class": "GTD",
+      "car": "Lamborghini Temerario GT3",
+      "driver_slug": "andrea-caldarelli-zachary-vanier"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "title": "Practice 1",
+      "headers": [
+        "POS",
+        "CAR NO",
+        "CLASS POS",
+        "DRIVERS",
+        "TEAM/CAR/SPONSOR",
+        "NO LAPS",
+        "FASTEST LAP",
+        "STATUS"
+      ],
+      "rows": [
+        [
+          "1",
+          "31",
+          "1",
+          "Earl Bamber / Jack Aitken",
+          "Cadillac Whelen / Cadillac V-Series.R",
+          "51",
+          "1:07.182",
+          "Running"
+        ],
+        [
+          "2",
+          "24",
+          "2",
+          "Dries Vanthoor / Sheldon van der Linde",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "59",
+          "1:07.328",
+          "Running"
+        ],
+        [
+          "3",
+          "93",
+          "3",
+          "Nick Yelloly / Renger van der Zande",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "54",
+          "1:07.384",
+          "Running"
+        ],
+        [
+          "4",
+          "7",
+          "4",
+          "Felipe Nasr / Julien Andlauer",
+          "Porsche Penske Motorsport / Porsche 963",
+          "57",
+          "1:07.655",
+          "Running"
+        ],
+        [
+          "5",
+          "10",
+          "5",
+          "Filipe Albuquerque / Ricky Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "55",
+          "1:07.695",
+          "Running"
+        ],
+        [
+          "6",
+          "60",
+          "6",
+          "Tom Blomqvist / Colin Braun",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "49",
+          "1:07.830",
+          "Running"
+        ],
+        [
+          "7",
+          "5",
+          "7",
+          "Laurin Heinrich / Tijmen van der Helm",
+          "JDC-Miller MotorSports / Porsche 963",
+          "57",
+          "1:07.835",
+          "Running"
+        ],
+        [
+          "8",
+          "25",
+          "8",
+          "Marco Wittmann / Philipp Eng",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "55",
+          "1:08.071",
+          "Running"
+        ],
+        [
+          "9",
+          "40",
+          "9",
+          "Louis Deletraz / Jordan Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "47",
+          "1:08.101",
+          "Running"
+        ],
+        [
+          "10",
+          "6",
+          "10",
+          "Kevin Estre / Laurens Vanthoor",
+          "Porsche Penske Motorsport / Porsche 963",
+          "59",
+          "1:08.223",
+          "Running"
+        ],
+        [
+          "11",
+          "23",
+          "11",
+          "Roman De Angelis / Ross Gunn",
+          "Aston Martin THOR Team / Aston Martin Valkyrie",
+          "51",
+          "1:08.954",
+          "Running"
+        ],
+        [
+          "12",
+          "4",
+          "1",
+          "Tommy Milner / Nicky Catsburg",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "47",
+          "1:10.921",
+          "Running"
+        ],
+        [
+          "13",
+          "14",
+          "2",
+          "Ben Barnicoat / Jack Hawksworth",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "47",
+          "1:11.199",
+          "Running"
+        ],
+        [
+          "14",
+          "65",
+          "3",
+          "Frederic Vervisch / Christopher Mies",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "48",
+          "1:11.291",
+          "Running"
+        ],
+        [
+          "15",
+          "3",
+          "4",
+          "Alexander Sims / Antonio Garcia",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "47",
+          "1:11.408",
+          "Running"
+        ],
+        [
+          "16",
+          "64",
+          "5",
+          "Ben Barker / Dennis Olsen",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "52",
+          "1:11.716",
+          "Running"
+        ],
+        [
+          "17",
+          "59",
+          "6",
+          "Max Esterson / Nikita Johnson",
+          "RLL Team McLaren / McLaren 720S GT3 Evo",
+          "49",
+          "1:11.880",
+          "Running"
+        ],
+        [
+          "18",
+          "15",
+          "7",
+          "Chaz Mostert / Aaron Telitz",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "47",
+          "1:12.071",
+          "Running"
+        ],
+        [
+          "19",
+          "1",
+          "8",
+          "Neil Verhagen / Connor De Phillippi",
+          "Paul Miller Racing / BMW M4 GT3 Evo",
+          "53",
+          "1:12.150",
+          "Running"
+        ],
+        [
+          "20",
+          "77",
+          "9",
+          "Nick Tandy / Harry King",
+          "AO Racing / Porsche 911 GT3 R (992.2)",
+          "48",
+          "1:12.405",
+          "Running"
+        ],
+        [
+          "21",
+          "9",
+          "10",
+          "Andrea Caldarelli / Sandy Mitchell",
+          "Pfaff Motorsports / Lamborghini Temerario GT3",
+          "47",
+          "1:12.446",
+          "Running"
+        ]
+      ]
+    },
+    "practice2": {
+      "title": "Practice 2",
+      "headers": [
+        "POS",
+        "CAR NO",
+        "CLASS POS",
+        "DRIVERS",
+        "TEAM/CAR/SPONSOR",
+        "NO LAPS",
+        "FASTEST LAP",
+        "STATUS"
+      ],
+      "rows": [
+        [
+          "1",
+          "31",
+          "1",
+          "Earl Bamber / Jack Aitken",
+          "Cadillac Whelen / Cadillac V-Series.R",
+          "82",
+          "1:06.412",
+          "Running"
+        ],
+        [
+          "2",
+          "24",
+          "2",
+          "Dries Vanthoor / Sheldon van der Linde",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "80",
+          "1:06.443",
+          "Running"
+        ],
+        [
+          "3",
+          "25",
+          "3",
+          "Marco Wittmann / Philipp Eng",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "77",
+          "1:06.532",
+          "Running"
+        ],
+        [
+          "4",
+          "40",
+          "4",
+          "Louis Deletraz / Jordan Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "73",
+          "1:06.733",
+          "Running"
+        ],
+        [
+          "5",
+          "60",
+          "5",
+          "Tom Blomqvist / Colin Braun",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "74",
+          "1:06.791",
+          "Running"
+        ],
+        [
+          "6",
+          "6",
+          "6",
+          "Kevin Estre / Laurens Vanthoor",
+          "Porsche Penske Motorsport / Porsche 963",
+          "76",
+          "1:06.856",
+          "Running"
+        ],
+        [
+          "7",
+          "93",
+          "7",
+          "Nick Yelloly / Renger van der Zande",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "73",
+          "1:06.859",
+          "Running"
+        ],
+        [
+          "8",
+          "10",
+          "8",
+          "Filipe Albuquerque / Ricky Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "73",
+          "1:06.887",
+          "Running"
+        ],
+        [
+          "9",
+          "7",
+          "9",
+          "Felipe Nasr / Julien Andlauer",
+          "Porsche Penske Motorsport / Porsche 963",
+          "74",
+          "1:07.089",
+          "Running"
+        ],
+        [
+          "10",
+          "5",
+          "10",
+          "Laurin Heinrich / Tijmen van der Helm",
+          "JDC-Miller MotorSports / Porsche 963",
+          "67",
+          "1:07.233",
+          "Running"
+        ],
+        [
+          "11",
+          "23",
+          "11",
+          "Roman De Angelis / Ross Gunn",
+          "Aston Martin THOR Team / Aston Martin Valkyrie",
+          "57",
+          "1:08.417",
+          "Running"
+        ],
+        [
+          "12",
+          "3",
+          "1",
+          "Alexander Sims / Antonio Garcia",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "80",
+          "1:10.109",
+          "Running"
+        ],
+        [
+          "13",
+          "4",
+          "2",
+          "Tommy Milner / Nicky Catsburg",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "75",
+          "1:10.319",
+          "Running"
+        ],
+        [
+          "14",
+          "59",
+          "3",
+          "Max Esterson / Nikita Johnson",
+          "RLL Team McLaren / McLaren 720S GT3 Evo",
+          "57",
+          "1:10.657",
+          "Running"
+        ],
+        [
+          "15",
+          "15",
+          "4",
+          "Chaz Mostert / Aaron Telitz",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "67",
+          "1:10.690",
+          "Running"
+        ],
+        [
+          "16",
+          "65",
+          "5",
+          "Frederic Vervisch / Christopher Mies",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "74",
+          "1:10.911",
+          "Running"
+        ],
+        [
+          "17",
+          "14",
+          "6",
+          "Ben Barnicoat / Jack Hawksworth",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "58",
+          "1:10.972",
+          "Running"
+        ],
+        [
+          "18",
+          "1",
+          "7",
+          "Neil Verhagen / Connor De Phillippi",
+          "Paul Miller Racing / BMW M4 GT3 Evo",
+          "52",
+          "1:11.021",
+          "Running"
+        ],
+        [
+          "19",
+          "64",
+          "8",
+          "Ben Barker / Dennis Olsen",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "68",
+          "1:11.133",
+          "Running"
+        ],
+        [
+          "20",
+          "77",
+          "9",
+          "Nick Tandy / Harry King",
+          "AO Racing / Porsche 911 GT3 R (992.2)",
+          "73",
+          "1:11.247",
+          "Running"
+        ],
+        [
+          "21",
+          "9",
+          "10",
+          "Andrea Caldarelli / Sandy Mitchell",
+          "Pfaff Motorsports / Lamborghini Temerario GT3",
+          "63",
+          "1:11.722",
+          "Running"
+        ]
+      ]
+    },
+    "practice3": {
+      "title": "Practice 3",
+      "headers": [
+        "POS",
+        "CAR NO",
+        "CLASS POS",
+        "DRIVERS",
+        "TEAM/CAR/SPONSOR",
+        "NO LAPS",
+        "FASTEST LAP",
+        "STATUS"
+      ],
+      "rows": [
+        [
+          "1",
+          "24",
+          "1",
+          "Dries Vanthoor / Sheldon van der Linde",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "15",
+          "1:06.950",
+          "Running"
+        ],
+        [
+          "2",
+          "40",
+          "2",
+          "Louis Deletraz / Jordan Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "16",
+          "1:07.196",
+          "Running"
+        ],
+        [
+          "3",
+          "7",
+          "3",
+          "Felipe Nasr / Julien Andlauer",
+          "Porsche Penske Motorsport / Porsche 963",
+          "15",
+          "1:07.381",
+          "Running"
+        ],
+        [
+          "4",
+          "6",
+          "4",
+          "Kevin Estre / Laurens Vanthoor",
+          "Porsche Penske Motorsport / Porsche 963",
+          "16",
+          "1:07.721",
+          "Running"
+        ],
+        [
+          "5",
+          "10",
+          "5",
+          "Filipe Albuquerque / Ricky Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "16",
+          "1:07.779",
+          "Running"
+        ],
+        [
+          "6",
+          "5",
+          "6",
+          "Laurin Heinrich / Tijmen van der Helm",
+          "JDC-Miller MotorSports / Porsche 963",
+          "16",
+          "1:07.893",
+          "Running"
+        ],
+        [
+          "7",
+          "25",
+          "7",
+          "Marco Wittmann / Philipp Eng",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "15",
+          "1:08.020",
+          "Running"
+        ],
+        [
+          "8",
+          "31",
+          "8",
+          "Earl Bamber / Jack Aitken",
+          "Cadillac Whelen / Cadillac V-Series.R",
+          "12",
+          "1:08.311",
+          "Running"
+        ],
+        [
+          "9",
+          "93",
+          "9",
+          "Nick Yelloly / Renger van der Zande",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "14",
+          "1:08.639",
+          "Running"
+        ],
+        [
+          "10",
+          "23",
+          "10",
+          "Roman De Angelis / Ross Gunn",
+          "Aston Martin THOR Team / Aston Martin Valkyrie",
+          "16",
+          "1:08.752",
+          "Running"
+        ],
+        [
+          "11",
+          "60",
+          "11",
+          "Tom Blomqvist / Colin Braun",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "10",
+          "1:09.955",
+          "Running"
+        ],
+        [
+          "12",
+          "4",
+          "1",
+          "Tommy Milner / Nicky Catsburg",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "16",
+          "1:10.527",
+          "Running"
+        ],
+        [
+          "13",
+          "9",
+          "2",
+          "Andrea Caldarelli / Sandy Mitchell",
+          "Pfaff Motorsports / Lamborghini Temerario GT3",
+          "16",
+          "1:10.536",
+          "Running"
+        ],
+        [
+          "14",
+          "14",
+          "3",
+          "Ben Barnicoat / Jack Hawksworth",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "16",
+          "1:10.744",
+          "Running"
+        ],
+        [
+          "15",
+          "3",
+          "4",
+          "Alexander Sims / Antonio Garcia",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "15",
+          "1:10.962",
+          "Running"
+        ],
+        [
+          "16",
+          "65",
+          "5",
+          "Frederic Vervisch / Christopher Mies",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "15",
+          "1:11.002",
+          "Running"
+        ],
+        [
+          "17",
+          "64",
+          "6",
+          "Ben Barker / Dennis Olsen",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "15",
+          "1:11.551",
+          "Running"
+        ],
+        [
+          "18",
+          "77",
+          "7",
+          "Nick Tandy / Harry King",
+          "AO Racing / Porsche 911 GT3 R (992.2)",
+          "14",
+          "1:12.534",
+          "Running"
+        ],
+        [
+          "19",
+          "59",
+          "8",
+          "Max Esterson / Nikita Johnson",
+          "RLL Team McLaren / McLaren 720S GT3 Evo",
+          "15",
+          "1:12.805",
+          "Running"
+        ],
+        [
+          "20",
+          "15",
+          "9",
+          "Chaz Mostert / Aaron Telitz",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "10",
+          "1:15.008",
+          "Running"
+        ],
+        [
+          "21",
+          "1",
+          "10",
+          "Neil Verhagen / Connor De Phillippi",
+          "Paul Miller Racing / BMW M4 GT3 Evo",
+          "9",
+          "",
+          "Running"
+        ]
+      ]
+    },
+    "qualifying": {
+      "title": "Qualifying",
+      "headers": [
+        "POS",
+        "CAR NO",
+        "CLASS POS",
+        "DRIVERS",
+        "TEAM/CAR/SPONSOR",
+        "NO LAPS",
+        "FASTEST LAP",
+        "STATUS"
+      ],
+      "rows": [
+        [
+          "18",
+          "15",
+          "12",
+          "Chaz Mostert / Aaron Telitz",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "13",
+          "1:09.961",
+          "Running"
+        ],
+        [
+          "2",
+          "177",
+          "14",
+          "Harry King / Mikkel O. Pedersen",
+          "AO Racing / Porsche 911 GT3 R (992.2)",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "3",
+          "46",
+          "13",
+          "Andrea Caldarelli / Zachary Vanier",
+          "Pfaff Motorsports / Lamborghini Temerario GT3",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "4",
+          "4",
+          "4",
+          "Nicky Catsburg / Tommy Milner",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "",
+          "",
+          "Running"
+        ]
+      ]
+    },
+    "race": {
+      "title": "Race",
+      "headers": [
+        "POS",
+        "CAR NO",
+        "DRIVERS",
+        "TEAM/CAR/SPONSOR",
+        "CLASS",
+        "CLASS POS",
+        "NO LAPS",
+        "FASTEST LAP",
+        "PTS",
+        "STATUS"
+      ],
+      "rows": [
+        [
+          "1",
+          "31",
+          "Earl Bamber / Jack Aitken",
+          "Cadillac Whelen / Cadillac V-Series.R",
+          "GTP",
+          "1",
+          "82",
+          "1:06.234",
+          "350",
+          "Running"
+        ],
+        [
+          "2",
+          "25",
+          "Marco Wittmann / Philipp Eng",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "GTP",
+          "2",
+          "82",
+          "1:06.701",
+          "320",
+          "Running"
+        ],
+        [
+          "3",
+          "10",
+          "Filipe Albuquerque / Ricky Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "GTP",
+          "3",
+          "82",
+          "1:06.592",
+          "300",
+          "Running"
+        ],
+        [
+          "4",
+          "93",
+          "Nick Yelloly / Renger van der Zande",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "GTP",
+          "4",
+          "82",
+          "1:06.461",
+          "280",
+          "Running"
+        ],
+        [
+          "5",
+          "7",
+          "Felipe Nasr / Julien Andlauer",
+          "Porsche Penske Motorsport / Porsche 963",
+          "GTP",
+          "5",
+          "82",
+          "1:06.601",
+          "260",
+          "Running"
+        ],
+        [
+          "6",
+          "40",
+          "Louis Deletraz / Jordan Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "GTP",
+          "6",
+          "82",
+          "1:06.385",
+          "250",
+          "Running"
+        ],
+        [
+          "7",
+          "60",
+          "Tom Blomqvist / Colin Braun",
+          "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
+          "GTP",
+          "7",
+          "82",
+          "1:06.323",
+          "240",
+          "Running"
+        ],
+        [
+          "8",
+          "6",
+          "Kevin Estre / Laurens Vanthoor",
+          "Porsche Penske Motorsport / Porsche 963",
+          "GTP",
+          "8",
+          "82",
+          "1:06.386",
+          "230",
+          "Running"
+        ],
+        [
+          "9",
+          "24",
+          "Dries Vanthoor / Sheldon van der Linde",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "GTP",
+          "9",
+          "82",
+          "1:06.340",
+          "220",
+          "Running"
+        ],
+        [
+          "10",
+          "23",
+          "Roman De Angelis / Ross Gunn",
+          "Aston Martin THOR Team / Aston Martin Valkyrie",
+          "GTP",
+          "10",
+          "82",
+          "1:06.996",
+          "210",
+          "Running"
+        ],
+        [
+          "11",
+          "5",
+          "Laurin Heinrich / Tijmen van der Helm",
+          "JDC-Miller MotorSports / Porsche 963",
+          "GTP",
+          "11",
+          "80",
+          "1:06.569",
+          "200",
+          "Running"
+        ],
+        [
+          "12",
+          "3",
+          "Alexander Sims / Antonio Garcia",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "GTD Pro",
+          "1",
+          "79",
+          "1:09.848",
+          "350",
+          "Running"
+        ],
+        [
+          "13",
+          "9",
+          "Andrea Caldarelli / Sandy Mitchell",
+          "Pfaff Motorsports / Lamborghini Temerario GT3",
+          "GTD Pro",
+          "2",
+          "79",
+          "1:10.643",
+          "320",
+          "Running"
+        ],
+        [
+          "14",
+          "65",
+          "Frederic Vervisch / Christopher Mies",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "GTD Pro",
+          "3",
+          "79",
+          "1:10.240",
+          "300",
+          "Running"
+        ],
+        [
+          "15",
+          "1",
+          "Neil Verhagen / Connor De Phillippi",
+          "Paul Miller Racing / BMW M4 GT3 Evo",
+          "GTD Pro",
+          "4",
+          "79",
+          "1:11.041",
+          "280",
+          "Running"
+        ],
+        [
+          "16",
+          "64",
+          "Ben Barker / Dennis Olsen",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "GTD Pro",
+          "5",
+          "79",
+          "1:10.074",
+          "260",
+          "Running"
+        ],
+        [
+          "17",
+          "14",
+          "Ben Barnicoat / Jack Hawksworth",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "GTD Pro",
+          "6",
+          "79",
+          "1:10.105",
+          "250",
+          "Running"
+        ],
+        [
+          "18",
+          "4",
+          "Tommy Milner / Nicky Catsburg",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "GTD Pro",
+          "7",
+          "79",
+          "1:10.172",
+          "240",
+          "Running"
+        ],
+        [
+          "19",
+          "59",
+          "Max Esterson / Nikita Johnson",
+          "RLL Team McLaren / McLaren 720S GT3 Evo",
+          "GTD Pro",
+          "8",
+          "79",
+          "1:10.739",
+          "230",
+          "Running"
+        ],
+        [
+          "20",
+          "77",
+          "Nick Tandy / Harry King",
+          "AO Racing / Porsche 911 GT3 R (992.2)",
+          "GTD Pro",
+          "9",
+          "78",
+          "1:11.713",
+          "220",
+          "Running"
+        ],
+        [
+          "21",
+          "15",
+          "Chaz Mostert / Aaron Telitz",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "GTD Pro",
+          "10",
+          "78",
+          "1:10.195",
+          "210",
+          "Not Running"
+        ],
+        [
+          "22",
+          "36",
+          "Robert Wickens / Mason Filippi",
+          "DXDT Racing / Chevrolet Corvette Z06 GT3.R",
+          "GTD",
+          "6",
+          "0",
+          "",
+          "250",
+          "Running"
+        ],
+        [
+          "23",
+          "177",
+          "Harry King / Mikkel Pedersen",
+          "AO Racing / Aston Martin Vantage AMR GT3 Evo",
+          "GTD",
+          "13",
+          "0",
+          "",
+          "180",
+          "Running"
+        ],
+        [
+          "24",
+          "46",
+          "Zachary Vanier / Andrea Caldarelli",
+          "Pfaff Motorsports / Lamborghini Huracan GT3 Evo 2",
+          "GTD",
+          "14",
+          "0",
+          "",
+          "170",
+          "Running"
+        ]
+      ]
+    }
+  },
+  "event_preview": "The Detroit Street Circuit is a 1.645-mile (2.647 km), nine-turn temporary street course in downtown Detroit, running along the Detroit Riverwalk and past the Renaissance Center, with a distinctive split pit lane as one of its signature features. The Chevrolet Detroit Sports Car Classic is the fifth round of the 2026 IMSA WeatherTech SportsCar Championship, contested over 100 minutes on Saturday, May 30, with just the GTP and GTD Pro classes on track. A field of 21 cars — 11 in GTP and 10 in GTD Pro — takes the start, with Vasser Sullivan adding a second GTD Pro entry for guest driver Chaz Mostert, the defending Australian Supercars champion, alongside Aaron Telitz.\n\nJDC-Miller Motorsports' Laurin Heinrich leads the GTP drivers' championship by 21 points over Action Express Racing's Jack Aitken following his breakthrough win at Laguna Seca — the first for a customer-run Porsche since the 963's debut and JDC-Miller's first overall victory since 2018. In GTD Pro, Ford Racing returns as the defending class winner and looks to build on the Mustang GT3 Evo's first-ever IMSA victory, while Corvette Racing's No. 4 entry has finished on the podium in three of four races so far without a win. Nick Tandy has won at every current track on the IMSA calendar except Detroit and will look to complete the set with AO Racing.\n\nThe WeatherTech Championship track records at the Detroit Street Circuit belong to Nick Tandy in GTP, a 1:05.390 (90.564 mph) set in a Porsche 963 in May 2024, and Antonio Garcia in GTD Pro, a 1:09.092 (85.711 mph) set in a Corvette Z06 GT3.R the same month.",
+  "event_preview_ru": "Detroit Street Circuit — временная 9-поворотная уличная трасса длиной 1,645 мили (2,647 км) в центре Detroit, проходящая вдоль Detroit Riverwalk и мимо Renaissance Center; одна из её отличительных черт — разделённая пит-лейн. Chevrolet Detroit Sports Car Classic — пятый этап IMSA WeatherTech SportsCar Championship 2026, 100 минут в субботу, 30 мая, только классы GTP и GTD Pro. На старт выходит 21 машина — 11 в GTP и 10 в GTD Pro; Vasser Sullivan добавляет вторую GTD Pro-машину с гостевым пилотом Chaz Mostert, действующим чемпионом Australian Supercars, в паре с Aaron Telitz.\n\nLaurin Heinrich из JDC-Miller Motorsports лидирует в зачёте пилотов GTP с отрывом 21 очко от Jack Aitken (Action Express Racing) после прорывной победы на Laguna Seca — первой для клиентского Porsche с дебюта 963 и первой общей победы JDC-Miller с 2018 года. В GTD Pro Ford Racing защищает титул победителя класса и стремится развить успех Mustang GT3 Evo после первой победы в IMSA, а Corvette Racing No. 4 трижды поднимался на подиум из четырёх гонок сезона, но победы пока нет. Nick Tandy побеждал на каждой действующей трассе календаря IMSA, кроме Detroit, и с AO Racing попытается закрыть этот пробел.\n\nРекорды трасс WeatherTech Championship на Detroit Street Circuit: в GTP — 1:05.390 (90,564 mph) Nick Tandy на Porsche 963 в мае 2024; в GTD Pro — 1:09.092 (85,711 mph) Antonio Garcia на Corvette Z06 GT3.R в том же месяце.",
+  "youtube_id": "0pAbWMJ6sco"
+}

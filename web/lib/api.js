@@ -121,9 +121,6 @@
       return get(BASE + '/live-events');
     },
 
-    getLiveDebug: function () {
-      return get(BASE + '/live-debug?_=' + Date.now());
-    },
 
     getLiveBoards: function () {
       return get(BASE + '/live-boards?_=' + Date.now());

@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/vX8q/tga/actions/workflows/ci.yml/badge.svg)
 
-Автоспортивный веб-сервис и API на Go: расписания, результаты, турнирные таблицы, статистика пилотов и live-данные по **22 чемпионатам**. Данные актуальны для сезона **2026** (`config.CurrentSeason`).
+Автоспортивный веб-сервис и API на Go: расписания, результаты, турнирные таблицы, статистика пилотов и live-данные по **21 чемпионату**. Данные актуальны для сезона **2026** (`config.CurrentSeason`).
 
 ## Возможности
 
@@ -11,7 +11,8 @@
 - Турнирные таблицы (личный и командный зачёт)
 - Статистика пилотов, команд, трасс и Head-to-Head сравнения
 - Live-данные: NASCAR Feed, OpenF1 API, WEC и Super Formula (синхронизация каждые 2 минуты)
-- История F1 (чемпионы 1950–2025, очки, шасси, моторы)
+- История F1 (чемпионы 1950–2026, очки, шасси, моторы)
+- Форма обратной связи (`/feedback`) с опциональной почтой и Cloudflare Turnstile
 - Prometheus-метрики и admin-эндпоинты для мониторинга
 - Интернационализация **EN / RU** (переключатель в шапке), тёмная и светлая тема
 - Русская локализация контента: имена пилотов, географические названия, названия этапов, превью гонок, статистика гонки, спецификации машин и UI-строки (названия команд и конструкторов остаются на английском)
@@ -31,7 +32,7 @@
 
 | Компонент | Стек |
 |-----------|------|
-| Бэкенд | Go 1.24, `net/http`, `slog` |
+| Бэкенд | Go 1.26, `net/http`, `slog` |
 | БД | SQLite через `modernc.org/sqlite` (pure Go, без CGO) |
 | Фронтенд | Vanilla JS SPA, CSS, клиентская маршрутизация |
 | Метрики | Prometheus (`prometheus/client_golang`) |
@@ -47,6 +48,8 @@ TGA/
 │   ├── server/                  # Основной HTTP-сервер (live-sync в том же процессе)
 │   ├── sync-nascar-live/        # Отдельный CLI: синхронизация NASCAR → live.json
 │   ├── sync-openf1-live/        # Отдельный CLI: синхронизация OpenF1 → live.json
+│   ├── sync-wec-live/           # Отдельный CLI: синхронизация WEC → live.json
+│   ├── sync-superformula-live/  # Отдельный CLI: синхронизация Super Formula → live.json
 │   ├── fetch-driver-wikidata/   # Обогащение данных пилотов из Wikidata
 │   └── normalize-event-tables/  # Нормализация JSON-таблиц этапов
 ├── config/                      # Определения чемпионатов (один файл на серию)
@@ -74,14 +77,14 @@ TGA/
 │   ├── live.json                # Live-данные (обновляются livesync)
 │   ├── driver_profiles.json     # Профили пилотов
 │   └── driver_profile_redirects.json  # Редиректы slug → канонический профиль
-├── scripts/                     # Node.js-скрипты для подготовки/нормализации данных
-├── k6/                          # Load-testing сценарии (smoke, sustained, spike)
+├── scripts/                     # Node.js-скрипты для подготовки/нормализации данных (см. ниже)
 ├── docs/                        # Заметки по архитектуре, метрикам и эксплуатации
 │   ├── DATA_ISSUES.md           # Известные проблемы и расхождения в данных
 │   ├── PERFORMANCE.md           # Базовый профиль производительности + команды прогонов
 │   ├── METRICS.md               # Продуктовые и технические метрики Prometheus
 │   ├── RUNBOOK.md               # Действия при инцидентах
-│   └── RELEASE_CHECKLIST.md     # Чеклист перед и после релиза
+│   ├── RELEASE_CHECKLIST.md     # Чеклист перед и после релиза
+│   └── WEB_TGA_API.md           # Публичный API фронтенда (`window.TGA`)
 ├── cloudflared/                 # Пример конфигурации туннеля (config.example.yml)
 ├── .github/workflows/           # CI: тесты + линтер
 ├── Dockerfile                   # Multi-stage build (alpine)
@@ -94,7 +97,7 @@ TGA/
 
 ### Требования
 
-- **Go 1.24+**
+- **Go 1.26+**
 - (Опционально) **Docker** и **Docker Compose** для контейнерного запуска
 - (Опционально) **Make** для удобных команд
 
@@ -108,7 +111,7 @@ go run ./cmd/server
 
 Сервер запустится на **http://localhost:8080**.
 
-Если в корне проекта есть `.env`, сервер загрузит его автоматически. Для отправки писем с формы фидбека скопируйте значения из `.env.example` в `.env` и замените `TGA_FEEDBACK_SMTP_PASS` на Google App Password. Для публичного сайта можно также заполнить `TGA_TURNSTILE_SITE_KEY` и `TGA_TURNSTILE_SECRET_KEY`, тогда форма фидбека будет проверять Cloudflare Turnstile.
+Если в корне проекта есть `.env`, сервер загрузит его автоматически. Для почты с формы фидбека создайте `.env` и задайте как минимум `TGA_FEEDBACK_SMTP_USER` и `TGA_FEEDBACK_SMTP_PASS` (для Gmail — [App Password](https://support.google.com/accounts/answer/185833)). Опционально: `TGA_FEEDBACK_FROM`, `TGA_FEEDBACK_TO`, `TGA_FEEDBACK_SMTP_HOST`, `TGA_FEEDBACK_SMTP_PORT`. Для публичного сайта добавьте `TGA_TURNSTILE_SITE_KEY` и `TGA_TURNSTILE_SECRET_KEY` — тогда форма будет проверять Cloudflare Turnstile.
 
 При старте сервер:
 1. Загружает JSON из `data/` в SQLite (`bootstrapStoreFromFiles`)
@@ -141,6 +144,27 @@ PowerShell:
 ```powershell
 $env:PORT="3000"; go run ./cmd/server
 ```
+
+### Скрипты обслуживания данных (`scripts/`)
+
+| Скрипт | Назначение |
+|--------|------------|
+| `fill-schedule-times.mjs` | Заполнение `time_est` / `time_msk` в `data/schedules/` (см. `data/TIMEZONES.md`) |
+| `validate-schedule-times.mjs` | Проверка времени в расписаниях |
+| `build-multi-race-schedule-sessions.mjs` | Генерация `web/data/multi-race-schedule-sessions.js` |
+| `sync-stockcar-table-teams.mjs` | Колонка Team в stock-car tables ↔ `entry_list` |
+| `stats-columns-sanity.mjs` | Проверка покрытия колонок stats |
+| `sync-driver-profiles-from-events.mjs` | Пересборка `driver_profiles.json` из events |
+| `sync-sf-table-teams.mjs` | Team-колонки в Super Formula events |
+
+### Отдельные live-sync CLI (опционально)
+
+Если сервер не запущен постоянно, можно гонять по cron (см. `data/LIVE_README.md`):
+
+- `go run ./cmd/sync-nascar-live`
+- `go run ./cmd/sync-openf1-live`
+- `go run ./cmd/sync-wec-live`
+- `go run ./cmd/sync-superformula-live`
 
 ## Docker
 
@@ -178,8 +202,16 @@ Compose запускает два сервиса:
 | `TGA_ENABLE_ADMIN` | — | `1` = включить admin-эндпоинты |
 | `TGA_ADMIN_TOKEN` | — | Токен для admin и pprof (обязателен при `TGA_ENABLE_ADMIN=1`) |
 | `TGA_RATE_LIMIT_RPS` | `0` | Лимит запросов/сек на IP (`0` = выключен) |
-| `TGA_ENABLE_PPROF` | — | `1` = включить `/debug/pprof/*` (требуется admin-токен) |
+| `TGA_ENABLE_PPROF` | — | `1` = включить `/debug/pprof/*` (требуется `TGA_ADMIN_TOKEN`) |
 | `LOG_LEVEL` | slog default | Если задан: `debug`, `info`, `warn`, `error` |
+| `TGA_FEEDBACK_SMTP_HOST` | `smtp.gmail.com` | SMTP-хост для писем с формы фидбека |
+| `TGA_FEEDBACK_SMTP_PORT` | `587` | SMTP-порт |
+| `TGA_FEEDBACK_SMTP_USER` | — | Логин SMTP |
+| `TGA_FEEDBACK_SMTP_PASS` | — | Пароль SMTP |
+| `TGA_FEEDBACK_FROM` | как `TGA_FEEDBACK_SMTP_USER` | Адрес отправителя |
+| `TGA_FEEDBACK_TO` | `bobbtga@gmail.com` | Получатель фидбека |
+| `TGA_TURNSTILE_SITE_KEY` | — | Публичный ключ Cloudflare Turnstile |
+| `TGA_TURNSTILE_SECRET_KEY` | — | Secret Turnstile |
 | `CLOUDFLARE_TUNNEL_TOKEN` | — | Токен Cloudflare Tunnel (для docker-compose) |
 
 ## API
@@ -197,15 +229,20 @@ Compose запускает два сервиса:
 | `GET` | `/api/series/{id}/standings` | Турнирная таблица |
 | `GET` | `/api/series/{id}/stats` | Статистика серии |
 | `GET` | `/api/series/{id}/headtohead` | H2H-сравнения пилотов |
-| `GET` | `/api/series/f1/history` | История F1 (1950–2025) |
+| `GET` | `/api/series/f1/history` | История F1 (1950–2026) |
 | `GET` | `/api/events/{eventID}` | Детали этапа (сессии, результаты) |
 | `GET` | `/api/live-events` | Текущие/ближайшие live-события |
+| `GET` | `/api/live-boards` | Live-борды (NASCAR, OpenF1); алиас: `/api/nascar-live` |
+| `POST` | `/api/feedback` | Отправка сообщения с формы обратной связи |
+| `GET` | `/api/feedback/config` | Включён ли Turnstile и публичный site key |
 | `GET` | `/api/drivers` | Список пилотов для поиска (имя, slug) |
+| `GET` | `/api/driver-profile-redirects` | Редиректы slug → канонический профиль |
 | `GET` | `/api/drivers/primary-context` | Основной контекст пилота по сезону (`?season=`, по умолчанию 2026) |
 | `GET` | `/api/driver/{slug}` | Профиль пилота + результаты сезона |
 | `GET` | `/api/driver-thumb/{slug}` | Миниатюра фото пилота (PNG) |
 | `GET` | `/api/flag/{iso2}` | Флаг страны (PNG, ISO 3166-1 alpha-2, напр. `gb`) |
 | `GET` | `/api/team-logo/{slug}` | Логотип команды (PNG или SVG-fallback) |
+| `GET` | `/api/card-bg/{filename}` | Фон карточки трассы из `web/images/` |
 
 Статика фронтенда: `GET /web/*`, редирект `GET /favicon.ico` → `/web/favicon.svg`.
 
@@ -223,11 +260,11 @@ Compose запускает два сервиса:
 
 Следующие пути отдают `index.html` для клиентской маршрутизации:
 
-`/`, `/schedule`, `/search`, `/series/*`, `/season/*`, `/track/*`, `/driver/*`, `/team/*`, `/crew-chief/*`
+`/`, `/schedule`, `/live`, `/feedback`, `/search`, `/series/*`, `/season/*`, `/track/*`, `/driver/*`, `/team/*`, `/crew-chief/*`
 
 Отдельно: `GET /event/*` — тоже `index.html` (legacy-URL этапов).
 
-Редирект: `/series/f1` → `/series/f1/history` (страница F1 — история сезонов; текущий сезон — `/season/f1-2026`).
+Редирект: `/series/f1` → `/season/f1-2026` (текущий сезон, `config.CurrentSeason`). История чемпионатов — `/series/f1/history`, API — `/api/series/f1/history`.
 
 ## Архитектура
 
@@ -288,9 +325,9 @@ Live-данные обновляются из внешних API фоновым 
 Данные хранятся в JSON-файлах и редактируются напрямую:
 
 - `data/schedules/{seriesID}.json` — расписания этапов
-- `data/events/{seriesID}_{year}_{n}.json` **или** `data/events/{SeriesName}/{year}/{eventID}.json` — детали этапов (результаты, сессии, таблицы). Для новых файлов предпочтителен вложенный путь по серии; часть серий (например IndyCar) ещё использует плоские имена в корне `data/events/`
+- `data/events/{SeriesName}/{year}/{eventID}.json` — детали этапов (результаты, сессии, таблицы), например `data/events/F1/2026/f1_2026_1.json`
 - `data/teams/{seriesID}.json` — составы команд
-- `data/standings/{seriesID}.json` — **опциональные** снимки standings (Cup, Truck, Supercars и др.); у большинства серий таблица **считается** из `events/` через `internal/schedulefile`
+- `data/standings/{seriesID}.json` — **опциональные** снимки standings (`nascar_cup`, `noaps`, `nascar_truck`, `arca`, `nascar_modified`, `supercars`, `imsa`, `elms`, `indycar`); у остальных серий таблица **считается** из `events/` через `internal/schedulefile` (F1, GTWCE, DTM и др.)
 - `data/driver_profiles.json` — профили пилотов
 - `data/driver_profile_redirects.json` — старые slug → канонический профиль
 - `data/live.json` — live-данные (пишет `livesync` в `cmd/server` или CLI `sync-*-live`)
@@ -362,18 +399,10 @@ GitHub Actions (`.github/workflows/ci.yml`) запускаются на push/PR 
 - **test** — `go test ./... -count=1 -v` и `go vet ./...`
 - **lint** — `golangci-lint` (govet, staticcheck, gosimple, ineffassign, gosec, misspell, errcheck, revive; см. `.golangci.yml`)
 
-Локальная сборка и Docker используют **Go 1.24** (`go.mod`, `Dockerfile`).
+Локальная сборка и Docker используют **Go 1.26** (`go.mod`, `Dockerfile`).
 
 Интеграционные API-тесты (happy-path/404/500) находятся в `cmd/server/integration_api_test.go` и запускаются вместе с `go test ./...`.
 Базовые результаты нагрузочных тестов зафиксированы в `docs/PERFORMANCE.md`.
-
-Локальный прогон k6-сценариев:
-
-```bash
-k6 run k6/smoke.js
-k6 run k6/sustained.js
-k6 run k6/spike.js
-```
 
 ## Лицензия
 

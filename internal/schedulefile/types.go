@@ -127,6 +127,7 @@ type StandingRow struct {
 	Wth          string            `json:"wth,omitempty"`    // withdrawals/DNFs
 	Status       string            `json:"status,omitempty"` // e.g. DNQ, Wth
 	Races        map[string]string `json:"races,omitempty"`  // race code -> position
+	Quals        map[string]string `json:"quals,omitempty"`  // IMSA: qualifying class position per round
 }
 
 // StandingsClass is a separate standings table per class (e.g. GTP/LMP2/GTD Pro/GTD for IMSA).

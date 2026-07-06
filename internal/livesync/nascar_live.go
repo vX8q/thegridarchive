@@ -14,11 +14,6 @@ import (
 
 var nascarNowFunc = func() time.Time { return time.Now() }
 
-type nascarLiveFeed struct {
-	RaceID   int `json:"race_id"`
-	SeriesID int `json:"series_id"`
-}
-
 type nascarCFLiveFeedJSON struct {
 	RaceID     int               `json:"race_id"`
 	SeriesID   int               `json:"series_id"`
@@ -39,17 +34,6 @@ type nascarCFVehicle struct {
 	LapsCompleted     int     `json:"laps_completed"`
 	Delta             float64 `json:"delta"`
 	Driver            nascarCFDriver `json:"driver"`
-}
-
-type nascarLiveRaceSummary struct {
-	RaceID     int    `json:"race_id"`
-	SeriesID   int    `json:"series_id"`
-	RunName    string `json:"run_name,omitempty"`
-	TrackName  string `json:"track_name,omitempty"`
-	LapNumber  int    `json:"lap_number,omitempty"`
-	LapsInRace int    `json:"laps_in_race,omitempty"`
-	LapsToGo   int    `json:"laps_to_go,omitempty"`
-	FlagState  int    `json:"flag_state,omitempty"`
 }
 
 type nascarLiveRunningEntry struct {
@@ -133,22 +117,6 @@ func nascarManufacturerLabel(code string) string {
 			return ""
 		}
 		return code
-	}
-}
-
-func nascarLiveRaceSummaryFrom(feed *nascarCFLiveFeedJSON) *nascarLiveRaceSummary {
-	if feed == nil || feed.RaceID == 0 {
-		return nil
-	}
-	return &nascarLiveRaceSummary{
-		RaceID:     feed.RaceID,
-		SeriesID:   feed.SeriesID,
-		RunName:    feed.RunName,
-		TrackName:  feed.TrackName,
-		LapNumber:  feed.LapNumber,
-		LapsInRace: feed.LapsInRace,
-		LapsToGo:   feed.LapsToGo,
-		FlagState:  feed.FlagState,
 	}
 }
 

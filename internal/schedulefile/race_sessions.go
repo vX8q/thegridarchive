@@ -3,6 +3,7 @@ package schedulefile
 import (
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -92,6 +93,115 @@ func stockCarIneligibleDriver(driver, car string, eligibleByCar map[string]bool)
 		}
 	}
 	return driver
+}
+
+// stockCarSeriesUsesStagePoints is true for national NASCAR tours with stage scoring.
+// Whelen Modified Tour and ARCA Menards Series run a single race without stages.
+func stockCarSeriesUsesStagePoints(seriesID string) bool {
+	switch strings.ToUpper(strings.TrimSpace(seriesID)) {
+	case "NASCAR_CUP", "NOAPS", "NASCAR_TRUCK":
+		return true
+	default:
+		return false
+	}
+}
+
+// nascarModifiedChampionshipPointsForPos implements WMT rulebook 17-7.A/B.
+func nascarModifiedChampionshipPointsForPos(pos int) int {
+	if pos <= 0 {
+		return 0
+	}
+	if pos > 43 {
+		return 1
+	}
+	return 44 - pos
+}
+
+// nascarModifiedDNQPoints awards championship points to DNQ drivers based on
+// qualifying speed order after the last starter (rule 17-7.C).
+func nascarModifiedDNQPoints(detail *EventDetailJSON) map[string]int {
+	if detail == nil || detail.Tables == nil {
+		return nil
+	}
+	qual, okQ := detail.Tables["qualifying"]
+	dnq, okD := detail.Tables["did_not_qualify"]
+	if !okQ || len(qual.Headers) == 0 || len(qual.Rows) == 0 || !okD || len(dnq.Rows) == 0 {
+		return nil
+	}
+	dnqDrivers := make(map[string]bool)
+	dnqDriverCol := colIndex(dnq.Headers, "Driver")
+	for _, row := range dnq.Rows {
+		if dnqDriverCol < 0 || dnqDriverCol >= len(row) {
+			continue
+		}
+		driver := strings.TrimSpace(row[dnqDriverCol])
+		if driver == "" {
+			continue
+		}
+		key := canonicalDriverKey(driver)
+		if key == "" {
+			key = driver
+		}
+		dnqDrivers[key] = true
+	}
+	if len(dnqDrivers) == 0 {
+		return nil
+	}
+	fieldSize := 0
+	if rr, ok := detail.Tables["race_results"]; ok && len(rr.Rows) > 0 {
+		fieldSize = len(rr.Rows)
+	} else {
+		qDriverCol := colIndex(qual.Headers, "Driver")
+		for _, row := range qual.Rows {
+			if qDriverCol < 0 || qDriverCol >= len(row) {
+				continue
+			}
+			driver := strings.TrimSpace(row[qDriverCol])
+			key := canonicalDriverKey(driver)
+			if key == "" {
+				key = driver
+			}
+			if !dnqDrivers[key] {
+				fieldSize++
+			}
+		}
+	}
+	type dnqQual struct {
+		key  string
+		rank int
+	}
+	rankCol := firstColIndex(qual.Headers, "Rank", "Pos", "Pos.")
+	qDriverCol := colIndex(qual.Headers, "Driver")
+	var ordered []dnqQual
+	for _, row := range qual.Rows {
+		if qDriverCol < 0 || qDriverCol >= len(row) {
+			continue
+		}
+		driver := strings.TrimSpace(row[qDriverCol])
+		key := canonicalDriverKey(driver)
+		if key == "" {
+			key = driver
+		}
+		if !dnqDrivers[key] {
+			continue
+		}
+		rank := 9999
+		if rankCol >= 0 && rankCol < len(row) {
+			if n := atoi(strings.TrimSpace(row[rankCol])); n > 0 {
+				rank = n
+			}
+		}
+		ordered = append(ordered, dnqQual{key: key, rank: rank})
+	}
+	if len(ordered) == 0 {
+		return nil
+	}
+	sort.Slice(ordered, func(i, j int) bool { return ordered[i].rank < ordered[j].rank })
+	out := make(map[string]int, len(ordered))
+	for i, dq := range ordered {
+		out[dq.key] = nascarModifiedChampionshipPointsForPos(fieldSize + i + 1)
+	}
+	return out
 }
 
 func ensureIneligibleSuffix(name string) string {

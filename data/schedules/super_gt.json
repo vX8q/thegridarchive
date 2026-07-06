@@ -8,8 +8,8 @@
     "circuit_name": "Okayama International Circuit",
     "start_date": "2026-04-11",
     "end_date": "2026-04-12",
-    "time_est": "12:00",
-    "time_msk": "08:00"
+    "time_est": "14:00",
+    "time_msk": "4/12/26 08:00"
   },
   {
     "id": "SUPER_GT_2026_2",
@@ -20,8 +20,8 @@
     "circuit_name": "Fuji Speedway",
     "start_date": "2026-05-03",
     "end_date": "2026-05-04",
-    "time_est": "12:00",
-    "time_msk": "08:00"
+    "time_est": "14:00",
+    "time_msk": "5/4/26 08:00"
   },
   {
     "id": "SUPER_GT_2026_4",
@@ -32,8 +32,8 @@
     "circuit_name": "Fuji Speedway",
     "start_date": "2026-08-01",
     "end_date": "2026-08-02",
-    "time_est": "12:00",
-    "time_msk": "08:00"
+    "time_est": "14:00",
+    "time_msk": "8/2/26 08:00"
   },
   {
     "id": "SUPER_GT_2026_5",
@@ -44,8 +44,8 @@
     "circuit_name": "Suzuka Circuit",
     "start_date": "2026-08-22",
     "end_date": "2026-08-23",
-    "time_est": "12:00",
-    "time_msk": "08:00"
+    "time_est": "14:00",
+    "time_msk": "8/23/26 08:00"
   },
   {
     "id": "SUPER_GT_2026_6",
@@ -56,8 +56,8 @@
     "circuit_name": "Sportsland Sugo",
     "start_date": "2026-09-19",
     "end_date": "2026-09-20",
-    "time_est": "12:00",
-    "time_msk": "08:00"
+    "time_est": "14:00",
+    "time_msk": "9/20/26 08:00"
   },
   {
     "id": "SUPER_GT_2026_7",
@@ -68,8 +68,8 @@
     "circuit_name": "Autopolis",
     "start_date": "2026-10-17",
     "end_date": "2026-10-18",
-    "time_est": "12:00",
-    "time_msk": "08:00"
+    "time_est": "14:00",
+    "time_msk": "10/18/26 08:00"
   },
   {
     "id": "SUPER_GT_2026_8",
@@ -80,7 +80,7 @@
     "circuit_name": "Mobility Resort Motegi",
     "start_date": "2026-11-07",
     "end_date": "2026-11-08",
-    "time_est": "12:00",
-    "time_msk": "08:00"
+    "time_est": "14:00",
+    "time_msk": "11/8/26 08:00"
   }
 ]

@@ -3,6 +3,86 @@
 Справочник по структуре event-страниц для каждого типа серии.
 Используется при создании/проверке JSON-файлов событий.
 
+**Связанные правила Cursor** (подмешиваются при редактировании matching files):
+
+| Файл | Glob / scope |
+|------|----------------|
+| `event-json-fill.mdc` | **always** — workflow перед любым event JSON |
+| `event-json-format.mdc` | `data/events/**/*.json` |
+| `stockcar-event-json.mdc` | NASCAR Cup, NOAPS, Truck, Modified, ARCA |
+| `stockcar-qualifying-separators.mdc` | **always** — stock-car team/separator/distance |
+| `f1-event-json.mdc` | `data/events/F1/**` |
+| `f2-f3-event-json.mdc` | `data/events/F2/**`, `F3/**` |
+| `indycar-event-json.mdc` | `data/events/IndyCar/**` |
+| `imsa-event-json.mdc` | `data/events/IMSA/**` |
+| `wec-event-json.mdc` | `data/events/WEC/**` |
+| `elms-event-json.mdc` | `data/events/ELMS/**` |
+| `gtwce-end-event-json.mdc` | `GT World Challenge Europe Endurance/**` |
+| `gtwce-sprint-event-json.mdc` | `GT World Challenge Europe Sprint/**` |
+| `gtwce-sprint-entry-list.mdc` | `GT World Challenge Europe Sprint/**` |
+| `supercars-event-files.mdc` | `data/events/Supercars/**` |
+| `super-formula-event-json.mdc` | `data/events/Super Formula/**` |
+| `super-gt-event-json.mdc` | `data/events/Super GT/**` |
+| `dtm-event-json.mdc` | `data/events/DTM/**` |
+| `frec-2026-scoring.mdc` | `data/events/FREC/**` |
+| `italian-f4-2026-scoring.mdc` | `data/events/Italian F4/**` |
+| `psc-event-json.mdc` | `data/events/Porsche Supercup/**` |
+| `imsa-race-results-reference.mdc` | web/CSS only — not event data |
+
+---
+
+## Правила заполнения event JSON (чеклист)
+
+Использовать при каждом запросе «заполни этап / практику / квалификацию / гонку».
+
+### Порядок работы
+
+1. **Найти файл** — `data/events/<Series>/<season>/<slug>.json` (напр. `F2/2026/f2_2026_6.json`). Сверить `event_id` с `data/schedules/<series>.json`.
+2. **Сначала метаданные** — `event_preview` (+ `event_preview_ru`), `youtube_highlights`, `entry_list`, даты `start_date` / `end_date`.
+3. **Сессии по порядку** — practice → qualifying → race (sprint → feature для F2/F3).
+4. **Эталон** — скопировать структуру headers / meta / ключей таблиц с **последнего заполненного этапа той же серии** в том же сезоне (напр. `f2_2026_5.json` для F2).
+5. **Не ломать схему** — не добавлять ключи `tables.sprint` / `tables.feature`, если серия использует `tables.race.sessions[]` (F2, F3, Super Formula, F1 2026).
+6. **Очки** — колонка `Pts` в таблице гонки должна совпадать с официальным протоколом, включая бонусы (см. раздел серии).
+
+### Общие правила (все серии)
+
+| Поле | Правило |
+|------|---------|
+| `event_preview` | Только plain text, **без Markdown** (`**`, `#`, списков). Абзацы через `\n\n`. |
+| `event_preview_ru` | Добавлять, если есть английский preview. |
+| `laps` | Только число кругов (напр. `"200"`), не текст «200 laps». |
+| `distance` | Только дистанция в mi/km — **не дублировать** lap count (см. stockcar rule). |
+| `entry_list` | Официальные имена с диакритикой (`Câmara`, `León`); `driver_slug` — ASCII (`rafael-camara`). |
+| Таблицы | У P1 в Gap и Int — `"—"`. DNF: `"Pos"` = `"DNF"`, `"Gap"` = `"DNF"`, `"Int"` = `"—"`. |
+| Колонки из протокола | Не переносить служебные колонки, которые сайт не рендерит (напр. **LAP SET ON** у F2). |
+| Формат JSON | **Новые** файлы — компактно (`event-json-format.mdc`). **Существующие** — не переформатировать целиком без запроса. |
+| Standings | Для большинства серий **не править** `data/standings/*.json` — очки собираются из event JSON автоматически. |
+
+### Имена в таблицах vs entry_list
+
+| Место | Формат |
+|-------|--------|
+| `entry_list.driver` | Полное имя: `Gabriele Minì`, `Nico Varrone` |
+| Practice / Qualifying / Race rows | Инициалы: `G. Minì`, `N. Varrone`, `E. Fittipaldi` (без `Jr.`) |
+| Team в таблицах F2 | Как в протоколе FIA: `Hitech TGR`, `Trident`, `Prema Racing`, `DAMS Lucas Oil` (не ALL CAPS `TRIDENT` / `PREMA`) |
+
+### Даты на карточках (Next Race / Last Results / расписание)
+
+Правила отображения календарных дат на главной и в расписании. Канонический объект в коде: `web/lib/event-card-date.js` → `SERIES_CARD_DATE_RULES`. Пересборка multi-race сессий: `node scripts/build-multi-race-schedule-sessions.mjs` (из `tables.race.sessions` + `data/schedules`).
+
+| Серия | Дата на карточке | Сессии / merge | Примечание |
+|-------|------------------|----------------|------------|
+| **F2, F3, FREC, F4_IT** | Диапазон уик-энда (`Jul 4–5`) | Sprint + Feature (или Race 1–3 у FREC) из event JSON / multi-race map | Развёрнутая строка Full Schedule — **один** день сессии |
+| **DTM, GTWCE Sprint** | Диапазон уик-энда | Race 1 / Race 2 по `start_date`–`end_date` | |
+| **F1** | Диапазон в sprint-уикенды | Sprint (сб) + GP (вс) — `static-schedules.js` `f1Sprint20xx` | Обычный уикенд — один день (воскресенье) |
+| **Super Formula** | Диапазон уик-энда | Несколько гонок; **merge** карточек на главной | Исключение: `SUPER_FORMULA_2026_6` (Fuji triple-header) — вручную в build-скрипте |
+| **Supercars** | Диапазон уик-энда | **merge** всех гонок одного трека на главной (Next Race + Last Results) | В названии карточки без `Race N` |
+| **IMSA, WEC, ELMS, GTWCE End, PSC** | **Один день** — день гонки | В JSON уикенд может быть `start_date`–`end_date` | Не путать с диапазоном расписания |
+| **24h гонки** (Spa, Le Mans, …) | Два календарных дня | Из названия (`24 Hours`, `24h`) | Исключение из «один день» endurance |
+| **Остальные** (Cup, IndyCar, …) | Один день | — | По `getEventRaceStartDateIso` |
+
+**Multi-race map** (`web/data/multi-race-schedule-sessions.js`): даты и метки — из `tables.race.sessions[]` в event JSON (`meta.Date`, `meta.Session`, `title`); время — `meta.Start` / `meta.time_msk` при наличии, иначе из `data/schedules/<series>.json`. Ручная правка только для исключений (см. `CURATED_OVERRIDES` в build-скрипте).
+
 ---
 
 ## Общая структура (все серии)
@@ -258,8 +338,21 @@ Race
 
 ## 3. F2 / F3
 
-**Категория:** `openwheel`
-**Series IDs:** `f2`, `f3`
+**Категория:** `openwheel`  
+**Series IDs:** `f2`, `f3`  
+**Путь:** `data/events/F2/<year>/f2_<year>_<round>.json`, `data/events/F3/<year>/f3_<year>_<round>.json`  
+**Эталоны 2026:** `f2_2026_5.json` (Barcelona), `f2_2026_6.json` (Spielberg)
+
+### Формат уик-энда
+
+| День | Сессия | Ключ JSON |
+|------|--------|-----------|
+| Пятница | Free Practice | `tables.practice` |
+| Пятница | Qualifying (решётка Feature + reverse grid Sprint) | `tables.qualifying` |
+| Суббота | Sprint Race | `tables.race.sessions[0]` — title `"Sprint Race Results"` |
+| Воскресенье | Feature Race | `tables.race.sessions[1]` — title `"Feature Race Results"` |
+
+**❌ Не использовать** отдельные ключи `tables.sprint` / `tables.feature` — сайт читает только `tables.race.sessions[]`.
 
 ### Entry List
 
@@ -267,14 +360,165 @@ Race
 |---|------|--------|
 
 - Rowspan на Team (2 гонщика на команду)
-- **Порядок колонок**: Team ПЕРЕД Driver (отличие от всех остальных серий)
+- **Порядок колонок**: Team ПЕРЕД Driver (отличие от остальных серий)
+- Поля: `number`, `driver`, `team`, `driver_slug`
+- Сетка сезона: 22 машины; при обновлении этапа сверять с официальной entry list (раунды `1–N`)
 
-### Qualifying / Race
+### Practice
 
-Структура как у F1 (мульти-сессионная), но:
-- Колонка "Manufacturer" переименовывается → "Team"
-- Колонка "Chassis" — удаляется
-- Сессии: Sprint + Feature Race
+Flat-таблица (не `sessions[]`):
+
+```json
+"practice": {
+  "title": "2026 FIA Formula 2 Championship - Practice",
+  "subtitle": "Spielberg",
+  "meta": {
+    "Championship": "2026 FIA Formula 2 Championship",
+    "Session": "Practice",
+    "Date": "Fri 26 Jun 2026",
+    "Start": "11:05 AM",
+    "Length": "45 mins"
+  },
+  "headers": ["Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH"],
+  "rows": [["1", "10", "O. Goethe", "MP Motorsport", "20", "1:16.978", "—", "—", "202.312"], ...]
+}
+```
+
+- `subtitle` — короткое имя трассы / города (как в schedule)
+- `Date` — `Fri 12 Jun 2026` (день недели + число + месяц + год)
+
+### Qualifying
+
+Тот же каркас, что practice; **добавлена колонка `Laps`**:
+
+```json
+"headers": ["Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH"]
+```
+
+- `Length`: `"30 mins"`
+- Поул-сitter Feature → в колонку `Pts` Feature **не** пишется; +2 очка за поул добавляются к итоговым очкам пилота в Feature (см. ниже)
+
+### Race — `tables.race.sessions[]`
+
+Две сессии в одном массиве:
+
+```json
+"race": {
+  "sessions": [
+    {
+      "title": "Sprint Race Results",
+      "subtitle": "Spielberg",
+      "meta": {
+        "Championship": "2026 FIA Formula 2 Championship",
+        "Session": "Sprint Race",
+        "Date": "Sat 27 Jun 2026"
+      },
+      "headers": ["Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH", "Best", "Lap", "Pts"],
+      "rows": [...]
+    },
+    {
+      "title": "Feature Race Results",
+      "subtitle": "Spielberg",
+      "meta": {
+        "Championship": "2026 FIA Formula 2 Championship",
+        "Session": "Feature Race",
+        "Date": "Sun 28 Jun 2026"
+      },
+      "headers": ["Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH", "Best", "Lap", "Pts"],
+      "rows": [...]
+    }
+  ]
+}
+```
+
+Колонки **Best** и **Lap** — две отдельные колонки (лучший круг и номер круга).
+
+#### DNF / NC
+
+| Ситуация | Pos | Laps / Time | Gap | Int | KPH / Best / Lap |
+|----------|-----|-------------|-----|-----|------------------|
+| Сход с частичными данными | `DNF` | из протокола | `DNF` | `—` | из протокола |
+| Сход без данных | `DNF` | `—` | `DNF` | `—` | `—` |
+
+### Очки в колонке `Pts` (обязательно сверять)
+
+**Sprint Race** — только за финиш:
+
+| Pos | Очки |
+|-----|------|
+| 1 | 10 |
+| 2 | 8 |
+| 3 | 6 |
+| 4 | 5 |
+| 5 | 4 |
+| 6 | 3 |
+| 7 | 2 |
+| 8 | 1 |
+| 9+ | 0 |
+
+**+1** за fastest lap (любому классифицированному пилоту; напр. P9 с FL → `Pts` = `1`).
+
+**Feature Race** — за финиш:
+
+| Pos | Очки |
+|-----|------|
+| 1 | 25 |
+| 2 | 18 |
+| 3 | 15 |
+| 4 | 12 |
+| 5 | 10 |
+| 6 | 8 |
+| 7 | 6 |
+| 8 | 4 |
+| 9 | 2 |
+| 10 | 1 |
+| 11+ | 0 |
+
+**Бонусы Feature** (суммируются с финишными):
+
+| Бонус | Очки | Кому |
+|-------|------|------|
+| Pole position | +2 | победитель квалификации (Feature grid P1) |
+| Fastest lap | +1 | автор лучшего круга в Feature |
+
+Примеры: поул León + P7 в Feature → `6 + 2 = 8` в `Pts`. P3 Goethe + FL → `15 + 1 = 16`.
+
+### YouTube
+
+```json
+"youtube_highlights": [
+  {"id": "XXXXXXXXXXX", "title": "Sprint highlights"},
+  {"id": "YYYYYYYYYYY", "title": "Feature highlights"}
+]
+```
+
+### JSON-шаблон (верхний уровень)
+
+```json
+{
+  "event_id": "F2_2026_6",
+  "series": "FIA Formula 2 Championship",
+  "race": "Spielberg",
+  "date": "27–28 June 2026",
+  "track": "Red Bull Ring",
+  "location": "Spielberg",
+  "start_date": "2026-06-27",
+  "end_date": "2026-06-28",
+  "laps": "",
+  "distance": "",
+  "event_preview": "...",
+  "event_preview_ru": "...",
+  "youtube_highlights": [...],
+  "entry_list": [...],
+  "tables": {
+    "practice": {...},
+    "qualifying": {...},
+    "race": {"sessions": [sprintSession, featureSession]}
+  }
+}
+```
+
+**F3** — та же схема ключей и очков; меняются только `series`, `event_id`, число кругов Sprint/Feature и meta-даты.
 
 ---
 
@@ -537,15 +781,17 @@ Flat-формат, одна таблица (`practice`, `practice2`, `qualifying
 ### Race
 
 - В большинстве этапов единичная таблица `race` с колонками `Pos / Class / Drivers / Team / Points` (ELMS/GTWC также включают `Cup pts` + `Overall pts`).
+- **24 Hours of Spa** (`GTWCE_END`, CrowdStrike 24 Hours of Spa): на карточке Last Results показываются **5** классовых победителей — Overall, Gold, Silver, Bronze и **Pro-Am** (класс в протоколе часто `Pro-AM Cup`). Остальные этапы GTWCE Endurance — 4 строки.
 - Сборщик standings автоматически разбивает `Drivers` по `;` / `/` и начисляет очки каждому пилоту из колонки `Points` (или `DP` для Super GT).
 
-### Классовые standings (ручные)
+### Классовые standings (IMSA, ELMS, GTWCE-End)
 
-Для IMSA (и при необходимости для WEC/ELMS/GTWCE-End) стандартная автосборка может давать
-«flat» таблицу всех пилотов без разбиения по классам. Если требуется отображение
-строго по классам (как в `data/standings/imsa.json`), нужен ручной
-standings JSON со структурой `classes[]` — см. раздел "Классовый standings JSON"
-ниже.
+**IMSA**, **ELMS** и **GTWCE Endurance** — per-class standings собираются автоматически из
+`tables.race` (и для IMSA — `tables.qualifying`) в Go (`BuildImsaStandingsFromEvents`,
+`BuildElmsStandingsFromEvents`, …). Ручной `data/standings/*.json` для этих серий не нужен.
+
+Если для другой серии требуется ручной standings со структурой `classes[]`, см. раздел
+«Классовый standings JSON» ниже.
 
 ---
 
@@ -563,7 +809,7 @@ standings JSON со структурой `classes[]` — см. раздел "К�
 
 ## Классовый standings JSON (опционально)
 
-Структура ручного standings с разделением по классам (пример IMSA):
+Структура ручного standings с разделением по классам (если автосборка не подходит):
 
 ```json
 {
@@ -665,6 +911,6 @@ race_order реально появились непустые значения. 
 | CLASS колонка | Нет | Нет | Нет | Нет | Да | Нет | Нет | Да (GT500 / GT300) | Да |
 | Merged qual | Нет | Нет | Нет | Нет | Shoot Out | Shoot Out | Нет | Нет | Нет |
 | Множество гонок/уик. | Нет | Sprint+Race | Sprint+Feature | Нет | Нет | Race 1-4 | Race 1-2 | Нет | Нет |
-| Practice формат | Flat | sessions[] (2026) / flat (2025) | sessions[] | Flat | Flat | Flat | Flat | sessions[] (per-class) | sessions[] |
+| Practice формат | Flat | sessions[] (2026) / flat (2025) | Flat | Flat | Flat | Flat | Flat | sessions[] (per-class) | sessions[] |
 | Auto-standings | ✅ flat | ✅ sprint-aware | ✅ flat | ✅ flat | ❌ ручной (classes[]) | ⚠️ приоритетно ручной | ✅ multi-race | ✅ flat (multi-driver) | ✅ flat (multi-driver) |
 | laps_led/best_laps | Нет | Нет (встроены в race_results) | Нет | Нет | Нет | Нет | Нет | Нет | Нет |

@@ -3,11 +3,8 @@
   "series": "IMSA WeatherTech SportsCar Championship",
   "race": "Acura Grand Prix of Long Beach",
   "date": "2026-04-18",
-  "start_date": "2026-04-18",
-  "end_date": "2026-04-19",
   "track": "Long Beach Street Circuit",
   "location": "Long Beach, California",
-  "laps": "",
   "distance": "100 minutes",
   "entry_list": [
     {
@@ -847,7 +844,7 @@
         [
           "1",
           "93",
-          "1",
+          "6",
           "Nick Yelloly / Renger van der Zande",
           "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
           "11",
@@ -857,7 +854,7 @@
         [
           "2",
           "25",
-          "2",
+          "15",
           "Marco Wittmann; Philipp Eng",
           "BMW M Team WRT / BMW M Hybrid V8",
           "12",
@@ -867,7 +864,7 @@
         [
           "3",
           "40",
-          "3",
+          "1",
           "Jordan Taylor; Louis Deletraz",
           "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
           "11",
@@ -887,7 +884,7 @@
         [
           "5",
           "7",
-          "5",
+          "14",
           "Julien Andlauer / Felipe Nasr",
           "Porsche Penske Motorsport / Porsche 963",
           "12",
@@ -897,7 +894,7 @@
         [
           "6",
           "24",
-          "6",
+          "8",
           "Dries Vanthoor; Sheldon van der Linde",
           "BMW M Team WRT / BMW M Hybrid V8",
           "12",
@@ -905,19 +902,9 @@
           "Running"
         ],
         [
-          "7",
-          "23",
-          "7",
-          "Roman De Angelis / Ross Gunn",
-          "ASTON MARTIN THOR Team / Aston Martin Valkyrie",
-          "12",
-          "1:11.997",
-          "Running"
-        ],
-        [
           "8",
           "6",
-          "8",
+          "13",
           "Laurens Vanthoor; Kevin Estre",
           "Porsche Penske Motorsport / Porsche 963",
           "12",
@@ -927,7 +914,7 @@
         [
           "9",
           "10",
-          "9",
+          "12",
           "Filipe Albuquerque; Ricky Taylor; Will Stevens",
           "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
           "11",
@@ -937,7 +924,7 @@
         [
           "11",
           "5",
-          "10",
+          "16",
           "Laurin Heinrich; Tijmen van der Helm",
           "JDC-Miller MotorSports / Porsche 963",
           "12",
@@ -945,33 +932,13 @@
           "Running"
         ],
         [
-          "12",
-          "89",
-          "1",
-          "Jack Hawksworth / Frankie Montecalvo",
-          "Vasser Sullivan Racing / Lexus RC F GT3",
-          "9",
-          "1:18.411",
-          "Running"
-        ],
-        [
           "13",
           "96",
-          "2",
+          "12",
           "Robby Foley / Patrick Gallagher",
           "Turner Motorsport / BMW M4 GT3 EVO",
           "12",
           "1:19.553",
-          "Running"
-        ],
-        [
-          "14",
-          "36",
-          "3",
-          "Robert Wickens; Mason Filippi",
-          "DXDT Racing / Chevrolet Corvette Z06 GT3.R",
-          "11",
-          "1:18.562",
           "Running"
         ],
         [
@@ -987,7 +954,7 @@
         [
           "16",
           "27",
-          "5",
+          "6",
           "Eduardo Barrichello / Spencer Pumpelly",
           "Heart of Racing Team / Aston Martin Vantage GT3 Evo",
           "12",
@@ -997,7 +964,7 @@
         [
           "17",
           "57",
-          "6",
+          "8",
           "Philip Ellis / Russell Ward",
           "WINWARD RACING / Mercedes-AMG GT3",
           "12",
@@ -1007,7 +974,7 @@
         [
           "19",
           "12",
-          "8",
+          "10",
           "Benjamin Pedersen / Aaron Telitz",
           "Vasser Sullivan Racing / Lexus RC F GT3",
           "8",
@@ -1017,7 +984,7 @@
         [
           "20",
           "34",
-          "9",
+          "1",
           "Albert Costa / Manny Franco",
           "Conquest Racing / Ferrari 296 GT3 EVO",
           "11",
@@ -1025,29 +992,9 @@
           "Running"
         ],
         [
-          "21",
-          "46",
-          "10",
-          "Zachary Vanier; Andrea Caldarelli",
-          "Pfaff Motorsports / Lamborghini Temerario GT3",
-          "9",
-          "1:19.271",
-          "Running"
-        ],
-        [
-          "22",
-          "177",
-          "11",
-          "Mikkel Pedersen; Harry King",
-          "AO Racing / Porsche 911 GT3 R (992)",
-          "11",
-          "1:19.295",
-          "Running"
-        ],
-        [
           "23",
           "66",
-          "12",
+          "15",
           "Corey Lewis; Jake Walker",
           "Gradient Racing / Ford Mustang GT3",
           "12",
@@ -1057,7 +1004,7 @@
         [
           "24",
           "70",
-          "13",
+          "14",
           "Frederik Schandorff; Brendan Iribe",
           "Inception Racing / Ferrari 296 GT3 EVO",
           "10",
@@ -1067,7 +1014,7 @@
         [
           "25",
           "19",
-          "14",
+          "11",
           "Rory van der Steur; Valentin Hasse Clot",
           "van der Steur Racing / Aston Martin Vantage GT3 Evo",
           "11",
@@ -1077,7 +1024,7 @@
         [
           "26",
           "120",
-          "15",
+          "13",
           "Callum Ilott; Adam Adelson",
           "Wright Motorsports / Porsche 911 GT3 R (992)",
           "12",
@@ -1097,7 +1044,7 @@
         [
           "28",
           "81",
-          "17",
+          "18",
           "Giacomo Altoe / Henrik Hedman",
           "DragonSpeed / Chevrolet Corvette Z06 GT3.R",
           "11",
@@ -1107,7 +1054,7 @@
         [
           "29",
           "13",
-          "18",
+          "17",
           "Orey Fidani; Matthew Bell",
           "13 Autosport / Chevrolet Corvette Z06 GT3.R",
           "5",
@@ -1117,10 +1064,20 @@
         [
           "30",
           "60",
-          "11",
+          "10",
           "Colin Braun; Tom Blomqvist",
           "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
           "0",
+          "",
+          "Running"
+        ],
+        [
+          "24",
+          "23",
+          "11",
+          "Roman De Angelis / Ross Gunn",
+          "Aston Martin THOR Team / Aston Martin Valkyrie",
+          "",
           "",
           "Running"
         ]
@@ -1314,10 +1271,10 @@
           "Robert Wickens; Mason Filippi",
           "DXDT Racing / Chevrolet Corvette Z06 GT3.R",
           "GTD",
-          "6",
+          "",
           "68",
           "1:19.501",
-          "250",
+          "",
           "Running"
         ],
         [
@@ -1398,10 +1355,10 @@
           "Harry King; Mikkel Pedersen",
           "AO Racing / Porsche 911 GT3 R (992)",
           "GTD",
-          "13",
+          "",
           "67",
           "1:19.851",
-          "180",
+          "",
           "Running"
         ],
         [
@@ -1434,10 +1391,10 @@
           "Zachary Vanier; Andrea Caldarelli",
           "Pfaff Motorsports / Lamborghini Temerario GT3",
           "GTD",
-          "14",
+          "",
           "67",
           "1:19.978",
-          "170",
+          "",
           "Running"
         ],
         [

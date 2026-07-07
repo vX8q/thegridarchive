@@ -207,8 +207,7 @@
     return String((e && (e._seriesId || e.series_id)) || '').toUpperCase();
   }
 
-  /** ISO YYYY-MM-DD from start_date or parseable date string (not slice(0,10) on prose). */
-  function parseIsoDatePrefix(s) {
+  var parseIsoDatePrefix = window.TGA.parseIsoDatePrefix || function (s) {
     if (s == null) return '';
     var str = String(s).trim();
     if (!str) return '';
@@ -221,7 +220,7 @@
       return y + '-' + m + '-' + da;
     }
     return '';
-  }
+  };
 
   function is24HourEventName(e) {
     var parse = window.TGA && window.TGA.parseNamedRaceDurationHours;
@@ -913,6 +912,7 @@
     var l = val.toLowerCase();
     if (l === "qualified by owner's points") return t('qualifying.qualified_by_points');
     if (l === 'failed to qualify') return t('qualifying.failed_to_qualify');
+    if (l === 'did not qualify') return t('table.did_not_qualify');
     return val;
   }
 
@@ -1262,7 +1262,6 @@
   window.TGA.estToUtcMs = estToUtcMs;
   window.TGA.mskToUtcMs = mskToUtcMs;
   window.TGA.parseMskDateTime = parseMskDateTime;
-  window.TGA.parseIsoDatePrefix = parseIsoDatePrefix;
   window.TGA.getEventScheduleLocalDate = getEventScheduleLocalDate;
   window.TGA.getEventRaceLocalDateIso = getEventRaceLocalDateIso;
   window.TGA.getEventRaceUtcMs = getEventRaceUtcMs;

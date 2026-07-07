@@ -21,12 +21,10 @@
 
 | Категория | Серии |
 |-----------|-------|
-| **Formula** | Formula 1, Formula 2, Formula 3, FREC, Italian F4, Porsche Supercup |
-| **Stock Car** | NASCAR Cup, NASCAR Xfinity (O'Reilly), NASCAR Truck (Craftsman), ARCA Menards, Whelen Modified Tour |
-| **Open-Wheel** | IndyCar, Super Formula |
-| **Touring** | Supercars, DTM, Super GT |
-| **Endurance** | WEC, ELMS, IMSA |
-| **GT** | GT World Challenge Europe (Endurance & Sprint) |
+| **Открытые колеса** | Formula 1, IndyCar, Super Formula, Formula 2, Formula 3, FREC, Italian F4 |
+| **Сток-кар** | NASCAR Cup, NASCAR O'Reilly Auto Parts (Xfinity), NASCAR Craftsman Truck, ARCA Menards, Whelen Modified Tour |
+| **Марафоны** | WEC, ELMS, IMSA |
+| **Туринг** | Supercars, GT World Challenge Europe (Endurance & Sprint), Porsche Supercup, DTM, Super GT |
 
 ## Технологии
 

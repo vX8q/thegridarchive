@@ -3,7 +3,7 @@
  * Unit tests for event card date logic (expanded F2 row, ELMS single day, F1 sprint, 24h).
  */
 import assert from 'assert';
-import { createEventCardDateApi, createWeekendMergeApi } from './lib/load-event-card-date.mjs';
+import { createEventCardDateApi, createWeekendMergeApi, loadScheduleEntry } from './lib/load-event-card-date.mjs';
 
 function test(name, fn) {
   try {
@@ -143,6 +143,100 @@ test('F2 Last Results rows collapse by event.id to weekend span', () => {
   assert.strictEqual(out[0].event.start_date, '2026-07-04');
   assert.strictEqual(out[0].event.end_date, '2026-07-05');
   assert.ok(!/\(Sprint\)/i.test(out[0].event.name));
+});
+
+test('Next Race F2 sprint row shows single session day not weekend span', () => {
+  const e = {
+    id: 'F2_2026_7',
+    series_id: 'F2',
+    name: 'Silverstone (Sprint)',
+    start_date: '2026-07-04',
+    end_date: '2026-07-04',
+    _scheduleSessionKind: 'sprint',
+    _scheduleSessionLabel: 'Sprint',
+  };
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-07-04');
+  assert.strictEqual(range.end, '2026-07-04');
+  const weekend = {
+    id: 'F2_2026_7',
+    series_id: 'F2',
+    name: 'Silverstone',
+    start_date: '2026-07-04',
+    end_date: '2026-07-05',
+  };
+  const weekendRange = TGA.getEventRaceDateRangeIso(weekend);
+  assert.ok(weekendRange.end > weekendRange.start);
+  assert.strictEqual(TGA.nextRaceCardDateIso(e), '2026-07-04');
+  const nextWeekend = TGA.nextRaceCardDateIso(weekend);
+  assert.strictEqual(nextWeekend.length, 10);
+  assert.notStrictEqual(nextWeekend, '');
+  assert.strictEqual(TGA.formatNextRaceCardDate(e), 'Jul 4');
+});
+
+test('SERIES_CARD_DATE_RULES documents FREC and DTM', () => {
+  assert.strictEqual(TGA.getSeriesCardDateRule('FREC').card, 'weekend_range');
+  assert.strictEqual(TGA.getSeriesCardDateRule('FREC').sessions, 'sprint_feature');
+  assert.strictEqual(TGA.getSeriesCardDateRule('DTM').card, 'weekend_range');
+  assert.strictEqual(TGA.getSeriesCardDateRule('DTM').sessions, 'race_1_2');
+});
+
+test('FREC and DTM are multi-race schedule series', () => {
+  assert.strictEqual(TGA.isMultiRaceSeriesSchedule('FREC'), true);
+  assert.strictEqual(TGA.isMultiRaceSeriesSchedule('DTM'), true);
+});
+
+test('FREC_2026_4 weekend span from multi-race session map', () => {
+  const e = loadScheduleEntry('frec.json', 'FREC_2026_4');
+  assert.ok(e);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-06-20');
+  assert.strictEqual(range.end, '2026-06-21');
+  const sessions = TGA.getEventRaceSessions(e);
+  assert.strictEqual(sessions.length, 3);
+});
+
+test('DTM_2026_4 weekend span and Race 1 / Race 2 sessions', () => {
+  const e = loadScheduleEntry('dtm.json', 'DTM_2026_4');
+  assert.ok(e);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-07-04');
+  assert.strictEqual(range.end, '2026-07-05');
+  const sessions = TGA.getEventRaceSessions(e);
+  assert.strictEqual(sessions.length, 2);
+  assert.strictEqual(sessions[0].label, 'Race 1');
+  assert.strictEqual(sessions[0].start_date, '2026-07-04');
+  assert.strictEqual(sessions[1].label, 'Race 2');
+  assert.strictEqual(sessions[1].start_date, '2026-07-05');
+});
+
+test('FREC expanded schedule row shows single session day', () => {
+  const e = {
+    id: 'FREC_2026_4',
+    series_id: 'FREC',
+    name: 'FREC — Monza (Race 2)',
+    start_date: '2026-06-20',
+    end_date: '2026-06-20',
+    _scheduleSessionKind: '',
+    _scheduleSessionLabel: 'Race 2',
+  };
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-06-20');
+  assert.strictEqual(range.end, '2026-06-20');
+  assert.strictEqual(TGA.nextRaceCardDateIso(e), '2026-06-20');
+});
+
+test('DTM Next Race row uses session start date not weekend end', () => {
+  const e = {
+    id: 'DTM_2026_4',
+    series_id: 'DTM',
+    name: 'Norisring (Race 1)',
+    start_date: '2026-07-04',
+    end_date: '2026-07-04',
+    _scheduleSessionLabel: 'Race 1',
+  };
+  assert.strictEqual(TGA.nextRaceCardDateIso(e), '2026-07-04');
+  assert.strictEqual(TGA.formatNextRaceCardDate(e), 'Jul 4');
 });
 
 console.log('All event-card-date tests passed.');

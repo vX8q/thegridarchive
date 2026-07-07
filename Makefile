@@ -1,4 +1,4 @@
-.PHONY: build test lint run dev ci docker
+.PHONY: build test lint run dev ci docker js-test smoke check-data
 
 build:
 	go build -trimpath -o server.exe ./cmd/server/
@@ -18,7 +18,17 @@ dev:
 	go run ./cmd/server
 
 # Локальная проверка перед коммитом: тесты + линтер.
-ci: test lint
+ci: test lint js-test check-data
+
+js-test:
+	node scripts/js-test.mjs
+
+smoke:
+	node scripts/smoke-phase31.mjs
+	node scripts/smoke-tier-ab.mjs
+
+check-data:
+	node scripts/check-data.mjs
 
 docker:
 	docker build -t tga:latest .

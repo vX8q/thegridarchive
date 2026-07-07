@@ -136,16 +136,26 @@
 
     weekEntries.sort(compareWeekEntries);
 
-    if (window.TGA && window.TGA.collapseNextRaceWeekends) {
-      weekEntries = window.TGA.collapseNextRaceWeekends(weekEntries, ['SUPER_FORMULA', 'SUPERCARS']);
-      weekEntries.sort(compareWeekEntries);
-    }
-
+    // Next Race: one card per upcoming session (no weekend merge — that stays on Last Results).
     if (weekEntries.length === 0) {
       container.innerHTML =
         '<div class="nrc-label">' + t('home.next_race') + '</div>' +
         '<div class="nrc-empty">' + t('home.no_upcoming') + '</div>';
       return;
+    }
+
+    function nextRaceEventDisplayName(e) {
+      var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
+      if (name && name.indexOf('Java House') === 0) {
+        name = name.replace(/^Java House\s+/i, '');
+        name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(Object.assign({}, e, { name: name }));
+      }
+      var label = String(e._scheduleSessionLabel || e._sessionLabel || '').trim();
+      if (label && name.indexOf(label) < 0 && !/\((Sprint|Feature|Race\s+\d+)\)/i.test(name) &&
+          !/\sRace\s+\d+\s*$/i.test(name)) {
+        name = name + ' (' + label + ')';
+      }
+      return name;
     }
 
     // Render cards and start countdown + LIVE polling, without waiting for /api/live-events
@@ -157,17 +167,14 @@
         '<div class="nrc-cards">' +
         weekEntries.map(function (entry, idx) {
           var e = entry.event;
+          var formatNextRaceCardDate = window.TGA && window.TGA.formatNextRaceCardDate;
           var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
-          var dateDisplay = formatEventRaceStartDate
-            ? formatEventRaceStartDate(e)
-            : formatShortDate((e.start_date || e.date || '').slice(0, 10));
-          var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
-          // Always strip title sponsor "Java House" from event name,
-          // so UI shows just "Grand Prix of Arlington".
-          if (name && name.indexOf('Java House') === 0) {
-            name = name.replace(/^Java House\s+/i, '');
-            name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(Object.assign({}, e, { name: name }));
-          }
+          var dateDisplay = formatNextRaceCardDate
+            ? formatNextRaceCardDate(e)
+            : (formatEventRaceStartDate
+              ? formatEventRaceStartDate(e)
+              : formatShortDate((e.start_date || e.date || '').slice(0, 10)));
+          var name = nextRaceEventDisplayName(e);
           var eventSlug = (e.id || '').toLowerCase().replace(/_+/g, '-');
           var seriesSlug = (e._seriesId || e.series_id || '').toLowerCase().replace(/_+/g, '-');
           var eventNameLc = String(e.name || '').toLowerCase();

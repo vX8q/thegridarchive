@@ -26,11 +26,23 @@ jobs:
       - name: Run tests
         run: go test ./... -count=1 -v
 
-      - name: Run event card date tests
-        run: node scripts/event-card-date.test.mjs
+      - name: Run JS unit tests
+        run: node scripts/js-test.mjs
 
-      - name: Audit card dates
-        run: node scripts/audit-card-dates.mjs
+      - name: Audit stockcar stage layouts
+        run: node scripts/audit-stockcar-stages.mjs
+
+      - name: Audit stockcar data quality
+        run: node scripts/audit-stockcar-data.mjs
+
+      - name: Run stockcar data audit tests
+        run: node scripts/audit-stockcar-data.test.mjs
+
+      - name: Audit caution breakdown Free Pass rows
+        run: node scripts/audit-caution-breakdown.mjs
+
+      - name: Check data pipeline
+        run: node scripts/check-data.mjs
 
       - name: Run go vet
         run: go vet ./...

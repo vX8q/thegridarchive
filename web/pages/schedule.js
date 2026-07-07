@@ -9,89 +9,6 @@
   function setGlobalEventsCache(events) { globalEventsCache = events; }
   function getGlobalEventsCache() { return globalEventsCache; }
 
-/** Date range with full month name for event page: "March 5–8, 2026"  */
-function formatDateRangeLong(startDs, endDs) {
-  if (!startDs) return '';
-  var monthsEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  var monthsRu = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-  var d1 = new Date((startDs + '').slice(0, 10) + 'T12:00:00');
-  var endIso = (endDs || '').slice(0, 10);
-  var year = (startDs + '').slice(0, 4);
-  if (!endIso || endIso === (startDs + '').slice(0, 10)) {
-    var day = d1.getDate();
-    var mon = getLang() === 'ru' ? monthsRu[d1.getMonth()] : monthsEn[d1.getMonth()];
-    return getLang() === 'ru' ? day + ' ' + mon + ' ' + year : mon + ' ' + day + ', ' + year;
-  }
-  var d2 = new Date(endIso + 'T12:00:00');
-  var d1day = d1.getDate(), d2day = d2.getDate();
-  var m1 = getLang() === 'ru' ? monthsRu[d1.getMonth()] : monthsEn[d1.getMonth()];
-  var m2 = getLang() === 'ru' ? monthsRu[d2.getMonth()] : monthsEn[d2.getMonth()];
-  if (d1.getMonth() === d2.getMonth()) {
-    return getLang() === 'ru' ? d1day + '\u2013' + d2day + ' ' + m1 + ' ' + year : m1 + ' ' + d1day + '\u2013' + d2day + ', ' + year;
-  }
-  return getLang() === 'ru'
-    ? d1day + ' ' + m1 + '\u2013' + d2day + ' ' + m2 + ' ' + year
-    : m1 + ' ' + d1day + '\u2013' + m2 + ' ' + d2day + ', ' + year;
-}
-
-/** Parse date from meta.Date like "Thu 05 Mar 2026" to ISO YYYY-MM-DD.  */
-function parseMetaDateToISO(str) {
-  if (!str || typeof str !== 'string') return null;
-  var m = str.match(/(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})/);
-  if (!m) return null;
-  var day = ('0' + parseInt(m[1], 10)).slice(-2);
-  var monMap = { jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06', jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12' };
-  var monKey = String(m[2] || '').slice(0, 3).toLowerCase();
-  var mm = monMap[monKey];
-  if (!mm) return null;
-  return m[3] + '-' + mm + '-' + day;
-}
-
-/** Collect min/max dates: d.start_date / d.end_date and sessions in d.tables (meta.Date).  */
-function getEventSessionDateRange(d) {
-  if (!d || typeof d !== 'object') return null;
-  var sd = String(d.start_date == null ? '' : d.start_date).trim().slice(0, 10);
-  var ed = String(d.end_date == null ? '' : d.end_date).trim().slice(0, 10);
-  // Weekend bounds from JSON/schedule take priority over session dates in tables (F1/F2, etc.),
-  // so the line under the title matches the official weekend (e.g. Sat–Sun only).
-  if (/^\d{4}-\d{2}-\d{2}$/.test(sd) && /^\d{4}-\d{2}-\d{2}$/.test(ed)) {
-    return { minIso: sd, maxIso: ed };
-  }
-  var minIso = null;
-  var maxIso = null;
-  function addIso(iso) {
-    if (!iso) return;
-    if (!minIso || iso < minIso) minIso = iso;
-    if (!maxIso || iso > maxIso) maxIso = iso;
-  }
-  function addIsoFromTopLevel(field) {
-    if (field == null || field === '') return;
-    var s = String(field).trim();
-    if (/^\d{4}-\d{2}-\d{2}/.test(s)) addIso(s.slice(0, 10));
-  }
-  addIsoFromTopLevel(d.start_date);
-  addIsoFromTopLevel(d.end_date);
-  function collectFromMeta(meta) {
-    if (meta && typeof meta.Date === 'string') {
-      var iso = parseMetaDateToISO(meta.Date);
-      if (iso) addIso(iso);
-    }
-  }
-  if (d.tables && typeof d.tables === 'object') {
-    Object.keys(d.tables).forEach(function (key) {
-      var tbl = d.tables[key];
-      if (!tbl) return;
-      collectFromMeta(tbl.meta);
-      if (Array.isArray(tbl.sessions)) {
-        tbl.sessions.forEach(function (sess) {
-          collectFromMeta(sess && sess.meta);
-        });
-      }
-    });
-  }
-  if (!minIso && !maxIso) return null;
-  return { minIso: minIso || maxIso, maxIso: maxIso || minIso };
-}
 // ── Global schedule helpers ───────────────────────────────────────────────
 var globalEventsCache = null; // cache of all events
 
@@ -549,9 +466,6 @@ function renderSchedulePage() {
   if (typeof window.TGA.translateStaticUI === 'function') window.TGA.translateStaticUI();
 }
 
-  window.TGA.formatDateRangeLong = formatDateRangeLong;
-  window.TGA.parseMetaDateToISO = parseMetaDateToISO;
-  window.TGA.getEventSessionDateRange = getEventSessionDateRange;
   window.TGA.applySchedulePastVisibility = applySchedulePastVisibility;
   window.TGA.monthDayToISO = monthDayToISO;
   window.TGA.loadGlobalSchedule = loadGlobalSchedule;

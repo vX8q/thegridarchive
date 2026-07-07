@@ -72,11 +72,11 @@
 
 | Серия | Дата на карточке | Сессии / merge | Примечание |
 |-------|------------------|----------------|------------|
-| **F2, F3, FREC, F4_IT** | Диапазон уик-энда (`Jul 4–5`) | Sprint + Feature (или Race 1–3 у FREC) из event JSON / multi-race map | Развёрнутая строка Full Schedule — **один** день сессии |
+| **F2, F3, FREC, F4_IT** | Last Results: диапазон уик-энда (`Jul 4–5`). **Next Race: один день** ближайшей сессии | Sprint + Feature (или Race 1–3 у FREC) из event JSON / multi-race map | Развёрнутая строка Full Schedule — **один** день сессии |
 | **DTM, GTWCE Sprint** | Диапазон уик-энда | Race 1 / Race 2 по `start_date`–`end_date` | |
 | **F1** | Диапазон в sprint-уикенды | Sprint (сб) + GP (вс) — `static-schedules.js` `f1Sprint20xx` | Обычный уикенд — один день (воскресенье) |
 | **Super Formula** | Диапазон уик-энда | Несколько гонок; **merge** карточек на главной | Исключение: `SUPER_FORMULA_2026_6` (Fuji triple-header) — вручную в build-скрипте |
-| **Supercars** | Диапазон уик-энда | **merge** всех гонок одного трека на главной (Next Race + Last Results) | В названии карточки без `Race N` |
+| **Supercars** | Last Results: диапазон уик-энда, **merge** | **Next Race: отдельная карточка на каждую гонку** (`Race 1`, `Race 2`, …) | В названии карточки — номер гонки из schedule |
 | **IMSA, WEC, ELMS, GTWCE End, PSC** | **Один день** — день гонки | В JSON уикенд может быть `start_date`–`end_date` | Не путать с диапазоном расписания |
 | **24h гонки** (Spa, Le Mans, …) | Два календарных дня | Из названия (`24 Hours`, `24h`) | Исключение из «один день» endurance |
 | **Остальные** (Cup, IndyCar, …) | Один день | — | По `getEventRaceStartDateIso` |

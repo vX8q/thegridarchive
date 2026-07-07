@@ -611,21 +611,14 @@
     return '<span class="series-badge" style="color:' + color + ';background:rgba(' + rgb + ',0.1);border:1px solid rgba(' + rgb + ',0.22)">' + esc(label) + '</span>';
   }
 
-  // ─── Date formats ─────────────────────────────────────────────────────────
-  function formatShortDate(dateStr) {
-    if (!dateStr) return '—';
-    var d = new Date(dateStr + 'T12:00:00');
-    if (isNaN(d.getTime())) return dateStr;
-    var months_en = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var months_ru = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-    var day = d.getDate();
-    var mon = getLang() === 'ru' ? months_ru[d.getMonth()] : months_en[d.getMonth()];
-    return getLang() === 'ru' ? day + ' ' + mon : mon + ' ' + day;
-  }
-
+  // ─── Date formats (display: web/lib/tga-dates-format.js) ─────────────────
   /** Calendar date of race start; range start–end for multi-race weekends and 24-hour races. */
   function formatEventRaceStartDate(e) {
     if (!e) return '—';
+    var formatShortDate = window.TGA && window.TGA.formatShortDate;
+    var formatDateRange = window.TGA && window.TGA.formatDateRange;
+    var parseNamedRaceDurationHours = window.TGA && window.TGA.parseNamedRaceDurationHours;
+    if (!formatShortDate || !formatDateRange) return '—';
     var isSessionRow = window.TGA && window.TGA.isExpandedScheduleSessionRow;
     if (isSessionRow && isSessionRow(e)) {
       var getIsoSession = window.TGA && window.TGA.getEventRaceStartDateIso;
@@ -664,7 +657,7 @@
     if (!raceStartIso) return '—';
 
     var nameForDuration = String(e.name || e.race || '').trim();
-    if (parseNamedRaceDurationHours(nameForDuration) === 24) {
+    if (parseNamedRaceDurationHours && parseNamedRaceDurationHours(nameForDuration) === 24) {
       var d = new Date(raceStartIso + 'T12:00:00');
       d.setDate(d.getDate() + 1);
       var raceEndIso = d.getFullYear() + '-' +
@@ -677,78 +670,10 @@
     return formatShortDate(raceStartIso) || raceStartIso;
   }
 
-  /** Date line for event page header (range from start_date/end_date, or prose date field). */
-  function buildEventMetaDate(d) {
-    if (!d) return '';
-    var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
-    var iso = parseIso || function () { return ''; };
-    var startIso = iso(d.start_date || d.startDate);
-    var endIso = iso(d.end_date || d.endDate);
-    if (startIso && endIso && endIso > startIso) {
-      return formatDateRange(startIso, endIso);
-    }
-    if (startIso) {
-      var localizeDateFn = window.TGA && window.TGA.localizeDate;
-      return typeof localizeDateFn === 'function' ? localizeDateFn(startIso) : formatShortDate(startIso);
-    }
-    var dateStr = String(d.date || '').trim();
-    if (!dateStr) return '';
-    if (/^\d{4}-\d{2}-\d{2}/.test(dateStr)) {
-      var localizeDateFn2 = window.TGA && window.TGA.localizeDate;
-      return typeof localizeDateFn2 === 'function' ? localizeDateFn2(dateStr.slice(0, 10)) : dateStr.slice(0, 10);
-    }
-    return dateStr;
-  }
-
-  function formatDateRange(startDs, endDs) {
-    if (!startDs) return '—';
-    var months_en = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var months_ru = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-    var d1 = new Date(startDs + 'T12:00:00');
-    if (!endDs || startDs === endDs) {
-      var day = d1.getDate();
-      var mon = getLang() === 'ru' ? months_ru[d1.getMonth()] : months_en[d1.getMonth()];
-      return getLang() === 'ru' ? day + ' ' + mon : mon + ' ' + day;
-    }
-    var d2 = new Date(endDs + 'T12:00:00');
-    var d1day = d1.getDate(), d2day = d2.getDate();
-    var m1 = getLang() === 'ru' ? months_ru[d1.getMonth()] : months_en[d1.getMonth()];
-    var m2 = getLang() === 'ru' ? months_ru[d2.getMonth()] : months_en[d2.getMonth()];
-    if (d1.getMonth() === d2.getMonth()) {
-      return getLang() === 'ru' ? d1day + '\u2013' + d2day + '\u00a0' + m1 : m1 + '\u00a0' + d1day + '\u2013' + d2day;
-    }
-    return getLang() === 'ru'
-      ? d1day + '\u00a0' + m1 + '\u2013' + d2day + '\u00a0' + m2
-      : m1 + '\u00a0' + d1day + '\u2013' + m2 + '\u00a0' + d2day;
-  }
-
-  /**
-   * Race duration in hours when encoded in the event name
-   * (e.g. "24 Hours of Le Mans", "Mobil 1 Twelve Hours of Sebring", "Rolex 24 at Daytona").
-   * Returns null when duration cannot be inferred from the title.
-   */
-  function parseNamedRaceDurationHours(name) {
-    var nm = String(name || '').toLowerCase().trim();
-    if (!nm) return null;
-
-    var numeric = nm.match(/\b(\d{1,2})\s*hours?\s+of\b/);
-    if (numeric) return parseInt(numeric[1], 10);
-
-    var wordHours = {
-      twelve: 12, eleven: 11, ten: 10, nine: 9, eight: 8, seven: 7,
-      six: 6, five: 5, four: 4, three: 3, two: 2, one: 1
-    };
-    var wordMatch = nm.match(/\b(twelve|eleven|ten|nine|eight|seven|six|five|four|three|two|one)\s+hours?\s+of\b/);
-    if (wordMatch) return wordHours[wordMatch[1]];
-
-    if (/\brolex\s*24\b/.test(nm) || /\b24\s+at\s+daytona\b/.test(nm)) return 24;
-
-    return null;
-  }
-
   /** LIVE badge end: estimated chequered flag (+30 min) or named endurance duration (+2 h). */
   function liveEndTsForEvent(ev, startTs, fallbackEndTs) {
-    var hours = parseNamedRaceDurationHours(ev && ev.name);
+    var parseNamed = window.TGA && window.TGA.parseNamedRaceDurationHours;
+    var hours = parseNamed ? parseNamed(ev && ev.name) : null;
     if (hours != null && startTs) {
       return startTs + (hours + 2) * 3600000;
     }
@@ -787,7 +712,8 @@
   }
 
   function raceDurationHours(ev) {
-    var named = parseNamedRaceDurationHours(ev && ev.name);
+    var parseNamed = window.TGA && window.TGA.parseNamedRaceDurationHours;
+    var named = parseNamed ? parseNamed(ev && ev.name) : null;
     if (named != null) return named;
     return defaultRaceDurationHours(ev);
   }
@@ -1499,12 +1425,8 @@
   window.TGA.categoryBySeriesId       = categoryBySeriesId;
   window.TGA.hexRgb                   = hexRgb;
   window.TGA.seriesBadge              = seriesBadge;
-  window.TGA.formatShortDate          = formatShortDate;
   window.TGA.formatEventRaceStartDate = formatEventRaceStartDate;
-  window.TGA.buildEventMetaDate = buildEventMetaDate;
-  window.TGA.formatDateRange          = formatDateRange;
   window.TGA.parseEventDate           = parseEventDate;
-  window.TGA.parseNamedRaceDurationHours = parseNamedRaceDurationHours;
   window.TGA.liveEndTsForEvent        = liveEndTsForEvent;
   window.TGA.raceDurationHours          = raceDurationHours;
   window.TGA.estimateRaceFinishedUtcMs  = estimateRaceFinishedUtcMs;

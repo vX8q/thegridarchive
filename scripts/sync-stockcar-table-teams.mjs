@@ -1,82 +1,21 @@
 /**
  * Sync Team / Official Team columns from entry_list (car number -> team)
- * for stock-car event JSON: practice, qualifying, race_results, stage_*.
+ * for stock-car event JSON tables.
  *
  * Run from repo root: node scripts/sync-stockcar-table-teams.mjs
  */
 import fs from 'fs';
 import path from 'path';
-
-const ROOT = path.join(process.cwd(), 'data', 'events');
-
-function isStockCarRel(rel) {
-  const l = rel.replace(/\\/g, '/').toLowerCase();
-  return (
-    l.includes('nascar cup series') ||
-    l.includes('nascar truck') ||
-    l.includes('noaps') ||
-    l.includes('/arca/') ||
-    l.includes('arca/') ||
-    l.includes('nascar modified')
-  );
-}
-
-function walkJsonFiles(dir, base = dir, out = []) {
-  for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, ent.name);
-    if (ent.isDirectory()) walkJsonFiles(p, base, out);
-    else if (ent.name.endsWith('.json')) {
-      const rel = path.relative(base, p);
-      if (isStockCarRel(rel)) out.push(p);
-    }
-  }
-  return out;
-}
-
-function normHeader(h) {
-  return String(h ?? '')
-    .trim()
-    .toLowerCase()
-    .replace(/\./g, '');
-}
-
-function headerIndex(headers, candidates) {
-  const lows = headers.map(normHeader);
-  for (const c of candidates) {
-    const want = normHeader(c);
-    const i = lows.indexOf(want);
-    if (i >= 0) return i;
-  }
-  return -1;
-}
-
-function buildTeamMap(entryList) {
-  const m = new Map();
-  if (!Array.isArray(entryList)) return m;
-  for (const e of entryList) {
-    const num = String(e?.number ?? '').trim();
-    const team = String(e?.team ?? '').trim();
-    if (num && team) m.set(num, team);
-  }
-  return m;
-}
-
-function lookupTeam(map, carRaw) {
-  const car = String(carRaw ?? '').trim();
-  if (!car || car === '—' || car === '-') return null;
-  if (map.has(car)) return map.get(car);
-  if (!/^\d+$/.test(car)) return null;
-  const n = parseInt(car, 10);
-  if (Number.isNaN(n)) return null;
-  const tries = [String(n), String(n).padStart(2, '0'), String(n).padStart(3, '0')];
-  for (const k of tries) {
-    if (map.has(k)) return map.get(k);
-  }
-  return null;
-}
-
-const CAR_HEADERS = ['car', 'no', 'no.', '#', 'trk'];
-const TEAM_HEADERS = ['team', 'official team'];
+import {
+  walkStockCarJsonFiles,
+  buildTeamMap,
+  lookupTeam,
+  headerIndex,
+  CAR_HEADERS,
+  TEAM_HEADERS,
+  iterTeamTables,
+  isSeparatorRow,
+} from './lib/stockcar-event-utils.mjs';
 
 function syncTable(table, teamMap) {
   if (!table || typeof table !== 'object') return false;
@@ -90,9 +29,9 @@ function syncTable(table, teamMap) {
 
   let changed = false;
   for (const row of rows) {
-    if (!Array.isArray(row) || row.length <= Math.max(carIdx, teamIdx)) continue;
-    const car = row[carIdx];
-    const t = lookupTeam(teamMap, car);
+    if (!Array.isArray(row) || isSeparatorRow(row)) continue;
+    if (row.length <= Math.max(carIdx, teamIdx)) continue;
+    const t = lookupTeam(teamMap, row[carIdx]);
     if (t == null) continue;
     const old = String(row[teamIdx] ?? '');
     if (old !== t) {
@@ -104,15 +43,9 @@ function syncTable(table, teamMap) {
 }
 
 function processFile(filePath) {
-  let raw;
-  try {
-    raw = fs.readFileSync(filePath, 'utf8');
-  } catch {
-    return false;
-  }
   let obj;
   try {
-    obj = JSON.parse(raw);
+    obj = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } catch {
     return false;
   }
@@ -122,17 +55,9 @@ function processFile(filePath) {
   const tables = obj.tables;
   if (!tables || typeof tables !== 'object') return false;
 
-  const keys = Object.keys(tables).filter(
-    (k) =>
-      k === 'practice' ||
-      k === 'qualifying' ||
-      k === 'race_results' ||
-      /^stage_\d+$/.test(k)
-  );
-
   let any = false;
-  for (const k of keys) {
-    if (syncTable(tables[k], teamMap)) any = true;
+  for (const { table } of iterTeamTables(tables)) {
+    if (syncTable(table, teamMap)) any = true;
   }
   if (!any) return false;
 
@@ -140,7 +65,7 @@ function processFile(filePath) {
   return true;
 }
 
-const files = walkJsonFiles(ROOT);
+const files = walkStockCarJsonFiles();
 let n = 0;
 for (const f of files) {
   if (processFile(f)) {

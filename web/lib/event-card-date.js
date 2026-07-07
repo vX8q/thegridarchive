@@ -8,20 +8,20 @@
    * @type {Object<string, {card: string, sessions?: string, notes?: string}>}
    */
   var SERIES_CARD_DATE_RULES = {
-    f2: { card: 'weekend_range', sessions: 'sprint_feature', notes: 'Sprint Sat + Feature Sun' },
-    f3: { card: 'weekend_range', sessions: 'sprint_feature' },
-    frec: { card: 'weekend_range', sessions: 'sprint_feature' },
-    f4_it: { card: 'weekend_range', sessions: 'sprint_feature' },
-    gtwce_sprint: { card: 'weekend_range', sessions: 'race_1_2' },
-    dtm: { card: 'weekend_range', sessions: 'race_1_2' },
-    f1: { card: 'weekend_range', sessions: 'sprint_gp_when_sprint_weekend' },
-    super_formula: { card: 'weekend_range', sessions: 'multi_race_map_or_span' },
+    f2: { card: 'weekend_range', next_race: 'session_day', sessions: 'sprint_feature', notes: 'Sprint Sat + Feature Sun' },
+    f3: { card: 'weekend_range', next_race: 'session_day', sessions: 'sprint_feature' },
+    frec: { card: 'weekend_range', next_race: 'session_day', sessions: 'sprint_feature' },
+    f4_it: { card: 'weekend_range', next_race: 'session_day', sessions: 'sprint_feature' },
+    gtwce_sprint: { card: 'weekend_range', next_race: 'session_day', sessions: 'race_1_2' },
+    dtm: { card: 'weekend_range', next_race: 'session_day', sessions: 'race_1_2' },
+    f1: { card: 'weekend_range', next_race: 'session_day', sessions: 'sprint_gp_when_sprint_weekend' },
+    super_formula: { card: 'weekend_range', next_race: 'session_day', sessions: 'multi_race_map_or_span' },
     imsa: { card: 'race_day_only', notes: 'Multi-day schedule span; card shows race day only' },
     wec: { card: 'race_day_only' },
     elms: { card: 'race_day_only' },
     gtwce_end: { card: 'race_day_only' },
     psc: { card: 'race_day_only' },
-    supercars: { card: 'weekend_merge', notes: 'One card per venue weekend on home feed' },
+    supercars: { card: 'weekend_merge', next_race: 'session_day', notes: 'Last Results: one card per venue weekend; Next Race: one card per schedule race' },
     default: { card: 'single_day', notes: '24h races show two calendar days from name' }
   };
 
@@ -62,6 +62,8 @@
   var F1_SPRINT_WEEKENDS = buildF1SprintWeekendSet();
 
   function isoAddDays(iso, delta) {
+    var fn = window.TGA && window.TGA.isoAddDays;
+    if (fn) return fn(iso, delta);
     if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
     var t = new Date(iso + 'T12:00:00').getTime() + delta * 86400000;
     var d = new Date(t);
@@ -184,9 +186,9 @@
     return [];
   }
 
-  function parseNamedRaceDurationHours(name) {
-    var m = String(name || '').match(/(\d+)\s*h(?:ours?)?/i);
-    return m ? parseInt(m[1], 10) : 0;
+  function namedRaceDurationHours(name) {
+    var fn = window.TGA && window.TGA.parseNamedRaceDurationHours;
+    return fn ? fn(name) : null;
   }
 
   /** True only for rows expanded with explicit session metadata (Full Schedule / series table). */
@@ -212,7 +214,7 @@
     var sid = String((e._seriesId || e.series_id) || '').toUpperCase();
     if (!RACE_DAY_ONLY_SERIES[sid]) return false;
     var name = String(e.name || e.race || '').trim();
-    if (parseNamedRaceDurationHours(name) === 24) return false;
+    if (namedRaceDurationHours(name) === 24) return false;
     var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
     var iso = parseIso || function (s) {
       var str = String(s || '').trim();
@@ -318,6 +320,56 @@
     F1_SPRINT_WEEKENDS = buildF1SprintWeekendSet();
   }
 
+  /**
+   * Calendar date (ISO) for Next Race cards — always the upcoming race day, never a weekend span.
+   */
+  function nextRaceCardDateIso(e) {
+    if (!e) return '';
+    var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
+    var iso = parseIso || function (s) {
+      var str = String(s || '').trim();
+      return /^\d{4}-\d{2}-\d{2}/.test(str) ? str.slice(0, 10) : '';
+    };
+    if (isExpandedScheduleSessionRow(e)) {
+      var getIsoRow = window.TGA && window.TGA.getEventRaceStartDateIso;
+      return (getIsoRow ? getIsoRow(e) : '') || iso(e.start_date || e.date) || iso(e.end_date);
+    }
+    if (enduranceWeekendRaceDayOnly(e)) {
+      var raceDay = singleRaceCardDateIso(e);
+      if (raceDay) return raceDay;
+    }
+    var sid = seriesKeyNorm(e._seriesId || e.series_id || '');
+    var rule = getSeriesCardDateRule(sid);
+    var namedHours = window.TGA && window.TGA.parseNamedRaceDurationHours;
+    var name = String(e.name || e.race || '').trim();
+    if (namedHours && namedHours(name) === 24) {
+      return iso(e.start_date || e.date) || iso(e.end_date);
+    }
+    if (rule.next_race === 'session_day' || rule.card === 'weekend_range' || rule.card === 'weekend_merge' ||
+        isMultiRaceSeriesSchedule(sid)) {
+      var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+      if (getIso) {
+        var raceIso = getIso(e);
+        if (raceIso) return raceIso;
+      }
+      var sessions = buildSessionsForEvent(sid, e);
+      if (sessions && sessions.length) {
+        return sessionRaceStartDateIso(e, sessions[0]) || iso(sessions[0].start_date);
+      }
+    }
+    var getIsoDefault = window.TGA && window.TGA.getEventRaceStartDateIso;
+    return (getIsoDefault ? getIsoDefault(e) : '') || iso(e.start_date || e.date) || iso(e.end_date);
+  }
+
+  /** Display date for Next Race home cards (single race day). */
+  function formatNextRaceCardDate(e) {
+    var formatShortDate = window.TGA && window.TGA.formatShortDate;
+    if (!formatShortDate) return '—';
+    var raceIso = nextRaceCardDateIso(e);
+    if (!raceIso) return '—';
+    return formatShortDate(raceIso) || raceIso;
+  }
+
   window.TGA.SERIES_CARD_DATE_RULES = SERIES_CARD_DATE_RULES;
   window.TGA.getSeriesCardDateRule = getSeriesCardDateRule;
   window.TGA.buildSessionsForEvent = buildSessionsForEvent;
@@ -328,6 +380,8 @@
   window.TGA.singleRaceCardDateIso = singleRaceCardDateIso;
   window.TGA.getEventRaceDateRangeIso = getEventRaceDateRangeIso;
   window.TGA.getEventRaceSessions = getEventRaceSessions;
+  window.TGA.nextRaceCardDateIso = nextRaceCardDateIso;
+  window.TGA.formatNextRaceCardDate = formatNextRaceCardDate;
   window.TGA.raceSessionDisplayLabel = raceSessionDisplayLabel;
   window.TGA.refreshF1SprintWeekends = refreshF1SprintWeekends;
 })();

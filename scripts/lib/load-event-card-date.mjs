@@ -39,7 +39,13 @@ export function isoPrefix(s) {
  */
 export function createEventCardDateApi(opts = {}) {
   const TGA = {
-    parseIsoDatePrefix: isoPrefix,
+    getLang() { return 'en'; },
+    formatShortDate(iso) {
+      if (!iso) return '—';
+      const d = new Date(iso + 'T12:00:00');
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return months[d.getMonth()] + ' ' + d.getDate();
+    },
     normalizeScheduleEvent: (e) => e,
     getEventRaceStartDateIso(e) {
       const start = isoPrefix(e.start_date || e.date);
@@ -57,6 +63,8 @@ export function createEventCardDateApi(opts = {}) {
     TGA_STATIC_SCHEDULES: opts.staticSchedules || loadStaticSchedules(),
     console,
   };
+  const coreSrc = fs.readFileSync(path.join(root, 'web', 'lib', 'tga-dates-core.js'), 'utf8');
+  vm.runInNewContext(coreSrc, { window, console });
   const src = fs.readFileSync(path.join(root, 'web', 'lib', 'event-card-date.js'), 'utf8');
   vm.runInNewContext(src, { window, console });
   return window.TGA;
@@ -68,4 +76,17 @@ export function createWeekendMergeApi() {
   const src = fs.readFileSync(path.join(root, 'web', 'lib', 'weekend-card-merge.js'), 'utf8');
   vm.runInNewContext(src, { window, console });
   return window.TGA;
+}
+
+export function createSeriesScheduleExpandApi(opts = {}) {
+  const TGA = createEventCardDateApi(opts);
+  const window = { TGA, console };
+  const src = fs.readFileSync(path.join(root, 'web', 'components', 'series-schedule-expand.js'), 'utf8');
+  vm.runInNewContext(src, { window, console });
+  return window.TGA;
+}
+
+export function loadScheduleEntry(seriesFile, eventId) {
+  const rows = JSON.parse(fs.readFileSync(path.join(root, 'data', 'schedules', seriesFile), 'utf8'));
+  return rows.find((e) => e.id === eventId) || null;
 }

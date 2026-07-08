@@ -53,9 +53,18 @@ test('expandSeriesScheduleEvents leaves pre-season test as single row', () => {
 
 test('expandSeriesScheduleEvents does not expand single-race IndyCar', () => {
   const e = loadScheduleEntry('indycar.json', 'INDYCAR_2026_5');
-  if (!e) return;
+  assert.ok(e);
   const out = TGA.expandSeriesScheduleEvents('INDYCAR', [e]);
   assert.strictEqual(out.length, 1);
+  assert.strictEqual(out[0].id, 'INDYCAR_2026_5');
+});
+
+test('expandSeriesScheduleEvents does not expand WEC endurance rounds', () => {
+  const e = loadScheduleEntry('wec.json', 'WEC_2026_4');
+  assert.ok(e);
+  const out = TGA.expandSeriesScheduleEvents('WEC', [e]);
+  assert.strictEqual(out.length, 1);
+  assert.strictEqual(out[0].id, 'WEC_2026_4');
 });
 
 test('expandFullScheduleEvents appends session label to name', () => {
@@ -78,6 +87,14 @@ test('expandFullScheduleEvents skips already-expanded F2 sprint row', () => {
   const rows = TGA.expandFullScheduleEvents([e]);
   assert.strictEqual(rows.length, 1);
   assert.strictEqual(rows[0].name, 'Silverstone (Sprint)');
+});
+
+test('expandFullScheduleEvents leaves IndyCar as single row', () => {
+  const e = loadScheduleEntry('indycar.json', 'INDYCAR_2026_6');
+  assert.ok(e);
+  const rows = TGA.expandFullScheduleEvents([e]);
+  assert.strictEqual(rows.length, 1);
+  assert.strictEqual(rows[0].id, 'INDYCAR_2026_6');
 });
 
 test('resolveRaceSessionLabel uses sprint kind', () => {

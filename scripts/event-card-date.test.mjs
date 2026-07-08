@@ -239,4 +239,39 @@ test('DTM Next Race row uses session start date not weekend end', () => {
   assert.strictEqual(TGA.formatNextRaceCardDate(e), 'Jul 4');
 });
 
+test('SERIES_CARD_DATE_RULES documents INDYCAR and WEC', () => {
+  assert.strictEqual(TGA.getSeriesCardDateRule('INDYCAR').card, 'single_day');
+  assert.strictEqual(TGA.getSeriesCardDateRule('WEC').card, 'race_day_only');
+});
+
+test('INDYCAR single-race weekend shows one calendar day on cards', () => {
+  const e = loadScheduleEntry('indycar.json', 'INDYCAR_2026_5');
+  assert.ok(e);
+  assert.strictEqual(TGA.isMultiRaceSeriesSchedule('INDYCAR'), false);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-04-19');
+  assert.strictEqual(range.end, '2026-04-19');
+  assert.strictEqual(TGA.nextRaceCardDateIso(e), '2026-04-19');
+  assert.strictEqual(TGA.formatNextRaceCardDate(e), 'Apr 19');
+});
+
+test('WEC multi-day São Paulo weekend shows race day only on cards', () => {
+  const e = loadScheduleEntry('wec.json', 'WEC_2026_4');
+  assert.ok(e);
+  assert.strictEqual(TGA.enduranceWeekendRaceDayOnly(e), true);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-07-12');
+  assert.strictEqual(range.end, '2026-07-12');
+  assert.strictEqual(TGA.nextRaceCardDateIso(e), '2026-07-12');
+});
+
+test('WEC single-day Lone Star Le Mans stays one day', () => {
+  const e = loadScheduleEntry('wec.json', 'WEC_2026_5');
+  assert.ok(e);
+  assert.strictEqual(TGA.enduranceWeekendRaceDayOnly(e), false);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-09-06');
+  assert.strictEqual(range.end, '2026-09-06');
+});
+
 console.log('All event-card-date tests passed.');

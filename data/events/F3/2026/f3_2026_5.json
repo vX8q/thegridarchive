@@ -7,23 +7,199 @@
   "end_date": "2026-07-05",
   "track": "Silverstone Circuit",
   "location": "Silverstone",
-  "entry_list": [],
-  "tables": {
-    "feature": {
-      "title": "Feature Race Results",
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Laps",
-        "Time/Retired",
-        "Grid",
-        "Pts"
-      ],
-      "rows": []
+  "entry_list": [
+    {
+      "number": "1",
+      "driver": "Théophile Naël",
+      "team": "Campos Racing",
+      "driver_slug": "theophile-nael"
     },
+    {
+      "number": "2",
+      "driver": "Ugo Ugochukwu",
+      "team": "Campos Racing",
+      "driver_slug": "ugo-ugochukwu"
+    },
+    {
+      "number": "3",
+      "driver": "Ernesto Rivera",
+      "team": "Campos Racing",
+      "driver_slug": "ernesto-rivera"
+    },
+    {
+      "number": "4",
+      "driver": "Noah Strømsted",
+      "team": "Trident",
+      "driver_slug": "noah-stromsted"
+    },
+    {
+      "number": "5",
+      "driver": "Freddie Slater",
+      "team": "Trident",
+      "driver_slug": "freddie-slater"
+    },
+    {
+      "number": "6",
+      "driver": "Matteo De Palo",
+      "team": "Trident",
+      "driver_slug": "matteo-de-palo"
+    },
+    {
+      "number": "7",
+      "driver": "Mattia Colnaghi",
+      "team": "MP Motorsport",
+      "driver_slug": "mattia-colnaghi"
+    },
+    {
+      "number": "8",
+      "driver": "Tuukka Taponen",
+      "team": "MP Motorsport",
+      "driver_slug": "tuukka-taponen"
+    },
+    {
+      "number": "9",
+      "driver": "Alessandro Giusti",
+      "team": "MP Motorsport",
+      "driver_slug": "alessandro-giusti"
+    },
+    {
+      "number": "10",
+      "driver": "Taito Kato",
+      "team": "ART Grand Prix",
+      "driver_slug": "taito-kato"
+    },
+    {
+      "number": "11",
+      "driver": "Maciej Gładysz",
+      "team": "ART Grand Prix",
+      "driver_slug": "maciej-gladysz"
+    },
+    {
+      "number": "12",
+      "driver": "Kanato Le",
+      "team": "ART Grand Prix",
+      "driver_slug": "kanato-le"
+    },
+    {
+      "number": "14",
+      "driver": "Hiyu Yamakoshi",
+      "team": "Van Amersfoort Racing",
+      "driver_slug": "hiyu-yamakoshi"
+    },
+    {
+      "number": "15",
+      "driver": "Enzo Deligny",
+      "team": "Van Amersfoort Racing",
+      "driver_slug": "enzo-deligny"
+    },
+    {
+      "number": "16",
+      "driver": "Bruno del Pino",
+      "team": "Van Amersfoort Racing",
+      "driver_slug": "bruno-del-pino"
+    },
+    {
+      "number": "17",
+      "driver": "Pedro Clerot",
+      "team": "Rodin Motorsport",
+      "driver_slug": "pedro-clerot"
+    },
+    {
+      "number": "18",
+      "driver": "Brando Badoer",
+      "team": "Rodin Motorsport",
+      "driver_slug": "brando-badoer"
+    },
+    {
+      "number": "19",
+      "driver": "Christian Ho",
+      "team": "Rodin Motorsport",
+      "driver_slug": "christian-ho"
+    },
+    {
+      "number": "20",
+      "driver": "Louis Sharp",
+      "team": "Prema Racing",
+      "driver_slug": "louis-sharp"
+    },
+    {
+      "number": "21",
+      "driver": "James Wharton",
+      "team": "Prema Racing",
+      "driver_slug": "james-wharton"
+    },
+    {
+      "number": "22",
+      "driver": "José Garfias",
+      "team": "Prema Racing",
+      "driver_slug": "jose-garfias"
+    },
+    {
+      "number": "23",
+      "driver": "Michael Shin",
+      "team": "Hitech",
+      "driver_slug": "michael-shin"
+    },
+    {
+      "number": "24",
+      "driver": "Fionn McLaughlin",
+      "team": "Hitech",
+      "driver_slug": "fionn-mclaughlin"
+    },
+    {
+      "number": "25",
+      "driver": "Jin Nakamura",
+      "team": "Hitech",
+      "driver_slug": "jin-nakamura"
+    },
+    {
+      "number": "26",
+      "driver": "Salim Hanna",
+      "team": "AIX Racing",
+      "driver_slug": "salim-hanna"
+    },
+    {
+      "number": "27",
+      "driver": "Yevan David",
+      "team": "AIX Racing",
+      "driver_slug": "yevan-david"
+    },
+    {
+      "number": "28",
+      "driver": "Fernando Barrichello",
+      "team": "AIX Racing",
+      "driver_slug": "fernando-barrichello"
+    },
+    {
+      "number": "29",
+      "driver": "Nicola Lacorte",
+      "team": "DAMS Lucas Oil",
+      "driver_slug": "nicola-lacorte"
+    },
+    {
+      "number": "30",
+      "driver": "Nandhavud Bhirombhakdi",
+      "team": "DAMS Lucas Oil",
+      "driver_slug": "nandhavud-bhirombhakdi"
+    },
+    {
+      "number": "31",
+      "driver": "Gerrard Xie",
+      "team": "DAMS Lucas Oil",
+      "driver_slug": "gerrard-xie"
+    }
+  ],
+  "tables": {
     "practice": {
+      "title": "2026 FIA Formula 3 Championship - Practice",
+      "subtitle": "Silverstone",
+      "meta": {
+        "Championship": "2026 FIA Formula 3 Championship",
+        "Session": "Practice",
+        "Date": "Fri 04 Jul 2026",
+        "Start": "09:00 AM",
+        "Length": "45 mins"
+      },
       "headers": [
         "Pos",
         "No.",
@@ -38,11 +214,21 @@
       "rows": []
     },
     "qualifying": {
+      "title": "2026 FIA Formula 3 Championship - Qualifying",
+      "subtitle": "Silverstone",
+      "meta": {
+        "Championship": "2026 FIA Formula 3 Championship",
+        "Session": "Qualifying",
+        "Date": "Fri 04 Jul 2026",
+        "Start": "02:00 PM",
+        "Length": "30 mins"
+      },
       "headers": [
         "Pos",
         "No.",
         "Driver",
         "Team",
+        "Laps",
         "Time",
         "Gap",
         "Int",
@@ -50,19 +236,57 @@
       ],
       "rows": []
     },
-    "sprint": {
-      "title": "Sprint Race Results",
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Laps",
-        "Time/Retired",
-        "Grid",
-        "Pts"
-      ],
-      "rows": []
+    "race": {
+      "sessions": [
+        {
+          "title": "Sprint Race Results",
+          "meta": {
+            "Championship": "2026 FIA Formula 3 Championship",
+            "Session": "Sprint Race",
+            "Date": "Sat 04 Jul 2026"
+          },
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH",
+            "Best",
+            "Lap",
+            "Pts"
+          ],
+          "rows": [],
+          "subtitle": "Silverstone"
+        },
+        {
+          "title": "Feature Race Results",
+          "meta": {
+            "Championship": "2026 FIA Formula 3 Championship",
+            "Session": "Feature Race",
+            "Date": "Sun 05 Jul 2026"
+          },
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH",
+            "Best",
+            "Lap",
+            "Pts"
+          ],
+          "rows": [],
+          "subtitle": "Silverstone"
+        }
+      ]
     }
   }
 }

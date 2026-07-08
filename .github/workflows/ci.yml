@@ -29,6 +29,9 @@ jobs:
       - name: Run JS unit tests
         run: node scripts/js-test.mjs
 
+      - name: Audit event page render modules
+        run: node scripts/audit-event-render.mjs
+
       - name: Audit stockcar stage layouts
         run: node scripts/audit-stockcar-stages.mjs
 

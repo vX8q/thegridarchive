@@ -178,7 +178,7 @@ check('B-NOAPS-qual', 'NOAPS_2026_4 qual separator in rows', hasSep);
 
 // --- Static bundle ---
 const indexHtml = fs.readFileSync(path.join(root, 'web', 'index.html'), 'utf8');
-for (const script of ['tga-dates-core.js', 'event-tables.js', 'last-results-dates.js', 'endurance-race.js', 'stockcar-race.js', 'openwheel-race.js', 'touring-race.js']) {
+for (const script of ['tga-dates-core.js', 'event-tables.js', 'event-page-helpers.js', 'last-results-dates.js', 'endurance-race.js', 'stockcar-race.js', 'openwheel-race.js', 'touring-race.js', 'event-pit-stops.js', 'event-bop.js', 'event-race-content.js', 'event-entry-list.js']) {
   check('bundle', `index.html loads ${script}`, indexHtml.includes(script));
 }
 

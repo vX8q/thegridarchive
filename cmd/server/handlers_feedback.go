@@ -7,7 +7,6 @@ import (
 	"errors"
 	"io"
 	"log/slog"
-	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -217,19 +216,6 @@ func feedbackIPHash(r *http.Request) string {
 	ip := clientIP(r)
 	sum := sha256.Sum256([]byte(ip + "|" + r.UserAgent()))
 	return hex.EncodeToString(sum[:])
-}
-
-func clientIP(r *http.Request) string {
-	ip := r.RemoteAddr
-	if host, _, err := net.SplitHostPort(ip); err == nil {
-		ip = host
-	}
-	if fwd := r.Header.Get("X-Forwarded-For"); fwd != "" {
-		ip = strings.TrimSpace(strings.SplitN(fwd, ",", 2)[0])
-	} else if realIP := r.Header.Get("X-Real-IP"); realIP != "" {
-		ip = strings.TrimSpace(realIP)
-	}
-	return ip
 }
 
 func writeJSON(w http.ResponseWriter, status int, v interface{}) {

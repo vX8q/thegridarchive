@@ -265,7 +265,7 @@ ORDER BY wins DESC, top5 DESC, top10 DESC, driver_name
 	}
 
 	mans := aggregateByManufacturer(out)
-	teamCanon := stockCarTeamCanonByFoldKey(dataDir, seriesID)
+	teamCanon := teamCanonByFoldKeyForStats(dataDir, seriesID)
 	teams := aggregateByTeam(out, teamCanon)
 
 	// Supercars: if Manufacturer Stats empty (view uses teams.car manufacturer, empty for Supercars),

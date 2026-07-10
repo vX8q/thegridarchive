@@ -162,7 +162,7 @@ func mergeDriverNames(existing string, additions ...string) string {
 	var out []string
 	add := func(raw string) {
 		for _, n := range splitDriversCell(raw) {
-			key := strings.ToLower(n)
+			key := canonicalDriverKey(n)
 			if _, ok := seen[key]; ok {
 				continue
 			}
@@ -502,11 +502,6 @@ func accFromBuckets(buckets map[string]*classCarAcc, cls string, raceOrder []str
 // BuildImsaStandingsFromEvents builds per-class IMSA standings from tables.race and tables.qualifying.
 func BuildImsaStandingsFromEvents(dataDir string, season string) (*StandingsData, error) {
 	return buildImsaStandingsFromEvents(dataDir, season, 0)
-}
-
-// BuildImsaStandingsThroughRound is like BuildImsaStandingsFromEvents but only includes rounds <= maxRound.
-func BuildImsaStandingsThroughRound(dataDir string, season string, maxRound int) (*StandingsData, error) {
-	return buildImsaStandingsFromEvents(dataDir, season, maxRound)
 }
 
 func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (*StandingsData, error) {

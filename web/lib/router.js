@@ -130,6 +130,10 @@
       // URL uses hyphens (nascar-cup); code uses underscores (nascar_cup)
       id = id.replace(/-/g, '_');
       if (id === 'nascar_xfinity') id = 'noaps';
+      // indycar-2026 → indycar (keep f1_2026 for /season/ redirect below)
+      if (!/^f1_\d{4}$/.test(id)) {
+        id = id.replace(/_\d{4}$/, '');
+      }
       var subPath = slash >= 0 ? rest.slice(slash + 1).replace(/\/.*$/, '') : '';
       // /series/f1 (no subpath) — current season schedule at /season/f1-2026.
       if (id === 'f1' && subPath === '') {

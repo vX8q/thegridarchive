@@ -153,163 +153,7 @@
               raceHeaders = f1GridNorm.headers;
               raceRows = f1GridNorm.rows;
             }
-    
-            // F1_2025_2 … F1_2025_11: add Laps Led and Best Lap columns directly in result tables.
-            // Also normalize points and laps led: if driver scored no points or led no laps, show 0.
-            if ((evKeyEvent === 'F1_2025_2' || evKeyEvent === 'F1_2025_3' || evKeyEvent === 'F1_2025_4' || evKeyEvent === 'F1_2025_5' || evKeyEvent === 'F1_2025_6' || evKeyEvent === 'F1_2025_7' || evKeyEvent === 'F1_2025_8' || evKeyEvent === 'F1_2025_9' || evKeyEvent === 'F1_2025_10' || evKeyEvent === 'F1_2025_11') && eventData && eventData.tables) {
-              var isSprintSession = /^sprint/i.test(String(sess.title || ''));
-              var lapsLedByDriver = {};
-              var bestLapByNo = {};
-              var ptsColIdx = -1;
-              for (var pi = 0; pi < raceHeaders.length; pi++) {
-                var ph = (raceHeaders[pi] || '').toLowerCase();
-                if (ph.indexOf('pts') >= 0 || ph.indexOf('points') >= 0) {
-                  ptsColIdx = pi;
-                  break;
-                }
-              }
-    
-              // Laps led: sprint or race.
-              if (isSprintSession && eventData.tables.laps_led_sprint && Array.isArray(eventData.tables.laps_led_sprint.rows)) {
-                eventData.tables.laps_led_sprint.rows.forEach(function (row) {
-                  var drv = row[1] != null ? String(row[1]).trim() : '';
-                  var total = row[3] != null ? String(row[3]).trim() : '';
-                  if (drv && total) lapsLedByDriver[drv] = total;
-                });
-              } else if (!isSprintSession && eventData.tables.laps_led && Array.isArray(eventData.tables.laps_led.rows)) {
-                eventData.tables.laps_led.rows.forEach(function (row) {
-                  var range = row[0] != null ? String(row[0]).trim() : '';
-                  var drv = row[1] != null ? String(row[1]).trim() : '';
-                  if (!drv || !range) return;
-                  var count = 0;
-                  var mRange = range.match(/^(\d+)\s*[\u2013\u2014\-]\s*(\d+)$/);
-                  if (mRange) {
-                    var a = parseInt(mRange[1], 10);
-                    var b = parseInt(mRange[2], 10);
-                    if (!isNaN(a) && !isNaN(b) && b >= a) count = (b - a + 1);
-                  } else if (/^\d+$/.test(range)) {
-                    count = 1;
-                  }
-                  if (count > 0) {
-                    lapsLedByDriver[drv] = (lapsLedByDriver[drv] || 0) + count;
-                  }
-                });
-              }
-    
-              // Special cases (laps led totals only, no ranges in data):
-              // Monaco 2025 (F1_2025_8), Spain 2025 (F1_2025_9), Canada 2025 (F1_2025_10), Austria 2025 (F1_2025_11).
-              if (!isSprintSession) {
-                if (evKeyEvent === 'F1_2025_8') {
-                  lapsLedByDriver = {
-                    'Lando Norris': 42,
-                    'Charles Leclerc': 3,
-                    'Max Verstappen': 33
-                  };
-                } else if (evKeyEvent === 'F1_2025_9') {
-                  lapsLedByDriver = {
-                    'Oscar Piastri': 60,
-                    'Max Verstappen': 6
-                  };
-                } else if (evKeyEvent === 'F1_2025_10') {
-                  lapsLedByDriver = {
-                    'George Russell': 43,
-                    'Kimi Antonelli': 1,
-                    'Oscar Piastri': 5,
-                    'Lando Norris': 15,
-                    'Charles Leclerc': 6
-                  };
-                } else if (evKeyEvent === 'F1_2025_11') {
-                  lapsLedByDriver = {
-                    'Lando Norris': 62,
-                    'Oscar Piastri': 7,
-                    'Lewis Hamilton': 1
-                  };
-                }
-              }
-    
-              // Fastest laps.
-              if (isSprintSession && eventData.tables.best_laps_sprint && Array.isArray(eventData.tables.best_laps_sprint.rows)) {
-                eventData.tables.best_laps_sprint.rows.forEach(function (row) {
-                  var no = row[1] != null ? String(row[1]).trim() : '';
-                  var time = row[6] != null ? String(row[6]).trim() : '';
-                  if (no && time) bestLapByNo[no] = time;
-                });
-              } else if (!isSprintSession && eventData.tables.best_laps && Array.isArray(eventData.tables.best_laps.rows)) {
-                eventData.tables.best_laps.rows.forEach(function (row) {
-                  var no = row[1] != null ? String(row[1]).trim() : '';
-                  var time = row[6] != null ? String(row[6]).trim() : '';
-                  if (no && time) bestLapByNo[no] = time;
-                });
-              }
-    
-              // Extend headers and rows.
-              if (ptsColIdx >= 0) {
-                // For F1_2025_2 and F1_2025_3 insert Laps Led and Best Lap BEFORE Pts. column,
-                // so order matches F1_2025_1 template: ... St, Laps Led, Best Lap, Pts.
-                var newHeaders = [];
-                for (var hi2 = 0; hi2 < raceHeaders.length; hi2++) {
-                  if (hi2 === ptsColIdx) {
-                    newHeaders.push('Laps Led', 'Best Lap', raceHeaders[hi2]);
-                  } else {
-                    newHeaders.push(raceHeaders[hi2]);
-                  }
-                }
-                raceHeaders = newHeaders;
-                raceRows = raceRows.map(function (r) {
-                  var baseRow = r.slice();
-                  var drv = baseRow[2] != null ? String(baseRow[2]).trim() : '';
-                  var no = baseRow[1] != null ? String(baseRow[1]).trim() : '';
-                  var posRaw = baseRow[0] != null ? String(baseRow[0]).trim() : '';
-                  var lapsRaw = baseRow[4] != null ? String(baseRow[4]).trim() : '';
-                  var lapsVal = lapsLedByDriver[drv];
-                  var bestVal = bestLapByNo[no];
-                  // For DNS/0-lap do not show best lap,
-                  // even if present in fastest laps table.
-                  var isDns = /^dns/i.test(posRaw);
-                  var lapsNum = parseInt(lapsRaw, 10);
-                  if (isNaN(lapsNum)) lapsNum = null;
-                  if (isDns || lapsNum === 0) bestVal = '';
-                  var out = [];
-                  for (var ci2 = 0; ci2 < baseRow.length; ci2++) {
-                    if (ci2 === ptsColIdx) {
-                      // Insert Laps Led and Best Lap before points.
-                      var lapsCell = lapsVal != null ? String(lapsVal) : '0';
-                      out.push(lapsCell);
-                      out.push(bestVal || '');
-                      // Normalize points — if empty, show 0.
-                      var rawPts3 = baseRow[ci2];
-                      if (rawPts3 == null || String(rawPts3).trim() === '') rawPts3 = '0';
-                      out.push(rawPts3);
-                    } else {
-                      out.push(baseRow[ci2]);
-                    }
-                  }
-                  return out;
-                });
-              } else {
-                // If Pts. column not found — append Laps Led and Best Lap at end.
-                raceHeaders = raceHeaders.slice();
-                raceHeaders.push('Laps Led', 'Best Lap');
-                raceRows = raceRows.map(function (r) {
-                  var row = r.slice();
-                  var drv = row[2] != null ? String(row[2]).trim() : '';
-                  var no = row[1] != null ? String(row[1]).trim() : '';
-                  var lapsVal = lapsLedByDriver[drv];
-                  var bestVal = bestLapByNo[no];
-                  // If no points or empty — show 0.
-                  if (ptsColIdx >= 0 && ptsColIdx < row.length) {
-                    var rawPts = row[ptsColIdx];
-                    if (rawPts == null || String(rawPts).trim() === '') row[ptsColIdx] = '0';
-                  }
-                  // If driver led no laps — show 0.
-                  var lapsCell2 = lapsVal != null ? String(lapsVal) : '0';
-                  row.push(lapsCell2);
-                  row.push(bestVal || '');
-                  return row;
-                });
-              }
-            }
-    
+
             // For all F1 events: empty points and laps led in race table shown as 0.
             if (evKeyEvent && evKeyEvent.indexOf('F1_') === 0 && Array.isArray(raceHeaders) && Array.isArray(raceRows)) {
               var ptsIdx = -1;
@@ -769,14 +613,6 @@
           // Laps led / Best laps — separate tables only if not embedded in F1 results.
           function f1HidesSeparateLapsTables(evKey, tbls) {
             if (!evKey || evKey.indexOf('F1_') !== 0) return false;
-            var legacyEmbedded = {
-              F1_2025_1: true, F1_2025_2: true, F1_2025_3: true, F1_2025_4: true, F1_2025_5: true,
-              F1_2025_6: true, F1_2025_7: true, F1_2025_8: true, F1_2025_9: true, F1_2025_10: true,
-              F1_2025_11: true, F1_2025_12: true, F1_2025_14: true, F1_2025_16: true, F1_2025_18: true,
-              F1_2025_19: true, F1_2025_20: true, F1_2026_1: true, F1_2026_2: true, F1_2026_3: true, F1_2026_4: true,
-              F1_2026_5: true, F1_2026_6: true, F1_2026_7: true, F1_2026_8: true
-            };
-            if (legacyEmbedded[evKey]) return true;
             var rrTbl = tbls && tbls.race_results;
             if (rrTbl && Array.isArray(rrTbl.headers)) {
               for (var fhi = 0; fhi < rrTbl.headers.length; fhi++) {
@@ -800,12 +636,7 @@
         }
         if (!penaltiesAndVscAddedAfterSprint) {
           if (tables.penalties) {
-            var penaltiesTitle;
-            if (evKeyEvent === 'F1_2025_2') {
-              penaltiesTitle = t('table.penalties_after');
-            } else {
-              penaltiesTitle = (typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race';
-            }
+            var penaltiesTitle = (typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race';
             add(penaltiesTitle, tables.penalties, 'penalties-table', null, null, null, null, false);
           }
           if (tables.penalties_after && tables.penalties_after.rows && tables.penalties_after.rows.length > 0) {

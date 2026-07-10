@@ -4,8 +4,10 @@ import (
 	"context"
 	"crypto/subtle"
 	"log/slog"
+	"net"
 	"net/http"
 	"runtime/debug"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -57,6 +59,7 @@ func (rw *responseWriter) Write(p []byte) (n int, err error) {
 // wrapWithLogging logs method, path, status, size, and trace_id; records duration in Prometheus.
 func wrapWithLogging(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		setSecurityHeaders(w)
 		start := time.Now()
 		rw := &responseWriter{ResponseWriter: w, status: http.StatusOK}
 		h(rw, r)
@@ -141,10 +144,57 @@ func wrapWithAdminToken(token string, h http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+// wrapWithMetricsAccess protects /metrics: admin token when configured, otherwise loopback only.
+func wrapWithMetricsAccess(adminToken string, h http.HandlerFunc) http.HandlerFunc {
+	tokenProtected := wrapWithAdminToken(adminToken, h)
+	return func(w http.ResponseWriter, r *http.Request) {
+		if strings.TrimSpace(adminToken) != "" {
+			tokenProtected(w, r)
+			return
+		}
+		if !isLoopbackRequest(r) {
+			writeError(w, http.StatusForbidden, "metrics not available")
+			return
+		}
+		h(w, r)
+	}
+}
+
 // chain wraps a handler in middleware in order (CORS, recovery, trace, rate, logging).
 func chain(h http.HandlerFunc, middlewares ...func(http.HandlerFunc) http.HandlerFunc) http.HandlerFunc {
 	for i := len(middlewares) - 1; i >= 0; i-- {
 		h = middlewares[i](h)
 	}
 	return h
+}
+
+func isLoopbackRequest(r *http.Request) bool {
+	host := r.RemoteAddr
+	if ip, _, err := net.SplitHostPort(host); err == nil {
+		host = ip
+	}
+	parsed := net.ParseIP(host)
+	return parsed != nil && parsed.IsLoopback()
+}
+
+func setSecurityHeaders(w http.ResponseWriter) {
+	w.Header().Set("X-Frame-Options", "SAMEORIGIN")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("Content-Security-Policy", contentSecurityPolicy())
+}
+
+func contentSecurityPolicy() string {
+	directives := []string{
+		"default-src 'self'",
+		"base-uri 'self'",
+		"form-action 'self'",
+		"object-src 'none'",
+		"script-src 'self' https://challenges.cloudflare.com",
+		"style-src 'self' https://fonts.googleapis.com 'unsafe-inline'",
+		"font-src 'self' https://fonts.gstatic.com data:",
+		"img-src 'self' data: https:",
+		"connect-src 'self' https://challenges.cloudflare.com",
+		"frame-src https://www.youtube.com https://challenges.cloudflare.com",
+	}
+	return strings.Join(directives, "; ")
 }

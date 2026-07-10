@@ -4,6 +4,24 @@ import (
 	"testing"
 )
 
+func TestSeasonFromSlug(t *testing.T) {
+	tests := []struct {
+		slug string
+		want string
+	}{
+		{"f1-2025", "2025"},
+		{"indycar_2026", "2026"},
+		{"noaps-2026", "2026"},
+		{"nascar_cup", ""},
+	}
+	for _, tt := range tests {
+		got := SeasonFromSlug(tt.slug)
+		if got != tt.want {
+			t.Errorf("SeasonFromSlug(%q) = %q, want %q", tt.slug, got, tt.want)
+		}
+	}
+}
+
 func TestDataSeriesID(t *testing.T) {
 	tests := []struct {
 		champID string
@@ -15,6 +33,9 @@ func TestDataSeriesID(t *testing.T) {
 		{"nascar_xfinity", "noaps"},
 		{"F1", "f1"},
 		{"f1-2025", "f1"},
+		{"f2_2026", "f2"},
+		{"indycar-2026", "indycar"},
+		{"noaps_2026", "noaps"},
 		{"", ""},
 	}
 	for _, tt := range tests {

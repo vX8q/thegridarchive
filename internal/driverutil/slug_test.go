@@ -4,6 +4,29 @@ import (
 	"testing"
 )
 
+func TestFoldDiacritics_Camara(t *testing.T) {
+	a := FoldDiacritics("Rafael Camara")
+	b := FoldDiacritics("Rafael Câmara")
+	if a != b {
+		t.Fatalf("FoldDiacritics mismatch: %q vs %q", a, b)
+	}
+}
+
+func TestNormalizeSlug_EligibilitySuffix(t *testing.T) {
+	cases := map[string]string{
+		"kyle-larson-i":   "kyle-larson",
+		"austin-hill-r":   "austin-hill",
+		"chase-briscoe-i": "chase-briscoe",
+		"lewis-hamilton":  "lewis-hamilton",
+		"david-sapienza":  "dave-sapienza",
+	}
+	for in, want := range cases {
+		if got := NormalizeSlug(in); got != want {
+			t.Errorf("NormalizeSlug(%q) = %q, want %q", in, got, want)
+		}
+	}
+}
+
 func TestSlug(t *testing.T) {
 	tests := []struct {
 		name string

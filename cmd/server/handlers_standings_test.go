@@ -86,8 +86,8 @@ func TestHandleSeriesStandings_IMSA_ReturnsClassTables(t *testing.T) {
 	if car31.Races["DET"] != "1" {
 		t.Errorf("GTP #31 DET race = %q, want 1", car31.Races["DET"])
 	}
-	if car31.Quals["DET"] != "" {
-		t.Errorf("GTP #31 DET qual = %q, want empty (no qual points)", car31.Quals["DET"])
+	if car31.Quals["DET"] != "1" {
+		t.Errorf("GTP #31 DET qual = %q, want 1 (official GTP pole, 35 qual pts)", car31.Quals["DET"])
 	}
 }
 

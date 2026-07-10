@@ -35,3 +35,16 @@ func TestIsEventSoon(t *testing.T) {
 		})
 	}
 }
+
+func TestParseCalendarDateLocal_UsesLocalMidnight(t *testing.T) {
+	d, ok := parseCalendarDateLocal("2026-07-10")
+	if !ok {
+		t.Fatal("expected valid date")
+	}
+	if d.Location() != time.Local {
+		t.Fatalf("location = %v, want Local", d.Location())
+	}
+	if d.Hour() != 0 || d.Minute() != 0 {
+		t.Fatalf("got time %v, want local midnight", d)
+	}
+}

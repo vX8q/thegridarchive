@@ -1,7 +1,7 @@
 {
   "event_id": "FREC_2026_4",
   "series": "FIA Formula Regional European Championship",
-  "race": "FREC — Monza",
+  "race": "Monza",
   "date": "20–21 June 2026",
   "start_date": "2026-06-20",
   "end_date": "2026-06-21",
@@ -118,7 +118,7 @@
     },
     {
       "number": "60",
-      "driver": "Tomass stolcermanis",
+      "driver": "Tomass Štolcermanis",
       "team": "Prema Racing",
       "status": "R",
       "rounds": "1–4",
@@ -214,7 +214,7 @@
     },
     {
       "number": "47",
-      "driver": "Andrija Kostic",
+      "driver": "Andrija Kostić",
       "team": "Trident Motorsport",
       "status": "",
       "rounds": "1–4",
@@ -230,7 +230,7 @@
     },
     {
       "number": "7",
-      "driver": "Andrea Dupe",
+      "driver": "Andrea Dupé",
       "team": "Van Amersfoort Racing",
       "status": "",
       "rounds": "1–4",

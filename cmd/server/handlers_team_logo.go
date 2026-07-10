@@ -136,7 +136,12 @@ func handleTeamLogo(w http.ResponseWriter, r *http.Request, dataDir string) {
 	}
 
 	client := &http.Client{Timeout: 12 * time.Second}
-	resp, err := client.Get(logoURL) // #nosec G107 -- URL controlled by local mapping file
+	safeURL, ok := allowedRemoteImageURL(logoURL)
+	if !ok {
+		writeFallbackTeamLogoSVG(w, slug)
+		return
+	}
+	resp, err := client.Get(safeURL)
 	if err != nil {
 		writeFallbackTeamLogoSVG(w, slug)
 		return

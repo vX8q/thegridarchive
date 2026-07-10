@@ -677,19 +677,6 @@
             entryCopy = G.expandSupercarsSubstituteEntryRows(entryCopy);
           }
           var isF1Entry = seriesLower === 'f1' || (String(d.series || '').toLowerCase().indexOf('formula 1') >= 0);
-          // F1 2025, Australian GP: "constructor → chassis" mapping for entry list.
-          var F1_2025_ENTRY_CHASSIS = {
-            'Alpine-Renault': 'A525',
-            'Aston Martin Aramco-Mercedes': 'AMR25',
-            'Ferrari': 'SF-25',
-            'Haas-Ferrari': 'VF-25',
-            'Kick Sauber-Ferrari': 'C45',
-            'McLaren-Mercedes': 'MCL39',
-            'Mercedes': 'F1 W16',
-            'Racing Bulls-Honda RBPT': 'VCARB02',
-            'Red Bull Racing-Honda RBPT': 'RB21',
-            'Williams-Mercedes': 'FW47'
-          };
           // IndyCar: No., Driver, Team, Engine. DTM/Supercars: No., Driver, Team, Car/Manufacturer. Stock car: No., Driver, Team, Manufacturer, Crew chief. Others (F1, etc.): No., Driver, Manufacturer, Chassis.
           var head = (isIndyCar || isSuperFormulaEntry)
             ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.engine') + '</th>' + (isStockCar ? '<th>' + t('th.crew_chief') + '</th>' : '')
@@ -725,11 +712,6 @@
           }
           function getChassisDisplay(r) {
             var manu = (r.manufacturer != null ? String(r.manufacturer).trim() : '');
-            // F1 2025: for all season events substitute chassis code instead of repeating constructor.
-            if (isF1Entry && evKeyEntry && evKeyEntry.indexOf('F1_2025_') === 0 && manu) {
-              var code = F1_2025_ENTRY_CHASSIS[manu];
-              if (code) return code;
-            }
             return manu || (r.car != null ? String(r.car) : '');
           }
           function getEngineDisplay(r) {

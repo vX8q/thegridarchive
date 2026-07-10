@@ -11,72 +11,46 @@ import (
 	"github.com/vX8q/tga/config"
 )
 
-// RecomputeCompletedRacesFromFilled sets CompletedRaces from filled cells: only RaceOrder codes with
-// a non-empty value in at least one row (not "", not "—", not "-") are included. Used for Supercars after enrich.
+// RecomputeCompletedRacesFromFilled sets CompletedRaces from filled cells in race_order
+// order. A round is completed when at least one row has a non-empty cell for that code.
+// Placeholder dashes (—, -) do not count. Gaps do not truncate later completed rounds.
 func RecomputeCompletedRacesFromFilled(data *StandingsData) {
 	if data == nil || len(data.RaceOrder) == 0 || len(data.Rows) == 0 {
 		return
 	}
-	var filled int
+	var completed []string
 	for _, code := range data.RaceOrder {
 		hasData := false
 		for i := range data.Rows {
 			if data.Rows[i].Races == nil {
 				continue
 			}
-			if strings.TrimSpace(data.Rows[i].Races[code]) != "" {
+			if raceCellIsFilled(data.Rows[i].Races[code]) {
 				hasData = true
 				break
 			}
 		}
-		if !hasData {
-			break
+		if hasData {
+			completed = append(completed, code)
 		}
-		filled++
 	}
-	data.CompletedRaces = make([]string, 0, filled)
-	for i := 0; i < filled && i < len(data.RaceOrder); i++ {
-		data.CompletedRaces = append(data.CompletedRaces, data.RaceOrder[i])
+	data.CompletedRaces = completed
+}
+
+func raceCellIsFilled(val string) bool {
+	val = strings.TrimSpace(val)
+	if val == "" || val == "—" || val == "-" {
+		return false
 	}
+	return true
 }
 
 // EnsureCompletedRaces fills data.CompletedRaces from race_results in event details (if still empty).
-func EnsureCompletedRaces(dataDir string, seriesID string, data *StandingsData) {
+func EnsureCompletedRaces(dataDir string, seriesID string, season string, data *StandingsData) {
 	if data == nil || len(data.RaceOrder) == 0 || len(data.CompletedRaces) > 0 {
 		return
 	}
-	events, err := LoadEvents(dataDir, seriesID)
-	if err != nil || len(events) == 0 {
-		return
-	}
-	var completed []string
-	for i, ev := range events {
-		if i >= len(data.RaceOrder) {
-			break
-		}
-		detail, err := LoadEventDetail(dataDir, ev.ID)
-		if err != nil || detail == nil || detail.Tables == nil {
-			continue
-		}
-		rr, ok := detail.Tables["race_results"]
-		// F1/F2/F3 and special cases: allow "race" table or race.sessions as results source.
-		if !ok || len(rr.Rows) == 0 {
-			if ra, okRace := detail.Tables["race"]; okRace && len(ra.Rows) > 0 {
-				rr = ra
-				ok = true
-			}
-		}
-		if !ok || len(rr.Rows) == 0 {
-			if ra, okRace := detail.Tables["race"]; okRace && len(ra.Sessions) > 0 {
-				ok = true
-			}
-		}
-		if !ok {
-			continue
-		}
-		completed = append(completed, data.RaceOrder[i])
-	}
-	data.CompletedRaces = completed
+	finalizeStandingsFromEvents(dataDir, seriesID, season, data, standingsFinalizeOpts{completed: true})
 }
 
 // SplitBaseIneligible splits base.Rows into eligible (no (i)) and ineligible (with (i)), updating base in place.
@@ -357,7 +331,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	}
 	events, err := LoadEvents(dataDir, seriesID)
 	if err != nil || len(events) == 0 {
-		EnsureCompletedRaces(dataDir, seriesID, base)
+		EnsureCompletedRaces(dataDir, seriesID, season, base)
 		SplitBaseIneligible(base)
 		return base, nil
 	}
@@ -553,6 +527,21 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		return s
 	}
 	byDriver := make(map[string]*accRow)
+	applyDTMQualifyingAwards := func(awards []dtmQualAward) {
+		for _, aw := range awards {
+			key := standingsAggregateKey(seriesID, aw.driver, aw.carNum)
+			if key == "" {
+				key = aw.driver
+			}
+			if byDriver[key] == nil {
+				byDriver[key] = &accRow{driver: aw.driver, car: aw.carNum, races: make(map[string]string)}
+			}
+			if byDriver[key].races == nil {
+				byDriver[key].races = make(map[string]string)
+			}
+			byDriver[key].points += aw.points
+		}
+	}
 	applySuperFormulaQualifyingBonus := func(qual *EventTable, raceCode string, entryByCar map[string]string) {
 		if qual == nil || len(qual.Rows) == 0 {
 			return
@@ -898,11 +887,14 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 					detail = det
 				}
 				used := false
-				for _, rs := range sessions {
+				for si, rs := range sessions {
 					if raceIdx >= len(raceOrder) {
 						break
 					}
 					raceCode := raceOrder[raceIdx]
+					if isDTMSeries && detail != nil {
+						applyDTMQualifyingAwards(dtmQualifyingAwards(detail, si+1, entryByCarForEvent))
+					}
 					if len(rs.Headers) == 0 || len(rs.Rows) == 0 {
 						if detail != nil {
 							for _, e := range detail.EntryList {
@@ -1303,66 +1295,11 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 }
 
 // EnrichStagesFromEvents fills Stages in standings rows from event stage1/stage2 tables (by driver name).
-func EnrichStagesFromEvents(dataDir string, seriesID string, data *StandingsData) {
+func EnrichStagesFromEvents(dataDir string, seriesID string, season string, data *StandingsData) {
 	if data == nil || len(data.Rows) == 0 {
 		return
 	}
-	events, err := LoadEvents(dataDir, seriesID)
-	if err != nil || len(events) == 0 {
-		return
-	}
-	stagePointsByDriver := make(map[string]int)
-	for _, ev := range events {
-		if isExhibitionEvent(seriesID, ev.ID) {
-			continue
-		}
-		detail, err := LoadEventDetail(dataDir, ev.ID)
-		if err != nil || detail == nil || detail.Tables == nil {
-			continue
-		}
-		for sn := 1; sn <= 2; sn++ {
-			st, ok := StageN(detail.Tables, sn)
-			if !ok {
-				continue
-			}
-			sDriverCol := colIndex(st.Headers, "Driver")
-			sPtsCol := colIndex(st.Headers, "Points")
-			if sPtsCol < 0 {
-				sPtsCol = colIndex(st.Headers, "Pts")
-			}
-			if sDriverCol < 0 || sPtsCol < 0 {
-				continue
-			}
-			for _, row := range st.Rows {
-				if sDriverCol >= len(row) || sPtsCol >= len(row) {
-					continue
-				}
-				d := strings.TrimSpace(row[sDriverCol])
-				if d == "" {
-					continue
-				}
-				pts := 0
-				if s := strings.TrimSpace(row[sPtsCol]); s != "" {
-					for _, c := range s {
-						if c >= '0' && c <= '9' {
-							pts = pts*10 + int(c-'0')
-						}
-					}
-				}
-				stagePointsByDriver[canonicalDriverKey(d)] += pts
-			}
-		}
-	}
-	for i := range data.Rows {
-		driver := strings.TrimSpace(data.Rows[i].Driver)
-		sum := stagePointsByDriver[canonicalDriverKey(driver)]
-		data.Rows[i].Stages = itoa(sum)
-	}
-	for i := range data.Ineligible {
-		driver := strings.TrimSpace(data.Ineligible[i].Driver)
-		sum := stagePointsByDriver[canonicalDriverKey(driver)]
-		data.Ineligible[i].Stages = itoa(sum)
-	}
+	finalizeStandingsFromEvents(dataDir, seriesID, season, data, standingsFinalizeOpts{stages: true})
 }
 
 // SupercarsCarToCanonical normalizes Supercars car number: 800 (Sydney) → 8,
@@ -1446,145 +1383,6 @@ func MergeSupercarsCar800Into8(data *StandingsData) {
 		newRows[i].Pos = i + 1
 	}
 	data.Rows = newRows
-}
-
-// BuildSupercarsStandingsFromFiles builds Supercars standings from files only (Sydney + Melbourne),
-// when DB is unused or empty. Uses data/standings/supercars.json, events/supercars_2026_1.json and supercars_2026_4.json.
-func BuildSupercarsStandingsFromFiles(dataDir string) (*StandingsData, error) {
-	const seriesID = "supercars"
-	supercarsOrder := []string{"SMP1", "SMP2", "SMP3", "MLB4", "MLB5", "MLB6", "MLB7"}
-	base, err := LoadStandings(dataDir, seriesID)
-	if err != nil || base == nil {
-		base = &StandingsData{RaceOrder: supercarsOrder, CompletedRaces: []string{}, Rows: []StandingRow{}}
-	}
-	if base != nil && len(base.Rows) > 0 {
-		MergeSupercarsCar800Into8(base)
-	}
-	if len(base.RaceOrder) != 7 {
-		base.RaceOrder = supercarsOrder
-	}
-
-	teams, _ := LoadTeams(dataDir, seriesID)
-	driverByNo := make(map[string]string)
-	teamByNo := make(map[string]string)
-	manufacturerByNo := make(map[string]string)
-	if teams != nil {
-		for _, t := range teams.Teams {
-			no := strings.TrimSpace(t.Number)
-			if no == "" {
-				continue
-			}
-			if t.Driver != "" {
-				driverByNo[no] = strings.TrimSpace(t.Driver)
-			}
-			if t.Team != "" {
-				teamByNo[no] = strings.TrimSpace(t.Team)
-			}
-			if t.Manufacturer != "" {
-				manufacturerByNo[no] = strings.TrimSpace(t.Manufacturer)
-			}
-		}
-	}
-
-	sessions, err := LoadEventRaceSessions(dataDir, "SUPERCARS_2026_1")
-	if err != nil || len(sessions) == 0 {
-		EnrichSupercarsStandingsWithMelbourne(dataDir, base)
-		return base, nil
-	}
-
-	type acc struct {
-		driver string
-		team   string
-		manu   string
-		races  map[string]string
-		points int
-	}
-	byCar := make(map[string]*acc)
-	smpCodes := []string{"SMP1", "SMP2", "SMP3"}
-	for j := 0; j < 3 && j < len(sessions); j++ {
-		sess := &sessions[j]
-		colPos := firstColIndex(sess.Headers, "Pos", "Fin")
-		colNo := firstColIndex(sess.Headers, "No", "No.", "#", "Car")
-		colDriver := firstColIndex(sess.Headers, "Driver")
-		colTeam := firstColIndex(sess.Headers, "Team")
-		colPts := firstColIndex(sess.Headers, "Pts", "Points")
-		if colNo < 0 {
-			continue
-		}
-		for _, row := range sess.Rows {
-			if colNo >= len(row) {
-				continue
-			}
-			car := SupercarsCarToCanonical(strings.TrimSpace(row[colNo]))
-			if car == "" {
-				continue
-			}
-			if byCar[car] == nil {
-				drv := ""
-				if colDriver >= 0 && colDriver < len(row) {
-					drv = strings.TrimSpace(row[colDriver])
-				}
-				if drv == "" {
-					drv = driverByNo[car]
-				}
-				team := teamByNo[car]
-				if team == "" && colTeam >= 0 && colTeam < len(row) {
-					team = strings.TrimSpace(row[colTeam])
-				}
-				manu := manufacturerByNo[car]
-				byCar[car] = &acc{driver: drv, team: team, manu: manu, races: make(map[string]string)}
-			}
-			a := byCar[car]
-			posStr := "—"
-			if colPos >= 0 && colPos < len(row) {
-				posStr = strings.TrimSpace(row[colPos])
-			}
-			if posStr == "" {
-				posStr = "—"
-			}
-			a.races[smpCodes[j]] = posStr
-			if colPts >= 0 && colPts < len(row) {
-				s := strings.TrimSpace(row[colPts])
-				s = strings.TrimPrefix(s, "+")
-				a.points += atoi(s)
-			}
-		}
-	}
-
-	var rows []StandingRow
-	for car, a := range byCar {
-		rows = append(rows, StandingRow{
-			Car:          car,
-			Driver:       a.driver,
-			Team:         a.team,
-			Manufacturer: a.manu,
-			Points:       itoa(a.points),
-			Races:        a.races,
-		})
-	}
-
-	sort.Slice(rows, func(i, j int) bool {
-		pi, pj := atoi(rows[i].Points), atoi(rows[j].Points)
-		if pi != pj {
-			return pi > pj
-		}
-		return rows[i].Driver < rows[j].Driver
-	})
-	for i := range rows {
-		rows[i].Pos = i + 1
-	}
-
-	base.Rows = rows
-	nWithData := len(sessions)
-	if nWithData > 3 {
-		nWithData = 3
-	}
-	base.CompletedRaces = make([]string, 0, 7)
-	for i := 0; i < nWithData; i++ {
-		base.CompletedRaces = append(base.CompletedRaces, smpCodes[i])
-	}
-	EnrichSupercarsStandingsWithMelbourne(dataDir, base)
-	return base, nil
 }
 
 // NormalizeSupercarsStandingsToSeven normalizes Supercars standings to 7 columns: SMP1–SMP3 (Sydney), MLB4–MLB7 (Melbourne onward).

@@ -77,14 +77,17 @@
       var baseName = localizedScheduleBaseName(e);
       var groupId = String(e.id || baseName);
       sessions.forEach(function (s, idx) {
+        var sessionDate = String(s.start_date || s.date || '').slice(0, 10);
+        var displayLabel = s.kind ? raceSessionDisplayLabel(s.kind, s.label) : (s.label || '');
         var row = Object.assign({}, e, {
           name: baseName,
-          start_date: s.start_date || e.start_date,
-          end_date: s.end_date || s.start_date || e.end_date,
-          date: s.start_date || e.start_date,
+          start_date: sessionDate || e.start_date,
+          end_date: String(s.end_date || s.start_date || s.date || '').slice(0, 10) || sessionDate || e.start_date,
+          date: sessionDate || e.start_date,
           time_est: s.time_est,
           time_msk: s.time_msk,
-          _sessionLabel: s.kind ? raceSessionDisplayLabel(s.kind, s.label) : s.label,
+          _sessionLabel: displayLabel,
+          _scheduleSessionLabel: displayLabel,
           _scheduleSessionKind: s.kind || '',
           _scheduleGroupId: groupId,
           _scheduleSessionIndex: idx + 1
@@ -102,11 +105,9 @@
     return out;
   }
 
-  function isAlreadyExpandedForFullSchedule(e, sid) {
-    var name = String((e && e.name) || '');
-    if (/\((Sprint|Feature(?:\s+Race)?|Race\s+\d+|Grand Prix)\)\s*$/i.test(name)) return true;
-    if ((sid === 'f2' || sid === 'f3') && /\((Sprint|Feature)\)/i.test(name)) return true;
-    return false;
+  function isAlreadyExpandedForFullSchedule(e) {
+    if (!e) return false;
+    return !!(e._scheduleSessionKind || e._scheduleSessionLabel || e._sessionLabel);
   }
 
   function expandFullScheduleEvent(e) {
@@ -120,16 +121,18 @@
     if (!sessions || sessions.length <= 1) return [e];
     var baseName = localizedScheduleBaseName(e);
     return sessions.map(function (s) {
-      var displayLabel = s.kind ? raceSessionDisplayLabel(s.kind, s.label) : s.label;
+      var sessionDate = String(s.start_date || s.date || '').slice(0, 10);
+      var displayLabel = s.kind ? raceSessionDisplayLabel(s.kind, s.label) : (s.label || '');
       var row = Object.assign({}, e, {
         name: baseName + ' (' + displayLabel + ')',
-        start_date: s.start_date || e.start_date,
-        end_date: s.end_date || s.start_date || e.end_date,
-        date: s.start_date || e.start_date,
+        start_date: sessionDate || e.start_date,
+        end_date: String(s.end_date || s.start_date || s.date || '').slice(0, 10) || sessionDate || e.start_date,
+        date: sessionDate || e.start_date,
         time_est: s.time_est,
         time_msk: s.time_msk,
         _scheduleSessionKind: s.kind || '',
-        _scheduleSessionLabel: displayLabel
+        _scheduleSessionLabel: displayLabel,
+        _sessionLabel: displayLabel
       });
       delete row._raceUtcMs;
       delete row._scheduleDate;

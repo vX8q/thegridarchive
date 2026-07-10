@@ -1,9 +1,7 @@
 package main
 
 import (
-	"net"
 	"net/http"
-	"strings"
 	"sync"
 	"time"
 
@@ -46,15 +44,7 @@ func (rl *rateLimiter) allow(r *http.Request) bool {
 	if rl == nil {
 		return true
 	}
-	key := r.RemoteAddr
-	if ip, _, err := net.SplitHostPort(key); err == nil {
-		key = ip
-	}
-	if fwd := r.Header.Get("X-Forwarded-For"); fwd != "" {
-		key = strings.TrimSpace(strings.SplitN(fwd, ",", 2)[0])
-	} else if realIP := r.Header.Get("X-Real-IP"); realIP != "" {
-		key = strings.TrimSpace(realIP)
-	}
+	key := clientIP(r)
 	if key == "" {
 		key = "unknown"
 	}

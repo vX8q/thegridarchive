@@ -33,14 +33,31 @@ type Championship struct {
 // CurrentSeason is the default season.
 const CurrentSeason = "2026"
 
+// SeasonFromSlug returns a 4-digit year from URL/API slugs (f1-2025, indycar_2026) or "".
+func SeasonFromSlug(slug string) string {
+	s := strings.ToLower(strings.TrimSpace(slug))
+	for _, sep := range []string{"-", "_"} {
+		idx := strings.LastIndex(s, sep)
+		if idx <= 0 || idx+5 != len(s) {
+			continue
+		}
+		y := s[idx+1:]
+		if len(y) == 4 && y >= "2000" && y <= "2099" {
+			return y
+		}
+	}
+	return ""
+}
+
 // DataSeriesID returns the identifier for data directories/files (e.g. nascar_xfinity -> noaps).
-// For a season slug like "f1-2025" it returns "f1" (the season is extracted separately).
+// For a season slug like "f1-2025" or "indycar_2026" it returns "f1" / "indycar" (season via SeasonFromSlug).
 func DataSeriesID(champID string) string {
 	s := strings.ToLower(champID)
-	// f1-2025 -> f1 (season in slug)
-	if idx := strings.LastIndex(s, "-"); idx > 0 && idx+5 == len(s) {
-		if year := s[idx+1:]; len(year) == 4 && year >= "2000" && year <= "2099" {
-			return strings.ReplaceAll(s[:idx], "-", "_")
+	if y := SeasonFromSlug(s); y != "" {
+		if strings.HasSuffix(s, "-"+y) {
+			s = s[:len(s)-5]
+		} else if strings.HasSuffix(s, "_"+y) {
+			s = s[:len(s)-5]
 		}
 	}
 	// URL-slug uses hyphens (e.g. nascar-cup), data files use underscores (nascar_cup).

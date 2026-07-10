@@ -18,7 +18,7 @@ func TestNOAPSStagePointsFromEventTables(t *testing.T) {
 	}
 	before := stagesForDriver(data, "Justin Allgaier")
 
-	EnrichStagesFromEvents(dataDir, "NOAPS", data)
+	EnrichStagesFromEvents(dataDir, "NOAPS", "2026", data)
 	after := stagesForDriver(data, "Justin Allgaier")
 
 	if before == "" || after == "" {

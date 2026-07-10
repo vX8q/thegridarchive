@@ -303,6 +303,15 @@
       "class": "GTD",
       "car": "Porsche 911 GT3 R (992.2)",
       "driver_slug": "adam-adelson-callum-ilott"
+    },
+    {
+      "number": "068",
+      "driver": "Trenton Estep / Marius Fossard / Valentin Hasse-Clot",
+      "team": "Car Blanche",
+      "manufacturer": "Aston Martin",
+      "class": "GTD",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "driver_slug": "trenton-estep-marius-fossard-valentin-hasse-clot"
     }
   ],
   "tables": {
@@ -1011,7 +1020,7 @@
         [
           "1",
           "40",
-          "4",
+          "1",
           "Louis Deletraz / Jordan Taylor",
           "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
           "10",
@@ -1021,7 +1030,7 @@
         [
           "2",
           "31",
-          "1",
+          "2",
           "Jack Aitken / Earl Bamber",
           "Cadillac Whelen / Cadillac V-Series.R",
           "12",
@@ -1031,7 +1040,7 @@
         [
           "3",
           "93",
-          "6",
+          "3",
           "Nick Yelloly / Renger van der Zande",
           "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
           "9",
@@ -1041,7 +1050,7 @@
         [
           "4",
           "24",
-          "10",
+          "4",
           "Dries Vanthoor; Sheldon van der Linde",
           "BMW M Team WRT / BMW M Hybrid V8",
           "10",
@@ -1051,7 +1060,7 @@
         [
           "5",
           "60",
-          "11",
+          "5",
           "Colin Braun; Tom Blomqvist",
           "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
           "9",
@@ -1061,7 +1070,7 @@
         [
           "7",
           "10",
-          "12",
+          "7",
           "Ricky Taylor; Filipe Albuquerque",
           "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
           "11",
@@ -1071,7 +1080,7 @@
         [
           "8",
           "6",
-          "15",
+          "8",
           "Laurens Vanthoor; Kevin Estre",
           "Porsche Penske Motorsport / Porsche 963",
           "11",
@@ -1081,7 +1090,7 @@
         [
           "9",
           "7",
-          "13",
+          "9",
           "Felipe Nasr; Julien Andlauer",
           "Porsche Penske Motorsport / Porsche 963",
           "11",
@@ -1091,7 +1100,7 @@
         [
           "10",
           "25",
-          "8",
+          "10",
           "Philipp Eng / Marco Wittmann",
           "BMW M Team WRT / BMW M Hybrid V8",
           "11",
@@ -1101,7 +1110,7 @@
         [
           "11",
           "5",
-          "16",
+          "11",
           "Laurin Heinrich; Tijmen van der Helm",
           "JDC-Miller MotorSports / Porsche 963",
           "10",
@@ -1111,7 +1120,7 @@
         [
           "12",
           "14",
-          "6",
+          "1",
           "Jack Hawksworth; Ben Barnicoat",
           "Vasser Sullivan Racing / Lexus RC F GT3",
           "10",
@@ -1121,7 +1130,7 @@
         [
           "15",
           "1",
-          "11",
+          "2",
           "Connor De Phillippi / Neil Verhagen",
           "Paul Miller Racing / BMW M4 GT3 Evo",
           "10",
@@ -1131,7 +1140,7 @@
         [
           "16",
           "65",
-          "10",
+          "3",
           "Christopher Mies / Frederic Vervisch",
           "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
           "10",
@@ -1141,7 +1150,7 @@
         [
           "17",
           "77",
-          "14",
+          "4",
           "Harry King / Nick Tandy",
           "AO Racing / Porsche 911 GT3 R (992.2)",
           "10",
@@ -1151,7 +1160,7 @@
         [
           "18",
           "3",
-          "1",
+          "5",
           "Antonio Garcia / Alexander Sims",
           "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
           "10",
@@ -1161,7 +1170,7 @@
         [
           "19",
           "9",
-          "15",
+          "6",
           "Andrea Caldarelli / Sandy Mitchell",
           "Pfaff Motorsports / Lamborghini Temerario GT3",
           "10",
@@ -1171,7 +1180,7 @@
         [
           "21",
           "59",
-          "13",
+          "7",
           "Nikita Johnson; Max Esterson",
           "RLL Team McLaren / McLaren 720S GT3 Evo",
           "10",
@@ -1181,7 +1190,7 @@
         [
           "24",
           "64",
-          "8",
+          "9",
           "Ben Barker / Dennis Olsen",
           "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
           "10",
@@ -1191,7 +1200,7 @@
         [
           "19",
           "23",
-          "14",
+          "6",
           "Roman De Angelis / Ross Gunn",
           "Aston Martin THOR Team / Aston Martin Valkyrie",
           "",
@@ -1201,9 +1210,129 @@
         [
           "20",
           "4",
-          "13",
+          "8",
           "Nicky Catsburg / Tommy Milner",
           "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "12",
+          "14",
+          "Benjamin Pedersen / Aaron Telitz",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "13",
+          "16",
+          "Matt Bell / Orey Fidani",
+          "13 Autosport / Chevrolet Corvette Z06 GT3.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "16",
+          "21",
+          "Felipe Fraga / Sheena Monk",
+          "Myers Riley Motorsports / Ford Mustang GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "27",
+          "1",
+          "Eduardo Barrichello / Tom Gamble",
+          "Heart of Racing Team / Aston Martin Vantage AMR GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "34",
+          "13",
+          "Albert Costa / Lorenzo Patrese",
+          "Conquest Racing / Ferrari 296 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "45",
+          "12",
+          "Danny Formal / Trent Hindman",
+          "Wayne Taylor Racing / Lamborghini Huracán GT3 Evo 2",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "57",
+          "2",
+          "Philip Ellis / Russell Ward",
+          "Winward Racing / Mercedes-AMG GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "70",
+          "9",
+          "Brendan Iribe / Frederik Schandorff",
+          "Inception Racing / Ferrari 296 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "81",
+          "7",
+          "Giacomo Altoe / Henrik Hedman",
+          "DragonSpeed / Chevrolet Corvette Z06 GT3.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "96",
+          "3",
+          "Robby Foley / Patrick Gallagher",
+          "Turner Motorsport / BMW M4 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "120",
+          "10",
+          "Adam Adelson / Callum Ilott",
+          "Wright Motorsports / Porsche 911 GT3 R (992.2)",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "068",
+          "5",
+          "Trenton Estep / Marius Fossard / Valentin Hasse-Clot",
+          "Car Blanche / Aston Martin Vantage AMR GT3 Evo",
           "",
           "",
           "Running"
@@ -1619,6 +1748,18 @@
           "1:15.997",
           "200",
           "Not Running"
+        ],
+        [
+          "",
+          "068",
+          "Trenton Estep / Marius Fossard / Valentin Hasse-Clot",
+          "Car Blanche / Aston Martin Vantage AMR GT3 Evo",
+          "GTD",
+          "",
+          "",
+          "",
+          "210",
+          "Running"
         ]
       ]
     }

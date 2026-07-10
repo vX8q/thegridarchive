@@ -86,7 +86,7 @@
         ["6", "42", "Will Rodgers", "Young's Motorsports", "Chevrolet", "77.154", "92.853", "11", "11", "-0.780", "-0.102"],
         ["7", "19", "Brent Crews (R)", "Joe Gibbs Racing", "Toyota", "77.155", "92.852", "10", "10", "-0.781", "-0.001"],
         ["8", "00", "Sheldon Creed", "Haas Factory Team", "Chevrolet", "77.199", "92.799", "14", "18", "-0.825", "-0.044"],
-        ["9", "0", "Alex Labbe", "SS-Green Light Racing", "Chevrolet", "77.364", "92.601", "4", "10", "-0.990", "-0.165"],
+        ["9", "0", "Alex Labbé", "SS-Green Light Racing", "Chevrolet", "77.364", "92.601", "4", "10", "-0.990", "-0.165"],
         ["10", "8", "Sammy Smith", "JR Motorsports", "Chevrolet", "77.379", "92.583", "7", "18", "-1.005", "-0.015"],
         ["11", "32", "Ross Chastain (i)", "Jordan Anderson Racing", "Chevrolet", "77.437", "92.514", "2", "12", "-1.063", "-0.058"],
         ["12", "96", "Anthony Alfredo", "Viking Motorsports", "Chevrolet", "77.467", "92.478", "11", "14", "-1.093", "-0.030"],
@@ -152,7 +152,7 @@
         ["21", "88", "Rajah Caruth", "JR Motorsports", "Chevrolet", "1:16.702", "93.400"],
         ["22", "27", "Jeb Burton", "Jordan Anderson Racing", "Chevrolet", "1:16.766", "93.323"],
         ["23", "51", "Jeremy Clements", "Jeremy Clements Racing", "Chevrolet", "1:16.851", "93.219"],
-        ["24", "0", "Alex Labbe", "SS-Green Light Racing", "Chevrolet", "1:16.898", "93.162"],
+        ["24", "0", "Alex Labbé", "SS-Green Light Racing", "Chevrolet", "1:16.898", "93.162"],
         ["25", "39", "Ryan Sieg", "RSS Racing", "Chevrolet", "1:17.044", "92.986"],
         ["26", "92", "Josh Williams", "DGM Racing", "Chevrolet", "1:17.126", "92.887"],
         ["27", "31", "Blaine Perkins", "Jordan Anderson Racing", "Chevrolet", "1:17.167", "92.838"],
@@ -202,7 +202,7 @@
         ["16", "18", "07", "Josh Bilicki", "SS-Green Light Racing", "Chevrolet", "79", "0", "Running", "23"],
         ["17", "20", "42", "Will Rodgers", "Young's Motorsports", "Chevrolet", "79", "0", "Running", "24"],
         ["18", "19", "24", "Harrison Burton", "Sam Hunt Racing", "Toyota", "79", "2", "Running", "19"],
-        ["19", "24", "0", "Alex Labbe", "SS-Green Light Racing", "Chevrolet", "79", "0", "Running", "21"],
+        ["19", "24", "0", "Alex Labbé", "SS-Green Light Racing", "Chevrolet", "79", "0", "Running", "21"],
         ["20", "23", "51", "Jeremy Clements", "Jeremy Clements Racing", "Chevrolet", "79", "0", "Running", "17"],
         ["21", "22", "27", "Jeb Burton", "Jordan Anderson Racing", "Chevrolet", "79", "0", "Running", "16"],
         ["22", "10", "21", "Austin Hill", "Richard Childress Racing", "Chevrolet", "79", "0", "Running", "20"],
@@ -244,7 +244,7 @@
         ["7", "32", "Ross Chastain (i)", "Jordan Anderson Racing", "Chevrolet", "0"],
         ["8", "42", "Will Rodgers", "Young's Motorsports", "Chevrolet", "3"],
         ["9", "07", "Josh Bilicki", "SS-Green Light Racing", "Chevrolet", "2"],
-        ["10", "0", "Alex Labbe", "SS-Green Light Racing", "Chevrolet", "1"]
+        ["10", "0", "Alex Labbé", "SS-Green Light Racing", "Chevrolet", "1"]
       ]
     },
     "stage_2": {
@@ -266,7 +266,7 @@
         ["6", "41", "Sam Mayer", "Haas Factory Team", "Chevrolet", "5"],
         ["7", "88", "Rajah Caruth", "JR Motorsports", "Chevrolet", "4"],
         ["8", "39", "Ryan Sieg", "RSS Racing", "Chevrolet", "3"],
-        ["9", "0", "Alex Labbe", "SS-Green Light Racing", "Chevrolet", "2"],
+        ["9", "0", "Alex Labbé", "SS-Green Light Racing", "Chevrolet", "2"],
         ["10", "42", "Will Rodgers", "Young's Motorsports", "Chevrolet", "1"]
       ]
     },

@@ -328,7 +328,6 @@ func parseDriverFromRaceTable(
 	colDriver := firstColIndex(headers, "Driver", "Drivers", "Driver Name")
 	colNo := firstColIndex(headers, "No", "No.", "#", "Car", "Car No", "CAR NO")
 	colTeam := firstColIndex(headers, "Team", "Entrant", "Constructor", "TEAM/CAR/SPONSOR")
-	colClassPos := firstColIndex(headers, "CLASS POS", "Class Pos")
 
 	colLaps := firstColIndex(headers, "Laps", "No Laps", "NO LAPS", "Laps Completed")
 
@@ -373,8 +372,8 @@ func parseDriverFromRaceTable(
 
 		posStr := valueAt(row, colPos)
 		pos := atoiSafe(posStr)
-		if strings.EqualFold(seriesID, "IMSA") && colClassPos >= 0 {
-			if cp := atoiSafe(valueAt(row, colClassPos)); cp > 0 {
+		if strings.EqualFold(seriesID, "IMSA") {
+			if cp := imsaClassPosition(headers, rows, row); cp > 0 {
 				pos = cp
 			}
 		}
@@ -445,6 +444,62 @@ func parseDriverFromRaceTable(
 	}
 
 	return out
+}
+
+// imsaClassPosition returns class finishing position for IMSA results.
+// Uses CLASS POS when present; otherwise ranks within CLASS by overall POS.
+func imsaClassPosition(headers []string, rows [][]string, row []string) int {
+	colClassPos := firstColIndex(headers, "CLASS POS", "Class Pos")
+	if colClassPos >= 0 {
+		if cp := atoiSafe(valueAt(row, colClassPos)); cp > 0 {
+			return cp
+		}
+	}
+	colClass := firstColIndex(headers, "CLASS", "Class")
+	colPos := firstColIndex(headers, "POS", "Pos", "Fin")
+	colNo := firstColIndex(headers, "No", "No.", "#", "Car", "Car No", "CAR NO")
+	if colClass < 0 || colPos < 0 || colNo < 0 {
+		return 0
+	}
+	driverClass := strings.TrimSpace(valueAt(row, colClass))
+	driverCar := strings.TrimSpace(valueAt(row, colNo))
+	if driverClass == "" || driverCar == "" {
+		return 0
+	}
+	type finisher struct {
+		car string
+		pos int
+	}
+	var classRows []finisher
+	for _, r := range rows {
+		if strings.TrimSpace(valueAt(r, colClass)) != driverClass {
+			continue
+		}
+		p := atoiSafe(valueAt(r, colPos))
+		if p <= 0 {
+			continue
+		}
+		car := strings.TrimSpace(valueAt(r, colNo))
+		if car == "" {
+			continue
+		}
+		classRows = append(classRows, finisher{car: car, pos: p})
+	}
+	if len(classRows) == 0 {
+		return 0
+	}
+	sort.Slice(classRows, func(i, j int) bool {
+		if classRows[i].pos != classRows[j].pos {
+			return classRows[i].pos < classRows[j].pos
+		}
+		return classRows[i].car < classRows[j].car
+	})
+	for i, f := range classRows {
+		if f.car == driverCar {
+			return i + 1
+		}
+	}
+	return 0
 }
 
 func imsaTeamFromCell(cell string) string {

@@ -71,7 +71,7 @@ TGA/
 │   ├── schedules/               # Расписания серий (JSON)
 │   ├── events/                  # Детали этапов: SeriesName/year/eventID.json
 │   ├── teams/                   # Составы команд
-│   ├── standings/               # Снимки standings (только часть серий; остальное считается из events)
+│   ├── standings/               # База race_order для stock-car / IndyCar (очки всегда из events)
 │   ├── live.json                # Live-данные (обновляются livesync)
 │   ├── driver_profiles.json     # Профили пилотов
 │   └── driver_profile_redirects.json  # Редиректы slug → канонический профиль
@@ -109,7 +109,7 @@ go run ./cmd/server
 
 Сервер запустится на **http://localhost:8080**.
 
-Если в корне проекта есть `.env`, сервер загрузит его автоматически. Для почты с формы фидбека создайте `.env` и задайте как минимум `TGA_FEEDBACK_SMTP_USER` и `TGA_FEEDBACK_SMTP_PASS` (для Gmail — [App Password](https://support.google.com/accounts/answer/185833)). Опционально: `TGA_FEEDBACK_FROM`, `TGA_FEEDBACK_TO`, `TGA_FEEDBACK_SMTP_HOST`, `TGA_FEEDBACK_SMTP_PORT`. Для публичного сайта добавьте `TGA_TURNSTILE_SITE_KEY` и `TGA_TURNSTILE_SECRET_KEY` — тогда форма будет проверять Cloudflare Turnstile.
+Если в корне проекта есть `.env`, сервер загрузит его автоматически. Для почты с формы фидбека создайте `.env` и задайте как минимум `TGA_FEEDBACK_SMTP_USER` и `TGA_FEEDBACK_SMTP_PASS` (для Gmail — [App Password](https://support.google.com/accounts/answer/185833)). Опционально: `TGA_FEEDBACK_FROM`, `TGA_FEEDBACK_TO`, `TGA_FEEDBACK_SMTP_HOST`, `TGA_FEEDBACK_SMTP_PORT`. При настроенном SMTP **обязательны** `TGA_TURNSTILE_SITE_KEY` и `TGA_TURNSTILE_SECRET_KEY` — сервер не стартует без них.
 
 При старте сервер:
 1. Загружает JSON из `data/` в SQLite (`bootstrapStoreFromFiles`)
@@ -198,8 +198,9 @@ Compose запускает два сервиса:
 | `TGA_WEB` | авто → `web/` | Путь к статике; если не задан — ищется рядом с CWD/бинарником |
 | `TGA_RESET_DB_ON_START` | — | `1` = пересоздать SQLite при старте |
 | `TGA_ENABLE_ADMIN` | — | `1` = включить admin-эндпоинты |
-| `TGA_ADMIN_TOKEN` | — | Токен для admin и pprof (обязателен при `TGA_ENABLE_ADMIN=1`) |
+| `TGA_ADMIN_TOKEN` | — | Токен для admin, pprof и `/metrics` (обязателен при `TGA_ENABLE_ADMIN=1`) |
 | `TGA_RATE_LIMIT_RPS` | `0` | Лимит запросов/сек на IP (`0` = выключен) |
+| `TGA_TRUSTED_PROXY` | — | `1` = доверять `X-Forwarded-For` / `X-Real-IP` (за reverse proxy; **обязательно** в проде за Cloudflare/nginx) |
 | `TGA_ENABLE_PPROF` | — | `1` = включить `/debug/pprof/*` (требуется `TGA_ADMIN_TOKEN`) |
 | `LOG_LEVEL` | slog default | Если задан: `debug`, `info`, `warn`, `error` |
 | `TGA_FEEDBACK_SMTP_HOST` | `smtp.gmail.com` | SMTP-хост для писем с формы фидбека |
@@ -208,9 +209,11 @@ Compose запускает два сервиса:
 | `TGA_FEEDBACK_SMTP_PASS` | — | Пароль SMTP |
 | `TGA_FEEDBACK_FROM` | как `TGA_FEEDBACK_SMTP_USER` | Адрес отправителя |
 | `TGA_FEEDBACK_TO` | `bobbtga@gmail.com` | Получатель фидбека |
-| `TGA_TURNSTILE_SITE_KEY` | — | Публичный ключ Cloudflare Turnstile |
-| `TGA_TURNSTILE_SECRET_KEY` | — | Secret Turnstile |
+| `TGA_TURNSTILE_SITE_KEY` | — | Публичный ключ Cloudflare Turnstile (**обязателен**, если настроен SMTP фидбека) |
+| `TGA_TURNSTILE_SECRET_KEY` | — | Secret Turnstile (**обязателен**, если настроен SMTP фидбека) |
 | `CLOUDFLARE_TUNNEL_TOKEN` | — | Токен Cloudflare Tunnel (для docker-compose) |
+
+Подробный чеклист деплоя: [`docs/RUNBOOK.md`](docs/RUNBOOK.md) §0.
 
 ## API
 
@@ -219,7 +222,7 @@ Compose запускает два сервиса:
 | Метод | Путь | Описание |
 |-------|------|----------|
 | `GET` | `/health` | Статус сервера (503 при деградации) |
-| `GET` | `/metrics` | Prometheus-метрики |
+| `GET` | `/metrics` | Prometheus-метрики (`X-Admin-Token` / `Bearer`, если задан `TGA_ADMIN_TOKEN`; иначе только localhost) |
 | `GET` | `/api/series` | Список всех серий |
 | `GET` | `/api/series/{id}` | Метаданные серии (`?season=` опционально) |
 | `GET` | `/api/series/{id}/events` | Этапы серии |
@@ -325,13 +328,37 @@ Live-данные обновляются из внешних API фоновым 
 - `data/schedules/{seriesID}.json` — расписания этапов
 - `data/events/{SeriesName}/{year}/{eventID}.json` — детали этапов (результаты, сессии, таблицы), например `data/events/F1/2026/f1_2026_1.json`
 - `data/teams/{seriesID}.json` — составы команд
-- `data/standings/{seriesID}.json` — **опциональные** снимки standings (`nascar_cup`, `noaps`, `nascar_truck`, `arca`, `nascar_modified`, `supercars`, `imsa`, `elms`, `indycar`); у остальных серий таблица **считается** из `events/` через `internal/schedulefile` (F1, GTWCE, DTM и др.)
+- `data/standings/{seriesID}.json` — **только база колонок** `race_order` / `event_names` для stock-car и IndyCar (`nascar_cup`, `noaps`, `nascar_truck`, `arca`, `nascar_modified`, `indycar`); поле `rows` в этих файлах API **не читает** — очки и позиции пересобираются из `events/` при каждом запросе. Файлы `supercars.json` и `elms.json` — **legacy**, не источник API. Подробнее — раздел «Турнирные таблицы» ниже и `data/SERIES_TEMPLATES.md` § «Автоматическая сборка standings».
 - `data/driver_profiles.json` — профили пилотов
 - `data/driver_profile_redirects.json` — старые slug → канонический профиль
 - `data/live.json` — live-данные (пишет `livesync` в `cmd/server` или CLI `sync-*-live`)
 - `data/tga.sqlite` — кэш БД (создаётся при старте, не редактировать вручную)
 
 Поле `event_preview_ru` в JSON этапа — русский текст превью гонки (см. раздел «Интернационализация»).
+
+### Турнирные таблицы (standings)
+
+`GET /api/series/{id}/standings` **пересобирает** таблицу при каждом запросе из JSON этапов в `data/events/`. Ручное редактирование очков в `data/standings/` не требуется и не влияет на API (кроме колонок `race_order` у перечисленных ниже серий).
+
+| Группа серий | Сборщик (Go) | Формат ответа |
+|--------------|--------------|---------------|
+| IMSA | `BuildImsaStandingsFromEvents` | `classes[]` (GTP, LMP2, GTD Pro, GTD) + qualifying points |
+| ELMS | `BuildElmsStandingsFromEvents` | `classes[]` |
+| WEC | `BuildWecStandingsFromEvents` | `classes[]` (Hypercar, LMGT3) |
+| GTWCE Endurance & Sprint | `BuildGtwceStandingsFromEvents` | `classes[]` |
+| Остальные 17 серий | `BuildStandingsFromEvents` | `rows[]` (+ `ineligible[]` у stock-car) |
+
+**Что править в данных:** результаты и очки в `data/events/.../tables.*` (гонка, стейджи, квалификация). Для stock-car / IndyCar при добавлении раунда в календарь — обновить коды в `data/standings/{series}.json` (`race_order`, при необходимости `event_names`).
+
+**Файлы `data/standings/` в репозитории:**
+
+| Файл | Роль |
+|------|------|
+| `nascar_cup`, `noaps`, `nascar_truck`, `arca`, `nascar_modified` | Коды колонок раундов (`DAY`, `ATL`, …) |
+| `indycar` | Коды колонок (`STP`, `PHX`, …); `rows` пустой |
+| `supercars`, `elms` | Legacy; API считает standings только из events |
+
+Полный справочник по колонкам, стейджам и классам — `data/SERIES_TEMPLATES.md`.
 
 ## Мониторинг
 

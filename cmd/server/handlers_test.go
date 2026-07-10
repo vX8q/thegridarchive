@@ -172,3 +172,42 @@ func TestHandleEvent_NotFound(t *testing.T) {
 		t.Errorf("got status %d, want 404", rec.Code)
 	}
 }
+
+func TestHandleSeriesEvents_SeasonFilterEmptyWhenNoMatch(t *testing.T) {
+	dataDir := testDataDir(t)
+	req := httptest.NewRequest(http.MethodGet, "/api/series/f1/events?season=2099", nil)
+	rec := httptest.NewRecorder()
+	handleSeriesEvents(rec, req, dataDir, "f1", nil, "2099")
+	if rec.Code != http.StatusOK {
+		t.Fatalf("got status %d, want 200", rec.Code)
+	}
+	var events []map[string]any
+	if err := json.NewDecoder(rec.Body).Decode(&events); err != nil {
+		t.Fatal(err)
+	}
+	if len(events) != 0 {
+		t.Fatalf("got %d events, want 0 for non-matching season", len(events))
+	}
+}
+
+func TestHandleSeriesEvents_SeasonFilterMatchesOnlyRequestedSeason(t *testing.T) {
+	dataDir := testDataDir(t)
+	req := httptest.NewRequest(http.MethodGet, "/api/series/f1/events?season=2026", nil)
+	rec := httptest.NewRecorder()
+	handleSeriesEvents(rec, req, dataDir, "f1", nil, "2026")
+	if rec.Code != http.StatusOK {
+		t.Fatalf("got status %d, want 200", rec.Code)
+	}
+	var events []map[string]any
+	if err := json.NewDecoder(rec.Body).Decode(&events); err != nil {
+		t.Fatal(err)
+	}
+	if len(events) == 0 {
+		t.Fatal("expected 2026 F1 events")
+	}
+	for _, ev := range events {
+		if season, _ := ev["season"].(string); season != "2026" {
+			t.Fatalf("got season %q, want 2026", season)
+		}
+	}
+}

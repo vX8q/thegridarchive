@@ -18,6 +18,20 @@
     return d.innerHTML;
   }
 
+  // Allow only http(s) and same-site relative paths in href/src attributes.
+  function safeHref(url) {
+    if (url == null) return '';
+    var s = String(url).trim();
+    if (!s) return '';
+    var lower = s.toLowerCase();
+    if (lower.indexOf('javascript:') === 0 || lower.indexOf('data:') === 0 || lower.indexOf('vbscript:') === 0) {
+      return '';
+    }
+    if (/^https?:\/\//i.test(s)) return esc(s);
+    if (s.charAt(0) === '/' && s.charAt(1) !== '/') return esc(s);
+    return '';
+  }
+
   // ─── Empty value → dash ──────────────────────────────────────────
   function dash(val) {
     if (val == null || val === '') return '—';
@@ -138,7 +152,7 @@
       trimmed = out.join(' / ');
     }
     trimmed = foldDiacritics(trimmed);
-    trimmed = trimmed.replace(/\s*\((?:i|r|g)\)\s*$/i, '').trim();
+    trimmed = trimmed.replace(/\s*\((?:i|r|g|R)\)\s*$/i, '').trim();
     trimmed = trimmed.replace(/\s*\((?:tba|tbc|tbd)\)\s*$/i, '').trim();
     var withoutRaces = trimmed.replace(/\s*\(\d+\s+races?\)\s*$/i, '').trim();
     var normalized = driverDisplayNames[withoutRaces] || driverDisplayNames[trimmed] || withoutRaces || trimmed;
@@ -188,6 +202,8 @@
         if (slug === 'woohyun-shin' || slug === 'w-shin' || slug === 'm-shin') next = 'michael-shin';
         else if (slug === 'nico-h-lkenberg' || slug === 'nicolas-hulkenberg' || slug === 'nicolas-h-lkenberg') next = 'nico-hulkenberg';
         else if (slug === 'sergio-p-rez') next = 'sergio-perez';
+        else if (slug === 'david-sapienza') next = 'dave-sapienza';
+        else if (/-(i|r|g)$/.test(slug)) next = slug.replace(/-(i|r|g)$/, '');
         else break;
       }
       next = String(next).trim().toLowerCase();
@@ -619,17 +635,6 @@
     var formatDateRange = window.TGA && window.TGA.formatDateRange;
     var parseNamedRaceDurationHours = window.TGA && window.TGA.parseNamedRaceDurationHours;
     if (!formatShortDate || !formatDateRange) return '—';
-    var isSessionRow = window.TGA && window.TGA.isExpandedScheduleSessionRow;
-    if (isSessionRow && isSessionRow(e)) {
-      var getIsoSession = window.TGA && window.TGA.getEventRaceStartDateIso;
-      var sessionIso = getIsoSession ? getIsoSession(e) : '';
-      if (!sessionIso) {
-        var parseIsoSession = window.TGA && window.TGA.parseIsoDatePrefix;
-        sessionIso = parseIsoSession ? parseIsoSession(e.start_date || e.date) : '';
-      }
-      if (sessionIso) return formatShortDate(sessionIso) || sessionIso;
-      return '—';
-    }
     var enduranceOnly = window.TGA && window.TGA.enduranceWeekendRaceDayOnly;
     if (enduranceOnly && enduranceOnly(e)) {
       var singleDay = window.TGA && window.TGA.singleRaceCardDateIso;
@@ -668,6 +673,25 @@
       }
     }
     return formatShortDate(raceStartIso) || raceStartIso;
+  }
+
+  /** Full Schedule table: one calendar day per expanded session row. */
+  function formatFullScheduleRowDate(e) {
+    if (!e) return '—';
+    var formatShortDate = window.TGA && window.TGA.formatShortDate;
+    if (!formatShortDate) return '—';
+    var isSessionRow = window.TGA && window.TGA.isExpandedScheduleSessionRow;
+    if (isSessionRow && isSessionRow(e)) {
+      var getIsoSession = window.TGA && window.TGA.getEventRaceStartDateIso;
+      var sessionIso = getIsoSession ? getIsoSession(e) : '';
+      if (!sessionIso) {
+        var parseIsoSession = window.TGA && window.TGA.parseIsoDatePrefix;
+        sessionIso = parseIsoSession ? parseIsoSession(e.start_date || e.date) : '';
+      }
+      if (sessionIso) return formatShortDate(sessionIso) || sessionIso;
+      return '—';
+    }
+    return formatEventRaceStartDate(e);
   }
 
   /** LIVE badge end: estimated chequered flag (+30 min) or named endurance duration (+2 h). */
@@ -1385,6 +1409,7 @@
 
   // ─── Export ─────────────────────────────────────────────────────────────
   window.TGA.esc                      = esc;
+  window.TGA.safeHref                 = safeHref;
   window.TGA.dash                     = dash;
   window.TGA.standingsRacePosOnly     = standingsRacePosOnly;
   window.TGA.driverDisplayName        = driverDisplayName;
@@ -1426,6 +1451,7 @@
   window.TGA.hexRgb                   = hexRgb;
   window.TGA.seriesBadge              = seriesBadge;
   window.TGA.formatEventRaceStartDate = formatEventRaceStartDate;
+  window.TGA.formatFullScheduleRowDate = formatFullScheduleRowDate;
   window.TGA.parseEventDate           = parseEventDate;
   window.TGA.liveEndTsForEvent        = liveEndTsForEvent;
   window.TGA.raceDurationHours          = raceDurationHours;

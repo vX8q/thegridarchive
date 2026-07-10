@@ -86,8 +86,9 @@ type TeamJSON struct {
 	PowerUnit string `json:"power_unit,omitempty"`
 
 	// DTM / GT3 teams-page fields.
-	Car    string `json:"car,omitempty"`
-	Status string `json:"status,omitempty"`
+	Car               string `json:"car,omitempty"`
+	Status            string `json:"status,omitempty"`
+	TeamsChampionship string `json:"teams_championship,omitempty"` // DTM: shared teams' championship entry
 
 	// PSC: guest entry — show (G) in teams/entry list only.
 	Guest bool `json:"guest,omitempty"`
@@ -208,9 +209,10 @@ type EntryListRow struct {
 	Driver2       string `json:"driver2,omitempty"`     // Supercars: weekend substitute / co-driver on same car
 	Driver3       string `json:"driver3,omitempty"`
 	DriverCountry string `json:"driver_country,omitempty"` // Super Formula
-	PowerUnit     string `json:"power_unit,omitempty"`     // DTM
-	Status        string `json:"status,omitempty"`         // DTM ("R", etc.)
-	Rounds          string `json:"rounds,omitempty"`           // DTM (may appear in entry_list)
+	PowerUnit         string `json:"power_unit,omitempty"`         // DTM
+	Status            string `json:"status,omitempty"`             // DTM ("R", etc.)
+	Rounds            string `json:"rounds,omitempty"`             // DTM (may appear in entry_list)
+	TeamsChampionship string `json:"teams_championship,omitempty"` // DTM: shared teams' championship entry
 	PointsEligible  *bool  `json:"points_eligible,omitempty"` // false = ineligible (i) in stock-car
 	Guest           bool   `json:"guest,omitempty"`           // PSC guest entry — show (G) in entry list only
 	DriverSlug      string `json:"driver_slug,omitempty"`

@@ -852,7 +852,11 @@ func loadDriverSourceImage(photoURL, dataDir string) (image.Image, error) {
 	}
 
 	client := &http.Client{Timeout: 15 * time.Second}
-	req, err := http.NewRequest(http.MethodGet, raw, nil) // #nosec G107 -- URL is controlled by local driver profiles
+	safeURL, ok := allowedRemoteImageURL(raw)
+	if !ok {
+		return nil, os.ErrNotExist
+	}
+	req, err := http.NewRequest(http.MethodGet, safeURL, nil)
 	if err != nil {
 		return nil, err
 	}

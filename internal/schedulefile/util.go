@@ -5,21 +5,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/vX8q/tga/internal/driverutil"
 	"github.com/vX8q/tga/internal/tableutil"
-)
-
-var driverDiacriticReplacer = strings.NewReplacer(
-	"á", "a", "à", "a", "ä", "a", "â", "a", "ã", "a", "å", "a",
-	"Á", "a", "À", "a", "Ä", "a", "Â", "a", "Ã", "a", "Å", "a",
-	"é", "e", "è", "e", "ë", "e", "ê", "e",
-	"É", "e", "È", "e", "Ë", "e", "Ê", "e",
-	"í", "i", "ì", "i", "ï", "i", "î", "i",
-	"Í", "i", "Ì", "i", "Ï", "i", "Î", "i",
-	"ó", "o", "ò", "o", "ö", "o", "ô", "o", "õ", "o",
-	"Ó", "o", "Ò", "o", "Ö", "o", "Ô", "o", "Õ", "o",
-	"ú", "u", "ù", "u", "ü", "u", "û", "u",
-	"Ú", "u", "Ù", "u", "Ü", "u", "Û", "u",
-	"ñ", "n", "Ñ", "n",
 )
 
 // canonicalDriverKey returns a canonical key for a driver name in aggregating
@@ -60,8 +47,8 @@ func canonicalDriverKey(name string) string {
 	// Remove dots (Ricky Stenhouse Jr. → Ricky Stenhouse Jr).
 	s = strings.ReplaceAll(s, ".", "")
 
-	// Strip diacritics in common cases (Suárez → Suarez, etc.).
-	s = driverDiacriticReplacer.Replace(s)
+	// Strip diacritics (Strømsted → Stromsted, Gładysz → Gladysz, etc.).
+	s = driverutil.FoldDiacritics(s)
 
 	// Normalize whitespace.
 	s = strings.Join(strings.Fields(s), " ")
@@ -74,8 +61,17 @@ func canonicalDriverKey(name string) string {
 		return "mike christopher jr"
 	case "david sapienza":
 		return "dave sapienza"
+	case "pj hyett":
+		return "pj hyett"
+	case "p j hyett":
+		return "pj hyett"
 	}
 	return s
+}
+
+// CanonicalDriverKey exports canonicalDriverKey for API-layer deduplication.
+func CanonicalDriverKey(name string) string {
+	return canonicalDriverKey(name)
 }
 
 // collapseSpacedInitials collapses spaced initials at the start of a name: "a j allmendinger" -> "aj allmendinger".
@@ -179,7 +175,7 @@ func preferredDriverName(name string) string {
 	// Compare using the same canonical-ish normalization, but keep display exact casing/punctuation.
 	tmp := strings.ToLower(raw)
 	tmp = strings.ReplaceAll(tmp, ".", "")
-	tmp = driverDiacriticReplacer.Replace(tmp)
+	tmp = driverutil.FoldDiacritics(tmp)
 	tmp = collapseSpacedInitials(strings.Join(strings.Fields(tmp), " "))
 	switch tmp {
 	case "aj allmendinger":

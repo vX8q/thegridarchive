@@ -97,6 +97,9 @@ func TestStatsDTMCountsTwoRaceSessions(t *testing.T) {
 	if a.Races != 2 || a.Wins != 1 || a.Points != 43 {
 		t.Fatalf("expected two DTM race sessions, got %#v", a)
 	}
+	if len(got.Teams) != 1 || got.Teams[0].Team != "Team A" {
+		t.Fatalf("expected one team row, got %#v", got.Teams)
+	}
 }
 
 func TestStatsSuperGTClassSplit(t *testing.T) {

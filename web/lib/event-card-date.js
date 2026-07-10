@@ -191,10 +191,31 @@
     return fn ? fn(name) : null;
   }
 
+  function hasScheduleSessionMetadata(e) {
+    if (!e) return false;
+    return !!(e._scheduleSessionKind || e._scheduleSessionLabel || e._sessionLabel);
+  }
+
+  /** True for per-session schedule rows (Full Schedule / series table). */
+  function looksLikePerSessionScheduleRow(e) {
+    if (!e) return false;
+    var name = String(e.name || '');
+    if (!/\((Sprint|Feature(?:\s+Race)?|Race\s+\d+|Grand Prix)\)\s*$/i.test(name)) return false;
+    var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
+    var iso = parseIso || function (s) {
+      var str = String(s || '').trim();
+      return /^\d{4}-\d{2}-\d{2}/.test(str) ? str.slice(0, 10) : '';
+    };
+    var start = iso(e.start_date || e.date);
+    var end = iso(e.end_date);
+    return !!(start && end && start === end);
+  }
+
   /** True only for rows expanded with explicit session metadata (Full Schedule / series table). */
   function isExpandedScheduleSessionRow(e) {
     if (!e) return false;
-    return !!(e._scheduleSessionKind || e._scheduleSessionLabel);
+    if (hasScheduleSessionMetadata(e)) return true;
+    return looksLikePerSessionScheduleRow(e);
   }
 
   function isF1SprintWeekendEvent(e) {
@@ -268,7 +289,7 @@
       var str = String(s || '').trim();
       return /^\d{4}-\d{2}-\d{2}/.test(str) ? str.slice(0, 10) : '';
     };
-    if (isExpandedScheduleSessionRow(e)) {
+    if (hasScheduleSessionMetadata(e)) {
       var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
       var one = getIso ? getIso(e) : '';
       if (!one) one = iso(e.start_date || e.date) || iso(e.end_date);

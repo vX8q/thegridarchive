@@ -44,7 +44,7 @@
   "FREC_2026_2": "Europe/Amsterdam",
   "FREC_2026_3": "Europe/Amsterdam",
   "FREC_2026_4": "Europe/Paris",
-  "FREC_2026_5": "Europe/Berlin",
+  "FREC_2026_5": "Europe/Budapest",
   "FREC_2026_6": "Europe/Budapest",
   "FREC_2026_7": "Europe/Rome",
   "FREC_2026_8": "Europe/Lisbon",

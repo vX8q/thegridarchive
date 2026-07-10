@@ -1628,13 +1628,13 @@
               // Super GT: two winners by class (GT500 + GT300). DTM: Race 1 + Race 2.
               // Limit to first four so card does not grow too large.
               winnerHtml = list.slice(0, 4).map(function (w) {
+                var label = localizeWinnerCardLabel((w.label || '').trim());
                 var line = winnerDriverLabel(w.name || '');
                 if (w.car) {
                   line = '#' + w.car + ' ' + line;
                 }
-                var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) {
-                  line = line + ' — ' + label;
+                  line = label + ' — ' + line;
                 }
                 return esc(line);
               }).join('<br>');

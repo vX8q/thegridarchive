@@ -405,7 +405,11 @@
     var mskRaw = e._time_msk_raw != null ? e._time_msk_raw : e.time_msk;
     var mskParsed = parseMskDateTime(mskRaw, localDs);
     e._raceUtcMs = computeEventRaceUtcMs(e, localDs, mskParsed);
-    var displayDate = isoDateFromUtcMsLocal(e._raceUtcMs) || localDs;
+    var sid = scheduleSeriesUpper(e);
+    var useTrackLocal = US_LOCAL_TRACK_SERIES[sid] || EASTERN_TIME_SERIES[sid];
+    var displayDate = (useTrackLocal && localDs)
+      ? localDs
+      : (isoDateFromUtcMsLocal(e._raceUtcMs) || localDs);
     e._scheduleDate = displayDate;
     e._raceStartDate = displayDate;
     if (mskParsed.timeStr) e.time_msk = mskParsed.timeStr;

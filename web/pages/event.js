@@ -189,7 +189,11 @@
 
       function fillFromEventLike(match) {
         if (!match) return;
-        var name = localizeEventFromData(match) || match.id || apiEventId || '';
+        var rawFallbackName = (match.name && String(match.name).trim()) || match.race || match.id || apiEventId || '';
+        if (seriesIdFromEvent) {
+          rawFallbackName = G.stripSeriesPrefixFromEventName(rawFallbackName, seriesIdFromEvent) || rawFallbackName;
+        }
+        var name = localizeEventFromData(Object.assign({}, match, { name: rawFallbackName })) || rawFallbackName || '';
         if (titleEl && name && (!titleEl.textContent || titleEl.textContent === '—')) {
           titleEl.textContent = name;
         }
@@ -202,7 +206,7 @@
         }
         var circuit = match.circuit_name || match.track || '';
         var location = match.location || '';
-        if (circuit) {
+        if (circuit && !G.eventDisplayNameOverlapsTrack(name, circuit)) {
           datePart += (datePart ? ' · ' : '') + localizeCircuitName(circuit);
         }
         if (location) {
@@ -332,14 +336,9 @@
       }
       var rawName = (d.name && String(d.name).trim()) || d.race || d.event_id || 'Event';
       var seriesIdForName = G.eventSeriesId(d.event_id || apiEventId);
-      // Strip series prefix from event name when breadcrumb already shows the series (F1, DTM, …).
-      if (seriesIdForName && typeof rawName === 'string') {
-        var sidUpperName = seriesIdForName.toUpperCase();
-        if (sidUpperName === 'F1') {
-          rawName = rawName.replace(/^F1\s*[—-]\s*/i, '');
-        } else if (sidUpperName === 'DTM') {
-          rawName = rawName.replace(/^DTM\s*[—-]\s*/i, '');
-        }
+      // Strip series prefix when breadcrumb already shows the series (F1, FREC, DTM, …).
+      if (seriesIdForName) {
+        rawName = G.stripSeriesPrefixFromEventName(rawName, seriesIdForName) || rawName;
       }
       var eventName = localizeEventFromData(Object.assign({}, d, { name: rawName }));
       var seriesId    = G.eventSeriesId(d.event_id || apiEventId);
@@ -381,7 +380,9 @@
       if (!datePart && d.date) {
         datePart = typeof localizeDate === 'function' ? localizeDate(d.date || '') : String(d.date || '').trim();
       }
-      if (d.track) datePart += (datePart ? ' · ' : '') + localizeCircuitName(d.track);
+      if (d.track && !G.eventDisplayNameOverlapsTrack(eventName, d.track)) {
+        datePart += (datePart ? ' · ' : '') + localizeCircuitName(d.track);
+      }
       if (d.location) {
         var locTrimMeta = String(d.location).trim();
         var trackTrimMeta = String(d.track || '').trim();
@@ -476,6 +477,9 @@
       if (d.data && typeof d.data === 'object') d = d.data;
       if (d.event && typeof d.event === 'object') d = d.event;
       if (Array.isArray(d) && d.length > 0) d = d[0];
+      if (window.TGA && typeof window.TGA.normalizeF1EventTo2026Format === 'function') {
+        d = window.TGA.normalizeF1EventTo2026Format(d);
+      }
       return d;
     }
 
@@ -656,10 +660,15 @@
           ? [{ url: d.highlights_url.trim(), title: t('section.highlights') }]
           : [];
     if (highlightsList.length > 0) {
+      try {
       var hasSingleRaceSession = false;
       if (tablesOverview && tablesOverview.race && Array.isArray(tablesOverview.race.sessions)) {
         var overviewSid = G.eventSeriesId(d.event_id || '').toLowerCase();
-        hasSingleRaceSession = visibleRaceSessionsForDisplay(tablesOverview.race, overviewSid).length === 1;
+        if (typeof G.visibleRaceSessionsForDisplay === 'function') {
+          hasSingleRaceSession = G.visibleRaceSessionsForDisplay(tablesOverview.race, overviewSid).length === 1;
+        } else {
+          hasSingleRaceSession = tablesOverview.race.sessions.length === 1;
+        }
       } else if (tablesOverview && tablesOverview.race_results &&
                  !G.tgaStageTable(tablesOverview, 1) && !G.tgaStageTable(tablesOverview, 2) && !G.tgaStageTable(tablesOverview, 3)) {
         hasSingleRaceSession = true;
@@ -698,16 +707,18 @@
           // External source (e.g. official video on formula1.com).
           var url = (item && (item.url || item.href || item.link)) || (d && d.highlights_url);
           if (!url) return;
+          var safeUrl = G.safeHref(url);
+          if (!safeUrl) return;
           var extLabel = item.title || t('section.highlights') || 'Highlights';
           var thumbAttr = '';
           if (item.thumb) {
-            var thumbUrl = String(item.thumb || '').trim();
+            var thumbUrl = G.safeHref(item.thumb);
             if (thumbUrl) {
-              thumbAttr = '<img class="video-external-thumb" src="' + esc(thumbUrl) + '" alt="' + esc(extLabel) + '" loading="lazy" decoding="async">';
+              thumbAttr = '<img class="video-external-thumb" src="' + thumbUrl + '" alt="' + esc(extLabel) + '" loading="lazy" decoding="async">';
             }
           }
           html += '<div class="video-facade-wrap">' +
-            '<a class="video-external-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
+            '<a class="video-external-link" href="' + safeUrl + '" target="_blank" rel="noopener noreferrer">' +
               thumbAttr +
               '<span class="video-external-label">' + esc(extLabel) + '</span>' +
             '</a>' +
@@ -715,6 +726,9 @@
         }
       });
       html += '</div>';
+      } catch (highlightErr) {
+        logger.error('renderEventOverviewContent highlights', highlightErr);
+      }
     }
 
     // Fallback: if highlights list is empty for some reason,
@@ -722,10 +736,12 @@
     if ((!highlightsList || highlightsList.length === 0) &&
         d.highlights_url && typeof d.highlights_url === 'string' &&
         d.highlights_url.trim().length > 0) {
-      var hlUrl = d.highlights_url.trim();
-      html += '<p class="event-preview-text"><a class="video-external-inline-link" href="' +
-        esc(hlUrl) + '" target="_blank" rel="noopener noreferrer">' +
-        esc(t('section.highlights') || 'Highlights') + '</a></p>';
+      var hlUrl = G.safeHref(d.highlights_url.trim());
+      if (hlUrl) {
+        html += '<p class="event-preview-text"><a class="video-external-inline-link" href="' +
+          hlUrl + '" target="_blank" rel="noopener noreferrer">' +
+          esc(t('section.highlights') || 'Highlights') + '</a></p>';
+      }
     }
 
     // Race statistics — same table (FIELD / VALUE, colon parsing) for all series
@@ -1565,18 +1581,13 @@
     if (!html) { contentEl.innerHTML = '<p class="empty-msg">' + t('error.no_section_data') + '</p>'; return; }
     contentEl.innerHTML = html;
 
-    // Special notes under qualifying for specific F1 events.
+    // Optional note under qualifying (e.g. grid penalties).
     if (section === 'qualifying') {
-      var qualNoteText = null;
-      if (evKeyEvent === 'F1_2025_3') {
-        qualNoteText = 'Carlos Sainz Jr. received a three-place grid penalty for impeding Lewis Hamilton in Q2.';
-      } else if (evKeyEvent === 'F1_2025_4') {
-        qualNoteText = 'George Russell and Kimi Antonelli both received a one-place grid penalty for entering the fast lane in the pit lane before a re-start time was confirmed.';
-      }
-      if (qualNoteText) {
+      var qualNoteFromData = d.tables && d.tables.qualifying && d.tables.qualifying.note;
+      if (qualNoteFromData) {
         var qualNote = document.createElement('p');
         qualNote.className = 'race-note';
-        qualNote.textContent = qualNoteText;
+        qualNote.textContent = String(qualNoteFromData).trim();
         contentEl.appendChild(qualNote);
       }
     }

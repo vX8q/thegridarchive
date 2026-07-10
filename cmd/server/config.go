@@ -17,6 +17,7 @@ type Config struct {
 	EnableAdmin  bool
 	AdminToken   string  // secret for /api/admin/* (X-Admin-Token or Authorization: Bearer <token>)
 	RateLimitRPS float64 // requests per second per IP (0 = no limit)
+	TrustedProxy bool    // TGA_TRUSTED_PROXY=1: trust X-Forwarded-For / X-Real-IP from reverse proxy
 	EnablePprof  bool    // enable /debug/pprof* (dev/staging only)
 	FeedbackSMTP FeedbackSMTPConfig
 	Turnstile    TurnstileConfig
@@ -71,6 +72,7 @@ func LoadConfig() Config {
 			cfg.RateLimitRPS = f
 		}
 	}
+	cfg.TrustedProxy = os.Getenv("TGA_TRUSTED_PROXY") == "1"
 	cfg.FeedbackSMTP = FeedbackSMTPConfig{
 		Host:     envOrDefault("TGA_FEEDBACK_SMTP_HOST", "smtp.gmail.com"),
 		Port:     envOrDefault("TGA_FEEDBACK_SMTP_PORT", "587"),
@@ -100,7 +102,29 @@ func (c Config) Validate() error {
 	if c.EnableAdmin && c.AdminToken == "" {
 		return fmt.Errorf("TGA_ENABLE_ADMIN=1 but TGA_ADMIN_TOKEN is empty")
 	}
+	siteKey := strings.TrimSpace(c.Turnstile.SiteKey)
+	secretKey := strings.TrimSpace(c.Turnstile.SecretKey)
+	if (siteKey != "") != (secretKey != "") {
+		return fmt.Errorf("TGA_TURNSTILE_SITE_KEY and TGA_TURNSTILE_SECRET_KEY must both be set")
+	}
+	if c.feedbackEmailConfigured() && (siteKey == "" || secretKey == "") {
+		return fmt.Errorf("feedback SMTP is configured: set TGA_TURNSTILE_SITE_KEY and TGA_TURNSTILE_SECRET_KEY (or remove SMTP credentials for local dev)")
+	}
 	return nil
+}
+
+func (c Config) feedbackEmailConfigured() bool {
+	smtp := c.FeedbackSMTP
+	if strings.TrimSpace(smtp.Host) == "" || strings.TrimSpace(smtp.To) == "" {
+		return false
+	}
+	username := strings.TrimSpace(smtp.Username)
+	password := strings.ReplaceAll(strings.TrimSpace(smtp.Password), " ", "")
+	from := strings.TrimSpace(smtp.From)
+	if from == "" {
+		from = username
+	}
+	return from != "" && username != "" && password != ""
 }
 
 func envOrDefault(key, fallback string) string {

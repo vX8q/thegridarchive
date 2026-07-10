@@ -76,17 +76,35 @@ test('expandFullScheduleEvents appends session label to name', () => {
   assert.strictEqual(rows[0]._scheduleSessionLabel, 'Race 1');
 });
 
-test('expandFullScheduleEvents skips already-expanded F2 sprint row', () => {
+test('expandFullScheduleEvents skips already-expanded F2 sprint row with session metadata', () => {
   const e = {
     id: 'F2_2026_7',
     series_id: 'F2',
     name: 'Silverstone (Sprint)',
     start_date: '2026-07-04',
     end_date: '2026-07-04',
+    _scheduleSessionKind: 'sprint',
+    _scheduleSessionLabel: 'Sprint',
+    _sessionLabel: 'Sprint',
   };
   const rows = TGA.expandFullScheduleEvents([e]);
   assert.strictEqual(rows.length, 1);
   assert.strictEqual(rows[0].name, 'Silverstone (Sprint)');
+});
+
+test('expandFullScheduleEvents re-expands F2 name-only row without session metadata', () => {
+  const e = {
+    id: 'F2_2026_8',
+    series_id: 'F2',
+    name: 'Spa-Francorchamps (Sprint)',
+    start_date: '2026-07-18',
+    end_date: '2026-07-18',
+  };
+  const rows = TGA.expandFullScheduleEvents([e]);
+  assert.strictEqual(rows.length, 2);
+  assert.strictEqual(rows[0].start_date, '2026-07-18');
+  assert.strictEqual(rows[1].start_date, '2026-07-19');
+  assert.ok(rows[0]._scheduleSessionKind === 'sprint');
 });
 
 test('expandFullScheduleEvents leaves IndyCar as single row', () => {

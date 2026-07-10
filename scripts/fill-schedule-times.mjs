@@ -179,7 +179,26 @@ const wec = [
   ['WEC_2026_7', '2026-10-24', '14:00', 'Asia/Qatar'],
   ['WEC_2026_8', '2026-11-07', '14:00', 'Asia/Bahrain'],
 ];
-patchSchedule('wec.json', wec, (date, t, tz) => local24ToF1Style(date, t, tz));
+patchRaceTimes('wec.json', wec);
+
+// NASCAR national series — ET starts; embedded MSK when race crosses midnight MSK.
+function patchNascarEtTimes(file, patches) {
+  const p = path.join(root, 'data', 'schedules', file);
+  const rows = JSON.parse(fs.readFileSync(p, 'utf8'));
+  const byId = Object.fromEntries(patches.map((x) => [x[0], x]));
+  for (const ev of rows) {
+    const patch = byId[ev.id];
+    if (!patch) continue;
+    const times = etToNascar(patch[1], patch[2]);
+    if (times) Object.assign(ev, times);
+  }
+  fs.writeFileSync(p, JSON.stringify(rows, null, 2) + '\n');
+  console.log('Updated', file);
+}
+
+patchNascarEtTimes('arca.json', [['ARCA_2026_12', '2026-07-10', '4:00 PM']]);
+patchNascarEtTimes('noaps.json', [['NOAPS_2026_21', '2026-07-11', '7:00 PM']]);
+patchNascarEtTimes('nascar_cup.json', [['NASCAR_CUP_2026_20', '2026-07-12', '7:00 PM']]);
 
 /** Race time on raceDate; embedded MSK if race day ≠ start_date (multi-day weekends). */
 function patchRaceTimes(file, patches) {
@@ -250,7 +269,7 @@ patchSchedule('frec.json', [
   ['FREC_2026_2', '2026-05-22', '11:35', 'Europe/Amsterdam'],
   ['FREC_2026_3', '2026-05-29', '11:35', 'Europe/Amsterdam'],
   ['FREC_2026_4', '2026-06-20', '11:35', 'Europe/Paris'],
-  ['FREC_2026_5', '2026-07-18', '11:35', 'Europe/Berlin'],
+  ['FREC_2026_5', '2026-07-04', '11:35', 'Europe/Budapest'],
   ['FREC_2026_6', '2026-08-08', '11:35', 'Europe/Budapest'],
   ['FREC_2026_7', '2026-09-05', '11:35', 'Europe/Rome'],
   ['FREC_2026_8', '2026-10-10', '11:35', 'Europe/Lisbon'],

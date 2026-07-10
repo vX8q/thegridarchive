@@ -4,8 +4,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"strings"
-
-	"github.com/vX8q/tga/models"
 )
 
 func nullFloat64(v sql.NullFloat64) float64 {
@@ -13,29 +11,6 @@ func nullFloat64(v sql.NullFloat64) float64 {
 		return v.Float64
 	}
 	return 0
-}
-
-// SaveEvents saves events to data/schedules/{seriesID}.json
-func SaveEvents(dataDir string, seriesID string, events []models.Event) error {
-	if len(events) == 0 {
-		return nil
-	}
-	out := make([]EventJSON, len(events))
-	for i, e := range events {
-		out[i] = EventJSON{
-			ID:          e.ID,
-			SeriesID:    e.SeriesID,
-			Season:      e.Season,
-			Name:        e.Name,
-			Location:    e.Location,
-			CircuitName: e.CircuitName,
-			StartDate:   e.StartDate.Format(dateFormat),
-			EndDate:     e.EndDate.Format(dateFormat),
-			TimeEST:     e.TimeEST,
-			TimeMSK:     e.TimeMSK,
-		}
-	}
-	return saveJSONFile(eventsPath(dataDir, seriesID), out)
 }
 
 // LoadEvents loads events from data/schedules/{seriesID}.json
@@ -52,18 +27,6 @@ func LoadEvents(dataDir string, seriesID string) ([]EventJSON, error) {
 }
 
 // (team and spec types moved to types.go)
-
-// SaveTeams saves team data for a series.
-func SaveTeams(dataDir string, seriesID string, data *TeamsWithSpec) error {
-	if data == nil || (len(data.Teams) == 0 && len(data.CarModels) == 0 && len(data.TechnicalSpec) == 0) {
-		return nil
-	}
-	// Backward compatibility: teams only without wrapper — save as legacy array
-	if len(data.CarModels) == 0 && len(data.TechnicalSpec) == 0 && len(data.TeamsNonChartered) == 0 {
-		return saveJSONFile(teamsPath(dataDir, seriesID), data.Teams)
-	}
-	return saveJSONFile(teamsPath(dataDir, seriesID), data)
-}
 
 // LoadTeamsForSeason loads teams; when season is set, tries seriesID_season.json (e.g. f1_2025).
 // For F1 2026, if f1_2026 is missing, falls back to base f1.json (2026 data).
@@ -229,14 +192,6 @@ type DriverStatsData struct {
 	Classes       []DriverStatsClass     `json:"classes,omitempty"`
 }
 
-// SaveStandings saves standings data for a series.
-func SaveStandings(dataDir string, seriesID string, data *StandingsData) error {
-	if data == nil || len(data.Rows) == 0 {
-		return nil
-	}
-	return saveJSONFile(standingsPath(dataDir, seriesID), data)
-}
-
 // LoadStandings loads standings data for a series.
 func LoadStandings(dataDir string, seriesID string) (*StandingsData, error) {
 	b, err := readFileIfExists(standingsPath(dataDir, seriesID))
@@ -256,11 +211,6 @@ func LoadStandings(dataDir string, seriesID string) (*StandingsData, error) {
 }
 
 // (EventDetailJSON/EventTable/EntryListRow types moved to types.go)
-
-// SaveEventDetail saves event detail JSON.
-func SaveEventDetail(dataDir string, eventID string, detail *EventDetailJSON) error {
-	return saveJSONFile(eventDetailPath(dataDir, eventID), detail)
-}
 
 // LoadEventDetail loads event detail JSON.
 func LoadEventDetail(dataDir string, eventID string) (*EventDetailJSON, error) {

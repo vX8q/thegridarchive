@@ -501,6 +501,15 @@
       "class": "GTD",
       "car": "Porsche 911 GT3 R (992.2)",
       "driver_slug": "ryan-hardwick-riccardo-pera-morris-schuring"
+    },
+    {
+      "number": "068",
+      "driver": "Trenton Estep / Marius Fossard / Valentin Hasse-Clot",
+      "team": "Car Blanche",
+      "manufacturer": "Aston Martin",
+      "class": "GTD",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "driver_slug": "trenton-estep-marius-fossard-valentin-hasse-clot"
     }
   ],
   "tables": {
@@ -2213,7 +2222,7 @@
           "1",
           "31",
           "GTP",
-          "8",
+          "1",
           "Frederik Vesti; Jack Aitken; Earl Bamber",
           "Cadillac Whelen / Cadillac V-Series.R",
           "8",
@@ -2224,7 +2233,7 @@
           "2",
           "60",
           "GTP",
-          "16",
+          "2",
           "Tom Blomqvist / Colin Braun / Scott Dixon",
           "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
           "6",
@@ -2235,7 +2244,7 @@
           "3",
           "10",
           "GTP",
-          "14",
+          "3",
           "Filipe Albuquerque; Ricky Taylor; Will Stevens",
           "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
           "5",
@@ -2246,7 +2255,7 @@
           "4",
           "6",
           "GTP",
-          "13",
+          "4",
           "Kevin Estre; Matt Campbell; Laurens Vanthoor",
           "Porsche Penske Motorsport / Porsche 963",
           "6",
@@ -2257,7 +2266,7 @@
           "5",
           "40",
           "GTP",
-          "6",
+          "5",
           "Jordan Taylor; Colton Herta; Louis Deletraz",
           "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
           "8",
@@ -2268,7 +2277,7 @@
           "6",
           "7",
           "GTP",
-          "10",
+          "6",
           "Felipe Nasr; Laurin Heinrich; Julien Andlauer",
           "Porsche Penske Motorsport / Porsche 963",
           "8",
@@ -2279,7 +2288,7 @@
           "7",
           "5",
           "GTP",
-          "15",
+          "7",
           "Tijmen van der Helm; Nico Pino; Kaylen Frederick",
           "JDC-Miller MotorSports / Porsche 963",
           "7",
@@ -2290,7 +2299,7 @@
           "8",
           "24",
           "GTP",
-          "11",
+          "8",
           "Dries Vanthoor; Robin Frijns; Sheldon van der Linde",
           "BMW M Team WRT / BMW M Hybrid V8",
           "7",
@@ -2301,7 +2310,7 @@
           "9",
           "93",
           "GTP",
-          "1",
+          "9",
           "alex Palou / Nick Yelloly / Renger van der Zande",
           "Acura Meyer Shank Racing w/Curb Agajanian / Acura ARX-06",
           "6",
@@ -2312,7 +2321,7 @@
           "10",
           "23",
           "GTP",
-          "12",
+          "10",
           "Alex Riberas; Ross Gunn; Roman De Angelis",
           "Aston Martin THOR Team / Aston Martin Valkyrie",
           "7",
@@ -2323,7 +2332,7 @@
           "11",
           "25",
           "GTP",
-          "4",
+          "11",
           "Kevin Magnussen; Philipp Eng; Marco Wittmann",
           "BMW M Team WRT / BMW M Hybrid V8",
           "8",
@@ -2334,7 +2343,7 @@
           "26",
           "27",
           "GTD",
-          "6",
+          "3",
           "Tom Gamble; Zacharie Robichon; Eduardo Barrichello",
           "Heart of Racing Team / Aston Martin Vantage GT3 Evo",
           "7",
@@ -2345,7 +2354,7 @@
           "28",
           "57",
           "GTD",
-          "8",
+          "4",
           "Russell Ward; Philip Ellis; Indy Dontje",
           "WINWARD RACING / Mercedes-AMG GT3",
           "6",
@@ -2356,7 +2365,7 @@
           "30",
           "96",
           "GTD",
-          "10",
+          "5",
           "Robby Foley; Francis Selldorff; Patrick Gallagher",
           "Turner Motorsport / BMW M4 GT3 EVO",
           "6",
@@ -2367,7 +2376,7 @@
           "32",
           "80",
           "GTD",
-          "",
+          "8",
           "Scott Andrews / Lin Hodenius / James Roe",
           "Lone Star Racing / Mercedes-AMG GT3",
           "7",
@@ -2378,7 +2387,7 @@
           "38",
           "12",
           "GTD",
-          "11",
+          "6",
           "Frankie Montecalvo / Benjamin Pedersen / Aaron Telitz",
           "Vasser Sullivan Racing / Lexus RC F GT3",
           "6",
@@ -2389,7 +2398,7 @@
           "39",
           "120",
           "GTD",
-          "18",
+          "13",
           "Callum Ilott; Tom Sargent; Adam Adelson",
           "Wright Motorsports / Porsche 911 GT3 R (992)",
           "7",
@@ -2422,7 +2431,7 @@
           "47",
           "45",
           "GTD",
-          "4",
+          "2",
           "Graham Doyle / Danny Formal / Trent Hindman",
           "Wayne Taylor Racing / Lamborghini Huracan GT3 EVO2",
           "8",
@@ -2433,7 +2442,7 @@
           "48",
           "70",
           "GTD",
-          "16",
+          "11",
           "Brendan Iribe / Ollie Millroy / Frederik Schandorff",
           "Inception Racing / Ferrari 296 GT3 EVO",
           "8",
@@ -2444,7 +2453,7 @@
           "49",
           "66",
           "GTD",
-          "15",
+          "10",
           "Till Bechtolsheimer; Jake Walker; Joey Hand",
           "Gradient Racing / Ford Mustang GT3",
           "5",
@@ -2455,7 +2464,7 @@
           "51",
           "34",
           "GTD",
-          "12",
+          "7",
           "Lorenzo Patrese; Manny Franco; Albert Costa",
           "Conquest Racing / Ferrari 296 GT3 EVO",
           "8",
@@ -2466,7 +2475,7 @@
           "52",
           "16",
           "GTD",
-          "19",
+          "14",
           "Sheena Monk; Jenson Altzman; Felipe Fraga",
           "Myers Riley Motorsports / Ford Mustang GT3",
           "7",
@@ -2477,7 +2486,7 @@
           "54",
           "13",
           "GTD",
-          "21",
+          "16",
           "Orey Fidani; Matt Bell; Lars Kern",
           "13 Autosport / Chevrolet Corvette Z06 GT3.R",
           "8",
@@ -2488,11 +2497,319 @@
           "55",
           "81",
           "GTD",
-          "20",
+          "15",
           "Casper Stevenson; Giacomo Altoe; Henrik Hedman",
           "DragonSpeed / Chevrolet Corvette Z06 GT3.R",
           "8",
           "2:03.781",
+          "Running"
+        ],
+        [
+          "",
+          "2",
+          "LMP2",
+          "9",
+          "Phil Fayer / Mikkel Jensen / Hunter McElrea",
+          "United Autosports USA / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "8",
+          "LMP2",
+          "11",
+          "Sebastian alvarez / John Farano / Tristan Vautier",
+          "Tower Motorsports / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "11",
+          "LMP2",
+          "5",
+          "David Heinemeier Hansson / Tobias Lutke / Charles Milesi",
+          "TDS Racing / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "18",
+          "LMP2",
+          "8",
+          "Jacob Abel / Ferdinand Habsburg / Naveen Rao",
+          "Era Motorsport / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "22",
+          "LMP2",
+          "3",
+          "Paul di Resta / Dan Goldburg / Rasmus Lindh",
+          "United Autosports USA / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "37",
+          "LMP2",
+          "11",
+          "Jon Field / Oliver Jarvis / Seth Lucas",
+          "Intersport Racing / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "43",
+          "LMP2",
+          "1",
+          "Jeremy Clarke / Tom Dillmann / Bijoy Garg",
+          "Inter Europol Competition / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "52",
+          "LMP2",
+          "4",
+          "Misha Goikhberg / Parker Thompson / Harry Tincknell",
+          "Bryan Herta Autosport with PR1/Mathiasen / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "73",
+          "LMP2",
+          "8",
+          "Chris Cumming / Manuel Espirito Santo / Pietro Fittipaldi",
+          "Pratt Miller Motorsports / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "99",
+          "LMP2",
+          "2",
+          "Dane Cameron / Jonny Edgar / P. J. Hyett",
+          "AO Racing / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "04",
+          "LMP2",
+          "8",
+          "George Kurtz / Alex Quinn / Toby Sowery",
+          "CrowdStrike Racing by APR / Oreca 07",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "1",
+          "GTD Pro",
+          "11",
+          "Connor De Phillippi / Max Hesse / Neil Verhagen",
+          "Paul Miller Racing / BMW M4 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "3",
+          "GTD Pro",
+          "1",
+          "Antonio Garcia / Marvin Kirchhofer / Alexander Sims",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "4",
+          "GTD Pro",
+          "7",
+          "Nicky Catsburg / Tommy Milner / Nico Varrone",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "9",
+          "GTD Pro",
+          "10",
+          "Andrea Caldarelli / Sandy Mitchell / Franck Perera",
+          "Pfaff Motorsports / Lamborghini Huracán GT3 Evo 2",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "14",
+          "GTD Pro",
+          "11",
+          "Ben Barnicoat / Jack Hawksworth / Kyle Kirkwood",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "59",
+          "GTD Pro",
+          "2",
+          "Max Esterson / Nikita Johnson / Dean MacDonald",
+          "RLL Team McLaren / McLaren 720S GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "62",
+          "GTD Pro",
+          "8",
+          "Alessandro Pier Guidi / Davide Rigon / Daniel Serra",
+          "Risi Competizione / Ferrari 296 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "64",
+          "GTD Pro",
+          "12",
+          "Ben Barker / Dennis Olsen / Mike Rockenfeller",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "65",
+          "GTD Pro",
+          "5",
+          "Christopher Mies / Sebastian Priaulx / Frederic Vervisch",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "77",
+          "GTD Pro",
+          "14",
+          "Harry King / Alessio Picariello / Nick Tandy",
+          "AO Racing / Porsche 911 GT3 R (992.2)",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "911",
+          "GTD Pro",
+          "13",
+          "Klaus Bachler / Ricardo Feller / Thomas Preining",
+          "Manthey Racing / Porsche 911 GT3 R (992.2)",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "033",
+          "GTD Pro",
+          "4",
+          "Riccardo Agostini / James Calado / Miguel Molina",
+          "Triarsi Competizione / Ferrari 296 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "21",
+          "GTD",
+          "6",
+          "Antonio Fuoco / Simon Mann / Lilou Wadoux",
+          "AF Corse / Ferrari 296 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "28",
+          "GTD",
+          "20",
+          "Jan Heylen / Dillon Machavern / Spencer Pumpelly",
+          "RS1 / Porsche 911 GT3 R (992.2)",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "912",
+          "GTD",
+          "18",
+          "Ryan Hardwick / Riccardo Pera / Morris Schuring",
+          "Manthey 1st Phorm / Porsche 911 GT3 R (992.2)",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "023",
+          "GTD",
+          "11",
+          "Kenton Koch / Robert Megennis / Onofrio Triarsi",
+          "Triarsi Competizione / Ferrari 296 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "068",
+          "GTD",
+          "12",
+          "Trenton Estep / Marius Fossard / Valentin Hasse-Clot",
+          "Car Blanche / Aston Martin Vantage AMR GT3 Evo",
+          "",
+          "",
           "Running"
         ]
       ]
@@ -2508,6 +2825,7 @@
         "CLASS POS",
         "NO LAPS",
         "FASTEST LAP",
+        "PTS",
         "STATUS"
       ],
       "rows": [
@@ -2520,6 +2838,7 @@
           "1",
           "343",
           "1:49.020",
+          "350",
           "Running"
         ],
         [
@@ -2531,6 +2850,7 @@
           "2",
           "343",
           "1:49.343",
+          "320",
           "Running"
         ],
         [
@@ -2542,6 +2862,7 @@
           "3",
           "343",
           "1:49.955",
+          "300",
           "Running"
         ],
         [
@@ -2553,6 +2874,7 @@
           "4",
           "343",
           "1:49.395",
+          "280",
           "Running"
         ],
         [
@@ -2564,6 +2886,7 @@
           "5",
           "343",
           "1:49.996",
+          "260",
           "Running"
         ],
         [
@@ -2575,6 +2898,7 @@
           "6",
           "343",
           "1:49.469",
+          "250",
           "Running"
         ],
         [
@@ -2586,6 +2910,7 @@
           "7",
           "343",
           "1:49.428",
+          "240",
           "Running"
         ],
         [
@@ -2597,6 +2922,7 @@
           "8",
           "343",
           "1:50.003",
+          "230",
           "Running"
         ],
         [
@@ -2608,6 +2934,7 @@
           "1",
           "338",
           "1:50.660",
+          "350",
           "Running"
         ],
         [
@@ -2619,6 +2946,7 @@
           "2",
           "338",
           "1:51.297",
+          "320",
           "Running"
         ],
         [
@@ -2630,6 +2958,7 @@
           "3",
           "338",
           "1:50.730",
+          "300",
           "Running"
         ],
         [
@@ -2641,6 +2970,7 @@
           "4",
           "338",
           "1:51.861",
+          "280",
           "Running"
         ],
         [
@@ -2652,6 +2982,7 @@
           "5",
           "338",
           "1:51.605",
+          "260",
           "Running"
         ],
         [
@@ -2663,6 +2994,7 @@
           "6",
           "338",
           "1:51.516",
+          "250",
           "Running"
         ],
         [
@@ -2674,6 +3006,7 @@
           "7",
           "338",
           "1:51.342",
+          "240",
           "Running"
         ],
         [
@@ -2685,6 +3018,7 @@
           "8",
           "336",
           "1:51.722",
+          "230",
           "Running"
         ],
         [
@@ -2696,6 +3030,7 @@
           "9",
           "336",
           "1:51.736",
+          "220",
           "Running"
         ],
         [
@@ -2707,6 +3042,7 @@
           "10",
           "334",
           "1:51.278",
+          "210",
           "Running"
         ],
         [
@@ -2718,6 +3054,7 @@
           "9",
           "331",
           "1:50.204",
+          "220",
           "Running"
         ],
         [
@@ -2729,6 +3066,7 @@
           "10",
           "329",
           "1:50.334",
+          "210",
           "Running"
         ],
         [
@@ -2740,6 +3078,7 @@
           "11",
           "343",
           "1:49.461",
+          "200",
           "Running"
         ],
         [
@@ -2751,6 +3090,7 @@
           "1",
           "321",
           "2:00.704",
+          "350",
           "Running"
         ],
         [
@@ -2762,6 +3102,7 @@
           "2",
           "321",
           "2:00.664",
+          "320",
           "Running"
         ],
         [
@@ -2773,6 +3114,7 @@
           "3",
           "321",
           "2:01.128",
+          "300",
           "Running"
         ],
         [
@@ -2784,6 +3126,7 @@
           "4",
           "321",
           "2:01.421",
+          "280",
           "Running"
         ],
         [
@@ -2795,6 +3138,7 @@
           "5",
           "321",
           "2:01.144",
+          "260",
           "Running"
         ],
         [
@@ -2806,6 +3150,7 @@
           "6",
           "321",
           "2:01.930",
+          "250",
           "Running"
         ],
         [
@@ -2817,6 +3162,7 @@
           "7",
           "321",
           "2:00.830",
+          "240",
           "Running"
         ],
         [
@@ -2828,6 +3174,7 @@
           "8",
           "321",
           "2:01.912",
+          "230",
           "Running"
         ],
         [
@@ -2839,6 +3186,7 @@
           "9",
           "320",
           "2:01.329",
+          "220",
           "Running"
         ],
         [
@@ -2850,6 +3198,7 @@
           "10",
           "320",
           "2:01.821",
+          "210",
           "Running"
         ],
         [
@@ -2861,6 +3210,7 @@
           "1",
           "318",
           "2:00.880",
+          "350",
           "Running"
         ],
         [
@@ -2872,6 +3222,7 @@
           "2",
           "318",
           "2:01.042",
+          "320",
           "Running"
         ],
         [
@@ -2883,6 +3234,7 @@
           "3",
           "318",
           "2:01.261",
+          "300",
           "Running"
         ],
         [
@@ -2894,6 +3246,7 @@
           "4",
           "318",
           "2:01.139",
+          "280",
           "Running"
         ],
         [
@@ -2905,6 +3258,7 @@
           "5",
           "318",
           "2:01.379",
+          "260",
           "Running"
         ],
         [
@@ -2916,6 +3270,7 @@
           "6",
           "318",
           "2:01.780",
+          "250",
           "Running"
         ],
         [
@@ -2927,6 +3282,7 @@
           "7",
           "318",
           "2:01.115",
+          "240",
           "Running"
         ],
         [
@@ -2938,6 +3294,7 @@
           "8",
           "318",
           "2:02.397",
+          "230",
           "Running"
         ],
         [
@@ -2949,6 +3306,7 @@
           "9",
           "317",
           "2:01.226",
+          "220",
           "Running"
         ],
         [
@@ -2960,6 +3318,7 @@
           "11",
           "316",
           "2:01.163",
+          "200",
           "Running"
         ],
         [
@@ -2971,6 +3330,7 @@
           "10",
           "312",
           "2:01.333",
+          "210",
           "Running"
         ],
         [
@@ -2982,6 +3342,7 @@
           "11",
           "303",
           "1:51.281",
+          "200",
           "Running"
         ],
         [
@@ -2993,6 +3354,7 @@
           "11",
           "279",
           "2:02.047",
+          "200",
           "Not Running"
         ],
         [
@@ -3004,6 +3366,7 @@
           "12",
           "268",
           "2:01.975",
+          "190",
           "Running"
         ],
         [
@@ -3015,6 +3378,7 @@
           "13",
           "239",
           "2:01.362",
+          "",
           "Not Running"
         ],
         [
@@ -3026,6 +3390,7 @@
           "12",
           "223",
           "2:01.352",
+          "190",
           "Not Running"
         ],
         [
@@ -3037,6 +3402,7 @@
           "14",
           "208",
           "2:01.988",
+          "170",
           "Not Running"
         ],
         [
@@ -3048,6 +3414,7 @@
           "15",
           "155",
           "2:01.519",
+          "160",
           "Not Running"
         ],
         [
@@ -3059,6 +3426,7 @@
           "16",
           "150",
           "2:02.508",
+          "150",
           "Not Running"
         ],
         [
@@ -3070,6 +3438,7 @@
           "17",
           "111",
           "2:02.136",
+          "140",
           "Not Running"
         ],
         [
@@ -3081,6 +3450,7 @@
           "13",
           "76",
           "2:01.697",
+          "180",
           "Not Running"
         ],
         [
@@ -3092,6 +3462,7 @@
           "18",
           "76",
           "2:01.570",
+          "130",
           "Not Running"
         ],
         [
@@ -3103,6 +3474,7 @@
           "19",
           "302",
           "2:01.360",
+          "120",
           "Not Running"
         ],
         [
@@ -3111,10 +3483,23 @@
           "Josh Burdon; Gerry Kraut; Sennan Fielding",
           "JDC-Miller MotorSports / ORECA LMP2 07",
           "LMP2",
-          "",
+          "12",
           "0",
           "",
+          "",
           "DNS"
+        ],
+        [
+          "",
+          "068",
+          "Trenton Estep / Marius Fossard / Valentin Hasse-Clot",
+          "Car Blanche / Aston Martin Vantage AMR GT3 Evo",
+          "GTD",
+          "",
+          "",
+          "",
+          "180",
+          "Running"
         ]
       ]
     }

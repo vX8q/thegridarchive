@@ -91,17 +91,12 @@ func handleSeries(w http.ResponseWriter, r *http.Request, dataDir string, st sto
 
 	seasonStr := strings.TrimSpace(r.URL.Query().Get("season"))
 	if seasonStr == "" {
-		// Extract season from slug (f1-2025 -> 2025)
-		if idx := strings.LastIndex(seriesID, "-"); idx > 0 && idx+5 == len(seriesID) {
-			if y := seriesID[idx+1:]; len(y) == 4 {
-				if _, err := strconv.Atoi(y); err == nil {
-					seasonStr = y
-				}
-			}
+		if y := config.SeasonFromSlug(seriesID); y != "" {
+			seasonStr = y
 		}
-		if seasonStr == "" {
-			seasonStr = config.CurrentSeason
-		}
+	}
+	if seasonStr == "" {
+		seasonStr = config.CurrentSeason
 	} else if _, err := strconv.Atoi(seasonStr); err != nil {
 		writeError(w, http.StatusBadRequest, "invalid season")
 		return
@@ -141,15 +136,13 @@ func handleSeriesEvents(w http.ResponseWriter, r *http.Request, dataDir, dataSer
 		// Filter by season when the file contains multiple seasons
 		filtered := events
 		if season != "" {
-			var match []schedulefile.EventJSON
+			match := make([]schedulefile.EventJSON, 0, len(events))
 			for _, e := range events {
 				if e.Season == season {
 					match = append(match, e)
 				}
 			}
-			if len(match) > 0 {
-				filtered = match
-			}
+			filtered = match
 		}
 		enriched := make([]EventWithDetail, len(filtered))
 		for i, e := range filtered {
@@ -224,17 +217,12 @@ func handleSeriesEvents(w http.ResponseWriter, r *http.Request, dataDir, dataSer
 // isEventSoon returns true if the event start date (YYYY-MM-DD)
 // falls within [today; today+7 days] in local time.
 func isEventSoon(startDate string) bool {
-	const layout = "2006-01-02"
-	startDate = strings.TrimSpace(startDate)
-	if startDate == "" {
+	d, ok := parseCalendarDateLocal(startDate)
+	if !ok {
 		return false
 	}
-	d, err := time.Parse(layout, startDate)
-	if err != nil {
-		return false
-	}
-	today := time.Now().Truncate(24 * time.Hour)
-	d = d.Truncate(24 * time.Hour)
+	now := time.Now().In(time.Local)
+	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
 	if d.Before(today) {
 		return false
 	}
@@ -242,6 +230,19 @@ func isEventSoon(startDate string) bool {
 		return false
 	}
 	return true
+}
+
+func parseCalendarDateLocal(date string) (time.Time, bool) {
+	const layout = "2006-01-02"
+	date = strings.TrimSpace(date)
+	if date == "" {
+		return time.Time{}, false
+	}
+	t, err := time.ParseInLocation(layout, date, time.Local)
+	if err != nil {
+		return time.Time{}, false
+	}
+	return t, true
 }
 
 func handleSeriesTeams(w http.ResponseWriter, _ *http.Request, dataDir, dataSeriesID, season string) {
@@ -330,28 +331,11 @@ func handleSeriesStandings(w http.ResponseWriter, _ *http.Request, dataDir, data
 			writeError(w, http.StatusInternalServerError, "failed to build standings")
 			return
 		}
-		if data == nil {
-			data, err = schedulefile.LoadStandings(dataDir, dataSeriesID)
-			if err != nil {
-				slog.Error("load standings failed",
-					"series", dataSeriesID,
-					"err", err,
-				)
-				writeError(w, http.StatusInternalServerError, "failed to load standings")
-				return
-			}
-			if data != nil {
-				schedulefile.SplitBaseIneligible(data)
-			}
-		}
 	}
 	if data == nil {
 		data = &schedulefile.StandingsData{Rows: []schedulefile.StandingRow{}}
 	}
-	schedulefile.EnsureCompletedRaces(dataDir, dataSeriesID, data)
-	if len(data.Rows) > 0 && dataSeriesID != "ARCA" {
-		schedulefile.EnrichStagesFromEvents(dataDir, dataSeriesID, data)
-	}
+	schedulefile.FinalizeStandingsFromEvents(dataDir, dataSeriesID, season, data)
 	if strings.EqualFold(dataSeriesID, "SUPERCARS") && len(data.Rows) > 0 {
 		finalizeSupercarsStandings(dataDir, data)
 	}
@@ -388,7 +372,7 @@ func dedupeDriverList(raw string) string {
 		if name == "" {
 			continue
 		}
-		key := driverNameKey(name)
+		key := schedulefile.CanonicalDriverKey(name)
 		if _, ok := seen[key]; ok {
 			continue
 		}
@@ -399,36 +383,6 @@ func dedupeDriverList(raw string) string {
 		return ""
 	}
 	return strings.Join(out, " / ")
-}
-
-func driverNameKey(name string) string {
-	name = strings.ToLower(strings.TrimSpace(name))
-	replacer := strings.NewReplacer(
-		"á", "a",
-		"à", "a",
-		"ä", "a",
-		"â", "a",
-		"é", "e",
-		"è", "e",
-		"ë", "e",
-		"ê", "e",
-		"í", "i",
-		"ì", "i",
-		"ï", "i",
-		"î", "i",
-		"ó", "o",
-		"ò", "o",
-		"ö", "o",
-		"ô", "o",
-		"ú", "u",
-		"ù", "u",
-		"ü", "u",
-		"û", "u",
-		"ñ", "n",
-	)
-	name = replacer.Replace(name)
-	name = strings.Join(strings.Fields(name), " ")
-	return name
 }
 
 // finalizeSupercarsStandings applies Supercars-specific post-processing after auto-build.

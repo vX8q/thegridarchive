@@ -170,3 +170,17 @@ func driverSlugFromEntry(driver string, entry []EntryListRow) string {
 	}
 	return ""
 }
+
+func TestImsaClassPosition_FallsBackToClassRanking(t *testing.T) {
+	headers := []string{"POS", "CAR NO", "DRIVERS", "CLASS", "CLASS POS"}
+	rows := [][]string{
+		{"24", "912", "A", "GTD", "1"},
+		{"30", "96", "B", "GTD", ""},
+		{"31", "023", "C", "GTD", ""},
+		{"10", "31", "D", "GTP", "1"},
+	}
+	got := imsaClassPosition(headers, rows, rows[1])
+	if got != 2 {
+		t.Fatalf("got class pos %d, want 2", got)
+	}
+}

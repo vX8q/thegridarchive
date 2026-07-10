@@ -125,7 +125,7 @@
     },
     {
       "number": "36",
-      "driver": "David Sapienza",
+      "driver": "Dave Sapienza",
       "team": "Sapienza Racing",
       "manufacturer": "Troyer",
       "crew_chief": "Greg Kleila",
@@ -245,8 +245,8 @@
     },
     {
       "number": "79",
-      "driver": "Jonathan McKennedy",
-      "team": "Jonathan McKennedy Racing",
+      "driver": "Jon McKennedy",
+      "team": "Jon McKennedy Racing",
       "manufacturer": "FURY Race Cars",
       "crew_chief": "Patrick Walsh",
       "driver_slug": "jonathan-mckennedy"
@@ -360,8 +360,8 @@
         [
           "5",
           "79",
-          "Jonathan McKennedy",
-          "Jonathan McKennedy Racing",
+          "Jon McKennedy",
+          "Jon McKennedy Racing",
           "FURY Race Cars",
           "19.488",
           "0.030",
@@ -420,7 +420,7 @@
         [
           "10",
           "36",
-          "David Sapienza",
+          "Dave Sapienza",
           "Sapienza Racing",
           "Troyer",
           "19.540",
@@ -715,8 +715,8 @@
         [
           "3",
           "79",
-          "Jonathan McKennedy",
-          "Jonathan McKennedy Racing",
+          "Jon McKennedy",
+          "Jon McKennedy Racing",
           "FURY Race Cars",
           "19.498",
           "97.118"
@@ -931,7 +931,7 @@
         [
           "27",
           "36",
-          "David Sapienza",
+          "Dave Sapienza",
           "Sapienza Racing",
           "Troyer",
           "19.915",
@@ -1306,7 +1306,7 @@
           "3",
           "79",
           "Jon McKennedy",
-          "Jonathan McKennedy Racing",
+          "Jon McKennedy Racing",
           "FURY Race Cars",
           "160",
           "0",

@@ -33,6 +33,33 @@
   }
 
   /** Double-header weekends (e.g. Super Formula R1–2): no laps/distance table on overview. */
+  var SERIES_EVENT_NAME_PREFIX = {
+    F1: /^F1\s*[—-]\s*/i,
+    F2: /^F2\s*[—-]\s*/i,
+    F3: /^F3\s*[—-]\s*/i,
+    FREC: /^FREC\s*[—-]\s*/i,
+    F4_IT: /^Italian F4\s*[—-]\s*/i,
+    DTM: /^DTM\s*[—-]\s*/i
+  };
+
+  /** Drop "FREC — …" style prefix when breadcrumb already shows the series. */
+  function stripSeriesPrefixFromEventName(name, seriesId) {
+    if (name == null) return '';
+    var s = String(name).trim();
+    if (!s || !seriesId) return s;
+    var re = SERIES_EVENT_NAME_PREFIX[String(seriesId).toUpperCase()];
+    return re ? s.replace(re, '').trim() : s;
+  }
+
+  /** True when event title already names the circuit (skip duplicate in meta line). */
+  function eventDisplayNameOverlapsTrack(displayName, track) {
+    var n = String(displayName || '').trim().toLowerCase();
+    var t = String(track || '').trim().toLowerCase();
+    if (!n || !t) return false;
+    if (n === t) return true;
+    return n.indexOf(t) >= 0 || t.indexOf(n) >= 0;
+  }
+
   function eventIsMultiRoundWeekend(d) {
     if (!d || typeof d !== 'object') return false;
     var tables = (d.tables && typeof d.tables === 'object') ? d.tables
@@ -51,6 +78,8 @@
   }
 
   window.TGA.eventSeriesId = eventSeriesId;
+  window.TGA.stripSeriesPrefixFromEventName = stripSeriesPrefixFromEventName;
+  window.TGA.eventDisplayNameOverlapsTrack = eventDisplayNameOverlapsTrack;
   window.TGA.isF4SeriesId = isF4SeriesId;
   window.TGA.isGtwceSpaCheckpointRaceSession = isGtwceSpaCheckpointRaceSession;
   window.TGA.visibleRaceSessionsForDisplay = visibleRaceSessionsForDisplay;

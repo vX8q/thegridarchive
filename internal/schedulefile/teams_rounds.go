@@ -307,6 +307,79 @@ func compressRounds(set map[int]bool) string {
 	return strings.Join(parts, ", ")
 }
 
+// expandRoundsString parses a compressed rounds label ("1–3, 5") into a set.
+func expandRoundsString(s string) map[int]bool {
+	set := map[int]bool{}
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return set
+	}
+	for _, part := range strings.Split(s, ",") {
+		part = strings.TrimSpace(part)
+		if part == "" {
+			continue
+		}
+		part = strings.ReplaceAll(part, "–", "-")
+		if strings.Contains(part, "-") {
+			bits := strings.SplitN(part, "-", 2)
+			lo, err1 := strconv.Atoi(strings.TrimSpace(bits[0]))
+			hi, err2 := strconv.Atoi(strings.TrimSpace(bits[1]))
+			if err1 != nil || err2 != nil {
+				continue
+			}
+			if lo > hi {
+				lo, hi = hi, lo
+			}
+			for n := lo; n <= hi; n++ {
+				set[n] = true
+			}
+			continue
+		}
+		if n, err := strconv.Atoi(part); err == nil {
+			set[n] = true
+		}
+	}
+	return set
+}
+
+// mergeDuplicateDriverCarRows collapses rows that share a car number and the same
+// driver after normalization (e.g. "Noah Stromsted" + "Noah Strømsted" on #4).
+func mergeDuplicateDriverCarRows(rows *[]TeamJSON) {
+	if rows == nil || len(*rows) < 2 {
+		return
+	}
+	out := make([]TeamJSON, 0, len(*rows))
+	for _, r := range *rows {
+		num := strings.TrimSpace(r.Number)
+		dk := driverMatchKey(r.Driver)
+		if num == "" || dk == "" {
+			out = append(out, r)
+			continue
+		}
+		merged := false
+		for i := range out {
+			if strings.TrimSpace(out[i].Number) != num {
+				continue
+			}
+			if driverMatchKey(out[i].Driver) != dk {
+				continue
+			}
+			rounds := expandRoundsString(out[i].Rounds)
+			for n := range expandRoundsString(r.Rounds) {
+				rounds[n] = true
+			}
+			out[i].Rounds = compressRounds(rounds)
+			out[i].Driver = preferLongerDriverName(out[i].Driver, r.Driver)
+			merged = true
+			break
+		}
+		if !merged {
+			out = append(out, r)
+		}
+	}
+	*rows = out
+}
+
 // teamsAreFlatDriver reports whether all team rows are flat (one driver, no class
 // and no driver list), i.e. the table allows appending new driver rows.
 func teamsAreFlatDriver(data *TeamsWithSpec) bool {
@@ -469,10 +542,16 @@ func EnrichTeamsRoundsFromEvents(dataDir, seriesID, season string, data *TeamsWi
 	// WEC: starting grid is not in entry_list but in tables.entry_list.sessions
 	// (per-class table with merged car cells downward). Build from that.
 	if sid == "wec" {
+		built := buildWecTeamsFromEvents(dataDir, seriesID, season)
 		if len(data.Teams) == 0 && len(data.TeamsNonChartered) == 0 {
-			if built := buildWecTeamsFromEvents(dataDir, seriesID, season); len(built) > 0 {
+			if len(built) > 0 {
 				data.Teams = built
 			}
+			return
+		}
+		if len(built) > 0 {
+			enrichWecTeamsRoundsFromBuilt(data.Teams, built)
+			enrichWecTeamsRoundsFromBuilt(data.TeamsNonChartered, built)
 		}
 		return
 	}
@@ -615,6 +694,8 @@ func EnrichTeamsRoundsFromEvents(dataDir, seriesID, season string, data *TeamsWi
 		if substituteInsertSeries[sid] && teamsAreFlatDriver(data) {
 			insertSubstituteDrivers(data, byKey, keyOrder, matched)
 		}
+		mergeDuplicateDriverCarRows(&data.Teams)
+		mergeDuplicateDriverCarRows(&data.TeamsNonChartered)
 		// Hide placeholders (TBA/TBC) and rows without participation data for series where
 		// required (stock-car and IMSA): Teams table shows only those who
 		// were actually entered/raced.
@@ -973,6 +1054,44 @@ func buildWecTeamsFromEvents(dataDir, seriesID, season string) []TeamJSON {
 		}
 	}
 	return buildGtTeams(byNumber, order)
+}
+
+func enrichWecTeamsRoundsFromBuilt(curated []TeamJSON, built []TeamJSON) {
+	if len(curated) == 0 || len(built) == 0 {
+		return
+	}
+	byNumber := make(map[string]TeamJSON, len(built))
+	for _, t := range built {
+		num := strings.TrimSpace(t.Number)
+		if num != "" {
+			byNumber[num] = t
+		}
+	}
+	for i := range curated {
+		num := strings.TrimSpace(curated[i].Number)
+		if num == "" {
+			continue
+		}
+		b, ok := byNumber[num]
+		if !ok {
+			continue
+		}
+		if strings.TrimSpace(curated[i].Rounds) == "" && strings.TrimSpace(b.Rounds) != "" {
+			curated[i].Rounds = b.Rounds
+		}
+		if len(curated[i].Drivers) == 0 && len(b.Drivers) > 0 {
+			curated[i].Drivers = b.Drivers
+		}
+		if len(curated[i].DriverRounds) == 0 && len(b.DriverRounds) > 0 {
+			curated[i].DriverRounds = b.DriverRounds
+		}
+		if strings.TrimSpace(curated[i].Class) == "" && strings.TrimSpace(b.Class) != "" {
+			curated[i].Class = b.Class
+		}
+		if strings.TrimSpace(curated[i].Car) == "" && strings.TrimSpace(b.Car) != "" {
+			curated[i].Car = b.Car
+		}
+	}
 }
 
 // numberLess compares car numbers numerically, then lexicographically (for "06" etc.).

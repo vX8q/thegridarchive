@@ -340,10 +340,26 @@
         if (String(teamsArr[j].team || '').trim() !== teamName) break;
         span++;
       }
+      var numberRowSpan = [];
+      for (var ns = 0; ns < span; ns++) numberRowSpan[ns] = 0;
+      for (var nk = 0; nk < span; nk++) {
+        if (numberRowSpan[nk] === -1) continue;
+        var numVal = String(teamsArr[i + nk].number || '').trim();
+        var numSpan = 1;
+        for (var nm = nk + 1; nm < span; nm++) {
+          if (String(teamsArr[i + nm].number || '').trim() !== numVal) break;
+          numSpan++;
+          numberRowSpan[nm] = -1;
+        }
+        numberRowSpan[nk] = numSpan;
+      }
       for (var k = 0; k < span; k++) {
         var tm = teamsArr[i + k];
         var cells = k === 0 ? '<td rowspan="' + span + '">' + teamCellText + '</td>' : '';
-        cells += '<td class="col-num">' + esc(dash(tm.number)) + '</td><td>' + driverLink(tm.driver) + '</td><td>' + esc(dash(tm.rounds)) + '</td>';
+        if (numberRowSpan[k] > 0) {
+          cells += '<td class="col-num" rowspan="' + numberRowSpan[k] + '">' + esc(dash(tm.number)) + '</td>';
+        }
+        cells += '<td>' + driverLink(tm.driver) + '</td><td>' + esc(dash(tm.rounds)) + '</td>';
         rows.push('<tr>' + cells + '</tr>');
       }
       i += span;

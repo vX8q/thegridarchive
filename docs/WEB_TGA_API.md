@@ -33,6 +33,19 @@ Wraps `window.TGA.fetchJSON` with typed methods. All `/api/*` fetches should go 
 
 **Options:** `{ cacheBust: false }` skips the `_=` timestamp query param (matches legacy calls that omitted it).
 
+### `getSeriesStandings` response
+
+Standings are **rebuilt server-side on every request** from `data/events/` (not from frozen `data/standings/*.json` rows).
+
+| Shape | Series | Key fields |
+|-------|--------|------------|
+| Flat | F1, F2, F3, stock-car, IndyCar, Supercars, DTM, PSC, … | `rows[]`, `race_order[]`, `completed_races[]`; stock-car also `ineligible[]`, `Stages` column |
+| Per-class | IMSA, ELMS, WEC, GTWCE End, GTWCE Sprint | `classes[]` (each with `id`, `name`, `rows[]`), shared `race_order[]` |
+
+Rendering: flat tables in `#standings-wrap`; per-class via `tga-utils.js` → `buildImsaGtwceClassStandingsHtml` (`#standings-imsa-wrap`). IMSA and WEC support Crew / Driver mode (`standings-mode-nav`).
+
+Data workflow: edit `Pts` / `Points` in event JSON tables — see `data/SERIES_TEMPLATES.md` § «Автоматическая сборка standings».
+
 ## `lib/state.js` — `window.TGA._state`
 
 | Field | Owner | Purpose |

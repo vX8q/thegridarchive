@@ -431,6 +431,12 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 				}
 				// Count a start only if the driver actually ran (at least one lap).
 				didStart := laps > 0
+				if !didStart && colLaps < 0 {
+					ps := strings.TrimSpace(posStr)
+					if ps != "" && isAllDigits(ps) && atoiSafe(ps) > 0 {
+						didStart = true
+					}
+				}
 				if didStart {
 					acc.races++
 				}
@@ -661,10 +667,7 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 	}
 
 	mans := aggregateByManufacturer(out)
-	var teamCanon map[string]string
-	if isStockCarTeamStatsSeries(seriesID) {
-		teamCanon = stockCarTeamCanonByFoldKey(dataDir, seriesID)
-	}
+	teamCanon := teamCanonByFoldKeyForStats(dataDir, seriesID)
 	teams := aggregateByTeam(teamSourceRows, teamCanon)
 
 	return &DriverStatsData{Rows: out, Teams: teams, Manufacturers: mans, Classes: buildDriverStatsClasses(out, teamCanon)}, nil

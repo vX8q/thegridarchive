@@ -145,6 +145,24 @@ test('F2 Last Results rows collapse by event.id to weekend span', () => {
   assert.ok(!/\(Sprint\)/i.test(out[0].event.name));
 });
 
+test('F2 sprint row without metadata still treated as session row for display', () => {
+  const e = {
+    id: 'F2_2026_8',
+    series_id: 'F2',
+    name: 'Spa-Francorchamps (Sprint)',
+    start_date: '2026-07-18',
+    end_date: '2026-07-18',
+  };
+  assert.strictEqual(TGA.isExpandedScheduleSessionRow(e), true);
+  const withMeta = Object.assign({}, e, {
+    _scheduleSessionKind: 'sprint',
+    _scheduleSessionLabel: 'Sprint',
+  });
+  const range = TGA.getEventRaceDateRangeIso(withMeta);
+  assert.strictEqual(range.start, '2026-07-18');
+  assert.strictEqual(range.end, '2026-07-18');
+});
+
 test('Next Race F2 sprint row shows single session day not weekend span', () => {
   const e = {
     id: 'F2_2026_7',

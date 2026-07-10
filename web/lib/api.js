@@ -17,8 +17,19 @@
 
   var BASE = '/api';
 
+  function normalizeSeriesApiId(seriesId) {
+    var s = String(seriesId || '').toLowerCase().trim().replace(/-/g, '_');
+    if (s === 'nascar_xfinity') s = 'noaps';
+    if (!/^f1_\d{4}$/.test(s)) {
+      s = s.replace(/_(\d{4})$/, function (_m, y) {
+        return (y >= '2000' && y <= '2099') ? '' : '_' + y;
+      });
+    }
+    return s.replace(/_+$/, '');
+  }
+
   function seriesPath(seriesId) {
-    return encodeURIComponent(String(seriesId || '').toLowerCase());
+    return encodeURIComponent(normalizeSeriesApiId(seriesId));
   }
 
   function eventPath(eventId) {

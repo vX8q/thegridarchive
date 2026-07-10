@@ -19,11 +19,11 @@
     "name": "Italian F4 — Vallelunga",
     "location": "Campagnano di Roma",
     "circuit_name": "Autodromo Vallelunga",
-    "start_date": "2026-05-23",
-    "end_date": "2026-05-23",
+    "start_date": "2026-05-22",
+    "end_date": "2026-05-22",
     "time_est": "12:30",
     "time_msk": "13:30",
-    "date": "2026-05-23"
+    "date": "2026-05-22"
   },
   {
     "id": "F4_IT_2026_3",
@@ -32,11 +32,11 @@
     "name": "Italian F4 — Monza",
     "location": "Monza",
     "circuit_name": "Autodromo Nazionale di Monza",
-    "start_date": "2026-06-20",
-    "end_date": "2026-06-22",
+    "start_date": "2026-06-21",
+    "end_date": "2026-06-21",
     "time_est": "12:30",
     "time_msk": "13:30",
-    "date": "2026-06-20"
+    "date": "2026-06-21"
   },
   {
     "id": "F4_IT_2026_4",
@@ -45,11 +45,11 @@
     "name": "Italian F4 — Mugello",
     "location": "Scarperia e San Piero",
     "circuit_name": "Mugello Circuit",
-    "start_date": "2026-07-24",
-    "end_date": "2026-07-26",
+    "start_date": "2026-07-25",
+    "end_date": "2026-07-25",
     "time_est": "12:30",
     "time_msk": "13:30",
-    "date": "2026-07-24"
+    "date": "2026-07-25"
   },
   {
     "id": "F4_IT_2026_5",
@@ -58,11 +58,11 @@
     "name": "Italian F4 — Imola",
     "location": "Imola",
     "circuit_name": "Imola Circuit",
-    "start_date": "2026-09-04",
-    "end_date": "2026-09-06",
+    "start_date": "2026-09-05",
+    "end_date": "2026-09-05",
     "time_est": "12:30",
     "time_msk": "13:30",
-    "date": "2026-09-04"
+    "date": "2026-09-05"
   },
   {
     "id": "F4_IT_2026_6",
@@ -71,11 +71,11 @@
     "name": "Italian F4 — Misano",
     "location": "Misano Adriatico",
     "circuit_name": "Misano World Circuit Marco Simoncelli",
-    "start_date": "2026-09-18",
-    "end_date": "2026-09-20",
+    "start_date": "2026-09-19",
+    "end_date": "2026-09-19",
     "time_est": "12:30",
     "time_msk": "13:30",
-    "date": "2026-09-18"
+    "date": "2026-09-19"
   },
   {
     "id": "F4_IT_2026_7",
@@ -84,10 +84,10 @@
     "name": "Italian F4 — Mugello",
     "location": "Scarperia e San Piero",
     "circuit_name": "Mugello Circuit",
-    "start_date": "2026-10-30",
-    "end_date": "2026-11-01",
+    "start_date": "2026-10-24",
+    "end_date": "2026-10-24",
     "time_est": "12:30",
-    "time_msk": "14:30",
-    "date": "2026-10-30"
+    "time_msk": "13:30",
+    "date": "2026-10-24"
   }
 ]

@@ -813,6 +813,19 @@ function renderDetail(seriesId, subPath) {
             if (String(teamsArr[j].team || '').trim() !== teamName) break;
             span++;
           }
+          var numberRowSpan = [];
+          for (var ns = 0; ns < span; ns++) numberRowSpan[ns] = 0;
+          for (var nk = 0; nk < span; nk++) {
+            if (numberRowSpan[nk] === -1) continue;
+            var numVal = String(teamsArr[i + nk].number || '').trim();
+            var numSpan = 1;
+            for (var nm = nk + 1; nm < span; nm++) {
+              if (String(teamsArr[i + nm].number || '').trim() !== numVal) break;
+              numSpan++;
+              numberRowSpan[nm] = -1;
+            }
+            numberRowSpan[nk] = numSpan;
+          }
           for (var k = 0; k < span; k++) {
             var tm = teamsArr[i + k];
             var cells = k === 0 ? '<td rowspan="' + span + '">' + teamCellText + '</td>' : '';
@@ -822,7 +835,10 @@ function renderDetail(seriesId, subPath) {
             if (seriesKeyTeams && seriesKeyTeams.toLowerCase().indexOf('f1-') === 0 && roundsRaw.toLowerCase() === 'all') {
               roundsDisplay = '1–24';
             }
-            cells += '<td class="col-num">' + esc(dash(tm.number)) + '</td><td>' + driverLink(tm.driver) + '</td><td>' + esc(dash(roundsDisplay)) + '</td>';
+            if (numberRowSpan[k] > 0) {
+              cells += '<td class="col-num" rowspan="' + numberRowSpan[k] + '">' + esc(dash(tm.number)) + '</td>';
+            }
+            cells += '<td>' + driverLink(tm.driver) + '</td><td>' + esc(dash(roundsDisplay)) + '</td>';
             rows.push('<tr>' + cells + '</tr>');
           }
           i += span;
@@ -2487,6 +2503,9 @@ function renderDetail(seriesId, subPath) {
           if (sk === 'dtm') {
             return String(code || '');
           }
+          if (sk === 'nascar_cup' || sk === 'noaps' || sk === 'nascar_truck' || sk === 'nascar_modified' || sk === 'arca' || sk === 'indycar') {
+            return String(code || '');
+          }
           // Multi-race rounds (e.g. DTM: R1-1, R1-2): keep full code.
           if (String(code).indexOf('-') >= 0) {
             return String(code);
@@ -3255,8 +3274,8 @@ function renderDetail(seriesId, subPath) {
       return;
     }
 
-    // More patient retry: up to ~10 seconds wait (for other series).
-    var maxStatsAttempts = 10;
+    // Brief retry if stats empty (legacy DB import path; JSON rebuild is synchronous).
+    var maxStatsAttempts = 2; // initial + one retry
     var statsRetryDelayMs = 1000;
 
     function loadStats(attempt) {
@@ -4295,10 +4314,13 @@ function renderDetail(seriesId, subPath) {
           var formatDateRangeLong = window.TGA && window.TGA.formatDateRangeLong;
           var formatDateRange = window.TGA && window.TGA.formatDateRange;
           var formatShortDate = window.TGA && window.TGA.formatShortDate;
+          var formatFullScheduleRowDate = window.TGA && window.TGA.formatFullScheduleRowDate;
           var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
-          var date = formatEventRaceStartDate
-            ? formatEventRaceStartDate(e)
-            : (formatShortDate ? formatShortDate((e.start_date || e.date || '').slice(0, 10)) : (e.start_date || e.date || ''));
+          var date = formatFullScheduleRowDate
+            ? formatFullScheduleRowDate(e)
+            : (formatEventRaceStartDate
+              ? formatEventRaceStartDate(e)
+              : (formatShortDate ? formatShortDate((e.start_date || e.date || '').slice(0, 10)) : (e.start_date || e.date || '')));
           var eventName = localizeEventFromData(Object.assign({}, e, { name: e.name || '—' }));
           if (isGroupedRaceSchedule) {
             var strippedName = (window.TGA && window.TGA.normalizeSeriesScheduleBaseName)
@@ -4838,7 +4860,7 @@ function renderDetail(seriesId, subPath) {
       // For season slugs like f1-2026 events still arrive with series_id
       // of base series ("f1"), so when comparing also normalize —
       // strip `-YYYY` suffix.
-      var expectedKeyNorm = expectedKey.replace(/-\d{4}$/, '');
+      var expectedKeyNorm = expectedKey.replace(/[-_]\d{4}$/, '');
       if (Array.isArray(events)) {
         events = events.filter(function (e) {
           var sid = (e && (e._seriesId || e.series_id || '')).toLowerCase();

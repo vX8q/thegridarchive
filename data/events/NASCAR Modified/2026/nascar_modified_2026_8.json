@@ -11,7 +11,11 @@
   "laps": "150",
   "distance": "0.333 mile paved track (49.95 miles)",
   "race_statistics": {
-    "Cautions / Laps": "2 for 20 laps"
+    "Lead changes": "3",
+    "Cautions / Laps": "2 for 20 laps",
+    "Red flags": "0",
+    "Time of race": "39 minutes and 57 seconds",
+    "Average speed": "74.343 miles per hour (119.635 km/h)"
   },
   "event_preview": "Seekonk Speedway is a 0.333-mile (0.536 km) asphalt oval in Seekonk, Massachusetts, known as the Action Track of the East. The Firecracker 150 presented by the Bethesda Leadership Group is the seventh race of the 2026 NASCAR Whelen Modified Tour season and the Tour's 15th visit to the venue, run over 150 laps (49.95 miles). The race opens the inaugural Whelen Midsummer Championship, a three-race miniseries also featuring Claremont Motorsports Park (July 10) and Monadnock Speedway (July 25) with an additional $25,000 in bonus money for competing teams.\n\nJon McKennedy won the Tour's most recent Seekonk race in May, becoming the 11th different driver in series history to win at the track — a list that also includes Matt Hirschman, Doug Coby, Justin Bonsignore, Reggie Ruggiero and Jerry Marquis. Hirschman, Coby and Bonsignore are among the entries seeking to add to that tally and open the new miniseries with a strong result.",
   "event_preview_ru": "Seekonk Speedway — асфальтовый овал длиной 0,333 мили (0,536 км) в Seekonk, Massachusetts, известный как Action Track of the East. Firecracker 150 presented by the Bethesda Leadership Group — седьмой этап сезона NASCAR Whelen Modified Tour 2026 года и 15-й визит серии на эту трассу, гонка на 150 кругов (49,95 мили). Этап открывает дебютный Whelen Midsummer Championship — мини-серию из трёх гонок также на Claremont Motorsports Park (10 июля) и Monadnock Speedway (25 июля) с дополнительными $25 000 призовых для участвующих команд.\n\nJon McKennedy выиграл последний этап тура на Seekonk в мае, став 11-м разным гонщиком в истории серии, побеждавшим на этой трассе — среди них Matt Hirschman, Doug Coby, Justin Bonsignore, Reggie Ruggiero и Jerry Marquis. Hirschman, Coby и Bonsignore входят в заявку, стремясь пополнить этот список и открыть новую мини-серию сильным результатом.",
@@ -90,7 +94,7 @@
     },
     {
       "number": "36",
-      "driver": "David Sapienza",
+      "driver": "Dave Sapienza",
       "team": "Sapienza Racing",
       "manufacturer": "Troyer",
       "crew_chief": "Greg Kleila",
@@ -162,8 +166,8 @@
     },
     {
       "number": "79",
-      "driver": "Jonathan McKennedy",
-      "team": "Jonathan McKennedy Racing",
+      "driver": "Jon McKennedy",
+      "team": "Jon McKennedy Racing",
       "manufacturer": "FURY Race Cars",
       "crew_chief": "Patrick Walsh",
       "sponsor": "Stuarts Automotive; Christophers Towing; John Young Landscaping; Levasseur HVAC; Hillsboro Enterprises",
@@ -219,7 +223,7 @@
           "2",
           "79",
           "Jon McKennedy",
-          "Jonathan McKennedy Racing",
+          "Jon McKennedy Racing",
           "FURY Race Cars",
           "12.350",
           "0.001",
@@ -523,7 +527,7 @@
           "7",
           "79",
           "Jon McKennedy",
-          "Jonathan McKennedy Racing",
+          "Jon McKennedy Racing",
           "FURY Race Cars",
           "12.304",
           "0.054",
@@ -710,7 +714,7 @@
           "3",
           "79",
           "Jon McKennedy",
-          "Jonathan McKennedy Racing",
+          "Jon McKennedy Racing",
           "FURY Race Cars",
           "12.263",
           "97.846"
@@ -976,7 +980,7 @@
           "3",
           "79",
           "Jon McKennedy",
-          "Jonathan McKennedy Racing",
+          "Jon McKennedy Racing",
           "FURY Race Cars",
           "150",
           "1",

@@ -72,6 +72,9 @@ backups/
 # CLI compare scratch output
 *-compare-out.txt
 
+# Script scratch screenshots
+scripts/_*.png
+
 # Optional: Node if you add tooling under the repo
 node_modules/
 

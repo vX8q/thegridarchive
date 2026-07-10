@@ -64,6 +64,10 @@ func main() {
 		slog.Error("invalid config", "err", err)
 		os.Exit(1)
 	}
+	setClientIPTrustedProxy(cfg.TrustedProxy)
+	if cfg.TrustedProxy {
+		slog.Info("trusted proxy enabled", "client_ip", "X-Forwarded-For/X-Real-IP")
+	}
 
 	webDir := resolveWebDir(cfg)
 	dataDir := appenv.ResolveDataDir(cfg.DataDir)
@@ -92,6 +96,9 @@ func main() {
 	eventscaffold.RunAtStartup(dataDir)
 	feedbackNotifier := newFeedbackNotifier(cfg.FeedbackSMTP)
 	feedbackCaptcha := newFeedbackCaptchaVerifier(cfg.Turnstile)
+	if _, ok := feedbackCaptcha.(turnstileVerifier); ok {
+		slog.Info("feedback turnstile enabled")
+	}
 
 	// Context to stop background goroutines on shutdown
 	appCtx, cancelApp := context.WithCancel(context.Background())
@@ -149,9 +156,9 @@ func main() {
 		http.NotFound(w, r)
 	}))
 
-	http.Handle("/metrics", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+	http.Handle("/metrics", staticWrap(wrapWithMetricsAccess(cfg.AdminToken, func(w http.ResponseWriter, r *http.Request) {
 		promhttp.Handler().ServeHTTP(w, r)
-	}))
+	})))
 
 	if cfg.EnablePprof {
 		slog.Info("pprof enabled under /debug/pprof")
@@ -174,8 +181,9 @@ func main() {
 			return
 		}
 		if err := st.Health(r.Context()); err != nil {
+			slog.Warn("health check failed", "err", err)
 			w.WriteHeader(http.StatusServiceUnavailable)
-			b, _ := json.Marshal(map[string]string{"status": "unavailable", "error": err.Error()})
+			b, _ := json.Marshal(map[string]string{"status": "unavailable"})
 			_, _ = w.Write(b)
 			return
 		}
@@ -241,6 +249,11 @@ func main() {
 
 	if cfg.EnableAdmin {
 		adminHandler := apiWrap(func(w http.ResponseWriter, r *http.Request) {
+			if r.Method != http.MethodPost {
+				w.Header().Set("Allow", http.MethodPost)
+				writeError(w, http.StatusMethodNotAllowed, "method not allowed")
+				return
+			}
 			w.Header().Set("Content-Type", "application/json")
 			type result struct {
 				Series string `json:"series"`

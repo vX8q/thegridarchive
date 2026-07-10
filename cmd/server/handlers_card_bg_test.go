@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"testing"
 )
@@ -44,5 +45,31 @@ func TestHandleCardBackgroundRejectsTraversal(t *testing.T) {
 	handleCardBackground(rr, req, t.TempDir(), t.TempDir())
 	if rr.Code != http.StatusNotFound {
 		t.Fatalf("status = %d, want 404", rr.Code)
+	}
+}
+
+func TestCardBgSourcePathRejectsAbsolutePath(t *testing.T) {
+	webDir := t.TempDir()
+	if _, ok := cardBgSourcePath(webDir, "/etc/passwd.jpg"); ok {
+		t.Fatal("absolute path should be rejected")
+	}
+}
+
+func TestCardBgSourcePathAllowsRelativeImage(t *testing.T) {
+	webDir := t.TempDir()
+	imagesDir := filepath.Join(webDir, "images")
+	if err := os.MkdirAll(imagesDir, 0o750); err != nil {
+		t.Fatal(err)
+	}
+	want := filepath.Join(imagesDir, "track.jpg")
+	if err := os.WriteFile(want, []byte("x"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	got, ok := cardBgSourcePath(webDir, "track.jpg")
+	if !ok {
+		t.Fatal("expected relative image path to be allowed")
+	}
+	if got != want {
+		t.Fatalf("got %q, want %q", got, want)
 	}
 }

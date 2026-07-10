@@ -1,0 +1,56 @@
+{
+  "event_id": "NASCAR_MODIFIED_2026_9",
+  "series": "NASCAR Whelen Modified Tour",
+  "race": "Clash at Claremont",
+  "date": "Friday, July 10, 2026",
+  "start_date": "2026-07-10",
+  "end_date": "2026-07-10",
+  "track": "Claremont Motorsports Park",
+  "location": "Claremont Motorsports Park, Claremont, New Hampshire",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Trk",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed",
+        "Lap #",
+        "# Laps",
+        "-Fastest",
+        "-Next"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Fin",
+        "St",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Laps",
+        "Led",
+        "Status",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

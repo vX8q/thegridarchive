@@ -99,7 +99,7 @@ func TestNASCARCupEnrichUsesSameEventsAsBuild(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	EnrichStagesFromEvents(dataDir, "NASCAR_CUP", data)
+	EnrichStagesFromEvents(dataDir, "NASCAR_CUP", "2026", data)
 
 	var mismatches []string
 	for _, row := range data.Rows {

@@ -1,5 +1,32 @@
 # Runbook
 
+## 0) Production deploy checklist
+
+Перед публичным деплоем задайте в `.env` (или secrets в orchestrator):
+
+| Переменная | Обязательно | Зачем |
+|------------|-------------|--------|
+| `TGA_ADMIN_TOKEN` | **Да** (прод) | `/metrics`, admin API, pprof |
+| `TGA_TRUSTED_PROXY` | **Да** (прод за proxy) | `1` — брать IP клиента из `X-Forwarded-For` / `X-Real-IP` для rate limit и feedback |
+| `TGA_TURNSTILE_SITE_KEY` + `TGA_TURNSTILE_SECRET_KEY` | **Да**, если настроен SMTP фидбека | Сервер не стартует без них при `TGA_FEEDBACK_SMTP_*` |
+| `TGA_RATE_LIMIT_RPS` | Рекомендуется | Например `10`–`20` на IP |
+| Reverse proxy | **Да** (прод) | Cloudflare Tunnel / nginx перед приложением; не отдавайте `:8080` напрямую в интернет |
+
+**Проверка после деплоя:**
+
+```bash
+curl -fsS https://your-host/health
+curl -fsS -H "X-Admin-Token: $TGA_ADMIN_TOKEN" https://your-host/metrics | head
+curl -fsS https://your-host/api/series | head -c 200
+```
+
+`/metrics` без токена с внешнего IP должен возвращать **403** (если `TGA_ADMIN_TOKEN` задан).  
+Feedback с SMTP: форма должна показывать Turnstile (`GET /api/feedback/config` → `turnstile_enabled: true`).
+
+**Trusted proxy:** за Cloudflare Tunnel / nginx задайте `TGA_TRUSTED_PROXY=1`, чтобы rate limit и feedback hash использовали реальный IP клиента. Без этого заголовки `X-Forwarded-For` **игнорируются** (защита от спуфинга при прямом доступе к `:8080`).
+
+---
+
 ## 1) Рост 5xx по API
 
 1. Проверить `/health`.

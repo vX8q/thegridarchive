@@ -53,9 +53,19 @@
     return false;
   }
 
+  function eventForWeekendDateRange(ev) {
+    if (!ev) return ev;
+    var out = Object.assign({}, ev);
+    delete out._scheduleSessionKind;
+    delete out._scheduleSessionLabel;
+    delete out._sessionLabel;
+    return out;
+  }
+
   /** First/last calendar day shown on card (24h races span two days). */
   function lastResultsCardRaceDateRange(card) {
     var e = (card && card.event) || {};
+    var evRange = eventForWeekendDateRange(e);
     var rs = pickIsoDate(card && card.rangeStart);
     var re = pickIsoDate(card && card.rangeEnd);
     if (lastResultsCardIs24HourRace(card)) {
@@ -68,7 +78,7 @@
     if (lastResultsCardHasMultipleRaces(card)) {
       var getRangeMr = window.TGA && window.TGA.getEventRaceDateRangeIso;
       if (getRangeMr) {
-        var schedMr = getRangeMr(e);
+        var schedMr = getRangeMr(evRange);
         var ss = pickIsoDate(schedMr.start);
         var se = pickIsoDate(schedMr.end);
         if (ss && se && se > ss && (!rs || !re || rs === re)) {
@@ -141,35 +151,48 @@
     var formatDateRange = window.TGA && window.TGA.formatDateRange;
     if (!formatShortDate || !formatDateRange) return '—';
     var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
-    if (formatEventRaceStartDate) {
-      var primary = formatEventRaceStartDate(e);
-      if (primary && primary !== '—') return primary;
-    }
-    var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
-    if (getRange) {
-      var schedRange = getRange(e);
-      var spanStart = pickIsoDate(schedRange.start);
-      var spanEnd = pickIsoDate(schedRange.end);
-      if (spanStart && spanEnd && spanEnd > spanStart) {
-        return formatDateRange(spanStart, spanEnd);
-      }
-    }
-    var range = lastResultsCardRaceDateRange(card);
-    var rs = range.start;
-    var re = range.end;
     if (lastResultsCardHasMultipleRaces(card) || lastResultsCardIs24HourRace(card)) {
+      var evRange = eventForWeekendDateRange(e);
+      var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+      if (getRange) {
+        var schedRange = getRange(evRange);
+        var spanStart = pickIsoDate(schedRange.start);
+        var spanEnd = pickIsoDate(schedRange.end);
+        if (spanStart && spanEnd && spanEnd > spanStart) {
+          return formatDateRange(spanStart, spanEnd);
+        }
+      }
+      var range = lastResultsCardRaceDateRange(card);
+      var rs = range.start;
+      var re = range.end;
       if (!rs || !re || rs === re) {
         if (getRange) {
-          var schedRange2 = getRange(e);
+          var schedRange2 = getRange(evRange);
           rs = rs || pickIsoDate(schedRange2.start);
           re = re || pickIsoDate(schedRange2.end);
         }
       }
       if (rs) return formatDateRange(rs, re || rs);
     }
+    if (formatEventRaceStartDate) {
+      var primary = formatEventRaceStartDate(e);
+      if (primary && primary !== '—') return primary;
+    }
+    var getRangeFallback = window.TGA && window.TGA.getEventRaceDateRangeIso;
+    if (getRangeFallback) {
+      var schedRangeFb = getRangeFallback(e);
+      var spanStartFb = pickIsoDate(schedRangeFb.start);
+      var spanEndFb = pickIsoDate(schedRangeFb.end);
+      if (spanStartFb && spanEndFb && spanEndFb > spanStartFb) {
+        return formatDateRange(spanStartFb, spanEndFb);
+      }
+    }
+    var rangeFb = lastResultsCardRaceDateRange(card);
+    var rsFb = rangeFb.start;
+    var reFb = rangeFb.end;
     var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
     var raceIso = (getIso ? getIso(e) : '') ||
-      re || rs ||
+      reFb || rsFb ||
       pickIsoDate(e.end_date) ||
       pickIsoDate(e.start_date) ||
       pickIsoDate(card.dateStr);

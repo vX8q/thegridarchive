@@ -195,33 +195,6 @@
       "class": "GTD Pro",
       "car": "Porsche 911 GT3 R (992.2)",
       "driver_slug": "harry-king-nick-tandy"
-    },
-    {
-      "number": "36",
-      "driver": "Mason Filippi / Robert Wickens",
-      "team": "DXDT Racing",
-      "manufacturer": "Chevrolet",
-      "class": "GTD",
-      "car": "Chevrolet Corvette Z06 GT3.R",
-      "driver_slug": "mason-filippi-robert-wickens"
-    },
-    {
-      "number": "177",
-      "driver": "Harry King / Mikkel O. Pedersen",
-      "team": "AO Racing",
-      "manufacturer": "Porsche",
-      "class": "GTD",
-      "car": "Porsche 911 GT3 R (992.2)",
-      "driver_slug": "harry-king-mikkel-o-pedersen"
-    },
-    {
-      "number": "46",
-      "driver": "Andrea Caldarelli / Zachary Vanier",
-      "team": "Pfaff Motorsports",
-      "manufacturer": "Lamborghini",
-      "class": "GTD",
-      "car": "Lamborghini Temerario GT3",
-      "driver_slug": "andrea-caldarelli-zachary-vanier"
     }
   ],
   "tables": {
@@ -916,7 +889,7 @@
         [
           "18",
           "15",
-          "12",
+          "",
           "Chaz Mostert / Aaron Telitz",
           "Vasser Sullivan Racing / Lexus RC F GT3",
           "13",
@@ -924,31 +897,201 @@
           "Running"
         ],
         [
-          "2",
-          "177",
-          "14",
-          "Harry King / Mikkel O. Pedersen",
-          "AO Racing / Porsche 911 GT3 R (992.2)",
+          "4",
+          "4",
+          "10",
+          "Nicky Catsburg / Tommy Milner",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
           "",
           "",
           "Running"
         ],
         [
+          "",
+          "5",
+          "5",
+          "Tijmen van der Helm / Laurin Heinrich",
+          "JDC-Miller MotorSports / Porsche 963",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "6",
+          "8",
+          "Kevin Estre / Laurens Vanthoor",
+          "Porsche Penske Motorsport / Porsche 963",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "7",
+          "10",
+          "Julien Andlauer / Felipe Nasr",
+          "Porsche Penske Motorsport / Porsche 963",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "10",
+          "7",
+          "Filipe Albuquerque / Ricky Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "23",
+          "9",
+          "Roman De Angelis / Ross Gunn",
+          "Aston Martin THOR Team / Aston Martin Valkyrie",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "24",
+          "6",
+          "Sheldon van der Linde / Dries Vanthoor",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "25",
+          "11",
+          "Philipp Eng / Marco Wittmann",
+          "BMW M Team WRT / BMW M Hybrid V8",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "31",
+          "1",
+          "Jack Aitken / Earl Bamber",
+          "Cadillac Whelen / Cadillac V-Series.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "40",
           "3",
-          "46",
-          "13",
-          "Andrea Caldarelli / Zachary Vanier",
+          "Louis Deletraz / Jordan Taylor",
+          "Cadillac Wayne Taylor Racing / Cadillac V-Series.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "60",
+          "2",
+          "Tom Blomqvist / Colin Braun",
+          "Acura Meyer Shank Racing with Curb-Agajanian / Acura ARX-06",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "93",
+          "4",
+          "Nick Yelloly / Renger van der Zande",
+          "Acura Meyer Shank Racing with Curb-Agajanian / Acura ARX-06",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "1",
+          "6",
+          "Connor De Phillippi / Neil Verhagen",
+          "Paul Miller Racing / BMW M4 GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "3",
+          "8",
+          "Antonio Garcia / Alexander Sims",
+          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "9",
+          "12",
+          "Andrea Caldarelli / Sandy Mitchell",
           "Pfaff Motorsports / Lamborghini Temerario GT3",
           "",
           "",
           "Running"
         ],
         [
+          "",
+          "14",
+          "1",
+          "Ben Barnicoat / Jack Hawksworth",
+          "Vasser Sullivan Racing / Lexus RC F GT3",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "59",
+          "6",
+          "Max Esterson / Nikita Johnson",
+          "RLL Team McLaren / McLaren 720S GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "64",
+          "7",
+          "Ben Barker / Dennis Olsen",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "65",
           "4",
-          "4",
-          "4",
-          "Nicky Catsburg / Tommy Milner",
-          "Corvette Racing by Pratt Miller Motorsports / Chevrolet Corvette Z06 GT3.R",
+          "Christopher Mies / Frederic Vervisch",
+          "Ford Multimatic Motorsports / Ford Mustang GT3 Evo",
+          "",
+          "",
+          "Running"
+        ],
+        [
+          "",
+          "77",
+          "2",
+          "Harry King / Nick Tandy",
+          "AO Racing / Porsche 911 GT3 R (992.2)",
           "",
           "",
           "Running"
@@ -991,7 +1134,7 @@
           "2",
           "82",
           "1:06.701",
-          "320",
+          "220",
           "Running"
         ],
         [
@@ -1003,7 +1146,7 @@
           "3",
           "82",
           "1:06.592",
-          "300",
+          "240",
           "Running"
         ],
         [
@@ -1015,7 +1158,7 @@
           "4",
           "82",
           "1:06.461",
-          "280",
+          "320",
           "Running"
         ],
         [
@@ -1039,7 +1182,7 @@
           "6",
           "82",
           "1:06.385",
-          "250",
+          "230",
           "Running"
         ],
         [
@@ -1051,7 +1194,7 @@
           "7",
           "82",
           "1:06.323",
-          "240",
+          "210",
           "Running"
         ],
         [
@@ -1063,7 +1206,7 @@
           "8",
           "82",
           "1:06.386",
-          "230",
+          "250",
           "Running"
         ],
         [
@@ -1075,7 +1218,7 @@
           "9",
           "82",
           "1:06.340",
-          "220",
+          "280",
           "Running"
         ],
         [
@@ -1087,7 +1230,7 @@
           "10",
           "82",
           "1:06.996",
-          "210",
+          "200",
           "Running"
         ],
         [
@@ -1099,7 +1242,7 @@
           "11",
           "80",
           "1:06.569",
-          "200",
+          "300",
           "Running"
         ],
         [
@@ -1111,7 +1254,7 @@
           "1",
           "79",
           "1:09.848",
-          "350",
+          "280",
           "Running"
         ],
         [
@@ -1123,7 +1266,7 @@
           "2",
           "79",
           "1:10.643",
-          "320",
+          "220",
           "Running"
         ],
         [
@@ -1135,7 +1278,7 @@
           "3",
           "79",
           "1:10.240",
-          "300",
+          "210",
           "Running"
         ],
         [
@@ -1159,7 +1302,7 @@
           "5",
           "79",
           "1:10.074",
-          "260",
+          "300",
           "Running"
         ],
         [
@@ -1171,7 +1314,7 @@
           "6",
           "79",
           "1:10.105",
-          "250",
+          "350",
           "Running"
         ],
         [
@@ -1183,7 +1326,7 @@
           "7",
           "79",
           "1:10.172",
-          "240",
+          "230",
           "Running"
         ],
         [
@@ -1195,7 +1338,7 @@
           "8",
           "79",
           "1:10.739",
-          "230",
+          "200",
           "Running"
         ],
         [
@@ -1207,7 +1350,7 @@
           "9",
           "78",
           "1:11.713",
-          "220",
+          "240",
           "Running"
         ],
         [
@@ -1219,44 +1362,8 @@
           "10",
           "78",
           "1:10.195",
-          "210",
+          "",
           "Not Running"
-        ],
-        [
-          "22",
-          "36",
-          "Robert Wickens / Mason Filippi",
-          "DXDT Racing / Chevrolet Corvette Z06 GT3.R",
-          "GTD",
-          "6",
-          "0",
-          "",
-          "250",
-          "Running"
-        ],
-        [
-          "23",
-          "177",
-          "Harry King / Mikkel Pedersen",
-          "AO Racing / Aston Martin Vantage AMR GT3 Evo",
-          "GTD",
-          "13",
-          "0",
-          "",
-          "180",
-          "Running"
-        ],
-        [
-          "24",
-          "46",
-          "Zachary Vanier / Andrea Caldarelli",
-          "Pfaff Motorsports / Lamborghini Huracan GT3 Evo 2",
-          "GTD",
-          "14",
-          "0",
-          "",
-          "170",
-          "Running"
         ]
       ]
     }

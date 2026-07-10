@@ -10,7 +10,6 @@
   function getGlobalEventsCache() { return globalEventsCache; }
 
 // ── Global schedule helpers ───────────────────────────────────────────────
-var globalEventsCache = null; // cache of all events
 
 /** Pre-season tests / prologue sessions — excluded from Full Schedule. */
 function isPreSeasonScheduleEvent(e) {
@@ -342,6 +341,9 @@ function fetchAllEvents(seriesData) {
       races.forEach(function (r) {
         var label = r.label || 'Race';
         var ds = String(r.date || '').slice(0, 10);
+        var kind = r.kind || '';
+        if (!kind && /^sprint$/i.test(label)) kind = 'sprint';
+        if (!kind && /^feature$/i.test(label)) kind = 'feature';
         var rowEv = {
           _seriesId: e._seriesId,
           _seriesName: e._seriesName,
@@ -354,7 +356,10 @@ function fetchAllEvents(seriesData) {
           location: e.location || '',
           time_est: r.time_est || r.time_local || '',
           time_msk: r.time_msk || '',
-          has_detail: e.has_detail
+          has_detail: e.has_detail,
+          _scheduleSessionKind: kind,
+          _scheduleSessionLabel: label,
+          _sessionLabel: label
         };
         delete rowEv._raceUtcMs;
         delete rowEv._scheduleDate;
@@ -383,7 +388,7 @@ function loadGlobalSchedule(seriesData) {
   var nrRow = document.getElementById('next-races-row');
   if (nrRow) nrRow.classList.add('hidden');
 
-  fetchAllEvents(seriesData).then(function (all) {
+  function renderFromEvents(all) {
     var visible = filterVisibleEvents(all);
     globalEventsCache = visible;
     if (window.TGA && typeof window.TGA.setGlobalEventsCache === 'function') {
@@ -393,7 +398,15 @@ function loadGlobalSchedule(seriesData) {
     if (window.TGA && typeof window.TGA.renderLastResultsCards === 'function') {
       window.TGA.renderLastResultsCards(visible);
     }
-  });
+  }
+
+  var cached = getGlobalEventsCache();
+  if (cached && cached.length) {
+    renderFromEvents(cached);
+    return;
+  }
+
+  fetchAllEvents(seriesData).then(renderFromEvents);
 }
 
 // ── Schedule page ─────────────────────────────────────────────────────────
@@ -449,6 +462,15 @@ function renderSchedulePage() {
   }
 
   if (body) body.innerHTML = '<tr><td colspan="5" class="loading">' + t('loading') + '</td></tr>';
+
+  // Reuse events already loaded on Home (avoids ~20+ /api/series/*/events calls).
+  var cached = getGlobalEventsCache();
+  if (cached && cached.length) {
+    var fromCache = filterFullScheduleEvents(filterVisibleEvents(cached));
+    buildScheduleHTML(fromCache, 'sched-page-body');
+    if (typeof window.TGA.translateStaticUI === 'function') window.TGA.translateStaticUI();
+    return;
+  }
 
   API.getSeries()
     .then(function (data) { return fetchAllEvents(data); })

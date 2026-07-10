@@ -33,19 +33,12 @@ var cardBgMu sync.Mutex
 func handleCardBackground(w http.ResponseWriter, r *http.Request, webDir, dataDir string) {
 	name := strings.TrimPrefix(r.URL.Path, "/api/card-bg/")
 	name = strings.TrimSpace(strings.TrimRight(name, "/"))
-	if name == "" || strings.Contains(name, "..") {
-		http.NotFound(w, r)
-		return
-	}
-	ext := strings.ToLower(filepath.Ext(name))
-	switch ext {
-	case ".jpg", ".jpeg", ".png", ".webp", ".gif":
-	default:
+	srcPath, ok := cardBgSourcePath(webDir, name)
+	if !ok {
 		http.NotFound(w, r)
 		return
 	}
 
-	srcPath := filepath.Join(webDir, "images", filepath.FromSlash(name))
 	srcInfo, err := os.Stat(srcPath)
 	if err != nil || srcInfo.IsDir() {
 		http.NotFound(w, r)
@@ -97,6 +90,36 @@ func handleCardBackground(w http.ResponseWriter, r *http.Request, webDir, dataDi
 		_ = os.WriteFile(cachePath, buf.Bytes(), 0o600)
 	}
 	serveCardBgJPEG(w, buf.Bytes())
+}
+
+// cardBgSourcePath resolves a card background image under webDir/images only.
+func cardBgSourcePath(webDir, name string) (string, bool) {
+	if name == "" || strings.Contains(name, "..") {
+		return "", false
+	}
+	fromSlash := filepath.FromSlash(name)
+	if strings.HasPrefix(name, "/") || strings.HasPrefix(name, "\\") {
+		return "", false
+	}
+	if filepath.IsAbs(fromSlash) {
+		return "", false
+	}
+	if vol := filepath.VolumeName(fromSlash); vol != "" {
+		return "", false
+	}
+	ext := strings.ToLower(filepath.Ext(name))
+	switch ext {
+	case ".jpg", ".jpeg", ".png", ".webp", ".gif":
+	default:
+		return "", false
+	}
+	baseDir := filepath.Join(webDir, "images")
+	srcPath := filepath.Clean(filepath.Join(baseDir, fromSlash))
+	rel, err := filepath.Rel(baseDir, srcPath)
+	if err != nil || strings.HasPrefix(rel, "..") {
+		return "", false
+	}
+	return srcPath, true
 }
 
 func serveCardBgJPEG(w http.ResponseWriter, b []byte) {

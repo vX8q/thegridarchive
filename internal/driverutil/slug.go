@@ -13,6 +13,9 @@ var diacritics = strings.NewReplacer(
 	"ü", "u", "Ü", "u",
 	"é", "e", "É", "e",
 	"á", "a", "Á", "a",
+	"â", "a", "Â", "a",
+	"ã", "a", "Ã", "a",
+	"à", "a", "À", "a",
 	"í", "i", "Í", "i",
 	"ó", "o", "Ó", "o",
 	"ú", "u", "Ú", "u",
@@ -78,9 +81,24 @@ func NormalizeKey(s string) string {
 	return s
 }
 
+// stripEligibilitySlugSuffix removes NASCAR eligibility suffixes (-i, -r, -g) from URL slugs.
+func stripEligibilitySlugSuffix(slug string) string {
+	slug = strings.ToLower(strings.TrimSpace(slug))
+	for _, suf := range []string{"-i", "-r", "-g"} {
+		if strings.HasSuffix(slug, suf) {
+			base := strings.TrimSuffix(slug, suf)
+			if base != "" {
+				return base
+			}
+		}
+	}
+	return slug
+}
+
 // NormalizeSlug maps legacy or alternate driver URL slugs to the canonical slug.
 func NormalizeSlug(slug string) string {
-	switch strings.ToLower(strings.TrimSpace(slug)) {
+	slug = strings.ToLower(strings.TrimSpace(slug))
+	switch slug {
 	case "nico-h-lkenberg", "nicolas-hulkenberg", "nicolas-h-lkenberg":
 		return "nico-hulkenberg"
 	case "sergio-p-rez", "sergio-pérez":
@@ -111,8 +129,10 @@ func NormalizeSlug(slug string) string {
 		return "rafael-camara"
 	case "woohyun-shin", "w-shin", "m-shin":
 		return "michael-shin"
+	case "david-sapienza":
+		return "dave-sapienza"
 	default:
-		return strings.ToLower(strings.TrimSpace(slug))
+		return stripEligibilitySlugSuffix(slug)
 	}
 }
 

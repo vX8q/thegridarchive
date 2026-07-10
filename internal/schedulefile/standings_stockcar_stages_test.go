@@ -115,7 +115,7 @@ func compareSeriesStagePoints(t *testing.T, seriesID, tsvFile string) {
 	for _, row := range data.Rows {
 		buildStages[row.Driver] = row.Stages
 	}
-	EnrichStagesFromEvents(dataDir, seriesID, data)
+	EnrichStagesFromEvents(dataDir, seriesID, "2026", data)
 	apiStages := make(map[string]string)
 	for _, row := range data.Rows {
 		apiStages[row.Driver] = row.Stages

@@ -224,9 +224,10 @@
         }
 
         var formatEventRaceStartDate = window.TGA.formatEventRaceStartDate;
-        var dateShort = formatEventRaceStartDate
-          ? formatEventRaceStartDate(e)
-          : (ds ? formatShortDate(ds) : '');
+        var formatFullScheduleRowDate = window.TGA.formatFullScheduleRowDate;
+        var dateShort = formatFullScheduleRowDate
+          ? formatFullScheduleRowDate(e)
+          : (formatEventRaceStartDate ? formatEventRaceStartDate(e) : (ds ? formatShortDate(ds) : ''));
         var estRaw = e.time_est || e.timeEst || e.time_et || '';
         var mskRaw = e.time_msk || e.timeMsk || '';
         var seriesIdUpper = scheduleEventSeriesUpper(e);

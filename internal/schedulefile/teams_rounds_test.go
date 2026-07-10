@@ -3,6 +3,7 @@ package schedulefile
 import (
 	"fmt"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -587,5 +588,145 @@ func TestEnrichTeamsRoundsFromEvents_SupercarsWeekendSubstitutes(t *testing.T) {
 	}
 	if hazelwood.FullTime {
 		t.Fatal("substitute should be part-time")
+	}
+}
+
+func TestEnrichTeamsRoundsFromEvents_F3CamposNumber3Substitute(t *testing.T) {
+	dataDir, err := filepath.Abs("../../data")
+	if err != nil {
+		t.Fatal(err)
+	}
+	data, err := LoadTeams(dataDir, "f3")
+	if err != nil {
+		t.Fatal(err)
+	}
+	EnrichTeamsRoundsFromEvents(dataDir, "f3", "2026", data)
+
+	var heuzenroeder, rivera *TeamJSON
+	for i := range data.Teams {
+		if data.Teams[i].Number != "3" {
+			continue
+		}
+		switch data.Teams[i].Driver {
+		case "Patrick Heuzenroeder":
+			heuzenroeder = &data.Teams[i]
+		case "Ernesto Rivera":
+			rivera = &data.Teams[i]
+		}
+	}
+	if heuzenroeder == nil {
+		t.Fatal("missing Patrick Heuzenroeder on #3")
+	}
+	if heuzenroeder.Rounds != "1" {
+		t.Fatalf("Heuzenroeder rounds = %q, want 1", heuzenroeder.Rounds)
+	}
+	if rivera == nil {
+		t.Fatal("missing Ernesto Rivera substitute on #3")
+	}
+	if rivera.Rounds != "2–5" {
+		t.Fatalf("Rivera rounds = %q, want 2–5", rivera.Rounds)
+	}
+}
+
+func TestEnrichTeamsRoundsFromEvents_F3StromstedSingleRow(t *testing.T) {
+	dataDir, err := filepath.Abs("../../data")
+	if err != nil {
+		t.Fatal(err)
+	}
+	data, err := LoadTeams(dataDir, "f3")
+	if err != nil {
+		t.Fatal(err)
+	}
+	EnrichTeamsRoundsFromEvents(dataDir, "f3", "2026", data)
+
+	var stromsted []TeamJSON
+	for _, row := range data.Teams {
+		if row.Number == "4" && driverMatchKey(row.Driver) == driverMatchKey("Noah Stromsted") {
+			stromsted = append(stromsted, row)
+		}
+	}
+	if len(stromsted) != 1 {
+		names := make([]string, len(stromsted))
+		for i, row := range stromsted {
+			names[i] = row.Driver + " (" + row.Rounds + ")"
+		}
+		t.Fatalf("expected one #4 Stromsted row, got %d: %v", len(stromsted), names)
+	}
+	if stromsted[0].Rounds != "1–5" {
+		t.Fatalf("Stromsted rounds = %q, want 1–5", stromsted[0].Rounds)
+	}
+}
+
+func TestMergeDuplicateDriverCarRows(t *testing.T) {
+	rows := []TeamJSON{
+		{Number: "4", Driver: "Noah Stromsted", Rounds: "1–3"},
+		{Number: "4", Driver: "Noah Strømsted", Rounds: "4–5"},
+		{Number: "3", Driver: "Patrick Heuzenroeder", Rounds: "1"},
+		{Number: "3", Driver: "Ernesto Rivera", Rounds: "2–5"},
+	}
+	mergeDuplicateDriverCarRows(&rows)
+	if len(rows) != 3 {
+		t.Fatalf("expected 3 rows after merge, got %d: %+v", len(rows), rows)
+	}
+	if rows[0].Rounds != "1–5" || driverMatchKey(rows[0].Driver) != driverMatchKey("Noah Stromsted") {
+		t.Fatalf("merged Stromsted row = %+v", rows[0])
+	}
+	if rows[1].Number != "3" || rows[1].Driver != "Patrick Heuzenroeder" {
+		t.Fatalf("Heuzenroeder row = %+v", rows[1])
+	}
+	if rows[2].Number != "3" || rows[2].Driver != "Ernesto Rivera" {
+		t.Fatalf("Rivera row = %+v", rows[2])
+	}
+}
+
+func TestEnrichTeamsRoundsFromEvents_NoDuplicateDriverOnSameNumber(t *testing.T) {
+	dataDir, err := filepath.Abs("../../data")
+	if err != nil {
+		t.Fatal(err)
+	}
+	series := []struct {
+		id     string
+		season string
+	}{
+		{"f1", "2026"},
+		{"f2", "2026"},
+		{"f3", "2026"},
+		{"frec", "2026"},
+		{"indycar", "2026"},
+		{"super_formula", "2026"},
+		{"dtm", "2026"},
+		{"nascar_cup", "2026"},
+		{"noaps", "2026"},
+		{"nascar_truck", "2026"},
+		{"arca", "2026"},
+		{"nascar_modified", "2026"},
+		{"supercars", "2026"},
+	}
+	for _, s := range series {
+		s := s
+		t.Run(s.id, func(t *testing.T) {
+			data, err := LoadTeams(dataDir, s.id)
+			if err != nil || data == nil {
+				t.Skip("no teams file")
+			}
+			EnrichTeamsRoundsFromEvents(dataDir, s.id, s.season, data)
+			seen := map[string]string{}
+			check := func(rows []TeamJSON) {
+				for _, row := range rows {
+					num := strings.TrimSpace(row.Number)
+					dk := driverMatchKey(row.Driver)
+					if num == "" || dk == "" {
+						continue
+					}
+					key := num + "|" + dk
+					if prev, ok := seen[key]; ok {
+						t.Fatalf("%s: duplicate rows for #%s %q: %q and %q", s.id, num, row.Driver, prev, row.Driver)
+					}
+					seen[key] = row.Driver
+				}
+			}
+			check(data.Teams)
+			check(data.TeamsNonChartered)
+		})
 	}
 }

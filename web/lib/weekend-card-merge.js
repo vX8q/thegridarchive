@@ -222,6 +222,9 @@
       if (ids.indexOf(sid) < 0) return;
       var prev = byEventId[eid];
       var parent = Object.assign({}, prev.event, p.event, { _seriesId: sid, series_id: sid });
+      delete parent._scheduleSessionKind;
+      delete parent._scheduleSessionLabel;
+      delete parent._sessionLabel;
       var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
       var range = getRange ? getRange(parent) : { start: '', end: '' };
       var spanStart = pickIsoDate(range.start);

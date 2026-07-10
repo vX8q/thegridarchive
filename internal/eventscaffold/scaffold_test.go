@@ -134,6 +134,89 @@ func TestRun_supercarsWeekendUsesBundlePathAndTitle(t *testing.T) {
 	}
 }
 
+func TestRun_createsUpcomingSupercarsWeekend(t *testing.T) {
+	dataDir := t.TempDir()
+	schedDir := filepath.Join(dataDir, "schedules")
+	if err := os.MkdirAll(schedDir, 0o750); err != nil {
+		t.Fatal(err)
+	}
+	today := time.Now().Format("2006-01-02")
+	sched := []byte(`[
+		{
+			"id": "SUPERCARS_2026_20",
+			"series_id": "SUPERCARS",
+			"season": "2026",
+			"name": "NTI Townsville 500 Race 1",
+			"location": "Townsville, Queensland",
+			"circuit_name": "Reid Park Street Circuit",
+			"start_date": "` + today + `",
+			"end_date": "` + today + `"
+		},
+		{
+			"id": "SUPERCARS_2026_21",
+			"series_id": "SUPERCARS",
+			"season": "2026",
+			"name": "NTI Townsville 500 Race 2",
+			"location": "Townsville, Queensland",
+			"circuit_name": "Reid Park Street Circuit",
+			"start_date": "` + today + `",
+			"end_date": "` + today + `"
+		}
+	]`)
+	if err := os.WriteFile(filepath.Join(schedDir, "supercars.json"), sched, 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	n, err := Run(dataDir, Options{Mode: ModeUpcoming, Season: "2026", WithEntryList: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if n != 1 {
+		t.Fatalf("created = %d, want 1 weekend bundle", n)
+	}
+
+	detail, err := schedulefile.LoadEventDetail(dataDir, "SUPERCARS_2026_20")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if detail.Race != "NTI Townsville 500" {
+		t.Fatalf("race = %q, want NTI Townsville 500", detail.Race)
+	}
+	raceTable, ok := detail.Tables["race"]
+	if !ok || len(raceTable.Sessions) != 3 {
+		t.Fatalf("expected race.sessions with 3 races, got %#v", detail.Tables["race"])
+	}
+	if !schedulefile.EventDetailExists(dataDir, "SUPERCARS_2026_21") {
+		t.Fatal("expected weekend bundle to satisfy sibling schedule races")
+	}
+}
+
+func TestRun_scaffoldTownsville2026Integration(t *testing.T) {
+	dataDir := "../../data"
+	if schedulefile.EventDetailFileExists(dataDir, "supercars_2026_7") {
+		t.Skip("supercars_2026_7.json already exists")
+	}
+	n, err := Run(dataDir, Options{
+		Mode:          ModeUpcoming,
+		Season:        "2026",
+		WithEntryList: true,
+		EventIDs:      []string{"SUPERCARS_2026_20"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if n != 1 {
+		t.Fatalf("created = %d, want 1", n)
+	}
+	detail, err := schedulefile.LoadEventDetailAtID(dataDir, "supercars_2026_7")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if detail.Race != "NTI Townsville 500" {
+		t.Fatalf("race = %q", detail.Race)
+	}
+}
+
 func TestRaceTitle_stripsRaceSuffix(t *testing.T) {
 	t.Parallel()
 	if got := raceTitle("Darwin Triple Crown Race 1"); got != "Darwin Triple Crown" {

@@ -1,0 +1,40 @@
+{
+  "event_id": "WEC_2026_4",
+  "series": "FIA World Endurance Championship",
+  "race": "ROLEX 6 Hours of São Paulo",
+  "date": "10–12 July 2026",
+  "start_date": "2026-07-10",
+  "end_date": "2026-07-12",
+  "track": "Interlagos Circuit",
+  "location": "São Paulo",
+  "entry_list": null,
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

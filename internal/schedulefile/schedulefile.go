@@ -212,9 +212,22 @@ func LoadStandings(dataDir string, seriesID string) (*StandingsData, error) {
 
 // (EventDetailJSON/EventTable/EntryListRow types moved to types.go)
 
-// LoadEventDetail loads event detail JSON.
+// LoadEventDetail loads event detail JSON for a schedule event id.
 func LoadEventDetail(dataDir string, eventID string) (*EventDetailJSON, error) {
 	b, err := readEventDetailFile(dataDir, strings.ToLower(eventID))
+	if err != nil || b == nil {
+		return nil, err
+	}
+	var out EventDetailJSON
+	if err := json.Unmarshal(b, &out); err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// LoadEventDetailAtID loads event JSON by on-disk file id (weekend bundle slug).
+func LoadEventDetailAtID(dataDir, fileID string) (*EventDetailJSON, error) {
+	b, err := ReadEventDetailFileAtID(dataDir, fileID)
 	if err != nil || b == nil {
 		return nil, err
 	}

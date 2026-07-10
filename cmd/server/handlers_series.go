@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/vX8q/tga/config"
 	"github.com/vX8q/tga/internal/schedulefile"
@@ -148,9 +147,6 @@ func handleSeriesEvents(w http.ResponseWriter, r *http.Request, dataDir, dataSer
 		for i, e := range filtered {
 			eventIDLower := strings.ToLower(e.ID)
 			hasDetail := schedulefile.EventDetailExists(dataDir, eventIDLower)
-			if !hasDetail && isEventSoon(e.StartDate) {
-				hasDetail = true
-			}
 			enriched[i] = EventWithDetail{EventJSON: e, HasDetail: hasDetail}
 		}
 		_ = json.NewEncoder(w).Encode(enriched)
@@ -189,9 +185,6 @@ func handleSeriesEvents(w http.ResponseWriter, r *http.Request, dataDir, dataSer
 				}
 				eventIDLower := strings.ToLower(ev.ID)
 				hasDetail := schedulefile.EventDetailExists(dataDir, eventIDLower)
-				if !hasDetail && isEventSoon(ev.StartDate) {
-					hasDetail = true
-				}
 				enriched[i] = EventWithDetail{EventJSON: ev, HasDetail: hasDetail}
 			}
 			_ = json.NewEncoder(w).Encode(enriched)
@@ -206,43 +199,9 @@ func handleSeriesEvents(w http.ResponseWriter, r *http.Request, dataDir, dataSer
 	for i, e := range events {
 		eventIDLower := strings.ToLower(e.ID)
 		hasDetail := schedulefile.EventDetailExists(dataDir, eventIDLower)
-		if !hasDetail && isEventSoon(e.StartDate) {
-			hasDetail = true
-		}
 		enriched[i] = EventWithDetail{EventJSON: e, HasDetail: hasDetail}
 	}
 	_ = json.NewEncoder(w).Encode(enriched)
-}
-
-// isEventSoon returns true if the event start date (YYYY-MM-DD)
-// falls within [today; today+7 days] in local time.
-func isEventSoon(startDate string) bool {
-	d, ok := parseCalendarDateLocal(startDate)
-	if !ok {
-		return false
-	}
-	now := time.Now().In(time.Local)
-	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
-	if d.Before(today) {
-		return false
-	}
-	if d.After(today.AddDate(0, 0, 7)) {
-		return false
-	}
-	return true
-}
-
-func parseCalendarDateLocal(date string) (time.Time, bool) {
-	const layout = "2006-01-02"
-	date = strings.TrimSpace(date)
-	if date == "" {
-		return time.Time{}, false
-	}
-	t, err := time.ParseInLocation(layout, date, time.Local)
-	if err != nil {
-		return time.Time{}, false
-	}
-	return t, true
 }
 
 func handleSeriesTeams(w http.ResponseWriter, _ *http.Request, dataDir, dataSeriesID, season string) {
@@ -342,7 +301,9 @@ func handleSeriesStandings(w http.ResponseWriter, _ *http.Request, dataDir, data
 	if strings.EqualFold(dataSeriesID, "IMSA") {
 		normalizeIMSADriverDuplicates(data)
 	}
-	_ = json.NewEncoder(w).Encode(data)
+	cacheKey := "standings/" + strings.ToLower(dataSeriesID) + "/" + season
+	sourceMtime := schedulefile.SeriesDataMaxMtime(dataDir, dataSeriesID, season)
+	writeSeriesJSONCached(w, cacheKey, sourceMtime, data)
 }
 
 func normalizeIMSADriverDuplicates(data *schedulefile.StandingsData) {
@@ -423,7 +384,12 @@ func handleSeriesStats(w http.ResponseWriter, r *http.Request, dataDir, dataSeri
 	if data == nil {
 		data = &schedulefile.DriverStatsData{Rows: []schedulefile.DriverStatsRow{}}
 	}
-	_ = json.NewEncoder(w).Encode(data)
+	if season == "" {
+		season = config.CurrentSeason
+	}
+	cacheKey := "stats/" + strings.ToLower(dataSeriesID) + "/" + season
+	sourceMtime := schedulefile.SeriesDataMaxMtime(dataDir, dataSeriesID, season)
+	writeSeriesJSONCached(w, cacheKey, sourceMtime, data)
 }
 
 func handleSeriesHeadToHead(w http.ResponseWriter, r *http.Request, dataDir, dataSeriesID, season string) {

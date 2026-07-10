@@ -26,5 +26,6 @@ run('node', ['scripts/validate-schedule-times.mjs']);
 run('node', ['scripts/audit-card-dates.mjs']);
 run('node', ['scripts/compare-wiki-schedules.mjs'], { warnOnly: true, label: 'compare-wiki-schedules (warn-only)' });
 run('go', ['test', './internal/schedulefile/...', '-count=1', '-run', 'Standings']);
+run('node', ['scripts/audit-innerhtml.mjs'], { warnOnly: true, label: 'audit-innerhtml (warn-only)' });
 
 console.log('\nAll check-data steps completed.');

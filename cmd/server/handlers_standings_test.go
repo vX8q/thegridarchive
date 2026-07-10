@@ -146,3 +146,27 @@ func TestHandleSeriesStandings_F1_CanadaMonacoColumns(t *testing.T) {
 		t.Errorf("Monaco R6 = %q, want 1", ant.Races["R6"])
 	}
 }
+
+func TestHandleSeriesStandings_CacheHit(t *testing.T) {
+	dataDir := testDataDir(t)
+	seriesResponseCache = newComputedResponseCache(seriesComputedCacheTTL)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/series/f1/standings", nil)
+	rec1 := httptest.NewRecorder()
+	handleSeriesStandings(rec1, req, dataDir, "F1", "2026")
+	if rec1.Code != http.StatusOK {
+		t.Fatalf("first status = %d", rec1.Code)
+	}
+	if cc := rec1.Header().Get("Cache-Control"); cc == "" {
+		t.Fatal("expected Cache-Control on standings response")
+	}
+
+	rec2 := httptest.NewRecorder()
+	handleSeriesStandings(rec2, req, dataDir, "F1", "2026")
+	if rec2.Code != http.StatusOK {
+		t.Fatalf("second status = %d", rec2.Code)
+	}
+	if rec2.Body.String() != rec1.Body.String() {
+		t.Fatal("cached standings body differs from first response")
+	}
+}

@@ -1,0 +1,269 @@
+{
+  "event_id": "SUPERCARS_2026_7",
+  "series": "Supercars Championship",
+  "race": "NTI Townsville 500",
+  "date": "10–12 July 2026",
+  "start_date": "2026-07-10",
+  "end_date": "2026-07-12",
+  "track": "Reid Park Street Circuit",
+  "location": "Townsville, Queensland",
+  "entry_list": [
+    {
+      "number": "4",
+      "driver": "Jack Le Brocq",
+      "team": "Matt Stone Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "jack-le-brocq"
+    },
+    {
+      "number": "10",
+      "driver": "Zach Bates",
+      "team": "Matt Stone Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "zach-bates"
+    },
+    {
+      "number": "9",
+      "driver": "Jobe Stewart",
+      "team": "Erebus Motorsport",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "jobe-stewart"
+    },
+    {
+      "number": "99",
+      "driver": "Cooper Murray",
+      "team": "Erebus Motorsport",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "cooper-murray"
+    },
+    {
+      "number": "18",
+      "driver": "Anton de Pasquale",
+      "team": "Team 18",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "anton-de-pasquale"
+    },
+    {
+      "number": "20",
+      "driver": "David Reynolds",
+      "team": "Team 18",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "david-reynolds"
+    },
+    {
+      "number": "31",
+      "driver": "Jayden Ojeda",
+      "team": "PremiAir Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "jayden-ojeda"
+    },
+    {
+      "number": "777",
+      "driver": "Declan Fraser",
+      "team": "PremiAir Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "declan-fraser"
+    },
+    {
+      "number": "3",
+      "driver": "Aaron Cameron",
+      "team": "Blanchard Racing Team",
+      "manufacturer": "Ford",
+      "driver_slug": "aaron-cameron"
+    },
+    {
+      "number": "7",
+      "driver": "James Golding",
+      "team": "Blanchard Racing Team",
+      "manufacturer": "Ford",
+      "driver_slug": "james-golding"
+    },
+    {
+      "number": "6",
+      "driver": "Cameron Waters",
+      "team": "Tickford Racing",
+      "manufacturer": "Ford",
+      "driver_slug": "cameron-waters"
+    },
+    {
+      "number": "55",
+      "driver": "Thomas Randle",
+      "team": "Tickford Racing",
+      "manufacturer": "Ford",
+      "driver_slug": "thomas-randle"
+    },
+    {
+      "number": "11",
+      "driver": "Jackson Walls",
+      "team": "Triple Eight Race Engineering",
+      "manufacturer": "Ford",
+      "driver_slug": "jackson-walls"
+    },
+    {
+      "number": "88",
+      "driver": "Broc Feeney",
+      "team": "Triple Eight Race Engineering",
+      "manufacturer": "Ford",
+      "driver_slug": "broc-feeney"
+    },
+    {
+      "number": "888",
+      "driver": "Will Brown",
+      "team": "Triple Eight Race Engineering",
+      "manufacturer": "Ford",
+      "driver_slug": "will-brown"
+    },
+    {
+      "number": "17",
+      "driver": "Brodie Kostecki",
+      "team": "Dick Johnson Racing",
+      "manufacturer": "Ford",
+      "driver_slug": "brodie-kostecki"
+    },
+    {
+      "number": "38",
+      "driver": "Rylan Gray",
+      "team": "Dick Johnson Racing",
+      "manufacturer": "Ford",
+      "driver_slug": "rylan-gray"
+    },
+    {
+      "number": "19",
+      "driver": "Matt Payne",
+      "team": "Grove Racing",
+      "manufacturer": "Ford",
+      "driver_slug": "matt-payne"
+    },
+    {
+      "number": "26",
+      "driver": "Kai Allen",
+      "team": "Grove Racing",
+      "manufacturer": "Ford",
+      "driver_slug": "kai-allen"
+    },
+    {
+      "number": "1",
+      "driver": "Chaz Mostert",
+      "team": "Walkinshaw TWG Racing",
+      "manufacturer": "Toyota",
+      "driver_slug": "chaz-mostert"
+    },
+    {
+      "number": "2",
+      "driver": "Ryan Wood",
+      "team": "Walkinshaw TWG Racing",
+      "manufacturer": "Toyota",
+      "driver_slug": "ryan-wood"
+    },
+    {
+      "number": "8",
+      "driver": "Andre Heimgartner",
+      "team": "Brad Jones Racing",
+      "manufacturer": "Toyota",
+      "driver_slug": "andre-heimgartner"
+    },
+    {
+      "number": "14",
+      "driver": "Cameron Hill",
+      "team": "Brad Jones Racing",
+      "manufacturer": "Toyota",
+      "driver_slug": "cameron-hill"
+    },
+    {
+      "number": "96",
+      "driver": "Macauley Jones",
+      "team": "Brad Jones Racing",
+      "manufacturer": "Toyota",
+      "driver_slug": "macauley-jones"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Practice",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Fastest Lap",
+            "Lap",
+            "Laps"
+          ],
+          "rows": []
+        }
+      ]
+    },
+    "qualifying": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Qualifying",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Fastest Lap",
+            "Gap",
+            "Lap",
+            "Laps"
+          ],
+          "rows": []
+        }
+      ]
+    },
+    "race": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Race 1",
+          "headers": [
+            "Pos",
+            "ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Race time",
+            "Laps",
+            "Pts"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Race 2",
+          "headers": [
+            "Pos",
+            "ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Race time",
+            "Laps",
+            "Pts"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Race 3",
+          "headers": [
+            "Pos",
+            "ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Race time",
+            "Laps",
+            "Pts"
+          ],
+          "rows": []
+        }
+      ]
+    }
+  }
+}

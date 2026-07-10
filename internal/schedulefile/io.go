@@ -158,21 +158,15 @@ func SaveEventDetailAtPreferredPath(dataDir, eventID string, detail any) error {
 	return saveJSONFile(PreferredEventDetailPath(dataDir, eventID), detail)
 }
 
-// EventDetailExists returns true if event JSON exists in data/events/{Series}/{Year} or the flat directory.
+// EventDetailFileExists reports whether JSON exists at the on-disk file id
+// (e.g. supercars_2026_7) without schedule race remapping.
+func EventDetailFileExists(dataDir, fileID string) bool {
+	return eventDetailFileExistsRaw(dataDir, fileID)
+}
+
+// EventDetailExists returns true if event JSON exists for a schedule event id.
 func EventDetailExists(dataDir, eventID string) bool {
 	resolvedID := ResolveEventDetailID(dataDir, eventID)
-	for _, path := range eventDetailPathCandidates(dataDir, resolvedID) {
-		b, err := os.ReadFile(path) //nolint:gosec
-		if err == nil {
-			if eventDetailFileIsPlaceholder(b) {
-				continue
-			}
-			return true
-		}
-		if !os.IsNotExist(err) {
-			return false
-		}
-	}
-	return false
+	return EventDetailFileExists(dataDir, resolvedID)
 }
 

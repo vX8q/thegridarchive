@@ -62,11 +62,12 @@
   var categoryBySeriesId = P.categoryBySeriesId;
 
   /** Playoff cutline: dashed row above this position + 1 in driver standings. */
-  var STOCKCAR_STANDINGS_PLAYOFF_CUTLINE = {
-    nascar_cup: 16,
-    noaps: 12,
-    nascar_truck: 10
-  };
+  function stockcarPlayoffCutline(seriesKey) {
+    if (window.TGA && typeof window.TGA.stockcarPlayoffCutline === 'function') {
+      return window.TGA.stockcarPlayoffCutline(seriesKey);
+    }
+    return 0;
+  }
 
   function makeTableSortable() { return P.makeTableSortable.apply(null, arguments); }
   function makeSimpleTableSortable(tableEl) { P.makeSimpleTableSortable(tableEl); }
@@ -2622,11 +2623,13 @@ function renderDetail(seriesId, subPath) {
           theadRow.innerHTML = th;
         }
       function renderStandingsRows(list) {
-        var playoffCutline = STOCKCAR_STANDINGS_PLAYOFF_CUTLINE[sk] || 0;
+        var playoffCutline = stockcarPlayoffCutline(sk);
         standingsBody.innerHTML = list.map(function (row) {
           var posDisplay = (row.pos === 0 || row.pos === null || row.pos === undefined) ? '—' : row.pos;
           var posNum = posDisplay === '—' ? null : parseInt(String(row.pos), 10);
-          var rowClass = (playoffCutline > 0 && posNum === playoffCutline + 1) ? ' standings-playoff-cutline' : '';
+          var rowClass = (window.TGA && window.TGA.stockcarPlayoffRowClass)
+            ? window.TGA.stockcarPlayoffRowClass(sk, posNum)
+            : ((playoffCutline > 0 && posNum === playoffCutline + 1) ? ' standings-playoff-cutline' : '');
             var td = '<td class="col-num">' + posDisplay + '</td>';
             if (hasCar) td += '<td class="col-car">' + esc(dash(row.car)) + '</td>';
             td += '<td>' + driverLink(row.driver) + '</td><td>' + teamLink(row.team) + '</td>';

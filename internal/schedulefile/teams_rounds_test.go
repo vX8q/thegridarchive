@@ -623,8 +623,8 @@ func TestEnrichTeamsRoundsFromEvents_F3CamposNumber3Substitute(t *testing.T) {
 	if rivera == nil {
 		t.Fatal("missing Ernesto Rivera substitute on #3")
 	}
-	if rivera.Rounds != "2–5" {
-		t.Fatalf("Rivera rounds = %q, want 2–5", rivera.Rounds)
+	if rivera.Rounds != "2–6" {
+		t.Fatalf("Rivera rounds = %q, want 2–6", rivera.Rounds)
 	}
 }
 
@@ -652,8 +652,8 @@ func TestEnrichTeamsRoundsFromEvents_F3StromstedSingleRow(t *testing.T) {
 		}
 		t.Fatalf("expected one #4 Stromsted row, got %d: %v", len(stromsted), names)
 	}
-	if stromsted[0].Rounds != "1–5" {
-		t.Fatalf("Stromsted rounds = %q, want 1–5", stromsted[0].Rounds)
+	if stromsted[0].Rounds != "1–6" {
+		t.Fatalf("Stromsted rounds = %q, want 1–6", stromsted[0].Rounds)
 	}
 }
 

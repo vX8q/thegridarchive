@@ -17,8 +17,16 @@ run: build
 dev:
 	go run ./cmd/server
 
-# Локальная проверка перед коммитом: тесты + линтер.
-ci: test lint js-test check-data
+# Локальная проверка перед коммитом: тесты + линтер + data/JS gates (как CI).
+ci: test lint js-test check-data ci-data-audits
+
+ci-data-audits:
+	node scripts/audit-event-render.mjs
+	node scripts/audit-stockcar-stages.mjs
+	node scripts/audit-stockcar-data.mjs
+	node scripts/audit-stockcar-data.test.mjs
+	node scripts/audit-caution-breakdown.mjs
+	node scripts/audit-innerhtml.mjs
 
 js-test:
 	node scripts/js-test.mjs

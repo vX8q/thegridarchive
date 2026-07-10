@@ -537,9 +537,9 @@
         if (loadGen !== state.eventPageLoadGeneration) return;
         var msg = (err && err.message) ? String(err.message) : '';
         var isNotFound = msg === 'Not found' || msg.indexOf('404') >= 0;
-        titleEl.textContent = isNotFound ? t('error.event_not_found') : '—';
+        titleEl.textContent = isNotFound ? t('error.event_data_pending') : '—';
         if (sectionNavEl) sectionNavEl.innerHTML = '';
-        contentEl.innerHTML = '<p class="empty-msg">' + (isNotFound ? t('error.event_not_found') : (t('error.no_section_data') || 'Error loading event')) + '.</p>';
+        contentEl.innerHTML = '<p class="empty-msg">' + (isNotFound ? t('error.event_data_pending') : (t('error.no_section_data') || 'Error loading event')) + '</p>';
         adjustEventPanelPadding();
       });
   }

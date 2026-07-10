@@ -109,11 +109,11 @@ go run ./cmd/server
 
 Сервер запустится на **http://localhost:8080**.
 
-Если в корне проекта есть `.env`, сервер загрузит его автоматически. Для почты с формы фидбека создайте `.env` и задайте как минимум `TGA_FEEDBACK_SMTP_USER` и `TGA_FEEDBACK_SMTP_PASS` (для Gmail — [App Password](https://support.google.com/accounts/answer/185833)). Опционально: `TGA_FEEDBACK_FROM`, `TGA_FEEDBACK_TO`, `TGA_FEEDBACK_SMTP_HOST`, `TGA_FEEDBACK_SMTP_PORT`. При настроенном SMTP **обязательны** `TGA_TURNSTILE_SITE_KEY` и `TGA_TURNSTILE_SECRET_KEY` — сервер не стартует без них.
+Скопируйте шаблон окружения: `cp .env.example .env` (Windows: `copy .env.example .env`). Сервер загружает `.env` автоматически. Для локалки SMTP и Turnstile можно не задавать. Для почты с формы фидбека — `TGA_FEEDBACK_SMTP_USER` / `TGA_FEEDBACK_SMTP_PASS` (Gmail: [App Password](https://support.google.com/accounts/answer/185833)) и **обязательно** пара Turnstile-ключей; на `localhost` подойдут [тестовые ключи Cloudflare](https://developers.cloudflare.com/turnstile/troubleshooting/testing/) из `.env.example`.
 
 При старте сервер:
 1. Загружает JSON из `data/` в SQLite (`bootstrapStoreFromFiles`)
-2. Создаёт пустые скелеты недавних этапов без файла результатов (`internal/eventscaffold`, окно «Last Results» + 7 дней)
+2. Создаёт пустые скелеты недавних этапов (`ModeLastResults`, окно 7 дней) и ближайших будущих (`ModeUpcoming`, 14 дней) без файла результатов (`internal/eventscaffold`)
 3. Запускает фоновую live-синхронизацию (`internal/livesync`, каждые 2 минуты)
 
 ### Сборка и запуск бинарника
@@ -214,6 +214,20 @@ Compose запускает два сервиса:
 | `CLOUDFLARE_TUNNEL_TOKEN` | — | Токен Cloudflare Tunnel (для docker-compose) |
 
 Подробный чеклист деплоя: [`docs/RUNBOOK.md`](docs/RUNBOOK.md) §0.
+
+## Security
+
+Базовые меры в `cmd/server` (без отдельного WAF):
+
+- **Admin API** — только `POST` на reimport; `TGA_ADMIN_TOKEN` для `/api/admin/*`, `/metrics`, `/debug/pprof`
+- **HTTP headers** — `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`
+- **SSRF** — remote driver thumbs и team logos только с allowlist HTTPS-хостов (`allowedRemoteImageURL`)
+- **Client IP** — rate limit по реальному IP только при `TGA_TRUSTED_PROXY=1` за reverse proxy
+- **Feedback** — при включённом SMTP обязателен Cloudflare Turnstile; сервер не стартует без пары ключей
+- **XSS** — `esc()` / `safeHref()` в фронтенде; warn-only аудит: `node scripts/audit-innerhtml.mjs`
+- **Health** — `/health` не отдаёт внутренние ошибки БД клиенту
+
+Перед продом: задайте `TGA_ADMIN_TOKEN`, `TGA_TRUSTED_PROXY=1`, проверьте что `/metrics` с внешнего IP без токена → **403**.
 
 ## API
 

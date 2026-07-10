@@ -63,7 +63,7 @@ var seriesMetaByDataID = map[string]seriesMeta{
 	"imsa":           {series: "IMSA WeatherTech SportsCar Championship", template: "endurance"},
 	"gtwce_end":      {series: "GT World Challenge Europe Endurance", template: "endurance"},
 	"gtwce_sprint":   {series: "GT World Challenge Europe Sprint", template: "gt_sprint"},
-	"supercars":      {series: "Supercars Championship", template: "generic"},
+	"supercars":      {series: "Supercars Championship", template: "supercars"},
 	"dtm":            {series: "DTM", template: "generic"},
 	"super_gt":       {series: "Super GT", template: "generic"},
 	"super_formula":  {series: "Super Formula", template: "generic"},
@@ -100,18 +100,30 @@ type skeletonBody struct {
 	Tables     map[string]schedulefile.EventTable `json:"tables"`
 }
 
-// RunAtStartup creates last-results skeletons once when the server starts.
+// RunAtStartup creates last-results and upcoming skeletons once when the server starts.
 func RunAtStartup(dataDir string) {
+	var created int
 	n, err := Run(dataDir, Options{
 		Mode:   ModeLastResults,
 		Season: config.CurrentSeason,
 	})
 	if err != nil {
-		slog.Warn("event scaffold failed", "err", err)
-		return
+		slog.Warn("event scaffold failed", "mode", "last_results", "err", err)
+	} else {
+		created += n
 	}
-	if n > 0 {
-		slog.Info("event skeletons created", "count", n)
+	n, err = Run(dataDir, Options{
+		Mode:          ModeUpcoming,
+		Season:        config.CurrentSeason,
+		WithEntryList: true,
+	})
+	if err != nil {
+		slog.Warn("event scaffold failed", "mode", "upcoming", "err", err)
+	} else {
+		created += n
+	}
+	if created > 0 {
+		slog.Info("event skeletons created", "count", created)
 	}
 }
 
@@ -150,10 +162,10 @@ func Run(dataDir string, opts Options) (int, error) {
 			group = []scheduledEvent{item}
 		}
 
-		exists := schedulefile.EventDetailExists(dataDir, detailID)
+		exists := schedulefile.EventDetailFileExists(dataDir, detailID)
 		var existing *schedulefile.EventDetailJSON
 		if exists {
-			existing, err = schedulefile.LoadEventDetail(dataDir, detailID)
+			existing, err = schedulefile.LoadEventDetailAtID(dataDir, detailID)
 			if err != nil {
 				return created, fmt.Errorf("load %s: %w", detailID, err)
 			}
@@ -589,6 +601,26 @@ func buildTables(template string) map[string]schedulefile.EventTable {
 			"race_results":        emptyTable(indycarRaceHeaders, ""),
 			"caution_breakdown":   emptyTable([]string{"Condition", "From Lap", "To Lap", "# Of Laps", "Reason"}, ""),
 		}
+	case "supercars":
+		return map[string]schedulefile.EventTable{
+			"practice": {
+				Sessions: []schedulefile.EventTableSession{
+					{Title: "Practice", Headers: supercarsPracticeHeaders, Rows: [][]string{}},
+				},
+			},
+			"qualifying": {
+				Sessions: []schedulefile.EventTableSession{
+					{Title: "Qualifying", Headers: supercarsQualHeaders, Rows: [][]string{}},
+				},
+			},
+			"race": {
+				Sessions: []schedulefile.EventTableSession{
+					{Title: "Race 1", Headers: supercarsRaceHeaders, Rows: [][]string{}},
+					{Title: "Race 2", Headers: supercarsRaceHeaders, Rows: [][]string{}},
+					{Title: "Race 3", Headers: supercarsRaceHeaders, Rows: [][]string{}},
+				},
+			},
+		}
 	default:
 		return map[string]schedulefile.EventTable{
 			"practice":     emptyTable([]string{"Pos", "Driver", "Team", "Time"}, ""),
@@ -612,4 +644,7 @@ var (
 	indycarPracticeHeaders  = []string{"Rank", "Car", "Driver Name", "C/E/T", "Time", "Speed", "Diff", "Gap", "Best Lap", "Laps"}
 	indycarQualHeaders      = []string{"Pos", "Car", "Driver Name", "C/E/T", "Time", "Speed"}
 	indycarRaceHeaders      = []string{"Pos", "St", "No", "Driver", "Team", "Engine", "Laps", "Time/Retired", "Led", "Pts"}
+	supercarsPracticeHeaders = []string{"Pos", "No.", "Driver", "Team", "Fastest Lap", "Lap", "Laps"}
+	supercarsQualHeaders     = []string{"Pos", "No.", "Driver", "Team", "Fastest Lap", "Gap", "Lap", "Laps"}
+	supercarsRaceHeaders     = []string{"Pos", "ST", "No.", "Driver", "Team", "Race time", "Laps", "Pts"}
 )

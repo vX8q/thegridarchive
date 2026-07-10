@@ -1,0 +1,536 @@
+{
+  "event_id": "IMSA_2026_7",
+  "series": "IMSA WeatherTech SportsCar Championship",
+  "race": "Chevrolet Grand Prix",
+  "date": "10–12 July 2026",
+  "start_date": "2026-07-10",
+  "end_date": "2026-07-12",
+  "track": "Canadian Tire Motorsport Park",
+  "location": "Bowmanville, Ontario",
+  "entry_list": [
+    {
+      "number": "5",
+      "driver": "Tijmen van der Helm / Laurin Heinrich / Kaylen Frederick",
+      "team": "JDC-Miller MotorSports",
+      "manufacturer": "Porsche",
+      "class": "GTP",
+      "car": "Porsche 963",
+      "driver_slug": "tijmen-van-der-helm-laurin-heinrich-kaylen-frederick"
+    },
+    {
+      "number": "6",
+      "driver": "Kevin Estre / Laurens Vanthoor",
+      "team": "Porsche Penske Motorsport",
+      "manufacturer": "Porsche",
+      "class": "GTP",
+      "car": "Porsche 963",
+      "driver_slug": "kevin-estre-laurens-vanthoor"
+    },
+    {
+      "number": "7",
+      "driver": "Julien Andlauer / Felipe Nasr",
+      "team": "Porsche Penske Motorsport",
+      "manufacturer": "Porsche",
+      "class": "GTP",
+      "car": "Porsche 963",
+      "driver_slug": "julien-andlauer-felipe-nasr"
+    },
+    {
+      "number": "10",
+      "driver": "Filipe Albuquerque / Ricky Taylor",
+      "team": "Cadillac Wayne Taylor Racing",
+      "manufacturer": "Cadillac",
+      "class": "GTP",
+      "car": "Cadillac V-Series.R",
+      "driver_slug": "filipe-albuquerque-ricky-taylor"
+    },
+    {
+      "number": "40",
+      "driver": "Louis Deletraz / Jordan Taylor",
+      "team": "Cadillac Wayne Taylor Racing",
+      "manufacturer": "Cadillac",
+      "class": "GTP",
+      "car": "Cadillac V-Series.R",
+      "driver_slug": "louis-deletraz-jordan-taylor"
+    },
+    {
+      "number": "23",
+      "driver": "Roman De Angelis / Ross Gunn",
+      "team": "Aston Martin THOR Team",
+      "manufacturer": "Aston Martin",
+      "class": "GTP",
+      "car": "Aston Martin Valkyrie",
+      "driver_slug": "roman-de-angelis-ross-gunn"
+    },
+    {
+      "number": "24",
+      "driver": "Sheldon van der Linde / Dries Vanthoor",
+      "team": "BMW M Team WRT",
+      "manufacturer": "BMW",
+      "class": "GTP",
+      "car": "BMW M Hybrid V8",
+      "driver_slug": "sheldon-van-der-linde-dries-vanthoor"
+    },
+    {
+      "number": "25",
+      "driver": "Philipp Eng / Marco Wittmann",
+      "team": "BMW M Team WRT",
+      "manufacturer": "BMW",
+      "class": "GTP",
+      "car": "BMW M Hybrid V8",
+      "driver_slug": "philipp-eng-marco-wittmann"
+    },
+    {
+      "number": "31",
+      "driver": "Jack Aitken / Earl Bamber / Frederik Vesti",
+      "team": "Cadillac Whelen",
+      "manufacturer": "Cadillac",
+      "class": "GTP",
+      "car": "Cadillac V-Series.R",
+      "driver_slug": "jack-aitken-earl-bamber-frederik-vesti"
+    },
+    {
+      "number": "60",
+      "driver": "Tom Blomqvist / Colin Braun",
+      "team": "Acura Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Acura",
+      "class": "GTP",
+      "car": "Acura ARX-06",
+      "driver_slug": "tom-blomqvist-colin-braun"
+    },
+    {
+      "number": "93",
+      "driver": "Nick Yelloly / Renger van der Zande / Kakunoshin Ohta",
+      "team": "Acura Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Acura",
+      "class": "GTP",
+      "car": "Acura ARX-06",
+      "driver_slug": "nick-yelloly-renger-van-der-zande-kakunoshin-ohta"
+    },
+    {
+      "number": "04",
+      "driver": "George Kurtz / Alex Quinn / Toby Sowery",
+      "team": "CrowdStrike Racing by APR",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "george-kurtz-alex-quinn-toby-sowery"
+    },
+    {
+      "number": "2",
+      "driver": "Phil Fayer / Mikkel Jensen / Hunter McElrea",
+      "team": "United Autosports USA",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "phil-fayer-mikkel-jensen-hunter-mcelrea"
+    },
+    {
+      "number": "22",
+      "driver": "Dan Goldburg / Paul di Resta / Rasmus Lindh",
+      "team": "United Autosports USA",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "dan-goldburg-paul-di-resta-rasmus-lindh"
+    },
+    {
+      "number": "8",
+      "driver": "Sebastián Álvarez / John Farano / Tristan Vautier",
+      "team": "Tower Motorsports",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "sebastian-alvarez-john-farano-tristan-vautier"
+    },
+    {
+      "number": "11",
+      "driver": "Tobias Lütke / David Heinemeier Hansson / Mathias Beche",
+      "team": "TDS Racing",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "tobias-lutke-david-heinemeier-hansson-mathias-beche"
+    },
+    {
+      "number": "18",
+      "driver": "Jacob Abel / Ferdinand Habsburg / Naveen Rao",
+      "team": "Era Motorsport",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "jacob-abel-ferdinand-habsburg-naveen-rao"
+    },
+    {
+      "number": "37",
+      "driver": "Jon Field / Oliver Jarvis / Seth Lucas",
+      "team": "Intersport Racing",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "jon-field-oliver-jarvis-seth-lucas"
+    },
+    {
+      "number": "43",
+      "driver": "Jeremy Clarke / Tom Dillmann / Bijoy Garg",
+      "team": "Inter Europol Competition",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "jeremy-clarke-tom-dillmann-bijoy-garg"
+    },
+    {
+      "number": "52",
+      "driver": "Misha Goikhberg / Parker Thompson / Harry Tincknell",
+      "team": "Bryan Herta Autosport with PR1/Mathiasen",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "misha-goikhberg-parker-thompson-harry-tincknell"
+    },
+    {
+      "number": "73",
+      "driver": "Chris Cumming / Pietro Fittipaldi / Manuel Espírito Santo",
+      "team": "Pratt Miller Motorsports",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "chris-cumming-pietro-fittipaldi-manuel-espirito-santo"
+    },
+    {
+      "number": "99",
+      "driver": "Dane Cameron / P. J. Hyett / Jonny Edgar",
+      "team": "AO Racing",
+      "manufacturer": "Oreca",
+      "class": "LMP2",
+      "car": "Oreca 07",
+      "driver_slug": "dane-cameron-p-j-hyett-jonny-edgar"
+    },
+    {
+      "number": "033",
+      "driver": "Riccardo Agostini / James Calado",
+      "team": "Triarsi Competizione",
+      "manufacturer": "Ferrari",
+      "class": "GTD Pro",
+      "car": "Ferrari 296 GT3 Evo",
+      "driver_slug": "riccardo-agostini-james-calado"
+    },
+    {
+      "number": "1",
+      "driver": "Connor De Phillippi / Neil Verhagen",
+      "team": "Paul Miller Racing",
+      "manufacturer": "BMW",
+      "class": "GTD Pro",
+      "car": "BMW M4 GT3 Evo",
+      "driver_slug": "connor-de-phillippi-neil-verhagen"
+    },
+    {
+      "number": "3",
+      "driver": "Antonio Garcia / Alexander Sims",
+      "team": "Corvette Racing by Pratt Miller Motorsports",
+      "manufacturer": "Chevrolet",
+      "class": "GTD Pro",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "antonio-garcia-alexander-sims"
+    },
+    {
+      "number": "4",
+      "driver": "Nicky Catsburg / Tommy Milner",
+      "team": "Corvette Racing by Pratt Miller Motorsports",
+      "manufacturer": "Chevrolet",
+      "class": "GTD Pro",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "nicky-catsburg-tommy-milner"
+    },
+    {
+      "number": "9",
+      "driver": "Andrea Caldarelli / Sandy Mitchell",
+      "team": "Pfaff Motorsports",
+      "manufacturer": "Lamborghini",
+      "class": "GTD Pro",
+      "car": "Lamborghini Temerario GT3",
+      "driver_slug": "andrea-caldarelli-sandy-mitchell"
+    },
+    {
+      "number": "14",
+      "driver": "Ben Barnicoat / Jack Hawksworth",
+      "team": "Vasser Sullivan Racing",
+      "manufacturer": "Lexus",
+      "class": "GTD Pro",
+      "car": "Lexus RC F GT3",
+      "driver_slug": "ben-barnicoat-jack-hawksworth"
+    },
+    {
+      "number": "59",
+      "driver": "Max Esterson / Nikita Johnson",
+      "team": "RLL Team McLaren",
+      "manufacturer": "McLaren",
+      "class": "GTD Pro",
+      "car": "McLaren 720S GT3 Evo",
+      "driver_slug": "max-esterson-nikita-johnson"
+    },
+    {
+      "number": "62",
+      "driver": "Davide Rigon / Daniel Serra",
+      "team": "Risi Competizione",
+      "manufacturer": "Ferrari",
+      "class": "GTD Pro",
+      "car": "Ferrari 296 GT3 Evo",
+      "driver_slug": "davide-rigon-daniel-serra"
+    },
+    {
+      "number": "64",
+      "driver": "Ben Barker / Dennis Olsen",
+      "team": "Ford Racing",
+      "manufacturer": "Ford",
+      "class": "GTD Pro",
+      "car": "Ford Mustang GT3 Evo",
+      "driver_slug": "ben-barker-dennis-olsen"
+    },
+    {
+      "number": "65",
+      "driver": "Christopher Mies / Frederic Vervisch / Sebastian Priaulx",
+      "team": "Ford Racing",
+      "manufacturer": "Ford",
+      "class": "GTD Pro",
+      "car": "Ford Mustang GT3 Evo",
+      "driver_slug": "christopher-mies-frederic-vervisch-sebastian-priaulx"
+    },
+    {
+      "number": "77",
+      "driver": "Harry King / Nick Tandy",
+      "team": "AO Racing",
+      "manufacturer": "Porsche",
+      "class": "GTD Pro",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "driver_slug": "harry-king-nick-tandy"
+    },
+    {
+      "number": "911",
+      "driver": "Klaus Bachler / Ricardo Feller / Thomas Preining / Michael Christensen / Loek Hartog",
+      "team": "Manthey Racing",
+      "manufacturer": "Porsche",
+      "class": "GTD Pro",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "driver_slug": "klaus-bachler-ricardo-feller-thomas-preining-michael-christensen-loek-hartog"
+    },
+    {
+      "number": "023",
+      "driver": "Kenton Koch / Robert Megennis / Onofrio Triarsi",
+      "team": "Triarsi Competizione",
+      "manufacturer": "Ferrari",
+      "class": "GTD",
+      "car": "Ferrari 296 GT3 Evo",
+      "driver_slug": "kenton-koch-robert-megennis-onofrio-triarsi"
+    },
+    {
+      "number": "068",
+      "driver": "Trenton Estep / Marius Fossard / Valentin Hasse-Clot",
+      "team": "Car Blanche",
+      "manufacturer": "Aston Martin",
+      "class": "GTD",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "driver_slug": "trenton-estep-marius-fossard-valentin-hasse-clot"
+    },
+    {
+      "number": "12",
+      "driver": "Benjamin Pedersen / Aaron Telitz / Frankie Montecalvo",
+      "team": "Vasser Sullivan Racing",
+      "manufacturer": "Lexus",
+      "class": "GTD",
+      "car": "Lexus RC F GT3",
+      "driver_slug": "benjamin-pedersen-aaron-telitz-frankie-montecalvo"
+    },
+    {
+      "number": "13",
+      "driver": "Matt Bell / Orey Fidani / Lars Kern",
+      "team": "13 Autosport",
+      "manufacturer": "Chevrolet",
+      "class": "GTD",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "matt-bell-orey-fidani-lars-kern"
+    },
+    {
+      "number": "16",
+      "driver": "Felipe Fraga / Sheena Monk / Jenson Altzman",
+      "team": "Myers Riley Motorsports",
+      "manufacturer": "Ford",
+      "class": "GTD",
+      "car": "Ford Mustang GT3 Evo",
+      "driver_slug": "felipe-fraga-sheena-monk-jenson-altzman"
+    },
+    {
+      "number": "21",
+      "driver": "Antonio Fuoco / Simon Mann / Alec Udell",
+      "team": "AF Corse USA",
+      "manufacturer": "Ferrari",
+      "class": "GTD",
+      "car": "Ferrari 296 GT3 Evo",
+      "driver_slug": "antonio-fuoco-simon-mann-alec-udell"
+    },
+    {
+      "number": "27",
+      "driver": "Eduardo Barrichello / Tom Gamble / Zacharie Robichon",
+      "team": "Heart of Racing Team",
+      "manufacturer": "Aston Martin",
+      "class": "GTD",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "driver_slug": "eduardo-barrichello-tom-gamble-zacharie-robichon"
+    },
+    {
+      "number": "28",
+      "driver": "Jan Heylen / Dillon Machavern / Eric Lux",
+      "team": "RS1",
+      "manufacturer": "Porsche",
+      "class": "GTD",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "driver_slug": "jan-heylen-dillon-machavern-eric-lux"
+    },
+    {
+      "number": "34",
+      "driver": "Albert Costa / Lorenzo Patrese / Fran Rueda",
+      "team": "Conquest Racing",
+      "manufacturer": "Ferrari",
+      "class": "GTD",
+      "car": "Ferrari 296 GT3 Evo",
+      "driver_slug": "albert-costa-lorenzo-patrese-fran-rueda"
+    },
+    {
+      "number": "36",
+      "driver": "Mason Filippi / Charlie Eastwood / Salih Yoluç",
+      "team": "DXDT Racing",
+      "manufacturer": "Chevrolet",
+      "class": "GTD",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "mason-filippi-charlie-eastwood-salih-yoluc"
+    },
+    {
+      "number": "44",
+      "driver": "John Potter / Spencer Pumpelly / Mario Farnbacher",
+      "team": "Magnus Racing",
+      "manufacturer": "Aston Martin",
+      "class": "GTD",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "driver_slug": "john-potter-spencer-pumpelly-mario-farnbacher"
+    },
+    {
+      "number": "45",
+      "driver": "Danny Formal / Trent Hindman / Graham Doyle",
+      "team": "Wayne Taylor Racing",
+      "manufacturer": "Lamborghini",
+      "class": "GTD",
+      "car": "Lamborghini Huracán GT3 Evo 2",
+      "driver_slug": "danny-formal-trent-hindman-graham-doyle"
+    },
+    {
+      "number": "57",
+      "driver": "Philip Ellis / Russell Ward / Indy Dontje",
+      "team": "Winward Racing",
+      "manufacturer": "Mercedes-AMG",
+      "class": "GTD",
+      "car": "Mercedes-AMG GT3 Evo",
+      "driver_slug": "philip-ellis-russell-ward-indy-dontje"
+    },
+    {
+      "number": "66",
+      "driver": "Jake Walker / Corey Lewis / Till Bechtolsheimer",
+      "team": "Gradient Racing",
+      "manufacturer": "Ford",
+      "class": "GTD",
+      "car": "Ford Mustang GT3 Evo",
+      "driver_slug": "jake-walker-corey-lewis-till-bechtolsheimer"
+    },
+    {
+      "number": "70",
+      "driver": "Brendan Iribe / Ollie Millroy / Jaxon Evans",
+      "team": "Inception Racing",
+      "manufacturer": "Ferrari",
+      "class": "GTD",
+      "car": "Ferrari 296 GT3 Evo",
+      "driver_slug": "brendan-iribe-ollie-millroy-jaxon-evans"
+    },
+    {
+      "number": "80",
+      "driver": "Scott Andrews / Lin Hodenius / James Roe",
+      "team": "Lone Star Racing",
+      "manufacturer": "Mercedes-AMG",
+      "class": "GTD",
+      "car": "Mercedes-AMG GT3 Evo",
+      "driver_slug": "scott-andrews-lin-hodenius-james-roe"
+    },
+    {
+      "number": "81",
+      "driver": "Giacomo Altoè / Casper Stevenson / Henrik Hedman",
+      "team": "DragonSpeed",
+      "manufacturer": "Chevrolet",
+      "class": "GTD",
+      "car": "Chevrolet Corvette Z06 GT3.R",
+      "driver_slug": "giacomo-altoe-casper-stevenson-henrik-hedman"
+    },
+    {
+      "number": "96",
+      "driver": "Robby Foley / Patrick Gallagher / Francis Selldorff",
+      "team": "Turner Motorsport",
+      "manufacturer": "BMW",
+      "class": "GTD",
+      "car": "BMW M4 GT3 Evo",
+      "driver_slug": "robby-foley-patrick-gallagher-francis-selldorff"
+    },
+    {
+      "number": "120",
+      "driver": "Adam Adelson / Callum Ilott / Tom Sargent",
+      "team": "Wright Motorsports",
+      "manufacturer": "Porsche",
+      "class": "GTD",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "driver_slug": "adam-adelson-callum-ilott-tom-sargent"
+    },
+    {
+      "number": "912",
+      "driver": "Ryan Hardwick / Riccardo Pera / Richard Lietz",
+      "team": "Manthey 1st Phorm",
+      "manufacturer": "Porsche",
+      "class": "GTD",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "driver_slug": "ryan-hardwick-riccardo-pera-richard-lietz"
+    },
+    {
+      "number": "15",
+      "driver": "Chaz Mostert / Aaron Telitz",
+      "team": "Vasser Sullivan Racing",
+      "manufacturer": "Lexus",
+      "class": "GTD Pro",
+      "car": "Lexus RC F GT3",
+      "driver_slug": "chaz-mostert-aaron-telitz"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

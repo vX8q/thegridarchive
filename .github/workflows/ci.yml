@@ -44,6 +44,9 @@ jobs:
       - name: Audit caution breakdown Free Pass rows
         run: node scripts/audit-caution-breakdown.mjs
 
+      - name: Audit innerHTML (warn-only)
+        run: node scripts/audit-innerhtml.mjs
+
       - name: Check data pipeline
         run: node scripts/check-data.mjs
 

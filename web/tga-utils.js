@@ -170,10 +170,91 @@
     return display;
   }
 
+  var TEAM_ACRONYMS = {
+    af: true, tf: true, ao: true, am: true, jr: true, rfk: true,
+    dgm: true, wrt: true, rss: true, mbm: true, ecr: true, rll: true,
+    apr: true, ck: true, clx: true, ccm: true, bre: true, dams: true,
+    asp: true, akm: true, acr: true, bmw: true, wtr: true, jota: true,
+    gt: true, mugen: true, vds: true, hrc: true, idec: true, mks: true,
+    csa: true, dkr: true, tds: true, pr1: true, jim: true, sf: true,
+    sf23: true, xi: true, '23xi': true, aix: true, as: true
+  };
+
+  var TEAM_SMALL_WORDS = {
+    by: true, of: true, with: true, du: true, de: true, la: true,
+    le: true, et: true, au: true, en: true, and: true, the: true,
+    for: true, in: true, x: true, y: true, vs: true
+  };
+
+  var TEAM_SPECIAL_WORDS = {
+    mclaren: 'McLaren'
+  };
+
+  function looksAllCapsTeamName(s) {
+    var hasLetter = false;
+    for (var i = 0; i < s.length; i++) {
+      var c = s.charAt(i);
+      if (/[a-zA-Z]/.test(c)) {
+        hasLetter = true;
+        if (c >= 'a' && c <= 'z') return false;
+      }
+    }
+    return hasLetter;
+  }
+
+  function splitWordPunct(word) {
+    var start = 0;
+    var end = word.length;
+    while (start < end && !/[a-zA-Z0-9]/.test(word.charAt(start))) start++;
+    while (end > start && !/[a-zA-Z0-9]/.test(word.charAt(end - 1))) end--;
+    if (start >= end) return { prefix: '', core: '', suffix: word };
+    return {
+      prefix: word.slice(0, start),
+      core: word.slice(start, end),
+      suffix: word.slice(end)
+    };
+  }
+
+  function formatTeamWord(word, isFirstWord) {
+    if (!word) return word;
+    var parts = splitWordPunct(word);
+    if (!parts.core) return word;
+    var lower = parts.core.toLowerCase();
+    if (TEAM_SPECIAL_WORDS[lower]) {
+      return parts.prefix + TEAM_SPECIAL_WORDS[lower] + parts.suffix;
+    }
+    if (TEAM_ACRONYMS[lower]) {
+      return parts.prefix + parts.core.toUpperCase() + parts.suffix;
+    }
+    if (!isFirstWord && TEAM_SMALL_WORDS[lower]) {
+      return parts.prefix + lower + parts.suffix;
+    }
+    if (/^\d/.test(parts.core)) {
+      return parts.prefix + parts.core.replace(/[a-z]+/g, function (m) { return m.toUpperCase(); }) + parts.suffix;
+    }
+    return parts.prefix + lower.charAt(0).toUpperCase() + lower.slice(1) + parts.suffix;
+  }
+
+  function formatTeamToken(token, isFirstWord) {
+    if (!token) return token;
+    return token.split('-').map(function (part, idx) {
+      return formatTeamWord(part, isFirstWord && idx === 0);
+    }).join('-');
+  }
+
+  function formatTeamDisplayName(name) {
+    var raw = String(name == null ? '' : name).trim();
+    if (!raw || !looksAllCapsTeamName(raw)) return raw;
+    return raw.split(/\s+/).map(function (word, idx) {
+      return formatTeamToken(word, idx === 0);
+    }).join(' ');
+  }
+
   function teamLabel(name) {
     if (name == null) return '';
     var raw = String(name).trim();
     if (!raw) return '';
+    raw = formatTeamDisplayName(raw);
     if (typeof window !== 'undefined' && window.TGA && window.TGA.getLang &&
         window.TGA.getLang() === 'ru' && typeof window.TGA.localizeTeamName === 'function') {
       return window.TGA.localizeTeamName(raw);
@@ -473,7 +554,7 @@
       homologWrap.innerHTML =
         '<table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('th.team') + '</th></tr></thead><tbody>' +
         homologation.map(function (h) {
-          return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(h.team)) + '</td></tr>';
+          return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(teamLabel(h.team))) + '</td></tr>';
         }).join('') +
         '</tbody></table>';
       if (typeof makeTableSortable === 'function') {
@@ -648,8 +729,9 @@
         return formatDateRange(schedRange.start, schedRange.end);
       }
     }
+    var showsWeekendRange = window.TGA && window.TGA.eventShowsWeekendDateRange;
     var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
-    if (parseIso) {
+    if (showsWeekendRange && showsWeekendRange(e) && parseIso) {
       var spanStart = parseIso(e.start_date || e.startDate || e.date);
       var spanEnd = parseIso(e.end_date || e.endDate);
       if (spanStart && spanEnd && spanEnd > spanStart) {
@@ -857,6 +939,20 @@
     return estimateRaceFinishedUtcMs(ev);
   }
 
+  /** Series with server-side livesync — UI follows live.json, not schedule heuristics. */
+  var LIVE_SYNC_EVENT_PREFIXES = [
+    'NASCAR_CUP_', 'NOAPS_', 'NASCAR_TRUCK_', 'F1_', 'WEC_', 'SUPER_FORMULA_'
+  ];
+
+  function eventUsesLiveSync(eventId) {
+    var u = String(eventId || '').toUpperCase();
+    if (!u) return false;
+    for (var i = 0; i < LIVE_SYNC_EVENT_PREFIXES.length; i++) {
+      if (u.indexOf(LIVE_SYNC_EVENT_PREFIXES[i]) === 0) return true;
+    }
+    return false;
+  }
+
   /** Whether the event should appear in Last Results (first race started). */
   function isPastForLastResultsEvent(ev) {
     if (!ev) return false;
@@ -864,7 +960,16 @@
     var firstStart = getEventFirstRaceStartUtcMs(ev);
     var now = Date.now();
     if (firstStart) {
-      return now >= firstStart;
+      if (now < firstStart) return false;
+      var finishMs = getEventLastRaceFinishUtcMs(ev);
+      if (finishMs && now < finishMs) return false;
+      if (eventUsesLiveSync(ev.id)) {
+        var liveSet = window.TGA && window.TGA.liveEventIds;
+        if (liveSet && liveSet[String(ev.id || '').toUpperCase()]) {
+          return false;
+        }
+      }
+      return true;
     }
 
     var today = new Date();
@@ -979,47 +1084,109 @@
     return n.toFixed(1);
   }
 
-  /** Crews → individual standings: each driver gets points and positions from every crew they raced for.  */
+  /** Crews → driver standings: per car, points only for rounds where a driver was in the crew roster. */
   function buildDriverClassesFromCrew(classes, raceOrder) {
     raceOrder = raceOrder || [];
     return (classes || []).map(function (cls) {
-      var driverMap = {};
-      var driverOrder = [];
+      var lineMap = {};
+      var lineOrder = [];
+
+      function pushLine(lineKey, row, driverLabel, pointsNum, races, quals) {
+        if (lineMap[lineKey]) return;
+        lineMap[lineKey] = {
+          driver: driverLabel,
+          team: row.team || '',
+          manufacturer: row.manufacturer || '',
+          car: row.car || '',
+          races: races || {},
+          quals: quals || {},
+          pointsNum: pointsNum
+        };
+        lineOrder.push(lineKey);
+      }
+
       (cls.rows || []).forEach(function (row) {
-        var names = splitDriverNames(row.driver);
-        if (names.length === 0) return;
-        var rowPts = parseStandingsPoints(row.points);
-        names.forEach(function (rawName) {
-          var key = driverNameKey(rawName);
-          if (!driverMap[key]) {
-            driverMap[key] = {
-              driver: driverDisplayName(rawName),
-              team: '',
-              manufacturer: '',
-              car: '',
-              races: {},
-              quals: {},
-              pointsNum: 0
-            };
-            driverOrder.push(key);
-          }
-          var d = driverMap[key];
-          d.pointsNum += rowPts;
-          raceOrder.forEach(function (code) {
-            if (row.races && row.races[code] != null && String(row.races[code]).trim() !== '') {
-              d.races[code] = row.races[code];
-              d.team = row.team || d.team;
-              d.manufacturer = row.manufacturer || d.manufacturer;
-              d.car = row.car || d.car;
+        var roundDrivers = row.round_drivers;
+        var hasRoundData = roundDrivers && typeof roundDrivers === 'object' &&
+          Object.keys(roundDrivers).some(function (code) {
+            return roundDrivers[code] != null && String(roundDrivers[code]).trim() !== '';
+          });
+
+        if (!hasRoundData) {
+          var names = splitDriverNames(row.driver);
+          if (names.length === 0) return;
+          var rowPts = parseStandingsPoints(row.points);
+          names.forEach(function (rawName) {
+            var key = String(row.car || '') + '\0' + driverNameKey(rawName);
+            if (lineMap[key]) return;
+            var races = {};
+            var quals = {};
+            raceOrder.forEach(function (code) {
+              if (row.races && row.races[code] != null && String(row.races[code]).trim() !== '') {
+                races[code] = row.races[code];
+              }
+              if (row.quals && row.quals[code] != null && String(row.quals[code]).trim() !== '') {
+                quals[code] = row.quals[code];
+              }
+            });
+            pushLine(key, row, driverDisplayName(rawName), rowPts, races, quals);
+          });
+          return;
+        }
+
+        var perDriver = {};
+        raceOrder.forEach(function (code) {
+          var drvRaw = roundDrivers[code];
+          if (drvRaw == null || String(drvRaw).trim() === '') return;
+          var names = splitDriverNames(drvRaw);
+          if (names.length === 0) return;
+          var rPts = parseStandingsPoints(row.round_points && row.round_points[code]);
+          var qPts = parseStandingsPoints(row.round_qual_points && row.round_qual_points[code]);
+          var totalRound = rPts + qPts;
+          var raceCell = row.races && row.races[code] != null ? String(row.races[code]).trim() : '';
+          var qualCell = row.quals && row.quals[code] != null ? String(row.quals[code]).trim() : '';
+
+          names.forEach(function (rawName) {
+            var dkey = driverNameKey(rawName);
+            if (!perDriver[dkey]) {
+              perDriver[dkey] = {
+                driver: rawName,
+                fingerprint: [],
+                pointsNum: 0,
+                races: {},
+                quals: {}
+              };
             }
-            if (row.quals && row.quals[code] != null && String(row.quals[code]).trim() !== '') {
-              d.quals[code] = row.quals[code];
-            }
+            var d = perDriver[dkey];
+            d.pointsNum += totalRound;
+            if (raceCell !== '') d.races[code] = row.races[code];
+            if (qualCell !== '') d.quals[code] = row.quals[code];
+            d.fingerprint.push(code + ':' + raceCell + ':' + qualCell + ':' + String(totalRound));
           });
         });
+
+        var fpGroups = {};
+        Object.keys(perDriver).forEach(function (dkey) {
+          var d = perDriver[dkey];
+          d.fingerprint.sort();
+          var fp = d.fingerprint.join('|');
+          if (!fpGroups[fp]) fpGroups[fp] = [];
+          fpGroups[fp].push(d);
+        });
+
+        Object.keys(fpGroups).forEach(function (fp) {
+          var group = fpGroups[fp];
+          group.sort(function (a, b) {
+            return String(a.driver || '').localeCompare(String(b.driver || ''), undefined, { sensitivity: 'base' });
+          });
+          var lineKey = String(row.car || '') + '\0' + fp;
+          var combinedDriver = group.map(function (g) { return driverDisplayName(g.driver); }).join(' / ');
+          pushLine(lineKey, row, combinedDriver, group[0].pointsNum, group[0].races, group[0].quals);
+        });
       });
-      var rows = driverOrder.map(function (key) {
-        var d = driverMap[key];
+
+      var rows = lineOrder.map(function (key) {
+        var d = lineMap[key];
         return {
           driver: d.driver,
           team: d.team,
@@ -1307,7 +1474,7 @@
           var td = '<td class="col-num">' + posDisplay + '</td>';
           if (!isCrewMode) td += '<td>' + driversCellHtml(row.driver) + '</td>';
           td += '<td class="col-car">' + esc(row.car || '—') + '</td>' +
-            '<td>' + esc(dash(row.team)) + '</td>' +
+            '<td>' + esc(dash(teamLabel(row.team))) + '</td>' +
             '<td>' + carCell(row) + '</td>';
           td += raceCells(row);
           td += '<td class="col-pts">' + esc(dash(row.points)) + '</td>';
@@ -1344,7 +1511,7 @@
             var td = '<td class="col-num">' + posDisplay + '</td>';
             if (hasCarNum) td += '<td class="col-car">' + esc(row.car || '—') + '</td>';
             if (!isCrewMode) td += '<td>' + driversCellHtml(row.driver) + '</td>';
-            td += '<td>' + esc(dash(row.team)) + '</td>';
+            td += '<td>' + esc(dash(teamLabel(row.team))) + '</td>';
             if (showModelCol) td += '<td>' + carCell(row) + '</td>';
             for (var jm = 0; jm < raceOrder.length; jm++) {
               var rcode = raceOrder[jm];
@@ -1374,7 +1541,7 @@
             var td = '<td class="col-num">' + posDisplay + '</td>';
             if (hasCarNum) td += '<td class="col-car">' + esc(row.car || '—') + '</td>';
             if (!isCrewMode) td += '<td>' + driversCellHtml(row.driver) + '</td>';
-            td += '<td>' + esc(dash(row.team)) + '</td>';
+            td += '<td>' + esc(dash(teamLabel(row.team))) + '</td>';
             if (showModelCol) td += '<td>' + carCell(row) + '</td>';
             td += raceCells(row);
             td += '<td class="col-pts">' + esc(dash(row.points)) + '</td>';
@@ -1415,6 +1582,7 @@
   window.TGA.driverDisplayName        = driverDisplayName;
   window.TGA.driverLabel              = driverLabel;
   window.TGA.teamLabel                = teamLabel;
+  window.TGA.formatTeamDisplayName  = formatTeamDisplayName;
   window.TGA.foldDiacritics           = foldDiacritics;
   window.TGA.isGuestEntryRow          = isGuestEntryRow;
   window.TGA.guestCarNumberSet        = guestCarNumberSet;
@@ -1461,5 +1629,7 @@
   window.TGA.getEventLastRaceFinishUtcMs = getEventLastRaceFinishUtcMs;
   window.TGA.isWithinLastResultsWindow   = isWithinLastResultsWindow;
   window.TGA.isPastForLastResultsEvent  = isPastForLastResultsEvent;
+  window.TGA.eventUsesLiveSync          = eventUsesLiveSync;
+  window.TGA.liveEventIds               = window.TGA.liveEventIds || {};
   window.TGA.nextRaceEndTs              = nextRaceEndTs;
 })();

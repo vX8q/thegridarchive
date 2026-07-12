@@ -29,8 +29,8 @@ func TestEnrichTeamsRoundsFromEvents_F2CamaraSingleRow(t *testing.T) {
 		}
 		t.Fatalf("want 1 Camara row on #1, got %d", len(camara))
 	}
-	if camara[0].Rounds != "1–8" && camara[0].Rounds != "1-8" {
-		t.Fatalf("rounds = %q, want 1–8", camara[0].Rounds)
+	if camara[0].Rounds != "1–9" && camara[0].Rounds != "1-9" {
+		t.Fatalf("rounds = %q, want 1–9", camara[0].Rounds)
 	}
 	if camara[0].Driver != "Rafael Câmara" {
 		t.Fatalf("driver display = %q, want diacritic form from events", camara[0].Driver)

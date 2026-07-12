@@ -1,4 +1,4 @@
-.PHONY: build test lint run dev ci docker js-test smoke check-data
+.PHONY: build test lint run dev ci docker js-test check-data
 
 build:
 	go build -trimpath -o server.exe ./cmd/server/
@@ -30,10 +30,6 @@ ci-data-audits:
 
 js-test:
 	node scripts/js-test.mjs
-
-smoke:
-	node scripts/smoke-phase31.mjs
-	node scripts/smoke-tier-ab.mjs
 
 check-data:
 	node scripts/check-data.mjs

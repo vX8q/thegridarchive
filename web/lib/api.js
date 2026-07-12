@@ -104,6 +104,13 @@
       return get(BASE + '/series/' + seriesPath(seriesId) + '/events' + seriesEventsQuery(season, options));
     },
 
+    getSchedule: function (season, options) {
+      var params = {};
+      if (season != null && season !== '') params.season = season;
+      if (!options || options.cacheBust !== false) params._ = Date.now();
+      return get(BASE + '/schedule' + buildQuery(params));
+    },
+
     getSeriesHistory: function (seriesId) {
       return get(BASE + '/series/' + seriesPath(seriesId) + '/history');
     },

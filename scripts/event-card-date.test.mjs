@@ -86,6 +86,16 @@ test('F1 sprint weekend resolves two-day range from static schedule', () => {
   assert.strictEqual(range.end, '2026-07-05');
 });
 
+test('F1 sprint weekend excludes parent start_date 2026-07-03 from card range', () => {
+  const e = loadScheduleEntry('f1.json', 'F1_2026_9');
+  assert.ok(e);
+  assert.strictEqual(e.start_date, '2026-07-03', 'schedule parent span includes Friday');
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-07-04');
+  assert.strictEqual(range.end, '2026-07-05');
+  assert.notStrictEqual(range.start, e.start_date);
+});
+
 test('Supercars next-race entries merge into one weekend card', () => {
   const entries = [
     {

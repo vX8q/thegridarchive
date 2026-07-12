@@ -30,3 +30,34 @@ func BenchmarkBuildDriverStatsFromEvents(b *testing.B) {
 	}
 }
 
+// BenchmarkBuildStandingsFromEvents tracks standings rebuild cost (see docs/PERFORMANCE.md).
+func BenchmarkBuildStandingsFromEvents(b *testing.B) {
+	dataDir := filepath.Join("..", "..", "data")
+	cases := []struct {
+		series string
+		season string
+	}{
+		{"NASCAR_CUP", "2026"},
+		{"F1", "2026"},
+		{"ELMS", "2026"},
+	}
+	for _, tc := range cases {
+		tc := tc
+		b.Run(tc.series+"_"+tc.season, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				if tc.series == "ELMS" {
+					_, err := BuildElmsStandingsFromEvents(dataDir, tc.season)
+					if err != nil {
+						b.Fatalf("BuildElmsStandingsFromEvents: %v", err)
+					}
+					continue
+				}
+				_, err := BuildStandingsFromEvents(dataDir, tc.series, tc.season)
+				if err != nil {
+					b.Fatalf("BuildStandingsFromEvents(%s): %v", tc.series, err)
+				}
+			}
+		})
+	}
+}
+

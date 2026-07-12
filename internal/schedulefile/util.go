@@ -65,6 +65,10 @@ func canonicalDriverKey(name string) string {
 		return "pj hyett"
 	case "p j hyett":
 		return "pj hyett"
+	case "saqer al maosherji":
+		return "s al maosherji"
+	case "giovanni ruggiero":
+		return "gio ruggiero"
 	}
 	return s
 }

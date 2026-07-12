@@ -127,10 +127,17 @@
     var getEventScheduleLocalDate = window.TGA.getEventScheduleLocalDate || function (e) {
       return String((e && (e.start_date || e.date)) || '').slice(0, 10);
     };
+    var getViewerRaceDateIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+    function eventGroupDateIso(e) {
+      if (getViewerRaceDateIso) {
+        var local = getViewerRaceDateIso(e);
+        if (local) return local;
+      }
+      return e._scheduleDate || getEventScheduleLocalDate(e);
+    }
     var groups = [], curGroup = null;
     allEvents.forEach(function (e) {
-      // Group by local race date (Sunday at track), not MSK calendar.
-      var ds = e._scheduleDate || getEventScheduleLocalDate(e);
+      var ds = eventGroupDateIso(e);
       var ms = ds ? new Date(ds + 'T12:00:00').getTime() : 0;
       if (!curGroup || ms - curGroup.endMs > 3 * 86400000) {
         curGroup = { startDs: ds, endDs: ds, ms: ms, endMs: ms, events: [] };
@@ -138,8 +145,22 @@
       } else if (ds > curGroup.endDs) {
         curGroup.endDs = ds;
         curGroup.endMs = ms;
+      } else if (ds < curGroup.startDs) {
+        curGroup.startDs = ds;
+        curGroup.ms = ms;
       }
       curGroup.events.push(e);
+    });
+    groups.forEach(function (g) {
+      var dates = g.events.map(eventGroupDateIso).filter(function (d) {
+        return /^\d{4}-\d{2}-\d{2}$/.test(d);
+      }).sort();
+      if (dates.length) {
+        g.startDs = dates[0];
+        g.endDs = dates[dates.length - 1];
+        g.ms = new Date(g.startDs + 'T12:00:00').getTime();
+        g.endMs = new Date(g.endDs + 'T12:00:00').getTime();
+      }
     });
     return groups;
   }

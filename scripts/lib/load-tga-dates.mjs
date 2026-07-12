@@ -28,6 +28,12 @@ export function createTgaDatesApi(opts = {}) {
     console,
   };
   runBrowserModule('web/lib/tga-dates-core.js', window);
+  window.TGA.getEventRaceDateRangeIso = function (d) {
+    const parseIso = window.TGA.parseIsoDatePrefix;
+    const start = parseIso(d && (d.start_date || d.startDate));
+    const end = parseIso(d && (d.end_date || d.endDate)) || start;
+    return { start, end };
+  };
   runBrowserModule('web/lib/tga-dates-format.js', window);
   runBrowserModule('web/lib/tga-dates-event.js', window);
   return window.TGA;

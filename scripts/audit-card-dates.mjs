@@ -47,8 +47,9 @@ function loadSchedules() {
   const events = [];
   for (const f of fs.readdirSync(schedulesDir)) {
     if (!f.endsWith('.json')) continue;
-    const list = JSON.parse(fs.readFileSync(path.join(schedulesDir, f), 'utf8'));
-    for (const e of list) {
+    const raw = JSON.parse(fs.readFileSync(path.join(schedulesDir, f), 'utf8'));
+    if (!Array.isArray(raw)) continue;
+    for (const e of raw) {
       events.push(e);
     }
   }

@@ -86,3 +86,91 @@ func TestIntegrationAPI_DriverStoreError500(t *testing.T) {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusInternalServerError)
 	}
 }
+
+func TestIntegrationAPI_AggregatedSchedule2026(t *testing.T) {
+	dataDir := testDataDir(t)
+	req := httptest.NewRequest(http.MethodGet, "/api/schedule?season=2026", nil)
+	rec := httptest.NewRecorder()
+
+	handleAggregatedSchedule(rec, req, dataDir)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d, body = %s", rec.Code, http.StatusOK, rec.Body.String())
+	}
+	var payload struct {
+		Season string `json:"season"`
+		Events []struct {
+			ID        string `json:"id"`
+			SeriesID  string `json:"series_id"`
+			HasDetail bool   `json:"has_detail"`
+		} `json:"events"`
+		Series map[string]string `json:"series"`
+	}
+	if err := json.NewDecoder(rec.Body).Decode(&payload); err != nil {
+		t.Fatalf("decode: %v", err)
+	}
+	if payload.Season != "2026" {
+		t.Fatalf("season = %q, want 2026", payload.Season)
+	}
+	if len(payload.Events) < 80 {
+		t.Fatalf("expected many 2026 events, got %d", len(payload.Events))
+	}
+	if payload.Series["F1"] == "" || payload.Series["NASCAR_CUP"] == "" {
+		t.Fatalf("series name map incomplete: %#v", payload.Series)
+	}
+}
+
+func TestIntegrationAPI_CupStandingsSmoke(t *testing.T) {
+	dataDir := testDataDir(t)
+	req := httptest.NewRequest(http.MethodGet, "/api/series/cup/standings", nil)
+	rec := httptest.NewRecorder()
+
+	handleSeriesStandings(rec, req, dataDir, "NASCAR_CUP", "2026")
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d, body = %s", rec.Code, http.StatusOK, rec.Body.String())
+	}
+	var data struct {
+		Series string `json:"series"`
+		Rows   []struct {
+			Driver string `json:"driver"`
+			Points string `json:"points"`
+			Pos    int    `json:"pos"`
+		} `json:"rows"`
+		RaceOrder []string `json:"race_order"`
+	}
+	if err := json.NewDecoder(rec.Body).Decode(&data); err != nil {
+		t.Fatalf("decode: %v", err)
+	}
+	if len(data.Rows) == 0 {
+		t.Fatal("cup standings rows empty")
+	}
+	if data.Rows[0].Driver == "" || data.Rows[0].Points == "" {
+		t.Fatalf("leader row incomplete: %#v", data.Rows[0])
+	}
+	if data.Rows[0].Pos < 1 {
+		t.Fatalf("leader pos invalid: %d", data.Rows[0].Pos)
+	}
+	if len(data.RaceOrder) == 0 {
+		t.Fatal("race_order empty")
+	}
+}
+
+func TestIntegrationAPI_LiveEventsReturnsArray(t *testing.T) {
+	dataDir := testDataDir(t)
+	req := httptest.NewRequest(http.MethodGet, "/api/live-events", nil)
+	rec := httptest.NewRecorder()
+
+	handleLiveEvents(rec, req, dataDir, store.NoopStore{})
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+	}
+	var ids []string
+	if err := json.NewDecoder(rec.Body).Decode(&ids); err != nil {
+		t.Fatalf("decode live-events: %v", err)
+	}
+	if ids == nil {
+		t.Fatal("live-events must return JSON array, not null")
+	}
+}

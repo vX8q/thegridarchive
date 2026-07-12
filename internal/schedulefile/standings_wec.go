@@ -7,12 +7,26 @@ import (
 	"strings"
 
 	"github.com/vX8q/tga/config"
+	"github.com/vX8q/tga/internal/driverutil"
 )
 
 type wecAcc struct {
 	team, drivers, carModel string
 	racePos                 map[string]string
+	roundDrivers            map[string]string
+	roundPoints             map[string]float64
 	points                  float64
+}
+
+func newWecAcc(team, drivers, carModel string) *wecAcc {
+	return &wecAcc{
+		team:         team,
+		drivers:      drivers,
+		carModel:     carModel,
+		racePos:      make(map[string]string),
+		roundDrivers: make(map[string]string),
+		roundPoints:  make(map[string]float64),
+	}
 }
 
 func wecBucketForClass(cls string) string {
@@ -234,12 +248,7 @@ func wecMergeEntryList(dataDir string, champs []struct {
 			if b[num] != nil {
 				continue
 			}
-			b[num] = &wecAcc{
-				team:     brief.team,
-				drivers:  brief.drivers,
-				carModel: brief.car,
-				racePos:  make(map[string]string),
-			}
+			b[num] = newWecAcc(brief.team, brief.drivers, brief.car)
 		}
 	}
 }
@@ -275,13 +284,15 @@ func wecStandingRowsFromBucket(byCar map[string]*wecAcc, raceOrder []string) []S
 			}
 		}
 		out = append(out, StandingRow{
-			Pos:          i + 1,
-			Car:          e.car,
-			Driver:       a.drivers,
-			Team:         a.team,
-			Manufacturer: a.carModel,
-			Points:       formatGtwcePtsTotal(a.points),
-			Races:        raceStr,
+			Pos:             i + 1,
+			Car:             e.car,
+			Driver:          a.drivers,
+			Team:            driverutil.FormatDisplayTeamName(a.team),
+			Manufacturer:    a.carModel,
+			Points:          formatGtwcePtsTotal(a.points),
+			Races:           raceStr,
+			RoundDrivers:    copyRoundDriversMap(a.roundDrivers),
+			RoundPoints:     formatRoundPointsMap(a.roundPoints),
 		})
 	}
 	return out
@@ -416,7 +427,7 @@ func BuildWecStandingsFromEvents(dataDir string, season string) (*StandingsData,
 			}
 			b := buckets[sr.bName]
 			if b[sr.carNum] == nil {
-				b[sr.carNum] = &wecAcc{racePos: make(map[string]string)}
+				b[sr.carNum] = newWecAcc("", "", "")
 			}
 			a := b[sr.carNum]
 			if sr.team != "" {
@@ -424,9 +435,11 @@ func BuildWecStandingsFromEvents(dataDir string, season string) (*StandingsData,
 			}
 			if sr.drivers != "" {
 				a.drivers = sr.drivers
+				snapshotRoundDrivers(a.roundDrivers, code, sr.drivers)
 			}
 			a.racePos[code] = cell
 			a.points += sr.cupPts
+			addRoundPoints(a.roundPoints, code, sr.cupPts)
 		}
 	}
 

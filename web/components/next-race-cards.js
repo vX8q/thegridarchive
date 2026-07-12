@@ -6,20 +6,32 @@
   var nrcCards = [];
   var nrcInterval = null;
   var nrcLiveRefresh = null;
+  var nrcTickFn = null;
+  var nrcScheduleRefreshFn = null;
+  var nrcFetchLiveIdsFn = null;
   /** Live event IDs from API (data/live.json). Mutated when refetching. */
   var nrcLiveSet = {};
-  /** Series with server-side livesync — schedule-time LIVE fallback is disabled. */
-  var NRC_LIVE_SYNC_PREFIXES = [
-    'NASCAR_CUP_', 'NOAPS_', 'NASCAR_TRUCK_', 'F1_', 'WEC_', 'SUPER_FORMULA_'
-  ];
+  /** Events that were live at least once this session — drop from Next when sync clears them. */
+  var nrcEverLiveSet = {};
 
   function eventUsesLiveSync(eventId) {
-    var u = String(eventId || '').toUpperCase();
-    if (!u) return false;
-    for (var i = 0; i < NRC_LIVE_SYNC_PREFIXES.length; i++) {
-      if (u.indexOf(NRC_LIVE_SYNC_PREFIXES[i]) === 0) return true;
-    }
-    return false;
+    return !!(window.TGA && window.TGA.eventUsesLiveSync && window.TGA.eventUsesLiveSync(eventId));
+  }
+
+  function syncLiveEventIdsToGlobal() {
+    var globalSet = window.TGA.liveEventIds || {};
+    var k;
+    for (k in globalSet) { delete globalSet[k]; }
+    for (k in nrcLiveSet) { globalSet[k] = true; }
+    window.TGA.liveEventIds = globalSet;
+  }
+
+  function shouldShowLiveSyncInNextRace(eid, startTs, liveEndTs, nowTs) {
+    if (!eid || !eventUsesLiveSync(eid)) return true;
+    if (startTs > nowTs) return true;
+    if (nrcLiveSet[eid]) return true;
+    if (nrcEverLiveSet[eid]) return false;
+    return liveEndTs >= nowTs;
   }
 
   function stopNextRaceTimers() {
@@ -46,12 +58,49 @@
   }
 
   function applyLiveIds(ids) {
+    var prevLive = {};
     var k;
+    for (k in nrcLiveSet) { prevLive[k] = true; }
     for (k in nrcLiveSet) { delete nrcLiveSet[k]; }
     (Array.isArray(ids) ? ids : []).forEach(function (id) {
       var u = (id || '').toUpperCase();
-      if (u) nrcLiveSet[u] = true;
+      if (u) {
+        nrcLiveSet[u] = true;
+        nrcEverLiveSet[u] = true;
+      }
     });
+    syncLiveEventIdsToGlobal();
+
+    var syncFinished = false;
+    var syncStarted = false;
+    for (k in prevLive) {
+      if (!nrcLiveSet[k] && nrcEverLiveSet[k]) {
+        syncFinished = true;
+        break;
+      }
+    }
+    if (!syncFinished) {
+      for (k in nrcLiveSet) {
+        if (!prevLive[k]) {
+          syncStarted = true;
+          break;
+        }
+      }
+    }
+    if (nrcTickFn) nrcTickFn();
+    if ((syncFinished || syncStarted) && nrcScheduleRefreshFn) nrcScheduleRefreshFn();
+    if (nrcFetchLiveIdsFn) startLiveIdPolling(nrcFetchLiveIdsFn);
+  }
+
+  function startLiveIdPolling(fetchLiveIds) {
+    if (nrcLiveRefresh) { clearInterval(nrcLiveRefresh); nrcLiveRefresh = null; }
+    var pollMs = 60000;
+    for (var ek in nrcEverLiveSet) {
+      if (nrcEverLiveSet[ek]) { pollMs = 15000; break; }
+    }
+    nrcLiveRefresh = setInterval(function () {
+      fetchLiveIds().then(applyLiveIds).catch(function () {});
+    }, pollMs);
   }
 
   function renderNextRaceCards(allEvents) {
@@ -113,20 +162,28 @@
       var dt = raceUtc ? new Date(raceUtc) : parseEventDate(e.start_date || e.date, e.time_est || e.time_msk, '+03:00');
       if (!dt || isNaN(dt.getTime())) return;
       var ts = dt.getTime();
+      var getRaceStartIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+      var raceDayIso = getRaceStartIso ? getRaceStartIso(e) : '';
       var spanEndTs = ts;
-      if (/^\d{4}-\d{2}-\d{2}$/.test(endDs)) {
-        spanEndTs = new Date(endDs + 'T23:59:59').getTime();
+      if (raceDayIso) {
+        spanEndTs = Math.max(spanEndTs, new Date(raceDayIso + 'T23:59:59').getTime());
       }
-      // Overlap with [today; today+7]: otherwise event starting yesterday (FREC, etc.)
-      // drops from feed although weekend is still ongoing.
+      if (/^\d{4}-\d{2}-\d{2}$/.test(endDs)) {
+        spanEndTs = Math.max(spanEndTs, new Date(endDs + 'T23:59:59').getTime());
+      }
+      // Future cutoff: actual race start (ts). Past/overlap cutoff: span through race/end day
+      // so US evening races on the next MSK calendar day still show (see spanEndTs).
       if (ts > windowEnd || spanEndTs < windowStart) return;
       var startTs = dt.getTime();
       var endTs = endTsForEvent(e, startTs);
       if (!endTs) endTs = startTs + 3 * 60 * 60 * 1000;
       var liveEndTs = liveEndTsForEvent ? liveEndTsForEvent(e, startTs, endTs) : endTs;
-      // Show only events not yet finished (start or LIVE window not passed).
+      // Show only events not yet finished (schedule end or livesync still live).
       if (endTs >= nowTs) {
-        weekEntries.push({ event: e, date: dt, endTs: endTs, liveEndTs: liveEndTs });
+        var entryId = String(e.id || '').toUpperCase();
+        if (shouldShowLiveSyncInNextRace(entryId, startTs, liveEndTs, nowTs)) {
+          weekEntries.push({ event: e, date: dt, endTs: endTs, liveEndTs: liveEndTs });
+        }
       }
     });
 
@@ -833,23 +890,34 @@
           }
         }, 200);
       }
+      nrcScheduleRefreshFn = scheduleNextRaceRefresh;
 
       function tick() {
         var now2 = Date.now();
         var needRefresh = false;
         nrcCards.forEach(function (c) {
           if (!c.el || c.expired) return;
-          if (c.endTs && now2 > c.endTs) {
+          var startTs = c.raceUtcMs || (c.date && c.date.getTime ? c.date.getTime() : 0);
+          var usesSync = eventUsesLiveSync(c.eventId);
+          var fromApi = c.eventId && nrcLiveSet[c.eventId];
+          var wasLive = c.eventId && nrcEverLiveSet[c.eventId];
+          var inLiveWindow = startTs && now2 >= startTs && c.liveEndTs && now2 <= c.liveEndTs;
+          var fromSchedule = !usesSync && inLiveWindow;
+          var fromSyncFallback = usesSync && !wasLive && inLiveWindow;
+          var isLive = fromApi || fromSchedule || fromSyncFallback;
+
+          if (usesSync && startTs && now2 >= startTs && wasLive && !fromApi) {
             c.expired = true;
             if (c.cardEl) c.cardEl.style.display = 'none';
             needRefresh = true;
             return;
           }
-          var startTs = c.raceUtcMs || (c.date && c.date.getTime ? c.date.getTime() : 0);
-          var fromApi = c.eventId && nrcLiveSet[c.eventId];
-          var inLiveWindow = startTs && now2 >= startTs && c.liveEndTs && now2 <= c.liveEndTs;
-          // Live-sync series prefer API; fall back to schedule window when sync is offline.
-          var isLive = fromApi || inLiveWindow;
+          if (c.endTs && now2 > c.endTs && !isLive) {
+            c.expired = true;
+            if (c.cardEl) c.cardEl.style.display = 'none';
+            needRefresh = true;
+            return;
+          }
           if (c.liveEl) {
             if (isLive) {
               c.liveEl.classList.add('nrc-live-visible');
@@ -865,10 +933,13 @@
           }
           var diff = startTs - now2;
           if (!startTs || diff <= 0) {
-            if (inLiveWindow) {
+            if (isLive) {
               c.el.textContent = (window.TGA.t && window.TGA.t('live.badge')) || 'LIVE';
             } else {
-              c.el.textContent = '0' + ((window.TGA.t && window.TGA.t('cd.secs')) || 's');
+              // Start passed and not live — drop card instead of stuck "0s" until endTs.
+              c.expired = true;
+              if (c.cardEl) c.cardEl.style.display = 'none';
+              needRefresh = true;
             }
             return;
           }
@@ -882,23 +953,24 @@
         });
         if (needRefresh) scheduleNextRaceRefresh();
       }
+      nrcTickFn = tick;
 
       container.classList.remove('hidden');
       tick();
       nrcInterval = setInterval(tick, 1000);
     }
 
+    syncLiveEventIdsToGlobal();
     renderWithLiveSet();
     var API = window.TGA && window.TGA.API;
     function fetchLiveIds() {
       return API ? API.getLiveEvents() : fetch('/api/live-events').then(function (r) { return r.json(); });
     }
+    nrcFetchLiveIdsFn = fetchLiveIds;
     fetchLiveIds()
       .then(function (ids) {
         applyLiveIds(ids);
-        nrcLiveRefresh = setInterval(function () {
-          fetchLiveIds().then(applyLiveIds).catch(function () {});
-        }, 60000);
+        startLiveIdPolling(fetchLiveIds);
       })
       .catch(function () {});
   }

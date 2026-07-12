@@ -18,10 +18,10 @@
     "name": "GT World Challenge Europe Sprint — Misano",
     "location": "Misano Adriatico",
     "circuit_name": "Misano World Circuit Marco Simoncelli",
-    "start_date": "2026-07-18",
+    "start_date": "2026-07-17",
     "end_date": "2026-07-19",
-    "time_est": "15:30",
-    "time_msk": "16:30"
+    "time_est": "2:30 PM",
+    "time_msk": "15:30"
   },
   {
     "id": "GTWCE_SPRINT_2026_3",
@@ -53,7 +53,7 @@
     "series_id": "GTWCE_SPRINT",
     "season": "2026",
     "name": "GT World Challenge Europe Sprint — Barcelona",
-    "location": "Montmeló",
+    "location": "Montmelo",
     "circuit_name": "Circuit de Barcelona-Catalunya",
     "start_date": "2026-10-02",
     "end_date": "2026-10-02",

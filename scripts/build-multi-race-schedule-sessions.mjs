@@ -4,7 +4,7 @@
  * Run after filling tables.race.sessions on an event: node scripts/build-multi-race-schedule-sessions.mjs
  *
  * Sources (priority):
- *  1. CURATED_OVERRIDES — exceptions only (triple-headers, etc.)
+ *  1. data/schedules/f2_f3_sessions.json + CURATED_OVERRIDES — authoritative session times
  *  2. Event JSON tables.race.sessions — dates, labels, meta.Start / time_msk
  *  3. Schedule JSON — fallback dates (weekend span) and times
  */
@@ -20,8 +20,14 @@ const MONTHS = {
   jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12',
 };
 
+const F2_F3_SESSIONS_PATH = path.join(root, 'data', 'schedules', 'f2_f3_sessions.json');
+const f2F3Sessions = fs.existsSync(F2_F3_SESSIONS_PATH)
+  ? JSON.parse(fs.readFileSync(F2_F3_SESSIONS_PATH, 'utf8'))
+  : {};
+
 /** Never overwritten by auto-generation. */
 const CURATED_OVERRIDES = {
+  ...f2F3Sessions,
   SUPER_FORMULA_2026_6: [
     { label: 'Round 6', date: '2026-07-18', time_est: '16:15', time_msk: '10:15', kind: '' },
     { label: 'Round 3', date: '2026-07-19', time_est: '10:05', time_msk: '04:05', kind: '' },

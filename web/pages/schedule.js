@@ -89,31 +89,14 @@ function monthDayToISO(md) {
   return '2026-' + mm + '-' + day;
 }
 
-function fetchAllEvents(seriesData) {
-    var categories = window.TGA.categories;
-    var API = window.TGA.API;
-    if (!categories || !API) return Promise.resolve([]);
-  var allIds = [];
-  categories.forEach(function (c) { c.ids.forEach(function (id) { allIds.push(id); }); });
-  var byId = {};
-  seriesData.forEach(function (s) { byId[s.id] = s; });
-  var relevant = allIds.map(function (id) { return byId[id]; }).filter(Boolean);
+function mapSeriesEventRow(e, seriesId, seriesName) {
+  var ev = Object.assign({}, e, { _seriesId: seriesId, _seriesName: seriesName });
+  ev.time_est = ev.time_est || ev.timeEst || ev.time_et || '';
+  ev.time_msk = ev.time_msk || ev.timeMsk || '';
+  return ev;
+}
 
-  return Promise.all(relevant.map(function (s) {
-    var se = String((s.season != null && s.season !== '') ? s.season : '2026').trim();
-    return API.getSeriesEvents(s.id, se)
-      .then(function (events) {
-        return (Array.isArray(events) ? events : []).map(function (e) {
-          var ev = Object.assign({}, e, { _seriesId: s.id, _seriesName: s.name });
-          ev.time_est = ev.time_est || ev.timeEst || ev.time_et || '';
-          ev.time_msk = ev.time_msk || ev.timeMsk || '';
-          return ev;
-        });
-      })
-      .catch(function () { return []; });
-  })).then(function (arrays) {
-    var all = [].concat.apply([], arrays);
-
+function finalizeFetchedEvents(all, byId) {
     // Add static schedules for F1 / INDYCAR / F2 when series has no own events
     var haveIndycar = all.some(function (e) { return (e._seriesId || '').toUpperCase() === 'INDYCAR'; });
     var haveF1      = all.some(function (e) { return (e._seriesId || '').toUpperCase() === 'F1'; });
@@ -179,19 +162,19 @@ function fetchAllEvents(seriesData) {
         { date: 'May 3',    name: 'Miami Grand Prix',    circuit: 'United States — Miami International Autodrome, Miami Gardens, Florida' },
         { date: 'May 24',   name: 'Canadian Grand Prix',            circuit: 'Canada — Circuit Gilles Villeneuve, Montreal' },
         { date: 'June 7',   name: 'Monaco Grand Prix',              circuit: 'Monaco — Circuit de Monaco, Monaco' },
-        { date: 'June 14',  name: 'Barcelona-Catalunya Grand Prix', circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló' },
+        { date: 'June 14',  name: 'Barcelona-Catalunya Grand Prix', circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmelo' },
         { date: 'June 28',  name: 'Austrian Grand Prix',            circuit: 'Austria — Red Bull Ring, Spielberg' },
         { date: 'July 5',   name: 'British Grand Prix',             circuit: 'United Kingdom — Silverstone Circuit, Silverstone' },
         { date: 'July 19',  name: 'Belgian Grand Prix',             circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot' },
-        { date: 'July 26',  name: 'Hungarian Grand Prix',           circuit: 'Hungary — Hungaroring, Mogyoród' },
+        { date: 'July 26',  name: 'Hungarian Grand Prix',           circuit: 'Hungary — Hungaroring, Mogyorod' },
         { date: 'August 23',name: 'Dutch Grand Prix',               circuit: 'Netherlands — Circuit Zandvoort, Zandvoort' },
         { date: 'September 6', name: 'Italian Grand Prix',          circuit: 'Italy — Monza Circuit, Monza' },
         { date: 'September 13', name: 'Spanish Grand Prix',         circuit: 'Spain — Madring, Madrid' },
         { date: 'September 26', name: 'Azerbaijan Grand Prix',      circuit: 'Azerbaijan — Baku City Circuit, Baku' },
         { date: 'October 11', name: 'Singapore Grand Prix',         circuit: 'Singapore — Marina Bay Street Circuit, Singapore' },
         { date: 'October 25', name: 'United States Grand Prix',    circuit: 'United States — Circuit of the Americas, Austin, Texas' },
-        { date: 'November 1', name: 'Mexico City Grand Prix',      circuit: 'Mexico — Autódromo Hermanos Rodríguez, Mexico City' },
-        { date: 'November 8', name: 'São Paulo Grand Prix',        circuit: 'Brazil — Interlagos Circuit, São Paulo' },
+        { date: 'November 1', name: 'Mexico City Grand Prix',      circuit: 'Mexico — Autodromo Hermanos Rodriguez, Mexico City' },
+        { date: 'November 8', name: 'Sao Paulo Grand Prix',        circuit: 'Brazil — Interlagos Circuit, Sao Paulo' },
         { date: 'November 21', name: 'Las Vegas Grand Prix',       circuit: 'United States — Las Vegas Strip Circuit, Paradise, Nevada' },
         { date: 'November 29', name: 'Qatar Grand Prix',           circuit: 'Qatar — Lusail International Circuit, Lusail' },
         { date: 'December 6', name: 'Abu Dhabi Grand Prix',        circuit: 'United Arab Emirates — Yas Marina Circuit, Abu Dhabi' }
@@ -228,11 +211,11 @@ function fetchAllEvents(seriesData) {
         { round: 2,  sprint: '2 May',        feature: '3 May',        circuit: 'United States — Miami International Autodrome, Miami Gardens, Florida' },
         { round: 3,  sprint: '23 May',       feature: '24 May',       circuit: 'Canada — Circuit Gilles Villeneuve, Montreal' },
         { round: 4,  sprint: '6 June',       feature: '7 June',       circuit: 'Monaco — Circuit de Monaco, Monaco' },
-        { round: 5,  sprint: '13 June',      feature: '14 June',      circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló' },
+        { round: 5,  sprint: '13 June',      feature: '14 June',      circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmelo' },
         { round: 6,  sprint: '27 June',      feature: '28 June',      circuit: 'Austria — Red Bull Ring, Spielberg' },
         { round: 7,  sprint: '4 July',       feature: '5 July',       circuit: 'United Kingdom — Silverstone Circuit, Silverstone' },
         { round: 8,  sprint: '18 July',      feature: '19 July',      circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot' },
-        { round: 9,  sprint: '25 July',      feature: '26 July',      circuit: 'Hungary — Hungaroring, Mogyoród' },
+        { round: 9,  sprint: '25 July',      feature: '26 July',      circuit: 'Hungary — Hungaroring, Mogyorod' },
         { round: 10, sprint: '5 September',  feature: '6 September',  circuit: 'Italy — Monza Circuit, Monza' },
         { round: 11, sprint: '12 September', feature: '13 September', circuit: 'Spain — Madring, Madrid' },
         { round: 12, sprint: '26 September', feature: '27 September', circuit: 'Azerbaijan — Baku City Circuit, Baku' },
@@ -279,11 +262,11 @@ function fetchAllEvents(seriesData) {
       var f3Stat = [
         { round: 1,  sprint: '7 March',      feature: '8 March',      circuit: 'Australia — Albert Park Circuit, Melbourne' },
         { round: 2,  sprint: '6 June',       feature: '7 June',       circuit: 'Monaco — Circuit de Monaco, Monaco' },
-        { round: 3,  sprint: '13 June',      feature: '14 June',      circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmeló' },
+        { round: 3,  sprint: '13 June',      feature: '14 June',      circuit: 'Spain — Circuit de Barcelona-Catalunya, Montmelo' },
         { round: 4,  sprint: '27 June',      feature: '28 June',      circuit: 'Austria — Red Bull Ring, Spielberg' },
         { round: 5,  sprint: '4 July',       feature: '5 July',       circuit: 'United Kingdom — Silverstone Circuit, Silverstone' },
         { round: 6,  sprint: '18 July',      feature: '19 July',      circuit: 'Belgium — Circuit de Spa-Francorchamps, Stavelot' },
-        { round: 7,  sprint: '25 July',      feature: '26 July',      circuit: 'Hungary — Hungaroring, Mogyoród' },
+        { round: 7,  sprint: '25 July',      feature: '26 July',      circuit: 'Hungary — Hungaroring, Mogyorod' },
         { round: 8,  sprint: '5 September',  feature: '6 September',  circuit: 'Italy — Monza Circuit, Monza' },
         { round: 9,  sprint: '12 September', feature: '13 September', circuit: 'Spain — Madring, Madrid' }
       ];
@@ -380,7 +363,60 @@ function fetchAllEvents(seriesData) {
       return ta - tb;
     });
     return all;
+}
+
+function fetchEventsPerSeries(relevant) {
+  var API = window.TGA.API;
+  return Promise.all(relevant.map(function (s) {
+    var se = String((s.season != null && s.season !== '') ? s.season : '2026').trim();
+    return API.getSeriesEvents(s.id, se)
+      .then(function (events) {
+        return (Array.isArray(events) ? events : []).map(function (e) {
+          return mapSeriesEventRow(e, s.id, s.name);
+        });
+      })
+      .catch(function () { return []; });
+  })).then(function (arrays) {
+    return [].concat.apply([], arrays);
   });
+}
+
+function fetchAllEvents(seriesData) {
+  var categories = window.TGA.categories;
+  var API = window.TGA.API;
+  if (!categories || !API) return Promise.resolve([]);
+  var allIds = [];
+  categories.forEach(function (c) { c.ids.forEach(function (id) { allIds.push(id); }); });
+  var byId = {};
+  seriesData.forEach(function (s) { byId[s.id] = s; });
+  var relevant = allIds.map(function (id) { return byId[id]; }).filter(Boolean);
+  var season = '2026';
+  if (relevant.length) {
+    season = String((relevant[0].season != null && relevant[0].season !== '') ? relevant[0].season : '2026').trim();
+  }
+
+  function finish(all) {
+    return finalizeFetchedEvents(all, byId);
+  }
+
+  if (typeof API.getSchedule === 'function') {
+    return API.getSchedule(season)
+      .then(function (payload) {
+        var seriesNames = payload && payload.series ? payload.series : {};
+        var events = payload && Array.isArray(payload.events) ? payload.events : [];
+        var all = events.map(function (e) {
+          var sid = e.series_id || '';
+          var name = seriesNames[sid] || (byId[sid] && byId[sid].name) || sid;
+          return mapSeriesEventRow(e, sid, name);
+        });
+        return finish(all);
+      })
+      .catch(function () {
+        return fetchEventsPerSeries(relevant).then(finish);
+      });
+  }
+
+  return fetchEventsPerSeries(relevant).then(finish);
 }
 
 function loadGlobalSchedule(seriesData) {

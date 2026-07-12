@@ -2123,7 +2123,7 @@ function renderDetail(seriesId, subPath) {
           if (scHomolog.length > 0 && homologationWrap) {
             var homologTableHtml = '<div class="table-wrap"><table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('specs.homologating_team') + '</th></tr></thead><tbody>' +
               scHomolog.map(function (h) {
-                return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(h.team)) + '</td></tr>';
+                return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(teamLabel(h.team))) + '</td></tr>';
               }).join('') +
               '</tbody></table></div>';
             homologationWrap.innerHTML = homologTableHtml;
@@ -2545,7 +2545,7 @@ function renderDetail(seriesId, subPath) {
         // Supercars: two-row header grouped by venue (SMP 1–3, MLB 1–4, …); only completed races appear.
         if (theadEl && sk === 'supercars' && raceOrder.length > 0) {
           var supercarsVenueLabels = {
-            SMP: 'Sydney', MLB: 'Melbourne', TPO: 'Taupō', CHR: 'Christchurch',
+            SMP: 'Sydney', MLB: 'Melbourne', TPO: 'Taupo', CHR: 'Christchurch',
             TAS: 'Tasmania', DAR: 'Darwin', TSV: 'Townsville', PER: 'Perth',
             IPS: 'Ipswich', BEN: 'The Bend', BAT: 'Bathurst', GC: 'Gold Coast',
             SAN: 'Sandown', ADL: 'Adelaide'
@@ -4834,7 +4834,7 @@ function renderDetail(seriesId, subPath) {
             { id: 'WEC_2026_1',        name: '6 Hours of Imola',     circuit_name: 'Imola Circuit',                location: 'Imola',            start_date: '2026-04-19', end_date: '2026-04-19' },
             { id: 'WEC_2026_2',        name: '6 Hours of Spa-Francorchamps', circuit_name: 'Circuit de Spa-Francorchamps', location: 'Stavelot',        start_date: '2026-05-09', end_date: '2026-05-09' },
             { id: 'WEC_2026_3',        name: '24 Hours of Le Mans',  circuit_name: 'Circuit de la Sarthe',         location: 'Le Mans',          start_date: '2026-06-13', end_date: '2026-06-14' },
-            { id: 'WEC_2026_4',        name: '6 Hours of São Paulo', circuit_name: 'Interlagos Circuit',           location: 'São Paulo',        start_date: '2026-07-12', end_date: '2026-07-12' },
+            { id: 'WEC_2026_4',        name: '6 Hours of Sao Paulo', circuit_name: 'Interlagos Circuit',           location: 'Sao Paulo',        start_date: '2026-07-12', end_date: '2026-07-12' },
             { id: 'WEC_2026_5',        name: 'Lone Star Le Mans',    circuit_name: 'Circuit of the Americas',      location: 'Austin, Texas',    start_date: '2026-09-06', end_date: '2026-09-06' },
             { id: 'WEC_2026_6',        name: '6 Hours of Fuji',      circuit_name: 'Fuji Speedway',                location: 'Oyama, Shizuoka',  start_date: '2026-09-27', end_date: '2026-09-27' },
             { id: 'WEC_2026_7',        name: 'Qatar 1812 km',        circuit_name: 'Losail International Circuit', location: 'Qatar Lusail',     start_date: '2026-10-24', end_date: '2026-10-24' },

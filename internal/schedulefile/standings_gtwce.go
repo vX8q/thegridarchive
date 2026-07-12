@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/vX8q/tga/config"
+	"github.com/vX8q/tga/internal/driverutil"
 )
 
 // gtwceSpaCheckpointIndices locates Spa 24H interim + Main Race sessions.
@@ -93,7 +94,17 @@ func gtwceStandingsRaceSessions(isSprint bool, sessions []RaceSession) []RaceSes
 type gtwceAcc struct {
 	team, drivers, carModel string
 	racePos                 map[string]string // round code → race position (display)
+	roundDrivers            map[string]string
+	roundPoints             map[string]float64
 	points                  float64
+}
+
+func newGtwceAcc() *gtwceAcc {
+	return &gtwceAcc{
+		racePos:      make(map[string]string),
+		roundDrivers: make(map[string]string),
+		roundPoints:  make(map[string]float64),
+	}
 }
 
 type gtwceSessRow struct {
@@ -392,7 +403,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 				}
 				bo := buckets["overall"]
 				if bo[sr.carNum] == nil {
-					bo[sr.carNum] = &gtwceAcc{racePos: make(map[string]string)}
+					bo[sr.carNum] = newGtwceAcc()
 				}
 				ao := bo[sr.carNum]
 				if sr.team != "" {
@@ -400,6 +411,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 				}
 				if sr.drivers != "" {
 					ao.drivers = sr.drivers
+					snapshotRoundDrivers(ao.roundDrivers, code, sr.drivers)
 				}
 				if sr.chassis != "" {
 					ao.carModel = sr.chassis
@@ -407,6 +419,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 				ao.racePos[code] = cell
 				if slot.countPts {
 					ao.points += sr.overallPts
+					addRoundPoints(ao.roundPoints, code, sr.overallPts)
 				}
 			}
 			// Gold / Silver / Bronze: own-class crews only, Cup pts, class place.
@@ -420,7 +433,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 				}
 				b := buckets[sr.bName]
 				if b[sr.carNum] == nil {
-					b[sr.carNum] = &gtwceAcc{racePos: make(map[string]string)}
+					b[sr.carNum] = newGtwceAcc()
 				}
 				a := b[sr.carNum]
 				if sr.team != "" {
@@ -428,6 +441,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 				}
 				if sr.drivers != "" {
 					a.drivers = sr.drivers
+					snapshotRoundDrivers(a.roundDrivers, code, sr.drivers)
 				}
 				if sr.chassis != "" {
 					a.carModel = sr.chassis
@@ -435,6 +449,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 				a.racePos[code] = cell
 				if slot.countPts {
 					a.points += sr.cupPts
+					addRoundPoints(a.roundPoints, code, sr.cupPts)
 				}
 			}
 		}
@@ -524,13 +539,15 @@ func gtwceStandingRowsFromBucket(byCar map[string]*gtwceAcc, raceOrder []string)
 			}
 		}
 		out = append(out, StandingRow{
-			Pos:          i + 1,
-			Car:          e.car,
-			Driver:       a.drivers,
-			Team:         a.team,
-			Manufacturer: a.carModel,
-			Points:       formatGtwcePtsTotal(a.points),
-			Races:        raceStr,
+			Pos:             i + 1,
+			Car:             e.car,
+			Driver:          a.drivers,
+			Team:            driverutil.FormatDisplayTeamName(a.team),
+			Manufacturer:    a.carModel,
+			Points:          formatGtwcePtsTotal(a.points),
+			Races:           raceStr,
+			RoundDrivers:    copyRoundDriversMap(a.roundDrivers),
+			RoundPoints:     formatRoundPointsMap(a.roundPoints),
 		})
 	}
 	return out

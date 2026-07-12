@@ -7,6 +7,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/vX8q/tga/internal/driverutil"
 )
 
 // substituteInsertSeries — series with a flat teams table (one driver per row,
@@ -487,7 +489,7 @@ func (a *roundsAgg) update(e EntryListRow, drivers []string, single string, roun
 		a.drivers = drivers
 	}
 	if v := strings.TrimSpace(e.Team); v != "" {
-		a.team = v
+		a.team = driverutil.FormatDisplayTeamName(v)
 	}
 	if v := strings.TrimSpace(e.Manufacturer); v != "" {
 		a.manufacturer = v
@@ -864,7 +866,7 @@ func buildGtTeams(byNumber map[string]*roundsAgg, numOrder []string) []TeamJSON 
 		out = append(out, TeamJSON{
 			Class:        a.class,
 			Number:       a.number,
-			Team:         a.team,
+			Team:         driverutil.FormatDisplayTeamName(a.team),
 			Car:          a.car,
 			Manufacturer: a.manufacturer,
 			Drivers:      drivers,
@@ -895,7 +897,7 @@ func buildFlatTeams(byKey map[string]*roundsAgg, keyOrder []string) []TeamJSON {
 		out = append(out, TeamJSON{
 			Number:        a.number,
 			Driver:        a.driver,
-			Team:          a.team,
+			Team:          driverutil.FormatDisplayTeamName(a.team),
 			Manufacturer:  a.manufacturer,
 			CrewChief:     a.crewChief,
 			Class:         a.class,
@@ -1028,7 +1030,7 @@ func buildWecTeamsFromEvents(dataDir, seriesID, season string) []TeamJSON {
 					a.number = curNum
 					a.class = class
 					if curTeam != "" {
-						a.team = curTeam
+						a.team = driverutil.FormatDisplayTeamName(curTeam)
 					}
 					if curCar != "" {
 						a.car = curCar

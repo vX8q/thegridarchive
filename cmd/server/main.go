@@ -196,6 +196,9 @@ func main() {
 	http.HandleFunc("/api/series/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleSeries(w, r, dataDir, st)
 	}))
+	http.HandleFunc("/api/schedule", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleAggregatedSchedule(w, r, dataDir)
+	}))
 	http.HandleFunc("/api/events/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleEvent(w, r, dataDir, nil)
 	}))

@@ -214,11 +214,15 @@
       'Atlassian Williams Racing': 'Williams'
     };
     if (map[raw]) return map[raw];
-    return raw
+    var cleaned = raw
       .replace(/\b(oracle|visa|cash app|aramco|petronas|moneygram|atlassian|stake|bwt)\b/gi, '')
       .replace(/\b(formula 1|f1)\b/gi, '')
       .replace(/\s{2,}/g, ' ')
       .trim() || raw;
+    if (typeof window !== 'undefined' && window.TGA && typeof window.TGA.formatTeamDisplayName === 'function') {
+      return window.TGA.formatTeamDisplayName(cleaned);
+    }
+    return cleaned;
   }
 
   function teamAgeFromMeta(meta) {

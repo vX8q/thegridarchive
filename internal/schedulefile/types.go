@@ -129,6 +129,10 @@ type StandingRow struct {
 	Status       string            `json:"status,omitempty"` // e.g. DNQ, Wth
 	Races        map[string]string `json:"races,omitempty"`  // race code -> position
 	Quals        map[string]string `json:"quals,omitempty"`  // IMSA: qualifying class position per round
+	// Per-round crew roster and points for driver standings (ELMS/IMSA/WEC/GTWCE).
+	RoundDrivers    map[string]string `json:"round_drivers,omitempty"`     // race code -> drivers in that round only
+	RoundPoints     map[string]string `json:"round_points,omitempty"`      // race code -> race points that round
+	RoundQualPoints map[string]string `json:"round_qual_points,omitempty"` // race code -> qualifying points (IMSA)
 }
 
 // StandingsClass is a separate standings table per class (e.g. GTP/LMP2/GTD Pro/GTD for IMSA).

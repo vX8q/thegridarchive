@@ -6,12 +6,87 @@ import (
 	"strings"
 
 	"github.com/vX8q/tga/config"
+	"github.com/vX8q/tga/internal/driverutil"
 )
 
 type classCarAcc struct {
 	car, driver, team, manufacturer string
 	races, quals                    map[string]string
+	roundDrivers                    map[string]string
+	roundPoints                     map[string]float64
+	roundQualPoints                 map[string]float64
 	points                          float64
+}
+
+func newClassCarAcc(car string) *classCarAcc {
+	return &classCarAcc{
+		car:             strings.TrimSpace(car),
+		races:           make(map[string]string),
+		quals:           make(map[string]string),
+		roundDrivers:    make(map[string]string),
+		roundPoints:     make(map[string]float64),
+		roundQualPoints: make(map[string]float64),
+	}
+}
+
+func snapshotRoundDrivers(roundDrivers map[string]string, code, drivers string) {
+	drivers = strings.TrimSpace(drivers)
+	code = strings.TrimSpace(code)
+	if drivers == "" || code == "" || roundDrivers == nil {
+		return
+	}
+	roundDrivers[code] = drivers
+}
+
+func addRoundPoints(roundPoints map[string]float64, code string, pts float64) {
+	code = strings.TrimSpace(code)
+	if code == "" || roundPoints == nil {
+		return
+	}
+	roundPoints[code] += pts
+}
+
+func addRoundQualPoints(roundQualPoints map[string]float64, code string, pts float64) {
+	code = strings.TrimSpace(code)
+	if code == "" || roundQualPoints == nil {
+		return
+	}
+	roundQualPoints[code] += pts
+}
+
+func formatRoundPointsMap(m map[string]float64) map[string]string {
+	if len(m) == 0 {
+		return nil
+	}
+	out := make(map[string]string, len(m))
+	for code, pts := range m {
+		if strings.TrimSpace(code) == "" {
+			continue
+		}
+		out[code] = formatGtwcePtsTotal(pts)
+	}
+	if len(out) == 0 {
+		return nil
+	}
+	return out
+}
+
+func copyRoundDriversMap(m map[string]string) map[string]string {
+	if len(m) == 0 {
+		return nil
+	}
+	out := make(map[string]string, len(m))
+	for code, drivers := range m {
+		drivers = strings.TrimSpace(drivers)
+		if drivers == "" {
+			continue
+		}
+		out[code] = drivers
+	}
+	if len(out) == 0 {
+		return nil
+	}
+	return out
 }
 
 func imsaStandingsRaceCode(ev EventJSON) string {
@@ -393,7 +468,88 @@ type elmsSessRow struct {
 	posNum                                   int
 	posIsNC                                  bool
 	posRaw                                   string
+	laps                                     int
+	gap, interval                            string
 	points                                   float64
+}
+
+func parseLapsCell(s string) int {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return 0
+	}
+	n, err := strconv.Atoi(s)
+	if err != nil {
+		return 0
+	}
+	return n
+}
+
+func elmsLeaderLapsByClass(rows []elmsSessRow) map[string]int {
+	out := make(map[string]int)
+	for _, r := range rows {
+		if r.laps > out[r.cls] {
+			out[r.cls] = r.laps
+		}
+	}
+	return out
+}
+
+func elmsGapIndicatesDSQ(gap, interval string) bool {
+	for _, s := range []string{gap, interval} {
+		s = strings.TrimSpace(s)
+		if strings.HasPrefix(s, "-") && strings.Contains(strings.ToLower(s), "lap") {
+			return true
+		}
+	}
+	return false
+}
+
+// elmsStandingsStatusLabel maps a race row to Ret/DSQ for championship tables.
+// Classified finishers get an empty label and are ranked 1..N within class.
+func elmsStandingsStatusLabel(posRaw string, laps, leaderLaps int, gap, interval string) (label string, classified bool) {
+	raw := strings.TrimSpace(posRaw)
+	up := strings.ToUpper(raw)
+	switch {
+	case up == "DSQ" || strings.HasPrefix(up, "DSQ"):
+		return "DSQ", false
+	case up == "RET" || up == "DNF" || strings.HasPrefix(up, "RET"):
+		return "Ret", false
+	case up == "DNS":
+		return "DNS", false
+	case up == "NC" || strings.HasPrefix(up, "NC"):
+		if raw == "" {
+			return "NC", false
+		}
+		return raw, false
+	}
+	if elmsGapIndicatesDSQ(gap, interval) {
+		return "DSQ", false
+	}
+	if laps == 0 {
+		return "Ret", false
+	}
+	if leaderLaps > 0 && laps <= leaderLaps-2 {
+		return "Ret", false
+	}
+	return "", true
+}
+
+func elmsApplyStandingsStatus(rows []elmsSessRow) []elmsSessRow {
+	leaders := elmsLeaderLapsByClass(rows)
+	out := make([]elmsSessRow, len(rows))
+	for i, r := range rows {
+		label, ok := elmsStandingsStatusLabel(r.posRaw, r.laps, leaders[r.cls], r.gap, r.interval)
+		if !ok {
+			r.posIsNC = true
+			r.posNum = 0
+			if label != "" {
+				r.posRaw = label
+			}
+		}
+		out[i] = r
+	}
+	return out
 }
 
 func elmsClassRankInSession(rows []elmsSessRow, cls string) map[string]string {
@@ -483,13 +639,16 @@ func accFromBuckets(buckets map[string]*classCarAcc, cls string, raceOrder []str
 			}
 		}
 		row := StandingRow{
-			Pos:          i + 1,
-			Car:          a.car,
-			Driver:       a.driver,
-			Team:         a.team,
-			Manufacturer: a.manufacturer,
-			Points:       formatGtwcePtsTotal(a.points),
-			Races:        raceStr,
+			Pos:             i + 1,
+			Car:             a.car,
+			Driver:          a.driver,
+			Team:            driverutil.FormatDisplayTeamName(a.team),
+			Manufacturer:    a.manufacturer,
+			Points:          formatGtwcePtsTotal(a.points),
+			Races:           raceStr,
+			RoundDrivers:    copyRoundDriversMap(a.roundDrivers),
+			RoundPoints:     formatRoundPointsMap(a.roundPoints),
+			RoundQualPoints: formatRoundPointsMap(a.roundQualPoints),
 		}
 		if len(qualStr) > 0 {
 			row.Quals = qualStr
@@ -544,11 +703,7 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 	getAcc := func(cls, car string) *classCarAcc {
 		k := classCarKey(cls, car)
 		if buckets[k] == nil {
-			buckets[k] = &classCarAcc{
-				car:   strings.TrimSpace(car),
-				races: make(map[string]string),
-				quals: make(map[string]string),
-			}
+			buckets[k] = newClassCarAcc(car)
 		}
 		return buckets[k]
 	}
@@ -561,6 +716,7 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 		if err != nil || detail == nil {
 			continue
 		}
+		eventEntryDrivers := make(map[string]string)
 		for _, e := range detail.EntryList {
 			car := strings.TrimSpace(e.Number)
 			cls := normalizeImsaClassFromEntry(e.Class, "")
@@ -578,6 +734,9 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 			}
 			if manu != "" {
 				a.manufacturer = manu
+			}
+			if drv := elmsEntryDrivers(e); drv != "" {
+				eventEntryDrivers[classCarKey(cls, car)] = drv
 			}
 		}
 
@@ -608,8 +767,15 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 			if cell != "" {
 				a.races[code] = cell
 			}
-			a.points += imsaRacePointsFromRow(race.Headers, row)
-			if drv := strings.TrimSpace(valueAt(row, firstColIndex(race.Headers, "DRIVERS", "Drivers", "Driver"))); drv != "" {
+			racePts := imsaRacePointsFromRow(race.Headers, row)
+			a.points += racePts
+			addRoundPoints(a.roundPoints, code, racePts)
+			drv := strings.TrimSpace(valueAt(row, firstColIndex(race.Headers, "DRIVERS", "Drivers", "Driver")))
+			if drv == "" {
+				drv = eventEntryDrivers[classCarKey(cls, eventCar)]
+			}
+			if drv != "" {
+				snapshotRoundDrivers(a.roundDrivers, code, drv)
 				a.driver = mergeDriverNames(a.driver, drv)
 			}
 		}
@@ -632,7 +798,14 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 				if qcell != "" {
 					a.quals[code] = qcell
 				}
-				a.points += imsaQualPointsFromRow(qual.Headers, qrow)
+				qualPts := imsaQualPointsFromRow(qual.Headers, qrow)
+				a.points += qualPts
+				addRoundQualPoints(a.roundQualPoints, code, qualPts)
+				if a.roundDrivers[code] == "" {
+					if drv := eventEntryDrivers[classCarKey(cls, car)]; drv != "" {
+						snapshotRoundDrivers(a.roundDrivers, code, drv)
+					}
+				}
 			}
 		}
 	}
@@ -697,11 +870,7 @@ func BuildElmsStandingsFromEvents(dataDir string, season string) (*StandingsData
 	getAcc := func(cls, car string) *classCarAcc {
 		k := classCarKey(cls, car)
 		if buckets[k] == nil {
-			buckets[k] = &classCarAcc{
-				car:   strings.TrimSpace(car),
-				races: make(map[string]string),
-				quals: make(map[string]string),
-			}
+			buckets[k] = newClassCarAcc(car)
 		}
 		return buckets[k]
 	}
@@ -743,6 +912,9 @@ func BuildElmsStandingsFromEvents(dataDir string, season string) (*StandingsData
 		posCol := firstColIndex(h, "Pos", "POS")
 		teamCol := colIndex(h, "Team")
 		ptsCol := pointsColIndex(h)
+		lapsCol := firstColIndex(h, "Laps", "LAPS")
+		gapCol := firstColIndex(h, "Gap", "GAP")
+		intCol := firstColIndex(h, "Interval", "Int", "INT")
 		if carCol < 0 || posCol < 0 {
 			continue
 		}
@@ -773,9 +945,11 @@ func BuildElmsStandingsFromEvents(dataDir string, season string) (*StandingsData
 			}
 			sessRows = append(sessRows, elmsSessRow{
 				carNum: carNum, cls: cls, team: team, drivers: meta.drivers, manufacturer: meta.manufacturer,
-				posNum: pn, posIsNC: pnc, posRaw: rawPos, points: pts,
+				posNum: pn, posIsNC: pnc, posRaw: rawPos, laps: parseLapsCell(valueAt(row, lapsCol)),
+				gap: valueAt(row, gapCol), interval: valueAt(row, intCol), points: pts,
 			})
 		}
+		sessRows = elmsApplyStandingsStatus(sessRows)
 
 		classesSeen := map[string]struct{}{}
 		for _, sr := range sessRows {
@@ -794,10 +968,12 @@ func BuildElmsStandingsFromEvents(dataDir string, season string) (*StandingsData
 			a := getAcc(sr.cls, sr.carNum)
 			a.races[code] = cell
 			a.points += sr.points
+			addRoundPoints(a.roundPoints, code, sr.points)
 			if sr.team != "" {
 				a.team = sr.team
 			}
 			if sr.drivers != "" {
+				snapshotRoundDrivers(a.roundDrivers, code, sr.drivers)
 				a.driver = mergeDriverNames(a.driver, sr.drivers)
 			}
 			if sr.manufacturer != "" {

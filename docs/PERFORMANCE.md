@@ -60,6 +60,28 @@ Result:
 - sustained: `p95 < 250ms`, `error rate < 0.5%`
 - spike-like: `error rate < 1%`
 
+## 2026 optimizations (local dev)
+
+Changes:
+
+- `GET /api/schedule?season=2026` — one request for Full Schedule / Home instead of ~22 `/api/series/*/events`.
+- Standings / stats: response cache checked **before** rebuild (`tryWriteSeriesJSONCache`).
+- `EventDetailFileSet` — single walk of `data/events/` for `has_detail` on series events.
+
+Quick checks (server running, `TGA_BOOTSTRAP=skip` optional):
+
+```powershell
+# Aggregated schedule (cold then warm)
+Measure-Command { curl.exe -s -o NUL http://localhost:8080/api/schedule?season=2026 }
+Measure-Command { curl.exe -s -o NUL http://localhost:8080/api/schedule?season=2026 }
+
+# Standings: 2nd request should be much faster (cache hit, no rebuild)
+Measure-Command { curl.exe -s -o NUL http://localhost:8080/api/series/cup/standings }
+Measure-Command { curl.exe -s -o NUL http://localhost:8080/api/series/cup/standings }
+```
+
+In browser DevTools → Network on cold Home load: expect **one** `/api/schedule?...` (not many `/api/series/*/events`).
+
 ## Load testing (k6)
 
 Результаты выше получены сценариями smoke / sustained / spike (1 VU×30s, 200 VU×10m, spike 0→500→0 VU).

@@ -69,11 +69,25 @@
   /** Date line for event page header (range from start_date/end_date, or prose date field). */
   function buildEventMetaDate(d) {
     if (!d) return '';
+    var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
+    if (getRange) {
+      var range = getRange(d);
+      if (range.start && range.end && range.end > range.start) {
+        return formatDateRange(range.start, range.end);
+      }
+      if (range.start) {
+        var localizeRangeDay = window.TGA && window.TGA.localizeDate;
+        return typeof localizeRangeDay === 'function'
+          ? localizeRangeDay(range.start)
+          : formatShortDate(range.start);
+      }
+    }
     var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
     var iso = parseIso || function () { return ''; };
+    var showsWeekendRange = window.TGA && window.TGA.eventShowsWeekendDateRange;
     var startIso = iso(d.start_date || d.startDate);
     var endIso = iso(d.end_date || d.endDate);
-    if (startIso && endIso && endIso > startIso) {
+    if (showsWeekendRange && showsWeekendRange(d) && startIso && endIso && endIso > startIso) {
       return formatDateRange(startIso, endIso);
     }
     if (startIso) {

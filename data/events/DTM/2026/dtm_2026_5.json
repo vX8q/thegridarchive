@@ -1,0 +1,254 @@
+{
+  "event_id": "DTM_2026_5",
+  "series": "DTM",
+  "race": "Oschersleben",
+  "date": "25–26 July 2026",
+  "start_date": "2026-07-25",
+  "end_date": "2026-07-26",
+  "track": "Motorsport Arena Oschersleben",
+  "location": "Oschersleben, Saxony-Anhalt",
+  "entry_list": [
+    {
+      "number": "7",
+      "driver": "Nicki Thiim",
+      "team": "Comtoyou Racing",
+      "manufacturer": "Aston Martin",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "power_unit": "Aston Martin AMR16A 4.0 L Turbo V8",
+      "rounds": "4",
+      "driver_slug": "nicki-thiim"
+    },
+    {
+      "number": "8",
+      "driver": "Nicolas Baert",
+      "team": "Comtoyou Racing",
+      "manufacturer": "Aston Martin",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "power_unit": "Aston Martin AMR16A 4.0 L Turbo V8",
+      "status": "R",
+      "rounds": "4",
+      "driver_slug": "nicolas-baert"
+    },
+    {
+      "number": "3",
+      "driver": "Kelvin van der Linde",
+      "team": "Schubert Motorsport",
+      "manufacturer": "BMW",
+      "car": "BMW M4 GT3 Evo",
+      "power_unit": "BMW P58 3.0 L Turbo I6",
+      "rounds": "4",
+      "driver_slug": "kelvin-van-der-linde"
+    },
+    {
+      "number": "11",
+      "driver": "Marco Wittmann",
+      "team": "Schubert Motorsport",
+      "manufacturer": "BMW",
+      "car": "BMW M4 GT3 Evo",
+      "power_unit": "BMW P58 3.0 L Turbo I6",
+      "rounds": "4",
+      "driver_slug": "marco-wittmann"
+    },
+    {
+      "number": "14",
+      "driver": "Matteo Cairoli",
+      "team": "Emil Frey Racing",
+      "manufacturer": "Ferrari",
+      "car": "Ferrari 296 GT3 Evo",
+      "power_unit": "Ferrari F163CE 3.0 L Turbo V6",
+      "rounds": "4",
+      "driver_slug": "matteo-cairoli"
+    },
+    {
+      "number": "69",
+      "driver": "Thierry Vermeulen",
+      "team": "Emil Frey Racing",
+      "manufacturer": "Ferrari",
+      "car": "Ferrari 296 GT3 Evo",
+      "power_unit": "Ferrari F163CE 3.0 L Turbo V6",
+      "rounds": "4",
+      "driver_slug": "thierry-vermeulen"
+    },
+    {
+      "number": "36",
+      "driver": "Arjun Maini",
+      "team": "HRT Ford Racing",
+      "manufacturer": "Ford",
+      "car": "Ford Mustang GT3 Evo",
+      "power_unit": "Ford Coyote 5.4 L V8",
+      "rounds": "4",
+      "driver_slug": "arjun-maini"
+    },
+    {
+      "number": "64",
+      "driver": "Finn Wiebelhaus",
+      "team": "HRT Ford Racing",
+      "manufacturer": "Ford",
+      "car": "Ford Mustang GT3 Evo",
+      "power_unit": "Ford Coyote 5.4 L V8",
+      "status": "R",
+      "rounds": "4",
+      "driver_slug": "finn-wiebelhaus"
+    },
+    {
+      "number": "10",
+      "driver": "Marco Mapelli",
+      "team": "Red Bull Team Abt",
+      "manufacturer": "Lamborghini",
+      "car": "Lamborghini Temerario GT3",
+      "power_unit": "Lamborghini L411 4.0 L Turbo V8",
+      "rounds": "4",
+      "driver_slug": "marco-mapelli"
+    },
+    {
+      "number": "130",
+      "driver": "Luca Engstler",
+      "team": "Red Bull Team Abt",
+      "manufacturer": "Lamborghini",
+      "car": "Lamborghini Temerario GT3",
+      "power_unit": "Lamborghini L411 4.0 L Turbo V8",
+      "rounds": "4",
+      "driver_slug": "luca-engstler"
+    },
+    {
+      "number": "19",
+      "driver": "Mirko Bortolotti",
+      "team": "TGI Team by GRT",
+      "manufacturer": "Lamborghini",
+      "car": "Lamborghini Temerario GT3",
+      "power_unit": "Lamborghini L411 4.0 L Turbo V8",
+      "rounds": "4",
+      "driver_slug": "mirko-bortolotti"
+    },
+    {
+      "number": "63",
+      "driver": "Maximilian Paul",
+      "team": "TGI Team by GRT",
+      "manufacturer": "Lamborghini",
+      "car": "Lamborghini Temerario GT3",
+      "power_unit": "Lamborghini L411 4.0 L Turbo V8",
+      "rounds": "4",
+      "driver_slug": "maximilian-paul"
+    },
+    {
+      "number": "22",
+      "driver": "Lucas Auer",
+      "team": "Mercedes-AMG Team Landgraf",
+      "manufacturer": "Mercedes-AMG",
+      "car": "Mercedes-AMG GT3 Evo",
+      "power_unit": "Mercedes-AMG M159 6.2 L V8",
+      "rounds": "4",
+      "driver_slug": "lucas-auer"
+    },
+    {
+      "number": "84",
+      "driver": "Tom Kalender",
+      "team": "Mercedes-AMG Team Landgraf",
+      "manufacturer": "Mercedes-AMG",
+      "car": "Mercedes-AMG GT3 Evo",
+      "power_unit": "Mercedes-AMG M159 6.2 L V8",
+      "status": "R",
+      "rounds": "4",
+      "driver_slug": "tom-kalender"
+    },
+    {
+      "number": "48",
+      "driver": "Jules Gounon",
+      "team": "Mercedes-AMG Team Mann-Filter",
+      "manufacturer": "Mercedes-AMG",
+      "car": "Mercedes-AMG GT3 Evo",
+      "power_unit": "Mercedes-AMG M159 6.2 L V8",
+      "rounds": "4",
+      "driver_slug": "jules-gounon"
+    },
+    {
+      "number": "80",
+      "driver": "Maro Engel",
+      "team": "Mercedes-AMG Team Ravenol",
+      "manufacturer": "Mercedes-AMG",
+      "car": "Mercedes-AMG GT3 Evo",
+      "power_unit": "Mercedes-AMG M159 6.2 L V8",
+      "rounds": "4",
+      "driver_slug": "maro-engel"
+    },
+    {
+      "number": "16",
+      "driver": "Timo Glock",
+      "team": "Dorr Motorsport",
+      "manufacturer": "McLaren",
+      "car": "McLaren 720S GT3 Evo",
+      "power_unit": "McLaren M840T 4.0 L Turbo V8",
+      "rounds": "4",
+      "driver_slug": "timo-glock"
+    },
+    {
+      "number": "25",
+      "driver": "Ben Dörr",
+      "team": "Dorr Motorsport",
+      "manufacturer": "McLaren",
+      "car": "McLaren 720S GT3 Evo",
+      "power_unit": "McLaren M840T 4.0 L Turbo V8",
+      "rounds": "4",
+      "driver_slug": "ben-dorr"
+    },
+    {
+      "number": "29",
+      "driver": "Bastian Buus",
+      "team": "Land-Motorsport",
+      "manufacturer": "Porsche",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "power_unit": "Porsche M97/80 4.2 L Flat-6",
+      "rounds": "4",
+      "driver_slug": "bastian-buus"
+    },
+    {
+      "number": "90",
+      "driver": "Ricardo Feller",
+      "team": "Manthey Racing",
+      "manufacturer": "Porsche",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "power_unit": "Porsche M97/80 4.2 L Flat-6",
+      "rounds": "4",
+      "driver_slug": "ricardo-feller"
+    },
+    {
+      "number": "91",
+      "driver": "Thomas Preining",
+      "team": "Manthey Racing",
+      "manufacturer": "Porsche",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "power_unit": "Porsche M97/80 4.2 L Flat-6",
+      "rounds": "4",
+      "driver_slug": "thomas-preining"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

@@ -151,7 +151,6 @@ $env:PORT="3000"; go run ./cmd/server
 | `validate-schedule-times.mjs` | Проверка времени в расписаниях |
 | `build-multi-race-schedule-sessions.mjs` | Генерация `web/data/multi-race-schedule-sessions.js` |
 | `sync-stockcar-table-teams.mjs` | Колонка Team в stock-car tables ↔ `entry_list` |
-| `stats-columns-sanity.mjs` | Проверка покрытия колонок stats |
 | `sync-driver-profiles-from-events.mjs` | Пересборка `driver_profiles.json` из events |
 | `sync-sf-table-teams.mjs` | Team-колонки в Super Formula events |
 

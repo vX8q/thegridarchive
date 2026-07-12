@@ -28,6 +28,7 @@ func TestCanonicalDriverKey_InitialVariants(t *testing.T) {
 		{"Noah Stromsted", "Noah Strømsted"},
 		{"Maciej Gladysz", "Maciej Gładysz"},
 		{"Theophile Nael", "Théophile Naël"},
+		{"S. Al Maosherji", "Saqer Al Maosherji"},
 	}
 	for _, p := range pairs {
 		a := canonicalDriverKey(p[0])

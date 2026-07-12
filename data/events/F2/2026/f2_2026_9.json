@@ -1,0 +1,223 @@
+{
+  "event_id": "F2_2026_9",
+  "series": "FIA Formula 2 Championship",
+  "race": "Hungaroring",
+  "date": "25–26 July 2026",
+  "start_date": "2026-07-25",
+  "end_date": "2026-07-26",
+  "track": "Hungaroring",
+  "location": "Mogyorod",
+  "entry_list": [
+    {
+      "number": "1",
+      "driver": "Rafael Câmara",
+      "team": "Invicta Racing",
+      "manufacturer": "",
+      "driver_slug": "rafael-camara"
+    },
+    {
+      "number": "2",
+      "driver": "Joshua Dürksen",
+      "team": "Invicta Racing",
+      "manufacturer": "",
+      "driver_slug": "joshua-durksen"
+    },
+    {
+      "number": "3",
+      "driver": "Ritomo Miyata",
+      "team": "Hitech",
+      "manufacturer": "",
+      "driver_slug": "ritomo-miyata"
+    },
+    {
+      "number": "4",
+      "driver": "Colton Herta",
+      "team": "Hitech",
+      "manufacturer": "",
+      "driver_slug": "colton-herta"
+    },
+    {
+      "number": "5",
+      "driver": "Noel León",
+      "team": "Campos Racing",
+      "manufacturer": "",
+      "driver_slug": "noel-leon"
+    },
+    {
+      "number": "6",
+      "driver": "Nikola Tsolov",
+      "team": "Campos Racing",
+      "manufacturer": "",
+      "driver_slug": "nikola-tsolov"
+    },
+    {
+      "number": "7",
+      "driver": "Dino Beganovic",
+      "team": "DAMS Lucas Oil",
+      "manufacturer": "",
+      "driver_slug": "dino-beganovic"
+    },
+    {
+      "number": "8",
+      "driver": "Roman Bilinski",
+      "team": "DAMS Lucas Oil",
+      "manufacturer": "",
+      "driver_slug": "roman-bilinski"
+    },
+    {
+      "number": "9",
+      "driver": "Gabriele Minì",
+      "team": "MP Motorsport",
+      "manufacturer": "",
+      "driver_slug": "gabriele-mini"
+    },
+    {
+      "number": "10",
+      "driver": "Oliver Goethe",
+      "team": "MP Motorsport",
+      "manufacturer": "",
+      "driver_slug": "oliver-goethe"
+    },
+    {
+      "number": "11",
+      "driver": "Sebastián Montoya",
+      "team": "Prema Racing",
+      "manufacturer": "",
+      "driver_slug": "sebastian-montoya"
+    },
+    {
+      "number": "12",
+      "driver": "Mari Boya",
+      "team": "Prema Racing",
+      "manufacturer": "",
+      "driver_slug": "mari-boya"
+    },
+    {
+      "number": "14",
+      "driver": "Martinius Stenshorne",
+      "team": "Rodin Motorsport",
+      "manufacturer": "",
+      "driver_slug": "martinius-stenshorne"
+    },
+    {
+      "number": "15",
+      "driver": "Alex Dunne",
+      "team": "Rodin Motorsport",
+      "manufacturer": "",
+      "driver_slug": "alex-dunne"
+    },
+    {
+      "number": "16",
+      "driver": "Kush Maini",
+      "team": "ART Grand Prix",
+      "manufacturer": "",
+      "driver_slug": "kush-maini"
+    },
+    {
+      "number": "17",
+      "driver": "Tasanapol Inthraphuvasak",
+      "team": "ART Grand Prix",
+      "manufacturer": "",
+      "driver_slug": "tasanapol-inthraphuvasak"
+    },
+    {
+      "number": "20",
+      "driver": "Emerson Fittipaldi Jr.",
+      "team": "AIX Racing",
+      "manufacturer": "",
+      "driver_slug": "emerson-fittipaldi-jr"
+    },
+    {
+      "number": "21",
+      "driver": "Cian Shields",
+      "team": "AIX Racing",
+      "manufacturer": "",
+      "driver_slug": "cian-shields"
+    },
+    {
+      "number": "22",
+      "driver": "Nico Varrone",
+      "team": "Van Amersfoort Racing",
+      "manufacturer": "",
+      "driver_slug": "nico-varrone"
+    },
+    {
+      "number": "23",
+      "driver": "Rafael Villagómez",
+      "team": "Van Amersfoort Racing",
+      "manufacturer": "",
+      "driver_slug": "rafael-villagomez"
+    },
+    {
+      "number": "24",
+      "driver": "Laurens van Hoepen",
+      "team": "Trident",
+      "manufacturer": "",
+      "driver_slug": "laurens-van-hoepen"
+    },
+    {
+      "number": "25",
+      "driver": "John Bennett",
+      "team": "Trident",
+      "manufacturer": "",
+      "driver_slug": "john-bennett"
+    }
+  ],
+  "tables": {
+    "feature": {
+      "title": "Feature Race Results",
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "practice": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Time",
+        "Gap",
+        "Int",
+        "KPH"
+      ],
+      "rows": []
+    },
+    "sprint": {
+      "title": "Sprint Race Results",
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

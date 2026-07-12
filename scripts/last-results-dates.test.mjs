@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import assert from 'assert';
 import { createLastResultsDatesApi } from './lib/load-last-results-dates.mjs';
+import { loadScheduleEntry } from './lib/load-event-card-date.mjs';
 
 function test(name, fn) {
   try {
@@ -48,6 +49,15 @@ test('cardLastRaceDateIso from rangeEnd on card', () => {
     rangeEnd: '2026-06-07',
   };
   assert.strictEqual(TGA.cardLastRaceDateIso(card), '2026-06-07');
+});
+
+test('WEC Last Results race day iso uses race-day-only card rule', () => {
+  const wec = loadScheduleEntry('wec.json', 'WEC_2026_4');
+  assert.ok(wec);
+  const range = TGA.getEventRaceDateRangeIso(wec);
+  assert.strictEqual(range.start, '2026-07-12');
+  assert.strictEqual(range.end, '2026-07-12');
+  assert.strictEqual(TGA.eventLastRaceDateIso(wec), '2026-07-12');
 });
 
 console.log('All last-results-dates tests passed.');

@@ -1,0 +1,209 @@
+{
+  "event_id": "NASCAR_MODIFIED_2026_10",
+  "series": "NASCAR Whelen Modified Tour",
+  "race": "Duel at the Dog 200",
+  "date": "Saturday, July 25, 2026",
+  "start_date": "2026-07-25",
+  "end_date": "2026-07-25",
+  "track": "Monadnock Speedway",
+  "location": "Monadnock Speedway, Winchester, New Hampshire",
+  "entry_list": [
+    {
+      "number": "1",
+      "driver": "Patrick Emerling",
+      "team": "USNE Motorsports",
+      "manufacturer": "LFR",
+      "crew_chief": "Dale Hedquist",
+      "driver_slug": "patrick-emerling"
+    },
+    {
+      "number": "3",
+      "driver": "Tyler Rypkema",
+      "team": "BRE Racing",
+      "manufacturer": "Boehler Racing",
+      "crew_chief": "Greg Fournier",
+      "driver_slug": "tyler-rypkema"
+    },
+    {
+      "number": "05",
+      "driver": "Teddy Hodgdon IV",
+      "team": "Teddy Hodgdon Racing",
+      "manufacturer": "FURY Race Cars",
+      "crew_chief": "Ted Hodgdon",
+      "driver_slug": "teddy-hodgdon-iv"
+    },
+    {
+      "number": "8",
+      "driver": "John-Michael Shenette",
+      "team": "Eighty-Two Autosport",
+      "manufacturer": "LFR",
+      "crew_chief": "Scott Morin",
+      "driver_slug": "john-michael-shenette"
+    },
+    {
+      "number": "18",
+      "driver": "Ken Heagy",
+      "team": "Heagy Motorsports",
+      "manufacturer": "FURY Race Cars",
+      "crew_chief": "Greg Gorman",
+      "driver_slug": "ken-heagy"
+    },
+    {
+      "number": "21",
+      "driver": "Stephen Kopcik",
+      "team": "Wanick Motorsports",
+      "manufacturer": "Troyer",
+      "crew_chief": "Nick Kopcik",
+      "driver_slug": "stephen-kopcik"
+    },
+    {
+      "number": "28",
+      "driver": "Doug Coby",
+      "team": "Jett Motorsports",
+      "manufacturer": "LFR",
+      "crew_chief": "John McKenna",
+      "driver_slug": "doug-coby"
+    },
+    {
+      "number": "31",
+      "driver": "Michael Christopher Jr.",
+      "team": "Elite Motorsports",
+      "manufacturer": "LFR",
+      "crew_chief": "Eugene Orlando",
+      "driver_slug": "michael-christopher-jr"
+    },
+    {
+      "number": "36",
+      "driver": "Dave Sapienza",
+      "team": "Sapienza Racing",
+      "manufacturer": "Troyer",
+      "crew_chief": "Greg Kleila",
+      "driver_slug": "david-sapienza"
+    },
+    {
+      "number": "44",
+      "driver": "Chase Dowling",
+      "team": "Tinio Racing",
+      "manufacturer": "LFR",
+      "crew_chief": "Danny Gamache",
+      "driver_slug": "chase-dowling"
+    },
+    {
+      "number": "54",
+      "driver": "Tommy Catalano",
+      "team": "Catalano Motorsports",
+      "manufacturer": "Troyer",
+      "crew_chief": "Rick Kluth",
+      "driver_slug": "tommy-catalano"
+    },
+    {
+      "number": "56",
+      "driver": "Trevor Catalano",
+      "team": "Catalano Motorsports",
+      "manufacturer": "Troyer",
+      "crew_chief": "David Catalano",
+      "driver_slug": "trevor-catalano"
+    },
+    {
+      "number": "58",
+      "driver": "Eric Goodale",
+      "team": "Goodie Motorsports",
+      "manufacturer": "FURY Race Cars",
+      "crew_chief": "Rob Hyer",
+      "driver_slug": "eric-goodale"
+    },
+    {
+      "number": "60",
+      "driver": "Matt Hirschman",
+      "team": "Pee Dee Motorsports",
+      "manufacturer": "Troyer",
+      "crew_chief": "Mike Stein",
+      "driver_slug": "matt-hirschman"
+    },
+    {
+      "number": "64",
+      "driver": "Austin Beers",
+      "team": "KLM Motorsports",
+      "manufacturer": "Troyer",
+      "crew_chief": "Ron Yuhas",
+      "driver_slug": "austin-beers"
+    },
+    {
+      "number": "73",
+      "driver": "Paulie Hartwig III",
+      "team": "Hartwig Racing",
+      "manufacturer": "FURY Race Cars",
+      "crew_chief": "Bobby Geiger Jr.",
+      "driver_slug": "paulie-hartwig-iii"
+    },
+    {
+      "number": "79",
+      "driver": "Jon McKennedy",
+      "team": "Jon McKennedy Racing",
+      "manufacturer": "FURY Race Cars",
+      "crew_chief": "Patrick Walsh",
+      "driver_slug": "jonathan-mckennedy"
+    },
+    {
+      "number": "82",
+      "driver": "Andrew Molleur",
+      "team": "DWR Racing",
+      "manufacturer": "LFR",
+      "crew_chief": "Michael Molleur",
+      "driver_slug": "andrew-molleur"
+    },
+    {
+      "number": "89",
+      "driver": "Matt Swanson",
+      "team": "Matt Swanson",
+      "manufacturer": "FURY Race Cars",
+      "crew_chief": "John Swanson",
+      "driver_slug": "matt-swanson"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Trk",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed",
+        "Lap #",
+        "# Laps",
+        "-Fastest",
+        "-Next"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Fin",
+        "St",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Laps",
+        "Led",
+        "Status",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

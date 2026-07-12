@@ -7,11 +7,18 @@ import (
 	"time"
 )
 
-func writeSeriesJSONCached(w http.ResponseWriter, cacheKey string, sourceMtime time.Time, v any) {
+func tryWriteSeriesJSONCache(w http.ResponseWriter, cacheKey string, sourceMtime time.Time) bool {
 	if body, ok := seriesResponseCache.Get(cacheKey, sourceMtime); ok {
 		w.Header().Set("Content-Type", "application/json")
 		w.Header().Set("Cache-Control", "private, max-age=30")
 		_, _ = w.Write(body)
+		return true
+	}
+	return false
+}
+
+func writeSeriesJSONCached(w http.ResponseWriter, cacheKey string, sourceMtime time.Time, v any) {
+	if tryWriteSeriesJSONCache(w, cacheKey, sourceMtime) {
 		return
 	}
 	body, err := json.Marshal(v)

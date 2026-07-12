@@ -2,11 +2,15 @@
   "event_id": "NASCAR_CUP_2026_21",
   "series": "NASCAR Cup Series",
   "race": "Window World 450",
-  "date": "Sunday, July 19, 2026",
-  "start_date": "2026-07-19",
+  "date": "Saturday–Sunday, July 18–19, 2026",
+  "start_date": "2026-07-18",
   "end_date": "2026-07-19",
   "track": "North Wilkesboro Speedway",
   "location": "North Wilkesboro Speedway, North Wilkesboro, North Carolina",
+  "laps": "450",
+  "distance": "281.25 mi (452.54 km)",
+  "event_preview": "North Wilkesboro Speedway is a 0.625-mile (1.006 km) short oval in North Wilkesboro, North Carolina, with 14-degree banking in the turns and a narrow racing surface that rewards precision and patience. The Window World 450 is the 21st points race of the 2026 NASCAR Cup Series season and returns Cup to the historic North Carolina track for a summertime night race. Practice is scheduled for Saturday evening, qualifying follows at 6:10 p.m. ET, and the 450-lap main event goes green at 7:00 p.m. ET on Sunday on TNT, with stages of 80, 265 and 450 laps.\n\nThe weekend also features the NASCAR Craftsman Truck Series FaithFest 250 on Saturday afternoon and a Sawyer Brown pre-race concert before Sunday's Cup race. North Wilkesboro's abrasive surface and limited passing lanes tend to produce strategy-heavy racing and late-race restarts, making track position and tire management central to the outcome.",
+  "event_preview_ru": "North Wilkesboro Speedway — короткий овал длиной 0,625 мили (1,006 км) в North Wilkesboro, North Carolina, с уклоном 14° в поворотах и узкой траекторией, где важны точность и терпение. Window World 450 — 21-й очковый этап NASCAR Cup Series 2026 и возвращение Cup на историческую трассу Северной Каролины в летнюю ночную гонку. Практика запланирована в субботу вечером, квалификация в 18:10 по восточному времени, основная гонка на 450 кругов стартует в 19:00 ET в воскресенье на TNT со стейджами 80, 265 и 450 кругов.\n\nВ программе уик-энда также FaithFest 250 NASCAR Craftsman Truck Series в субботу днём и предгоночный концерт Sawyer Brown перед воскресной гонкой Cup. Абразивное покрытие North Wilkesboro и ограниченные возможности для обгонов делают гонку тактической, с упором на позицию на трассе и управление шинами.",
   "entry_list": [
     {
       "number": "1",

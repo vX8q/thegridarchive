@@ -281,7 +281,18 @@
     return getStartIso(temp) || String(s.start_date || '').slice(0, 10);
   }
 
-  /** First and last race calendar dates for an event weekend (not per expanded session row). */
+  function pushLocalRaceDateIso(dates, isoStr) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(isoStr)) return;
+    if (dates.indexOf(isoStr) < 0) dates.push(isoStr);
+  }
+
+  function eventShowsWeekendDateRange(e) {
+    if (!e) return false;
+    var rule = getSeriesCardDateRule(seriesKeyNorm(e._seriesId || e.series_id || ''));
+    return rule.card === 'weekend_range' || rule.card === 'weekend_merge';
+  }
+
+  /** First and last race calendar dates in the viewer timezone (multi-race weekends only). */
   function getEventRaceDateRangeIso(e) {
     if (!e) return { start: '', end: '' };
     var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
@@ -295,40 +306,36 @@
       if (!one) one = iso(e.start_date || e.date) || iso(e.end_date);
       return { start: one, end: one };
     }
-    var sid = seriesKeyNorm(e._seriesId || e.series_id || '');
-    var sessions = buildSessionsForEvent(sid, e);
-    if (sessions && sessions.length > 1) {
-      var dates = sessions.map(function (s) {
-        return sessionRaceStartDateIso(e, s);
-      }).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d); }).sort();
-      if (dates.length > 1) {
-        return { start: dates[0], end: dates[dates.length - 1] };
-      }
-    }
-    var start = iso(e.start_date || e.startDate) || iso(e.date);
-    var end = iso(e.end_date || e.endDate);
     var raceOnly = singleRaceCardDateIso(e);
     if (raceOnly) {
       return { start: raceOnly, end: raceOnly };
     }
-    if (/^\d{4}-\d{2}-\d{2}$/.test(start) && /^\d{4}-\d{2}-\d{2}$/.test(end) && end > start) {
-      return { start: start, end: end };
+
+    var getRaceIso = window.TGA && window.TGA.getEventRaceStartDateIso;
+    if (!eventShowsWeekendDateRange(e)) {
+      var raceDay = getRaceIso ? getRaceIso(e) : '';
+      if (!raceDay) raceDay = iso(e.start_date || e.startDate) || iso(e.date) || iso(e.end_date);
+      return { start: raceDay, end: raceDay };
     }
-    if (sessions && sessions.length > 1) {
-      var sessionDates = sessions.map(function (s) {
-        return sessionRaceStartDateIso(e, s);
-      }).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d); }).sort();
-      if (sessionDates.length === 1) {
-        return { start: sessionDates[0], end: sessionDates[0] };
+
+    var dates = [];
+    var sid = seriesKeyNorm(e._seriesId || e.series_id || '');
+    var sessions = buildSessionsForEvent(sid, e);
+    if (sessions && sessions.length) {
+      sessions.forEach(function (s) {
+        pushLocalRaceDateIso(dates, sessionRaceStartDateIso(e, s));
+      });
+    } else {
+      pushLocalRaceDateIso(dates, iso(e.start_date || e.startDate) || iso(e.date));
+      pushLocalRaceDateIso(dates, iso(e.end_date || e.endDate));
+      if (getRaceIso) {
+        pushLocalRaceDateIso(dates, getRaceIso(e));
       }
     }
-    var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
-    var raceStart = getIso ? getIso(e) : '';
-    if (raceStart) {
-      return { start: raceStart, end: raceStart };
-    }
-    if (!raceStart) raceStart = start;
-    return { start: raceStart, end: raceStart || end || start };
+
+    if (!dates.length) return { start: '', end: '' };
+    dates.sort();
+    return { start: dates[0], end: dates[dates.length - 1] };
   }
 
   function getEventRaceSessions(ev) {
@@ -400,6 +407,7 @@
   window.TGA.enduranceWeekendRaceDayOnly = enduranceWeekendRaceDayOnly;
   window.TGA.singleRaceCardDateIso = singleRaceCardDateIso;
   window.TGA.getEventRaceDateRangeIso = getEventRaceDateRangeIso;
+  window.TGA.eventShowsWeekendDateRange = eventShowsWeekendDateRange;
   window.TGA.getEventRaceSessions = getEventRaceSessions;
   window.TGA.nextRaceCardDateIso = nextRaceCardDateIso;
   window.TGA.formatNextRaceCardDate = formatNextRaceCardDate;

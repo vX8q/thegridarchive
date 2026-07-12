@@ -13,6 +13,11 @@
     return (window.TGA && window.TGA.driverLabel) ? window.TGA.driverLabel(name) : String(name);
   }
 
+  function winnerTeamLabel(name) {
+    if (!name) return '';
+    return (window.TGA && window.TGA.teamLabel) ? window.TGA.teamLabel(name) : String(name);
+  }
+
   function isGtwceSpa24HoursEvent(meta) {
     if (!meta || typeof meta !== 'object') return false;
     var race = String(meta.race || meta.name || '').trim();
@@ -1558,7 +1563,7 @@
             if (seriesIdUpper === 'IMSA') {
               // IMSA: show class winners (up to 4 lines).
               winnerHtml = list.slice(0, 4).map(function (w) {
-                var line = w.name || '';
+                var line = winnerTeamLabel(w.name || '');
                 if (w.car) line = '#' + w.car + ' ' + line;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = line + ' — ' + label;
@@ -1567,7 +1572,7 @@
             } else if (seriesIdUpper === 'WEC') {
               // WEC: "class — crew" (Hypercar / LMP2 / LMGT3).
               winnerHtml = list.slice(0, 4).map(function (w) {
-                var crew = w.name || '';
+                var crew = winnerTeamLabel(w.name || '');
                 if (w.car) crew = '#' + w.car + ' ' + crew;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
                 var line = label ? label + ' — ' + crew : crew;
@@ -1576,7 +1581,7 @@
             } else if (seriesIdUpper === 'ELMS') {
               // ELMS: class winners — «Label - Team #no» (.lrc-winner-line — display:block).
               winnerHtml = list.slice(0, 4).map(function (w) {
-                var line = w.name || '';
+                var line = winnerTeamLabel(w.name || '');
                 if (w.car) line = line + ' #' + w.car;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = label + ' - ' + line;
@@ -1586,7 +1591,7 @@
               // GTWCE Endurance: "Label - #no Team" (crew = number + team).
               var gtwceWinnerLimit = card.gtwceSpa24Hours ? 5 : 4;
               winnerHtml = list.slice(0, gtwceWinnerLimit).map(function (w) {
-                var crew = w.name || '';
+                var crew = winnerTeamLabel(w.name || '');
                 var line = w.car ? '#' + w.car + ' ' + crew : crew;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = label + ' - ' + line;
@@ -1595,7 +1600,7 @@
             } else if (seriesIdUpper === 'GTWCE_SPRINT') {
               // GTWCE Sprint: absolute Race 1 / Race 2 winners only — team and # (no driver names).
               winnerHtml = list.slice(0, 2).map(function (w) {
-                var line = w.name || '';
+                var line = winnerTeamLabel(w.name || '');
                 if (w.car) line = line + ' #' + w.car;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = label + ' - ' + line;

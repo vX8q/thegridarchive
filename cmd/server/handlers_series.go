@@ -123,87 +123,6 @@ func handleSeries(w http.ResponseWriter, r *http.Request, dataDir string, st sto
 	}
 }
 
-func handleSeriesEvents(w http.ResponseWriter, r *http.Request, dataDir, dataSeriesID string, st store.Store, season string) {
-	type EventWithDetail struct {
-		schedulefile.EventJSON
-		HasDetail bool `json:"has_detail"`
-	}
-
-	// 1) Read from JSON first — source of truth for the schedule (editable data/schedules/*.json).
-	events, err := schedulefile.LoadEvents(dataDir, dataSeriesID)
-	if err == nil && len(events) > 0 {
-		// Filter by season when the file contains multiple seasons
-		filtered := events
-		if season != "" {
-			match := make([]schedulefile.EventJSON, 0, len(events))
-			for _, e := range events {
-				if e.Season == season {
-					match = append(match, e)
-				}
-			}
-			filtered = match
-		}
-		enriched := make([]EventWithDetail, len(filtered))
-		for i, e := range filtered {
-			eventIDLower := strings.ToLower(e.ID)
-			hasDetail := schedulefile.EventDetailExists(dataDir, eventIDLower)
-			enriched[i] = EventWithDetail{EventJSON: e, HasDetail: hasDetail}
-		}
-		_ = json.NewEncoder(w).Encode(enriched)
-		return
-	}
-
-	// 2) Fallback: if JSON is empty or missing, read from the DB.
-	if st != nil {
-		ctx := r.Context()
-		dbSeriesID := strings.ToUpper(dataSeriesID)
-		dbEvents, err := st.ListEvents(ctx, dbSeriesID, season)
-		if err != nil {
-			slog.Error("list events failed",
-				"series", dbSeriesID,
-				"season", season,
-				"err", err,
-				"trace_id", TraceID(ctx),
-			)
-			writeError(w, http.StatusInternalServerError, "failed to list events")
-			return
-		}
-		if len(dbEvents) > 0 {
-			enriched := make([]EventWithDetail, len(dbEvents))
-			for i, e := range dbEvents {
-				ev := schedulefile.EventJSON{
-					ID:          e.ID,
-					SeriesID:    e.SeriesID,
-					Season:      e.Season,
-					Name:        e.Name,
-					Location:    e.Location,
-					CircuitName: e.CircuitName,
-					StartDate:   e.StartDate.Format("2006-01-02"),
-					EndDate:     e.EndDate.Format("2006-01-02"),
-					TimeEST:     e.TimeEST,
-					TimeMSK:     e.TimeMSK,
-				}
-				eventIDLower := strings.ToLower(ev.ID)
-				hasDetail := schedulefile.EventDetailExists(dataDir, eventIDLower)
-				enriched[i] = EventWithDetail{EventJSON: ev, HasDetail: hasDetail}
-			}
-			_ = json.NewEncoder(w).Encode(enriched)
-			return
-		}
-	}
-
-	if events == nil {
-		events = []schedulefile.EventJSON{}
-	}
-	enriched := make([]EventWithDetail, len(events))
-	for i, e := range events {
-		eventIDLower := strings.ToLower(e.ID)
-		hasDetail := schedulefile.EventDetailExists(dataDir, eventIDLower)
-		enriched[i] = EventWithDetail{EventJSON: e, HasDetail: hasDetail}
-	}
-	_ = json.NewEncoder(w).Encode(enriched)
-}
-
 func handleSeriesTeams(w http.ResponseWriter, _ *http.Request, dataDir, dataSeriesID, season string) {
 	data, err := schedulefile.LoadTeamsForSeason(dataDir, dataSeriesID, season)
 	if err != nil {
@@ -227,13 +146,19 @@ func handleSeriesTeams(w http.ResponseWriter, _ *http.Request, dataDir, dataSeri
 }
 
 func handleSeriesStandings(w http.ResponseWriter, _ *http.Request, dataDir, dataSeriesID string, season string) {
+	if season == "" {
+		season = config.CurrentSeason
+	}
+	cacheKey := "standings/" + strings.ToLower(dataSeriesID) + "/" + season
+	sourceMtime := schedulefile.SeriesDataMaxMtime(dataDir, dataSeriesID, season)
+	if tryWriteSeriesJSONCache(w, cacheKey, sourceMtime) {
+		return
+	}
+
 	var (
 		data *schedulefile.StandingsData
 		err  error
 	)
-	if season == "" {
-		season = config.CurrentSeason
-	}
 
 	// IMSA / ELMS: per-class standings from event race (and IMSA qualifying) tables.
 	if strings.EqualFold(dataSeriesID, "IMSA") {
@@ -301,8 +226,6 @@ func handleSeriesStandings(w http.ResponseWriter, _ *http.Request, dataDir, data
 	if strings.EqualFold(dataSeriesID, "IMSA") {
 		normalizeIMSADriverDuplicates(data)
 	}
-	cacheKey := "standings/" + strings.ToLower(dataSeriesID) + "/" + season
-	sourceMtime := schedulefile.SeriesDataMaxMtime(dataDir, dataSeriesID, season)
 	writeSeriesJSONCached(w, cacheKey, sourceMtime, data)
 }
 
@@ -363,6 +286,15 @@ func finalizeSupercarsStandings(dataDir string, data *schedulefile.StandingsData
 }
 
 func handleSeriesStats(w http.ResponseWriter, r *http.Request, dataDir, dataSeriesID, season string) {
+	if season == "" {
+		season = config.CurrentSeason
+	}
+	cacheKey := "stats/" + strings.ToLower(dataSeriesID) + "/" + season
+	sourceMtime := schedulefile.SeriesDataMaxMtime(dataDir, dataSeriesID, season)
+	if tryWriteSeriesJSONCache(w, cacheKey, sourceMtime) {
+		return
+	}
+
 	var (
 		data *schedulefile.DriverStatsData
 		err  error
@@ -384,11 +316,6 @@ func handleSeriesStats(w http.ResponseWriter, r *http.Request, dataDir, dataSeri
 	if data == nil {
 		data = &schedulefile.DriverStatsData{Rows: []schedulefile.DriverStatsRow{}}
 	}
-	if season == "" {
-		season = config.CurrentSeason
-	}
-	cacheKey := "stats/" + strings.ToLower(dataSeriesID) + "/" + season
-	sourceMtime := schedulefile.SeriesDataMaxMtime(dataDir, dataSeriesID, season)
 	writeSeriesJSONCached(w, cacheKey, sourceMtime, data)
 }
 

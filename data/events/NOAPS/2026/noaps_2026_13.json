@@ -308,11 +308,10 @@
     },
     {
       "number": "92",
-      "driver": "Alex Guenette (i)",
+      "driver": "Alex Guenette",
       "team": "DGM Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Steve Addington",
-      "points_eligible": false,
       "driver_slug": "alex-guenette"
     },
     {
@@ -663,7 +662,7 @@
         [
           "25",
           "92",
-          "Alex Guenette (i)",
+          "Alex Guenette",
           "DGM Racing",
           "Chevrolet",
           "74.544",
@@ -965,7 +964,7 @@
           "Shane van Gisbergen (i)",
           "JR Motorsports",
           "Chevrolet",
-          "8"
+          "0"
         ],
         [
           "4",
@@ -1367,7 +1366,7 @@
           "28",
           "21",
           "92",
-          "Alex Guenette (i)",
+          "Alex Guenette",
           "DGM Racing",
           "Chevrolet",
           "81",

@@ -135,15 +135,15 @@
     {
       "label": "Sprint",
       "date": "2026-03-07",
-      "time_est": "14:00",
-      "time_msk": "06:00",
+      "time_est": "14:30",
+      "time_msk": "06:30",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-03-08",
-      "time_est": "14:00",
-      "time_msk": "06:00",
+      "time_est": "11:25",
+      "time_msk": "03:25",
       "kind": "feature"
     }
   ],
@@ -151,15 +151,15 @@
     {
       "label": "Sprint",
       "date": "2026-09-05",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "14:15",
+      "time_msk": "15:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-09-06",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "11:25",
+      "time_msk": "12:25",
       "kind": "feature"
     }
   ],
@@ -167,15 +167,15 @@
     {
       "label": "Sprint",
       "date": "2026-09-12",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "14:15",
+      "time_msk": "15:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-09-13",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "11:25",
+      "time_msk": "12:25",
       "kind": "feature"
     }
   ],
@@ -183,15 +183,15 @@
     {
       "label": "Sprint",
       "date": "2026-09-26",
-      "time_msk": "13:00",
-      "time_est": "14:00",
+      "time_est": "14:15",
+      "time_msk": "13:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-09-27",
-      "time_msk": "13:00",
-      "time_est": "14:00",
+      "time_est": "11:00",
+      "time_msk": "10:00",
       "kind": "feature"
     }
   ],
@@ -199,15 +199,15 @@
     {
       "label": "Sprint",
       "date": "2026-11-28",
-      "time_msk": "18:00",
-      "time_est": "18:00",
+      "time_est": "19:20",
+      "time_msk": "19:20",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-11-29",
-      "time_msk": "18:00",
-      "time_est": "18:00",
+      "time_est": "15:00",
+      "time_msk": "15:00",
       "kind": "feature"
     }
   ],
@@ -215,15 +215,15 @@
     {
       "label": "Sprint",
       "date": "2026-12-05",
-      "time_msk": "15:00",
-      "time_est": "16:00",
+      "time_est": "16:15",
+      "time_msk": "15:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-12-06",
-      "time_msk": "15:00",
-      "time_est": "16:00",
+      "time_est": "13:15",
+      "time_msk": "12:15",
       "kind": "feature"
     }
   ],
@@ -231,15 +231,15 @@
     {
       "label": "Sprint",
       "date": "2026-05-02",
-      "time_est": "14:00",
-      "time_msk": "21:00",
+      "time_est": "10:00",
+      "time_msk": "17:00",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-05-03",
-      "time_est": "14:00",
-      "time_msk": "21:00",
+      "time_est": "09:25",
+      "time_msk": "16:25",
       "kind": "feature"
     }
   ],
@@ -247,15 +247,15 @@
     {
       "label": "Sprint",
       "date": "2026-05-23",
-      "time_est": "14:00",
-      "time_msk": "21:00",
+      "time_est": "14:10",
+      "time_msk": "21:10",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-05-24",
-      "time_est": "14:00",
-      "time_msk": "21:00",
+      "time_est": "12:05",
+      "time_msk": "19:05",
       "kind": "feature"
     }
   ],
@@ -263,15 +263,15 @@
     {
       "label": "Sprint",
       "date": "2026-06-06",
-      "time_est": "14:00",
-      "time_msk": "15:00",
+      "time_est": "14:15",
+      "time_msk": "15:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-06-07",
-      "time_est": "14:00",
-      "time_msk": "15:00",
+      "time_est": "09:25",
+      "time_msk": "10:25",
       "kind": "feature"
     }
   ],
@@ -286,8 +286,8 @@
     {
       "label": "Feature",
       "date": "2026-06-14",
-      "time_est": "14:15",
-      "time_msk": "15:15",
+      "time_est": "11:25",
+      "time_msk": "12:25",
       "kind": "feature"
     }
   ],
@@ -295,8 +295,8 @@
     {
       "label": "Sprint",
       "date": "2026-06-27",
-      "time_est": "10:10",
-      "time_msk": "11:10",
+      "time_est": "14:15",
+      "time_msk": "15:15",
       "kind": "sprint"
     },
     {
@@ -311,15 +311,15 @@
     {
       "label": "Sprint",
       "date": "2026-07-04",
-      "time_msk": "13:15",
-      "time_est": "11:15",
+      "time_est": "13:45",
+      "time_msk": "15:45",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-07-05",
-      "time_msk": "13:15",
       "time_est": "11:15",
+      "time_msk": "13:15",
       "kind": "feature"
     }
   ],
@@ -327,15 +327,15 @@
     {
       "label": "Sprint",
       "date": "2026-07-18",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "14:15",
+      "time_msk": "15:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-07-19",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "10:00",
+      "time_msk": "11:00",
       "kind": "feature"
     }
   ],
@@ -343,15 +343,15 @@
     {
       "label": "Sprint",
       "date": "2026-07-25",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "14:15",
+      "time_msk": "15:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-07-26",
-      "time_msk": "15:00",
-      "time_est": "14:00",
+      "time_est": "11:25",
+      "time_msk": "12:25",
       "kind": "feature"
     }
   ],
@@ -359,15 +359,15 @@
     {
       "label": "Sprint",
       "date": "2026-03-07",
-      "time_est": "13:00",
-      "time_msk": "05:00",
+      "time_est": "11:15",
+      "time_msk": "03:15",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-03-08",
-      "time_est": "13:00",
-      "time_msk": "05:00",
+      "time_est": "08:50",
+      "time_msk": "00:50",
       "kind": "feature"
     }
   ],
@@ -375,8 +375,8 @@
     {
       "label": "Sprint",
       "date": "2026-06-06",
-      "time_est": "07:45",
-      "time_msk": "08:45",
+      "time_est": "10:45",
+      "time_msk": "11:45",
       "kind": "sprint"
     },
     {
@@ -398,8 +398,8 @@
     {
       "label": "Feature",
       "date": "2026-06-14",
-      "time_est": "10:05",
-      "time_msk": "11:05",
+      "time_est": "08:40",
+      "time_msk": "09:40",
       "kind": "feature"
     }
   ],
@@ -407,8 +407,8 @@
     {
       "label": "Sprint",
       "date": "2026-06-27",
-      "time_est": "08:40",
-      "time_msk": "09:40",
+      "time_est": "10:05",
+      "time_msk": "11:05",
       "kind": "sprint"
     },
     {
@@ -423,15 +423,15 @@
     {
       "label": "Sprint",
       "date": "2026-07-04",
-      "time_msk": "10:25",
-      "time_est": "08:25",
+      "time_est": "09:35",
+      "time_msk": "11:35",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-07-05",
-      "time_msk": "10:25",
       "time_est": "08:25",
+      "time_msk": "10:25",
       "kind": "feature"
     }
   ],
@@ -439,15 +439,15 @@
     {
       "label": "Sprint",
       "date": "2026-07-18",
-      "time_msk": "09:40",
-      "time_est": "08:40",
+      "time_est": "10:00",
+      "time_msk": "11:00",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-07-19",
-      "time_msk": "09:40",
-      "time_est": "08:40",
+      "time_est": "08:30",
+      "time_msk": "09:30",
       "kind": "feature"
     }
   ],
@@ -455,15 +455,15 @@
     {
       "label": "Sprint",
       "date": "2026-07-25",
-      "time_msk": "09:40",
-      "time_est": "08:40",
+      "time_est": "10:05",
+      "time_msk": "11:05",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-07-26",
-      "time_msk": "09:40",
       "time_est": "08:40",
+      "time_msk": "09:40",
       "kind": "feature"
     }
   ],
@@ -471,15 +471,15 @@
     {
       "label": "Sprint",
       "date": "2026-09-05",
-      "time_msk": "09:40",
-      "time_est": "08:40",
+      "time_est": "10:05",
+      "time_msk": "11:05",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-09-06",
-      "time_msk": "09:40",
       "time_est": "08:40",
+      "time_msk": "09:40",
       "kind": "feature"
     }
   ],
@@ -487,15 +487,15 @@
     {
       "label": "Sprint",
       "date": "2026-09-12",
-      "time_msk": "10:55",
-      "time_est": "09:55",
+      "time_est": "11:05",
+      "time_msk": "12:05",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-09-13",
-      "time_msk": "10:55",
       "time_est": "09:55",
+      "time_msk": "10:55",
       "kind": "feature"
     }
   ],
@@ -532,28 +532,28 @@
   "F4_IT_2026_2": [
     {
       "label": "Race 1",
-      "date": "2026-05-23",
+      "date": "2026-05-22",
       "time_est": "12:30",
       "time_msk": "13:30",
       "kind": ""
     },
     {
       "label": "Race 2",
-      "date": "2026-05-23",
+      "date": "2026-05-22",
       "time_est": "12:30",
       "time_msk": "13:30",
       "kind": ""
     },
     {
       "label": "Race 3",
-      "date": "2026-05-23",
+      "date": "2026-05-22",
       "time_est": "12:30",
       "time_msk": "13:30",
       "kind": ""
     },
     {
       "label": "Final Race",
-      "date": "2026-05-23",
+      "date": "2026-05-22",
       "time_est": "12:30",
       "time_msk": "13:30",
       "kind": ""
@@ -562,28 +562,28 @@
   "F4_IT_2026_3": [
     {
       "label": "Race 1",
-      "date": "2026-06-20",
-      "time_est": "",
-      "time_msk": "09:30",
+      "date": "2026-06-21",
+      "time_est": "12:30",
+      "time_msk": "13:30",
       "kind": ""
     },
     {
       "label": "Race 2",
-      "date": "2026-06-20",
-      "time_est": "",
-      "time_msk": "",
+      "date": "2026-06-21",
+      "time_est": "12:30",
+      "time_msk": "13:30",
       "kind": ""
     },
     {
       "label": "Race 3",
-      "date": "2026-06-22",
+      "date": "2026-06-21",
       "time_est": "12:30",
       "time_msk": "13:30",
       "kind": ""
     },
     {
       "label": "Final Race",
-      "date": "2026-06-22",
+      "date": "2026-06-21",
       "time_est": "12:30",
       "time_msk": "13:30",
       "kind": ""
@@ -592,64 +592,23 @@
   "F4_IT_2026_4": [
     {
       "label": "Race 1",
-      "date": "2026-07-24",
-      "time_msk": "13:30",
+      "date": "2026-07-25",
       "time_est": "12:30",
+      "time_msk": "13:30",
       "kind": ""
     },
     {
       "label": "Race 2",
-      "date": "2026-07-26",
-      "time_msk": "13:30",
+      "date": "2026-07-25",
       "time_est": "12:30",
-      "kind": ""
-    }
-  ],
-  "F4_IT_2026_5": [
-    {
-      "label": "Race 1",
-      "date": "2026-09-04",
       "time_msk": "13:30",
-      "time_est": "12:30",
       "kind": ""
     },
     {
-      "label": "Race 2",
-      "date": "2026-09-06",
-      "time_msk": "13:30",
+      "label": "Race 3",
+      "date": "2026-07-25",
       "time_est": "12:30",
-      "kind": ""
-    }
-  ],
-  "F4_IT_2026_6": [
-    {
-      "label": "Race 1",
-      "date": "2026-09-18",
       "time_msk": "13:30",
-      "time_est": "12:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-09-20",
-      "time_msk": "13:30",
-      "time_est": "12:30",
-      "kind": ""
-    }
-  ],
-  "F4_IT_2026_7": [
-    {
-      "label": "Race 1",
-      "date": "2026-10-30",
-      "time_msk": "13:30",
-      "time_est": "12:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-11-01",
-      "time_msk": "13:30",
-      "time_est": "12:30",
       "kind": ""
     }
   ],
@@ -741,64 +700,16 @@
   "FREC_2026_5": [
     {
       "label": "Race 1",
-      "date": "2026-07-04",
-      "time_msk": "12:35",
+      "date": "2026-07-03",
       "time_est": "11:35",
+      "time_msk": "12:35",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-07-05",
+      "time_est": "11:35",
       "time_msk": "12:35",
-      "time_est": "11:35",
-      "kind": ""
-    }
-  ],
-  "FREC_2026_6": [
-    {
-      "label": "Race 1",
-      "date": "2026-07-17",
-      "time_msk": "12:35",
-      "time_est": "11:35",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-07-19",
-      "time_msk": "12:35",
-      "time_est": "11:35",
-      "kind": ""
-    }
-  ],
-  "FREC_2026_7": [
-    {
-      "label": "Race 1",
-      "date": "2026-09-04",
-      "time_msk": "12:35",
-      "time_est": "11:35",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-09-06",
-      "time_msk": "12:35",
-      "time_est": "11:35",
-      "kind": ""
-    }
-  ],
-  "FREC_2026_8": [
-    {
-      "label": "Race 1",
-      "date": "2026-09-11",
-      "time_msk": "13:35",
-      "time_est": "11:35",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-09-13",
-      "time_msk": "13:35",
-      "time_est": "11:35",
       "kind": ""
     }
   ],
@@ -821,16 +732,16 @@
   "GTWCE_SPRINT_2026_2": [
     {
       "label": "Race 1",
-      "date": "2026-07-18",
-      "time_msk": "16:30",
-      "time_est": "15:30",
+      "date": "2026-07-17",
+      "time_msk": "15:30",
+      "time_est": "2:30 PM",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-07-19",
-      "time_msk": "16:30",
-      "time_est": "15:30",
+      "time_msk": "15:30",
+      "time_est": "2:30 PM",
       "kind": ""
     }
   ],
@@ -853,14 +764,7 @@
   "GTWCE_SPRINT_2026_4": [
     {
       "label": "Race 1",
-      "date": "2026-09-18",
-      "time_msk": "16:30",
-      "time_est": "15:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-09-19",
+      "date": "2026-08-21",
       "time_msk": "16:30",
       "time_est": "15:30",
       "kind": ""
@@ -869,14 +773,7 @@
   "GTWCE_SPRINT_2026_5": [
     {
       "label": "Race 1",
-      "date": "2026-10-03",
-      "time_msk": "16:30",
-      "time_est": "15:30",
-      "kind": ""
-    },
-    {
-      "label": "Race 2",
-      "date": "2026-10-04",
+      "date": "2026-10-02",
       "time_msk": "16:30",
       "time_est": "15:30",
       "kind": ""

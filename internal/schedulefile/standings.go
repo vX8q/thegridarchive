@@ -85,7 +85,8 @@ func SplitBaseIneligible(base *StandingsData) {
 }
 
 // BuildStandingsFromEvents builds standings from race tables: race position and points from race_results,
-// stage points from stage1 and stage2 (if present). race_order from existing standings JSON.
+// stage points from stage_1/2 (plus Cup stage_3 on 4-stage races and Daytona Duels for Stages).
+// race_order from existing standings JSON.
 // When season is non-empty — only events of that season are included.
 func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*StandingsData, error) {
 	if strings.TrimSpace(season) == "" {
@@ -316,13 +317,15 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				eventNames = append(eventNames, name)
 			}
 		}
+		superFormulaEventIDs := []string(nil)
 		if strings.EqualFold(seriesID, "SUPER_FORMULA") {
-			if ro, names := buildSuperFormulaRaceOrder(events, season); len(ro) > 0 {
+			if ro, names, ids := buildSuperFormulaRaceOrder(dataDir, events, season); len(ro) > 0 {
 				raceOrder = ro
 				eventNames = names
+				superFormulaEventIDs = ids
 			}
 		}
-		base = &StandingsData{RaceOrder: raceOrder, EventNames: eventNames}
+		base = &StandingsData{RaceOrder: raceOrder, EventNames: eventNames, EventIDs: superFormulaEventIDs}
 	}
 	raceOrder := base.RaceOrder
 	if len(raceOrder) == 0 && !strings.EqualFold(seriesID, "SUPERCARS") {
@@ -436,11 +439,29 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	}
 	// Super Formula: R1..Rn columns by championship round numbers (not calendar rows).
 	if strings.EqualFold(seriesID, "SUPER_FORMULA") {
-		if ro, names := buildSuperFormulaRaceOrder(events, season); len(ro) > 0 {
+		if ro, names, ids := buildSuperFormulaRaceOrder(dataDir, events, season); len(ro) > 0 {
 			base.RaceOrder = ro
 			base.EventNames = names
+			base.EventIDs = keepEventIDsWithDetail(dataDir, ids)
 			raceOrder = ro
 		}
+	}
+	// Every race column links to its event page, so each one needs the event that
+	// hosts it. Supercars fills this in below, while it discovers its columns.
+	if len(base.EventIDs) != len(raceOrder) && !strings.EqualFold(seriesID, "SUPERCARS") {
+		base.EventIDs = standingsRaceColumnEventIDs(dataDir, seriesID, season, events, raceOrder, func(ev EventJSON) int {
+			switch {
+			case isSprintFeatureSeries:
+				if hasSprintRaceSession(ev.ID) {
+					return 2
+				}
+			case isDTMSeries || isMultiRacePerEvent:
+				if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 1 {
+					return len(sessions)
+				}
+			}
+			return 1
+		})
 	}
 	// IndyCar manufacturer is not stored in result tables, so we take
 	// engine brand from Teams file by car number.
@@ -624,41 +645,10 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			return
 		}
 
-		// Stage points only where stage1/stage2 tables exist and accumulateStages = true.
+		// Stage points: stage_1/2 (+ stage_3 on 4-stage Cup; + Daytona Duels for Cup Stage column).
 		stagePointsByDriver := make(map[string]int)
-		if accumulateStages && detail != nil && detail.Tables != nil {
-			for sn := 1; sn <= 2; sn++ {
-				st, ok := StageN(detail.Tables, sn)
-				if !ok {
-					continue
-				}
-				sDriverCol := colIndex(st.Headers, "Driver")
-				sPtsCol := colIndex(st.Headers, "Points")
-				if sPtsCol < 0 {
-					sPtsCol = colIndex(st.Headers, "Pts")
-				}
-				if sDriverCol < 0 || sPtsCol < 0 {
-					continue
-				}
-				for _, row := range st.Rows {
-					if sDriverCol >= len(row) || sPtsCol >= len(row) {
-						continue
-					}
-					d := strings.TrimSpace(row[sDriverCol])
-					if d == "" {
-						continue
-					}
-					pts := 0
-					if s := strings.TrimSpace(row[sPtsCol]); s != "" {
-						for _, c := range s {
-							if c >= '0' && c <= '9' {
-								pts = pts*10 + int(c-'0')
-							}
-						}
-					}
-					stagePointsByDriver[standingsAggregateKey(seriesID, d, "")] += pts
-				}
-			}
+		if accumulateStages {
+			accumulateStagePointsFromDetail(seriesID, detail, stagePointsByDriver)
 		}
 
 		for _, row := range rr.Rows {
@@ -766,6 +756,8 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				raceOrder = append(raceOrder, raceCode)
 				base.RaceOrder = raceOrder
 				base.EventNames = append(base.EventNames, supercarsStandingsEventName(ev.Name))
+				// Schedule rows are single races; the event page is the weekend bundle.
+				base.EventIDs = append(base.EventIDs, strings.ToUpper(bundleID))
 			}
 			detail, _ := loadDetail(ev.ID)
 			if len(rs.Headers) == 0 || len(rs.Rows) == 0 {
@@ -869,11 +861,15 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 					if qual := superFormulaQualifyingTable(detail); qual != nil {
 						applySuperFormulaQualifyingBonus(qual, raceCode, entryByCarForEvent)
 					}
-					completedRaces = append(completedRaces, raceCode)
+					completedRaces = appendUniqueRaceCode(completedRaces, raceCode)
 					continue
 				}
 				applyEventTable(EventTable{Headers: rs.Headers, Rows: rs.Rows}, raceCode, detail, false)
-				completedRaces = append(completedRaces, raceCode)
+				// Race Pts are finish-only; add qualifying 3/2/1 from Qualifying Round N.
+				if qual := superFormulaQualifyingForRound(detail, roundNum); qual != nil {
+					applySuperFormulaQualifyingBonus(qual, raceCode, entryByCarForEvent)
+				}
+				completedRaces = appendUniqueRaceCode(completedRaces, raceCode)
 			}
 			continue
 		}
@@ -1038,38 +1034,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		}
 		stagePointsByDriver := make(map[string]int)
 		if stockCarSeriesUsesStagePoints(seriesID) {
-			for sn := 1; sn <= 2; sn++ {
-				st, ok := StageN(detail.Tables, sn)
-				if !ok {
-					continue
-				}
-				sDriverCol := colIndex(st.Headers, "Driver")
-				sPtsCol := colIndex(st.Headers, "Points")
-				if sPtsCol < 0 {
-					sPtsCol = colIndex(st.Headers, "Pts")
-				}
-				if sDriverCol < 0 || sPtsCol < 0 {
-					continue
-				}
-				for _, row := range st.Rows {
-					if sDriverCol >= len(row) || sPtsCol >= len(row) {
-						continue
-					}
-					d := strings.TrimSpace(row[sDriverCol])
-					if d == "" {
-						continue
-					}
-					pts := 0
-					if s := strings.TrimSpace(row[sPtsCol]); s != "" {
-						for _, c := range s {
-							if c >= '0' && c <= '9' {
-								pts = pts*10 + int(c-'0')
-							}
-						}
-					}
-					stagePointsByDriver[canonicalDriverKey(d)] += pts
-				}
-			}
+			accumulateStagePointsFromDetail(seriesID, detail, stagePointsByDriver)
 		}
 		for rowIdx, row := range rr.Rows {
 			drivers := driversFromRow(rr.Headers, row)
@@ -1288,13 +1253,14 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	return &StandingsData{
 		RaceOrder:      raceOrder,
 		EventNames:     base.EventNames,
+		EventIDs:       base.EventIDs,
 		CompletedRaces: completedRaces,
 		Rows:           eligible,
 		Ineligible:     ineligible,
 	}, nil
 }
 
-// EnrichStagesFromEvents fills Stages in standings rows from event stage1/stage2 tables (by driver name).
+// EnrichStagesFromEvents fills Stages from event stage tables (and Cup Duels) by driver name.
 func EnrichStagesFromEvents(dataDir string, seriesID string, season string, data *StandingsData) {
 	if data == nil || len(data.Rows) == 0 {
 		return

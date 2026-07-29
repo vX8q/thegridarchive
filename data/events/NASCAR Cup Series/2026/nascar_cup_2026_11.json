@@ -7,7 +7,7 @@
   "end_date": "2026-05-03",
   "youtube_id": "BtL_H0RvQfA",
   "track": "Texas Motor Speedway",
-  "location": "Fort Worth, Texas",
+  "location": "Fort Worth, Texas, USA",
   "laps": "267",
   "distance": "400.5 mi (644.5 km)",
   "stage1_laps": "80",
@@ -85,7 +85,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Andy Street",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",

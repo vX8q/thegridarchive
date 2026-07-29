@@ -4,7 +4,7 @@
   "race": "2 of 25",
   "date": "Saturday, February 21, 2026",
   "track": "EchoPark Speedway",
-  "location": "Hampton, GA",
+  "location": "Hampton, Georgia, USA",
   "laps": "135*",
   "distance": "1.540 mile paved track (207.900 miles)",
   "stage1_laps": "41",
@@ -77,7 +77,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -85,7 +85,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Richard Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -93,7 +93,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",

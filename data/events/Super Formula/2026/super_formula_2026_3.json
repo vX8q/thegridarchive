@@ -6,7 +6,7 @@
   "start_date": "2026-04-25",
   "end_date": "2026-04-25",
   "track": "Autopolis",
-  "location": "Hita, Oita",
+  "location": "Hita, Oita, Japan",
   "laps": "41",
   "distance": "191.6 km",
   "event_preview": "Autopolis International Racing Course is a 4.674 km counter-clockwise permanent road course in Hita City, Ōita Prefecture, Kyushu. Round 3 qualifying was completed on 25 April 2026, but the race was cancelled due to adverse weather. The series will run the rescheduled Round 3 race at Fuji Speedway on 18–19 July 2026 as the second race of a three-race Fuji weekend (alongside the regular Rounds 6 and 7). Qualifying bonus points (3/2/1) for Autopolis were awarded in full; the race itself will be held later at Fuji.",
@@ -1074,7 +1074,7 @@
       "sessions": [
         {
           "title": "Race Round 3",
-          "note": "Race cancelled at Autopolis due to adverse weather. Rescheduled to Fuji Speedway (18–19 July 2026, second race of the Fuji triple-header). Qualifying bonus points (3/2/1) awarded; race points will be awarded when the race is held at Fuji.",
+          "note": "Race cancelled at Autopolis due to adverse weather; completed at Fuji Speedway (19 July 2026, Race Round 3 in SUPER_FORMULA_2026_6). Rows below hold Autopolis qualifying bonus only (3/2/1); race classification and sprint points are in the Fuji event file.",
           "headers": [
             "Pos",
             "No.",

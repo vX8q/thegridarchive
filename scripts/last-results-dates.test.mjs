@@ -60,4 +60,50 @@ test('WEC Last Results race day iso uses race-day-only card rule', () => {
   assert.strictEqual(TGA.eventLastRaceDateIso(wec), '2026-07-12');
 });
 
+test('PSC Hungaroring Last Results shows race day, not weekend span', () => {
+  const card = {
+    event: {
+      id: 'PSC_2026_5',
+      series_id: 'PSC',
+      name: 'Hungaroring',
+      start_date: '2026-07-24',
+      end_date: '2026-07-26',
+    },
+    rangeStart: '2026-07-24',
+    rangeEnd: '2026-07-26',
+    winners: [{ name: 'Driver A', car: '1', label: '' }],
+  };
+  assert.strictEqual(TGA.lastResultsCardHasMultipleRaces(card), false);
+  const range = TGA.lastResultsCardRaceDateRange(card);
+  assert.strictEqual(range.start, '2026-07-26');
+  assert.strictEqual(range.end, '2026-07-26');
+  assert.strictEqual(TGA.formatLastResultsCardDate(card), '2026-07-26');
+
+  const pending = Object.assign({}, card, { winners: [] });
+  assert.strictEqual(TGA.lastResultsCardHasMultipleRaces(pending), false);
+  assert.strictEqual(TGA.formatLastResultsCardDate(pending), '2026-07-26');
+});
+
+test('PSC merged double-header Last Results still shows date range', () => {
+  const card = {
+    event: {
+      id: 'PSC_2026_6',
+      series_id: 'PSC',
+      name: 'Circuit Zandvoort',
+      start_date: '2026-08-22',
+      end_date: '2026-08-23',
+    },
+    rangeStart: '2026-08-22',
+    rangeEnd: '2026-08-23',
+    winners: [
+      { name: 'Driver A', car: '1', label: 'Race 1' },
+      { name: 'Driver B', car: '2', label: 'Race 2' },
+    ],
+  };
+  assert.strictEqual(TGA.lastResultsCardHasMultipleRaces(card), true);
+  const display = TGA.formatLastResultsCardDate(card);
+  assert.ok(display.indexOf('2026-08-22') >= 0);
+  assert.ok(display.indexOf('2026-08-23') >= 0);
+});
+
 console.log('All last-results-dates tests passed.');

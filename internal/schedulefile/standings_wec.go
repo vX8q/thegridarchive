@@ -329,10 +329,12 @@ func BuildWecStandingsFromEvents(dataDir string, season string) (*StandingsData,
 
 	var raceOrder []string
 	var eventNames []string
+	var eventIDs []string
 	for _, ce := range champs {
 		code := "R" + strconv.Itoa(ce.round)
 		raceOrder = append(raceOrder, code)
 		eventNames = append(eventNames, strings.TrimSpace(ce.ev.Name))
+		eventIDs = append(eventIDs, ce.ev.ID)
 	}
 
 	buckets := map[string]map[string]*wecAcc{
@@ -470,6 +472,7 @@ func BuildWecStandingsFromEvents(dataDir string, season string) (*StandingsData,
 	return &StandingsData{
 		RaceOrder:      raceOrder,
 		EventNames:     eventNames,
+		EventIDs:       keepEventIDsWithDetail(dataDir, eventIDs),
 		CompletedRaces: completedOrdered,
 		Rows:           []StandingRow{},
 		Classes:        classes,

@@ -6,7 +6,7 @@
   "start_date": "2026-05-08",
   "end_date": "2026-05-10",
   "track": "Misano World Circuit Marco Simoncelli",
-  "location": "Misano Adriatico",
+  "location": "Misano Adriatico, Emilia-Romagna, Italy",
   "laps": "",
   "distance": "",
   "event_preview": "Misano World Circuit Marco Simoncelli is a 4.226 km (2.626 mi) clockwise 16-corner road course on the Adriatic Riviera in Misano Adriatico, rebuilt and reversed in direction during a 2005–2007 reconstruction. The opening round of the 2026 Italian Formula 4 Championship uses a four-race format — three qualifying heats followed by a Final restricted to the top 36 scorers — and sets a new record as the largest grid in European F4 competition at 47 cars across 13 teams.\n\nReigning champion Kean Nakamura-Berta has moved up to the FR European Championship, leaving the title open in a field that combines manufacturer-backed juniors from Ferrari, Mercedes and McLaren programmes with karting champions and returning race winners. Prema Racing's Alp Aksoy and McLaren junior Christian Costoya headline the reigning champions' four-car entry, while Thomas Bearman — younger brother of F1 driver and 2021 Italian F4 champion Oliver Bearman — makes his series debut for Van Amersfoort Racing. Trident Motorsport makes its Italian F4 debut, and AKM Motorsport returns after missing the 2025 season. As the season opener, all qualifying and race lap records will be set for the first time this weekend.",
@@ -300,6 +300,12 @@
       "sessions": [
         {
           "title": "Race 1 (Gr.B–Gr.C)",
+          "meta": {
+            "Date": "09 May 2026",
+            "Start": "11:30 AM",
+            "Session": "Gr.B – Gr.C",
+            "time_msk": "12:30"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -646,6 +652,12 @@
         },
         {
           "title": "Race 2 (Gr.A–Gr.B)",
+          "meta": {
+            "Date": "09 May 2026",
+            "Start": "17:17 AM",
+            "Session": "Gr.A – Gr.B",
+            "time_msk": "18:15"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -1003,6 +1015,12 @@
         },
         {
           "title": "Race 3 (Gr.A–Gr.C)",
+          "meta": {
+            "Date": "10 May 2026",
+            "Start": "8:30 AM",
+            "Session": "Gr.A – Gr.C",
+            "time_msk": "9:30"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -1349,6 +1367,12 @@
         },
         {
           "title": "Final Race",
+          "meta": {
+            "Date": "10 May 2026",
+            "Start": "13:50 AM",
+            "Session": "Final",
+            "time_msk": "14:50"
+          },
           "headers": [
             "Fin",
             "ST",

@@ -73,9 +73,13 @@
 
   function shouldShowSessionMetaTable(evKey, seriesId) {
     var ev = String(evKey || '');
+    var s = String(seriesId || '').toLowerCase();
     if (/^IMSA_\d{4}_\d+$/.test(ev)) return false;
     if (/^F1_/.test(ev)) return false;
     if (isOpenwheelJuniorSeries(seriesId)) return false;
+    // Session title already names Sprint/Feature/Race N — meta Session row is redundant.
+    if (s === 'gtwce_end' || s === 'gtwce_sprint') return false;
+    if (s === 'f4_it' || s === 'super_formula' || s === 'dtm' || s === 'psc' || s === 'supercars') return false;
     return true;
   }
 

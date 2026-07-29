@@ -97,7 +97,7 @@
       "manufacturer": "Toyota",
       "number": "19",
       "team": "Joe Gibbs Racing",
-      "driver_slug": "brent-crews-r"
+      "driver_slug": "brent-crews"
     },
     {
       "crew_chief": "Sam McAulay",
@@ -225,7 +225,7 @@
       "manufacturer": "Chevrolet",
       "number": "45",
       "team": "Alpha Prime Racing",
-      "driver_slug": "lavar-scott-r"
+      "driver_slug": "lavar-scott"
     },
     {
       "crew_chief": "Patrick Donahue",
@@ -233,7 +233,7 @@
       "manufacturer": "Chevrolet",
       "number": "48",
       "team": "Big Machine Racing",
-      "driver_slug": "patrick-staropoli-r"
+      "driver_slug": "patrick-staropoli"
     },
     {
       "crew_chief": "Matt Weber",
@@ -328,7 +328,7 @@
   ],
   "event_id": "NOAPS_2026_4",
   "laps": "200",
-  "location": "Avondale, AZ",
+  "location": "Avondale, Arizona, USA",
   "race": "GOVX 200",
   "race_statistics": {
     "Average speed": "93.909 miles per hour (151.132 km/h)",

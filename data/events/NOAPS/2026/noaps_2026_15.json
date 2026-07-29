@@ -7,7 +7,7 @@
   "end_date": "2026-05-23",
   "youtube_id": "d-RtODCP7v0",
   "track": "Charlotte Motor Speedway",
-  "location": "Concord, North Carolina",
+  "location": "Concord, North Carolina, USA",
   "laps": "91",
   "distance": "136.5 mi (219.7 km)",
   "stage1_laps": "45",
@@ -127,7 +127,7 @@
       "manufacturer": "Toyota",
       "crew_chief": "Seth Chavka",
       "points_eligible": true,
-      "driver_slug": "brent-crews-r"
+      "driver_slug": "brent-crews"
     },
     {
       "number": "20",
@@ -262,7 +262,7 @@
       "manufacturer": "Chevrolet",
       "crew_chief": "Kase Kallenbach",
       "points_eligible": true,
-      "driver_slug": "lavar-scott-r"
+      "driver_slug": "lavar-scott"
     },
     {
       "number": "48",
@@ -271,7 +271,7 @@
       "manufacturer": "Chevrolet",
       "crew_chief": "Patrick Donahue",
       "points_eligible": true,
-      "driver_slug": "patrick-staropoli-r"
+      "driver_slug": "patrick-staropoli"
     },
     {
       "number": "51",

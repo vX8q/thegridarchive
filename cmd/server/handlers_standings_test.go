@@ -147,6 +147,25 @@ func TestHandleSeriesStandings_F1_CanadaMonacoColumns(t *testing.T) {
 	}
 }
 
+func TestHandleSeriesStandings_EmptySeasonReturnsRowsArray(t *testing.T) {
+	dataDir := testDataDir(t)
+	req := httptest.NewRequest(http.MethodGet, "/api/series/f1/standings?season=1899", nil)
+	rec := httptest.NewRecorder()
+
+	handleSeriesStandings(rec, req, dataDir, "F1", "1899")
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, body = %s", rec.Code, rec.Body.String())
+	}
+
+	var raw map[string]json.RawMessage
+	if err := json.Unmarshal(rec.Body.Bytes(), &raw); err != nil {
+		t.Fatalf("decode standings: %v", err)
+	}
+	if got := string(raw["rows"]); got != "[]" {
+		t.Errorf("rows = %s, want [] (null breaks clients iterating the response)", got)
+	}
+}
+
 func TestHandleSeriesStandings_CacheHit(t *testing.T) {
 	dataDir := testDataDir(t)
 	seriesResponseCache = newComputedResponseCache(seriesComputedCacheTTL)

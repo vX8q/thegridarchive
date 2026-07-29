@@ -61,15 +61,22 @@ export function buildTeamMap(entryList) {
 export function lookupTeam(map, carRaw) {
   const car = String(carRaw ?? '').trim();
   if (!car || car === '—' || car === '-') return null;
-  if (map.has(car)) return map.get(car);
-  if (!/^\d+$/.test(car)) return null;
-  const n = parseInt(car, 10);
-  if (Number.isNaN(n)) return null;
-  const tries = [String(n), String(n).padStart(2, '0'), String(n).padStart(3, '0')];
-  for (const k of tries) {
-    if (map.has(k)) return map.get(k);
+  // Leading zeros make a distinct NASCAR car number: #07 (SS-Green Light
+  // Racing) and #7 (JR Motorsports) can start the same race, so a car missing
+  // from the entry list stays unresolved instead of matching its twin.
+  return map.has(car) ? map.get(car) : null;
+}
+
+// Car numbers that raced but are absent from the entry list — the gap that
+// makes team lookups unresolvable.
+export function carsMissingFromEntryList(map, cars) {
+  const missing = [];
+  for (const carRaw of cars) {
+    const car = String(carRaw ?? '').trim();
+    if (!car || car === '—' || car === '-' || !/^\d+$/.test(car)) continue;
+    if (!map.has(car) && !missing.includes(car)) missing.push(car);
   }
-  return null;
+  return missing;
 }
 
 export function isSeparatorRow(row) {

@@ -229,6 +229,8 @@
   }
 
   /** Local calendar date when the race starts (not first day of a multi-day weekend). */
+  var _inRaceLocalDateIsoLookup = false;
+
   function getEventRaceLocalDateIso(e) {
     if (!e) return '';
     var start = parseIsoDatePrefix(e.start_date || e.startDate);
@@ -239,7 +241,39 @@
     // US stock-car / Indy / IMSA: track-local race day from schedule dates, not embedded MSK calendar.
     var useTrackLocal = US_LOCAL_TRACK_SERIES[sid] || EASTERN_TIME_SERIES[sid];
     if (!useTrackLocal && mskParsed.hasEmbeddedDate && mskParsed.mskDateIso) {
+      // Night races (Las Vegas): MSK clock is often the next calendar day. Prefer a
+      // single-day start/end from the schedule as the track-local race day.
+      if (start && (!end || end === start)) return start;
       return mskParsed.mskDateIso;
+    }
+    // Multi-race events (e.g. a Super Formula triple-header) publish their top-level
+    // time_msk/time_est for the FIRST session, which isn't always on end_date. Prefer the
+    // earliest known session date over guessing "race day = last day" when sessions exist.
+    // NOTE: excludes F1 — buildF1SprintSessions() itself calls back into this function
+    // (via buildSessionsForEvent → getEventRaceSessions), so looking sessions up here for F1
+    // would recurse infinitely. sid here is the raw series_id (e.g. "F1_2026"), not normalized.
+    // _inRaceLocalDateIsoLookup is a belt-and-suspenders guard against ANY other series' session
+    // builder calling back into this function the same way.
+    var isF1 = /^F1(_\d{4})?$/.test(sid);
+    if (start && end && end > start && !isF1 && !_inRaceLocalDateIsoLookup) {
+      var getSessions = window.TGA && window.TGA.getEventRaceSessions;
+      if (getSessions) {
+        _inRaceLocalDateIsoLookup = true;
+        var sessions;
+        try {
+          sessions = getSessions(e);
+        } finally {
+          _inRaceLocalDateIsoLookup = false;
+        }
+        if (sessions && sessions.length > 0) {
+          var earliestDs = '';
+          for (var si = 0; si < sessions.length; si++) {
+            var sd = String(sessions[si] && (sessions[si].date || sessions[si].start_date) || '').slice(0, 10);
+            if (sd && (!earliestDs || sd < earliestDs)) earliestDs = sd;
+          }
+          if (earliestDs) return earliestDs;
+        }
+      }
     }
     if (start && end && end > start) {
       if (is24HourEventName(e)) {

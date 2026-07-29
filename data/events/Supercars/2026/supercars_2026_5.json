@@ -6,7 +6,7 @@
   "start_date": "2026-05-22",
   "end_date": "2026-05-24",
   "track": "Symmons Plains Raceway",
-  "location": "Launceston, Tasmania",
+  "location": "Launceston, Tasmania, Australia",
   "laps": "40",
   "distance": "120 km",
   "event_preview": "Symmons Plains Raceway is a 2.411 km (1.498 mi) anti-clockwise 7-turn circuit in Launceston, Tasmania, opened in 1960 and the shortest track on the Supercars calendar. The circuit's defining feature is the Brambles Hairpin — a severe right-hander that punishes any lack of precision and serves as the primary overtaking zone on a lap that demands smooth throttle application and commitment through high-speed corners. The Tyrepower Tasmania Super 440 is Round 5 of the 2026 Repco Supercars Championship, and marks a major milestone with the 100th Supercars/Australian Touring Car Championship race to be held at Symmons Plains. Symmons Plains becomes only the second raceway in Australia to reach the century milestone, alongside Perth's Wanneroo Raceway.\n\nBetween 28,000 and 30,000 attendees are expected across the three-day program, drawn by one of motorsport's most fabled short-track venues. The format includes three races — Saturday's Race 14 at 1:00 pm AEST serving as the landmark 100th championship race — with qualifying split into two sessions on Saturday morning. Will Davison holds the practice/qualifying lap record at Symmons Plains, setting a 50.345-second lap in 2022 — a benchmark that represents the fastest single lap the circuit has ever seen in Supercars competition. Jamie Whincup holds the race lap record, a 51.4370-second lap set at the circuit.",
@@ -150,7 +150,7 @@
       "driver": "Matt Payne",
       "team": "Grove Racing",
       "manufacturer": "Ford",
-      "driver_slug": "matt-payne"
+      "driver_slug": "matthew-payne"
     },
     {
       "number": "26",

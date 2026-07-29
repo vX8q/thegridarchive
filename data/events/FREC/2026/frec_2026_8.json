@@ -1,0 +1,35 @@
+{
+  "event_id": "FREC_2026_8",
+  "series": "FIA Formula Regional European Championship",
+  "race": "Hockenheimring",
+  "date": "11–13 September 2026",
+  "start_date": "2026-09-11",
+  "end_date": "2026-09-13",
+  "track": "Hockenheimring",
+  "location": "Hockenheim, Baden-Wurttemberg, Germany",
+  "laps": "",
+  "distance": "",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "sessions": []
+    },
+    "qualifying": {
+      "sessions": []
+    },
+    "race": {
+      "sessions": [
+        {
+          "title": "Race 1",
+          "headers": [],
+          "rows": []
+        },
+        {
+          "title": "Race 2",
+          "headers": [],
+          "rows": []
+        }
+      ]
+    }
+  }
+}

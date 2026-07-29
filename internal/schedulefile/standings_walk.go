@@ -60,40 +60,92 @@ func eventDetailHasRaceResults(seriesID string, detail *EventDetailJSON, session
 	return false
 }
 
-func accumulateStagePointsFromDetail(detail *EventDetailJSON, into map[string]int) {
+// eventHasFourStages is true for Cup races with a points-paying stage 3
+// (Coca-Cola 600): stage4_laps set, or an explicit stage_4 / stage4 table.
+func eventHasFourStages(detail *EventDetailJSON) bool {
+	if detail == nil {
+		return false
+	}
+	if strings.TrimSpace(detail.Stage4Laps) != "" {
+		return true
+	}
+	if detail.Tables == nil {
+		return false
+	}
+	if t, ok := detail.Tables["stage_4"]; ok && len(t.Rows) > 0 {
+		return true
+	}
+	if t, ok := detail.Tables["stage4"]; ok && len(t.Rows) > 0 {
+		return true
+	}
+	return false
+}
+
+func addDriverPointsFromResultsTable(seriesID string, st EventTable, into map[string]int) {
+	if into == nil || len(st.Headers) == 0 || len(st.Rows) == 0 {
+		return
+	}
+	isStockCarSeries := strings.EqualFold(seriesID, "NASCAR_CUP") ||
+		strings.EqualFold(seriesID, "NOAPS") ||
+		strings.EqualFold(seriesID, "NASCAR_TRUCK") ||
+		strings.EqualFold(seriesID, "ARCA") ||
+		strings.EqualFold(seriesID, "NASCAR_MODIFIED")
+
+	sDriverCol := colIndex(st.Headers, "Driver")
+	sPtsCol := colIndex(st.Headers, "Points")
+	if sPtsCol < 0 {
+		sPtsCol = colIndex(st.Headers, "Pts")
+	}
+	if sDriverCol < 0 || sPtsCol < 0 {
+		return
+	}
+	for _, row := range st.Rows {
+		if sDriverCol >= len(row) || sPtsCol >= len(row) {
+			continue
+		}
+		d := strings.TrimSpace(row[sDriverCol])
+		if d == "" {
+			continue
+		}
+		if isStockCarSeries {
+			d = stockCarIneligibleDriver(d, "", nil)
+		}
+		pts := 0
+		if s := strings.TrimSpace(row[sPtsCol]); s != "" {
+			for _, c := range s {
+				if c >= '0' && c <= '9' {
+					pts = pts*10 + int(c-'0')
+				}
+			}
+		}
+		into[canonicalDriverKey(d)] += pts
+	}
+}
+
+// accumulateStagePointsFromDetail sums championship Stage Points for standings:
+// stage_1 + stage_2, plus stage_3 on 4-stage Cup races, plus Daytona Duel points
+// for NASCAR_CUP (Wikipedia / NASCAR.com Stage column). Duel points must NOT be
+// added to Pts — they are already included in Daytona race_results Points.
+func accumulateStagePointsFromDetail(seriesID string, detail *EventDetailJSON, into map[string]int) {
 	if detail == nil || detail.Tables == nil || into == nil {
 		return
 	}
-	for sn := 1; sn <= 2; sn++ {
+	maxStage := 2
+	if eventHasFourStages(detail) {
+		maxStage = 3
+	}
+	for sn := 1; sn <= maxStage; sn++ {
 		st, ok := StageN(detail.Tables, sn)
 		if !ok {
 			continue
 		}
-		sDriverCol := colIndex(st.Headers, "Driver")
-		sPtsCol := colIndex(st.Headers, "Points")
-		if sPtsCol < 0 {
-			sPtsCol = colIndex(st.Headers, "Pts")
-		}
-		if sDriverCol < 0 || sPtsCol < 0 {
-			continue
-		}
-		for _, row := range st.Rows {
-			if sDriverCol >= len(row) || sPtsCol >= len(row) {
-				continue
+		addDriverPointsFromResultsTable(seriesID, st, into)
+	}
+	if strings.EqualFold(seriesID, "NASCAR_CUP") {
+		for _, key := range []string{"duel1", "duel2", "duel_1", "duel_2"} {
+			if st, ok := detail.Tables[key]; ok {
+				addDriverPointsFromResultsTable(seriesID, st, into)
 			}
-			d := strings.TrimSpace(row[sDriverCol])
-			if d == "" {
-				continue
-			}
-			pts := 0
-			if s := strings.TrimSpace(row[sPtsCol]); s != "" {
-				for _, c := range s {
-					if c >= '0' && c <= '9' {
-						pts = pts*10 + int(c-'0')
-					}
-				}
-			}
-			into[canonicalDriverKey(d)] += pts
 		}
 	}
 }
@@ -207,8 +259,11 @@ func finalizeStandingsFromEvents(dataDir, seriesID, season string, data *Standin
 		}
 
 		detail, _ := cache.loadDetail(ev.ID)
+
 		if fillStages {
-			accumulateStagePointsFromDetail(detail, stagePointsByDriver)
+			// Stage results are published before the race classification, so a
+			// weekend in progress still counts toward the Stage column.
+			accumulateStagePointsFromDetail(seriesID, detail, stagePointsByDriver)
 		}
 		if !fillCompleted {
 			continue

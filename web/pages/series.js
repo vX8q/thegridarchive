@@ -2281,6 +2281,21 @@ function renderDetail(seriesId, subPath) {
         var completedRacesSet = {};
         for (var cr = 0; cr < completedRacesArr.length; cr++) { completedRacesSet[completedRacesArr[cr]] = true; }
 
+        // Race headers double as links to the event that scores the column.
+        var standingsEventIdList = (dataObj && Array.isArray(dataObj.event_ids)) ? dataObj.event_ids : [];
+        var raceHeaderLink = (window.TGA && window.TGA.standingsRaceHeaderHtml)
+          ? window.TGA.standingsRaceHeaderHtml
+          : function (labelHtml) { return labelHtml; };
+        function raceHeaderCellHtml(idx, labelHtml, cls, attrs) {
+          return '<th class="' + (cls || 'col-race') + '"' + (attrs || '') + '>'
+            + raceHeaderLink(labelHtml, standingsEventIdList[idx]) + '</th>';
+        }
+        // Venue/group labels for multi-race weekends are not links — only round cells are.
+        function raceGroupHeaderHtml(labelHtml, cls, attrs) {
+          return '<th class="' + (cls || 'col-race-group') + '"' + (attrs || '') + '>'
+            + labelHtml + '</th>';
+        }
+
         // ——— F1 / F2 / F3 / FREC / F4: event names on top, race columns, Pts last ———
         if (sk === 'f1' || sk === 'f2' || sk === 'f3' || sk === 'frec' || sk === 'f4_it' || String(currentSeriesId || '').toLowerCase().indexOf('f1-') === 0) {
           var eventNames = (dataObj && dataObj.event_names && Array.isArray(dataObj.event_names)) ? dataObj.event_names : [];
@@ -2305,7 +2320,7 @@ function renderDetail(seriesId, subPath) {
                 }
                 var rc = raceOrder[i] || '';
                 var suffix = rc.slice(-1) === 'S' ? '\u00b7S' : (rc.slice(-1) === 'F' ? '\u00b7F' : '');
-                headerRow += '<th class="col-race">' + esc(en + suffix) + '</th>';
+                headerRow += raceHeaderCellHtml(i, esc(en + suffix));
               }
               headerRow += '<th class="col-pts">' + t('th.pts') + '</th></tr>';
               theadElF1.innerHTML = headerRow;
@@ -2328,7 +2343,7 @@ function renderDetail(seriesId, subPath) {
                 var spSuffix = rcCode.slice(-1) === 'S'
                   ? '*S'
                   : (rcCode.slice(-1) === 'F' ? '*F' : '');
-                headerRowCurrentF1 += '<th class="col-race">' + esc(enCur + spSuffix) + '</th>';
+                headerRowCurrentF1 += raceHeaderCellHtml(ci, esc(enCur + spSuffix));
               }
               headerRowCurrentF1 += '<th class="col-pts">' + t('th.pts') + '</th></tr>';
               theadElF1.innerHTML = headerRowCurrentF1;
@@ -2337,6 +2352,14 @@ function renderDetail(seriesId, subPath) {
               var eventRow = '';
               var prevName = null;
               var colSpan = 0;
+              var groupStart = 0;
+              function eventGroupCell(name, span, startIdx) {
+                return raceGroupHeaderHtml(
+                  esc(localizeEventName(name)),
+                  'col-race-group',
+                  ' colspan="' + span + '"'
+                );
+              }
               for (var i = 0; i < raceOrder.length; i++) {
                 var en = eventNames[i] || '';
                 if (sk === 'frec') {
@@ -2347,12 +2370,13 @@ function renderDetail(seriesId, subPath) {
                 if (en === prevName) {
                   colSpan++;
                 } else {
-                  if (prevName != null) eventRow += '<th class="col-race-group" colspan="' + colSpan + '">' + esc(localizeEventName(prevName)) + '</th>';
+                  if (prevName != null) eventRow += eventGroupCell(prevName, colSpan, groupStart);
                   prevName = en;
                   colSpan = 1;
+                  groupStart = i;
                 }
               }
-              if (prevName != null) eventRow += '<th class="col-race-group" colspan="' + colSpan + '">' + esc(localizeEventName(prevName)) + '</th>';
+              if (prevName != null) eventRow += eventGroupCell(prevName, colSpan, groupStart);
               var topRowF1 = '<tr class="standings-header-row-top">' +
                 '<th class="col-num" rowspan="2">' + t('th.pos') + '</th>' +
                 '<th class="col-car" rowspan="2">#</th>' +
@@ -2373,7 +2397,7 @@ function renderDetail(seriesId, subPath) {
                 } else {
                   subLabel = (sub || 'Race');
                 }
-                bottomRowF1 += '<th class="col-race">' + esc(subLabel) + '</th>';
+                bottomRowF1 += raceHeaderCellHtml(j, esc(subLabel));
               }
               bottomRowF1 += '</tr>';
               theadElF1.innerHTML = topRowF1 + bottomRowF1;
@@ -2423,7 +2447,7 @@ function renderDetail(seriesId, subPath) {
                     var mRq = rq.match(/-(\d+)$/);
                     rqLabel = mRq && mRq[1] ? ('R' + mRq[1]) : rqLabel;
                   }
-                  inelH += '<th class="col-race">' + esc(rqLabel) + '</th>';
+                  inelH += raceHeaderCellHtml(qi, esc(rqLabel));
                 }
                 inelH += '<th class="col-pts">' + t('th.pts') + '</th>';
                 inelTh.innerHTML = inelH;
@@ -2472,31 +2496,38 @@ function renderDetail(seriesId, subPath) {
           var word = venue.replace(/[^a-z0-9]+/gi, ' ').trim().split(/\s+/)[0] || 'r';
           return word.slice(0, 3).toLowerCase();
         }
+        // Super Formula: rounds do not map 1:1 to weekends (Motegi, Suzuka and
+        // Fuji each host two rounds), so venue and round are shown separately.
+        function sfVenueShort(eventName) {
+          var name = String(eventName || '').trim();
+          if (!name) return '';
+          var low = name.toLowerCase();
+          if (low.indexOf('motegi') >= 0) return 'Motegi';
+          if (low.indexOf('autopolis') >= 0) return 'Autopolis';
+          if (low.indexOf('suzuka') >= 0) return 'Suzuka';
+          if (low.indexOf('fuji') >= 0) return 'Fuji';
+          if (low.indexOf('sugo') >= 0) return 'SUGO';
+          if (low.indexOf('okayama') >= 0) return 'Okayama';
+          return name.split(/\s+/)[0];
+        }
+        function sfRoundNumber(code) {
+          var m = String(code || '').match(/(\d+)/);
+          return m ? m[1] : '';
+        }
+        function sfRoundLabel(code) {
+          var num = sfRoundNumber(code);
+          if (!num) return String(code || '');
+          return (getLang() === 'ru' ? 'Р' : 'R') + num;
+        }
         function raceHeaderLabel(code, idx) {
           if (!code || typeof code !== 'string') return code;
           if (sk === 'psc') {
             return pscVenueAbbrev(eventNamesForStandings[idx] || '');
           }
           if (sk === 'super_formula') {
-            var evName = String((eventNamesForStandings[idx] || '')).toLowerCase();
-            var base = 'R';
-            if (evName.indexOf('motegi') >= 0) base = 'MOT';
-            else if (evName.indexOf('autopolis') >= 0) base = 'AUT';
-            else if (evName.indexOf('suzuka') >= 0) base = 'SUZ';
-            else if (evName.indexOf('fuji') >= 0) base = 'FUJ';
-            else if (evName.indexOf('sugo') >= 0) base = 'SUG';
-            var n = 0;
-            for (var ri = 0; ri <= idx; ri++) {
-              var evNamePrev = String((eventNamesForStandings[ri] || '')).toLowerCase();
-              var prevBase = 'R';
-              if (evNamePrev.indexOf('motegi') >= 0) prevBase = 'MOT';
-              else if (evNamePrev.indexOf('autopolis') >= 0) prevBase = 'AUT';
-              else if (evNamePrev.indexOf('suzuka') >= 0) prevBase = 'SUZ';
-              else if (evNamePrev.indexOf('fuji') >= 0) prevBase = 'FUJ';
-              else if (evNamePrev.indexOf('sugo') >= 0) prevBase = 'SUG';
-              if (prevBase === base) n++;
-            }
-            return base + String(n || 1);
+            // Venue lives in the grouped header row above; the column itself is
+            // the championship round.
+            return sfRoundLabel(code);
           }
           if (sk === 'supercars') {
             return String(code || '');
@@ -2535,7 +2566,7 @@ function renderDetail(seriesId, subPath) {
         th += '<th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th>';
         if (includeManufacturer) th += '<th>' + esc(manufacturerLabel) + '</th>';
         for (var i = 0; i < raceOrder.length; i++) {
-          th += '<th class="col-race">' + esc(raceHeaderLabel(raceOrder[i], i)) + '</th>';
+          th += raceHeaderCellHtml(i, esc(raceHeaderLabel(raceOrder[i], i)));
         }
         if (hasStages) th += '<th>' + t('th.stage_col') + '</th>';
         if (hasWth)    th += '<th>' + t('th.wth') + '</th>';
@@ -2549,22 +2580,6 @@ function renderDetail(seriesId, subPath) {
             TAS: 'Tasmania', DAR: 'Darwin', TSV: 'Townsville', PER: 'Perth',
             IPS: 'Ipswich', BEN: 'The Bend', BAT: 'Bathurst', GC: 'Gold Coast',
             SAN: 'Sandown', ADL: 'Adelaide'
-          };
-          var supercarsWeekendHref = {
-            SMP: '/event/supercars-2026-1/race',
-            MLB: '/event/supercars-2026-2/race',
-            TPO: '/event/supercars-2026-3/race',
-            CHR: '/event/supercars-2026-4/race',
-            TAS: '/event/supercars-2026-5/race',
-            DAR: '/event/supercars-2026-6/race',
-            TSV: '/event/supercars-2026-7/race',
-            PER: '/event/supercars-2026-8/race',
-            IPS: '/event/supercars-2026-9/race',
-            BEN: '/event/supercars-2026-10/race',
-            BAT: '/event/supercars-2026-11/race',
-            GC: '/event/supercars-2026-12/race',
-            SAN: '/event/supercars-2026-13/race',
-            ADL: '/event/supercars-2026-14/race'
           };
           function supercarsRacePrefix(code) {
             var m = String(code || '').match(/^([A-Z]+)\d+$/i);
@@ -2593,7 +2608,11 @@ function renderDetail(seriesId, subPath) {
             var grp = scGroups[gti];
             var label = supercarsVenueLabels[grp.prefix] || grp.prefix;
             var divCls = (gti > 0) ? ' supercars-stage-divider' : '';
-            topRowSc += '<th class="col-race-group' + divCls + '" colspan="' + grp.count + '">' + esc(label) + '</th>';
+            topRowSc += raceGroupHeaderHtml(
+              esc(label),
+              'col-race-group' + divCls,
+              ' colspan="' + grp.count + '"'
+            );
           }
           if (hasStages) topRowSc += '<th rowspan="2">' + t('th.stage_col') + '</th>';
           if (hasWth)    topRowSc += '<th rowspan="2">' + t('th.wth') + '</th>';
@@ -2606,14 +2625,68 @@ function renderDetail(seriesId, subPath) {
             var codeSc = String(raceOrder[gj] || '');
             var prefixSc = supercarsRacePrefix(codeSc);
             var numSc = supercarsRaceNum(codeSc) || String(gj + 1);
-            var divClassSc = (prevPrefix && prefixSc !== prevPrefix) ? ' col-race supercars-stage-divider' : ' col-race';
-            var hrefSc = supercarsWeekendHref[prefixSc] || '/event/supercars-2026-1/race';
-            bottomRowSc += '<th class="' + divClassSc.trim() + '"><a href="' + hrefSc + '" class="standings-race-link">' + esc(numSc) + '</a></th>';
+            var divClassSc = (prevPrefix && prefixSc !== prevPrefix) ? 'col-race supercars-stage-divider' : 'col-race';
+            bottomRowSc += raceHeaderCellHtml(gj, esc(numSc), divClassSc);
             prevPrefix = prefixSc;
           }
           bottomRowSc += '</tr>';
 
           theadEl.innerHTML = topRowSc + bottomRowSc;
+          theadRow = document.getElementById('standings-thead');
+        } else if (theadEl && sk === 'super_formula' && raceOrder.length > 0) {
+          // Two-row header: venue of the weekend on top, championship round below.
+          var sfEventIds = standingsEventIdList;
+          var sfGroups = [];
+          for (var sfi = 0; sfi < raceOrder.length; sfi++) {
+            var sfVenue = sfVenueShort(eventNamesForStandings[sfi] || '');
+            var sfEventId = String(sfEventIds[sfi] || '');
+            var sfPrev = sfGroups.length ? sfGroups[sfGroups.length - 1] : null;
+            if (sfPrev && sfPrev.venue === sfVenue && sfPrev.eventId === sfEventId) {
+              sfPrev.count++;
+            } else {
+              sfGroups.push({ venue: sfVenue, eventId: sfEventId, count: 1, start: sfi });
+            }
+          }
+          var roundWord = t('th.round') || 'Round';
+          var topRowSf = '<tr class="standings-header-row-top">';
+          topRowSf += '<th class="col-num" rowspan="2">' + t('th.pos') + '</th>';
+          if (hasCar) topRowSf += '<th class="col-car" rowspan="2">' + t('th.no') + '</th>';
+          topRowSf += '<th rowspan="2">' + t('th.driver') + '</th>';
+          topRowSf += '<th rowspan="2">' + t('th.team') + '</th>';
+          for (var sgi = 0; sgi < sfGroups.length; sgi++) {
+            var sfGrp = sfGroups[sgi];
+            var sfDiv = (sgi > 0) ? ' supercars-stage-divider' : '';
+            var sfFull = esc(eventNamesForStandings[sfGrp.start] || sfGrp.venue || '');
+            topRowSf += raceGroupHeaderHtml(
+              esc(sfGrp.venue || '—'),
+              'col-race-group' + sfDiv,
+              ' colspan="' + sfGrp.count + '"' + (sfFull ? ' title="' + sfFull + '"' : '')
+            );
+          }
+          if (hasWth)    topRowSf += '<th rowspan="2">' + t('th.wth') + '</th>';
+          if (hasStatus) topRowSf += '<th rowspan="2">' + t('th.status') + '</th>';
+          topRowSf += '<th class="col-pts" rowspan="2">' + t('th.pts') + '</th></tr>';
+
+          var bottomRowSf = '<tr id="standings-thead">';
+          for (var sfj = 0; sfj < raceOrder.length; sfj++) {
+            var sfCode = String(raceOrder[sfj] || '');
+            var sfGroupStart = false;
+            for (var sgk = 0; sgk < sfGroups.length; sgk++) {
+              if (sfGroups[sgk].start === sfj && sgk > 0) { sfGroupStart = true; break; }
+            }
+            var sfCls = 'col-race' + (sfGroupStart ? ' supercars-stage-divider' : '');
+            var sfTitle = roundWord + ' ' + sfRoundNumber(sfCode)
+              + (eventNamesForStandings[sfj] ? ' — ' + eventNamesForStandings[sfj] : '');
+            bottomRowSf += raceHeaderCellHtml(
+              sfj,
+              esc(sfRoundLabel(sfCode)),
+              sfCls,
+              ' title="' + esc(sfTitle) + '"'
+            );
+          }
+          bottomRowSf += '</tr>';
+
+          theadEl.innerHTML = topRowSf + bottomRowSf;
           theadRow = document.getElementById('standings-thead');
         } else if (theadEl) {
           // For all other series always reset thead to single row,
@@ -2653,7 +2726,25 @@ function renderDetail(seriesId, subPath) {
       }
       renderStandingsRows(rows);
       var rowsCopy = rows.slice();
-      var stThs = theadRow ? theadRow.querySelectorAll('th') : [];
+      // Grouped headers (Supercars venues, Super Formula weekends) split cells
+      // across two rows; sorting needs them back in logical column order.
+      function standingsHeaderCells(headEl, headRow) {
+        var fallback = headRow ? headRow.querySelectorAll('th') : [];
+        if (!headEl) return fallback;
+        var headerRows = headEl.querySelectorAll('tr');
+        if (headerRows.length < 2) return fallback;
+        var topCells = headerRows[0].querySelectorAll('th');
+        var bottomCells = headerRows[1].querySelectorAll('th');
+        var leading = [], trailing = [], passedGroups = false;
+        for (var hi = 0; hi < topCells.length; hi++) {
+          if (topCells[hi].classList.contains('col-race-group')) { passedGroups = true; continue; }
+          (passedGroups ? trailing : leading).push(topCells[hi]);
+        }
+        var ordered = leading.slice();
+        for (var hj = 0; hj < bottomCells.length; hj++) ordered.push(bottomCells[hj]);
+        return ordered.concat(trailing);
+      }
+      var stThs = standingsHeaderCells(theadEl, theadRow);
 
         // Column order: pos, [car], driver, team, [manufacturer], races..., stage?, wth?, status?, pts (last)
         var stageOff = hasStages ? 1 : 0;
@@ -2700,7 +2791,9 @@ function renderDetail(seriesId, subPath) {
         (function (colIndex) {
           var dir = 1;
           stThs[colIndex].classList.add('sortable');
-          stThs[colIndex].addEventListener('click', function () {
+          stThs[colIndex].addEventListener('click', function (ev) {
+              // Race headers link to their event; those clicks navigate, not sort.
+              if (ev && ev.target && ev.target.closest && ev.target.closest('a')) return;
               var numeric = isNumericCol(colIndex);
             rowsCopy.sort(function (a, b) {
                 var va = getStandingVal(a, colIndex);
@@ -2750,10 +2843,10 @@ function renderDetail(seriesId, subPath) {
                     var raceCell = !emptyStage ? (rval.indexOf('*') >= 0 ? esc(rval.slice(0, rval.indexOf('*'))) + '<sup class="stage-pts">' + esc(rval.slice(rval.indexOf('*'))) + '</sup>' : esc(rval)) : (isCompleted ? '—' : '');
                     td += '<td class="col-race">' + raceCell + '</td>';
                   }
-                  td += '<td class="col-pts">' + esc(dash(row.points)) + '</td>';
                   if (hasStages) td += '<td>' + esc(dash(row.stages)) + '</td>';
                   if (hasWth) td += '<td>' + esc(dash(row.wth)) + '</td>';
                   if (hasStatus) td += '<td>' + esc(dash(row.status)) + '</td>';
+                  td += '<td class="col-pts">' + esc(dash(row.points)) + '</td>';
                   return '<tr>' + td + '</tr>';
                 }).join('');
               }
@@ -4150,7 +4243,16 @@ function renderDetail(seriesId, subPath) {
         var schedHeadRow = document.querySelector('#schedule-table thead tr');
         if (schedHeadRow) {
           var seriesKey = seriesKeySched;
-          if (isGroupedRaceSchedule) {
+          if (isGroupedRaceSchedule && isSuperFormula) {
+            // Super Formula: no separate Round column — the round link lives on the Race cell.
+            schedHeadRow.innerHTML =
+              '<th>' + esc(t('th.race_num')) + '</th>' +
+              '<th>' + esc(t('th.event')) + '</th>' +
+              '<th>' + esc(t('th.circuit')) + '</th>' +
+              '<th>' + esc(t('th.location')) + '</th>' +
+              '<th>' + esc(t('th.date')) + '</th>' +
+              '<th>' + esc(t('th.time')) + '</th>';
+          } else if (isGroupedRaceSchedule) {
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.round')) + '</th>' +
               '<th>' + esc(t('th.race_num')) + '</th>' +
@@ -4371,8 +4473,8 @@ function renderDetail(seriesId, subPath) {
           }
           var trackNameRaw = e.circuit_name || e.location || '—';
           var trackName = trackNameRaw;
-          if (isStockCarSeries && trackName !== '—' && trackName.indexOf(', ') >= 0) {
-            trackName = trackName.split(', ')[0];
+          if (isStockCarSeries && trackName !== '—' && window.TGA.stockCarDisplayTrack) {
+            trackName = window.TGA.stockCarDisplayTrack(e.circuit_name || e.location || '', e.location || '') || '—';
           }
           var trackNameDisplay = trackName === '—' ? '—' : localizeVenueLine(trackName);
           var trackSlug = slugify(e.circuit_name || e.location || trackName);
@@ -4419,17 +4521,8 @@ function renderDetail(seriesId, subPath) {
             numCell = '<td class="col-num">' + esc(showNum) + '</td>';
           }
           if (seriesKeyRow === 'super_formula') {
-            var sfRd = e._sfRdLabel;
-            if (!sfRd) {
-              var sfIdm = String(e.id || '').match(/_(\d+)$/);
-              sfRd = sfIdm ? sfIdm[1] : (opts.round != null ? String(opts.round) : showNum);
-            }
-            if (e.has_detail && e.id) {
-              var sfEventSlug = String(e.id || '').toLowerCase().replace(/_/g, '-');
-              numCell = '<td class="col-num"><a href="/event/' + encodeURIComponent(sfEventSlug) + '" class="event-link">' + esc(String(sfRd)) + '</a></td>';
-            } else {
-              numCell = '<td class="col-num">' + esc(String(sfRd)) + '</td>';
-            }
+            // Round column removed for this series — link moves to the Race cell instead.
+            numCell = '';
           }
           var eventCell;
           if (opts.continuation || opts.groupContinuation) {
@@ -4577,9 +4670,10 @@ function renderDetail(seriesId, subPath) {
             // NASCAR: # | Race | Track | Location | Date | Local (date + time) | MSK (date + time)
             // Track — track name only; Location — city/state only, no duplication
             var raceCellStock = '<td>' + link + '</td>';
-            var locTextStockRaw = (e.circuit_name && e.circuit_name.indexOf(', ') >= 0)
-              ? e.circuit_name.slice(e.circuit_name.indexOf(', ') + 2).trim()
+            var locTextStockRaw = (window.TGA.stockCarDisplayLocation)
+              ? window.TGA.stockCarDisplayLocation(e.circuit_name || '', e.location || '')
               : (e.location || '—');
+            if (!locTextStockRaw) locTextStockRaw = '—';
             var locTextStock = locTextStockRaw === '—' ? '—' : localizeLocation(locTextStockRaw);
             var locationCellStock;
             if (opts.continuation || opts.groupContinuation) {
@@ -4837,8 +4931,8 @@ function renderDetail(seriesId, subPath) {
             { id: 'WEC_2026_4',        name: '6 Hours of Sao Paulo', circuit_name: 'Interlagos Circuit',           location: 'Sao Paulo',        start_date: '2026-07-12', end_date: '2026-07-12' },
             { id: 'WEC_2026_5',        name: 'Lone Star Le Mans',    circuit_name: 'Circuit of the Americas',      location: 'Austin, Texas',    start_date: '2026-09-06', end_date: '2026-09-06' },
             { id: 'WEC_2026_6',        name: '6 Hours of Fuji',      circuit_name: 'Fuji Speedway',                location: 'Oyama, Shizuoka',  start_date: '2026-09-27', end_date: '2026-09-27' },
-            { id: 'WEC_2026_7',        name: 'Qatar 1812 km',        circuit_name: 'Losail International Circuit', location: 'Qatar Lusail',     start_date: '2026-10-24', end_date: '2026-10-24' },
-            { id: 'WEC_2026_8',        name: '8 Hours of Bahrain',   circuit_name: 'Bahrain International Circuit', location: 'Bahrain Sakhir',  start_date: '2026-11-07', end_date: '2026-11-07' }
+            { id: 'WEC_2026_7',        name: '6 Hours of Barcelona', circuit_name: 'Circuit de Barcelona-Catalunya', location: 'Montmelo',        start_date: '2026-10-18', end_date: '2026-10-18' },
+            { id: 'WEC_2026_8',        name: '6 Hours of Monza',     circuit_name: 'Monza Circuit',                location: 'Monza',           start_date: '2026-11-08', end_date: '2026-11-08' }
           ];
           renderScheduleRows(wecStatic);
           return;

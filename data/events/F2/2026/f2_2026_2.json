@@ -4,7 +4,7 @@
   "race": "F2 — Miami",
   "date": "2–3 May 2026",
   "track": "Miami International Autodrome",
-  "location": "Miami Gardens, Florida, United States",
+  "location": "Miami Gardens, Florida, USA",
   "start_date": "2026-05-02",
   "end_date": "2026-05-03",
   "laps": "",
@@ -134,7 +134,7 @@
       "number": "22",
       "driver": "Nicolas Varrone",
       "team": "Van Amersfoort Racing",
-      "driver_slug": "nicolas-varrone"
+      "driver_slug": "nico-varrone"
     },
     {
       "number": "23",

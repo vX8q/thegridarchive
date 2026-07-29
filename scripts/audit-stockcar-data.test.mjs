@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import {
   buildTeamMap,
   lookupTeam,
+  carsMissingFromEntryList,
   headerIndex,
   TEAM_HEADERS,
   CAR_HEADERS,
@@ -78,6 +79,19 @@ test('Daytona qualifying has no team mismatches', () => {
 test('NOAPS Atlanta DNQ position 39', () => {
   const d = load('data/events/NOAPS/2026/noaps_2026_2.json');
   assert.strictEqual(d.tables.did_not_qualify.rows[0][0], '39');
+});
+
+test('#07 never resolves to the #7 entry', () => {
+  const map = buildTeamMap([
+    { number: '7', team: 'JR Motorsports' },
+    { number: '07', team: 'SS-Green Light Racing' },
+  ]);
+  assert.strictEqual(lookupTeam(map, '07'), 'SS-Green Light Racing');
+  assert.strictEqual(lookupTeam(map, '7'), 'JR Motorsports');
+
+  const onlySeven = buildTeamMap([{ number: '7', team: 'JR Motorsports' }]);
+  assert.strictEqual(lookupTeam(onlySeven, '07'), null);
+  assert.deepStrictEqual(carsMissingFromEntryList(onlySeven, ['7', '07', '—']), ['07']);
 });
 
 console.log('All audit-stockcar-data tests passed.');

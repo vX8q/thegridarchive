@@ -6,7 +6,7 @@
   "start_date": "2026-04-12",
   "end_date": "2026-04-12",
   "track": "Bristol Motor Speedway",
-  "location": "Bristol, Tennessee",
+  "location": "Bristol, Tennessee, USA",
   "laps": "500",
   "stage1_laps": "125",
   "stage2_laps": "125",
@@ -85,7 +85,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "James Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",

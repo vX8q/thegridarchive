@@ -7,7 +7,7 @@
   "start_date": "2026-06-12",
   "end_date": "2026-06-12",
   "track": "Pocono Raceway",
-  "location": "Blakeslee, Pennsylvania",
+  "location": "Long Pond, Pennsylvania, USA",
   "laps": "60",
   "distance": "150 mi (241.402 km)",
   "event_preview": "Pocono Raceway is a 2.5-mile (4.023 km) tri-oval in Blakeslee, Pennsylvania, featuring three unique turns modeled after Trenton Speedway, Indianapolis Motor Speedway and the Milwaukee Mile — making it one of the most challenging and versatile tracks ARCA drivers face all season. The Sunset Hill Shooting Range 150 is the eighth race of the 2026 ARCA Menards Series season, run over 60 laps (150 miles) on Friday, June 12, at 3 p.m. ET. It is the first ARCA race at Pocono since 2023.\n\nGio Ruggiero leads ARCA in wins with three victories heading into the weekend, and makes his first ARCA start at Pocono after finishing 11th in a Truck Series outing here in 2025. Jake Bollman leads the championship standings and has led laps at Michigan in his second-place finish. Pinnacle Racing Group and Joe Gibbs Racing have combined for five wins in the first seven races. Carson Brown and Lanie Buice, both from Pinnacle, will make their first ARCA starts on tracks larger than one mile. Four women will compete this weekend — Isabella Robusto, Lanie Buice, Jade Avedisian and Dystany Spurlock — demonstrating the series' growing diversity.\n\nThe ARCA Menards Series race speed record at Pocono is 162.221 mph, set during Corey Lajoie's victory in August 2013.",
@@ -84,7 +84,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "22",
@@ -108,7 +108,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Shane Wilson",
-      "driver_slug": "gavan-boschele-r"
+      "driver_slug": "gavan-boschele"
     },
     {
       "number": "28",
@@ -116,7 +116,7 @@
       "team": "Pinnacle Racing Group",
       "manufacturer": "Chevrolet",
       "crew_chief": "Steven Dawson",
-      "driver_slug": "carson-brown-r"
+      "driver_slug": "carson-brown"
     },
     {
       "number": "48",
@@ -172,7 +172,7 @@
       "team": "Clubb Racing Inc.",
       "manufacturer": "Ford",
       "crew_chief": "Jon Clubb",
-      "driver_slug": "jeff-maconi-r"
+      "driver_slug": "jeff-maconi"
     },
     {
       "number": "89",

@@ -6,35 +6,2996 @@
   "start_date": "2026-07-10",
   "end_date": "2026-07-12",
   "track": "Interlagos Circuit",
-  "location": "Sao Paulo",
-  "entry_list": null,
+  "circuit_name": "Autódromo José Carlos Pace",
+  "location": "Sao Paulo, Brazil",
+  "laps": "",
+  "distance": "",
+  "youtube_id": "GFbCplgyCqk",
+  "event_preview": "Autódromo José Carlos Pace, better known as Interlagos, is a 4.309 km (2.678 mi) permanent road course in São Paulo, Brazil, running counter-clockwise across 15 corners with significant elevation changes and situated at roughly 800 metres above sea level. The Rolex 6 Hours of São Paulo is the fourth round of the 2026 FIA World Endurance Championship and the series' first flyaway event of the season, held July 10-12 as the campaign's exact midpoint. A 35-car field spans 17 Hypercars and 18 LMGT3 entries.\n\nEvery WEC race held at Interlagos has been won from the front row, and no class winner has ever started lower than fifth — making qualifying unusually decisive at this circuit. Will Stevens claimed his first FIA WEC pole position in the No. 12 Cadillac V-Series.R with a 1:23.041 in Hyperpole, edging teammate Jack Aitken by just 0.048 seconds to give Cadillac a front-row lockout for the second consecutive year at the venue. Victor Martins split the Cadillacs by 0.067s for Alpine in third, with Genesis's Mathieu Jaminet also inside the top six. In LMGT3, Kobe Pauwels — deputising for Eduardo Barrichello and making only his second WEC start — took pole for Heart of Racing's No. 23 Aston Martin with a 1:33.350, the fastest LMGT3 lap ever recorded at the circuit. Toyota, the championship leader after Le Mans and the only manufacturer to have won at Interlagos more than once, struggled throughout practice and qualified both TR010 Hybrids down in 14th and 16th.\n\nThe all-time Hypercar qualifying record at Interlagos belongs to Alex Lynn, who set a 1:22.570 in the No. 12 Cadillac during 2025 Hyperpole — a mark that also stands as the fastest race lap at the circuit, set by Will Stevens' 1:24.498 during that year's race.",
+  "event_preview_ru": "Autódromo José Carlos Pace, более известный как Interlagos, — постоянная трасса длиной 4,309 км (2,678 мили) в Сан-Паулу, Бразилия, проложенная против часовой стрелки с 15 поворотами, значительными перепадами высот и расположенная на высоте около 800 метров над уровнем моря. Rolex 6 Hours of São Paulo — четвёртый этап FIA World Endurance Championship 2026 года и первый выездной этап сезона, проходящий 10-12 июля ровно в середине календаря. Состав из 35 машин включает 17 Hypercar и 18 LMGT3.\n\nКаждая гонка WEC на Interlagos была выиграна с первого ряда, и ни один победитель класса никогда не стартовал ниже пятого места — что делает квалификацию на этой трассе необычайно важной. Уилл Стивенс завоевал свой первый поул FIA WEC на Cadillac V-Series.R No. 12 с результатом 1:23.041 в Hyperpole, опередив напарника Джека Эйткена всего на 0,048 секунды, что принесло Cadillac полный первый ряд на трассе второй год подряд. Виктор Мартинс разделил Cadillacs с отставанием 0,067 секунды на Alpine — третьим, а Матье Жамене на Genesis также вошёл в топ-6. В LMGT3 Кобе Пауэлс — заменяющий Эдуардо Баррикелло и проводящий всего второй старт в WEC — завоевал поул для Heart of Racing на Aston Martin No. 23 с временем 1:33.350, быстрейшим кругом LMGT3, когда-либо зафиксированным на трассе. Toyota, лидер чемпионата после Ле-Мана и единственный производитель, побеждавший на Interlagos более одного раза, испытывала трудности на всех практиках и квалифицировала оба TR010 Hybrid на 14-м и 16-м местах.\n\nАбсолютный квалификационный рекорд Hypercar на Interlagos принадлежит Алексу Линну, установившему 1:22.570 на Cadillac No. 12 во время Hyperpole 2025 года — эта отметка также является быстрейшим гоночным кругом на трассе, установленным Уиллом Стивенсом с временем 1:24.498 в гонке того же года.",
+  "entry_list": [],
   "tables": {
+    "entry_list": {
+      "sessions": [
+        {
+          "title": "Hypercar",
+          "headers": [
+            "Entrant",
+            "Car",
+            "Engine",
+            "Hybrid",
+            "Tyre",
+            "No.",
+            "Drivers",
+            "Rounds"
+          ],
+          "rows": [
+            [
+              "Aston Martin THOR Team",
+              "Aston Martin Valkyrie",
+              "Aston Martin RA 6.5 L V12",
+              "",
+              "M",
+              "007",
+              "Tom Gamble",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Harry Tincknell",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "009",
+              "Alex Riberas",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Marco Sørensen",
+              "4"
+            ],
+            [
+              "Toyota Racing",
+              "Toyota TR010 Hybrid",
+              "Toyota H8909 3.5 L Turbo V6",
+              "Hybrid",
+              "M",
+              "7",
+              "Mike Conway",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Kamui Kobayashi",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Nyck de Vries",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "8",
+              "Sebastien Buemi",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Brendon Hartley",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Ryo Hirakawa",
+              "4"
+            ],
+            [
+              "Cadillac Hertz Team Jota",
+              "Cadillac V-Series.R",
+              "Cadillac LMC55R 5.5 L V8",
+              "Hybrid",
+              "M",
+              "12",
+              "Norman Nato",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Will Stevens",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "38",
+              "Earl Bamber",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Sebastien Bourdais",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Jack Aitken",
+              "4"
+            ],
+            [
+              "BMW M Team WRT",
+              "BMW M Hybrid V8",
+              "BMW P66/3 4.0 L Turbo V8",
+              "Hybrid",
+              "M",
+              "15",
+              "Kevin Magnussen",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Raffaele Marciello",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Dries Vanthoor",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "20",
+              "Robin Frijns",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Rene Rast",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Sheldon van der Linde",
+              "4"
+            ],
+            [
+              "Genesis Magma Racing",
+              "Genesis GMR-001",
+              "Genesis G8MR 3.2 L Turbo V8",
+              "Hybrid",
+              "M",
+              "17",
+              "Pipo Derani",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Mathys Jaubert",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Andre Lotterer",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "19",
+              "Paul-Loup Chatin",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Mathieu Jaminet",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Daniel Juncadella",
+              "4"
+            ],
+            [
+              "Alpine Endurance Team",
+              "Alpine A424",
+              "Alpine V634 3.4 L Turbo V6",
+              "Hybrid",
+              "M",
+              "35",
+              "Antonio Felix da Costa",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Ferdinand Habsburg",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Charles Milesi",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "36",
+              "Jules Gounon",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Frédéric Makowiecki",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Victor Martins",
+              "4"
+            ],
+            [
+              "Ferrari AF Corse",
+              "Ferrari 499P",
+              "Ferrari F163CG 3.0 L Turbo V6",
+              "Hybrid",
+              "M",
+              "50",
+              "Antonio Fuoco",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Miguel Molina",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Nicklas Nielsen",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "51",
+              "James Calado",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Antonio Giovinazzi",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Alessandro Pier Guidi",
+              "4"
+            ],
+            [
+              "AF Corse",
+              "Ferrari 499P",
+              "Ferrari F163CG 3.0 L Turbo V6",
+              "Hybrid",
+              "M",
+              "83",
+              "Phil Hanson",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Robert Kubica",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Yifei Ye",
+              "4"
+            ],
+            [
+              "Peugeot TotalEnergies",
+              "Peugeot 9X8",
+              "Peugeot X6H 2.6 L Turbo V6",
+              "Hybrid",
+              "M",
+              "93",
+              "Nick Cassidy",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Paul di Resta",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Stoffel Vandoorne",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "94",
+              "Loic Duval",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Malthe Jakobsen",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Theo Pourchaire",
+              "4"
+            ]
+          ]
+        },
+        {
+          "title": "LMGT3",
+          "headers": [
+            "Entrant",
+            "Car",
+            "Engine",
+            "Tyre",
+            "No.",
+            "Drivers",
+            "Rounds"
+          ],
+          "rows": [
+            [
+              "Garage 59",
+              "McLaren 720S GT3 Evo",
+              "McLaren M840T 4.0 L Turbo V8",
+              "G",
+              "10",
+              "Antares Au",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Tom Fleming",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Marvin Kirchhöfer",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "58",
+              "Finn Gehrsitz",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Benjamin Goethe",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Alexander West",
+              "4"
+            ],
+            [
+              "Vista AF Corse",
+              "Ferrari 296 GT3 Evo",
+              "Ferrari F163CE 3.0 L Turbo V6",
+              "G",
+              "21",
+              "Francois Heriau",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Simon Mann",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Alessio Rovera",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "54",
+              "Francesco Castellacci",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Thomas Flohr",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Davide Rigon",
+              "4"
+            ],
+            [
+              "Heart of Racing Team",
+              "Aston Martin Vantage AMR GT3 Evo",
+              "Aston Martin M177 4.0 L Turbo V8",
+              "G",
+              "23",
+              "Jonny Adam",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Gray Newell",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Kobe Pauwels",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "27",
+              "Mattia Drudi",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Ian James",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Zacharie Robichon",
+              "4"
+            ],
+            [
+              "Team WRT",
+              "BMW M4 GT3 Evo",
+              "BMW P58 3.0 L Turbo I6",
+              "G",
+              "32",
+              "Augusto Farfus",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Sean Gelael",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Darren Leung",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "69",
+              "Dan Harper",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Anthony McIntosh",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Parker Thompson",
+              "4"
+            ],
+            [
+              "TF Sport",
+              "Chevrolet Corvette Z06 GT3.R",
+              "Chevrolet LT6.R 5.5 L V8",
+              "G",
+              "33",
+              "Jonny Edgar",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Nicolás Varrone",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Ben Keating",
+              "4"
+            ],
+            [
+              "Racing Team Turkey by TF",
+              "Chevrolet Corvette Z06 GT3.R",
+              "Chevrolet LT6.R 5.5 L V8",
+              "G",
+              "34",
+              "Peter Dempsey",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Charlie Eastwood",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Salih Yoluç",
+              "4"
+            ],
+            [
+              "Iron Lynx",
+              "Mercedes-AMG GT3 Evo",
+              "Mercedes-AMG M159 6.2 L V8",
+              "G",
+              "61",
+              "Rui Andrade",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Martin Berry",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Maxime Martin",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "79",
+              "Matteo Cressoni",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Lin Hodenius",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Johannes Zelger",
+              "4"
+            ],
+            [
+              "Proton Competition",
+              "Ford Mustang GT3 Evo",
+              "Ford Coyote 5.4 L V8",
+              "G",
+              "77",
+              "Eric Powell",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Sebastian Priaulx",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Ben Tuck",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "88",
+              "Stefano Gattuso",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Giammarco Levorato",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Logan Sargeant",
+              "4"
+            ],
+            [
+              "Akkodis ASP Team",
+              "Lexus RC F GT3",
+              "Lexus 2UR-GSE 5.4 L V8",
+              "G",
+              "78",
+              "Hadrien David",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Tom Van Rompuy",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Esteban Masson",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "87",
+              "Jose Maria Lopez",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Clemens Schmid",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Razvan Umbrarescu",
+              "4"
+            ],
+            [
+              "Manthey DK Engineering",
+              "Porsche 911 GT3 R (992.2)",
+              "Porsche M97/80 4.2 L Flat-6",
+              "G",
+              "91",
+              "Timur Boguslavskiy",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "James Cottingham",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Ayhancan Güven",
+              "4"
+            ],
+            [
+              "The Bend Manthey",
+              "Porsche 911 GT3 R (992.2)",
+              "Porsche M97/80 4.2 L Flat-6",
+              "G",
+              "92",
+              "Richard Lietz",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Riccardo Pera",
+              "4"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Yasser Shahin",
+              "4"
+            ]
+          ]
+        }
+      ]
+    },
     "practice": {
-      "headers": [
-        "Pos",
-        "Driver",
-        "Team",
-        "Time"
-      ],
-      "rows": []
+      "sessions": [
+        {
+          "title": "Practice 1 — Hypercar",
+          "headers": [
+            "Pos",
+            "Competitors",
+            "N°",
+            "Team",
+            "Best lap",
+            "Laps",
+            "Gap",
+            "Interval",
+            "Avg. (km/h)"
+          ],
+          "rows": [
+            [
+              "1",
+              "Aston Martin",
+              "#007",
+              "Aston Martin THOR Team",
+              "1:25.457",
+              "46",
+              "-",
+              "-",
+              "181.5"
+            ],
+            [
+              "2",
+              "Ferrari",
+              "#50",
+              "Ferrari AF Corse",
+              "1:25.481",
+              "51",
+              "+0.024",
+              "+0.024",
+              "181.5"
+            ],
+            [
+              "3",
+              "Ferrari",
+              "#51",
+              "Ferrari AF Corse",
+              "1:25.563",
+              "52",
+              "+0.106",
+              "+0.082",
+              "181.3"
+            ],
+            [
+              "4",
+              "Ferrari",
+              "#83",
+              "AF Corse",
+              "1:25.596",
+              "50",
+              "+0.139",
+              "+0.033",
+              "181.2"
+            ],
+            [
+              "5",
+              "Alpine",
+              "#36",
+              "Alpine Endurance Team",
+              "1:25.700",
+              "41",
+              "+0.243",
+              "+0.104",
+              "181"
+            ],
+            [
+              "6",
+              "BMW",
+              "#20",
+              "BMW M Team WRT",
+              "1:25.998",
+              "47",
+              "+0.541",
+              "+0.298",
+              "180.4"
+            ],
+            [
+              "7",
+              "Genesis",
+              "#19",
+              "Genesis Magma Racing",
+              "1:26.002",
+              "46",
+              "+0.545",
+              "+0.004",
+              "180.4"
+            ],
+            [
+              "8",
+              "Peugeot",
+              "#94",
+              "Peugeot TotalEnergies",
+              "1:26.014",
+              "50",
+              "+0.557",
+              "+0.012",
+              "180.3"
+            ],
+            [
+              "9",
+              "Genesis",
+              "#17",
+              "Genesis Magma Racing",
+              "1:26.059",
+              "49",
+              "+0.602",
+              "+0.045",
+              "180.3"
+            ],
+            [
+              "10",
+              "Cadillac",
+              "#12",
+              "Cadillac Hertz Team Jota",
+              "1:26.063",
+              "46",
+              "+0.606",
+              "+0.004",
+              "180.2"
+            ],
+            [
+              "11",
+              "Aston Martin",
+              "#009",
+              "Aston Martin THOR Team",
+              "1:26.178",
+              "54",
+              "+0.721",
+              "+0.115",
+              "180"
+            ],
+            [
+              "12",
+              "Toyota",
+              "#7",
+              "Toyota Racing",
+              "1:26.219",
+              "46",
+              "+0.762",
+              "+0.041",
+              "179.9"
+            ],
+            [
+              "13",
+              "Cadillac",
+              "#38",
+              "Cadillac Hertz Team Jota",
+              "1:26.259",
+              "46",
+              "+0.802",
+              "+0.040",
+              "179.8"
+            ],
+            [
+              "14",
+              "Alpine",
+              "#35",
+              "Alpine Endurance Team",
+              "1:26.411",
+              "43",
+              "+0.954",
+              "+0.152",
+              "179.5"
+            ],
+            [
+              "15",
+              "BMW",
+              "#15",
+              "BMW M Team WRT",
+              "1:26.423",
+              "53",
+              "+0.966",
+              "+0.012",
+              "179.5"
+            ],
+            [
+              "16",
+              "Peugeot",
+              "#93",
+              "Peugeot TotalEnergies",
+              "1:26.564",
+              "54",
+              "+1.107",
+              "+0.141",
+              "179.2"
+            ],
+            [
+              "17",
+              "Toyota",
+              "#8",
+              "Toyota Racing",
+              "1:26.779",
+              "49",
+              "+1.322",
+              "+0.215",
+              "178.8"
+            ]
+          ]
+        },
+        {
+          "title": "Practice 1 — LMGT3",
+          "headers": [
+            "Pos",
+            "Competitors",
+            "N°",
+            "Team",
+            "Best lap",
+            "Laps",
+            "Gap",
+            "Interval",
+            "Avg. (km/h)"
+          ],
+          "rows": [
+            [
+              "1",
+              "Mercedes",
+              "#61",
+              "Iron Lynx",
+              "1:34.883",
+              "49",
+              "-",
+              "-",
+              "163.5"
+            ],
+            [
+              "2",
+              "Corvette",
+              "#34",
+              "Racing Team Turkey by TF",
+              "1:35.459",
+              "45",
+              "+0.576",
+              "+0.576",
+              "162.5"
+            ],
+            [
+              "3",
+              "BMW",
+              "#32",
+              "Team WRT",
+              "1:35.596",
+              "39",
+              "+0.713",
+              "+0.137",
+              "162.3"
+            ],
+            [
+              "4",
+              "Ford",
+              "#77",
+              "Proton Competition",
+              "1:35.648",
+              "48",
+              "+0.765",
+              "+0.052",
+              "162.2"
+            ],
+            [
+              "5",
+              "Ferrari",
+              "#21",
+              "Vista AF Corse",
+              "1:35.727",
+              "32",
+              "+0.844",
+              "+0.079",
+              "162"
+            ],
+            [
+              "6",
+              "Mercedes",
+              "#79",
+              "Iron Lynx",
+              "1:35.752",
+              "44",
+              "+0.869",
+              "+0.025",
+              "162"
+            ],
+            [
+              "7",
+              "Corvette",
+              "#33",
+              "TF Sport",
+              "1:35.769",
+              "44",
+              "+0.886",
+              "+0.017",
+              "162"
+            ],
+            [
+              "8",
+              "Porsche",
+              "#91",
+              "Manthey DK Engineering",
+              "1:35.789",
+              "49",
+              "+0.906",
+              "+0.020",
+              "161.9"
+            ],
+            [
+              "9",
+              "Lexus",
+              "#78",
+              "Akkodis ASP Team",
+              "1:35.790",
+              "46",
+              "+0.907",
+              "+0.001",
+              "161.9"
+            ],
+            [
+              "10",
+              "Ferrari",
+              "#54",
+              "Vista AF Corse",
+              "1:35.815",
+              "44",
+              "+0.932",
+              "+0.025",
+              "161.9"
+            ],
+            [
+              "11",
+              "Lexus",
+              "#87",
+              "Akkodis ASP Team",
+              "1:35.909",
+              "30",
+              "+1.026",
+              "+0.094",
+              "161.7"
+            ],
+            [
+              "12",
+              "McLaren",
+              "#58",
+              "Garage 59",
+              "1:35.910",
+              "44",
+              "+1.027",
+              "+0.001",
+              "161.7"
+            ],
+            [
+              "13",
+              "BMW",
+              "#69",
+              "Team WRT",
+              "1:35.984",
+              "41",
+              "+1.101",
+              "+0.074",
+              "161.6"
+            ],
+            [
+              "14",
+              "Ford",
+              "#88",
+              "Proton Competition",
+              "1:36.090",
+              "48",
+              "+1.207",
+              "+0.106",
+              "161.4"
+            ],
+            [
+              "15",
+              "Porsche",
+              "#92",
+              "The Bend Manthey",
+              "1:36.198",
+              "52",
+              "+1.315",
+              "+0.108",
+              "161.3"
+            ],
+            [
+              "16",
+              "Aston Martin",
+              "#27",
+              "Heart of Racing Team",
+              "1:36.439",
+              "46",
+              "+1.556",
+              "+0.241",
+              "160.9"
+            ],
+            [
+              "17",
+              "McLaren",
+              "#10",
+              "Garage 59",
+              "1:36.594",
+              "46",
+              "+1.711",
+              "+0.155",
+              "160.6"
+            ],
+            [
+              "18",
+              "Aston Martin",
+              "#23",
+              "Heart of Racing Team",
+              "1:36.753",
+              "45",
+              "+1.870",
+              "+0.159",
+              "160.3"
+            ]
+          ]
+        },
+        {
+          "title": "Practice 2 — Hypercar",
+          "headers": [
+            "Pos",
+            "Competitors",
+            "N°",
+            "Team",
+            "Best lap",
+            "Laps",
+            "Gap",
+            "Interval",
+            "Avg. (km/h)"
+          ],
+          "rows": [
+            [
+              "1",
+              "Genesis",
+              "#19",
+              "Genesis Magma Racing",
+              "1:24.271",
+              "45",
+              "-",
+              "-",
+              "184.1"
+            ],
+            [
+              "2",
+              "Aston Martin",
+              "#009",
+              "Aston Martin THOR Team",
+              "1:24.331",
+              "56",
+              "+0.060",
+              "+0.060",
+              "183.9"
+            ],
+            [
+              "3",
+              "Aston Martin",
+              "#007",
+              "Aston Martin THOR Team",
+              "1:24.487",
+              "52",
+              "+0.216",
+              "+0.156",
+              "183.6"
+            ],
+            [
+              "4",
+              "Cadillac",
+              "#38",
+              "Cadillac Hertz Team Jota",
+              "1:24.685",
+              "54",
+              "+0.414",
+              "+0.198",
+              "183.2"
+            ],
+            [
+              "5",
+              "Cadillac",
+              "#12",
+              "Cadillac Hertz Team Jota",
+              "1:24.713",
+              "58",
+              "+0.442",
+              "+0.028",
+              "183.1"
+            ],
+            [
+              "6",
+              "Alpine",
+              "#35",
+              "Alpine Endurance Team",
+              "1:24.755",
+              "45",
+              "+0.484",
+              "+0.042",
+              "183"
+            ],
+            [
+              "7",
+              "Ferrari",
+              "#83",
+              "AF Corse",
+              "1:24.871",
+              "51",
+              "+0.600",
+              "+0.116",
+              "182.8"
+            ],
+            [
+              "8",
+              "BMW",
+              "#15",
+              "BMW M Team WRT",
+              "1:24.912",
+              "54",
+              "+0.641",
+              "+0.041",
+              "182.7"
+            ],
+            [
+              "9",
+              "Alpine",
+              "#36",
+              "Alpine Endurance Team",
+              "1:24.925",
+              "51",
+              "+0.654",
+              "+0.013",
+              "182.7"
+            ],
+            [
+              "10",
+              "Ferrari",
+              "#50",
+              "Ferrari AF Corse",
+              "1:24.976",
+              "56",
+              "+0.705",
+              "+0.051",
+              "182.6"
+            ],
+            [
+              "11",
+              "BMW",
+              "#20",
+              "BMW M Team WRT",
+              "1:24.986",
+              "53",
+              "+0.715",
+              "+0.010",
+              "182.5"
+            ],
+            [
+              "12",
+              "Peugeot",
+              "#94",
+              "Peugeot TotalEnergies",
+              "1:24.996",
+              "50",
+              "+0.725",
+              "+0.010",
+              "182.5"
+            ],
+            [
+              "13",
+              "Genesis",
+              "#17",
+              "Genesis Magma Racing",
+              "1:25.048",
+              "50",
+              "+0.777",
+              "+0.052",
+              "182.4"
+            ],
+            [
+              "14",
+              "Toyota",
+              "#7",
+              "Toyota Racing",
+              "1:25.134",
+              "48",
+              "+0.863",
+              "+0.086",
+              "182.2"
+            ],
+            [
+              "15",
+              "Toyota",
+              "#8",
+              "Toyota Racing",
+              "1:25.151",
+              "50",
+              "+0.880",
+              "+0.017",
+              "182.2"
+            ],
+            [
+              "16",
+              "Ferrari",
+              "#51",
+              "Ferrari AF Corse",
+              "1:25.371",
+              "49",
+              "+1.100",
+              "+0.220",
+              "181.7"
+            ],
+            [
+              "17",
+              "Peugeot",
+              "#93",
+              "Peugeot TotalEnergies",
+              "1:25.562",
+              "49",
+              "+1.291",
+              "+0.191",
+              "181.3"
+            ]
+          ]
+        },
+        {
+          "title": "Practice 2 — LMGT3",
+          "headers": [
+            "Pos",
+            "Competitors",
+            "N°",
+            "Team",
+            "Best lap",
+            "Laps",
+            "Gap",
+            "Interval",
+            "Avg. (km/h)"
+          ],
+          "rows": [
+            [
+              "1",
+              "Lexus",
+              "#87",
+              "Akkodis ASP Team",
+              "1:34.498",
+              "39",
+              "-",
+              "-",
+              "164.2"
+            ],
+            [
+              "2",
+              "Lexus",
+              "#78",
+              "Akkodis ASP Team",
+              "1:34.535",
+              "48",
+              "+0.037",
+              "+0.037",
+              "164.1"
+            ],
+            [
+              "3",
+              "Aston Martin",
+              "#23",
+              "Heart of Racing Team",
+              "1:34.580",
+              "51",
+              "+0.082",
+              "+0.045",
+              "164"
+            ],
+            [
+              "4",
+              "McLaren",
+              "#58",
+              "Garage 59",
+              "1:34.851",
+              "51",
+              "+0.353",
+              "+0.271",
+              "163.5"
+            ],
+            [
+              "5",
+              "Aston Martin",
+              "#27",
+              "Heart of Racing Team",
+              "1:34.960",
+              "48",
+              "+0.462",
+              "+0.109",
+              "163.4"
+            ],
+            [
+              "6",
+              "Corvette",
+              "#34",
+              "Racing Team Turkey by TF",
+              "1:35.379",
+              "47",
+              "+0.881",
+              "+0.419",
+              "162.6"
+            ],
+            [
+              "7",
+              "Porsche",
+              "#92",
+              "The Bend Manthey",
+              "1:35.443",
+              "51",
+              "+0.945",
+              "+0.064",
+              "162.5"
+            ],
+            [
+              "8",
+              "Ford",
+              "#77",
+              "Proton Competition",
+              "1:35.459",
+              "49",
+              "+0.961",
+              "+0.016",
+              "162.5"
+            ],
+            [
+              "9",
+              "Ford",
+              "#88",
+              "Proton Competition",
+              "1:35.525",
+              "51",
+              "+1.027",
+              "+0.066",
+              "162.4"
+            ],
+            [
+              "10",
+              "McLaren",
+              "#10",
+              "Garage 59",
+              "1:35.549",
+              "51",
+              "+1.051",
+              "+0.024",
+              "162.4"
+            ],
+            [
+              "11",
+              "Ferrari",
+              "#21",
+              "Vista AF Corse",
+              "1:35.591",
+              "51",
+              "+1.093",
+              "+0.042",
+              "162.3"
+            ],
+            [
+              "12",
+              "Ferrari",
+              "#54",
+              "Vista AF Corse",
+              "1:35.664",
+              "49",
+              "+1.166",
+              "+0.073",
+              "162.2"
+            ],
+            [
+              "13",
+              "Corvette",
+              "#33",
+              "TF Sport",
+              "1:35.749",
+              "47",
+              "+1.251",
+              "+0.085",
+              "162"
+            ],
+            [
+              "14",
+              "Porsche",
+              "#91",
+              "Manthey DK Engineering",
+              "1:35.767",
+              "46",
+              "+1.269",
+              "+0.018",
+              "162"
+            ],
+            [
+              "15",
+              "Mercedes",
+              "#61",
+              "Iron Lynx",
+              "1:35.902",
+              "50",
+              "+1.404",
+              "+0.135",
+              "161.8"
+            ],
+            [
+              "16",
+              "Mercedes",
+              "#79",
+              "Iron Lynx",
+              "1:35.966",
+              "45",
+              "+1.468",
+              "+0.064",
+              "161.6"
+            ],
+            [
+              "17",
+              "BMW",
+              "#69",
+              "Team WRT",
+              "1:36.012",
+              "45",
+              "+1.514",
+              "+0.046",
+              "161.6"
+            ],
+            [
+              "18",
+              "BMW",
+              "#32",
+              "Team WRT",
+              "1:36.063",
+              "47",
+              "+1.565",
+              "+0.051",
+              "161.5"
+            ]
+          ]
+        },
+        {
+          "title": "Practice 3 — Hypercar",
+          "headers": [
+            "Pos",
+            "Competitors",
+            "N°",
+            "Team",
+            "Best lap",
+            "Laps",
+            "Gap",
+            "Interval",
+            "Avg. (km/h)"
+          ],
+          "rows": [
+            [
+              "1",
+              "Alpine",
+              "#36",
+              "Alpine Endurance Team",
+              "1:24.038",
+              "33",
+              "-",
+              "-",
+              "184.6"
+            ],
+            [
+              "2",
+              "Genesis",
+              "#19",
+              "Genesis Magma Racing",
+              "1:24.203",
+              "35",
+              "+0.165",
+              "+0.165",
+              "184.2"
+            ],
+            [
+              "3",
+              "Aston Martin",
+              "#007",
+              "Aston Martin THOR Team",
+              "1:24.220",
+              "36",
+              "+0.182",
+              "+0.017",
+              "184.2"
+            ],
+            [
+              "4",
+              "Genesis",
+              "#17",
+              "Genesis Magma Racing",
+              "1:24.230",
+              "34",
+              "+0.192",
+              "+0.010",
+              "184.2"
+            ],
+            [
+              "5",
+              "Ferrari",
+              "#50",
+              "Ferrari AF Corse",
+              "1:24.267",
+              "31",
+              "+0.229",
+              "+0.037",
+              "184.1"
+            ],
+            [
+              "6",
+              "Cadillac",
+              "#38",
+              "Cadillac Hertz Team Jota",
+              "1:24.289",
+              "36",
+              "+0.251",
+              "+0.022",
+              "184"
+            ],
+            [
+              "7",
+              "Ferrari",
+              "#51",
+              "Ferrari AF Corse",
+              "1:24.478",
+              "34",
+              "+0.440",
+              "+0.189",
+              "183.6"
+            ],
+            [
+              "8",
+              "Alpine",
+              "#35",
+              "Alpine Endurance Team",
+              "1:24.486",
+              "30",
+              "+0.448",
+              "+0.008",
+              "183.6"
+            ],
+            [
+              "9",
+              "Peugeot",
+              "#94",
+              "Peugeot TotalEnergies",
+              "1:24.492",
+              "18",
+              "+0.454",
+              "+0.006",
+              "183.6"
+            ],
+            [
+              "10",
+              "Aston Martin",
+              "#009",
+              "Aston Martin THOR Team",
+              "1:24.563",
+              "37",
+              "+0.525",
+              "+0.071",
+              "183.4"
+            ],
+            [
+              "11",
+              "Cadillac",
+              "#12",
+              "Cadillac Hertz Team Jota",
+              "1:24.687",
+              "36",
+              "+0.649",
+              "+0.124",
+              "183.2"
+            ],
+            [
+              "12",
+              "Toyota",
+              "#8",
+              "Toyota Racing",
+              "1:24.781",
+              "35",
+              "+0.743",
+              "+0.094",
+              "183"
+            ],
+            [
+              "13",
+              "Ferrari",
+              "#83",
+              "AF Corse",
+              "1:24.875",
+              "33",
+              "+0.837",
+              "+0.094",
+              "182.8"
+            ],
+            [
+              "14",
+              "Toyota",
+              "#7",
+              "Toyota Racing",
+              "1:24.935",
+              "34",
+              "+0.897",
+              "+0.060",
+              "182.6"
+            ],
+            [
+              "15",
+              "BMW",
+              "#20",
+              "BMW M Team WRT",
+              "1:25.131",
+              "32",
+              "+1.093",
+              "+0.196",
+              "182.2"
+            ],
+            [
+              "16",
+              "Peugeot",
+              "#93",
+              "Peugeot TotalEnergies",
+              "1:25.225",
+              "35",
+              "+1.187",
+              "+0.094",
+              "182"
+            ],
+            [
+              "17",
+              "BMW",
+              "#15",
+              "BMW M Team WRT",
+              "1:25.357",
+              "38",
+              "+1.319",
+              "+0.132",
+              "181.7"
+            ]
+          ]
+        },
+        {
+          "title": "Practice 3 — LMGT3",
+          "headers": [
+            "Pos",
+            "Competitors",
+            "N°",
+            "Team",
+            "Best lap",
+            "Laps",
+            "Gap",
+            "Interval",
+            "Avg. (km/h)"
+          ],
+          "rows": [
+            [
+              "1",
+              "Mercedes",
+              "#61",
+              "Iron Lynx",
+              "1:34.283",
+              "33",
+              "-",
+              "-",
+              "164.5"
+            ],
+            [
+              "2",
+              "Lexus",
+              "#87",
+              "Akkodis ASP Team",
+              "1:34.283",
+              "32",
+              "-",
+              "-",
+              "164.5"
+            ],
+            [
+              "3",
+              "Ferrari",
+              "#21",
+              "Vista AF Corse",
+              "1:34.416",
+              "28",
+              "+0.133",
+              "+0.133",
+              "164.3"
+            ],
+            [
+              "4",
+              "Ford",
+              "#88",
+              "Proton Competition",
+              "1:34.593",
+              "32",
+              "+0.310",
+              "+0.177",
+              "164"
+            ],
+            [
+              "5",
+              "BMW",
+              "#69",
+              "Team WRT",
+              "1:34.673",
+              "33",
+              "+0.390",
+              "+0.080",
+              "163.9"
+            ],
+            [
+              "6",
+              "McLaren",
+              "#10",
+              "Garage 59",
+              "1:34.695",
+              "33",
+              "+0.412",
+              "+0.022",
+              "163.8"
+            ],
+            [
+              "7",
+              "Ferrari",
+              "#54",
+              "Vista AF Corse",
+              "1:34.740",
+              "22",
+              "+0.457",
+              "+0.045",
+              "163.7"
+            ],
+            [
+              "8",
+              "Corvette",
+              "#34",
+              "Racing Team Turkey by TF",
+              "1:34.750",
+              "27",
+              "+0.467",
+              "+0.010",
+              "163.7"
+            ],
+            [
+              "9",
+              "Aston Martin",
+              "#23",
+              "Heart of Racing Team",
+              "1:34.783",
+              "34",
+              "+0.500",
+              "+0.033",
+              "163.7"
+            ],
+            [
+              "10",
+              "Aston Martin",
+              "#27",
+              "Heart of Racing Team",
+              "1:34.783",
+              "33",
+              "+0.500",
+              "-",
+              "163.7"
+            ],
+            [
+              "11",
+              "Lexus",
+              "#78",
+              "Akkodis ASP Team",
+              "1:34.878",
+              "27",
+              "+0.595",
+              "+0.095",
+              "163.5"
+            ],
+            [
+              "12",
+              "McLaren",
+              "#58",
+              "Garage 59",
+              "1:34.892",
+              "30",
+              "+0.609",
+              "+0.014",
+              "163.5"
+            ],
+            [
+              "13",
+              "BMW",
+              "#32",
+              "Team WRT",
+              "1:34.928",
+              "31",
+              "+0.645",
+              "+0.036",
+              "163.4"
+            ],
+            [
+              "14",
+              "Ford",
+              "#77",
+              "Proton Competition",
+              "1:34.937",
+              "33",
+              "+0.654",
+              "+0.009",
+              "163.4"
+            ],
+            [
+              "15",
+              "Porsche",
+              "#91",
+              "Manthey DK Engineering",
+              "1:35.209",
+              "34",
+              "+0.926",
+              "+0.272",
+              "162.9"
+            ],
+            [
+              "16",
+              "Mercedes",
+              "#79",
+              "Iron Lynx",
+              "1:35.314",
+              "32",
+              "+1.031",
+              "+0.105",
+              "162.8"
+            ],
+            [
+              "17",
+              "Porsche",
+              "#92",
+              "The Bend Manthey",
+              "1:35.330",
+              "34",
+              "+1.047",
+              "+0.016",
+              "162.7"
+            ],
+            [
+              "18",
+              "Corvette",
+              "#33",
+              "TF Sport",
+              "1:35.636",
+              "33",
+              "+1.353",
+              "+0.306",
+              "162.2"
+            ]
+          ]
+        }
+      ]
     },
     "qualifying": {
       "headers": [
         "Pos",
-        "Driver",
+        "Class",
+        "No.",
         "Team",
-        "Time"
+        "Qualifying",
+        "Hyperpole",
+        "Grid"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "Hypercar",
+          "12",
+          "Cadillac Hertz Team Jota",
+          "1:23.603",
+          "1:23.041",
+          "1"
+        ],
+        [
+          "2",
+          "Hypercar",
+          "38",
+          "Cadillac Hertz Team Jota",
+          "1:23.482",
+          "1:23.089",
+          "2"
+        ],
+        [
+          "3",
+          "Hypercar",
+          "36",
+          "Alpine Endurance Team",
+          "1:23.616",
+          "1:23.108",
+          "3"
+        ],
+        [
+          "4",
+          "Hypercar",
+          "15",
+          "BMW M Team WRT",
+          "1:23.695",
+          "1:23.135",
+          "4"
+        ],
+        [
+          "5",
+          "Hypercar",
+          "35",
+          "Alpine Endurance Team",
+          "1:23.546",
+          "1:23.168",
+          "5"
+        ],
+        [
+          "6",
+          "Hypercar",
+          "19",
+          "Genesis Magma Racing",
+          "1:23.491",
+          "1:23.341",
+          "7"
+        ],
+        [
+          "7",
+          "Hypercar",
+          "50",
+          "Ferrari AF Corse",
+          "1:23.524",
+          "1:23.387",
+          "6"
+        ],
+        [
+          "8",
+          "Hypercar",
+          "94",
+          "Peugeot TotalEnergies",
+          "1:23.598",
+          "1:23.402",
+          "8"
+        ],
+        [
+          "9",
+          "Hypercar",
+          "007",
+          "Aston Martin THOR Team",
+          "1:23.773",
+          "1:23.578",
+          "9"
+        ],
+        [
+          "10",
+          "Hypercar",
+          "83",
+          "Ferrari AF Corse",
+          "1:23.683",
+          "1:23.625",
+          "10"
+        ],
+        [
+          "11",
+          "Hypercar",
+          "51",
+          "Ferrari AF Corse",
+          "1:23.832",
+          "",
+          "11"
+        ],
+        [
+          "12",
+          "Hypercar",
+          "17",
+          "Genesis Magma Racing",
+          "1:23.984",
+          "",
+          "12"
+        ],
+        [
+          "13",
+          "Hypercar",
+          "93",
+          "Peugeot TotalEnergies",
+          "1:24.010",
+          "",
+          "13"
+        ],
+        [
+          "14",
+          "Hypercar",
+          "8",
+          "Toyota Racing",
+          "1:24.048",
+          "",
+          "14"
+        ],
+        [
+          "15",
+          "Hypercar",
+          "009",
+          "Aston Martin THOR Team",
+          "1:24.151",
+          "",
+          "15"
+        ],
+        [
+          "16",
+          "Hypercar",
+          "7",
+          "Toyota Racing",
+          "1:24.010",
+          "",
+          "17"
+        ],
+        [
+          "17",
+          "Hypercar",
+          "20",
+          "BMW M Team WRT",
+          "1:24.221",
+          "",
+          "16"
+        ],
+        [
+          "18",
+          "LMGT3",
+          "23",
+          "Heart of Racing Team",
+          "1:34.527",
+          "1:33.350",
+          "18"
+        ],
+        [
+          "19",
+          "LMGT3",
+          "79",
+          "Iron Lynx",
+          "1:34.720",
+          "1:33.549",
+          "19"
+        ],
+        [
+          "20",
+          "LMGT3",
+          "87",
+          "Akkodis ASP Team",
+          "1:34.537",
+          "1:33.764",
+          "20"
+        ],
+        [
+          "21",
+          "LMGT3",
+          "69",
+          "Team WRT",
+          "1:34.190",
+          "1:33.766",
+          "21"
+        ],
+        [
+          "22",
+          "LMGT3",
+          "77",
+          "Proton Competition",
+          "1:34.501",
+          "1:33.773",
+          "22"
+        ],
+        [
+          "23",
+          "LMGT3",
+          "61",
+          "Iron Lynx",
+          "1:34.570",
+          "1:33.873",
+          "23"
+        ],
+        [
+          "24",
+          "LMGT3",
+          "92",
+          "The Bend Manthey",
+          "1:34.558",
+          "1:34.069",
+          "24"
+        ],
+        [
+          "25",
+          "LMGT3",
+          "88",
+          "Proton Competition",
+          "1:34.566",
+          "1:34.281",
+          "25"
+        ],
+        [
+          "26",
+          "LMGT3",
+          "32",
+          "Team WRT",
+          "1:34.676",
+          "1:34.326",
+          "26"
+        ],
+        [
+          "27",
+          "LMGT3",
+          "34",
+          "Racing Team Turkey by TF",
+          "1:33.808",
+          "1:34.612",
+          "27"
+        ],
+        [
+          "28",
+          "LMGT3",
+          "91",
+          "Manthey DK Engineering",
+          "1:34.913",
+          "",
+          "28"
+        ],
+        [
+          "29",
+          "LMGT3",
+          "33",
+          "TF Sport",
+          "1:35.003",
+          "",
+          "29"
+        ],
+        [
+          "30",
+          "LMGT3",
+          "54",
+          "Vista AF Corse",
+          "1:35.112",
+          "",
+          "30"
+        ],
+        [
+          "31",
+          "LMGT3",
+          "10",
+          "Garage 59",
+          "1:35.135",
+          "",
+          "31"
+        ],
+        [
+          "32",
+          "LMGT3",
+          "27",
+          "Heart of Racing Team",
+          "1:35.206",
+          "",
+          "32"
+        ],
+        [
+          "33",
+          "LMGT3",
+          "78",
+          "Akkodis ASP Team",
+          "1:35.211",
+          "",
+          "33"
+        ],
+        [
+          "34",
+          "LMGT3",
+          "21",
+          "Vista AF Corse",
+          "1:35.231",
+          "",
+          "34"
+        ],
+        [
+          "35",
+          "LMGT3",
+          "58",
+          "Garage 59",
+          "1:35.262",
+          "",
+          "35"
+        ]
+      ]
     },
     "race_results": {
       "headers": [
         "Pos",
-        "Driver",
+        "Class",
+        "No.",
         "Team",
-        "Time/Retired"
+        "Drivers",
+        "Tyre",
+        "Laps",
+        "Time / status",
+        "Pts"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "Hypercar",
+          "15",
+          "BMW M Team WRT",
+          "Kevin Magnussen / Raffaele Marciello / Dries Vanthoor",
+          "M",
+          "242",
+          "6:00:26.462‡",
+          "25"
+        ],
+        [
+          "2",
+          "Hypercar",
+          "51",
+          "Ferrari AF Corse",
+          "James Calado / Antonio Giovinazzi / Alessandro Pier Guidi",
+          "M",
+          "242",
+          "+2.254",
+          "18"
+        ],
+        [
+          "3",
+          "Hypercar",
+          "12",
+          "Cadillac Hertz Team Jota",
+          "Norman Nato / Will Stevens",
+          "M",
+          "242",
+          "+6.687",
+          "16"
+        ],
+        [
+          "4",
+          "Hypercar",
+          "38",
+          "Cadillac Hertz Team Jota",
+          "Jack Aitken / Earl Bamber / Sebastien Bourdais",
+          "M",
+          "242",
+          "+12.666",
+          "12"
+        ],
+        [
+          "5",
+          "Hypercar",
+          "83",
+          "AF Corse",
+          "Phil Hanson / Robert Kubica / Yifei Ye",
+          "M",
+          "242",
+          "+32.351",
+          "10"
+        ],
+        [
+          "6",
+          "Hypercar",
+          "007",
+          "Aston Martin THOR Team",
+          "Tom Gamble / Harry Tincknell",
+          "M",
+          "242",
+          "+35.566",
+          "8"
+        ],
+        [
+          "7",
+          "Hypercar",
+          "50",
+          "Ferrari AF Corse",
+          "Antonio Fuoco / Miguel Molina / Nicklas Nielsen",
+          "M",
+          "242",
+          "+39.952",
+          "6"
+        ],
+        [
+          "8",
+          "Hypercar",
+          "20",
+          "BMW M Team WRT",
+          "Robin Frijns / Rene Rast / Sheldon van der Linde",
+          "M",
+          "242",
+          "+40.047",
+          "4"
+        ],
+        [
+          "9",
+          "Hypercar",
+          "009",
+          "Aston Martin THOR Team",
+          "Alex Riberas / Marco Sorensen",
+          "M",
+          "242",
+          "+45.523",
+          "2"
+        ],
+        [
+          "10",
+          "Hypercar",
+          "35",
+          "Alpine Endurance Team",
+          "Antonio Felix da Costa / Ferdinand Habsburg / Charles Milesi",
+          "M",
+          "242",
+          "+56.996",
+          "1"
+        ],
+        [
+          "11",
+          "Hypercar",
+          "36",
+          "Alpine Endurance Team",
+          "Jules Gounon / Frédéric Makowiecki / Victor Martins",
+          "M",
+          "242",
+          "+1:17.818",
+          "0"
+        ],
+        [
+          "12",
+          "Hypercar",
+          "7",
+          "Toyota Racing",
+          "Mike Conway / Kamui Kobayashi / Nyck de Vries",
+          "M",
+          "241",
+          "+1 Lap",
+          "0"
+        ],
+        [
+          "13",
+          "Hypercar",
+          "19",
+          "Genesis Magma Racing",
+          "Paul-Loup Chatin / Mathieu Jaminet / Daniel Juncadella",
+          "M",
+          "241",
+          "+1 Lap",
+          "0"
+        ],
+        [
+          "14",
+          "Hypercar",
+          "94",
+          "Peugeot TotalEnergies",
+          "Loic Duval / Malthe Jakobsen / Theo Pourchaire",
+          "M",
+          "241",
+          "+1 Lap",
+          "0"
+        ],
+        [
+          "15",
+          "Hypercar",
+          "17",
+          "Genesis Magma Racing",
+          "Pipo Derani / Mathys Jaubert / Andre Lotterer",
+          "M",
+          "241",
+          "+1 Lap",
+          "0"
+        ],
+        [
+          "16",
+          "Hypercar",
+          "93",
+          "Peugeot TotalEnergies",
+          "Nick Cassidy / Paul di Resta / Stoffel Vandoorne",
+          "M",
+          "240",
+          "+2 Laps",
+          "0"
+        ],
+        [
+          "17",
+          "Hypercar",
+          "8",
+          "Toyota Racing",
+          "Sebastien Buemi / Brendon Hartley / Ryo Hirakawa",
+          "M",
+          "230",
+          "+12 Laps",
+          "0"
+        ],
+        [
+          "18",
+          "LMGT3",
+          "34",
+          "Racing Team Turkey by TF",
+          "Peter Dempsey / Charlie Eastwood / Salih Yoluç",
+          "G",
+          "219",
+          "+23 Laps‡",
+          "25"
+        ],
+        [
+          "19",
+          "LMGT3",
+          "69",
+          "Team WRT",
+          "Dan Harper / Anthony McIntosh / Parker Thompson",
+          "G",
+          "219",
+          "+23 Laps",
+          "18"
+        ],
+        [
+          "20",
+          "LMGT3",
+          "92",
+          "The Bend Manthey",
+          "Richard Lietz / Riccardo Pera / Yasser Shahin",
+          "G",
+          "218",
+          "+24 Laps",
+          "15"
+        ],
+        [
+          "21",
+          "LMGT3",
+          "91",
+          "Manthey DK Engineering",
+          "Timur Boguslavskiy / James Cottingham / Ayhancan Güven",
+          "G",
+          "218",
+          "+24 Laps",
+          "12"
+        ],
+        [
+          "22",
+          "LMGT3",
+          "88",
+          "Proton Competition",
+          "Stefano Gattuso / Giammarco Levorato / Logan Sargeant",
+          "G",
+          "218",
+          "+24 Laps",
+          "10"
+        ],
+        [
+          "23",
+          "LMGT3",
+          "61",
+          "Iron Lynx",
+          "Rui Andrade / Martin Berry / Maxime Martin",
+          "G",
+          "218",
+          "+24 Laps",
+          "8"
+        ],
+        [
+          "24",
+          "LMGT3",
+          "87",
+          "Akkodis ASP Team",
+          "Jose Maria Lopez / Clemens Schmid / Razvan Umbrarescu",
+          "G",
+          "218",
+          "+24 Laps",
+          "6"
+        ],
+        [
+          "25",
+          "LMGT3",
+          "33",
+          "TF Sport",
+          "Ben Keating / Jonny Edgar / Nicolás Varrone",
+          "G",
+          "218",
+          "+24 Laps",
+          "4"
+        ],
+        [
+          "26",
+          "LMGT3",
+          "21",
+          "Vista AF Corse",
+          "Francois Heriau / Simon Mann / Alessio Rovera",
+          "G",
+          "218",
+          "+24 Laps",
+          "2"
+        ],
+        [
+          "27",
+          "LMGT3",
+          "77",
+          "Proton Competition",
+          "Eric Powell / Sebastian Priaulx / Ben Tuck",
+          "G",
+          "218",
+          "+24 Laps",
+          "1"
+        ],
+        [
+          "28",
+          "LMGT3",
+          "58",
+          "Garage 59",
+          "Finn Gehrsitz / Benjamin Goethe / Alexander West",
+          "G",
+          "218",
+          "+24 Laps",
+          "0"
+        ],
+        [
+          "29",
+          "LMGT3",
+          "32",
+          "Team WRT",
+          "Augusto Farfus / Sean Gelael / Darren Leung",
+          "G",
+          "218",
+          "+24 Laps",
+          "0"
+        ],
+        [
+          "30",
+          "LMGT3",
+          "27",
+          "Heart of Racing Team",
+          "Mattia Drudi / Ian James / Zacharie Robichon",
+          "G",
+          "217",
+          "+25 Laps",
+          "0"
+        ],
+        [
+          "31",
+          "LMGT3",
+          "78",
+          "Akkodis ASP Team",
+          "Tom Van Rompuy / Hadrien David / Esteban Masson",
+          "G",
+          "217",
+          "+25 Laps",
+          "0"
+        ],
+        [
+          "32",
+          "LMGT3",
+          "79",
+          "Iron Lynx",
+          "Matteo Cressoni / Lin Hodenius / Johannes Zelger",
+          "G",
+          "217",
+          "+25 Laps",
+          "0"
+        ],
+        [
+          "33",
+          "LMGT3",
+          "10",
+          "Garage 59",
+          "Antares Au / Tom Fleming / Marvin Kirchhöfer",
+          "G",
+          "217",
+          "+25 Laps",
+          "0"
+        ],
+        [
+          "34",
+          "LMGT3",
+          "54",
+          "Vista AF Corse",
+          "Francesco Castellacci / Thomas Flohr / Davide Rigon",
+          "G",
+          "217",
+          "+25 Laps",
+          "0"
+        ],
+        [
+          "35",
+          "LMGT3",
+          "23",
+          "Heart of Racing Team",
+          "Jonny Adam / Kobe Pauwels / Gray Newell",
+          "G",
+          "216",
+          "+26 Laps",
+          "1"
+        ]
+      ]
     }
   }
 }

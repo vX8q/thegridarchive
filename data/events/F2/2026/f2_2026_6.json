@@ -4,7 +4,7 @@
   "race": "Spielberg",
   "date": "27–28 June 2026",
   "track": "Red Bull Ring",
-  "location": "Spielberg",
+  "location": "Spielberg, Styria, Austria",
   "start_date": "2026-06-27",
   "end_date": "2026-06-28",
   "laps": "",
@@ -132,7 +132,7 @@
     },
     {
       "number": "22",
-      "driver": "Nico Varrone",
+      "driver": "Nicolas Varrone",
       "team": "Van Amersfoort Racing",
       "driver_slug": "nico-varrone"
     },

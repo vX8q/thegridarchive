@@ -7,7 +7,7 @@
   "end_date": "2026-05-01",
   "youtube_id": "3QeTlMgbRio",
   "track": "Texas Motor Speedway",
-  "location": "Fort Worth, Texas",
+  "location": "Fort Worth, Texas, USA",
   "laps": "172",
   "distance": "258 mi (415.2 km)",
   "stage1_laps": "40",
@@ -88,7 +88,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue Jr.",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -96,7 +96,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Rich Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -104,7 +104,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",
@@ -128,7 +128,7 @@
       "team": "Tricon Garage",
       "manufacturer": "Toyota",
       "crew_chief": "Jeff Stankiewicz",
-      "driver_slug": "giovanni-ruggiero"
+      "driver_slug": "gio-ruggiero"
     },
     {
       "number": "18",

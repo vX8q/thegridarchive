@@ -84,7 +84,7 @@
 
 | Место | Формат |
 |-------|--------|
-| `entry_list.driver` | Полное имя: `Gabriele Minì`, `Nico Varrone` |
+| `entry_list.driver` | Полное имя: `Gabriele Minì`, `Nicolas Varrone` |
 | Practice / Qualifying / Race rows | Инициалы: `G. Minì`, `N. Varrone`, `E. Fittipaldi` (без `Jr.`) |
 | Team в таблицах F2 | Как в протоколе FIA: `Hitech TGR`, `Trident`, `Prema Racing`, `DAMS Lucas Oil` (не ALL CAPS `TRIDENT` / `PREMA`) |
 
@@ -685,12 +685,15 @@ Race
 
 ### Entry List
 
-| # | Class | Team | Car | Drivers |
-|---|-------|------|-----|---------|
+На сайте — **отдельная таблица на класс** (как ELMS), заголовок `h4.table-section-title`:
+
+| # | Team | Car | Drivers |
+|---|------|-----|---------|
 
 - Множество пилотов на экипаж (через `/`)
-- Rowspan на Team + Class + Car
-- Классы: GTP, LMP2, GTD Pro, GTD
+- Rowspan на Team (и Car, если совпадает) внутри класса
+- Порядок секций: GTP → LMP2 → GTD Pro → GTD (пустые классы на этапе пропускаются)
+- В JSON по-прежнему плоский `entry_list[]` с полем `class`
 
 ### JSON-ключи таблиц
 
@@ -805,7 +808,19 @@ Race
 
 ### Практика / квалификация
 
-Flat-формат, одна таблица (`practice`, `practice2`, `qualifying`).
+Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
+
+### Очки
+
+В колонке **`Pts` гонки** — только очки за финиш (без бонуса квалификации):
+
+| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|--|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| Полная дистанция | 20 | 15 | 11 | 8 | 6 | 5 | 4 | 3 | 2 | 1 |
+| Спринт / укороченная R3 (25 кругов Fuji 2026) | 12 | 9 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | — |
+| Половинные (например Motegi R1) | 10 | 7.5 | 5.5 | 4 | 3 | 2.5 | 2 | 1.5 | 1 | 0.5 |
+
+**Квалификация** отдельно: 3 / 2 / 1 за P1–P3. Standings начисляет их из `Qualifying Round N` (или flat quali, если гонка в файле ещё пустая — Autopolis).
 
 ### Race — многогоночный уикенд
 
@@ -815,15 +830,14 @@ Flat-формат, одна таблица (`practice`, `practice2`, `qualifying
 ```json
 "race": {
   "sessions": [
-    { "title": "Race 1", "headers": [...], "rows": [...] },
-    { "title": "Race 2", "headers": [...], "rows": [...] }
+    { "title": "Race Round 4", "headers": [...], "rows": [...] },
+    { "title": "Race Round 5", "headers": [...], "rows": [...] }
   ]
 }
 ```
 
 - При сборе standings каждая сессия раскладывается в свою колонку `race_order`
-  (`R1`, `R2`, …) по порядку. Заголовок в шапке таблицы строится с учётом
-  названия трассы (Motegi → `MOT1`, `MOT2`; Suzuka → `SUZ1`; Fuji → `FUJ1`; …).
+  (`R1`, `R2`, …) по номеру из title (`Race Round N`).
 - Очки допускают дробные значения (например, половинные очки за укороченную
   гонку) — хранятся как `"2.5"` в исходных данных.
 
@@ -1148,7 +1162,7 @@ Exhibition / pre-season файлы могут отображаться на са
 | FREC | `tables.race.sessions[]` → колонки `R1-1`, `R1-2`, … (по числу гонок в раунде). |
 | F4_IT | Как FREC; одна строка standings на номер машины (`#10`), даже если пилоты разные в heat-группах. |
 | PSC | Гостевые заезды (`guest` в entry list) попадают в отдельную таблицу `ineligible`. |
-| NASCAR Cup / Xfinity / Truck / ARCA / Modified | Очки стейджей (`stage_1`, `stage_2`) добавляются отдельно в колонку `Stages`. DNQ из таблицы `did_not_qualify` создают отдельные строки со статусом `DNQ`. Для NASCAR Cup события `..._0` (Clash) исключаются из зачёта. `NC` в колонке Pos отображается как индекс строки. `race_order` — из standings-файла серии. |
+| NASCAR Cup / Xfinity / Truck / ARCA / Modified | Очки стейджей (`stage_1`, `stage_2`; для Cup также `stage_3` на 4-stage гонках вроде Coca-Cola 600 и очки Daytona Duels) попадают в колонку `Stages`. DNQ из таблицы `did_not_qualify` создают отдельные строки со статусом `DNQ`. Для NASCAR Cup события `..._0` (Clash) исключаются из зачёта. `NC` в колонке Pos отображается как индекс строки. `race_order` — из standings-файла серии. |
 | NOAPS / Modified / ARCA | Эксклюзивно поддерживается fallback на `tables.stage3` как источник финишной таблицы. |
 
 ### Completed races

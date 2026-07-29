@@ -693,10 +693,11 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 		return &StandingsData{Classes: []StandingsClass{}}, nil
 	}
 
-	var raceOrder, eventNames []string
+	var raceOrder, eventNames, eventIDs []string
 	for _, ev := range champs {
 		raceOrder = append(raceOrder, imsaStandingsRaceCode(ev))
 		eventNames = append(eventNames, strings.TrimSpace(ev.Name))
+		eventIDs = append(eventIDs, ev.ID)
 	}
 
 	buckets := make(map[string]*classCarAcc)
@@ -829,6 +830,7 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 	return &StandingsData{
 		RaceOrder:      raceOrder,
 		EventNames:     eventNames,
+		EventIDs:       keepEventIDsWithDetail(dataDir, eventIDs),
 		CompletedRaces: completed,
 		Rows:           []StandingRow{},
 		Classes:        classes,
@@ -860,10 +862,11 @@ func BuildElmsStandingsFromEvents(dataDir string, season string) (*StandingsData
 		return &StandingsData{Classes: []StandingsClass{}}, nil
 	}
 
-	var raceOrder, eventNames []string
+	var raceOrder, eventNames, eventIDs []string
 	for _, ev := range champs {
 		raceOrder = append(raceOrder, elmsStandingsRaceCode(ev))
 		eventNames = append(eventNames, strings.TrimSpace(ev.Name))
+		eventIDs = append(eventIDs, ev.ID)
 	}
 
 	buckets := make(map[string]*classCarAcc)
@@ -1001,6 +1004,7 @@ func BuildElmsStandingsFromEvents(dataDir string, season string) (*StandingsData
 	return &StandingsData{
 		RaceOrder:      raceOrder,
 		EventNames:     eventNames,
+		EventIDs:       keepEventIDsWithDetail(dataDir, eventIDs),
 		CompletedRaces: completed,
 		Rows:           []StandingRow{},
 		Classes:        classes,

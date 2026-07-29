@@ -14,11 +14,19 @@ func TestFoldDiacritics_Camara(t *testing.T) {
 
 func TestNormalizeSlug_EligibilitySuffix(t *testing.T) {
 	cases := map[string]string{
-		"kyle-larson-i":   "kyle-larson",
-		"austin-hill-r":   "austin-hill",
-		"chase-briscoe-i": "chase-briscoe",
-		"lewis-hamilton":  "lewis-hamilton",
-		"david-sapienza":  "dave-sapienza",
+		"kyle-larson-i":      "kyle-larson",
+		"austin-hill-r":      "austin-hill",
+		"chase-briscoe-i":    "chase-briscoe",
+		"lewis-hamilton":     "lewis-hamilton",
+		"david-sapienza":     "dave-sapienza",
+		"matt-payne":         "matthew-payne",
+		"cam-waters":         "cameron-waters",
+		"giovanni-ruggiero":  "gio-ruggiero",
+		"nicolas-varrone":    "nico-varrone",
+		"alexander-dunne":    "alex-dunne",
+		"dani-juncadella":    "daniel-juncadella",
+		"john-h-nemechek":    "john-hunter-nemechek",
+		"mike-christopher-jr": "michael-christopher-jr",
 	}
 	for in, want := range cases {
 		if got := NormalizeSlug(in); got != want {

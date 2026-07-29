@@ -284,6 +284,22 @@
         else if (slug === 'nico-h-lkenberg' || slug === 'nicolas-hulkenberg' || slug === 'nicolas-h-lkenberg') next = 'nico-hulkenberg';
         else if (slug === 'sergio-p-rez') next = 'sergio-perez';
         else if (slug === 'david-sapienza') next = 'dave-sapienza';
+        else if (slug === 'matt-payne') next = 'matthew-payne';
+        else if (slug === 'cam-waters') next = 'cameron-waters';
+        else if (slug === 'giovanni-ruggiero') next = 'gio-ruggiero';
+        else if (slug === 'nicolas-varrone') next = 'nico-varrone';
+        else if (slug === 'jonathan-mckennedy') next = 'jon-mckennedy';
+        else if (slug === 'alexander-dunne') next = 'alex-dunne';
+        else if (slug === 'dani-juncadella') next = 'daniel-juncadella';
+        else if (slug === 'max-lynn') next = 'maxwell-lynn';
+        else if (slug === 'dan-harper') next = 'daniel-harper';
+        else if (slug === 'kaku-ohta') next = 'kakunoshin-ohta';
+        else if (slug === 'joshua-rattican') next = 'josh-rattican';
+        else if (slug === 'ben-hanley') next = 'benjamin-hanley';
+        else if (slug === 'john-h-nemechek') next = 'john-hunter-nemechek';
+        else if (slug === 'bobby-earnhardt') next = 'bobby-dale-earnhardt';
+        else if (slug === 'tobi-lutke') next = 'tobias-lutke';
+        else if (slug === 'mike-christopher-jr') next = 'michael-christopher-jr';
         else if (/-(i|r|g)$/.test(slug)) next = slug.replace(/-(i|r|g)$/, '');
         else break;
       }
@@ -728,6 +744,10 @@
       if (schedRange.start && schedRange.end && schedRange.end > schedRange.start) {
         return formatDateRange(schedRange.start, schedRange.end);
       }
+      // Single race calendar day in viewer TZ (night races may differ from track-local date).
+      if (schedRange.start && (!schedRange.end || schedRange.end === schedRange.start)) {
+        return formatShortDate(schedRange.start) || schedRange.start;
+      }
     }
     var showsWeekendRange = window.TGA && window.TGA.eventShowsWeekendDateRange;
     var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
@@ -801,7 +821,14 @@
     if (sid === 'INDYCAR') return 3.5;
     if (sid === 'F1') return 3.5;
     if (sid === 'F2' || sid === 'F3') return 2.5;
-    if (sid === 'SUPERCARS' || sid === 'SUPER_FORMULA' || sid === 'SUPER_GT' || sid === 'DTM') return 3.5;
+    if (sid === 'FREC') return 2;
+    // Super Formula races run ~1h (single sprint-length race per session) — the group's
+    // multi-race entries (e.g. a Fuji triple-header) rely on THIS per-session duration when
+    // computing the finish of each individual race (see getEventLastRaceFinishUtcMs), so a
+    // Supercars/DTM-style 3.5h estimate here made every already-finished race look ongoing
+    // for hours after the chequered flag.
+    if (sid === 'SUPER_FORMULA') return 1.5;
+    if (sid === 'SUPERCARS' || sid === 'SUPER_GT' || sid === 'DTM') return 3.5;
     if (sid === 'WEC' || sid === 'ELMS') return 6;
     if (sid === 'IMSA') {
       var nm = String((ev && ev.name) || '').toLowerCase();
@@ -897,6 +924,15 @@
 
   function getEventFirstRaceStartUtcMs(ev) {
     if (!ev) return 0;
+    // Already an exploded per-session card (Sprint/Feature/Round N …) — use its OWN start time.
+    // buildSessionsForEvent() looks sessions up by ev.id, and exploded rows keep the parent's id,
+    // so re-deriving sessions here would return the whole weekend's session list again and collapse
+    // every card in the group onto the same (earliest) timestamp.
+    var isExpandedRow = window.TGA && window.TGA.isExpandedScheduleSessionRow;
+    if (isExpandedRow && isExpandedRow(ev)) {
+      var getRaceUtcOwn = window.TGA && window.TGA.getEventRaceUtcMs;
+      return getRaceUtcOwn ? (getRaceUtcOwn(ev) || 0) : 0;
+    }
     var sessions = getEventRaceSessionList(ev);
     if (sessions.length > 0) {
       var starts = [];
@@ -930,6 +966,14 @@
 
   function getEventLastRaceFinishUtcMs(ev) {
     if (!ev) return null;
+    // Already an exploded per-session card — use its OWN finish estimate, not the whole
+    // group's last session (buildSessionsForEvent()/multi-race map look up by ev.id, and
+    // exploded rows keep the parent's id, so this would return e.g. Round 7's finish time
+    // for a Round 6 card, making an already-finished race look like it's still upcoming).
+    var isExpandedRow = window.TGA && window.TGA.isExpandedScheduleSessionRow;
+    if (isExpandedRow && isExpandedRow(ev)) {
+      return estimateRaceFinishedUtcMs(ev);
+    }
     var sessions = getEventRaceSessionList(ev);
     if (sessions.length > 0) {
       var lastSess = sessions[sessions.length - 1];
@@ -1354,6 +1398,24 @@
     return groups;
   }
 
+  // Standings race headers double as links to the event they score.
+  function standingsEventHref(eventId) {
+    var id = String(eventId == null ? '' : eventId).trim();
+    if (!id) return '';
+    return '/event/' + encodeURIComponent(id.toLowerCase().replace(/_/g, '-')) + '/race';
+  }
+
+  // labelHtml is already escaped; rounds without an event file stay plain text.
+  function standingsRaceHeaderHtml(labelHtml, eventId) {
+    var href = standingsEventHref(eventId);
+    if (!href) return labelHtml;
+    return '<a href="' + href + '" class="standings-race-link">' + labelHtml + '</a>';
+  }
+
+  function standingsEventIds(dataObj) {
+    return (dataObj && Array.isArray(dataObj.event_ids)) ? dataObj.event_ids : [];
+  }
+
   function buildImsaGtwceClassStandingsHtml(dataObj, seriesKey, mode) {
     var tFn = function (k) { return window.TGA.t(k); };
     mode = mode || getStandingsMode(seriesKey);
@@ -1368,6 +1430,11 @@
     var completedRacesSet = {};
     for (var cr = 0; cr < completedRacesArr.length; cr++) { completedRacesSet[completedRacesArr[cr]] = true; }
     var eventNamesForStandings = (dataObj && Array.isArray(dataObj.event_names)) ? dataObj.event_names : [];
+    var eventIdsForStandings = standingsEventIds(dataObj);
+    function raceHeaderCell(idx, labelHtml, attrs) {
+      return '<th class="col-race"' + (attrs || '') + '>'
+        + standingsRaceHeaderHtml(labelHtml, eventIdsForStandings[idx]) + '</th>';
+    }
     var sk = seriesKey;
     var lang = getLang();
     var carLabel = tFn('th.car') || 'Car';
@@ -1445,16 +1512,19 @@
             '<th rowspan="2">' + esc(tFn('th.team') || 'Team') + '</th>' +
             '<th rowspan="2">' + esc(carLabel) + '</th>';
           var tr2g = '';
+          var gtwceCol = 0;
           for (var gg = 0; gg < gtwceHeaderGroups.length; gg++) {
             var grp = gtwceHeaderGroups[gg];
             if (grp.subs) {
-              tr1g += '<th class="col-race" colspan="' + grp.colspan + '">' + esc(grp.top) + '</th>';
+              tr1g += raceHeaderCell(gtwceCol, esc(grp.top), ' colspan="' + grp.colspan + '"');
               for (var gs = 0; gs < grp.subs.length; gs++) {
-                tr2g += '<th class="col-race col-gtwce-spa">' + esc(grp.subs[gs]) + '</th>';
+                tr2g += '<th class="col-race col-gtwce-spa">'
+                  + standingsRaceHeaderHtml(esc(grp.subs[gs]), eventIdsForStandings[gtwceCol + gs]) + '</th>';
               }
             } else {
-              tr1g += '<th class="col-race" rowspan="2">' + esc(grp.top) + '</th>';
+              tr1g += raceHeaderCell(gtwceCol, esc(grp.top), ' rowspan="2"');
             }
+            gtwceCol += grp.colspan;
           }
           tr1g += '<th class="col-pts" rowspan="2">' + esc(tFn('th.pts') || 'Pts') + '</th>';
           theadSplit = '<thead><tr>' + tr1g + '</tr><tr>' + tr2g + '</tr></thead>';
@@ -1465,7 +1535,7 @@
             '<th>' + esc(tFn('th.team') || 'Team') + '</th>' +
             '<th>' + esc(carLabel) + '</th>';
           for (var gi = 0; gi < raceOrder.length; gi++) {
-            th += '<th class="col-race">' + esc(raceHeaderLabel(raceOrder[gi], gi)) + '</th>';
+            th += raceHeaderCell(gi, esc(raceHeaderLabel(raceOrder[gi], gi)));
           }
           th += '<th class="col-pts">' + esc(tFn('th.pts') || 'Pts') + '</th>';
         }
@@ -1497,13 +1567,13 @@
           tr1 += '<th rowspan="2">' + tFn('th.team') + '</th>';
           if (showModelCol) tr1 += '<th rowspan="2">' + esc(carLabel) + '</th>';
           for (var im = 0; im < raceOrder.length; im++) {
-            tr1 += '<th class="col-race" colspan="2">' + esc(raceHeaderLabel(raceOrder[im], im)) + '</th>';
+            tr1 += raceHeaderCell(im, esc(raceHeaderLabel(raceOrder[im], im)), ' colspan="2"');
           }
           tr1 += '<th class="col-pts" rowspan="2">' + tFn('th.pts') + '</th>';
           var tr2 = '';
           for (var im2 = 0; im2 < raceOrder.length; im2++) {
-            tr2 += '<th class="col-race col-imsa-qr">' + esc(labelQ) + '</th>' +
-              '<th class="col-race col-imsa-qr">' + esc(labelR) + '</th>';
+            tr2 += '<th class="col-race col-imsa-qr">' + standingsRaceHeaderHtml(esc(labelQ), eventIdsForStandings[im2]) + '</th>' +
+              '<th class="col-race col-imsa-qr">' + standingsRaceHeaderHtml(esc(labelR), eventIdsForStandings[im2]) + '</th>';
           }
           theadHtml = '<thead><tr>' + tr1 + '</tr><tr>' + tr2 + '</tr></thead>';
           body = classRows.map(function (row) {
@@ -1532,7 +1602,7 @@
           th += '<th>' + tFn('th.team') + '</th>';
           if (showModelCol) th += '<th>' + esc(carLabel) + '</th>';
           for (var i = 0; i < raceOrder.length; i++) {
-            th += '<th class="col-race">' + esc(raceHeaderLabel(raceOrder[i], i)) + '</th>';
+            th += raceHeaderCell(i, esc(raceHeaderLabel(raceOrder[i], i)));
           }
           th += '<th class="col-pts">' + tFn('th.pts') + '</th>';
           theadHtml = '<thead><tr>' + th + '</tr></thead>';
@@ -1606,6 +1676,9 @@
   window.TGA.countryDisplay           = countryDisplay;
   window.TGA.countryHtml              = countryHtml;
   window.TGA.syncStandingsScrollBars  = syncStandingsScrollBars;
+  window.TGA.standingsEventHref       = standingsEventHref;
+  window.TGA.standingsRaceHeaderHtml  = standingsRaceHeaderHtml;
+  window.TGA.standingsEventIds        = standingsEventIds;
   window.TGA.buildImsaGtwceClassStandingsHtml = buildImsaGtwceClassStandingsHtml;
   window.TGA.buildDriverClassesFromCrew = buildDriverClassesFromCrew;
   window.TGA.isCrewStandingsSeries = isCrewStandingsSeries;

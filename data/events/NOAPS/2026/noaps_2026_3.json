@@ -4,7 +4,7 @@
   "race": "Focused Health 250",
   "date": "Saturday, February 28, 2026",
   "track": "Circuit of the Americas",
-  "location": "Austin, Texas",
+  "location": "Austin, Texas, USA",
   "laps": "65",
   "distance": "3.410 mile road course (221.650 miles)",
   "stage1_laps": "20",
@@ -247,7 +247,7 @@
       "team": "Alpha Prime Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Kase Kallenbach",
-      "driver_slug": "lavar-scott-r"
+      "driver_slug": "lavar-scott"
     },
     {
       "number": "48",

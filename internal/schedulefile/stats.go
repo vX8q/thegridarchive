@@ -325,7 +325,7 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 		if useStockCarStageRules {
 			eligibleByCar = pointsEligibleByCarFromEntryList(detail.EntryList)
 		}
-		stageWinsThisRace, stagePointsThisRace := accumulateStageStatsPerRace(detail.Tables, eligibleByCar, useStockCarStageRules)
+		stageWinsThisRace, stagePointsThisRace := accumulateStageStatsPerRace(seriesID, detail, eligibleByCar, useStockCarStageRules)
 		for rtIdx, rt := range resultTables {
 			sessionKind := statsSessionKind(rt.Title)
 			colPos := firstColIndex(rt.Headers, "Pos", "Fin", "Position")
@@ -1346,26 +1346,31 @@ func isStockCarStatsSeries(seriesID string) bool {
 	}
 }
 
-// accumulateStageStatsPerRace reads stage wins and points from stage_1/stage_2 tables.
+// accumulateStageStatsPerRace reads stage wins and points from stage tables.
+// Includes stage_3 on 4-stage Cup races. Daytona Duels add to points only (not stage wins).
 // When a Points/Pts column is present, values are taken from JSON (respecting 0 for ineligible drivers).
 // Without Points, stock-car series fall back to 11−Pos for top 10 among points-eligible drivers only.
-func accumulateStageStatsPerRace(tables map[string]EventTable, eligibleByCar map[string]bool, useEligibleRules bool) (wins, points map[string]int) {
+func accumulateStageStatsPerRace(seriesID string, detail *EventDetailJSON, eligibleByCar map[string]bool, useEligibleRules bool) (wins, points map[string]int) {
 	wins = make(map[string]int)
 	points = make(map[string]int)
-	for sn := 1; sn <= 2; sn++ {
-		st, ok := StageN(tables, sn)
-		if !ok {
-			continue
-		}
+	if detail == nil || detail.Tables == nil {
+		return wins, points
+	}
+	tables := detail.Tables
+	maxStage := 2
+	if eventHasFourStages(detail) {
+		maxStage = 3
+	}
+	addFromStageTable := func(st EventTable, countWins bool) {
 		spos := firstColIndex(st.Headers, "Pos", "Fin")
 		sDriver := firstColIndex(st.Headers, "Driver")
-		sNo := firstColIndex(st.Headers, "No", "#", "Car")
+		sNo := firstColIndex(st.Headers, "No", "No.", "#", "Car")
 		sPts := firstColIndex(st.Headers, "Points")
 		if sPts < 0 {
 			sPts = firstColIndex(st.Headers, "Pts")
 		}
 		if sDriver < 0 {
-			continue
+			return
 		}
 		for _, row := range st.Rows {
 			dr := valueAt(row, sDriver)
@@ -1375,7 +1380,7 @@ func accumulateStageStatsPerRace(tables map[string]EventTable, eligibleByCar map
 			if stagePos <= 0 {
 				continue
 			}
-			if stagePos == 1 {
+			if countWins && stagePos == 1 {
 				wins[key]++
 			}
 			pts := 0
@@ -1385,6 +1390,20 @@ func accumulateStageStatsPerRace(tables map[string]EventTable, eligibleByCar map
 				pts = 11 - stagePos
 			}
 			points[key] += pts
+		}
+	}
+	for sn := 1; sn <= maxStage; sn++ {
+		st, ok := StageN(tables, sn)
+		if !ok {
+			continue
+		}
+		addFromStageTable(st, true)
+	}
+	if strings.EqualFold(seriesID, "NASCAR_CUP") {
+		for _, key := range []string{"duel1", "duel2", "duel_1", "duel_2"} {
+			if st, ok := tables[key]; ok && len(st.Headers) > 0 {
+				addFromStageTable(st, false)
+			}
 		}
 	}
 	return wins, points

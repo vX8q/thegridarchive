@@ -108,10 +108,11 @@
           var hasRaceResultRows = sess && Array.isArray(sess.rows) && sess.rows.length > 0;
           var skipVenueSubtitle = G.shouldSkipOpenwheelRaceVenueSubtitle(seriesIdLower);
           var isSuperGtClassTitle = G.isSuperGtRaceClassTitle(seriesIdLower, titleText);
-          var isF1Event = evKeyEvent && evKeyEvent.indexOf('F1_') === 0;
-          var skipSessionMetaTable = seriesIdLower === 'gtwce_end' || seriesIdLower === 'gtwce_sprint';
+          var showSessionMeta = typeof G.shouldShowSessionMetaTable === 'function'
+            ? G.shouldShowSessionMetaTable(evKeyEvent, seriesIdLower)
+            : false;
           if (isSuperGtClassTitle) {
-            if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event && !skipSessionMetaTable) {
+            if (!isImsaChampionshipRound && showSessionMeta) {
               out += buildSessionMetaTable(sess.meta);
             }
             if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(localizeSectionTitle(titleText)) + '</h3>';
@@ -119,7 +120,7 @@
           } else {
             if (titleText && hasRaceResultRows) out += '<h3 class="event-pre-season-title">' + esc(localizeSectionTitle(titleText)) + '</h3>';
             if (!skipVenueSubtitle && sess.subtitle) out += '<p class="event-pre-season-subtitle">' + esc(sess.subtitle) + '</p>';
-            if (!isImsaChampionshipRound && seriesIdLower !== 'f2' && !isF1Event && !skipSessionMetaTable) {
+            if (!isImsaChampionshipRound && showSessionMeta) {
               out += buildSessionMetaTable(sess.meta);
             }
           }

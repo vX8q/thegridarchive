@@ -1,0 +1,371 @@
+{
+  "event_id": "GTWCE_SPRINT_2026_3",
+  "series": "GT World Challenge Europe Sprint",
+  "race": "Magny-Cours",
+  "date": "1–2 August 2026",
+  "start_date": "2026-08-01",
+  "end_date": "2026-08-02",
+  "track": "Circuit de Nevers Magny-Cours",
+  "location": "Magny-Cours, Nievre, France",
+  "entry_list": [
+    {
+      "number": "2",
+      "driver": "",
+      "team": "Boutsen VDS",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Porsche 911 GT3 R EVO",
+      "driver1": "Dorian Boccolacci",
+      "driver2": "Morris Schuring"
+    },
+    {
+      "number": "3",
+      "driver": "",
+      "team": "Mercedes-AMG Team Verstappen Racing",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Mercedes-AMG GT3 EVO",
+      "driver1": "Chris Lulham",
+      "driver2": "Dani Juncadella"
+    },
+    {
+      "number": "5",
+      "driver": "",
+      "team": "Optimum Motorsport",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "McLaren 720S GT3 EVO",
+      "driver1": "Mikey Porter",
+      "driver2": "Guilherme Oliveira"
+    },
+    {
+      "number": "6",
+      "driver": "",
+      "team": "GetSpeed Team Bartone Bros",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Mercedes-AMG GT3 EVO",
+      "driver1": "Anthony Bartone",
+      "driver2": "Aurelien Panis"
+    },
+    {
+      "number": "7",
+      "driver": "",
+      "team": "Comtoyou Racing",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Aston Martin Vantage AMR GT3 EVO",
+      "driver1": "Nicki Thiim",
+      "driver2": "Kobe Pauwels"
+    },
+    {
+      "number": "9",
+      "driver": "",
+      "team": "Pure Rxcing",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Porsche 911 GT3 R EVO",
+      "driver1": "Alex Malykhin",
+      "driver2": "Alexey Nesov"
+    },
+    {
+      "number": "10",
+      "driver": "",
+      "team": "Boutsen VDS",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "Porsche 911 GT3 R EVO",
+      "driver1": "Gilles Magnus",
+      "driver2": "Robin Knutsson"
+    },
+    {
+      "number": "14",
+      "driver": "",
+      "team": "Emil Frey Racing",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Ferrari 296 GT3 EVO",
+      "driver1": "Matteo Cairoli",
+      "driver2": "Konsta Lappalainen"
+    },
+    {
+      "number": "21",
+      "driver": "",
+      "team": "Comtoyou Racing",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Aston Martin Vantage AMR GT3 EVO",
+      "driver1": "Oliver Soderstrom",
+      "driver2": "Arthur Dorison"
+    },
+    {
+      "number": "30",
+      "driver": "",
+      "team": "Team WRT",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "BMW M4 GT3 EVO",
+      "driver1": "Matisse Lismont",
+      "driver2": "Ignacio Montenegro"
+    },
+    {
+      "number": "31",
+      "driver": "",
+      "team": "Team WRT",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "BMW M4 GT3 EVO",
+      "driver1": "Amaury Cordeel",
+      "driver2": "Jordan Pepper"
+    },
+    {
+      "number": "32",
+      "driver": "",
+      "team": "Team WRT",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "BMW M4 GT3 EVO",
+      "driver1": "Charles Weerts",
+      "driver2": "Kelvin van der Linde"
+    },
+    {
+      "number": "34",
+      "driver": "",
+      "team": "Walkenhorst Motorsport",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Aston Martin Vantage AMR GT3 EVO",
+      "driver1": "Mateo Villagomez",
+      "driver2": "Jamie Day"
+    },
+    {
+      "number": "35",
+      "driver": "",
+      "team": "Walkenhorst Motorsport",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Aston Martin Vantage AMR GT3 EVO",
+      "driver1": "Maxime Robin",
+      "driver2": "Gaspard Simon"
+    },
+    {
+      "number": "46",
+      "driver": "",
+      "team": "Team WRT",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "BMW M4 GT3 EVO",
+      "driver1": "Max Hesse",
+      "driver2": "Valentino Rossi"
+    },
+    {
+      "number": "48",
+      "driver": "",
+      "team": "Winward Racing",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Mercedes-AMG GT3 EVO",
+      "driver1": "Lucas Auer",
+      "driver2": "Maro Engel"
+    },
+    {
+      "number": "50",
+      "driver": "",
+      "team": "AF Corse",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Ferrari 296 GT3 EVO",
+      "driver1": "Arthur Leclerc",
+      "driver2": "Thomas Neubauer"
+    },
+    {
+      "number": "51",
+      "driver": "",
+      "team": "AF Corse",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "Ferrari 296 GT3 EVO",
+      "driver1": "Matias Zagazeta",
+      "driver2": "Tommaso Mosca"
+    },
+    {
+      "number": "52",
+      "driver": "",
+      "team": "AF Corse",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Ferrari 296 GT3 EVO",
+      "driver1": "Jeff Machiels",
+      "driver2": "Gilles Stadsbader"
+    },
+    {
+      "number": "54",
+      "driver": "",
+      "team": "Dinamic GT",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Porsche 911 GT3 R EVO",
+      "driver1": "Tanart Sathienthirakul",
+      "driver2": "Loris Cabirol"
+    },
+    {
+      "number": "58",
+      "driver": "",
+      "team": "Garage 59",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "McLaren 720S GT3 EVO",
+      "driver1": "Louis Prette",
+      "driver2": "Thomas Fleming"
+    },
+    {
+      "number": "59",
+      "driver": "",
+      "team": "Garage 59",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "McLaren 720S GT3 EVO",
+      "driver1": "Marvin Kirchhöfer",
+      "driver2": "Dean MacDonald"
+    },
+    {
+      "number": "66",
+      "driver": "",
+      "team": "Tresor Attempto Racing",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Audi R8 LMS GT3 EVO II",
+      "driver1": "Andrea Frassineti",
+      "driver2": "Ariel Levi"
+    },
+    {
+      "number": "69",
+      "driver": "",
+      "team": "Emil Frey Racing",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Ferrari 296 GT3 EVO",
+      "driver1": "Thierry Vermeulen",
+      "driver2": "Ben Green"
+    },
+    {
+      "number": "71",
+      "driver": "",
+      "team": "AF Corse",
+      "manufacturer": "",
+      "class": "SILVER",
+      "car": "Ferrari 296 GT3 EVO",
+      "driver1": "Carl Bennett",
+      "driver2": "Felix Hirsiger"
+    },
+    {
+      "number": "77",
+      "driver": "",
+      "team": "KPX Motorsport",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "BMW M4 GT3 EVO",
+      "driver1": "Jop Rappange",
+      "driver2": "David Pittard"
+    },
+    {
+      "number": "80",
+      "driver": "",
+      "team": "Lionspeed GP",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Porsche 911 GT3 R EVO",
+      "driver1": "Bastian Buus",
+      "driver2": "Ricardo Feller"
+    },
+    {
+      "number": "84",
+      "driver": "",
+      "team": "Eastalent Racing",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Audi R8 LMS GT3 EVO II",
+      "driver1": "Simon Reicher",
+      "driver2": "Christopher Haase"
+    },
+    {
+      "number": "96",
+      "driver": "",
+      "team": "Rutronik Racing",
+      "manufacturer": "",
+      "class": "PRO",
+      "car": "Lamborghini Temerario GT3",
+      "driver1": "Patric Niederhauser",
+      "driver2": "Luca Engstler"
+    },
+    {
+      "number": "99",
+      "driver": "",
+      "team": "Tresor Attempto Racing",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "Audi R8 LMS GT3 EVO II",
+      "driver1": "Alex Aka",
+      "driver2": "Dylan Pereira"
+    },
+    {
+      "number": "111",
+      "driver": "",
+      "team": "CSA Racing",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "McLaren 720S GT3 EVO",
+      "driver1": "Arthur Rougier",
+      "driver2": "James Kell"
+    },
+    {
+      "number": "163",
+      "driver": "",
+      "team": "VSR",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "Lamborghini Temerario GT3",
+      "driver1": "Mattia Michelotto",
+      "driver2": "Loris Spinelli"
+    },
+    {
+      "number": "555",
+      "driver": "",
+      "team": "CSA Racing",
+      "manufacturer": "",
+      "class": "GOLD",
+      "car": "McLaren 720S GT3 EVO",
+      "driver1": "Simon Gachet",
+      "driver2": "Romain Andriolo"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

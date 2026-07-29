@@ -107,7 +107,7 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 2.1 Mtime-кэш для standings и stats
 
-**Где:** `cmd/server/handlers_series.go`, пакет `internal/cache/ttl.go` (уже есть).
+**Где:** `cmd/server/handlers_series.go`, `cmd/server/computed_cache.go` (mtime + TTL).
 
 **Дизайн:**
 - Ключ: `{seriesID}/{season}/standings` и `.../stats`
@@ -162,17 +162,11 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ---
 
-### 2.4 Подключить event cache в `handleEvent`
+### 2.4 Event response cache (optional)
 
-**Где:** `cmd/server/main.go:192` — `handleEvent(..., nil)`; `internal/cache/ttl.go`.
+**Где:** `cmd/server/handlers_events.go` — сейчас `Cache-Control: no-store` для полных event JSON (намеренно, чтобы правки JSON сразу видны). Summary endpoint использует `private, max-age=30`.
 
-**Действия:**
-- Кэшировать **сырые bytes** или enriched JSON по `event_id` + mtime файла
-- Передавать `*cache.TTL` в handler
-
-**Эффект:** event page + Last Results cards — меньше повторного parse/enrich.  
-**Риск:** средний (enrich chain).  
-**Готово когда:** два подряд `GET /api/events/{id}` — второй быстрее; live-редактирование JSON видно после сохранения файла.
+**Статус:** полный event cache не подключали; Last Results больше не зависит от N× полного event fetch (см. §3.3).
 
 ---
 
@@ -205,9 +199,9 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 3.3 Облегчить Last Results на главной
 
-**Где:** `web/components/last-results-cards.js`.
+**Статус:** сделано — `GET /api/events/summaries?ids=` + `GET /api/events/{id}/summary`; Home Last Results использует batch summary (`web/lib/api.js` `getEventSummaries`, `web/components/last-results-cards.js`).
 
-**Действия:** endpoint `GET /api/events/{id}/summary` (победитель, top-3, дата) **или** включить summary в ответ `/api/series/{id}/events`.
+**Где:** `internal/schedulefile/event_summary.go`, `cmd/server/handlers_event_summary.go`, `web/components/last-results-cards.js`.
 
 **Эффект:** нет 5–10 полных `getEvent` после загрузки Home.  
 **Готово когда:** Network tab — нет полных event JSON для карточек Last Results.

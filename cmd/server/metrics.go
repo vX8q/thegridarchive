@@ -70,6 +70,9 @@ var (
 func normalizeRoute(path string) string {
 	switch {
 	case strings.HasPrefix(path, "/api/events/"):
+		if strings.Contains(path, "/summaries") || strings.HasSuffix(path, "/summary") {
+			return "/api/events/summaries"
+		}
 		return "/api/events/:id"
 	case strings.HasPrefix(path, "/api/driver/"):
 		return "/api/driver/:slug"

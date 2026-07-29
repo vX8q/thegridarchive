@@ -4,7 +4,7 @@
   "race": "Buckle Up South Carolina 200",
   "date": "Friday, March 20, 2026",
   "track": "Darlington Raceway",
-  "location": "Darlington, South Carolina",
+  "location": "Darlington, South Carolina, USA",
   "laps": "147",
   "distance": "200.802 mi (323.159 km)",
   "youtube_id": "8wP6K8QNSE4",
@@ -80,7 +80,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -88,7 +88,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Richard Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -96,7 +96,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",

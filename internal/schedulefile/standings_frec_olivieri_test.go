@@ -36,8 +36,8 @@ func TestBuildStandingsFromEvents_FREC_OlivieriAfterHungaroring(t *testing.T) {
 	if olivieri.Races["R5-2"] != "2" {
 		t.Errorf("HUN R2 position: got %q want 2", olivieri.Races["R5-2"])
 	}
-	if olivieri.Points != "116" {
-		t.Errorf("total points: got %q want 116", olivieri.Points)
+	if olivieri.Points != "152" {
+		t.Errorf("total points: got %q want 152", olivieri.Points)
 	}
 
 	sessions, err := LoadEventRaceSessions(dataDir, "FREC_2026_5")

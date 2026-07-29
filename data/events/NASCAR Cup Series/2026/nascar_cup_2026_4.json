@@ -4,7 +4,7 @@
   "race": "Straight Talk Wireless 500",
   "date": "Sunday, March 8, 2026",
   "track": "Phoenix Raceway",
-  "location": "Avondale, AZ",
+  "location": "Avondale, Arizona, USA",
   "laps": "312",
   "distance": "1.000 mile paved track (312.000 miles)",
   "youtube_id": "6AEmtZR4rsQ",
@@ -76,7 +76,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Jim Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",
@@ -302,7 +303,7 @@
       "team": "Trackhouse Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Randall Burnett",
-      "driver_slug": "connor-zilisch-r"
+      "driver_slug": "connor-zilisch"
     },
     {
       "number": "97",

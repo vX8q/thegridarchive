@@ -7,7 +7,7 @@
   "start_date": "2026-05-16",
   "end_date": "2026-05-16",
   "track": "Toledo Speedway",
-  "location": "Toledo, Ohio",
+  "location": "Toledo, Ohio, USA",
   "laps": "200",
   "distance": "100 mi (160.934 km)",
   "event_preview": "Toledo Speedway is a 0.5-mile (0.805 km) paved oval in Toledo, Ohio — the hometown circuit of the ARCA Menards Series, whose offices sit six miles away in Temperance, Michigan. The Owens Corning 200 is the sixth race of the 2026 ARCA Menards Series season and the 86th ARCA Menards Series race at Toledo since the first in 1963 — a list of past winners that includes Iggy Katona, Benny Parsons, Ken Schrader and Frank Kimmel. It is also the first of four combination races in 2026 with the ARCA Menards Series East, with the winner credited a victory in both series. The race runs 200 laps (100 miles) with two five-minute pit breaks at laps 75 and 125. With 30 cars entered, it is the largest ARCA Menards Series field at Toledo since 2015.\n\nMax Reaves, the defending winner, led 199 of 200 laps in the 2025 race and arrives as the clear favourite — his No. 18 Joe Gibbs Racing team has won five straight times at Toledo. Jake Bollman leads the ARCA Menards Series championship by 12 points over Ryan Vargas heading in, while Tristan McKee tops the East standings having won the first two East races of 2026 at Hickory and Rockingham. Andy Jankowiak marks his 50th career ARCA Menards Series start, while Caden Kvapil — younger brother of O'Reilly Series regular Carson Kvapil — makes his ARCA Menards Series debut in the No. 24 Sigma Performance Services Chevrolet.\n\nThe qualifying record belongs to Mason Mitchell, who turned a 15.682-second lap (114.781 mph) in 2014. The race record belongs to Frank Kimmel, set at 86.400 mph average in a 150-lap race in 1998.",
@@ -44,7 +44,7 @@
       "team": "Fast Track Racing",
       "manufacturer": "Toyota",
       "crew_chief": "Joseth Carabantes",
-      "driver_slug": "craig-pellegrini-jr-r"
+      "driver_slug": "craig-pellegrini-jr"
     },
     {
       "number": "11",
@@ -76,7 +76,7 @@
       "team": "Joe Gibbs Racing",
       "manufacturer": "Toyota",
       "crew_chief": "Matt Ross",
-      "driver_slug": "max-reaves-r"
+      "driver_slug": "max-reaves"
     },
     {
       "number": "19",
@@ -92,7 +92,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "24",
@@ -116,7 +116,7 @@
       "team": "Pinnacle Racing Group",
       "manufacturer": "Chevrolet",
       "crew_chief": "Steven Dawson",
-      "driver_slug": "carson-brown-r"
+      "driver_slug": "carson-brown"
     },
     {
       "number": "34",
@@ -164,7 +164,7 @@
       "team": "Pinnacle Racing Group",
       "manufacturer": "Chevrolet",
       "crew_chief": "Kevin Reed Jr",
-      "driver_slug": "tristan-mckee-r"
+      "driver_slug": "tristan-mckee"
     },
     {
       "number": "79",
@@ -180,7 +180,7 @@
       "team": "City Garage Motorsports",
       "manufacturer": "Ford",
       "crew_chief": "Ryan Bell",
-      "driver_slug": "quinn-davis-r"
+      "driver_slug": "quinn-davis"
     },
     {
       "number": "86",
@@ -188,7 +188,7 @@
       "team": "Clubb Racing Inc.",
       "manufacturer": "Ford",
       "crew_chief": "Jon Clubb",
-      "driver_slug": "jeff-maconi-r"
+      "driver_slug": "jeff-maconi"
     },
     {
       "number": "89",

@@ -200,7 +200,7 @@ func main() {
 		handleAggregatedSchedule(w, r, dataDir)
 	}))
 	http.HandleFunc("/api/events/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
-		handleEvent(w, r, dataDir, nil)
+		handleEvent(w, r, dataDir)
 	}))
 	http.HandleFunc("/api/live-events", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleLiveEvents(w, r, dataDir, st)

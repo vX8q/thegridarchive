@@ -62,8 +62,13 @@ test('qualifyingExcludingDidNotQualify removes DNQ car numbers', () => {
 });
 
 test('shouldSkipStage3PointsTable for 3-stage with race_results', () => {
-  const d = load('data/events/NASCAR Cup Series/2026/nascar_cup_2026_18.json');
-  assert.strictEqual(TGA.shouldSkipStage3PointsTable(true, false, d.tables), true);
+  // 3-stage events no longer keep a separate stage_3 table in JSON; race_results
+  // is stage 3. Skip only when a redundant stage_3 points table is still present.
+  const three = {
+    race_results: { headers: ['Pos'], rows: [['1']] },
+    stage_3: { headers: ['Pos'], rows: [['1']] },
+  };
+  assert.strictEqual(TGA.shouldSkipStage3PointsTable(true, false, three), true);
   const four = load('data/events/NASCAR Cup Series/2026/nascar_cup_2026_13.json');
   assert.strictEqual(TGA.shouldSkipStage3PointsTable(true, true, four.tables), false);
 });

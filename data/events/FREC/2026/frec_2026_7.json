@@ -1,0 +1,40 @@
+{
+  "event_id": "FREC_2026_7",
+  "series": "FIA Formula Regional European Championship",
+  "race": "Imola",
+  "date": "4–6 September 2026",
+  "start_date": "2026-09-04",
+  "end_date": "2026-09-06",
+  "track": "Imola Circuit",
+  "location": "Imola, Emilia-Romagna, Italy",
+  "laps": "",
+  "distance": "",
+  "entry_list": [],
+  "tables": {
+    "practice": {
+      "sessions": []
+    },
+    "qualifying": {
+      "sessions": []
+    },
+    "race": {
+      "sessions": [
+        {
+          "title": "Race 1",
+          "headers": [],
+          "rows": []
+        },
+        {
+          "title": "Race 2",
+          "headers": [],
+          "rows": []
+        },
+        {
+          "title": "Race 3",
+          "headers": [],
+          "rows": []
+        }
+      ]
+    }
+  }
+}

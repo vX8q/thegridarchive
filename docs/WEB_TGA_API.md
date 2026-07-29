@@ -24,6 +24,8 @@ Wraps `window.TGA.fetchJSON` with typed methods. All `/api/*` fetches should go 
 | `getSeriesEvents(seriesId, season?, options?)` | `/api/series/:id/events` |
 | `getSeriesHistory(seriesId)` | `/api/series/:id/history` |
 | `getEvent(eventId, options?)` | `/api/events/:id` |
+| `getEventSummaries(ids, options?)` | `/api/events/summaries?ids=A,B` — slim Last Results winners |
+| `getEventSummary(eventId, options?)` | `/api/events/:id/summary` |
 | `getDriver(slug, options?)` | `/api/driver/:slug` |
 | `getDrivers()` | `/api/drivers` |
 | `getDriversPrimaryContext()` | `/api/drivers/primary-context` |

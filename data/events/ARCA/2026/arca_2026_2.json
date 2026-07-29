@@ -1,10 +1,10 @@
 {
   "event_id": "ARCA_2026_2",
   "series": "ARCA Menards Series",
-  "race": "2 of 20",
+  "race": "General Tire 150",
   "date": "Thursday, March 5, 2026",
   "track": "Phoenix Raceway",
-  "location": "Avondale, AZ",
+  "location": "Avondale, Arizona, USA",
   "laps": "150*",
   "distance": "1.000 mile paved track (150.000 miles)",
   "event_preview": "Phoenix Raceway in its current form is measured at 1.000 mi (1.609 km), with 9° of banking in the first two turns, 11° of banking in the last two turns, 9° of banking on the frontstretch, and 3° of banking on the backstretch. The track is known for its frontstretch kink, commonly referred to as a \"dogleg\" that was added to accommodate the track's original road course, which used parts of the oval alongside specialized portions outside the oval.",
@@ -16,7 +16,7 @@
       "team": "Jan's Towing Racing",
       "manufacturer": "Ford",
       "crew_chief": "Chris Greaney",
-      "driver_slug": "cole-denton-r"
+      "driver_slug": "cole-denton"
     },
     {
       "number": "1",
@@ -72,7 +72,7 @@
       "team": "Jerry Pitts Racing",
       "manufacturer": "Toyota",
       "crew_chief": "RJ Johnson",
-      "driver_slug": "gavin-ray-r"
+      "driver_slug": "gavin-ray"
     },
     {
       "number": "9",
@@ -120,7 +120,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Ryan London",
-      "driver_slug": "mia-lovell-r"
+      "driver_slug": "mia-lovell"
     },
     {
       "number": "16",
@@ -160,7 +160,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "25",
@@ -168,7 +168,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Danny Johnson",
-      "driver_slug": "julian-dacosta-r"
+      "driver_slug": "julian-dacosta"
     },
     {
       "number": "28",

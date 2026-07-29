@@ -17,23 +17,30 @@ import (
 )
 
 const (
-	superFormulaWSURL     = "ws://superformula.racelive.jp:6001/get"
-	superFormulaLivePage  = "http://superformula.racelive.jp/live"
-	superFormulaSeriesKey = "SUPER_FORMULA"
+	superFormulaWSURL      = "ws://superformula.racelive.jp:6001/get"
+	superFormulaLivePage   = "http://superformula.racelive.jp/live"
+	superFormulaSeriesKey  = "SUPER_FORMULA"
 	superFormulaSeriesName = "Super Formula"
-	superFormulaWSTimeout = 8 * time.Second
-	superFormulaCacheTTL  = 30 * time.Second
+	superFormulaWSTimeout  = 8 * time.Second
+	superFormulaCacheTTL   = 30 * time.Second
+	// RaceNow keeps serving the final classification long after a session ends,
+	// so a snapshot whose timing has not moved for this long is treated as over.
+	superFormulaStaleAfter = 15 * time.Minute
+	// Once timing rows arrive, stop waiting for the optional heartbeat message.
+	superFormulaRowsGrace = 2 * time.Second
 )
 
+// sfRaceNowRow mirrors a RaceNow timing row. The feed sends every numeric
+// field as a JSON string, so numbers use the flexible decoders.
 type sfRaceNowRow struct {
-	CarNo     string  `json:"CARNO"`
-	DriverE   string  `json:"DRIVER_E"`
-	TeamE     string  `json:"TEAM_E"`
-	Laps      int     `json:"LAPS"`
-	TotalTime float64 `json:"TOTAL_TIME"`
-	StartPos  int     `json:"START_POS"`
-	RunFlag   string  `json:"RUN_FLAG"`
-	Maker     string  `json:"MAKER"`
+	CarNo     string        `json:"CARNO"`
+	DriverE   string        `json:"DRIVER_E"`
+	TeamE     string        `json:"TEAM_E"`
+	Laps      flexJSONInt   `json:"LAPS"`
+	TotalTime flexJSONFloat `json:"TOTAL_TIME"`
+	StartPos  flexJSONInt   `json:"START_POS"`
+	RunFlag   string        `json:"RUN_FLAG"`
+	Maker     string        `json:"MAKER"`
 }
 
 type sfRaceNowSchedule struct {
@@ -57,11 +64,48 @@ var (
 	fetchSuperFormulaSnapshotFunc = fetchSuperFormulaRaceNowSnapshot
 	superFormulaNowFunc           = func() time.Time { return time.Now().UTC() }
 
-	superFormulaCacheMu   sync.RWMutex
-	superFormulaCacheSnap *sfRaceNowSnapshot
-	superFormulaCacheAt   time.Time
-	superFormulaCacheErr  error
+	superFormulaCacheMu     sync.RWMutex
+	superFormulaCacheSnap   *sfRaceNowSnapshot
+	superFormulaCacheAt     time.Time
+	superFormulaCacheErr    error
+	superFormulaTimingPrint string
+	superFormulaTimingMoved time.Time
 )
+
+// superFormulaTimingFingerprint captures the parts of a snapshot that change
+// while cars are on track.
+func superFormulaTimingFingerprint(snap *sfRaceNowSnapshot) string {
+	if snap == nil {
+		return ""
+	}
+	var b strings.Builder
+	if snap.Heartbeat != nil {
+		b.WriteString(snap.Heartbeat.Flag)
+		b.WriteByte('|')
+		b.WriteString(snap.Heartbeat.Togo)
+		b.WriteByte(';')
+	}
+	for _, row := range snap.Rows {
+		b.WriteString(row.CarNo)
+		b.WriteByte(':')
+		b.WriteString(strconv.Itoa(row.Laps.Int()))
+		b.WriteByte(':')
+		b.WriteString(strconv.FormatFloat(row.TotalTime.Float(), 'f', 3, 64))
+		b.WriteByte(';')
+	}
+	return b.String()
+}
+
+// superFormulaTimingStalled reports whether the feed has been serving identical
+// timing for longer than superFormulaStaleAfter (finished session left on air).
+func superFormulaTimingStalled() bool {
+	superFormulaCacheMu.RLock()
+	defer superFormulaCacheMu.RUnlock()
+	if superFormulaTimingMoved.IsZero() {
+		return false
+	}
+	return time.Since(superFormulaTimingMoved) > superFormulaStaleAfter
+}
 
 func cloneSuperFormulaSnapshot(snap *sfRaceNowSnapshot) *sfRaceNowSnapshot {
 	if snap == nil {
@@ -90,8 +134,13 @@ func refreshSuperFormulaCache(ctx context.Context) {
 		superFormulaCacheErr = err
 		return
 	}
+	now := time.Now()
+	if fp := superFormulaTimingFingerprint(snap); fp != superFormulaTimingPrint {
+		superFormulaTimingPrint = fp
+		superFormulaTimingMoved = now
+	}
 	superFormulaCacheSnap = snap
-	superFormulaCacheAt = time.Now()
+	superFormulaCacheAt = now
 	superFormulaCacheErr = nil
 }
 
@@ -191,7 +240,13 @@ func fetchSuperFormulaRaceNowSnapshot(ctx context.Context) (*sfRaceNowSnapshot, 
 	}
 
 	for time.Now().Before(deadline) {
-		if err := conn.SetReadDeadline(deadline); err != nil {
+		readUntil := deadline
+		if len(snap.Rows) > 0 {
+			if grace := time.Now().Add(superFormulaRowsGrace); grace.Before(readUntil) {
+				readUntil = grace
+			}
+		}
+		if err := conn.SetReadDeadline(readUntil); err != nil {
 			break
 		}
 		_, msg, err := conn.ReadMessage()
@@ -211,11 +266,10 @@ func fetchSuperFormulaRaceNowSnapshot(ctx context.Context) (*sfRaceNowSnapshot, 
 
 func applySuperFormulaRaceNowMessage(snap *sfRaceNowSnapshot, msg []byte) {
 	var envelope struct {
-		Type string            `json:"type"`
-		Rows []sfRaceNowRow    `json:"rows"`
-		Raw  json.RawMessage   `json:"-"`
+		Type string         `json:"type"`
+		Rows []sfRaceNowRow `json:"rows"`
 	}
-	if err := json.Unmarshal(msg, &envelope); err != nil {
+	if err := json.Unmarshal(msg, &envelope); err != nil && envelope.Type == "" {
 		return
 	}
 	switch strings.ToUpper(strings.TrimSpace(envelope.Type)) {
@@ -273,11 +327,16 @@ func superFormulaSessionLooksLive(snap *sfRaceNowSnapshot) bool {
 	return false
 }
 
+// superFormulaSnapshotIsLive combines the session state with feed freshness.
+func superFormulaSnapshotIsLive(snap *sfRaceNowSnapshot) bool {
+	return superFormulaSessionLooksLive(snap) && !superFormulaTimingStalled()
+}
+
 func superFormulaRowSortKey(row sfRaceNowRow) float64 {
 	if strings.TrimSpace(row.RunFlag) != "1" {
-		return -1e15 - float64(row.StartPos)
+		return -1e15 - float64(row.StartPos.Int())
 	}
-	return float64(row.Laps)*1e7 - row.TotalTime
+	return float64(row.Laps.Int())*1e7 - row.TotalTime.Float()
 }
 
 func superFormulaLeaderboardFrom(rows []sfRaceNowRow, raceMode string, limit int) []nascarLiveRunningEntry {
@@ -287,9 +346,9 @@ func superFormulaLeaderboardFrom(rows []sfRaceNowRow, raceMode string, limit int
 	})
 
 	type ranked struct {
-		row  sfRaceNowRow
-		pos  int
-		gap  string
+		row sfRaceNowRow
+		pos int
+		gap string
 	}
 	rankedRows := make([]ranked, 0, len(sorted))
 	var leaderTime float64
@@ -301,13 +360,14 @@ func superFormulaLeaderboardFrom(rows []sfRaceNowRow, raceMode string, limit int
 		}
 		pos++
 		gap := "—"
-		if pos == 1 {
-			leaderTime = row.TotalTime
-			leaderLaps = row.Laps
-		} else if strings.EqualFold(raceMode, "R") && row.Laps < leaderLaps {
-			gap = fmt.Sprintf("+%d LAP", leaderLaps-row.Laps)
-		} else if leaderTime > 0 && row.TotalTime > leaderTime {
-			gap = "+" + strconv.FormatFloat(row.TotalTime-leaderTime, 'f', 3, 64)
+		switch {
+		case pos == 1:
+			leaderTime = row.TotalTime.Float()
+			leaderLaps = row.Laps.Int()
+		case strings.EqualFold(raceMode, "R") && row.Laps.Int() < leaderLaps:
+			gap = fmt.Sprintf("+%d LAP", leaderLaps-row.Laps.Int())
+		case leaderTime > 0 && row.TotalTime.Float() > leaderTime:
+			gap = "+" + strconv.FormatFloat(row.TotalTime.Float()-leaderTime, 'f', 3, 64)
 		}
 		rankedRows = append(rankedRows, ranked{row: row, pos: pos, gap: gap})
 	}
@@ -324,8 +384,8 @@ func superFormulaLeaderboardFrom(rows []sfRaceNowRow, raceMode string, limit int
 			CarNumber:        strings.TrimSpace(row.CarNo),
 			Driver:           strings.TrimSpace(row.DriverE),
 			Manufacturer:     superFormulaMakerLabel(row.Maker),
-			StartingPosition: row.StartPos,
-			LapsCompleted:    row.Laps,
+			StartingPosition: row.StartPos.Int(),
+			LapsCompleted:    row.Laps.Int(),
 			GapDisplay:       r.gap,
 		}
 		if team := strings.TrimSpace(row.TeamE); team != "" {
@@ -431,6 +491,11 @@ func superFormulaBoardFromSnapshot(snap *sfRaceNowSnapshot, dataDir string, limi
 	events, err := schedulefile.LoadEvents(dataDir, "super_formula")
 	if err == nil && len(events) > 0 {
 		board.EventID = findSuperFormulaLiveEvent(events, superFormulaNowFunc())
+		if board.EventID == "" {
+			// RaceNow stays online between rounds; without a scheduled event
+			// nearby the payload is last weekend's classification.
+			return NASCARLiveBoard{Error: "no scheduled event"}, fmt.Errorf("no scheduled super formula event")
+		}
 	}
 	if board.EventID != "" && strings.Contains(strings.ToLower(board.RunName), "race") && superFormulaEventHasRaceResults(dataDir, board.EventID) {
 		return NASCARLiveBoard{Error: "race results published"}, fmt.Errorf("race results published")
@@ -441,7 +506,7 @@ func superFormulaBoardFromSnapshot(snap *sfRaceNowSnapshot, dataDir string, limi
 // CollectSuperFormulaLiveBoards returns a Super Formula leaderboard when RaceNow websocket is active.
 func CollectSuperFormulaLiveBoards(dataDir string, leaderLimit int) []NASCARLiveBoard {
 	snap, err := fetchSuperFormulaRaceNowSnapshotCached()
-	if err != nil || !superFormulaSessionLooksLive(snap) {
+	if err != nil || !superFormulaSnapshotIsLive(snap) {
 		return nil
 	}
 	board, err := superFormulaBoardFromSnapshot(snap, dataDir, leaderLimit)
@@ -460,7 +525,7 @@ func SyncSuperFormula(dataDir string) error {
 		livesyncErrorsTotal.WithLabelValues("super_formula", "live_feed").Inc()
 		return mergeLiveJSONSuperFormula(livePath, nil)
 	}
-	if !superFormulaSessionLooksLive(snap) {
+	if !superFormulaSnapshotIsLive(snap) {
 		livesyncErrorsTotal.WithLabelValues("super_formula", "no_live_window").Inc()
 		return mergeLiveJSONSuperFormula(livePath, nil)
 	}

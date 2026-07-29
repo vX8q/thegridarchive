@@ -7,7 +7,7 @@
   "start_date": "2026-06-05",
   "end_date": "2026-06-05",
   "track": "Michigan International Speedway",
-  "location": "Brooklyn, Michigan",
+  "location": "Brooklyn, Michigan, USA",
   "laps": "57",
   "distance": "114 mi (183.466 km)",
   "event_preview": "Michigan International Speedway is a 2-mile (3.2 km) permanent D-shaped oval in Brooklyn, Michigan, with moderate banking designed for competitive racing across multiple series. The Henry Ford Health 200 is the seventh race of the 2026 ARCA Menards Series season, contested over 100 laps (200 miles) on Friday, June 5, at 5 p.m. ET on FS2. The 38th running of this event will feature 30 drivers competing for the win.\n\nBrenden Queen is the defending winner after leading a race-high 65 laps and claiming victory in 2025. Gio Ruggiero, who won twice earlier this season at Daytona and Kansas, qualified fifth at Michigan in 2025 and led 35 laps in his debut at the track. Ruggiero has shown consistency with two wins already in 2026 and will be among the contenders. Championship contenders Isabella Robusto, Thomas Annunziata and Jake Bollman round out the notable entries seeking to capitalize on their strong early-season campaigns.\n\nThe all-time ARCA Menards Series qualifying lap record at Michigan belongs to Brenden Queen, who turned a 38.841-second lap during qualifying for the 2025 Henry Ford Health 200.",
@@ -100,7 +100,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "22",
@@ -124,7 +124,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Shane Wilson",
-      "driver_slug": "gavan-boschele-r"
+      "driver_slug": "gavan-boschele"
     },
     {
       "number": "28",
@@ -220,7 +220,7 @@
       "team": "Clubb Racing Inc.",
       "manufacturer": "Ford",
       "crew_chief": "Jon Clubb",
-      "driver_slug": "jeff-maconi-r"
+      "driver_slug": "jeff-maconi"
     },
     {
       "number": "89",

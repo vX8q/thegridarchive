@@ -4,7 +4,7 @@
   "race": "DuraMAX Texas Grand Prix",
   "date": "Sunday, March 1, 2026",
   "track": "Circuit of the Americas",
-  "location": "Austin, Texas",
+  "location": "Austin, Texas, USA",
   "laps": "95",
   "distance": "3.410 mile road course (323.950 miles)",
   "stage1_laps": "20",
@@ -76,7 +76,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Jim Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",
@@ -301,7 +302,7 @@
       "team": "Trackhouse Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Randall Burnett",
-      "driver_slug": "connor-zilisch-r"
+      "driver_slug": "connor-zilisch"
     },
     {
       "number": "97",

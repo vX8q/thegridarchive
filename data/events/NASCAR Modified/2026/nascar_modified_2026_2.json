@@ -6,7 +6,7 @@
   "start_date": "2026-03-28",
   "end_date": "2026-03-28",
   "track": "Martinsville Speedway",
-  "location": "Martinsville, Virginia",
+  "location": "Ridgeway, Virginia, USA",
   "youtube_id": "1ZjALJa-kIw",
   "laps": "200",
   "distance": "0.526 mile paved track (105.200 miles)",
@@ -129,7 +129,7 @@
       "team": "Sapienza Racing",
       "manufacturer": "Troyer",
       "crew_chief": "Greg Kleila",
-      "driver_slug": "david-sapienza"
+      "driver_slug": "dave-sapienza"
     },
     {
       "number": "38",
@@ -249,7 +249,7 @@
       "team": "Jon McKennedy Racing",
       "manufacturer": "FURY Race Cars",
       "crew_chief": "Patrick Walsh",
-      "driver_slug": "jonathan-mckennedy"
+      "driver_slug": "jon-mckennedy"
     },
     {
       "number": "82",

@@ -7,7 +7,7 @@
   "end_date": "2026-04-10",
   "youtube_id": "KDwhOlENTJc",
   "track": "Bristol Motor Speedway",
-  "location": "Bristol, Tennessee",
+  "location": "Bristol, Tennessee, USA",
   "laps": "250",
   "distance": "133.25 mi (214.45 km)",
   "stage1_laps": "65",
@@ -94,7 +94,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -102,7 +102,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Richard Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -110,7 +110,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",

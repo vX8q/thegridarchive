@@ -25,7 +25,7 @@ const skipped = [];
 const ok = [];
 
 for (const file of fs.readdirSync(schedulesDir).filter((f) => f.endsWith('.json')).sort()) {
-  const rows = JSON.parse(fs.readFileSync(path.join(schedulesDir, file), 'utf8'));
+  const rows = JSON.parse(fs.readFileSync(path.join(schedulesDir, file), 'utf8').replace(/^\uFEFF/, ''));
   if (!Array.isArray(rows)) continue;
   for (const ev of rows) {
     const id = ev.id || '';

@@ -248,7 +248,7 @@ patchRaceTimes('psc.json', [
   ['PSC_2026_3', '2026-06-28', '11:55', 'Europe/Vienna'],
   ['PSC_2026_4', '2026-07-19', '11:45', 'Europe/Brussels'],
   ['PSC_2026_5', '2026-07-26', '11:55', 'Europe/Budapest'],
-  ['PSC_2026_6', '2026-08-23', '11:55', 'Europe/Amsterdam'],
+  ['PSC_2026_6', '2026-08-22', '18:00', 'Europe/Amsterdam'],
   ['PSC_2026_8', '2026-09-06', '12:05', 'Europe/Rome'],
 ]);
 
@@ -265,14 +265,14 @@ patchSchedule('dtm.json', [
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
 
 patchSchedule('frec.json', [
-  ['FREC_2026_1', '2026-04-24', '11:35', 'Europe/Amsterdam'],
+  ['FREC_2026_1', '2026-04-24', '11:35', 'Europe/Vienna'],
   ['FREC_2026_2', '2026-05-22', '11:35', 'Europe/Amsterdam'],
-  ['FREC_2026_3', '2026-05-29', '11:35', 'Europe/Amsterdam'],
-  ['FREC_2026_4', '2026-06-20', '11:35', 'Europe/Paris'],
-  ['FREC_2026_5', '2026-07-04', '11:35', 'Europe/Budapest'],
-  ['FREC_2026_6', '2026-08-08', '11:35', 'Europe/Budapest'],
-  ['FREC_2026_7', '2026-09-05', '11:35', 'Europe/Rome'],
-  ['FREC_2026_8', '2026-10-10', '11:35', 'Europe/Lisbon'],
+  ['FREC_2026_3', '2026-05-29', '11:35', 'Europe/Brussels'],
+  ['FREC_2026_4', '2026-06-20', '11:35', 'Europe/Rome'],
+  ['FREC_2026_5', '2026-07-03', '11:35', 'Europe/Budapest'],
+  ['FREC_2026_6', '2026-07-18', '16:25', 'Europe/Paris'],
+  ['FREC_2026_7', '2026-09-04', '13:00', 'Europe/Rome'],
+  ['FREC_2026_8', '2026-09-11', '13:00', 'Europe/Berlin'],
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
 
 patchSchedule('f4_it.json', [
@@ -287,7 +287,7 @@ patchSchedule('f4_it.json', [
 
 patchSchedule('gtwce_sprint.json', [
   ['GTWCE_SPRINT_2026_1', '2026-05-02', '15:30', 'Europe/London'],
-  ['GTWCE_SPRINT_2026_2', '2026-07-18', '15:30', 'Europe/Rome'],
+  ['GTWCE_SPRINT_2026_2', '2026-07-18', '21:30', 'Europe/Rome'],
   ['GTWCE_SPRINT_2026_3', '2026-08-01', '15:30', 'Europe/Berlin'],
   ['GTWCE_SPRINT_2026_4', '2026-08-21', '15:30', 'Europe/Amsterdam'],
   ['GTWCE_SPRINT_2026_5', '2026-10-02', '15:30', 'Europe/Madrid'],

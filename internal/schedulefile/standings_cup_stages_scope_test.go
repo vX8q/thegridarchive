@@ -51,40 +51,9 @@ func sumStagePointsCompletedCupOnly(t *testing.T) map[string]int {
 			continue
 		}
 		raceIdx++
-		for sn := 1; sn <= 2; sn++ {
-			st, ok := StageN(detail.Tables, sn)
-			if !ok {
-				continue
-			}
-			sDriverCol := colIndex(st.Headers, "Driver")
-			sPtsCol := colIndex(st.Headers, "Points")
-			if sPtsCol < 0 {
-				sPtsCol = colIndex(st.Headers, "Pts")
-			}
-			if sDriverCol < 0 || sPtsCol < 0 {
-				continue
-			}
-			for _, row := range st.Rows {
-				d := strings.TrimSpace(row[sDriverCol])
-				pts := parseStagePtsCell(row, sPtsCol)
-				out[canonicalDriverKey(d)] += pts
-			}
-		}
+		accumulateStagePointsFromDetail("NASCAR_CUP", detail, out)
 	}
 	return out
-}
-
-func parseStagePtsCell(row []string, col int) int {
-	if col < 0 || col >= len(row) {
-		return 0
-	}
-	pts := 0
-	for _, c := range strings.TrimSpace(row[col]) {
-		if c >= '0' && c <= '9' {
-			pts = pts*10 + int(c-'0')
-		}
-	}
-	return pts
 }
 
 func TestNASCARCupEnrichUsesSameEventsAsBuild(t *testing.T) {

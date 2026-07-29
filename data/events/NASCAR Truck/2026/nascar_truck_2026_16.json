@@ -6,7 +6,7 @@
   "start_date": "2026-07-24",
   "end_date": "2026-07-24",
   "track": "Lucas Oil Indianapolis Raceway Park",
-  "location": "Lucas Oil Indianapolis Raceway Park, Brownsburg, Indiana",
+  "location": "Brownsburg, Indiana, USA",
   "entry_list": [
     {
       "number": "1",
@@ -71,7 +71,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -79,7 +79,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Richard Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -87,7 +87,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",

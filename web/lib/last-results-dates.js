@@ -45,10 +45,19 @@
     if (sid === 'F2' || sid === 'F3') return true;
     if (sid === 'FREC' || sid === 'F4_IT') return true;
     if (sid === 'GTWCE_SPRINT' || sid === 'DTM') return true;
-    if (sid === 'PSC' || sid === 'SUPER_FORMULA') return true;
-    if (sid === 'SUPERCARS') {
+    if (sid === 'SUPER_FORMULA') return true;
+    // PSC is race_day_only: schedule start≠end is practice/qual weekend, not multi-race.
+    // Real double-headers (e.g. Zandvoort) show as multi-race only after weekend merge (winners>1).
+    if (sid === 'PSC') {
+      var wPsc = card.winners;
+      return Array.isArray(wPsc) && wPsc.length > 1;
+    }
+    if (sid === 'SUPERCARS' || sid === 'INDYCAR') {
       var w = card.winners;
-      return Array.isArray(w) && w.length > 1;
+      if (Array.isArray(w) && w.length > 1) return true;
+      var rs = pickIsoDate(card.rangeStart);
+      var re = pickIsoDate(card.rangeEnd);
+      return !!(rs && re && re > rs);
     }
     return false;
   }
@@ -84,6 +93,17 @@
         if (ss && se && se > ss && (!rs || !re || rs === re)) {
           rs = ss;
           re = se;
+        }
+      }
+    } else {
+      // race_day_only (PSC/IMSA/WEC/…): prefer resolved race day over seeded weekend span.
+      var getRangeRd = window.TGA && window.TGA.getEventRaceDateRangeIso;
+      if (getRangeRd) {
+        var rd = getRangeRd(evRange);
+        var rds = pickIsoDate(rd.start);
+        var rde = pickIsoDate(rd.end);
+        if (rds && rde && rds === rde) {
+          return { start: rds, end: rde };
         }
       }
     }
@@ -222,46 +242,21 @@
     return Date.now() <= limit.getTime();
   }
 
-  /** Multi-race weekends (Supercars, Super Formula): map each race id → last day of its block. */
+  /** Multi-race weekends (Supercars, PSC, IndyCar, Super Formula): map each race id to last day of its block. */
   function buildGroupedWeekendLastRaceByEventId(items) {
     var map = {};
     if (!Array.isArray(items) || items.length === 0) return map;
-    var grouped = [];
-    items.forEach(function (p) {
-      var sid = lastResultsEventSeriesUpper(p.event);
-      if (sid === 'SUPERCARS' || sid === 'SUPER_FORMULA') grouped.push(p);
+    var events = items.map(function (p) { return p && p.event ? p.event : p; }).filter(Boolean);
+    var lastById = (window.TGA && typeof window.TGA.buildGroupedWeekendLastEventById === 'function')
+      ? window.TGA.buildGroupedWeekendLastEventById(events)
+      : {};
+    Object.keys(lastById).forEach(function (id) {
+      var lastEv = lastById[id];
+      if (!lastEv) return;
+      map[id] = eventLastRaceDateIso(lastEv, {}) ||
+        pickIsoDate(lastEv.end_date) ||
+        pickIsoDate(lastEv.start_date || lastEv.date);
     });
-    grouped.sort(function (a, b) {
-      var da = eventLastRaceDateIso(a.event, a);
-      var db = eventLastRaceDateIso(b.event, b);
-      return da < db ? -1 : da > db ? 1 : 0;
-    });
-    for (var i = 0; i < grouped.length; i++) {
-      var c = grouped[i];
-      var e = c.event || {};
-      var run = [c];
-      var c0 = String(e.circuit_name || '').trim();
-      var l0 = String(e.location || '').trim();
-      var prev = eventLastRaceDateIso(e, c);
-      var j = i + 1;
-      while (j < grouped.length) {
-        var c2 = grouped[j];
-        var e2 = c2.event || {};
-        if (String(e2.circuit_name || '').trim() !== c0 || String(e2.location || '').trim() !== l0) break;
-        var d2 = eventLastRaceDateIso(e2, c2);
-        var diffMs = new Date(d2 + 'T12:00:00').getTime() - new Date(prev + 'T12:00:00').getTime();
-        if (diffMs > 86400000) break;
-        run.push(c2);
-        if (!prev || d2 > prev) prev = d2;
-        j++;
-      }
-      var lastIso = prev || eventLastRaceDateIso(e, c);
-      run.forEach(function (x) {
-        var id = String((x.event && x.event.id) || '').toUpperCase();
-        if (id) map[id] = lastIso;
-      });
-      i = j - 1;
-    }
     return map;
   }
 

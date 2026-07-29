@@ -145,7 +145,6 @@ func TestSyncNASCAR_ClearsLiveWhenRaceFinished(t *testing.T) {
 		}, nil
 	}
 	fetchNASCARRacesFunc = func(_, _ int) ([]nascarRace, error) {
-		t.Fatal("should not fetch races when feed is finished")
 		return nil, nil
 	}
 	defer func() {
@@ -226,6 +225,84 @@ func TestSyncNASCAR_ClearsLiveWhenNotRaceDay(t *testing.T) {
 	}
 }
 
+// The shared live feed keeps serving the last finished Cup race, so Truck and
+// O'Reilly races must be discovered from their own per-series feeds.
+func TestSyncNASCAR_MarksTruckLiveWhileMainFeedShowsFinishedCupRace(t *testing.T) {
+	origFetchLive := fetchNASCARLiveFeedFullFunc
+	origFetchRaces := fetchNASCARRacesFunc
+	origFetchSeries := fetchNASCARSeriesLiveFeedFunc
+	origNow := nascarNowFunc
+	defer func() {
+		fetchNASCARLiveFeedFullFunc = origFetchLive
+		fetchNASCARRacesFunc = origFetchRaces
+		fetchNASCARSeriesLiveFeedFunc = origFetchSeries
+		nascarNowFunc = origNow
+	}()
+
+	// 2026-07-24 18:00 Eastern.
+	nascarNowFunc = func() time.Time { return time.Date(2026, 7, 24, 22, 0, 0, 0, time.UTC) }
+	fetchNASCARLiveFeedFullFunc = func() (*nascarCFLiveFeedJSON, error) {
+		return &nascarCFLiveFeedJSON{
+			RaceID:     5619,
+			SeriesID:   1,
+			RunName:    "Brickyard 400",
+			LapNumber:  160,
+			LapsInRace: 160,
+			Vehicles: []nascarCFVehicle{
+				{RunningPosition: 1, LapsCompleted: 160, Driver: nascarCFDriver{FullName: "Winner"}},
+			},
+		}, nil
+	}
+	fetchNASCARRacesFunc = func(seriesID, _ int) ([]nascarRace, error) {
+		switch seriesID {
+		case 1:
+			return []nascarRace{{RaceID: 5619, DateScheduled: "2026-07-19T20:00:00Z"}}, nil
+		case 3:
+			return []nascarRace{{RaceID: 5682, DateScheduled: "2026-07-24T23:00:00Z"}}, nil
+		default:
+			return nil, nil
+		}
+	}
+	fetchNASCARSeriesLiveFeedFunc = func(seriesID, raceID int) (*nascarCFLiveFeedJSON, error) {
+		if seriesID != 3 || raceID != 5682 {
+			return nil, fmt.Errorf("unexpected feed request %d/%d", seriesID, raceID)
+		}
+		return &nascarCFLiveFeedJSON{
+			RaceID:     5682,
+			SeriesID:   3,
+			RunName:    "TSport 200",
+			LapNumber:  42,
+			FlagState:  1,
+			LapsInRace: 200,
+			Vehicles: []nascarCFVehicle{
+				{RunningPosition: 1, LapsCompleted: 42, Driver: nascarCFDriver{FullName: "Corey Heim"}},
+			},
+		}, nil
+	}
+
+	dir := t.TempDir()
+	schedDir := filepath.Join(dir, "schedules")
+	if err := os.MkdirAll(schedDir, 0o755); err != nil {
+		t.Fatalf("mkdir schedules: %v", err)
+	}
+	sched := `[{"id":"NASCAR_TRUCK_2026_16","series_id":"NASCAR_TRUCK","season":"2026","name":"TSport 200","start_date":"2026-07-24","end_date":"2026-07-24"}]`
+	if err := os.WriteFile(filepath.Join(schedDir, "nascar_truck.json"), []byte(sched), 0o644); err != nil {
+		t.Fatalf("write schedule: %v", err)
+	}
+	livePath := filepath.Join(dir, "live.json")
+	if err := os.WriteFile(livePath, []byte(`[]`), 0o644); err != nil {
+		t.Fatalf("write seed live.json: %v", err)
+	}
+
+	if err := SyncNASCAR(dir); err != nil {
+		t.Fatalf("SyncNASCAR error: %v", err)
+	}
+	got := readLiveIDs(livePath)
+	if len(got) != 1 || got[0] != "NASCAR_TRUCK_2026_16" {
+		t.Fatalf("live ids = %#v, want [NASCAR_TRUCK_2026_16]", got)
+	}
+}
+
 func TestSyncOpenF1_GracefulOnNoSessions(t *testing.T) {
 	origMeet := fetchOpenF1LatestMeetingSessionsFunc
 	origLatest := fetchOpenF1SessionsLatestRawFunc
@@ -259,4 +336,3 @@ func TestSyncOpenF1_GracefulOnNoSessions(t *testing.T) {
 		t.Fatalf("live.json = %s, want %s", string(got), want)
 	}
 }
-

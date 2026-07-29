@@ -4,7 +4,7 @@
   "race": "Autotrader 400",
   "date": "Sunday, February 22, 2026",
   "track": "EchoPark Speedway",
-  "location": "Hampton, Georgia",
+  "location": "Hampton, Georgia, USA",
   "laps": "260*",
   "distance": "1.540 mile paved track (400.400 miles)",
   "stage1_laps": "60",
@@ -76,7 +76,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Jim Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",
@@ -309,7 +310,7 @@
       "team": "Trackhouse Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Randall Burnett",
-      "driver_slug": "connor-zilisch-r"
+      "driver_slug": "connor-zilisch"
     },
     {
       "number": "97",

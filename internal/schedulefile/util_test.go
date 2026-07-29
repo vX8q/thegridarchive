@@ -29,6 +29,15 @@ func TestCanonicalDriverKey_InitialVariants(t *testing.T) {
 		{"Maciej Gladysz", "Maciej Gładysz"},
 		{"Theophile Nael", "Théophile Naël"},
 		{"S. Al Maosherji", "Saqer Al Maosherji"},
+		{"Matt Payne", "Matthew Payne"},
+		{"Cam Waters", "Cameron Waters"},
+		{"Giovanni Ruggiero", "Gio Ruggiero"},
+		{"Nicolas Varrone", "Nico Varrone"},
+		{"Alexander Dunne", "Alex Dunne"},
+		{"Dani Juncadella", "Daniel Juncadella"},
+		{"Max Lynn", "Maxwell Lynn"},
+		{"Dan Harper", "Daniel Harper"},
+		{"John H. Nemechek", "John Hunter Nemechek"},
 	}
 	for _, p := range pairs {
 		a := canonicalDriverKey(p[0])

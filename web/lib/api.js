@@ -119,6 +119,23 @@
       return get(BASE + '/events/' + eventPath(eventId) + eventQuery(options));
     },
 
+    /** Slim Last Results payloads: { [EVENT_ID]: { id, winners, range_start, range_end, ... } } */
+    getEventSummaries: function (eventIds, options) {
+      var ids = (Array.isArray(eventIds) ? eventIds : [])
+        .map(function (id) { return String(id || '').trim(); })
+        .filter(Boolean);
+      if (ids.length === 0) {
+        return Promise.resolve({});
+      }
+      var params = { ids: ids.join(',') };
+      if (!options || options.cacheBust !== false) params._ = Date.now();
+      return get(BASE + '/events/summaries' + buildQuery(params));
+    },
+
+    getEventSummary: function (eventId, options) {
+      return get(BASE + '/events/' + eventPath(eventId) + '/summary' + eventQuery(options));
+    },
+
     getDriver: function (slug, options) {
       return get(BASE + '/driver/' + driverPath(slug) + driverQuery(options));
     },

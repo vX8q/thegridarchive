@@ -852,7 +852,7 @@
     'nicky catsburg': 'Никки Кэтсбург',
     'nico hulkenberg': 'Нико Хюлькенберг',
     'nico pino': 'Нико Пино',
-    'nico varrone': 'Нико Варроне',
+    'Nicolas Varrone': 'Нико Варроне',
     'nicola lacorte': 'Никола Лакорте',
     'nicolas baert': 'Николас Барт',
     'nicolas cortes': 'Николас Кортес',

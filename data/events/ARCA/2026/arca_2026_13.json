@@ -6,7 +6,7 @@
   "start_date": "2026-07-24",
   "end_date": "2026-07-24",
   "track": "Lucas Oil Indianapolis Raceway Park",
-  "location": "Lucas Oil Indianapolis Raceway Park, Brownsburg, Indiana",
+  "location": "Brownsburg, Indiana, USA",
   "entry_list": [
     {
       "number": "2",
@@ -94,7 +94,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "24",
@@ -110,7 +110,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Shane Wilson",
-      "driver_slug": "gavan-boschele-r"
+      "driver_slug": "gavan-boschele"
     },
     {
       "number": "27",
@@ -190,7 +190,7 @@
       "team": "Clubb Racing Inc.",
       "manufacturer": "Ford",
       "crew_chief": "Jon Clubb",
-      "driver_slug": "jeff-maconi-r"
+      "driver_slug": "jeff-maconi"
     },
     {
       "number": "89",

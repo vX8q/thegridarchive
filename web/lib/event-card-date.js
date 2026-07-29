@@ -20,8 +20,9 @@
     wec: { card: 'race_day_only' },
     elms: { card: 'race_day_only' },
     gtwce_end: { card: 'race_day_only' },
-    psc: { card: 'race_day_only' },
-    supercars: { card: 'weekend_merge', next_race: 'session_day', notes: 'Last Results: one card per venue weekend; Next Race: one card per schedule race' },
+    psc: { card: 'race_day_only', notes: 'Zandvoort double-header merges to one Last Results card after Race 2' },
+    supercars: { card: 'weekend_merge', next_race: 'session_day', notes: 'Last Results: one card per venue weekend after last race; Next Race: one card per schedule race' },
+    indycar: { card: 'single_day', notes: 'Milwaukee double-header merges to one Last Results card after Race 2' },
     default: { card: 'single_day', notes: '24h races show two calendar days from name' }
   };
 
@@ -326,10 +327,21 @@
         pushLocalRaceDateIso(dates, sessionRaceStartDateIso(e, s));
       });
     } else {
-      pushLocalRaceDateIso(dates, iso(e.start_date || e.startDate) || iso(e.date));
-      pushLocalRaceDateIso(dates, iso(e.end_date || e.endDate));
-      if (getRaceIso) {
-        pushLocalRaceDateIso(dates, getRaceIso(e));
+      var startIso = iso(e.start_date || e.startDate) || iso(e.date);
+      var endIso = iso(e.end_date || e.endDate);
+      // F1 non-sprint: schedule start/end is the practice weekend, not race days.
+      // Sprint weekends are handled above via Sprint + Feature sessions.
+      if (sid === 'f1') {
+        pushLocalRaceDateIso(dates, (getRaceIso && getRaceIso(e)) || endIso || startIso);
+      } else if (startIso && endIso && endIso === startIso && getRaceIso) {
+        // Single schedule day: viewer-local race calendar day (night races may shift TZ).
+        pushLocalRaceDateIso(dates, getRaceIso(e) || startIso);
+      } else {
+        pushLocalRaceDateIso(dates, startIso);
+        pushLocalRaceDateIso(dates, endIso);
+        if (!dates.length && getRaceIso) {
+          pushLocalRaceDateIso(dates, getRaceIso(e));
+        }
       }
     }
 

@@ -285,6 +285,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 
 	var raceOrder []string
 	var eventNames []string
+	var eventIDs []string
 	round := 0
 	for _, ev := range events {
 		if ev.Season != season {
@@ -296,6 +297,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 		for _, slot := range slots {
 			raceOrder = append(raceOrder, slot.code)
 			eventNames = append(eventNames, evName)
+			eventIDs = append(eventIDs, ev.ID)
 		}
 	}
 
@@ -484,6 +486,7 @@ func BuildGtwceStandingsFromEvents(dataDir string, seriesID string, season strin
 	return &StandingsData{
 		RaceOrder:      raceOrder,
 		EventNames:     eventNames,
+		EventIDs:       keepEventIDsWithDetail(dataDir, eventIDs),
 		CompletedRaces: completedOrdered,
 		Rows:           []StandingRow{},
 		Classes:        classes,

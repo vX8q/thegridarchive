@@ -7,7 +7,7 @@
   "start_date": "2026-05-08",
   "end_date": "2026-05-08",
   "track": "Watkins Glen International",
-  "location": "Watkins Glen, NY",
+  "location": "Watkins Glen, New York, USA",
   "laps": "41",
   "distance": "2.454 (100.4 miles)",
   "event_preview": "Watkins Glen International is a 2.454-mile 11-turn road course in Schuyler County, New York — the oldest purpose-built road course on the North American major racing calendar, in use since 1956. The General Tire 100 at The Glen is the fifth race of the 2026 ARCA Menards Series season and the seventh ARCA Menards Series race at Watkins Glen, run over 41 laps (100.4 mi) with a five-minute break scheduled around lap 21 for tyres and fuel. The 33-car entry list is the largest the series has brought to the circuit since its first appearance here in 2001. Qualifying was cancelled due to morning rain, with the lineup set by owner points.\n\nChampionship leader Jake Bollman holds an eight-point advantage over Ryan Vargas heading in — neither has made a road course start in the ARCA Menards Series before. Andrew Ranger, a four-time ARCA winner at Watkins Glen, makes his first national series start since 2014 and is one of the most experienced road racers in the field. Reigning winner Tristan McKee — who won on debut in 2025 at the age of 15, becoming the series' second-youngest winner in history — returns in the No. 77 for Pinnacle Racing Group. Kaden Honeycutt and Dystany Spurlock will both pull double duty, with Spurlock also set to make her NASCAR Craftsman Truck Series debut later in the day.\n\nThe all-time ARCA qualifying lap record at Watkins Glen belongs to Connor Zilisch, who clocked 119.547 mph in 2024 qualifying — faster by nearly seven tenths of a second than the rest of the field.",
@@ -100,7 +100,7 @@
       "team": "Joe Gibbs Racing",
       "manufacturer": "Toyota",
       "crew_chief": "Matt Ross",
-      "driver_slug": "max-reaves-r"
+      "driver_slug": "max-reaves"
     },
     {
       "number": "19",
@@ -116,7 +116,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "25",
@@ -124,7 +124,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Shane Wilson",
-      "driver_slug": "gavan-boschele-r"
+      "driver_slug": "gavan-boschele"
     },
     {
       "number": "28",
@@ -132,7 +132,7 @@
       "team": "Pinnacle Racing Group",
       "manufacturer": "Chevrolet",
       "crew_chief": "Steven Dawson",
-      "driver_slug": "carson-brown-r"
+      "driver_slug": "carson-brown"
     },
     {
       "number": "29",
@@ -244,7 +244,7 @@
       "team": "Clubb Racing Inc.",
       "manufacturer": "Ford",
       "crew_chief": "Jon Clubb",
-      "driver_slug": "jeff-maconi-r"
+      "driver_slug": "jeff-maconi"
     },
     {
       "number": "89",
@@ -716,7 +716,7 @@
           "41",
           "0",
           "Running",
-          "41"
+          "91"
         ],
         [
           "4",
@@ -752,7 +752,7 @@
           "41",
           "0",
           "Running",
-          "38"
+          "88"
         ],
         [
           "7",
@@ -800,7 +800,7 @@
           "41",
           "0",
           "Running",
-          "34"
+          "84"
         ],
         [
           "11",
@@ -836,7 +836,7 @@
           "41",
           "0",
           "Running",
-          "31"
+          "81"
         ],
         [
           "14",
@@ -848,7 +848,7 @@
           "40",
           "0",
           "Running",
-          "30"
+          "80"
         ],
         [
           "15",
@@ -872,7 +872,7 @@
           "38",
           "0",
           "Running",
-          "28"
+          "78"
         ],
         [
           "17",
@@ -920,7 +920,7 @@
           "33",
           "0",
           "Running",
-          "24"
+          "74"
         ],
         [
           "21",
@@ -932,7 +932,7 @@
           "31",
           "0",
           "Running",
-          "23"
+          "73"
         ],
         [
           "22",
@@ -956,7 +956,7 @@
           "22",
           "0",
           "Crash",
-          "21"
+          "71"
         ],
         [
           "24",
@@ -986,7 +986,7 @@
           "26",
           "33",
           "72",
-          "Chris Werth",
+          "Christopher Werth",
           "CK Motorsports",
           "Chevrolet",
           "19",
@@ -1010,13 +1010,13 @@
           "28",
           "14",
           "89",
-          "Bobby Earnhardt",
+          "Bobby Dale Earnhardt",
           "Rise Racing",
           "Chevrolet",
           "15",
           "0",
           "Running",
-          "16"
+          "66"
         ],
         [
           "29",
@@ -1076,7 +1076,7 @@
           "3",
           "0",
           "Mechanical",
-          "11"
+          "61"
         ]
       ]
     },

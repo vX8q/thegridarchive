@@ -202,7 +202,12 @@
     }
 
     function nextRaceEventDisplayName(e) {
+      var seriesId = e._seriesId || e.series_id || '';
       var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
+      var stripPrefix = window.TGA && window.TGA.stripSeriesPrefixFromEventName;
+      if (stripPrefix) {
+        name = stripPrefix(name, seriesId) || name;
+      }
       if (name && name.indexOf('Java House') === 0) {
         name = name.replace(/^Java House\s+/i, '');
         name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(Object.assign({}, e, { name: name }));
@@ -309,6 +314,9 @@
           if (trackKey.indexOf('hungaroring') >= 0 || trackKey.indexOf('mogyor') >= 0) {
             extraClass += ' nrc-card--hungaroring';
           }
+          if (trackKey.indexOf('north wilkesboro') >= 0) {
+            extraClass += ' nrc-card--north-wilkesboro';
+          }
           if (trackKey.indexOf('canadian tire motorsport') >= 0 || trackKey.indexOf('mosport') >= 0) {
             extraClass += ' nrc-card--canadian-tire-motorsport-park';
           }
@@ -317,6 +325,12 @@
           }
           if (trackKey.indexOf('lime rock') >= 0) {
             extraClass += ' nrc-card--lime-rock';
+          }
+          if (trackKey.indexOf('magny-cours') >= 0 || trackKey.indexOf('magny cours') >= 0 || trackKey.indexOf('nevers magny') >= 0) {
+            extraClass += ' nrc-card--magny-cours';
+          }
+          if (trackKey.indexOf('wanneroo') >= 0 || trackKey.indexOf('barbagallo') >= 0) {
+            extraClass += ' nrc-card--wanneroo-raceway';
           }
           if (trackKey.indexOf('norisring') >= 0) {
             extraClass += ' nrc-card--norisring';
@@ -475,6 +489,18 @@
           if (trackKey.indexOf('chicagoland') >= 0) {
             extraClass += ' nrc-card--chicagoland';
           }
+          if (trackKey.indexOf('lucas oil') >= 0 || trackKey.indexOf('indianapolis raceway park') >= 0 || trackKey.indexOf('brownsburg') >= 0) {
+            extraClass += ' nrc-card--indianapolis-irp';
+          }
+          if (trackKey.indexOf('monadnock') >= 0) {
+            extraClass += ' nrc-card--monadnock-speedway';
+          }
+          if (trackKey.indexOf('mugello') >= 0) {
+            extraClass += ' nrc-card--mugello';
+          }
+          if (trackKey.indexOf('oschersleben') >= 0) {
+            extraClass += ' nrc-card--oschersleben';
+          }
           if (eventNameLc.indexOf('taupo') >= 0 || eventNameLc.indexOf('taupō') >= 0) {
             extraClass += ' nrc-card--taupo';
           }
@@ -499,6 +525,9 @@
           if (eventNameLc.indexOf('hungaroring') >= 0 || eventNameLc.indexOf('hungarian grand prix') >= 0) {
             extraClass += ' nrc-card--hungaroring';
           }
+          if (eventNameLc.indexOf('north wilkesboro') >= 0 || eventNameLc.indexOf('window world 450') >= 0) {
+            extraClass += ' nrc-card--north-wilkesboro';
+          }
           if (eventNameLc.indexOf('canadian tire motorsport') >= 0 || eventNameLc.indexOf('mosport') >= 0) {
             extraClass += ' nrc-card--canadian-tire-motorsport-park';
           }
@@ -507,6 +536,12 @@
           }
           if (eventNameLc.indexOf('lime rock') >= 0) {
             extraClass += ' nrc-card--lime-rock';
+          }
+          if (eventNameLc.indexOf('magny-cours') >= 0 || eventNameLc.indexOf('magny cours') >= 0) {
+            extraClass += ' nrc-card--magny-cours';
+          }
+          if (eventNameLc.indexOf('wanneroo') >= 0 || eventNameLc.indexOf('perth super') >= 0) {
+            extraClass += ' nrc-card--wanneroo-raceway';
           }
           if (eventNameLc.indexOf('norisring') >= 0) {
             extraClass += ' nrc-card--norisring';
@@ -664,6 +699,18 @@
           if (eventNameLc.indexOf('chicagoland') >= 0) {
             extraClass += ' nrc-card--chicagoland';
           }
+          if (eventNameLc.indexOf('lucas oil') >= 0 || eventNameLc.indexOf('indianapolis raceway park') >= 0) {
+            extraClass += ' nrc-card--indianapolis-irp';
+          }
+          if (eventNameLc.indexOf('monadnock') >= 0) {
+            extraClass += ' nrc-card--monadnock-speedway';
+          }
+          if (eventNameLc.indexOf('mugello') >= 0) {
+            extraClass += ' nrc-card--mugello';
+          }
+          if (eventNameLc.indexOf('oschersleben') >= 0) {
+            extraClass += ' nrc-card--oschersleben';
+          }
           if (trackKey.indexOf('pocono raceway') >= 0) {
             extraClass += ' nrc-card--pocono';
           }
@@ -700,12 +747,18 @@
               extraClass += ' nrc-card--interlagos';
             } else if (eventSlug.indexOf('hungaroring') >= 0 || eventSlug.indexOf('hungarian') >= 0) {
               extraClass += ' nrc-card--hungaroring';
+            } else if (eventSlug.indexOf('north-wilkesboro') >= 0 || eventSlug.indexOf('wilkesboro') >= 0) {
+              extraClass += ' nrc-card--north-wilkesboro';
             } else if (eventSlug.indexOf('canadian-tire') >= 0 || eventSlug.indexOf('mosport') >= 0) {
               extraClass += ' nrc-card--canadian-tire-motorsport-park';
             } else if (eventSlug.indexOf('claremont') >= 0) {
               extraClass += ' nrc-card--claremont-motorsports-park';
             } else if (eventSlug.indexOf('lime-rock') >= 0 || eventSlug.indexOf('lime_rock') >= 0) {
               extraClass += ' nrc-card--lime-rock';
+            } else if (eventSlug.indexOf('magny-cours') >= 0 || eventSlug.indexOf('magny_cours') >= 0) {
+              extraClass += ' nrc-card--magny-cours';
+            } else if (eventSlug.indexOf('wanneroo') >= 0 || eventSlug.indexOf('perth') >= 0) {
+              extraClass += ' nrc-card--wanneroo-raceway';
             } else if (eventSlug.indexOf('norisring') >= 0) {
               extraClass += ' nrc-card--norisring';
             } else if (eventSlug.indexOf('reid-park') >= 0 || eventSlug.indexOf('reid_park') >= 0) {
@@ -716,6 +769,14 @@
               extraClass += ' nrc-card--mid-ohio';
             } else if (eventSlug.indexOf('chicagoland') >= 0) {
               extraClass += ' nrc-card--chicagoland';
+            } else if (eventSlug.indexOf('irp') >= 0 || eventSlug.indexOf('lucas-oil') >= 0) {
+              extraClass += ' nrc-card--indianapolis-irp';
+            } else if (eventSlug.indexOf('monadnock') >= 0) {
+              extraClass += ' nrc-card--monadnock-speedway';
+            } else if (eventSlug.indexOf('mugello') >= 0) {
+              extraClass += ' nrc-card--mugello';
+            } else if (eventSlug.indexOf('oschersleben') >= 0) {
+              extraClass += ' nrc-card--oschersleben';
             } else if (eventSlug.indexOf('kansas') >= 0) {
               extraClass += ' nrc-card--kansas';
             } else if (eventSlug.indexOf('autopolis') >= 0) {
@@ -877,7 +938,16 @@
       });
 
       var nrcRefreshPending = false;
-      function scheduleNextRaceRefresh() {
+      // Guards against an infinite refresh loop: if the SAME event id keeps triggering a
+      // refresh (e.g. its raceUtcMs is 0/NaN because of malformed schedule data), stop
+      // asking for a refresh on its account after the first attempt. A real fix in the
+      // underlying data/normalizer is still needed — this just prevents a request storm.
+      var nrcRefreshTriggeredByEventId = {};
+      function scheduleNextRaceRefresh(reasonEventId) {
+        if (reasonEventId) {
+          if (nrcRefreshTriggeredByEventId[reasonEventId]) return;
+          nrcRefreshTriggeredByEventId[reasonEventId] = true;
+        }
         if (nrcRefreshPending) return;
         nrcRefreshPending = true;
         setTimeout(function () {
@@ -895,9 +965,16 @@
       function tick() {
         var now2 = Date.now();
         var needRefresh = false;
+        var needRefreshEventId = null;
         nrcCards.forEach(function (c) {
           if (!c.el || c.expired) return;
           var startTs = c.raceUtcMs || (c.date && c.date.getTime ? c.date.getTime() : 0);
+          if (!startTs) {
+            // Malformed/unparseable date — warn once instead of silently retrying forever.
+            if (!nrcRefreshTriggeredByEventId[c.eventId]) {
+              console.warn('[next-race-cards] event has no valid start time, dropping card:', c.eventId);
+            }
+          }
           var usesSync = eventUsesLiveSync(c.eventId);
           var fromApi = c.eventId && nrcLiveSet[c.eventId];
           var wasLive = c.eventId && nrcEverLiveSet[c.eventId];
@@ -940,6 +1017,10 @@
               c.expired = true;
               if (c.cardEl) c.cardEl.style.display = 'none';
               needRefresh = true;
+              // If it's specifically the "no valid start time" case, tag the refresh with
+              // this event id so scheduleNextRaceRefresh only fires for it once, instead of
+              // looping forever if the underlying schedule data stays broken.
+              if (!startTs) needRefreshEventId = c.eventId;
             }
             return;
           }
@@ -951,7 +1032,7 @@
             ? pad(days) + (window.TGA.t('cd.days') || 'd') + ' ' + pad(hours) + (window.TGA.t('cd.hours') || 'h') + ' ' + pad(mins) + (window.TGA.t('cd.mins') || 'm')
             : pad(hours) + ':' + pad(mins) + ':' + pad(secs);
         });
-        if (needRefresh) scheduleNextRaceRefresh();
+        if (needRefresh) scheduleNextRaceRefresh(needRefreshEventId);
       }
       nrcTickFn = tick;
 

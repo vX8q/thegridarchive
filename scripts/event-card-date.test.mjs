@@ -302,4 +302,33 @@ test('WEC single-day Lone Star Le Mans stays one day', () => {
   assert.strictEqual(range.end, '2026-09-06');
 });
 
+test('F1 non-sprint multi-day weekend shows race day only (not Fri–Sun practice span)', () => {
+  const e = loadScheduleEntry('f1.json', 'F1_2026_8');
+  assert.ok(e);
+  assert.strictEqual(e.name, 'Austrian Grand Prix');
+  e._seriesId = 'F1';
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-06-28');
+  assert.strictEqual(range.end, '2026-06-28');
+});
+
+test('F1 Las Vegas night race uses viewer-local race day (single day, no range widen)', () => {
+  const e = loadScheduleEntry('f1.json', 'F1_2026_21');
+  assert.ok(e);
+  assert.strictEqual(e.name, 'Las Vegas Grand Prix');
+  assert.ok(String(e.time_msk || '').includes('/') || String(e.time_msk || '').includes('07:00'));
+  e.time_msk = '11/22/26 07:00';
+  e._seriesId = 'F1';
+  // Viewer in MSK: race UTC falls on Nov 22 — date matches displayed local time.
+  const prev = TGA.getEventRaceStartDateIso;
+  TGA.getEventRaceStartDateIso = () => '2026-11-22';
+  try {
+    const range = TGA.getEventRaceDateRangeIso(e);
+    assert.strictEqual(range.start, '2026-11-22');
+    assert.strictEqual(range.end, '2026-11-22');
+  } finally {
+    TGA.getEventRaceStartDateIso = prev;
+  }
+});
+
 console.log('All event-card-date tests passed.');

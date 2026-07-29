@@ -62,13 +62,14 @@
       { rd:15,  grand_prix: 'Italian Grand Prix',             circuit: 'Italy — Monza Circuit, Monza',                                          date: '6 September' },
       { rd:16,  grand_prix: 'Spanish Grand Prix',             circuit: 'Spain — Madring, Madrid',                                               date: '13 September' },
       { rd:17,  grand_prix: 'Azerbaijan Grand Prix',          circuit: 'Azerbaijan — Baku City Circuit, Baku',                                  date: '26 September' },
-      { rd:18,  grand_prix: 'Singapore Grand Prix',           circuit: 'Singapore — Marina Bay Street Circuit, Singapore',                      date: '11 October' },
-      { rd:19,  grand_prix: 'United States Grand Prix',       circuit: 'United States — Circuit of the Americas, Austin, Texas',                date: '25 October' },
-      { rd:20,  grand_prix: 'Mexico City Grand Prix',         circuit: 'Mexico — Autodromo Hermanos Rodriguez, Mexico City',                    date: '1 November' },
-      { rd:21,  grand_prix: 'Sao Paulo Grand Prix',           circuit: 'Brazil — Interlagos Circuit, Sao Paulo',                                 date: '8 November' },
-      { rd:22,  grand_prix: 'Las Vegas Grand Prix',           circuit: 'United States — Las Vegas Strip Circuit, Paradise, Nevada',             date: '21 November' },
-      { rd:23,  grand_prix: 'Qatar Grand Prix',               circuit: 'Qatar — Lusail International Circuit, Lusail',                           date: '29 November' },
-      { rd:24,  grand_prix: 'Abu Dhabi Grand Prix',           circuit: 'United Arab Emirates — Yas Marina Circuit, Abu Dhabi',                  date: '6 December' }
+      { rd:18,  grand_prix: 'Bahrain Grand Prix',             circuit: 'Malaysia — Sepang International Circuit, Sepang',                      date: '4 October' },
+      { rd:19,  grand_prix: 'Singapore Grand Prix',           circuit: 'Singapore — Marina Bay Street Circuit, Singapore',                      date: '11 October' },
+      { rd:20,  grand_prix: 'United States Grand Prix',       circuit: 'United States — Circuit of the Americas, Austin, Texas',                date: '25 October' },
+      { rd:21,  grand_prix: 'Mexico City Grand Prix',         circuit: 'Mexico — Autodromo Hermanos Rodriguez, Mexico City',                    date: '1 November' },
+      { rd:22,  grand_prix: 'Sao Paulo Grand Prix',           circuit: 'Brazil — Interlagos Circuit, Sao Paulo',                                 date: '8 November' },
+      { rd:23,  grand_prix: 'Las Vegas Grand Prix',           circuit: 'United States — Las Vegas Strip Circuit, Paradise, Nevada',             date: '21 November' },
+      { rd:24,  grand_prix: 'Qatar Grand Prix',               circuit: 'Qatar — Lusail International Circuit, Lusail',                           date: '29 November' },
+      { rd:25,  grand_prix: 'Abu Dhabi Grand Prix',           circuit: 'United Arab Emirates — Yas Marina Circuit, Abu Dhabi',                  date: '6 December' }
     ],
 
     f1_2025: [
@@ -188,7 +189,7 @@
       F1_2026_5:  { sprintDate: '2026-05-23', sprintLocal: '12:00', sprintMsk: '19:00' },
       F1_2026_9:  { sprintDate: '2026-07-04', sprintLocal: '12:00', sprintMsk: '14:00' },
       F1_2026_12: { sprintDate: '2026-08-22', sprintLocal: '12:00', sprintMsk: '13:00' },
-      F1_2026_16: { sprintDate: '2026-10-10', sprintLocal: '17:00', sprintMsk: '12:00' }
+      F1_2026_17: { sprintDate: '2026-10-10', sprintLocal: '17:00', sprintMsk: '12:00' }
     }
   };
 })();

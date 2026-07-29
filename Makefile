@@ -27,6 +27,7 @@ ci-data-audits:
 	node scripts/audit-stockcar-data.test.mjs
 	node scripts/audit-caution-breakdown.mjs
 	node scripts/audit-innerhtml.mjs
+	node scripts/fix-driver-slug-aliases.mjs --check
 
 js-test:
 	node scripts/js-test.mjs

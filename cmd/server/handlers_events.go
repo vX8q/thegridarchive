@@ -10,28 +10,38 @@ import (
 	"strings"
 
 	"github.com/vX8q/tga/config"
-	"github.com/vX8q/tga/internal/cache"
-	"github.com/vX8q/tga/internal/schedulefile"
 	"github.com/vX8q/tga/internal/store"
 )
 
-func handleEvent(w http.ResponseWriter, r *http.Request, dataDir string, _ *cache.TTL) {
-	eventID := strings.TrimPrefix(r.URL.Path, "/api/events/")
-	eventID = strings.TrimRight(eventID, "/")
-	eventID = strings.TrimSpace(eventID)
-	if eventID == "" {
+func handleEvent(w http.ResponseWriter, r *http.Request, dataDir string) {
+	pathRest := strings.TrimPrefix(r.URL.Path, "/api/events/")
+	pathRest = strings.Trim(pathRest, "/")
+	pathRest = strings.TrimSpace(pathRest)
+	if pathRest == "" {
 		http.NotFound(w, r)
 		return
 	}
+
+	// Batch: GET /api/events/summaries?ids=A,B,C
+	if strings.EqualFold(pathRest, "summaries") {
+		handleEventSummaries(w, r, dataDir)
+		return
+	}
+
+	// Single: GET /api/events/{id}/summary
+	if strings.HasSuffix(strings.ToLower(pathRest), "/summary") {
+		eventID := strings.TrimSpace(pathRest[:len(pathRest)-len("/summary")])
+		eventID = strings.TrimRight(eventID, "/")
+		handleEventSummary(w, r, dataDir, eventID)
+		return
+	}
+
+	eventID := pathRest
 	if !ValidEventOrSeriesID(eventID) {
 		writeError(w, http.StatusBadRequest, "invalid event id")
 		return
 	}
-	cacheKey := strings.ToLower(eventID)
-	fileID := schedulefile.ResolveSupercarsHTTPFileID(dataDir, cacheKey)
-	// Do not cache event responses so JSON edits (laps, distance, tables) show up immediately.
-	// schedulefile reads from data/events/{Series}/{Year} and the flat directory.
-	body, err := schedulefile.ReadEventDetailFileAtID(dataDir, fileID)
+	body, err := loadEnrichedEventBody(dataDir, eventID)
 	if err != nil {
 		if os.IsNotExist(err) {
 			writeError(w, http.StatusNotFound, "not found")
@@ -47,18 +57,6 @@ func handleEvent(w http.ResponseWriter, r *http.Request, dataDir string, _ *cach
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
-
-	seriesID := extractSeriesIDFromEventID(eventID)
-	if enriched, err := schedulefile.EnrichPSCEvent(body, seriesID); err == nil {
-		body = enriched
-	}
-	if enriched, err := schedulefile.EnrichSupercarsEvent(body, dataDir, seriesID); err == nil {
-		body = enriched
-	}
-	if enriched, err := schedulefile.EnrichStockCarEventTeamNames(body, dataDir, seriesID); err == nil {
-		body = enriched
-	}
-	body = schedulefile.PatchSupercarsEventIDFromRequest(body, eventID, fileID)
 	_, _ = w.Write(body)
 }
 

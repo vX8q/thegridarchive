@@ -44,6 +44,77 @@ func TestSuperFormulaSessionLooksLive(t *testing.T) {
 	}
 }
 
+// RaceNow sends every numeric field as a JSON string; older builds dropped the
+// whole rows payload on the resulting type error.
+func TestApplySuperFormulaRaceNowMessage_StringAndNumericFields(t *testing.T) {
+	cases := map[string]string{
+		"strings": `{"type":"0","rows":[{"type":"L","CARNO":"16","DRIVER_E":"Tomoki Nojiri","TEAM_E":"TEAM MUGEN","MAKER":"HONDA","LAPS":"41","TOTAL_TIME":"3956.8","START_POS":"1","RUN_FLAG":"1"}]}`,
+		"numbers": `{"type":"0","rows":[{"type":"L","CARNO":"16","DRIVER_E":"Tomoki Nojiri","TEAM_E":"TEAM MUGEN","MAKER":"HONDA","LAPS":41,"TOTAL_TIME":3956.8,"START_POS":1,"RUN_FLAG":"1"}]}`,
+	}
+	for name, msg := range cases {
+		t.Run(name, func(t *testing.T) {
+			snap := &sfRaceNowSnapshot{}
+			applySuperFormulaRaceNowMessage(snap, []byte(msg))
+			if len(snap.Rows) != 1 {
+				t.Fatalf("rows = %d, want 1", len(snap.Rows))
+			}
+			row := snap.Rows[0]
+			if row.Laps.Int() != 41 || row.StartPos.Int() != 1 || row.TotalTime.Float() != 3956.8 {
+				t.Fatalf("row = %#v", row)
+			}
+			if !superFormulaSessionLooksLive(snap) {
+				t.Fatal("running car should look live")
+			}
+		})
+	}
+}
+
+func TestSuperFormulaTimingStalled(t *testing.T) {
+	origPrint := superFormulaTimingPrint
+	origMoved := superFormulaTimingMoved
+	defer func() {
+		superFormulaTimingPrint = origPrint
+		superFormulaTimingMoved = origMoved
+	}()
+
+	superFormulaTimingPrint = ""
+	superFormulaTimingMoved = time.Time{}
+	if superFormulaTimingStalled() {
+		t.Fatal("unknown timing age must not count as stalled")
+	}
+
+	superFormulaTimingMoved = time.Now()
+	if superFormulaTimingStalled() {
+		t.Fatal("timing that just moved must not be stalled")
+	}
+
+	superFormulaTimingMoved = time.Now().Add(-superFormulaStaleAfter - time.Minute)
+	if !superFormulaTimingStalled() {
+		t.Fatal("frozen classification must be treated as stalled")
+	}
+}
+
+func TestSuperFormulaBoardFromSnapshot_RequiresScheduledEvent(t *testing.T) {
+	origNow := superFormulaNowFunc
+	defer func() { superFormulaNowFunc = origNow }()
+	superFormulaNowFunc = func() time.Time { return time.Date(2026, 7, 27, 12, 0, 0, 0, time.UTC) }
+
+	dir := t.TempDir()
+	schedDir := filepath.Join(dir, "schedules")
+	if err := os.MkdirAll(schedDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	sched := `[{"id":"SUPER_FORMULA_2026_6","start_date":"2026-07-18"}]`
+	if err := os.WriteFile(filepath.Join(schedDir, "super_formula.json"), []byte(sched), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	snap := sfSnapshotFromMessages(t)
+	if _, err := superFormulaBoardFromSnapshot(snap, dir, 5); err == nil {
+		t.Fatal("classification served nine days after the round must not build a board")
+	}
+}
+
 func TestSuperFormulaLeaderboardFrom(t *testing.T) {
 	snap := sfSnapshotFromMessages(t)
 	leaders := superFormulaLeaderboardFrom(snap.Rows, "R", 0)

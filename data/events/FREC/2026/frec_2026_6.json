@@ -1,0 +1,2338 @@
+{
+  "event_id": "FREC_2026_6",
+  "series": "FIA Formula Regional European Championship",
+  "race": "Paul Ricard",
+  "date": "17–19 July 2026",
+  "start_date": "2026-07-17",
+  "end_date": "2026-07-19",
+  "track": "Circuit Paul Ricard",
+  "location": "Le Castellet, Var, France",
+  "laps": "",
+  "distance": "",
+  "event_preview": "Circuit Paul Ricard is a 5.842 km permanent road course in Le Castellet, in the Var department of southern France, known for its mixture of long straights, technical corners and high-speed sections that force teams to balance aerodynamic efficiency with stability. Round 6 of the 2026 FIA Formula Regional European Championship, held July 17-19, is the final event before the summer break and follows a two-qualifying, two-race format.\n\nRashid Al Dhaheri arrived at Le Castellet leading the standings after strengthening his position with victory at the Hungaroring, though only 35 points separated the top four drivers heading into the round — Kean Nakamura-Berta, Sebastian Wheldon and Emanuele Olivieri all remained within striking distance. Eight different drivers had won races across the opening five rounds, and seven different drivers had taken pole position in the second-generation Tatuus T-326, reflecting a season with no dominant force. Paul Ricard carries pedigree for producing future stars — reigning FREC champion Freddie Slater swept both races here in 2025 before graduating to FIA Formula 3, while current Formula One championship leader Kimi Antonelli won at the circuit during his own 2023 Formula Regional campaign, the third of five wins that season.",
+  "event_preview_ru": "Circuit Paul Ricard — постоянная трасса длиной 5.842 км в Le Castellet, в департаменте Var на юге Франции, известная сочетанием длинных прямых, техничных поворотов и скоростных секций, где командам приходится искать баланс между аэродинамической эффективностью и стабильностью. Шестой этап FIA Formula Regional European Championship 2026, проходящий 17-19 июля, становится последним уик-эндом перед летней паузой и использует формат с двумя квалификациями и двумя гонками.\n\nRashid Al Dhaheri приехал в Le Castellet лидером чемпионата после того, как укрепил своё положение победой на Hungaroring, хотя перед этапом всего 35 очков разделяли первую четвёрку — Kean Nakamura-Berta, Sebastian Wheldon и Emanuele Olivieri оставались на расстоянии атаки. В восьми гонках первых пяти раундов победили восемь разных пилотов, а поул брали семь разных гонщиков на втором поколении Tatuus T-326, что подчёркивает отсутствие доминирующей силы в сезоне. Paul Ricard имеет репутацию трассы, где проявляются будущие звёзды: действующий чемпион FREC Freddie Slater сделал здесь дубль в 2025 году перед переходом в FIA Formula 3, а нынешний лидер чемпионата Formula One Kimi Antonelli выиграл на этой трассе в своей кампании Formula Regional 2023 года — это была третья из его пяти побед в том сезоне.",
+  "entry_list": [
+    {
+      "number": "2",
+      "driver": "Alex Ninovic",
+      "team": "Rodin Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "alex-ninovic"
+    },
+    {
+      "number": "4",
+      "driver": "Reza Seewooruthun",
+      "team": "Rodin Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "reza-seewooruthun"
+    },
+    {
+      "number": "78",
+      "driver": "Gabriel Gomez",
+      "team": "Rodin Motorsport",
+      "status": "R",
+      "rounds": "1–6",
+      "driver_slug": "gabriel-gomez"
+    },
+    {
+      "number": "3",
+      "driver": "Saqer Al-Maosherji",
+      "team": "G4 Racing",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "saqer-al-maosherji"
+    },
+    {
+      "number": "23",
+      "driver": "Rahim Alibhai",
+      "team": "G4 Racing",
+      "status": "R",
+      "rounds": "1–6",
+      "driver_slug": "rahim-alibhai"
+    },
+    {
+      "number": "67",
+      "driver": "Marcus Sæter",
+      "team": "G4 Racing",
+      "status": "R",
+      "rounds": "1–6",
+      "driver_slug": "marcus-saeter"
+    },
+    {
+      "number": "5",
+      "driver": "Miguel Costa",
+      "team": "RPM",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "miguel-costa"
+    },
+    {
+      "number": "8",
+      "driver": "Jan Przyrowski",
+      "team": "RPM",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "jan-przyrowski"
+    },
+    {
+      "number": "99",
+      "driver": "Giovanni Maschio",
+      "team": "RPM",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "giovanni-maschio"
+    },
+    {
+      "number": "6",
+      "driver": "Enea Frey",
+      "team": "CL Motorsport",
+      "status": "",
+      "rounds": "1",
+      "driver_slug": "enea-frey"
+    },
+    {
+      "number": "9",
+      "driver": "Thomas Strauven",
+      "team": "CL Motorsport",
+      "status": "",
+      "rounds": "2–3",
+      "driver_slug": "thomas-strauven"
+    },
+    {
+      "number": "14",
+      "driver": "Noah Lisle",
+      "team": "CL Motorsport",
+      "status": "",
+      "rounds": "5–6",
+      "driver_slug": "noah-lisle"
+    },
+    {
+      "number": "24",
+      "driver": "Jules Roussel",
+      "team": "CL Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "jules-roussel"
+    },
+    {
+      "number": "42",
+      "driver": "Kyuho Lee",
+      "team": "CL Motorsport",
+      "status": "R",
+      "rounds": "4",
+      "driver_slug": "kyuho-lee"
+    },
+    {
+      "number": "69",
+      "driver": "Reno Francot",
+      "team": "CL Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "reno-francot"
+    },
+    {
+      "number": "7",
+      "driver": "Andrea Dupé",
+      "team": "Van Amersfoort Racing",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "andrea-dupe"
+    },
+    {
+      "number": "11",
+      "driver": "Francisco Macedo",
+      "team": "Van Amersfoort Racing",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "francisco-macedo"
+    },
+    {
+      "number": "55",
+      "driver": "Dion Gowda",
+      "team": "Van Amersfoort Racing",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "dion-gowda"
+    },
+    {
+      "number": "12",
+      "driver": "Yuki Sano",
+      "team": "R-ace GP",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "yuki-sano"
+    },
+    {
+      "number": "71",
+      "driver": "Rashid Al Dhaheri",
+      "team": "R-ace GP",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "rashid-al-dhaheri"
+    },
+    {
+      "number": "73",
+      "driver": "Emanuele Olivieri",
+      "team": "R-ace GP",
+      "status": "R",
+      "rounds": "1–6",
+      "driver_slug": "emanuele-olivieri"
+    },
+    {
+      "number": "15",
+      "driver": "Alexander Abkhazava",
+      "team": "MP Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "alexander-abkhazava"
+    },
+    {
+      "number": "28",
+      "driver": "Zhenrui Chi",
+      "team": "MP Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "zhenrui-chi"
+    },
+    {
+      "number": "98",
+      "driver": "Sebastian Wheldon",
+      "team": "MP Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "sebastian-wheldon"
+    },
+    {
+      "number": "19",
+      "driver": "Kabir Anurag",
+      "team": "ART Grand Prix",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "kabir-anurag"
+    },
+    {
+      "number": "27",
+      "driver": "Matteo Giaccardi",
+      "team": "ART Grand Prix",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "matteo-giaccardi"
+    },
+    {
+      "number": "95",
+      "driver": "Alexandre Munoz",
+      "team": "ART Grand Prix",
+      "status": "R",
+      "rounds": "1–6",
+      "driver_slug": "alexandre-munoz"
+    },
+    {
+      "number": "33",
+      "driver": "Maximilian Popov",
+      "team": "Trident Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "maximilian-popov"
+    },
+    {
+      "number": "47",
+      "driver": "Andrija Kostić",
+      "team": "Trident Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "andrija-kostic"
+    },
+    {
+      "number": "87",
+      "driver": "Kai Daryanani",
+      "team": "Trident Motorsport",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "kai-daryanani"
+    },
+    {
+      "number": "51",
+      "driver": "Kean Nakamura-Berta",
+      "team": "Prema Racing",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "kean-nakamura-berta"
+    },
+    {
+      "number": "60",
+      "driver": "Tomass Štolcermanis",
+      "team": "Prema Racing",
+      "status": "R",
+      "rounds": "1–6",
+      "driver_slug": "tomass-stolcermanis"
+    },
+    {
+      "number": "88",
+      "driver": "Salim Hanna",
+      "team": "Prema Racing",
+      "status": "",
+      "rounds": "1–6",
+      "driver_slug": "salim-hanna"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "sessions": [
+        {
+          "title": "Free Practice 1",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "51",
+              "K. Nakamura-Berta",
+              "Prema Racing",
+              "18",
+              "1:59.187",
+              "—",
+              "175.8"
+            ],
+            [
+              "2",
+              "88",
+              "S. Hanna",
+              "Prema Racing",
+              "18",
+              "1:59.513",
+              "+0.326",
+              "175.3"
+            ],
+            [
+              "3",
+              "2",
+              "A. Ninovic",
+              "Rodin Motorsport",
+              "18",
+              "1:59.554",
+              "+0.367",
+              "175.3"
+            ],
+            [
+              "4",
+              "60",
+              "T. Štolcermanis",
+              "Prema Racing",
+              "18",
+              "1:59.592",
+              "+0.405",
+              "175.2"
+            ],
+            [
+              "5",
+              "33",
+              "M. Popov",
+              "Trident Motorsport",
+              "17",
+              "1:59.619",
+              "+0.432",
+              "175.2"
+            ],
+            [
+              "6",
+              "73",
+              "E. Olivieri",
+              "R-ace GP",
+              "16",
+              "1:59.625",
+              "+0.438",
+              "175.2"
+            ],
+            [
+              "7",
+              "71",
+              "R. Al Dhaheri",
+              "R-ace GP",
+              "18",
+              "1:59.644",
+              "+0.457",
+              "175.1"
+            ],
+            [
+              "8",
+              "5",
+              "M. Costa",
+              "RPM",
+              "21",
+              "1:59.676",
+              "+0.489",
+              "175.1"
+            ],
+            [
+              "9",
+              "4",
+              "R. Seewooruthun",
+              "Rodin Motorsport",
+              "19",
+              "1:59.703",
+              "+0.516",
+              "175.0"
+            ],
+            [
+              "10",
+              "98",
+              "S. Wheldon",
+              "MP Motorsport",
+              "19",
+              "1:59.739",
+              "+0.552",
+              "175.0"
+            ],
+            [
+              "11",
+              "11",
+              "F. Macedo",
+              "Van Amersfoort Racing",
+              "19",
+              "1:59.774",
+              "+0.587",
+              "174.9"
+            ],
+            [
+              "12",
+              "67",
+              "M. Sæter",
+              "G4 Racing",
+              "19",
+              "1:59.805",
+              "+0.618",
+              "174.9"
+            ],
+            [
+              "13",
+              "78",
+              "G. Gomez",
+              "Rodin Motorsport",
+              "18",
+              "1:59.831",
+              "+0.644",
+              "174.9"
+            ],
+            [
+              "14",
+              "69",
+              "R. Francot",
+              "CL Motorsport",
+              "21",
+              "1:59.839",
+              "+0.652",
+              "174.8"
+            ],
+            [
+              "15",
+              "15",
+              "A. Abkhazava",
+              "MP Motorsport",
+              "19",
+              "1:59.845",
+              "+0.658",
+              "174.8"
+            ],
+            [
+              "16",
+              "19",
+              "K. Anurag",
+              "ART Grand Prix",
+              "19",
+              "1:59.934",
+              "+0.747",
+              "174.7"
+            ],
+            [
+              "17",
+              "8",
+              "J. Przyrowski",
+              "RPM",
+              "20",
+              "1:59.961",
+              "+0.774",
+              "174.7"
+            ],
+            [
+              "18",
+              "3",
+              "S. Al-Maosherji",
+              "G4 Racing",
+              "18",
+              "1:59.975",
+              "+0.788",
+              "174.6"
+            ],
+            [
+              "19",
+              "47",
+              "A. Kostić",
+              "Trident Motorsport",
+              "16",
+              "1:59.980",
+              "+0.793",
+              "174.6"
+            ],
+            [
+              "20",
+              "87",
+              "K. Daryanani",
+              "Trident Motorsport",
+              "16",
+              "1:59.988",
+              "+0.801",
+              "174.6"
+            ],
+            [
+              "21",
+              "12",
+              "Y. Sano",
+              "R-ace GP",
+              "19",
+              "2:00.022",
+              "+0.835",
+              "174.6"
+            ],
+            [
+              "22",
+              "28",
+              "Z. Chi",
+              "MP Motorsport",
+              "19",
+              "2:00.054",
+              "+0.867",
+              "174.5"
+            ],
+            [
+              "23",
+              "95",
+              "A. Munoz",
+              "ART Grand Prix",
+              "20",
+              "2:00.109",
+              "+0.922",
+              "174.5"
+            ],
+            [
+              "24",
+              "55",
+              "D. Gowda",
+              "Van Amersfoort Racing",
+              "19",
+              "2:00.155",
+              "+0.968",
+              "174.4"
+            ],
+            [
+              "25",
+              "7",
+              "A. Dupé",
+              "Van Amersfoort Racing",
+              "18",
+              "2:00.161",
+              "+0.974",
+              "174.4"
+            ],
+            [
+              "26",
+              "27",
+              "M. Giaccardi",
+              "ART Grand Prix",
+              "17",
+              "2:00.193",
+              "+1.006",
+              "174.3"
+            ],
+            [
+              "27",
+              "24",
+              "J. Roussel",
+              "CL Motorsport",
+              "19",
+              "2:00.387",
+              "+1.200",
+              "174.0"
+            ],
+            [
+              "28",
+              "23",
+              "R. Alibhai",
+              "G4 Racing",
+              "19",
+              "2:00.433",
+              "+1.246",
+              "174.0"
+            ],
+            [
+              "29",
+              "99",
+              "G. Maschio",
+              "RPM",
+              "20",
+              "2:00.747",
+              "+1.560",
+              "173.5"
+            ],
+            [
+              "30",
+              "14",
+              "N. Lisle",
+              "CL Motorsport",
+              "20",
+              "2:00.965",
+              "+1.778",
+              "173.2"
+            ]
+          ]
+        },
+        {
+          "title": "Free Practice 2",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "98",
+              "S. Wheldon",
+              "MP Motorsport",
+              "18",
+              "1:58.588",
+              "—",
+              "176.7"
+            ],
+            [
+              "2",
+              "33",
+              "M. Popov",
+              "Trident Motorsport",
+              "19",
+              "1:58.667",
+              "+0.079",
+              "176.6"
+            ],
+            [
+              "3",
+              "71",
+              "R. Al Dhaheri",
+              "R-ace GP",
+              "17",
+              "1:58.711",
+              "+0.123",
+              "176.5"
+            ],
+            [
+              "4",
+              "73",
+              "E. Olivieri",
+              "R-ace GP",
+              "18",
+              "1:58.849",
+              "+0.261",
+              "176.3"
+            ],
+            [
+              "5",
+              "28",
+              "Z. Chi",
+              "MP Motorsport",
+              "17",
+              "1:58.912",
+              "+0.324",
+              "176.2"
+            ],
+            [
+              "6",
+              "15",
+              "A. Abkhazava",
+              "MP Motorsport",
+              "17",
+              "1:58.922",
+              "+0.334",
+              "176.2"
+            ],
+            [
+              "7",
+              "69",
+              "R. Francot",
+              "CL Motorsport",
+              "19",
+              "1:58.956",
+              "+0.368",
+              "176.1"
+            ],
+            [
+              "8",
+              "51",
+              "K. Nakamura-Berta",
+              "Prema Racing",
+              "19",
+              "1:58.997",
+              "+0.409",
+              "176.1"
+            ],
+            [
+              "9",
+              "78",
+              "G. Gomez",
+              "Rodin Motorsport",
+              "19",
+              "1:59.045",
+              "+0.457",
+              "176.0"
+            ],
+            [
+              "10",
+              "24",
+              "J. Roussel",
+              "CL Motorsport",
+              "18",
+              "1:59.138",
+              "+0.550",
+              "175.9"
+            ],
+            [
+              "11",
+              "95",
+              "A. Munoz",
+              "ART Grand Prix",
+              "19",
+              "1:59.231",
+              "+0.643",
+              "175.7"
+            ],
+            [
+              "12",
+              "4",
+              "R. Seewooruthun",
+              "Rodin Motorsport",
+              "19",
+              "1:59.253",
+              "+0.665",
+              "175.7"
+            ],
+            [
+              "13",
+              "67",
+              "M. Sæter",
+              "G4 Racing",
+              "19",
+              "1:59.318",
+              "+0.730",
+              "175.6"
+            ],
+            [
+              "14",
+              "60",
+              "T. Štolcermanis",
+              "Prema Racing",
+              "19",
+              "1:59.328",
+              "+0.740",
+              "175.6"
+            ],
+            [
+              "15",
+              "55",
+              "D. Gowda",
+              "Van Amersfoort Racing",
+              "18",
+              "1:59.367",
+              "+0.779",
+              "175.5"
+            ],
+            [
+              "16",
+              "47",
+              "A. Kostić",
+              "Trident Motorsport",
+              "16",
+              "1:59.373",
+              "+0.785",
+              "175.5"
+            ],
+            [
+              "17",
+              "12",
+              "Y. Sano",
+              "R-ace GP",
+              "18",
+              "1:59.378",
+              "+0.790",
+              "175.5"
+            ],
+            [
+              "18",
+              "2",
+              "A. Ninovic",
+              "Rodin Motorsport",
+              "19",
+              "1:59.401",
+              "+0.813",
+              "175.5"
+            ],
+            [
+              "19",
+              "27",
+              "M. Giaccardi",
+              "ART Grand Prix",
+              "20",
+              "1:59.424",
+              "+0.836",
+              "175.5"
+            ],
+            [
+              "20",
+              "8",
+              "J. Przyrowski",
+              "RPM",
+              "20",
+              "1:59.451",
+              "+0.863",
+              "175.4"
+            ],
+            [
+              "21",
+              "88",
+              "S. Hanna",
+              "Prema Racing",
+              "19",
+              "1:59.453",
+              "+0.865",
+              "175.4"
+            ],
+            [
+              "22",
+              "87",
+              "K. Daryanani",
+              "Trident Motorsport",
+              "16",
+              "1:59.453",
+              "+0.865",
+              "175.4"
+            ],
+            [
+              "23",
+              "19",
+              "K. Anurag",
+              "ART Grand Prix",
+              "19",
+              "1:59.510",
+              "+0.922",
+              "175.3"
+            ],
+            [
+              "24",
+              "11",
+              "F. Macedo",
+              "Van Amersfoort Racing",
+              "19",
+              "1:59.552",
+              "+0.964",
+              "175.3"
+            ],
+            [
+              "25",
+              "99",
+              "G. Maschio",
+              "RPM",
+              "19",
+              "1:59.630",
+              "+1.042",
+              "175.2"
+            ],
+            [
+              "26",
+              "7",
+              "A. Dupé",
+              "Van Amersfoort Racing",
+              "17",
+              "1:59.650",
+              "+1.062",
+              "175.1"
+            ],
+            [
+              "27",
+              "3",
+              "S. Al-Maosherji",
+              "G4 Racing",
+              "20",
+              "1:59.689",
+              "+1.101",
+              "175.1"
+            ],
+            [
+              "28",
+              "5",
+              "M. Costa",
+              "RPM",
+              "19",
+              "2:00.242",
+              "+1.654",
+              "174.3"
+            ],
+            [
+              "29",
+              "14",
+              "N. Lisle",
+              "CL Motorsport",
+              "19",
+              "2:00.254",
+              "+1.666",
+              "174.2"
+            ],
+            [
+              "30",
+              "23",
+              "R. Alibhai",
+              "G4 Racing",
+              "17",
+              "2:00.460",
+              "+1.872",
+              "173.9"
+            ]
+          ]
+        }
+      ]
+    },
+    "qualifying": {
+      "sessions": [
+        {
+          "title": "Qualifying 1 - Group A",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "51",
+              "K. Nakamura-Berta",
+              "Prema Racing",
+              "8",
+              "1:57.824",
+              "—",
+              "177.8"
+            ],
+            [
+              "2",
+              "15",
+              "A. Abkhazava",
+              "MP Motorsport",
+              "7",
+              "1:57.829",
+              "+0.005",
+              "177.8"
+            ],
+            [
+              "3",
+              "73",
+              "E. Olivieri",
+              "R-ace GP",
+              "8",
+              "1:57.912",
+              "+0.088",
+              "177.7"
+            ],
+            [
+              "4",
+              "67",
+              "M. Sæter",
+              "G4 Racing",
+              "8",
+              "1:58.175",
+              "+0.351",
+              "177.3"
+            ],
+            [
+              "5",
+              "88",
+              "S. Hanna",
+              "Prema Racing",
+              "8",
+              "1:58.202",
+              "+0.378",
+              "177.3"
+            ],
+            [
+              "6",
+              "19",
+              "K. Anurag",
+              "ART Grand Prix",
+              "8",
+              "1:58.294",
+              "+0.470",
+              "177.1"
+            ],
+            [
+              "7",
+              "27",
+              "M. Giaccardi",
+              "ART Grand Prix",
+              "7",
+              "1:58.356",
+              "+0.532",
+              "177.0"
+            ],
+            [
+              "8",
+              "95",
+              "A. Munoz",
+              "ART Grand Prix",
+              "7",
+              "1:58.463",
+              "+0.639",
+              "176.9"
+            ],
+            [
+              "9",
+              "8",
+              "J. Przyrowski",
+              "RPM",
+              "8",
+              "1:58.488",
+              "+0.664",
+              "176.8"
+            ],
+            [
+              "10",
+              "12",
+              "Y. Sano",
+              "R-ace GP",
+              "8",
+              "1:58.570",
+              "+0.746",
+              "176.7"
+            ],
+            [
+              "11",
+              "55",
+              "D. Gowda",
+              "Van Amersfoort Racing",
+              "8",
+              "1:58.582",
+              "+0.758",
+              "176.7"
+            ],
+            [
+              "12",
+              "47",
+              "A. Kostić",
+              "Trident Motorsport",
+              "8",
+              "1:58.771",
+              "+0.947",
+              "176.4"
+            ],
+            [
+              "13",
+              "11",
+              "F. Macedo",
+              "Van Amersfoort Racing",
+              "7",
+              "1:58.857",
+              "+1.033",
+              "176.3"
+            ],
+            [
+              "14",
+              "24",
+              "J. Roussel",
+              "CL Motorsport",
+              "8",
+              "1:58.863",
+              "+1.039",
+              "176.3"
+            ],
+            [
+              "15",
+              "99",
+              "G. Maschio",
+              "RPM",
+              "8",
+              "1:59.039",
+              "+1.215",
+              "176.0"
+            ]
+          ]
+        },
+        {
+          "title": "Qualifying 1 - Group B",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "98",
+              "S. Wheldon",
+              "MP Motorsport",
+              "8",
+              "1:57.832",
+              "—",
+              "177.8"
+            ],
+            [
+              "2",
+              "71",
+              "R. Al Dhaheri",
+              "R-ace GP",
+              "8",
+              "1:57.854",
+              "+0.022",
+              "177.8"
+            ],
+            [
+              "3",
+              "78",
+              "G. Gomez",
+              "Rodin Motorsport",
+              "8",
+              "1:57.898",
+              "+0.066",
+              "177.7"
+            ],
+            [
+              "4",
+              "2",
+              "A. Ninovic",
+              "Rodin Motorsport",
+              "8",
+              "1:57.919",
+              "+0.087",
+              "177.7"
+            ],
+            [
+              "5",
+              "69",
+              "R. Francot",
+              "CL Motorsport",
+              "8",
+              "1:57.960",
+              "+0.128",
+              "177.6"
+            ],
+            [
+              "6",
+              "60",
+              "T. Štolcermanis",
+              "Prema Racing",
+              "8",
+              "1:58.081",
+              "+0.249",
+              "177.4"
+            ],
+            [
+              "7",
+              "28",
+              "Z. Chi",
+              "MP Motorsport",
+              "8",
+              "1:58.225",
+              "+0.393",
+              "177.2"
+            ],
+            [
+              "8",
+              "4",
+              "R. Seewooruthun",
+              "Rodin Motorsport",
+              "8",
+              "1:58.290",
+              "+0.458",
+              "177.1"
+            ],
+            [
+              "9",
+              "5",
+              "M. Costa",
+              "RPM",
+              "8",
+              "1:58.326",
+              "+0.494",
+              "177.1"
+            ],
+            [
+              "10",
+              "7",
+              "A. Dupé",
+              "Van Amersfoort Racing",
+              "8",
+              "1:58.384",
+              "+0.552",
+              "177.0"
+            ],
+            [
+              "11",
+              "3",
+              "S. Al-Maosherji",
+              "G4 Racing",
+              "8",
+              "1:58.417",
+              "+0.585",
+              "176.9"
+            ],
+            [
+              "12",
+              "33",
+              "M. Popov",
+              "Trident Motorsport",
+              "7",
+              "1:58.564",
+              "+0.732",
+              "176.7"
+            ],
+            [
+              "13",
+              "87",
+              "K. Daryanani",
+              "Trident Motorsport",
+              "8",
+              "1:58.686",
+              "+0.854",
+              "176.5"
+            ],
+            [
+              "14",
+              "14",
+              "N. Lisle",
+              "CL Motorsport",
+              "8",
+              "1:59.163",
+              "+1.331",
+              "175.8"
+            ],
+            [
+              "15",
+              "23",
+              "R. Alibhai",
+              "G4 Racing",
+              "8",
+              "1:59.252",
+              "+1.420",
+              "175.7"
+            ]
+          ]
+        },
+        {
+          "title": "Qualifying 2 - Group A",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "73",
+              "E. Olivieri",
+              "R-ace GP",
+              "8",
+              "1:57.350",
+              "—",
+              "178.6"
+            ],
+            [
+              "2",
+              "15",
+              "A. Abkhazava",
+              "MP Motorsport",
+              "8",
+              "1:57.667",
+              "+0.317",
+              "178.1"
+            ],
+            [
+              "3",
+              "51",
+              "K. Nakamura-Berta",
+              "Prema Racing",
+              "8",
+              "1:57.680",
+              "+0.330",
+              "178.1"
+            ],
+            [
+              "4",
+              "88",
+              "S. Hanna",
+              "Prema Racing",
+              "8",
+              "1:57.798",
+              "+0.448",
+              "177.9"
+            ],
+            [
+              "5",
+              "8",
+              "J. Przyrowski",
+              "RPM",
+              "8",
+              "1:57.935",
+              "+0.585",
+              "177.7"
+            ],
+            [
+              "6",
+              "19",
+              "K. Anurag",
+              "ART Grand Prix",
+              "8",
+              "1:57.936",
+              "+0.586",
+              "177.7"
+            ],
+            [
+              "7",
+              "67",
+              "M. Sæter",
+              "G4 Racing",
+              "8",
+              "1:57.970",
+              "+0.620",
+              "177.6"
+            ],
+            [
+              "8",
+              "95",
+              "A. Munoz",
+              "ART Grand Prix",
+              "8",
+              "1:58.006",
+              "+0.656",
+              "177.6"
+            ],
+            [
+              "9",
+              "24",
+              "J. Roussel",
+              "CL Motorsport",
+              "8",
+              "1:58.017",
+              "+0.667",
+              "177.5"
+            ],
+            [
+              "10",
+              "27",
+              "M. Giaccardi",
+              "ART Grand Prix",
+              "8",
+              "1:58.107",
+              "+0.757",
+              "177.4"
+            ],
+            [
+              "11",
+              "11",
+              "F. Macedo",
+              "Van Amersfoort Racing",
+              "8",
+              "1:58.116",
+              "+0.766",
+              "177.4"
+            ],
+            [
+              "12",
+              "12",
+              "Y. Sano",
+              "R-ace GP",
+              "8",
+              "1:58.151",
+              "+0.801",
+              "177.3"
+            ],
+            [
+              "13",
+              "55",
+              "D. Gowda",
+              "Van Amersfoort Racing",
+              "8",
+              "1:58.162",
+              "+0.812",
+              "177.3"
+            ],
+            [
+              "14",
+              "47",
+              "A. Kostić",
+              "Trident Motorsport",
+              "8",
+              "1:58.427",
+              "+1.077",
+              "176.9"
+            ],
+            [
+              "15",
+              "99",
+              "G. Maschio",
+              "RPM",
+              "8",
+              "1:58.593",
+              "+1.243",
+              "176.7"
+            ]
+          ]
+        },
+        {
+          "title": "Qualifying 2 - Group B",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "98",
+              "S. Wheldon",
+              "MP Motorsport",
+              "8",
+              "1:57.429",
+              "—",
+              "178.4"
+            ],
+            [
+              "2",
+              "69",
+              "R. Francot",
+              "CL Motorsport",
+              "8",
+              "1:57.600",
+              "+0.171",
+              "178.2"
+            ],
+            [
+              "3",
+              "28",
+              "Z. Chi",
+              "MP Motorsport",
+              "8",
+              "1:57.704",
+              "+0.275",
+              "178.0"
+            ],
+            [
+              "4",
+              "78",
+              "G. Gomez",
+              "Rodin Motorsport",
+              "7",
+              "1:57.733",
+              "+0.304",
+              "178.0"
+            ],
+            [
+              "5",
+              "71",
+              "R. Al Dhaheri",
+              "R-ace GP",
+              "7",
+              "1:57.805",
+              "+0.376",
+              "177.9"
+            ],
+            [
+              "6",
+              "2",
+              "A. Ninovic",
+              "Rodin Motorsport",
+              "8",
+              "1:57.880",
+              "+0.451",
+              "177.8"
+            ],
+            [
+              "7",
+              "60",
+              "T. Štolcermanis",
+              "Prema Racing",
+              "8",
+              "1:57.909",
+              "+0.480",
+              "177.7"
+            ],
+            [
+              "8",
+              "33",
+              "M. Popov",
+              "Trident Motorsport",
+              "8",
+              "1:57.992",
+              "+0.563",
+              "177.6"
+            ],
+            [
+              "9",
+              "3",
+              "S. Al-Maosherji",
+              "G4 Racing",
+              "7",
+              "1:58.074",
+              "+0.645",
+              "177.5"
+            ],
+            [
+              "10",
+              "7",
+              "A. Dupé",
+              "Van Amersfoort Racing",
+              "8",
+              "1:58.133",
+              "+0.704",
+              "177.4"
+            ],
+            [
+              "11",
+              "4",
+              "R. Seewooruthun",
+              "Rodin Motorsport",
+              "8",
+              "1:58.237",
+              "+0.808",
+              "177.2"
+            ],
+            [
+              "12",
+              "5",
+              "M. Costa",
+              "RPM",
+              "8",
+              "1:58.387",
+              "+0.958",
+              "177.0"
+            ],
+            [
+              "13",
+              "87",
+              "K. Daryanani",
+              "Trident Motorsport",
+              "8",
+              "1:58.502",
+              "+1.073",
+              "176.8"
+            ],
+            [
+              "14",
+              "23",
+              "R. Alibhai",
+              "G4 Racing",
+              "8",
+              "1:58.845",
+              "+1.416",
+              "176.3"
+            ],
+            [
+              "15",
+              "14",
+              "N. Lisle",
+              "CL Motorsport",
+              "8",
+              "1:58.941",
+              "+1.512",
+              "176.2"
+            ]
+          ]
+        }
+      ]
+    },
+    "race": {
+      "sessions": [
+        {
+          "title": "Race 1",
+          "headers": [
+            "Fin / ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Total time",
+            "Gap",
+            "Best lap",
+            "km/h",
+            "Pts"
+          ],
+          "rows": [
+            [
+              "1 / ST 1 —",
+              "51",
+              "K. Nakamura-Berta",
+              "Prema Racing",
+              "15",
+              "30:44.655",
+              "—",
+              "2:00.960",
+              "170.4",
+              "28"
+            ],
+            [
+              "2 / ST 5 ▲3",
+              "73",
+              "E. Olivieri",
+              "R-ace GP",
+              "15",
+              "30:49.014",
+              "+4.359",
+              "2:01.962",
+              "170.0",
+              "18"
+            ],
+            [
+              "3 / ST 3 —",
+              "15",
+              "A. Abkhazava",
+              "MP Motorsport",
+              "15",
+              "30:50.100",
+              "+5.445",
+              "2:02.139",
+              "169.9",
+              "15"
+            ],
+            [
+              "4 / ST 6 ▲2",
+              "78",
+              "G. Gomez",
+              "Rodin Motorsport",
+              "15",
+              "30:50.899",
+              "+6.244",
+              "2:02.059",
+              "169.8",
+              "12"
+            ],
+            [
+              "5 / ST 2 ▼3",
+              "98",
+              "S. Wheldon",
+              "MP Motorsport",
+              "15",
+              "30:51.578",
+              "+6.923",
+              "2:02.454",
+              "169.7",
+              "10"
+            ],
+            [
+              "6 / ST 14 ▲8",
+              "28",
+              "Z. Chi",
+              "MP Motorsport",
+              "15",
+              "30:56.967",
+              "+12.312",
+              "2:02.786",
+              "169.3",
+              "8"
+            ],
+            [
+              "7 / ST 10 ▲3",
+              "69",
+              "R. Francot",
+              "CL Motorsport",
+              "15",
+              "31:01.176",
+              "+16.521",
+              "2:02.790",
+              "168.9",
+              "6"
+            ],
+            [
+              "8 / ST 15 ▲7",
+              "95",
+              "A. Munoz",
+              "ART Grand Prix",
+              "15",
+              "31:02.309",
+              "+17.654",
+              "2:02.998",
+              "168.8",
+              "4"
+            ],
+            [
+              "9 / ST 7 ▼2",
+              "67",
+              "M. Sæter",
+              "G4 Racing",
+              "15",
+              "31:02.700",
+              "+18.045",
+              "2:02.993",
+              "168.7",
+              "2"
+            ],
+            [
+              "10 / ST 8 ▼2",
+              "2",
+              "A. Ninovic",
+              "Rodin Motorsport",
+              "15",
+              "31:03.785",
+              "+19.130",
+              "2:02.238",
+              "168.6",
+              "1"
+            ],
+            [
+              "11 / ST 17 ▲6",
+              "8",
+              "J. Przyrowski",
+              "RPM",
+              "15",
+              "31:03.997",
+              "+19.342",
+              "2:02.280",
+              "168.6",
+              "0"
+            ],
+            [
+              "12 / ST 19 ▲7",
+              "12",
+              "Y. Sano",
+              "R-ace GP",
+              "15",
+              "31:05.708",
+              "+21.053",
+              "2:02.892",
+              "168.5",
+              "0"
+            ],
+            [
+              "13 / ST 11 ▼2",
+              "19",
+              "K. Anurag",
+              "ART Grand Prix",
+              "15",
+              "31:05.741",
+              "+21.086",
+              "2:02.788",
+              "168.5",
+              "0"
+            ],
+            [
+              "14 / ST 24 ▲10",
+              "33",
+              "M. Popov",
+              "Trident Motorsport",
+              "15",
+              "31:06.870",
+              "+22.215",
+              "2:03.298",
+              "168.4",
+              "0"
+            ],
+            [
+              "15 / ST 12 ▼3",
+              "60",
+              "T. Štolcermanis",
+              "Prema Racing",
+              "15",
+              "31:07.084",
+              "+22.429",
+              "2:02.335",
+              "168.3",
+              "0"
+            ],
+            [
+              "16 / ST 16 —",
+              "4",
+              "R. Seewooruthun",
+              "Rodin Motorsport",
+              "15",
+              "31:07.609",
+              "+22.954",
+              "2:03.102",
+              "168.3",
+              "0"
+            ],
+            [
+              "17 / ST 9 ▼8",
+              "88",
+              "S. Hanna",
+              "Prema Racing",
+              "15",
+              "31:07.746",
+              "+23.091",
+              "2:02.910",
+              "168.3",
+              "0"
+            ],
+            [
+              "18 / ST 18 —",
+              "5",
+              "M. Costa",
+              "RPM",
+              "15",
+              "31:08.669",
+              "+24.014",
+              "2:03.238",
+              "168.2",
+              "0"
+            ],
+            [
+              "19 / ST 21 ▲2",
+              "55",
+              "D. Gowda",
+              "Van Amersfoort Racing",
+              "15",
+              "31:12.584",
+              "+27.929",
+              "2:03.180",
+              "167.8",
+              "0"
+            ],
+            [
+              "20 / ST 30 ▲10",
+              "23",
+              "R. Alibhai",
+              "G4 Racing",
+              "15",
+              "31:16.747",
+              "+32.092",
+              "2:03.469",
+              "167.5",
+              "0"
+            ],
+            [
+              "21 / ST 29 ▲8",
+              "99",
+              "G. Maschio",
+              "RPM",
+              "15",
+              "31:18.272",
+              "+33.617",
+              "2:03.187",
+              "167.3",
+              "0"
+            ],
+            [
+              "22 / ST 20 ▼2",
+              "7",
+              "A. Dupé",
+              "Van Amersfoort Racing",
+              "15",
+              "31:18.757",
+              "+34.102",
+              "2:03.192",
+              "167.3",
+              "0"
+            ],
+            [
+              "23 / ST 23 —",
+              "47",
+              "A. Kostić",
+              "Trident Motorsport",
+              "15",
+              "31:21.218",
+              "+36.563",
+              "2:03.381",
+              "167.1",
+              "0"
+            ],
+            [
+              "24 / ST 26 ▲2",
+              "87",
+              "K. Daryanani",
+              "Trident Motorsport",
+              "15",
+              "31:23.920",
+              "+39.265",
+              "2:03.346",
+              "166.8",
+              "0"
+            ],
+            [
+              "25 / ST 28 ▲3",
+              "14",
+              "N. Lisle",
+              "CL Motorsport",
+              "15",
+              "31:25.405",
+              "+40.750",
+              "2:01.985",
+              "166.7",
+              "0"
+            ],
+            [
+              "26 / ST 4 ▼22",
+              "71",
+              "R. Al Dhaheri",
+              "R-ace GP",
+              "15",
+              "31:36.157",
+              "+51.502",
+              "2:00.881",
+              "165.8",
+              "0"
+            ],
+            [
+              "27 / ST 27 —",
+              "24",
+              "J. Roussel",
+              "CL Motorsport",
+              "15",
+              "31:40.329",
+              "+55.674",
+              "2:01.822",
+              "165.4",
+              "0"
+            ],
+            [
+              "28 / ST 25 ▼3",
+              "11",
+              "F. Macedo",
+              "Van Amersfoort Racing",
+              "12",
+              "31:59.929",
+              "3 Laps",
+              "2:00.875",
+              "130.9",
+              "0"
+            ],
+            [
+              "NC / ST 13",
+              "27",
+              "M. Giaccardi",
+              "ART Grand Prix",
+              "2",
+              "4:38.987",
+              "13 Laps",
+              "2:14.881",
+              "150.2",
+              "0"
+            ],
+            [
+              "NC / ST 22",
+              "3",
+              "S. Al-Maosherji",
+              "G4 Racing",
+              "—",
+              "—",
+              "—",
+              "—",
+              "—",
+              "0"
+            ]
+          ]
+        },
+        {
+          "title": "Race 2",
+          "headers": [
+            "Fin / ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Total time",
+            "Gap",
+            "Best lap",
+            "km/h",
+            "Pts"
+          ],
+          "rows": [
+            [
+              "1 / ST 1 —",
+              "98",
+              "S. Wheldon",
+              "MP Motorsport",
+              "15",
+              "33:25.912",
+              "—",
+              "1:59.953",
+              "156.7",
+              "28"
+            ],
+            [
+              "2 / ST 4 ▲2",
+              "73",
+              "E. Olivieri",
+              "R-ace GP",
+              "15",
+              "33:32.054",
+              "+6.142",
+              "2:01.664",
+              "156.2",
+              "18"
+            ],
+            [
+              "3 / ST 5 ▲2",
+              "51",
+              "K. Nakamura-Berta",
+              "Prema Racing",
+              "15",
+              "33:34.244",
+              "+8.332",
+              "2:01.064",
+              "156.0",
+              "15"
+            ],
+            [
+              "4 / ST 8 ▲4",
+              "78",
+              "G. Gomez",
+              "Rodin Motorsport",
+              "15",
+              "33:36.906",
+              "+10.994",
+              "2:02.205",
+              "155.8",
+              "12"
+            ],
+            [
+              "5 / ST 2 ▼3",
+              "15",
+              "A. Abkhazava",
+              "MP Motorsport",
+              "15",
+              "33:37.957",
+              "+12.045",
+              "2:01.502",
+              "155.7",
+              "10"
+            ],
+            [
+              "6 / ST 10 ▲4",
+              "71",
+              "R. Al Dhaheri",
+              "R-ace GP",
+              "15",
+              "33:38.347",
+              "+12.435",
+              "2:02.089",
+              "155.7",
+              "8"
+            ],
+            [
+              "7 / ST 6 ▼1",
+              "28",
+              "Z. Chi",
+              "MP Motorsport",
+              "15",
+              "33:39.037",
+              "+13.125",
+              "2:02.345",
+              "155.7",
+              "6"
+            ],
+            [
+              "8 / ST 12 ▲4",
+              "2",
+              "A. Ninovic",
+              "Rodin Motorsport",
+              "15",
+              "33:40.144",
+              "+14.232",
+              "2:02.366",
+              "155.6",
+              "4"
+            ],
+            [
+              "9 / ST 9 —",
+              "8",
+              "J. Przyrowski",
+              "RPM",
+              "15",
+              "33:40.894",
+              "+14.982",
+              "2:02.100",
+              "155.5",
+              "2"
+            ],
+            [
+              "10 / ST 11 ▲1",
+              "19",
+              "K. Anurag",
+              "ART Grand Prix",
+              "15",
+              "33:42.705",
+              "+16.793",
+              "2:02.312",
+              "155.4",
+              "1"
+            ],
+            [
+              "11 / ST 14 ▲3",
+              "60",
+              "T. Štolcermanis",
+              "Prema Racing",
+              "15",
+              "33:43.009",
+              "+17.097",
+              "2:02.663",
+              "155.4",
+              "0"
+            ],
+            [
+              "12 / ST 7 ▼5",
+              "88",
+              "S. Hanna",
+              "Prema Racing",
+              "15",
+              "33:43.620",
+              "+17.708",
+              "2:02.816",
+              "155.3",
+              "0"
+            ],
+            [
+              "13 / ST 18 ▲5",
+              "3",
+              "S. Al-Maosherji",
+              "G4 Racing",
+              "15",
+              "33:44.835",
+              "+18.923",
+              "2:02.621",
+              "155.2",
+              "0"
+            ],
+            [
+              "14 / ST 22 ▲8",
+              "4",
+              "R. Seewooruthun",
+              "Rodin Motorsport",
+              "15",
+              "33:46.722",
+              "+20.810",
+              "2:02.634",
+              "155.1",
+              "0"
+            ],
+            [
+              "15 / ST 13 ▼2",
+              "67",
+              "M. Sæter",
+              "G4 Racing",
+              "15",
+              "33:47.807",
+              "+21.895",
+              "2:02.850",
+              "155.0",
+              "0"
+            ],
+            [
+              "16 / ST 15 ▼1",
+              "95",
+              "A. Munoz",
+              "ART Grand Prix",
+              "15",
+              "33:48.578",
+              "+22.666",
+              "2:02.205",
+              "154.9",
+              "0"
+            ],
+            [
+              "17 / ST 23 ▲6",
+              "12",
+              "Y. Sano",
+              "R-ace GP",
+              "15",
+              "33:49.305",
+              "+23.393",
+              "2:02.609",
+              "154.9",
+              "0"
+            ],
+            [
+              "18 / ST 25 ▲7",
+              "55",
+              "D. Gowda",
+              "Van Amersfoort Racing",
+              "15",
+              "33:49.746",
+              "+23.834",
+              "2:02.618",
+              "154.8",
+              "0"
+            ],
+            [
+              "19 / ST 16 ▼3",
+              "33",
+              "M. Popov",
+              "Trident Motorsport",
+              "15",
+              "33:50.852",
+              "+24.940",
+              "2:02.963",
+              "154.8",
+              "0"
+            ],
+            [
+              "20 / ST 19 ▼1",
+              "27",
+              "M. Giaccardi",
+              "ART Grand Prix",
+              "15",
+              "33:51.389",
+              "+25.477",
+              "2:03.092",
+              "154.7",
+              "0"
+            ],
+            [
+              "21 / ST 21 —",
+              "11",
+              "F. Macedo",
+              "Van Amersfoort Racing",
+              "15",
+              "33:51.986",
+              "+26.074",
+              "2:02.593",
+              "154.7",
+              "0"
+            ],
+            [
+              "22 / ST 20 ▼2",
+              "7",
+              "A. Dupé",
+              "Van Amersfoort Racing",
+              "15",
+              "33:52.431",
+              "+26.519",
+              "2:02.859",
+              "154.6",
+              "0"
+            ],
+            [
+              "23 / ST 29 ▲6",
+              "99",
+              "G. Maschio",
+              "RPM",
+              "15",
+              "33:54.942",
+              "+29.030",
+              "2:02.934",
+              "154.4",
+              "0"
+            ],
+            [
+              "24 / ST 17 ▼7",
+              "24",
+              "J. Roussel",
+              "CL Motorsport",
+              "15",
+              "33:58.844",
+              "+32.932",
+              "2:02.714",
+              "154.1",
+              "0"
+            ],
+            [
+              "25 / ST 28 ▲3",
+              "23",
+              "R. Alibhai",
+              "G4 Racing",
+              "15",
+              "34:01.946",
+              "+36.034",
+              "2:02.776",
+              "153.9",
+              "0"
+            ],
+            [
+              "26 / ST 30 ▲4",
+              "14",
+              "N. Lisle",
+              "CL Motorsport",
+              "15",
+              "34:03.270",
+              "+37.358",
+              "2:03.064",
+              "153.8",
+              "0"
+            ],
+            [
+              "27 / ST 24 ▼3",
+              "5",
+              "M. Costa",
+              "RPM",
+              "15",
+              "34:28.601",
+              "+1:02.689",
+              "2:00.563",
+              "151.9",
+              "0"
+            ],
+            [
+              "NC / ST 3",
+              "69",
+              "R. Francot",
+              "CL Motorsport",
+              "8",
+              "19:32.045",
+              "7 Laps",
+              "2:02.783",
+              "143.0",
+              "0"
+            ],
+            [
+              "NC / ST 26",
+              "87",
+              "K. Daryanani",
+              "Trident Motorsport",
+              "1",
+              "2:37.750",
+              "14 Laps",
+              "2:37.750",
+              "132.8",
+              "0"
+            ],
+            [
+              "NC / ST 27",
+              "47",
+              "A. Kostić",
+              "Trident Motorsport",
+              "—",
+              "—",
+              "—",
+              "—",
+              "—",
+              "0"
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

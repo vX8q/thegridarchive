@@ -3,6 +3,9 @@
   if (typeof window === 'undefined') return;
   window.TGA = window.TGA || {};
 
+  /** Series with one Last Results card per venue weekend (separate schedule race ids). */
+  var LAST_RESULTS_WEEKEND_MERGE_SERIES = ['SUPERCARS', 'SUPER_FORMULA', 'PSC', 'INDYCAR'];
+
   function isoSlice(v) {
     return String(v || '').slice(0, 10);
   }
@@ -14,6 +17,78 @@
 
   function dayDiffMs(fromIso, toIso) {
     return new Date(toIso + 'T12:00:00').getTime() - new Date(fromIso + 'T12:00:00').getTime();
+  }
+
+  function isLastResultsWeekendMergeSeries(seriesId) {
+    var sid = String(seriesId || '').toUpperCase();
+    return LAST_RESULTS_WEEKEND_MERGE_SERIES.indexOf(sid) >= 0;
+  }
+
+  function weekendMergeAllowOverlap(seriesId) {
+    return String(seriesId || '').toUpperCase() === 'SUPERCARS';
+  }
+
+  function weekendMergedEventName(sid, fe) {
+    if (sid === 'SUPERCARS') {
+      return String(fe.name || fe.circuit_name || '').replace(/\s*Race\s*\d+\s*$/i, '').trim() ||
+        String(fe.circuit_name || '').trim();
+    }
+    return String(fe.circuit_name || fe.name || '').trim();
+  }
+
+  /**
+   * Map each race id → last event of its venue weekend (Supercars / PSC / IndyCar / SF).
+   * Used so Last Results waits for the final race before showing any card from the block.
+   */
+  function buildGroupedWeekendLastEventById(events) {
+    var map = {};
+    if (!Array.isArray(events) || events.length === 0) return map;
+    var bySeries = {};
+    events.forEach(function (e) {
+      if (!e || !e.id) return;
+      var sid = String(e._seriesId || e.series_id || '').toUpperCase();
+      if (!isLastResultsWeekendMergeSeries(sid)) return;
+      if (!bySeries[sid]) bySeries[sid] = [];
+      bySeries[sid].push(e);
+    });
+    Object.keys(bySeries).forEach(function (sid) {
+      var list = bySeries[sid].slice();
+      list.sort(function (a, b) {
+        var da = isoSlice(a.start_date || a.date);
+        var db = isoSlice(b.start_date || b.date);
+        return da < db ? -1 : da > db ? 1 : 0;
+      });
+      var allowOverlap = weekendMergeAllowOverlap(sid);
+      var maxGapMs = 86400000;
+      for (var i = 0; i < list.length; i++) {
+        var e = list[i];
+        var run = [e];
+        var prev = isoSlice(e.end_date || e.start_date || e.date);
+        var j = i + 1;
+        while (j < list.length) {
+          var e2 = list[j];
+          if (!sameVenue(e, e2)) break;
+          var d2 = isoSlice(e2.start_date || e2.date);
+          var diffMs = dayDiffMs(prev, d2);
+          if (allowOverlap) {
+            if (diffMs > maxGapMs) break;
+          } else if (diffMs !== maxGapMs) {
+            break;
+          }
+          run.push(e2);
+          var e2End = isoSlice(e2.end_date || e2.start_date || e2.date);
+          if (!prev || e2End > prev) prev = e2End;
+          j++;
+        }
+        var lastEv = run[run.length - 1];
+        run.forEach(function (x) {
+          var id = String(x.id || '').toUpperCase();
+          if (id) map[id] = lastEv;
+        });
+        i = j - 1;
+      }
+    });
+    return map;
   }
 
   /**
@@ -87,8 +162,8 @@
       getEvent: function (c) { return c.event || {}; },
       getRangeStart: function (c) { return c.rangeStart || c.dateStr || ''; },
       getRangeEnd: function (c) { return c.rangeEnd || c.rangeStart || c.dateStr || ''; },
-      maxGapDays: sid === 'SUPERCARS' ? 1 : 1,
-      allowOverlap: sid === 'SUPERCARS',
+      maxGapDays: 1,
+      allowOverlap: weekendMergeAllowOverlap(sid),
       mergeRun: function (run) {
         var first = run[0];
         var last = run[run.length - 1];
@@ -96,13 +171,21 @@
         var rs = isoSlice(first.rangeStart || first.dateStr);
         var re = isoSlice(last.rangeEnd || last.dateStr);
         var allWinners = [];
-        run.forEach(function (x) {
+        run.forEach(function (x, raceIdx) {
           var w = x.winners;
-          if (Array.isArray(w)) {
-            for (var wi = 0; wi < w.length; wi++) allWinners.push(w[wi]);
+          if (!Array.isArray(w)) return;
+          for (var wi = 0; wi < w.length; wi++) {
+            var src = w[wi] || {};
+            var label = String(src.label || '').trim();
+            if (!label && run.length > 1) label = 'Race ' + (raceIdx + 1);
+            allWinners.push({
+              name: src.name || '',
+              car: src.car || '',
+              label: label
+            });
           }
         });
-        if (sid === 'SUPERCARS') {
+        if (sid === 'SUPERCARS' || sid === 'PSC' || sid === 'INDYCAR') {
           var seen = {};
           allWinners = allWinners.filter(function (w) {
             var key = String((w && w.label) || '') + '|' + String((w && w.car) || '') + '|' + String((w && w.name) || '');
@@ -111,14 +194,11 @@
             return true;
           });
         }
-        var mergedName = sid === 'SUPERCARS'
-          ? String(fe.name || fe.circuit_name || '').replace(/\s*Race\s*\d+\s*$/i, '').trim() || String(fe.circuit_name || '').trim()
-          : String(fe.circuit_name || fe.name || '').trim();
         return {
           event: Object.assign({}, fe, {
             start_date: rs,
             end_date: re,
-            name: mergedName,
+            name: weekendMergedEventName(sid, fe),
             _seriesId: fe._seriesId || fe.series_id || sid
           }),
           dateStr: re,
@@ -128,6 +208,14 @@
         };
       }
     });
+  }
+
+  function mergeAllLastResultsWeekendCards(cards) {
+    var out = Array.isArray(cards) ? cards : [];
+    LAST_RESULTS_WEEKEND_MERGE_SERIES.forEach(function (sid) {
+      out = mergeLastResultsWeekendCards(out, sid);
+    });
+    return out;
   }
 
   function mergeNextRaceWeekendEntries(entries, seriesId) {
@@ -154,14 +242,11 @@
         var le = last.event || {};
         var d0 = isoSlice(fe.start_date || fe.date);
         var d1 = isoSlice(le.end_date || le.start_date || le.date);
-        var mergedName = sid === 'SUPERCARS'
-          ? String(fe.name || fe.circuit_name || '').replace(/\s*Race\s*\d+\s*$/i, '').trim() || String(fe.circuit_name || '').trim()
-          : String(fe.circuit_name || fe.name || '').trim();
         var mergedEvent = Object.assign({}, fe, {
           start_date: d0,
           end_date: d1,
           date: d0,
-          name: mergedName,
+          name: weekendMergedEventName(sid, fe),
           id: fe.id,
           _seriesId: fe._seriesId || fe.series_id || sid,
           has_detail: run.some(function (x) { return x.event && x.event.has_detail; })
@@ -193,8 +278,12 @@
     return out;
   }
 
+  window.TGA.LAST_RESULTS_WEEKEND_MERGE_SERIES = LAST_RESULTS_WEEKEND_MERGE_SERIES;
+  window.TGA.isLastResultsWeekendMergeSeries = isLastResultsWeekendMergeSeries;
+  window.TGA.buildGroupedWeekendLastEventById = buildGroupedWeekendLastEventById;
   window.TGA.mergeWeekendCards = mergeWeekendCards;
   window.TGA.mergeLastResultsWeekendCards = mergeLastResultsWeekendCards;
+  window.TGA.mergeAllLastResultsWeekendCards = mergeAllLastResultsWeekendCards;
   window.TGA.mergeNextRaceWeekendEntries = mergeNextRaceWeekendEntries;
   window.TGA.collapseNextRaceWeekends = collapseNextRaceWeekends;
 

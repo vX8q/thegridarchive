@@ -41,6 +41,13 @@
     "citizenship": "",
     "photo_url": ""
   },
+  "abdulla-al-khelaifi": {
+    "full_name": "Abdulla Al Khelaifi",
+    "birth_date": "",
+    "birth_place": "",
+    "citizenship": "",
+    "photo_url": ""
+  },
   "adam-adelson": {
     "full_name": "Adam Adelson",
     "birth_date": "",
@@ -253,13 +260,6 @@
   },
   "alexander-bukhantsov": {
     "full_name": "Alexander Bukhantsov",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "alexander-dunne": {
-    "full_name": "Alexander Dunne",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -769,13 +769,6 @@
     "citizenship": "",
     "photo_url": ""
   },
-  "ben-hanley": {
-    "full_name": "Ben Hanley",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
   "ben-keating": {
     "full_name": "Ben Keating",
     "birth_date": "",
@@ -876,13 +869,6 @@
   },
   "bobby-dale-earnhardt": {
     "full_name": "Bobby Dale Earnhardt",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "bobby-earnhardt": {
-    "full_name": "Bobby Earnhardt",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -1128,13 +1114,6 @@
   },
   "callum-ilott": {
     "full_name": "Callum Ilott",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "cam-waters": {
-    "full_name": "Cam Waters",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -1735,22 +1714,8 @@
     "citizenship": "",
     "photo_url": ""
   },
-  "dan-harper": {
-    "full_name": "Dan Harper",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
   "dane-cameron": {
     "full_name": "Dane Cameron",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "dani-juncadella": {
-    "full_name": "Dani Juncadella",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -1919,13 +1884,6 @@
   },
   "david-reynolds": {
     "full_name": "David Reynolds",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "david-sapienza": {
-    "full_name": "Dave Sapienza",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -2787,13 +2745,6 @@
   },
   "giovanni-maschio": {
     "full_name": "Giovanni Maschio",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "giovanni-ruggiero": {
-    "full_name": "Giovanni Ruggiero",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -3674,13 +3625,6 @@
     "citizenship": "",
     "photo_url": ""
   },
-  "john-h-nemechek": {
-    "full_name": "John H. Nemechek",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
   "john-hunter-nemechek": {
     "full_name": "John Hunter Nemechek",
     "birth_date": "",
@@ -3725,13 +3669,6 @@
   },
   "jonathan-adam": {
     "full_name": "Jonathan Adam",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "jonathan-mckennedy": {
-    "full_name": "Jon McKennedy",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -3870,13 +3807,6 @@
     "citizenship": "",
     "photo_url": ""
   },
-  "joshua-rattican": {
-    "full_name": "Joshua Rattican",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
   "jr": {
     "full_name": "Jr.",
     "birth_date": "",
@@ -3991,13 +3921,6 @@
   },
   "kai-daryanani": {
     "full_name": "Kai Daryanani",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "kaku-ohta": {
-    "full_name": "Kaku Ohta",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -4970,13 +4893,6 @@
     "citizenship": "",
     "photo_url": ""
   },
-  "matt-payne": {
-    "full_name": "Matt Payne",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
   "matt-swanson": {
     "full_name": "Matt Swanson",
     "birth_date": "",
@@ -5098,13 +5014,6 @@
   },
   "max-hofer": {
     "full_name": "Max Hofer",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "max-lynn": {
-    "full_name": "Max Lynn",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -5259,6 +5168,13 @@
   },
   "michael-porter": {
     "full_name": "Michael Porter",
+    "birth_date": "",
+    "birth_place": "",
+    "citizenship": "",
+    "photo_url": ""
+  },
+  "michael-shin": {
+    "full_name": "Michael Shin",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -5587,7 +5503,7 @@
     "photo_url": ""
   },
   "nico-varrone": {
-    "full_name": "Nico Varrone",
+    "full_name": "Nicolas Varrone",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -5602,13 +5518,6 @@
   },
   "nicolas-baert": {
     "full_name": "Nicolas Baert",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "nicolas-varrone": {
-    "full_name": "Nicolas Varrone",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",
@@ -7371,13 +7280,6 @@
     "citizenship": "",
     "photo_url": ""
   },
-  "tobi-lutke": {
-    "full_name": "Tobi Lutke",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
   "tobias-lutke": {
     "full_name": "Tobias Lütke",
     "birth_date": "",
@@ -7800,13 +7702,6 @@
   },
   "willie-mullins": {
     "full_name": "Willie Mullins",
-    "birth_date": "",
-    "birth_place": "",
-    "citizenship": "",
-    "photo_url": ""
-  },
-  "michael-shin": {
-    "full_name": "Michael Shin",
     "birth_date": "",
     "birth_place": "",
     "citizenship": "",

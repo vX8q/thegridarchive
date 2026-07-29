@@ -4,7 +4,7 @@
   "race": "Black's Tire 200",
   "date": "Friday, April 3, 2026",
   "track": "Rockingham Speedway",
-  "location": "Rockingham, North Carolina",
+  "location": "Rockingham, North Carolina, USA",
   "laps": "200",
   "distance": "188.000 mi (302.557 km)",
   "youtube_id": "z7yG-bJOPSw",
@@ -90,7 +90,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -98,7 +98,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Richard Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -106,7 +106,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",
@@ -243,7 +243,7 @@
       "team": "Halmar Friesen Racing",
       "manufacturer": "Toyota",
       "crew_chief": "James Villeneuve",
-      "driver_slug": "mike-christopher-jr"
+      "driver_slug": "michael-christopher-jr"
     },
     {
       "number": "69",

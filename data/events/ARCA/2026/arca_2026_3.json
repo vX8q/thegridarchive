@@ -1,12 +1,12 @@
 {
   "event_id": "ARCA_2026_3",
   "series": "ARCA Menards Series",
-  "race": "3 of 20",
+  "race": "Tide 150",
   "date": "Saturday-Sunday, April 18-19, 2026",
   "start_date": "2026-04-18",
   "end_date": "2026-04-19",
   "track": "Kansas Speedway",
-  "location": "Kansas City, KS",
+  "location": "Kansas City, Kansas, USA",
   "laps": "100*",
   "distance": "1.500 mile paved track (150.000 miles)",
   "event_preview": "Kansas Speedway is a 1.5-mile (2.4 km) tri-oval in Kansas City, Kansas, opened in 2001 with 17 to 20 degrees of banking in the turns and a frontstretch that runs at a slight angle to the main straight. The Tide 150 is the third race of the 20-event 2026 ARCA Menards Series season and the first of two scheduled stops at Kansas, with the second serving as the season finale in September. The race runs 100 laps (150 miles) with a scheduled caution near lap 50. Saturday's field of 30 cars is the largest for an ARCA Menards Series race at Kansas since 2016, and marks the 34th consecutive year the series has competed at the facility.\n\nJake Bollman leads the 2026 championship standings heading in, having finished second at Daytona and sixth at Phoenix, while Daytona winner Gio Ruggiero returns in the No. 18 Joe Gibbs Racing Toyota. Dystany Spurlock will become the first Black female driver to compete in an ARCA Menards Series race when she takes the green flag in the No. 66 Foxxtecca Ford. Pinnacle Racing Group swept both Kansas races in 2025 with Brenden Queen; no previous Kansas winner is entered in Saturday's field.\n\nThe all-time ARCA qualifying lap record at Kansas belongs to Alex Bowman, who turned a 29.258-second lap (184.559 mph) in 2012.",
@@ -115,7 +115,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "24",
@@ -131,7 +131,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Shane Wilson",
-      "driver_slug": "gavan-boschele-r"
+      "driver_slug": "gavan-boschele"
     },
     {
       "number": "28",
@@ -211,7 +211,7 @@
       "team": "Clubb Racing Inc.",
       "manufacturer": "Ford",
       "crew_chief": "Jon Clubb",
-      "driver_slug": "jeff-maconi-r"
+      "driver_slug": "jeff-maconi"
     },
     {
       "number": "89",

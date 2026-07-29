@@ -1,5 +1,10 @@
 import fs from "fs";
 import path from "path";
+import {
+  CANON_DISPLAY_NAMES,
+  canonicalizeDriverSlug,
+  slugifyDriverName,
+} from "./lib/driver-slug-canon.mjs";
 
 const root = process.cwd();
 const eventsDir = path.join(root, "data", "events");
@@ -13,6 +18,10 @@ function shouldSkip(raw) {
   if (!t) return true;
   const l = t.toLowerCase();
   if (l === "tba" || l === "tbc" || l === "tbd") return true;
+  // Single-token surnames / artifacts — do not create profiles from table scraps.
+  if (!/\s/.test(t) && t.length < 18) {
+    if (l === "jr" || l === "jr." || l === "sr" || l === "sr.") return true;
+  }
   return (
     l === "driver" ||
     l === "drivers" ||
@@ -23,7 +32,7 @@ function shouldSkip(raw) {
 
 function pushName(raw) {
   if (typeof raw !== "string") return;
-  for (const part of raw.split(/[;,/]|\\s+&\\s+/g)) {
+  for (const part of raw.split(/[;,/]|\s+&\s+/g)) {
     const name = part.trim();
     if (!shouldSkip(name)) {
       names.add(name);
@@ -78,6 +87,24 @@ function walk(dir) {
     if (Array.isArray(obj?.entry_list)) {
       for (const row of obj.entry_list) {
         if (!row || typeof row !== "object") continue;
+        // Prefer explicit driver_slug when present (already canonicalized by fix script).
+        if (typeof row.driver_slug === "string" && row.driver_slug.trim()) {
+          const slug = canonicalizeDriverSlug(row.driver_slug);
+          if (slug && !profiles[slug]) {
+            const display =
+              CANON_DISPLAY_NAMES[slug] ||
+              (typeof row.driver === "string" && row.driver.trim()) ||
+              slug.replace(/-/g, " ");
+            profiles[slug] = {
+              full_name: display,
+              birth_date: "",
+              birth_place: "",
+              citizenship: "",
+              photo_url: "",
+            };
+          }
+          continue;
+        }
         for (const [k, v] of Object.entries(row)) {
           const key = k.toLowerCase();
           if (key === "driver" || /^driver\d+$/.test(key)) {
@@ -105,25 +132,20 @@ function walk(dir) {
   }
 }
 
-function slugify(name) {
-  return String(name)
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\u0400-\u04FF]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 walk(eventsDir);
 
 let added = 0;
 let removedComposite = 0;
+let skippedAlias = 0;
 for (const name of names) {
-  const slug = slugify(name);
+  const rawSlug = slugifyDriverName(name);
+  if (!rawSlug) continue;
+  const slug = canonicalizeDriverSlug(rawSlug);
   if (!slug) continue;
+  if (slug !== rawSlug) skippedAlias++;
   if (!profiles[slug]) {
     profiles[slug] = {
-      full_name: name,
+      full_name: CANON_DISPLAY_NAMES[slug] || name,
       birth_date: "",
       birth_place: "",
       citizenship: "",
@@ -157,6 +179,7 @@ console.log(
   JSON.stringify({
     drivers_found: names.size,
     added,
+    skipped_alias_raw_slugs: skippedAlias,
     removed_composite: removedComposite,
     total: Object.keys(ordered).length,
   }),

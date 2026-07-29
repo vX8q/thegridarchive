@@ -2,11 +2,11 @@
   "event_id": "F4_IT_2026_3",
   "series": "Italian F4 Championship",
   "race": "Monza",
-  "date": "20–22 June 2026",
-  "start_date": "2026-06-20",
-  "end_date": "2026-06-22",
+  "date": "19–21 June 2026",
+  "start_date": "2026-06-19",
+  "end_date": "2026-06-21",
   "track": "Autodromo Nazionale di Monza",
-  "location": "Monza",
+  "location": "Monza, Lombardy, Italy",
   "event_preview": "Autodromo Nazionale di Monza is a 5.793 km (3.600 mi) permanent road course in Monza, Italy, home to Italian motorsport and one of Formula 1's most prestigious circuits. The 2026 Italian F4 Championship Round 3 takes place 20–22 June, featuring a record 49-car grid across 13 teams — the largest entry in Italian F4 history.\n\nAlp Aksoy leads the championship after dominating the opening rounds at Misano and Vallelunga with consistent performances and strong qualifying pace. Luka Sammalisto arrives at Monza seeking to build on an outstanding Vallelunga weekend where he won all three races, demonstrating exceptional speed and racecraft. David Cosma Cristofor sits second in the championship standings and represents Prema Racing's main title threat. US Racing and Prema Racing are the dominant teams, with the pair accounting for the vast majority of wins so far in 2026. Monza holds special significance as the venue where reigning F1 driver Andrea Kimi Antonelli claimed the Italian F4 victory in 2023, underscoring the circuit's importance as a stepping stone for rising talent.",
   "event_preview_ru": "Autodromo Nazionale di Monza — постоянная трасса длиной 5,793 км (3,600 мили) в Monza, Италия, сердце итальянского автоспорта и одна из самых престижных трасс Формулы 1. Третий этап Italian F4 Championship 2026 пройдёт 20–22 июня с рекордной сеткой из 49 машин и 13 команд — крупнейшим составом в истории Italian F4.\n\nAlp Aksoy лидирует в чемпионате после доминирования на стартовых этапах в Misano и Vallelunga благодаря стабильным результатам и сильному темпу в квалификации. Luka Sammalisto приезжает в Monza после выдающегося уик-энда на Vallelunga, где выиграл все три гонки, демонстрируя исключительную скорость и гоночное мастерство. David Cosma Cristofor занимает второе место в общем зачёте и остаётся главной угрозой для Prema Racing в борьбе за титул. US Racing и Prema Racing — доминирующие команды, на двоих приходится подавляющее большинство побед в сезоне 2026. Monza имеет особое значение как трасса, где будущий пилот F1 Andrea Kimi Antonelli одержал победу в Italian F4 в 2023 году, подчёркивая роль этой трассы как ступени для молодых талантов.",
   "entry_list": [
@@ -1818,6 +1818,12 @@
       "sessions": [
         {
           "title": "Race 1 (Gr.B–Gr.C)",
+          "meta": {
+            "Date": "20 Jun 2026",
+            "Start": "11:30 AM",
+            "Session": "Gr.B – Gr.C",
+            "time_msk": "12:30"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -2186,6 +2192,12 @@
         },
         {
           "title": "Race 2 (Gr.A–Gr.B)",
+          "meta": {
+            "Date": "20 Jun 2026",
+            "Start": "17:30 AM",
+            "Session": "Gr.A – Gr.B",
+            "time_msk": "18:30"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -2565,6 +2577,12 @@
         },
         {
           "title": "Race 3 (Gr.A–Gr.C)",
+          "meta": {
+            "Date": "21 Jun 2026",
+            "Start": "9:30 AM",
+            "Session": "Gr.A – Gr.C",
+            "time_msk": "10:30"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -2944,6 +2962,12 @@
         },
         {
           "title": "Final Race",
+          "meta": {
+            "Date": "21 Jun 2026",
+            "Start": "14:00 AM",
+            "Session": "Final",
+            "time_msk": "15:00"
+          },
           "headers": [
             "Fin",
             "ST",

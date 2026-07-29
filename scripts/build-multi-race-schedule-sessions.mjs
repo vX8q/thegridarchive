@@ -20,6 +20,54 @@ const MONTHS = {
   jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12',
 };
 
+/**
+ * UTC offset (hours) of the circuit's LOCAL clock in-season (i.e. already accounting for
+ * summer DST where applicable, since these series race Mar–Nov). Used to convert a session's
+ * meta.Start (circuit-local time) into time_msk. Add entries here as new circuits show up in
+ * FREC / F4 Italy schedules — default below assumes mainland-Europe CEST (UTC+2), which covers
+ * the large majority of current rounds.
+ */
+const CIRCUIT_UTC_OFFSET = {
+  'silverstone': 1,      // UK, BST
+  'brands hatch': 1,     // UK, BST
+  'donington': 1,        // UK, BST
+  'zandvoort': 2,        // Netherlands, CEST
+  'spa': 2,               // Belgium, CEST
+  'paul ricard': 2,      // France, CEST
+  'imola': 2,             // Italy, CEST
+  'monza': 2,              // Italy, CEST
+  'mugello': 2,            // Italy, CEST
+  'vallelunga': 2,         // Italy, CEST
+  'hockenheim': 2,         // Germany, CEST
+  'red bull ring': 2,      // Austria, CEST
+  'barcelona': 2,          // Spain, CEST
+  'catalunya': 2,          // Spain, CEST
+  'jerez': 2,               // Spain, CEST
+  'hungaroring': 2,         // Hungary, CEST
+};
+const DEFAULT_CIRCUIT_UTC_OFFSET = 2; // mainland Europe, CEST
+
+function circuitUtcOffsetHours(circuitName) {
+  const key = String(circuitName || '').toLowerCase();
+  for (const name in CIRCUIT_UTC_OFFSET) {
+    if (key.indexOf(name) >= 0) return CIRCUIT_UTC_OFFSET[name];
+  }
+  return DEFAULT_CIRCUIT_UTC_OFFSET;
+}
+
+/** Convert a circuit-local "HH:MM" (24h, from parseStartTime12h) to МСК "HH:MM", given the circuit. */
+function localTimeToMsk(hhmm, circuitName) {
+  const m = String(hhmm || '').match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return '';
+  const totalMinLocal = parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+  const offsetHours = 3 - circuitUtcOffsetHours(circuitName); // МСК is UTC+3
+  let totalMinMsk = totalMinLocal + offsetHours * 60;
+  totalMinMsk = ((totalMinMsk % 1440) + 1440) % 1440; // wrap into [0, 1440)
+  const h = Math.floor(totalMinMsk / 60);
+  const min = totalMinMsk % 60;
+  return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+}
+
 const F2_F3_SESSIONS_PATH = path.join(root, 'data', 'schedules', 'f2_f3_sessions.json');
 const f2F3Sessions = fs.existsSync(F2_F3_SESSIONS_PATH)
   ? JSON.parse(fs.readFileSync(F2_F3_SESSIONS_PATH, 'utf8'))
@@ -28,10 +76,23 @@ const f2F3Sessions = fs.existsSync(F2_F3_SESSIONS_PATH)
 /** Never overwritten by auto-generation. */
 const CURATED_OVERRIDES = {
   ...f2F3Sessions,
+  SUPER_FORMULA_2026_1: [
+    { label: 'Round 1', date: '2026-04-04', time_est: '09:30', time_msk: '03:30', kind: '' },
+    { label: 'Round 2', date: '2026-04-05', time_est: '10:10', time_msk: '04:10', kind: '' },
+  ],
+  SUPER_FORMULA_2026_4: [
+    { label: 'Round 4', date: '2026-05-23', time_est: '14:45', time_msk: '08:45', kind: '' },
+    { label: 'Round 5', date: '2026-05-24', time_est: '14:45', time_msk: '08:45', kind: '' },
+  ],
   SUPER_FORMULA_2026_6: [
     { label: 'Round 6', date: '2026-07-18', time_est: '16:15', time_msk: '10:15', kind: '' },
     { label: 'Round 3', date: '2026-07-19', time_est: '10:05', time_msk: '04:05', kind: '' },
     { label: 'Round 7', date: '2026-07-19', time_est: '15:35', time_msk: '09:35', kind: '' },
+  ],
+  /** Misano: Fri FP, Sat Race 1 20:30 local, Sun Race 2 14:30 local (SRO timetable). */
+  GTWCE_SPRINT_2026_2: [
+    { label: 'Race 1', date: '2026-07-18', time_est: '20:30', time_msk: '21:30', kind: '' },
+    { label: 'Race 2', date: '2026-07-19', time_est: '14:30', time_msk: '15:30', kind: '' },
   ],
 };
 
@@ -92,8 +153,11 @@ function scheduleIndex(rel) {
 }
 
 function inferDate(scheduleEv, eventData, sessionIndex, sessionCount) {
-  const start = isoSlice(scheduleEv?.start_date || eventData?.start_date);
-  const end = isoSlice(scheduleEv?.end_date || eventData?.end_date);
+  // eventData.start_date/end_date is the per-event file, usually the more carefully maintained
+  // source; scheduleEv (the season schedule row) is a fallback for events without their own
+  // detail file yet. Prefer eventData when both exist and disagree.
+  const start = isoSlice(eventData?.start_date || scheduleEv?.start_date);
+  const end = isoSlice(eventData?.end_date || scheduleEv?.end_date);
   if (!start) return '';
   if (sessionCount <= 1) return start;
   if (sessionCount === 2) return sessionIndex === 0 ? start : (end || start);
@@ -108,17 +172,18 @@ function inferDate(scheduleEv, eventData, sessionIndex, sessionCount) {
   return sessionIndex === 0 ? start : (end || start);
 }
 
-function inferTimes(scheduleEv, date, sessionIndex, sessionCount, meta) {
+function inferTimes(scheduleEv, eventData, date, sessionIndex, sessionCount, meta) {
   const time_est = String(meta?.time_est || '').trim();
   const time_msk = String(meta?.time_msk || '').trim();
   const startLocal = parseStartTime12h(meta?.Start);
+  const circuitName = (eventData && eventData.circuit_name) || (scheduleEv && scheduleEv.circuit_name) || '';
   const out = {
     time_est: time_est || startLocal || '',
     time_msk: time_msk || '',
   };
   if (!scheduleEv) return out;
-  const start = isoSlice(scheduleEv.start_date);
-  const end = isoSlice(scheduleEv.end_date);
+  const start = isoSlice(eventData?.start_date || scheduleEv.start_date);
+  const end = isoSlice(eventData?.end_date || scheduleEv.end_date);
   const sid = String(scheduleEv.series_id || '').toUpperCase();
 
   if (!out.time_msk && end && date === end) {
@@ -129,9 +194,20 @@ function inferTimes(scheduleEv, date, sessionIndex, sessionCount, meta) {
     out.time_msk = scheduleEv.time_msk || '';
     out.time_est = out.time_est || scheduleEv.time_est || '';
   }
-  if (!out.time_msk && sid === 'FREC' && sessionCount >= 2 && date === start) {
-    out.time_msk = sessionIndex === 1 ? '15:50' : (scheduleEv.time_msk || '');
-    out.time_est = out.time_est || scheduleEv.time_est || '';
+  // FREC / F4 Italy: prefer this session's OWN local start time (meta.Start) converted via the
+  // circuit's timezone, when the event JSON actually has it. In practice tables.race.sessions
+  // rarely carries meta.Start before results are filled in, so fall back to the weekend's
+  // single published time_msk for every session rather than a fabricated per-session guess
+  // (the old code hardcoded '15:50' for session index 1, which was just wrong for most rounds).
+  if (!out.time_msk && (sid === 'FREC' || sid === 'F4_IT') && sessionCount >= 2) {
+    if (startLocal) {
+      const converted = localTimeToMsk(startLocal, circuitName);
+      if (converted) out.time_msk = converted;
+    }
+    if (!out.time_msk) {
+      out.time_msk = scheduleEv.time_msk || '';
+      out.time_est = out.time_est || scheduleEv.time_est || '';
+    }
   }
   return out;
 }
@@ -144,7 +220,7 @@ function sessionsFromEvent(eventData, scheduleEv) {
     const meta = s.meta || {};
     let date = parseMetaDate(meta.Date);
     if (!date) date = inferDate(scheduleEv, eventData, i, raw.length);
-    const times = inferTimes(scheduleEv, date, i, raw.length, meta);
+    const times = inferTimes(scheduleEv, eventData, date, i, raw.length, meta);
     return {
       label,
       date,
@@ -167,8 +243,18 @@ function twoRaceSessions(ev, labels) {
     return [{ label: lbl[0], date: start, time_msk: msk, time_est: est, kind: '' }];
   }
   const kinds = lbl[0] === 'Sprint' ? ['sprint', 'feature'] : ['', ''];
+  let race1Date = start;
+  if (end > start) {
+    const s = new Date(`${start}T12:00:00`);
+    const e = new Date(`${end}T12:00:00`);
+    const daySpan = Math.round((e - s) / 86400000);
+    if (daySpan >= 2) {
+      e.setDate(e.getDate() - 1);
+      race1Date = `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, '0')}-${String(e.getDate()).padStart(2, '0')}`;
+    }
+  }
   return [
-    { label: lbl[0], date: start, time_msk: msk, time_est: est, kind: kinds[0] },
+    { label: lbl[0], date: race1Date, time_msk: msk, time_est: est, kind: kinds[0] },
     { label: lbl[1], date: end, time_msk: msk, time_est: est, kind: kinds[1] },
   ];
 }
@@ -216,11 +302,13 @@ const map = { ...CURATED_OVERRIDES };
 const previous = loadExistingMap();
 
 for (const ev of readJson('data/schedules/dtm.json')) {
+  if (CURATED_OVERRIDES[ev.id]) continue;
   const sessions = twoRaceSessions(ev);
   if (sessions) map[ev.id] = sessions;
 }
 
 for (const ev of readJson('data/schedules/gtwce_sprint.json')) {
+  if (CURATED_OVERRIDES[ev.id]) continue;
   const sessions = twoRaceSessions(ev);
   if (sessions) map[ev.id] = sessions;
 }
@@ -242,6 +330,27 @@ for (const { schedule, eventsDir } of EVENT_SCAN) {
 }
 
 const sortedKeys = Object.keys(map).sort();
+
+// Validate before writing: a session with neither time_msk nor time_est parses to a 0/NaN
+// start time downstream (getEventRaceUtcMs / getEventFirstRaceStartUtcMs), which historically
+// caused an infinite refresh loop in next-race-cards.js. Fail loudly here instead.
+let missingTimeCount = 0;
+for (const key of sortedKeys) {
+  for (const row of map[key]) {
+    if (!row.time_msk && !row.time_est) {
+      missingTimeCount++;
+      console.error(`Missing time_msk/time_est: ${key} — "${row.label}" (${row.date || 'no date'})`);
+    }
+  }
+}
+if (missingTimeCount > 0) {
+  console.error(`\n${missingTimeCount} session(s) have no start time. Fix the source data (curated override, `
+    + 'tables.race.sessions meta.Start, or schedule.json time_msk/time_est) before rebuilding — '
+    + 'not writing web/data/multi-race-schedule-sessions.js.');
+  process.exitCode = 1;
+  process.exit(1);
+}
+
 const lines = sortedKeys.map((key) => {
   const rows = map[key];
   const body = rows.map((r) => JSON.stringify(r, null, 2).replace(/^/gm, '    ')).join(',\n');

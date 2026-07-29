@@ -6,7 +6,7 @@
   "start_date": "2026-05-24",
   "end_date": "2026-05-24",
   "track": "Charlotte Motor Speedway",
-  "location": "Concord, North Carolina",
+  "location": "Concord, North Carolina, USA",
   "youtube_id": "aT7el0tCo6Q",
   "laps": "110",
   "distance": "165 mi (265.5 km)",
@@ -95,7 +95,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue Jr.",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -103,7 +103,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Rich Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -111,7 +111,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",

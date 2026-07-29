@@ -6,7 +6,7 @@
   "start_date": "2026-03-05",
   "end_date": "2026-03-07",
   "track": "Albert Park Circuit",
-  "location": "Albert Park, Victoria",
+  "location": "Melbourne, Victoria, Australia",
   "laps": "",
   "distance": "",
   "event_preview": "Albert Park Circuit is measured at 5.278 km (3.280 mi) and hosts the Supercars Championship Melbourne SuperSprint as the premier support category of the Australian Grand Prix weekend. Races run in a sprint format of 19 laps over a 100 km distance. The revised 2022 layout - featuring the removal of the Turn 9–10 chicane and the creation of a long, sweeping back straight - raised the circuit's average Supercars speed to 180 km/h, making it the fastest circuit on the championship calendar, ahead of Bathurst's 179 km/h. The redesign wiped nearly 10 seconds off previous lap times, and the official qualifying lap record stands at 1:44.9418, set by Will Davison in 2022.",
@@ -154,7 +154,7 @@
       "driver": "Matt Payne",
       "team": "Grove Racing",
       "manufacturer": "Ford",
-      "driver_slug": "matt-payne"
+      "driver_slug": "matthew-payne"
     },
     {
       "number": "26",

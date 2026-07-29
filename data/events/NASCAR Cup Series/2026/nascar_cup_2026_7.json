@@ -2,7 +2,7 @@
   "event_id": "NASCAR_CUP_2026_7",
   "series": "NASCAR Cup Series",
   "race": "Cook Out 400",
-  "location": "Ridgeway, Virginia",
+  "location": "Ridgeway, Virginia, USA",
   "track": "Martinsville Speedway",
   "date": "Sunday, March 29, 2026",
   "laps": "400",
@@ -81,7 +81,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "James Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",

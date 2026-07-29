@@ -277,53 +277,96 @@
           var evKeyEntry = ((d.event_id || '') + '').toUpperCase().replace(/[^A-Z0-9]+/g, '_');
           var seriesSlugEntryList = (G.eventSeriesId(d.event_id || eventIdFromRoute || '') || '').toLowerCase();
           if (seriesSlugEntryList === 'imsa') {
-            // Column order: #, Class, Team, Car, Drivers. For one team merge Team, Class and Car cells (rowspan).
-            var headImsa = '<th>' + t('th.no') + '</th><th>' + t('th.class') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver') + '</th>';
+            // Per-class tables (like ELMS): GTP / LMP2 / GTD Pro / GTD. Columns: #, Team, Car, Drivers.
+            var imsaClassOrder = ['GTP', 'LMP2', 'GTD Pro', 'GTD'];
+            function normImsaClass(v) {
+              return String(v || '')
+                .replace(/\u00a0/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toUpperCase()
+                .replace(/^GTD\s*PRO$/, 'GTD PRO');
+            }
+            var imsaClassCanon = { 'GTP': 'GTP', 'LMP2': 'LMP2', 'GTD PRO': 'GTD Pro', 'GTD': 'GTD' };
+            function sortImsaByCarNumber(a, b) {
+              var na = parseInt(String((a && a.number) || '').replace(/[^\d]/g, ''), 10);
+              var nb = parseInt(String((b && b.number) || '').replace(/[^\d]/g, ''), 10);
+              if (!isNaN(na) && !isNaN(nb) && na !== nb) return na - nb;
+              return String((a && a.number) || '').localeCompare(String((b && b.number) || ''), undefined, { numeric: true, sensitivity: 'base' });
+            }
             function buildImsaEntryTbody(arr, byNum) {
               var teamVals = arr.map(function (row) {
                 var tv = row.team;
                 if (byNum && row.number != null) tv = byNum[String(row.number).trim()] || byNum[String(parseInt(row.number, 10))] || tv;
                 return tv != null ? String(tv) : '';
               });
-              var classVals = arr.map(function (row) {
-                return row.class != null ? String(row.class) : '';
+              var carVals = arr.map(function (row) {
+                if (row.car != null && String(row.car).trim()) return String(row.car);
+                return row.manufacturer != null ? String(row.manufacturer) : '';
               });
               var teamRowspan = [];
+              var carRowspan = [];
               for (var i = 0; i < arr.length; i++) {
-                if (i === 0 || teamVals[i] !== teamVals[i - 1] || classVals[i] !== classVals[i - 1]) {
+                if (i === 0 || teamVals[i] !== teamVals[i - 1]) {
                   var ts = 1;
-                  while (i + ts < arr.length && teamVals[i + ts] === teamVals[i] && classVals[i + ts] === classVals[i]) ts++;
+                  while (i + ts < arr.length && teamVals[i + ts] === teamVals[i]) ts++;
                   teamRowspan.push(ts);
                 } else {
                   teamRowspan.push(0);
                 }
+                if (i === 0 || teamVals[i] !== teamVals[i - 1] || carVals[i] !== carVals[i - 1]) {
+                  var cs = 1;
+                  while (i + cs < arr.length && teamVals[i + cs] === teamVals[i] && carVals[i + cs] === carVals[i]) cs++;
+                  carRowspan.push(cs);
+                } else {
+                  carRowspan.push(0);
+                }
               }
               return arr.map(function (row, idx) {
                 var teamDisplay = teamVals[idx];
-                var carDisplay = (row.car != null && String(row.car).trim()) ? String(row.car) : (row.manufacturer != null ? String(row.manufacturer) : '');
-                var classDisplay = row.class != null ? String(row.class) : '';
+                var carDisplay = carVals[idx];
                 var driverRaw = row.driver != null ? String(row.driver) : '';
                 var driverParts = driverRaw.split(/\s*\/\s*/).map(function (p) { return p.trim(); }).filter(function (p) { return p; });
                 var driverCell = driverParts.length
                   ? driverParts.map(function (name) { return G.renderDriverCell(name); }).join(' / ')
                   : '—';
-                var span = teamRowspan[idx];
-                var teamTd = span > 0
-                  ? '<td rowspan="' + span + '" class="entry-list-team-cell">' + (teamDisplay ? G.teamLink(teamDisplay) : '—') + '</td>'
+                var tSpan = teamRowspan[idx];
+                var cSpan = carRowspan[idx];
+                var teamTd = tSpan > 0
+                  ? '<td rowspan="' + tSpan + '" class="entry-list-team-cell">' + (teamDisplay ? G.teamLink(teamDisplay) : '—') + '</td>'
                   : '';
-                var classTd = span > 0
-                  ? '<td rowspan="' + span + '" class="entry-list-class-cell">' + esc(dash(localizeRacingClass(classDisplay))) + '</td>'
+                var carTd = cSpan > 0
+                  ? '<td rowspan="' + cSpan + '" class="entry-list-car-cell">' + esc(dash(carDisplay)) + '</td>'
                   : '';
-                var carTd = span > 0
-                  ? '<td rowspan="' + span + '" class="entry-list-car-cell">' + esc(dash(carDisplay)) + '</td>'
-                  : '';
-                return '<tr><td>' + esc(dash(row.number)) + '</td>' + classTd + teamTd + carTd + '<td>' + driverCell + '</td></tr>';
+                return '<tr><td>' + esc(dash(row.number)) + '</td>' + teamTd + carTd + '<td>' + driverCell + '</td></tr>';
               }).join('');
             }
-            contentEl.innerHTML = '<div class="table-wrap"><table class="data-table entry-list-table"><thead><tr>' + headImsa + '</tr></thead><tbody>' + buildImsaEntryTbody(entryCopy, byNumber) + '</tbody></table></div>';
-            addObjectTableSort(contentEl.querySelector('.data-table'), entryCopy, null, ['number', 'class', 'team', 'car', 'driver'], function (dataCopy) {
-              return buildImsaEntryTbody(dataCopy, byNumber);
+            var seenImsaNorm = {};
+            var imsaClassList = imsaClassOrder.slice();
+            entryCopy.forEach(function (row) {
+              var n = normImsaClass(row && row.class);
+              if (!n || seenImsaNorm[n]) return;
+              seenImsaNorm[n] = true;
+              var label = imsaClassCanon[n];
+              if (!label) label = String(row.class).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+              if (imsaClassList.indexOf(label) < 0) imsaClassList.push(label);
             });
+            var headImsa = '<th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver') + '</th>';
+            var htmlImsa = '';
+            for (var ici = 0; ici < imsaClassList.length; ici++) {
+              var clsLabel = imsaClassList[ici];
+              var clsNorm = normImsaClass(clsLabel);
+              var clsRows = entryCopy
+                .filter(function (r) { return normImsaClass(r && r.class) === clsNorm; })
+                .sort(sortImsaByCarNumber);
+              if (!clsRows.length) continue;
+              var sectionTitle = localizeRacingClass ? localizeRacingClass(clsLabel) : clsLabel;
+              htmlImsa += '<h4 class="table-section-title">' + esc(sectionTitle) + '</h4>' +
+                '<div class="table-wrap"><table class="data-table entry-list-table">' +
+                '<thead><tr>' + headImsa + '</tr></thead>' +
+                '<tbody>' + buildImsaEntryTbody(clsRows, byNumber) + '</tbody></table></div>';
+            }
+            contentEl.innerHTML = htmlImsa || ('<p class="empty-msg">' + t('error.no_entry_list') + '</p>');
             return;
           }
           var eventIdLower = (d.event_id || eventIdFromRoute || '').toLowerCase();
@@ -371,7 +414,7 @@
                   '<td>' + renderElmsDriverCell(row && row.driver3) + '</td>' +
                   '</tr>';
               }).join('');
-              htmlElms += '<h4 class="table-section-title">' + esc(clsName) + '</h4>' +
+              htmlElms += '<h4 class="table-section-title">' + esc(localizeRacingClass ? localizeRacingClass(clsName) : clsName) + '</h4>' +
                 '<div class="table-wrap"><table class="data-table entry-list-table">' +
                 '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver1') + '</th><th>' + t('th.driver2') + '</th><th>' + t('th.driver3') + '</th></tr></thead>' +
                 '<tbody>' + bodyElms + '</tbody></table></div>';
@@ -576,7 +619,7 @@
                   '<td>' + esc(dash(tireVal)) + '</td>' +
                   '</tr>';
               }).join('');
-              htmlSuperGt += '<h4 class="table-section-title">' + esc(clsSuperGt) + '</h4>' +
+              htmlSuperGt += '<h4 class="table-section-title">' + esc(localizeRacingClass ? localizeRacingClass(clsSuperGt) : clsSuperGt) + '</h4>' +
                 '<div class="table-wrap"><table class="data-table entry-list-table">' +
                 '<thead><tr><th>' + t('th.no') + '</th><th>' + t('th.team') + '</th><th>' + t('th.make') + '</th><th>' + t('th.car') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.tire') + '</th></tr></thead>' +
                 '<tbody>' + bodySuperGt + '</tbody></table></div>';
@@ -747,13 +790,18 @@
             if (r && r.car != null && String(r.car).trim() !== '') return String(r.car).trim();
             return getManufacturerDisplay(r);
           }
-          // F1, IndyCar, Super Formula, DTM: default sort by team, then number
-          if (isF1Entry || isIndyCar || isSuperFormulaEntry || isDtmEntry) {
+          // F1, IndyCar, Super Formula, DTM, and Supercars: keep rows grouped by team so
+          // extra/wildcard entries render adjacent to their team and merge correctly.
+          if (isF1Entry || isIndyCar || isSuperFormulaEntry || isDtmEntry || isSupercarsEntry) {
             entryCopy.sort(function (a, b) {
-              var ta = getTeamDisplay(a).toLowerCase();
-              var tb = getTeamDisplay(b).toLowerCase();
+              var ta = String(getTeamDisplay(a) || '').toLowerCase();
+              var tb = String(getTeamDisplay(b) || '').toLowerCase();
               if (ta < tb) return -1;
               if (ta > tb) return 1;
+              var ma = String(getManufacturerDisplay(a) || '').toLowerCase();
+              var mb = String(getManufacturerDisplay(b) || '').toLowerCase();
+              if (ma < mb) return -1;
+              if (ma > mb) return 1;
               var na = (a.number != null ? String(a.number) : '');
               var nb = (b.number != null ? String(b.number) : '');
               return na.localeCompare(nb, undefined, { numeric: true });

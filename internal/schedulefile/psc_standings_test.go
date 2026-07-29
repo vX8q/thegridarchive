@@ -24,14 +24,15 @@ func TestBuildStandingsFromEvents_PSC_GuestDriversSplit(t *testing.T) {
 		"Jacques Villeneuve":   true,
 		"Gianmarco Quaresmini": true,
 		"Bert de Heus":         true,
+		"Maik Rosenberg":       true,
 	}
 	for _, r := range data.Rows {
 		if guestNames[r.Driver] {
 			t.Errorf("guest driver %q in main standings", r.Driver)
 		}
 	}
-	if len(data.Ineligible) != 8 {
-		t.Fatalf("ineligible guests: got %d, want 8", len(data.Ineligible))
+	if len(data.Ineligible) != 9 {
+		t.Fatalf("ineligible guests: got %d, want 9", len(data.Ineligible))
 	}
 	for _, r := range data.Ineligible {
 		if !guestNames[r.Driver] {

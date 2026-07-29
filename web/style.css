@@ -1978,6 +1978,9 @@ body.series-gtwce_sprint #view-event #event-content[data-event-section="practice
   flex-direction: column;
   align-items: center;
 }
+/* Session title + Results stay left-aligned above the centered table */
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block .event-pre-season-title,
+:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block .event-pre-season-subtitle,
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block .table-section-title {
   align-self: stretch;
 }
@@ -2459,9 +2462,61 @@ body.series-imsa #view-event #event-content:is([data-event-section="practice"], 
 #view-event .data-table.race-session-results-table th:nth-child(10),
 #view-event .data-table.race-session-results-table td:nth-child(10) { min-width: 5rem; text-align: right; white-space: nowrap; }
 #view-event .data-table.race-session-results-table th:nth-child(11),
-#view-event .data-table.race-session-results-table td:nth-child(11) { min-width: 4.5rem; text-align: right; white-space: nowrap; }
+#view-event .data-table.race-session-results-table td:nth-child(11) { min-width: 4.5rem; text-align: center; white-space: nowrap; }
 #view-event .data-table.race-session-results-table th:nth-child(12),
 #view-event .data-table.race-session-results-table td:nth-child(12) { min-width: 6.5rem; text-align: right; white-space: nowrap; }
+
+/* Super Formula race: larger type; Pts is last column and must stay compact (not 6.5rem). */
+body.series-super_formula #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th,
+body.series-super_formula #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+  line-height: 1.4;
+}
+body.series-super_formula #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:last-child,
+body.series-super_formula #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:last-child {
+  min-width: 2.25rem;
+  width: 1%;
+  max-width: 3rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* F2 / F3 race: larger type; Laps (5) and Pts (last) stay compact. */
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th,
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td,
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th,
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+  line-height: 1.4;
+}
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(5),
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(5),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(5),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(5) {
+  min-width: 2.25rem;
+  width: 1%;
+  max-width: 3rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  text-align: center;
+  white-space: nowrap;
+}
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:last-child,
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:last-child,
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:last-child,
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:last-child {
+  min-width: 2.25rem;
+  width: 1%;
+  max-width: 3rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+  text-align: center;
+  white-space: nowrap;
+}
 #view-event .table-wrap:has(.pre-season-results-table--fit) {
   width: fit-content;
   max-width: 100%;
@@ -5474,14 +5529,66 @@ tr.table-separator-row td {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
+.lrc-card--indianapolis-irp,
+.lrc-card--monadnock-speedway,
+.lrc-card--mugello,
+.lrc-card--oschersleben {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+}
+.lrc-card--indianapolis-irp {
+  background-image: url('/api/card-bg/Lucas-Oil-Indianapolis-Raceway-Park.jpg');
+}
+.lrc-card--monadnock-speedway {
+  background-image: url('/api/card-bg/Monadnock-Speedway.jpg');
+}
+.lrc-card--mugello {
+  background-image: url('/api/card-bg/mugello.jpg');
+}
+.lrc-card--oschersleben {
+  background-image: url('/api/card-bg/Oschersleben.jpeg');
+}
+.lrc-card--indianapolis-irp::after,
+.lrc-card--monadnock-speedway::after,
+.lrc-card--mugello::after,
+.lrc-card--oschersleben::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.lrc-card--indianapolis-irp > *,
+.lrc-card--monadnock-speedway > *,
+.lrc-card--mugello > *,
+.lrc-card--oschersleben > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
 .lrc-card--echopark-speedway,
 .lrc-card--interlagos,
 .lrc-card--hungaroring,
+.lrc-card--north-wilkesboro,
 .lrc-card--canadian-tire-motorsport-park,
 .lrc-card--claremont-motorsports-park,
 .lrc-card--lime-rock,
 .lrc-card--norisring,
-.lrc-card--reid-park-street-circuit {
+.lrc-card--reid-park-street-circuit,
+.lrc-card--magny-cours,
+.lrc-card--wanneroo-raceway {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -5496,6 +5603,9 @@ tr.table-separator-row td {
 }
 .lrc-card--hungaroring {
   background-image: url('/api/card-bg/hungaroring.webp');
+}
+.lrc-card--north-wilkesboro {
+  background-image: url('/api/card-bg/north-wilkesboro.jpg');
 }
 .lrc-card--canadian-tire-motorsport-park {
   background-image: url('/api/card-bg/canadian-tire-motorsport-park.jpg');
@@ -5512,14 +5622,23 @@ tr.table-separator-row td {
 .lrc-card--reid-park-street-circuit {
   background-image: url('/api/card-bg/Reid-Park-Street-Circuit.jpg');
 }
+.lrc-card--magny-cours {
+  background-image: url('/api/card-bg/magny-cours.jpg');
+}
+.lrc-card--wanneroo-raceway {
+  background-image: url('/api/card-bg/Wanneroo-Raceway.jpg');
+}
 .lrc-card--echopark-speedway::after,
 .lrc-card--interlagos::after,
 .lrc-card--hungaroring::after,
+.lrc-card--north-wilkesboro::after,
 .lrc-card--canadian-tire-motorsport-park::after,
 .lrc-card--claremont-motorsports-park::after,
 .lrc-card--lime-rock::after,
 .lrc-card--norisring::after,
-.lrc-card--reid-park-street-circuit::after {
+.lrc-card--reid-park-street-circuit::after,
+.lrc-card--magny-cours::after,
+.lrc-card--wanneroo-raceway::after {
   content: '';
   position: absolute;
   left: 0;
@@ -5537,11 +5656,14 @@ tr.table-separator-row td {
 .lrc-card--echopark-speedway > *,
 .lrc-card--interlagos > *,
 .lrc-card--hungaroring > *,
+.lrc-card--north-wilkesboro > *,
 .lrc-card--canadian-tire-motorsport-park > *,
 .lrc-card--claremont-motorsports-park > *,
 .lrc-card--lime-rock > *,
 .lrc-card--norisring > *,
-.lrc-card--reid-park-street-circuit > * {
+.lrc-card--reid-park-street-circuit > *,
+.lrc-card--magny-cours > *,
+.lrc-card--wanneroo-raceway > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -7926,14 +8048,84 @@ tr.table-separator-row td {
   transform: none;
 }
 
+.nrc-card--indianapolis-irp,
+.nrc-card--monadnock-speedway,
+.nrc-card--mugello,
+.nrc-card--oschersleben {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.nrc-card--indianapolis-irp::before {
+  background-image: url('/api/card-bg/Lucas-Oil-Indianapolis-Raceway-Park.jpg');
+}
+.nrc-card--monadnock-speedway::before {
+  background-image: url('/api/card-bg/Monadnock-Speedway.jpg');
+}
+.nrc-card--mugello::before {
+  background-image: url('/api/card-bg/mugello.jpg');
+}
+.nrc-card--oschersleben::before {
+  background-image: url('/api/card-bg/Oschersleben.jpeg');
+}
+.nrc-card--indianapolis-irp::before,
+.nrc-card--monadnock-speedway::before,
+.nrc-card--mugello::before,
+.nrc-card--oschersleben::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: 0;
+  transition: transform 0.2s ease;
+}
+.nrc-card--indianapolis-irp::after,
+.nrc-card--monadnock-speedway::after,
+.nrc-card--mugello::after,
+.nrc-card--oschersleben::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  z-index: 1;
+}
+.nrc-card--indianapolis-irp > *,
+.nrc-card--monadnock-speedway > *,
+.nrc-card--mugello > *,
+.nrc-card--oschersleben > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+.nrc-card--indianapolis-irp:hover::before,
+.nrc-card--monadnock-speedway:hover::before,
+.nrc-card--mugello:hover::before,
+.nrc-card--oschersleben:hover::before {
+  transform: none;
+}
+
 .nrc-card--echopark-speedway,
 .nrc-card--interlagos,
 .nrc-card--hungaroring,
+.nrc-card--north-wilkesboro,
 .nrc-card--canadian-tire-motorsport-park,
 .nrc-card--claremont-motorsports-park,
 .nrc-card--lime-rock,
 .nrc-card--norisring,
-.nrc-card--reid-park-street-circuit {
+.nrc-card--reid-park-street-circuit,
+.nrc-card--magny-cours,
+.nrc-card--wanneroo-raceway {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -7946,6 +8138,9 @@ tr.table-separator-row td {
 }
 .nrc-card--hungaroring::before {
   background-image: url('/api/card-bg/hungaroring.webp');
+}
+.nrc-card--north-wilkesboro::before {
+  background-image: url('/api/card-bg/north-wilkesboro.jpg');
 }
 .nrc-card--canadian-tire-motorsport-park::before {
   background-image: url('/api/card-bg/canadian-tire-motorsport-park.jpg');
@@ -7962,14 +8157,23 @@ tr.table-separator-row td {
 .nrc-card--reid-park-street-circuit::before {
   background-image: url('/api/card-bg/Reid-Park-Street-Circuit.jpg');
 }
+.nrc-card--magny-cours::before {
+  background-image: url('/api/card-bg/magny-cours.jpg');
+}
+.nrc-card--wanneroo-raceway::before {
+  background-image: url('/api/card-bg/Wanneroo-Raceway.jpg');
+}
 .nrc-card--echopark-speedway::before,
 .nrc-card--interlagos::before,
 .nrc-card--hungaroring::before,
+.nrc-card--north-wilkesboro::before,
 .nrc-card--canadian-tire-motorsport-park::before,
 .nrc-card--claremont-motorsports-park::before,
 .nrc-card--lime-rock::before,
 .nrc-card--norisring::before,
-.nrc-card--reid-park-street-circuit::before {
+.nrc-card--reid-park-street-circuit::before,
+.nrc-card--magny-cours::before,
+.nrc-card--wanneroo-raceway::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -7983,11 +8187,14 @@ tr.table-separator-row td {
 .nrc-card--echopark-speedway::after,
 .nrc-card--interlagos::after,
 .nrc-card--hungaroring::after,
+.nrc-card--north-wilkesboro::after,
 .nrc-card--canadian-tire-motorsport-park::after,
 .nrc-card--claremont-motorsports-park::after,
 .nrc-card--lime-rock::after,
 .nrc-card--norisring::after,
-.nrc-card--reid-park-street-circuit::after {
+.nrc-card--reid-park-street-circuit::after,
+.nrc-card--magny-cours::after,
+.nrc-card--wanneroo-raceway::after {
   content: '';
   position: absolute;
   left: 0;
@@ -8005,11 +8212,14 @@ tr.table-separator-row td {
 .nrc-card--echopark-speedway > *,
 .nrc-card--interlagos > *,
 .nrc-card--hungaroring > *,
+.nrc-card--north-wilkesboro > *,
 .nrc-card--canadian-tire-motorsport-park > *,
 .nrc-card--claremont-motorsports-park > *,
 .nrc-card--lime-rock > *,
 .nrc-card--norisring > *,
-.nrc-card--reid-park-street-circuit > * {
+.nrc-card--reid-park-street-circuit > *,
+.nrc-card--magny-cours > *,
+.nrc-card--wanneroo-raceway > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -8017,11 +8227,14 @@ tr.table-separator-row td {
 .nrc-card--echopark-speedway:hover::before,
 .nrc-card--interlagos:hover::before,
 .nrc-card--hungaroring:hover::before,
+.nrc-card--north-wilkesboro:hover::before,
 .nrc-card--canadian-tire-motorsport-park:hover::before,
 .nrc-card--claremont-motorsports-park:hover::before,
 .nrc-card--lime-rock:hover::before,
 .nrc-card--norisring:hover::before,
-.nrc-card--reid-park-street-circuit:hover::before {
+.nrc-card--reid-park-street-circuit:hover::before,
+.nrc-card--magny-cours:hover::before,
+.nrc-card--wanneroo-raceway:hover::before {
   transform: none;
 }
 
@@ -8166,8 +8379,9 @@ tr.table-separator-row td {
 .sched-past  { opacity: 0.42; }
 .sched-series { width: 1px; white-space: nowrap; }
 .sched-race   { min-width: 8rem; }
-.sched-location { color: var(--muted); font-size: 0.78rem; }
-.sched-time   { white-space: nowrap; font-size: 0.78rem; color: var(--muted); }
+.sched-track  { min-width: 7rem; font-size: 0.78rem; }
+.sched-location { color: var(--text); font-size: 0.78rem; min-width: 6rem; }
+.sched-time   { white-space: nowrap; font-size: 0.78rem; color: var(--text); }
 
 .footer {
   padding: 1.5rem 0;
@@ -8196,5 +8410,3 @@ tr.table-separator-row td {
   color: var(--link-hover);
   text-decoration: underline;
 }
-
-/* ─── Desktop-only: mobile-specific rules removed ─────────────────────────── */

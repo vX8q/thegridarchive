@@ -1,0 +1,273 @@
+{
+  "event_id": "ARCA_2026_14",
+  "series": "ARCA Menards Series",
+  "race": "JR & CO. 150",
+  "date": "Friday, August 7, 2026",
+  "start_date": "2026-08-07",
+  "end_date": "2026-08-07",
+  "track": "Iowa Speedway",
+  "location": "Newton, Iowa, USA",
+  "entry_list": [
+    {
+      "number": "2",
+      "driver": "Kyle Steckly",
+      "team": "RAFA Racing Team",
+      "manufacturer": "Toyota",
+      "crew_chief": "Matt Lucas",
+      "driver_slug": "kyle-steckly"
+    },
+    {
+      "number": "03",
+      "driver": "Alex Clubb",
+      "team": "Clubb Racing Inc.",
+      "manufacturer": "Ford",
+      "crew_chief": "Brian Clubb",
+      "driver_slug": "alex-clubb"
+    },
+    {
+      "number": "06",
+      "driver": "Brayton Laster",
+      "team": "Wayne Peterson Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Nate Moeller",
+      "driver_slug": "brayton-laster"
+    },
+    {
+      "number": "9",
+      "driver": "Landon S. Huffman",
+      "team": "CR7 Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Frank Kimmel",
+      "driver_slug": "landon-s-huffman"
+    },
+    {
+      "number": "10",
+      "driver": "Dustin Hillenburg",
+      "team": "Fast Track Racing",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Joseth Carabantes",
+      "driver_slug": "dustin-hillenburg"
+    },
+    {
+      "number": "11",
+      "driver": "Tim Monroe",
+      "team": "Fast Track Racing",
+      "manufacturer": "Ford",
+      "crew_chief": "Nathan Davis",
+      "driver_slug": "tim-monroe"
+    },
+    {
+      "number": "12",
+      "driver": "Takuma Koga",
+      "team": "Fast Track Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "Andrew Kiernan",
+      "driver_slug": "takuma-koga"
+    },
+    {
+      "number": "15",
+      "driver": "Jade Avedisian",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Doug Richert",
+      "driver_slug": "jade-avedisian"
+    },
+    {
+      "number": "18",
+      "driver": "William Sawalich",
+      "team": "Joe Gibbs Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "Matt Ross",
+      "driver_slug": "william-sawalich"
+    },
+    {
+      "number": "19",
+      "driver": "Matt Kemp",
+      "team": "Maples Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Kenna Long",
+      "driver_slug": "matt-kemp"
+    },
+    {
+      "number": "20",
+      "driver": "Jake Bollman (R)",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Doug George",
+      "driver_slug": "jake-bollman"
+    },
+    {
+      "number": "24",
+      "driver": "Daniel Dye",
+      "team": "SPS Racing",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Blake Bainbridge",
+      "driver_slug": "daniel-dye"
+    },
+    {
+      "number": "25",
+      "driver": "Gavan Boschele (R)",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Shane Wilson",
+      "driver_slug": "gavan-boschele"
+    },
+    {
+      "number": "27",
+      "driver": "Tim Richmond",
+      "team": "Tim Richmond Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "Adam Murphy",
+      "driver_slug": "tim-richmond"
+    },
+    {
+      "number": "28",
+      "driver": "Connor Mosack",
+      "team": "Pinnacle Racing Group",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Steven Dawson",
+      "driver_slug": "connor-mosack"
+    },
+    {
+      "number": "48",
+      "driver": "Brad Smith",
+      "team": "Brad Smith Motorsports",
+      "manufacturer": "Ford",
+      "crew_chief": "Jeff Smith",
+      "driver_slug": "brad-smith"
+    },
+    {
+      "number": "55",
+      "driver": "Isabella Robusto",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Glenn Parker",
+      "driver_slug": "isabella-robusto"
+    },
+    {
+      "number": "69",
+      "driver": "Landon Brown",
+      "team": "Kimmel Racing",
+      "manufacturer": "Ford",
+      "crew_chief": "Bill Kimmel",
+      "driver_slug": "landon-brown"
+    },
+    {
+      "number": "70",
+      "driver": "Thomas Annunziata",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Shannon Rursch",
+      "driver_slug": "thomas-annunziata"
+    },
+    {
+      "number": "71",
+      "driver": "Andy Jankowiak",
+      "team": "KLAS Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Mike Dayton",
+      "driver_slug": "andy-jankowiak"
+    },
+    {
+      "number": "77",
+      "driver": "Lanie Buice",
+      "team": "Pinnacle Racing Group",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Kevin Reed Jr",
+      "driver_slug": "lanie-buice"
+    },
+    {
+      "number": "83",
+      "driver": "Nate Moeller",
+      "team": "Clubb Racing Inc.",
+      "manufacturer": "Ford",
+      "crew_chief": "Chris Porter",
+      "driver_slug": "nate-moeller"
+    },
+    {
+      "number": "86",
+      "driver": "Jeff Maconi (R)",
+      "team": "Clubb Racing Inc.",
+      "manufacturer": "Ford",
+      "crew_chief": "Jon Clubb",
+      "driver_slug": "jeff-maconi"
+    },
+    {
+      "number": "89",
+      "driver": "Bobby Dale Earnhardt",
+      "team": "Rise Racing",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Matthew Wright",
+      "driver_slug": "bobby-dale-earnhardt"
+    },
+    {
+      "number": "91",
+      "driver": "Morgen Baird",
+      "team": "Maples Motorsports",
+      "manufacturer": "Ford",
+      "crew_chief": "Chris Vanscoy",
+      "driver_slug": "morgen-baird"
+    },
+    {
+      "number": "97",
+      "driver": "Jason Kitzmiller",
+      "team": "CR7 Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Doug Howe",
+      "driver_slug": "jason-kitzmiller"
+    },
+    {
+      "number": "99",
+      "driver": "Michael Maples",
+      "team": "Maples Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Kyle Totman",
+      "driver_slug": "michael-maples"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Trk",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed",
+        "Lap #",
+        "# Laps",
+        "-Fastest",
+        "-Next"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Fin",
+        "St",
+        "#",
+        "Driver",
+        "Team",
+        "Make",
+        "Laps",
+        "Led",
+        "Status",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

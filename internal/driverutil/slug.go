@@ -131,6 +131,38 @@ func NormalizeSlug(slug string) string {
 		return "michael-shin"
 	case "david-sapienza":
 		return "dave-sapienza"
+	case "matt-payne":
+		return "matthew-payne"
+	case "cam-waters":
+		return "cameron-waters"
+	case "giovanni-ruggiero":
+		return "gio-ruggiero"
+	case "nicolas-varrone":
+		return "nico-varrone"
+	case "jonathan-mckennedy":
+		return "jon-mckennedy"
+	case "alexander-dunne":
+		return "alex-dunne"
+	case "dani-juncadella":
+		return "daniel-juncadella"
+	case "max-lynn":
+		return "maxwell-lynn"
+	case "dan-harper":
+		return "daniel-harper"
+	case "kaku-ohta":
+		return "kakunoshin-ohta"
+	case "joshua-rattican":
+		return "josh-rattican"
+	case "ben-hanley":
+		return "benjamin-hanley"
+	case "john-h-nemechek":
+		return "john-hunter-nemechek"
+	case "bobby-earnhardt":
+		return "bobby-dale-earnhardt"
+	case "tobi-lutke", "tobi-lütke":
+		return "tobias-lutke"
+	case "mike-christopher-jr":
+		return "michael-christopher-jr"
 	default:
 		return stripEligibilitySlugSuffix(slug)
 	}

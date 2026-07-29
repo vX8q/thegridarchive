@@ -1,10 +1,10 @@
 {
   "event_id": "NASCAR_CUP_2026_1",
   "series": "NASCAR Cup Series",
-  "race": "1 of 36",
+  "race": "Daytona 500",
   "date": "Sunday, February 15, 2026",
   "track": "Daytona International Speedway",
-  "location": "Daytona Beach, FL",
+  "location": "Daytona Beach, Florida, USA",
   "laps": "200",
   "distance": "2.500 mile paved track (500.000 miles)",
   "stage1_laps": "65",
@@ -76,7 +76,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Jim Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",

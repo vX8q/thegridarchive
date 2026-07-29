@@ -1,5 +1,10 @@
 // Table sorting helpers — registered on window.TGA and kept as globals for backward compat.
 window.TGA = window.TGA || {};
+// Standings headers link to their event; such clicks navigate instead of sorting.
+function headerLinkClick(ev) {
+  var target = ev && ev.target;
+  return !!(target && target.closest && target.closest('a'));
+}
 function makeTableSortable(tableEl, rows, escapeFn, getRowClass) {
   if (!tableEl || !rows || rows.length === 0) return;
   var thead = tableEl.querySelector('thead');
@@ -63,7 +68,8 @@ function makeTableSortable(tableEl, rows, escapeFn, getRowClass) {
     (function (colIndex) {
       var dir = 1;
       ths[colIndex].classList.add('sortable');
-      ths[colIndex].addEventListener('click', function () {
+      ths[colIndex].addEventListener('click', function (ev) {
+        if (headerLinkClick(ev)) return;
         // Column is numeric if all non-empty values are numbers (empty/"—" allowed)
         var hasAnyNumeric = rowsCopy.some(function (row) { return colIndex < row.length && isNumeric(getSortValue(row[colIndex])); });
         var numeric = hasAnyNumeric && rowsCopy.every(function (row) {
@@ -118,7 +124,8 @@ function makeSimpleTableSortable(tableEl, options) {
   [].forEach.call(ths, function (th, colIndex) {
     var dir = 1;
     th.classList.add('sortable');
-    th.addEventListener('click', function () {
+    th.addEventListener('click', function (ev) {
+      if (headerLinkClick(ev)) return;
       var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
       rows.sort(function (a, b) {
         var ta = getCellText(a, colIndex);

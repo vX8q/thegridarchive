@@ -49,6 +49,22 @@ func SeasonFromSlug(slug string) string {
 	return ""
 }
 
+// KnownSeriesID reports whether a URL slug (f1, f1-2025, nascar-cup, nascar_xfinity)
+// maps to a configured championship.
+func KnownSeriesID(slug string) bool {
+	slug = strings.TrimSpace(slug)
+	if slug == "" {
+		return false
+	}
+	dataID := DataSeriesID(slug)
+	for _, c := range Championships {
+		if strings.EqualFold(c.ID, slug) || strings.EqualFold(DataSeriesID(c.ID), dataID) {
+			return true
+		}
+	}
+	return false
+}
+
 // DataSeriesID returns the identifier for data directories/files (e.g. nascar_xfinity -> noaps).
 // For a season slug like "f1-2025" or "indycar_2026" it returns "f1" / "indycar" (season via SeasonFromSlug).
 func DataSeriesID(champID string) string {

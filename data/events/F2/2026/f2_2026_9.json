@@ -6,7 +6,7 @@
   "start_date": "2026-07-25",
   "end_date": "2026-07-26",
   "track": "Hungaroring",
-  "location": "Mogyorod",
+  "location": "Mogyorod, Pest, Hungary",
   "entry_list": [
     {
       "number": "1",
@@ -136,7 +136,7 @@
     },
     {
       "number": "22",
-      "driver": "Nico Varrone",
+      "driver": "Nicolas Varrone",
       "team": "Van Amersfoort Racing",
       "manufacturer": "",
       "driver_slug": "nico-varrone"

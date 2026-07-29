@@ -7,7 +7,7 @@
   "end_date": "2026-05-16",
   "youtube_id": "pkmV1RqWgjE",
   "track": "Seekonk Speedway",
-  "location": "Seekonk, Massachusetts",
+  "location": "Seekonk, Massachusetts, USA",
   "laps": "150",
   "distance": "0.333 mile paved track (49.950 miles)",
   "race_statistics": {
@@ -135,7 +135,7 @@
       "manufacturer": "Troyer",
       "crew_chief": "Greg Kleila",
       "sponsor": "Sapienza Enterprises; Eastport Feeds",
-      "driver_slug": "david-sapienza"
+      "driver_slug": "dave-sapienza"
     },
     {
       "number": "44",
@@ -225,7 +225,7 @@
       "manufacturer": "FURY Race Cars",
       "crew_chief": "Patrick Walsh",
       "sponsor": "Stuarts Automotive; Christophers Towing; Levasseur HVAC, Leone's Landscaping; Hillsboro Inc.; Central Mass Tree",
-      "driver_slug": "jonathan-mckennedy"
+      "driver_slug": "jon-mckennedy"
     },
     {
       "number": "82",

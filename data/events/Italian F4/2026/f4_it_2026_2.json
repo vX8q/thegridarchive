@@ -2,11 +2,11 @@
   "event_id": "F4_IT_2026_2",
   "series": "Italian F4 Championship",
   "race": "Vallelunga",
-  "date": "23 May 2026",
-  "start_date": "2026-05-23",
-  "end_date": "2026-05-23",
+  "date": "22–24 May 2026",
+  "start_date": "2026-05-22",
+  "end_date": "2026-05-24",
   "track": "Autodromo Vallelunga",
-  "location": "Campagnano di Roma",
+  "location": "Campagnano di Roma, Lazio, Italy",
   "laps": "16",
   "distance": "",
   "event_preview": "Autodromo Vallelunga \"Piero Taruffi\" is a 4.085 km (2.538 mi) permanent road course in Campagnano di Roma, 20 kilometres north of Rome, opened as a dirt track in 1951 and converted to asphalt in 1957. The circuit's 15 corners test racecraft and precision, with the demanding sequence at the Parabolica and the technical turns through the southern complex rewarding smooth inputs and commitment.\n\nThe 2026 Italian Formula 4 Championship round at Vallelunga takes place 23 May and is the second of seven rounds on the calendar. More than 40 drivers representing 13 teams are expected, with the weekend featuring four races — three qualifying races that will determine access to the Final restricted for the top 36 drivers.",
@@ -370,6 +370,12 @@
       "sessions": [
         {
           "title": "Race 1 (Gr.B–Gr.C)",
+          "meta": {
+            "Date": "23 May 2026",
+            "Start": "11:40 AM",
+            "Session": "Gr.B – Gr.C",
+            "time_msk": "12:40"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -694,6 +700,12 @@
         },
         {
           "title": "Race 2 (Gr.A–Gr.B)",
+          "meta": {
+            "Date": "23 May 2026",
+            "Start": "18:00 AM",
+            "Session": "Gr.A – Gr.B",
+            "time_msk": "19:00"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -1029,6 +1041,12 @@
         },
         {
           "title": "Race 3 (Gr.A–Gr.C)",
+          "meta": {
+            "Date": "24 May 2026",
+            "Start": "9:00 AM",
+            "Session": "Gr.A – Gr.C",
+            "time_msk": "10:00"
+          },
           "headers": [
             "Fin",
             "ST",
@@ -1364,6 +1382,12 @@
         },
         {
           "title": "Final Race",
+          "meta": {
+            "Date": "24 May 2026",
+            "Start": "15:45 AM",
+            "Session": "Final",
+            "time_msk": "16:45"
+          },
           "headers": [
             "Fin",
             "ST",

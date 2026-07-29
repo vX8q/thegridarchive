@@ -42,7 +42,7 @@
     'NASCAR_CUP': 'Cup', 'NOAPS': "O'Reilly", 'NASCAR_TRUCK': 'Trucks',
     'ARCA': 'ARCA', 'NASCAR_MODIFIED': 'Modified',
     'WEC': 'WEC', 'ELMS': 'ELMS', 'IMSA': 'IMSA',
-    'GTWCE_END': 'GT WC End', 'GTWCE_SPRINT': 'GT WC', 'PSC': 'PSC',
+    'GTWCE_END': 'GTWCE Endurance', 'GTWCE_SPRINT': 'GTWCE Sprint', 'PSC': 'PSC',
     'DTM': 'DTM', 'SUPER_GT': 'Super GT', 'SUPERCARS': 'Supercars'
   };
 })();

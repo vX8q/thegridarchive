@@ -24,39 +24,7 @@ func sumStagePointsFromEvents(t *testing.T, seriesID string) map[string]int {
 		if err != nil || detail == nil || detail.Tables == nil {
 			continue
 		}
-		for sn := 1; sn <= 2; sn++ {
-			st, ok := StageN(detail.Tables, sn)
-			if !ok {
-				continue
-			}
-			sDriverCol := colIndex(st.Headers, "Driver")
-			sPtsCol := colIndex(st.Headers, "Points")
-			if sPtsCol < 0 {
-				sPtsCol = colIndex(st.Headers, "Pts")
-			}
-			if sDriverCol < 0 || sPtsCol < 0 {
-				t.Logf("%s stage%d: missing driver/points cols %v", ev.ID, sn, st.Headers)
-				continue
-			}
-			for _, row := range st.Rows {
-				if sDriverCol >= len(row) || sPtsCol >= len(row) {
-					continue
-				}
-				d := strings.TrimSpace(row[sDriverCol])
-				if d == "" {
-					continue
-				}
-				pts := 0
-				if s := strings.TrimSpace(row[sPtsCol]); s != "" {
-					for _, c := range s {
-						if c >= '0' && c <= '9' {
-							pts = pts*10 + int(c-'0')
-						}
-					}
-				}
-				out[canonicalDriverKey(d)] += pts
-			}
-		}
+		accumulateStagePointsFromDetail(seriesID, detail, out)
 	}
 	return out
 }
@@ -125,15 +93,13 @@ func compareSeriesStagePoints(t *testing.T, seriesID, tsvFile string) {
 		driver, build, api, events, tsv string
 	}
 	var diffs []diff
-	seen := make(map[string]bool)
 	for _, row := range data.Rows {
 		k := canonicalDriverKey(row.Driver)
-		seen[k] = true
 		ev := fromEvents[k]
 		tsv := fromTSV[k]
 		b := buildStages[row.Driver]
 		a := apiStages[row.Driver]
-		if b != a || a != itoa(ev) || (tsv > 0 && ev != tsv) {
+		if b != a || a != itoa(ev) {
 			diffs = append(diffs, diff{row.Driver, b, a, itoa(ev), itoa(tsv)})
 		}
 	}
@@ -148,8 +114,12 @@ func compareSeriesStagePoints(t *testing.T, seriesID, tsvFile string) {
 		t.Logf("  %s | %s | %s | %s | %s", d.driver, dashStage(d.build), dashStage(d.api), dashStage(d.events), dashStage(d.tsv))
 	}
 	for _, d := range diffs {
-		if d.build != d.events || d.api != d.events {
-			t.Errorf("%s stage points: build=%s api=%s want events=%s", d.driver, d.build, d.api, d.events)
+		// Stale NASCAR.com TSV is advisory only; require build/api == event-derived sum.
+		if d.api != d.events {
+			t.Errorf("%s stage points: api=%s want events=%s", d.driver, d.api, d.events)
+		}
+		if d.build != d.events {
+			t.Errorf("%s stage points: build=%s want events=%s", d.driver, d.build, d.events)
 		}
 	}
 }
@@ -167,4 +137,99 @@ func TestNASCARCupStagePointsMatchEvents(t *testing.T) {
 
 func TestNASCARTruckStagePointsMatchEvents(t *testing.T) {
 	compareSeriesStagePoints(t, "NASCAR_TRUCK", "nascar_truck_2026_nascar_com.tsv")
+}
+
+// Stage results land in the event file before the race classification does;
+// that in-progress weekend must not blank out the Stage column.
+func TestEnrichStagesFromEvents_CountsStagesBeforeRaceResults(t *testing.T) {
+	dataDir := t.TempDir()
+	writeJSON(t, filepath.Join(dataDir, "schedules", "noaps.json"), []EventJSON{
+		{ID: "NOAPS_2026_1", SeriesID: "NOAPS", Season: "2026", StartDate: "2026-02-14", EndDate: "2026-02-14"},
+		{ID: "NOAPS_2026_2", SeriesID: "NOAPS", Season: "2026", StartDate: "2026-02-21", EndDate: "2026-02-21"},
+	})
+	writeJSON(t, filepath.Join(dataDir, "events", "noaps_2026_1.json"), &EventDetailJSON{
+		Tables: map[string]EventTable{
+			"stage_1":      {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"Justin Allgaier", "10"}}},
+			"stage_2":      {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"Justin Allgaier", "8"}}},
+			"race_results": {Headers: []string{"Pos", "Driver"}, Rows: [][]string{{"1", "Justin Allgaier"}}},
+		},
+	})
+	// Weekend in progress: stages scored, race classification not published yet.
+	writeJSON(t, filepath.Join(dataDir, "events", "noaps_2026_2.json"), &EventDetailJSON{
+		Tables: map[string]EventTable{
+			"stage_1": {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"Justin Allgaier", "7"}}},
+			"stage_2": {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"Justin Allgaier", "6"}}},
+		},
+	})
+
+	data := &StandingsData{Rows: []StandingRow{{Driver: "Justin Allgaier", Stages: "18"}}}
+	EnrichStagesFromEvents(dataDir, "NOAPS", "2026", data)
+	if got := data.Rows[0].Stages; got != "31" {
+		t.Fatalf("stage points = %q, want %q (18 scored + 13 from the weekend in progress)", got, "31")
+	}
+}
+
+func TestAccumulateStagePointsIncludesCokeS3AndDuels(t *testing.T) {
+	detail := &EventDetailJSON{
+		Stage4Laps: "100",
+		Tables: map[string]EventTable{
+			"stage_1": {
+				Headers: []string{"Driver", "Points"},
+				Rows:    [][]string{{"Kyle Larson", "10"}, {"Denny Hamlin", "7"}},
+			},
+			"stage_2": {
+				Headers: []string{"Driver", "Points"},
+				Rows:    [][]string{{"Kyle Larson", "6"}, {"Denny Hamlin", "10"}},
+			},
+			"stage_3": {
+				Headers: []string{"Driver", "Points"},
+				Rows:    [][]string{{"Kyle Larson", "6"}, {"Denny Hamlin", "9"}},
+			},
+			"duel1": {
+				Headers: []string{"Driver", "Points"},
+				Rows:    [][]string{{"Kyle Larson", "8"}, {"Denny Hamlin", "1"}},
+			},
+		},
+	}
+	into := make(map[string]int)
+	accumulateStagePointsFromDetail("NASCAR_CUP", detail, into)
+	if got := into[canonicalDriverKey("Kyle Larson")]; got != 30 {
+		t.Fatalf("Larson stages: got %d want 30 (10+6+6+8)", got)
+	}
+	if got := into[canonicalDriverKey("Denny Hamlin")]; got != 27 {
+		t.Fatalf("Hamlin stages: got %d want 27 (7+10+9+1)", got)
+	}
+
+	// Ordinary 3-stage weekend: stage_3 must NOT count (no stage4_laps).
+	ordinary := &EventDetailJSON{
+		Tables: map[string]EventTable{
+			"stage_1": {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"Kyle Larson", "5"}}},
+			"stage_2": {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"Kyle Larson", "4"}}},
+			"stage_3": {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"Kyle Larson", "10"}}},
+		},
+	}
+	into2 := make(map[string]int)
+	accumulateStagePointsFromDetail("NASCAR_CUP", ordinary, into2)
+	if got := into2[canonicalDriverKey("Kyle Larson")]; got != 9 {
+		t.Fatalf("ordinary weekend: got %d want 9 (stage_3 excluded)", got)
+	}
+
+	// NOAPS/Truck: no duels, no stage_3 even if present.
+	into3 := make(map[string]int)
+	accumulateStagePointsFromDetail("NOAPS", detail, into3)
+	if got := into3[canonicalDriverKey("Kyle Larson")]; got != 22 {
+		t.Fatalf("NOAPS should count Coke-like S1+S2+S3 only when four-stage: got %d want 22", got)
+	}
+	into4 := make(map[string]int)
+	noDuels := &EventDetailJSON{
+		Tables: map[string]EventTable{
+			"stage_1": {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"A", "3"}}},
+			"stage_2": {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"A", "2"}}},
+			"duel1":   {Headers: []string{"Driver", "Points"}, Rows: [][]string{{"A", "9"}}},
+		},
+	}
+	accumulateStagePointsFromDetail("NASCAR_TRUCK", noDuels, into4)
+	if got := into4[canonicalDriverKey("A")]; got != 5 {
+		t.Fatalf("Truck must ignore duel tables: got %d want 5", got)
+	}
 }

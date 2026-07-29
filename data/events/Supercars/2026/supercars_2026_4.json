@@ -1,12 +1,12 @@
 {
   "event_id": "SUPERCARS_2026_4",
   "series": "Supercars Championship",
-  "race": "Christchurch Super 440",
+  "race": "ITM Christchurch Super 440",
   "date": "17–19 April 2026",
   "start_date": "2026-04-17",
   "end_date": "2026-04-19",
   "track": "Euromarque Motorsport Park",
-  "location": "Christchurch, Canterbury Region, New Zealand",
+  "location": "Christchurch, Canterbury, New Zealand",
   "laps": "",
   "distance": "",
   "event_preview": "Euromarque Motorsport Park (Ruapuna Raceway) is a permanent 3.33 km road circuit located just west of Christchurch in New Zealand's Canterbury region, featuring a flowing layout with mixed-speed corners, heavy braking zones and multiple passing opportunities that reward confidence on corner exit. The 2026 Christchurch Super 440 places the Repco Supercars Championship on New Zealand's South Island and hosts the championship's first top-level event at this venue in the modern era. As a result, this round is approached as a true preview weekend where teams must build references quickly through practice and qualifying.",
@@ -154,7 +154,7 @@
       "driver": "Matt Payne",
       "team": "Grove Racing",
       "manufacturer": "Ford",
-      "driver_slug": "matt-payne"
+      "driver_slug": "matthew-payne"
     },
     {
       "number": "26",

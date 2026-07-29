@@ -7,7 +7,7 @@
   "end_date": "2026-04-19",
   "youtube_id": "M_N_08SXrzg",
   "track": "Kansas Speedway",
-  "location": "Kansas City, Kansas",
+  "location": "Kansas City, Kansas, USA",
   "laps": "274",
   "stage1_laps": "80",
   "stage2_laps": "85",
@@ -85,7 +85,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "James Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",

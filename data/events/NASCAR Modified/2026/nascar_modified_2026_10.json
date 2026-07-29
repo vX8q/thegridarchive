@@ -6,7 +6,7 @@
   "start_date": "2026-07-25",
   "end_date": "2026-07-25",
   "track": "Monadnock Speedway",
-  "location": "Monadnock Speedway, Winchester, New Hampshire",
+  "location": "Winchester, New Hampshire, USA",
   "entry_list": [
     {
       "number": "1",
@@ -78,7 +78,7 @@
       "team": "Sapienza Racing",
       "manufacturer": "Troyer",
       "crew_chief": "Greg Kleila",
-      "driver_slug": "david-sapienza"
+      "driver_slug": "dave-sapienza"
     },
     {
       "number": "44",
@@ -142,7 +142,7 @@
       "team": "Jon McKennedy Racing",
       "manufacturer": "FURY Race Cars",
       "crew_chief": "Patrick Walsh",
-      "driver_slug": "jonathan-mckennedy"
+      "driver_slug": "jon-mckennedy"
     },
     {
       "number": "82",

@@ -42,6 +42,155 @@ test('mergeLastResultsWeekendCards merges Townsville triple-header', () => {
   assert.ok(!/Race\s*\d+$/i.test(out[0].event.name));
 });
 
+test('mergeLastResultsWeekendCards merges PSC Zandvoort double-header', () => {
+  const cards = [
+    {
+      event: {
+        id: 'PSC_2026_6',
+        series_id: 'PSC',
+        circuit_name: 'Circuit Zandvoort',
+        location: 'Zandvoort, North Holland, Netherlands',
+        name: 'Zandvoort',
+      },
+      rangeStart: '2026-08-22',
+      rangeEnd: '2026-08-22',
+      dateStr: '2026-08-22',
+      winners: [{ name: 'Driver A', car: '1', label: '' }],
+    },
+    {
+      event: {
+        id: 'PSC_2026_7',
+        series_id: 'PSC',
+        circuit_name: 'Circuit Zandvoort',
+        location: 'Zandvoort, North Holland, Netherlands',
+        name: 'Zandvoort',
+      },
+      rangeStart: '2026-08-23',
+      rangeEnd: '2026-08-23',
+      dateStr: '2026-08-23',
+      winners: [{ name: 'Driver B', car: '2', label: '' }],
+    },
+  ];
+  const out = TGA.mergeLastResultsWeekendCards(cards, 'PSC');
+  assert.strictEqual(out.length, 1);
+  assert.strictEqual(out[0].rangeStart, '2026-08-22');
+  assert.strictEqual(out[0].rangeEnd, '2026-08-23');
+  assert.strictEqual(out[0].winners.length, 2);
+  assert.strictEqual(out[0].winners[0].label, 'Race 1');
+  assert.strictEqual(out[0].winners[1].label, 'Race 2');
+  assert.strictEqual(out[0].event.name, 'Circuit Zandvoort');
+});
+
+test('mergeLastResultsWeekendCards merges IndyCar Milwaukee double-header', () => {
+  const cards = [
+    {
+      event: {
+        id: 'INDYCAR_2026_16',
+        series_id: 'INDYCAR',
+        circuit_name: 'Milwaukee Mile',
+        location: 'West Allis, Wisconsin, USA',
+        name: 'Snap-on Makers and Fixers 250',
+      },
+      rangeStart: '2026-08-29',
+      rangeEnd: '2026-08-29',
+      dateStr: '2026-08-29',
+      winners: [{ name: 'Driver A', car: '9', label: '' }],
+    },
+    {
+      event: {
+        id: 'INDYCAR_2026_17',
+        series_id: 'INDYCAR',
+        circuit_name: 'Milwaukee Mile',
+        location: 'West Allis, Wisconsin, USA',
+        name: 'Snap-on Milwaukee Mile 250',
+      },
+      rangeStart: '2026-08-30',
+      rangeEnd: '2026-08-30',
+      dateStr: '2026-08-30',
+      winners: [{ name: 'Driver B', car: '10', label: '' }],
+    },
+  ];
+  const out = TGA.mergeLastResultsWeekendCards(cards, 'INDYCAR');
+  assert.strictEqual(out.length, 1);
+  assert.strictEqual(out[0].rangeStart, '2026-08-29');
+  assert.strictEqual(out[0].rangeEnd, '2026-08-30');
+  assert.strictEqual(out[0].winners.length, 2);
+  assert.strictEqual(out[0].event.name, 'Milwaukee Mile');
+});
+
+test('buildGroupedWeekendLastEventById points early Supercars races at weekend finale', () => {
+  const events = [
+    {
+      id: 'SUPERCARS_2026_20',
+      series_id: 'SUPERCARS',
+      circuit_name: 'Townsville Street Circuit',
+      location: 'Townsville',
+      start_date: '2026-07-10',
+      end_date: '2026-07-10',
+    },
+    {
+      id: 'SUPERCARS_2026_21',
+      series_id: 'SUPERCARS',
+      circuit_name: 'Townsville Street Circuit',
+      location: 'Townsville',
+      start_date: '2026-07-11',
+      end_date: '2026-07-11',
+    },
+    {
+      id: 'SUPERCARS_2026_22',
+      series_id: 'SUPERCARS',
+      circuit_name: 'Townsville Street Circuit',
+      location: 'Townsville',
+      start_date: '2026-07-12',
+      end_date: '2026-07-12',
+    },
+  ];
+  const map = TGA.buildGroupedWeekendLastEventById(events);
+  assert.strictEqual(map.SUPERCARS_2026_20.id, 'SUPERCARS_2026_22');
+  assert.strictEqual(map.SUPERCARS_2026_21.id, 'SUPERCARS_2026_22');
+  assert.strictEqual(map.SUPERCARS_2026_22.id, 'SUPERCARS_2026_22');
+});
+
+test('buildGroupedWeekendLastEventById maps PSC and IndyCar double-headers', () => {
+  const events = [
+    {
+      id: 'PSC_2026_6',
+      series_id: 'PSC',
+      circuit_name: 'Circuit Zandvoort',
+      location: 'Zandvoort, North Holland, Netherlands',
+      start_date: '2026-08-22',
+      end_date: '2026-08-22',
+    },
+    {
+      id: 'PSC_2026_7',
+      series_id: 'PSC',
+      circuit_name: 'Circuit Zandvoort',
+      location: 'Zandvoort, North Holland, Netherlands',
+      start_date: '2026-08-23',
+      end_date: '2026-08-23',
+    },
+    {
+      id: 'INDYCAR_2026_16',
+      series_id: 'INDYCAR',
+      circuit_name: 'Milwaukee Mile',
+      location: 'West Allis, Wisconsin, USA',
+      start_date: '2026-08-29',
+      end_date: '2026-08-29',
+    },
+    {
+      id: 'INDYCAR_2026_17',
+      series_id: 'INDYCAR',
+      circuit_name: 'Milwaukee Mile',
+      location: 'West Allis, Wisconsin, USA',
+      start_date: '2026-08-30',
+      end_date: '2026-08-30',
+    },
+  ];
+  const map = TGA.buildGroupedWeekendLastEventById(events);
+  assert.strictEqual(map.PSC_2026_6.id, 'PSC_2026_7');
+  assert.strictEqual(map.INDYCAR_2026_16.id, 'INDYCAR_2026_17');
+});
+
 test('mergeLastResultsWeekendCards leaves non-Supercars cards untouched', () => {
   const cards = [
     {

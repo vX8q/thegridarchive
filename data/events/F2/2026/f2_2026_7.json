@@ -6,7 +6,7 @@
   "start_date": "2026-07-04",
   "end_date": "2026-07-05",
   "track": "Silverstone Circuit",
-  "location": "Silverstone",
+  "location": "Silverstone, Northamptonshire, UK",
   "laps": "",
   "distance": "",
   "event_preview": "Silverstone Circuit is a 5.891 km (3.660 mi) permanent road course in Northamptonshire, England. Round 7 of the 2026 FIA Formula 2 Championship supported the British Grand Prix, with a 21-lap sprint race and a longer feature race, marking the tenth season F2 has raced at the circuit since 2017.\n\nNikola Tsolov arrived at Silverstone with the title fight compressed into a two-point margin, having cut Gabriele Minì's championship lead to almost nothing with a Spielberg Feature Race win — his fourth victory of the season, beating Minì by nearly four seconds as Oliver Goethe completed the podium for MP Motorsport. Heading into the round, the official standings had Minì on 108 points, Tsolov on 106 and Rafael Câmara — the former FIA Formula 3 champion in his first full F2 season — third on 82. Silverstone's high-speed sequence through Copse, Maggotts and Becketts rewards driver confidence, adding a further variable to a championship equation already sharpened by momentum swinging toward Tsolov.",
@@ -132,7 +132,7 @@
     },
     {
       "number": "22",
-      "driver": "Nico Varrone",
+      "driver": "Nicolas Varrone",
       "team": "Van Amersfoort Racing",
       "driver_slug": "nico-varrone"
     },

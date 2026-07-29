@@ -20,11 +20,11 @@ import (
 )
 
 const (
-	nascarFeedBase  = "https://feed.nascar.com" // legacy; now returns 401 without token
-	nascarCFBase    = "https://cf.nascar.com"
+	nascarFeedBase   = "https://feed.nascar.com" // legacy; now returns 401 without token
+	nascarCFBase     = "https://cf.nascar.com"
 	nascarCFLiveFeed = nascarCFBase + "/live/feeds/live-feed.json"
-	openF1Base      = "https://api.openf1.org"
-	defaultInterval = 2 * time.Minute
+	openF1Base       = "https://api.openf1.org"
+	defaultInterval  = 2 * time.Minute
 )
 
 var nascarSeriesToDataID = map[int]string{
@@ -79,68 +79,136 @@ func Run(dataDir string) error {
 
 // test hooks for substituting HTTP functions in unit tests.
 var (
-	fetchNASCARLiveFeedFullFunc = fetchNASCARLiveFeedFull
-	fetchNASCARRacesFunc        = fetchNASCARRaces
+	fetchNASCARLiveFeedFullFunc   = fetchNASCARLiveFeedFull
+	fetchNASCARRacesFunc          = fetchNASCARRaces
+	fetchNASCARSeriesLiveFeedFunc = fetchNASCARSeriesLiveFeed
 )
 
-// SyncNASCAR updates only NASCAR entries (Cup/Xfinity/Truck) in live.json.
+// SyncNASCAR updates only NASCAR entries (Cup/O'Reilly/Truck) in live.json.
+// Every series is checked against its own per-series feed: the shared
+// live-feed.json carries a single session and keeps the last finished race on
+// air between events, so it alone never reports an O'Reilly or Truck race.
 func SyncNASCAR(dataDir string) error {
 	livePath := filepath.Join(dataDir, "live.json")
-	live, err := fetchNASCARLiveFeedFullFunc()
-	if err != nil || live == nil || live.RaceID == 0 {
-		livesyncErrorsTotal.WithLabelValues("nascar", "live_feed").Inc()
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
-	if nascarFeedRaceFinished(live) {
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
 	season, _ := strconv.Atoi(config.CurrentSeason)
-	seriesID, err := nascarResolveSeriesID(live.RaceID, live.SeriesID, season)
-	if err != nil {
-		livesyncErrorsTotal.WithLabelValues("nascar", "unknown_series").Inc()
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
-	live.SeriesID = seriesID
-	dataID, ok := nascarSeriesToDataID[seriesID]
-	if !ok {
-		livesyncErrorsTotal.WithLabelValues("nascar", "unknown_series").Inc()
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
-	races, err := fetchNASCARRacesFunc(seriesID, season)
-	if err != nil {
-		livesyncErrorsTotal.WithLabelValues("nascar", "races_fetch").Inc()
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
-	raceDate := make(map[int]string)
-	for _, r := range races {
-		if r.RaceID != 0 && r.DateScheduled != "" {
-			raceDate[r.RaceID] = dateOnly(r.DateScheduled)
+	today := nascarEasternDateNow()
+
+	ids := make([]string, 0, len(nascarSeriesToDataID))
+	seen := make(map[string]struct{}, len(nascarSeriesToDataID))
+	addID := func(id string) {
+		if id == "" {
+			return
 		}
+		if _, dup := seen[id]; dup {
+			return
+		}
+		seen[id] = struct{}{}
+		ids = append(ids, id)
 	}
-	schedDate, ok := raceDate[live.RaceID]
-	if !ok {
-		livesyncErrorsTotal.WithLabelValues("nascar", "race_not_found").Inc()
+
+	addID(nascarLiveEventIDFromMainFeed(dataDir, season))
+	for _, seriesID := range []int{1, 2, 3} {
+		addID(nascarLiveEventIDForSeries(dataDir, seriesID, season, today))
+	}
+
+	if len(ids) == 0 {
 		return mergeLiveJSONNASCAR(livePath, nil)
 	}
-	events, err := schedulefile.LoadEvents(dataDir, dataID)
-	if err != nil || len(events) == 0 {
-		livesyncErrorsTotal.WithLabelValues("nascar", "no_events").Inc()
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
-	eventID := findEventByDate(events, schedDate, false)
-	if eventID == "" {
-		livesyncErrorsTotal.WithLabelValues("nascar", "no_matching_event").Inc()
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
-	if !nascarFeedCountsAsLiveRace(live, schedDate) {
-		return mergeLiveJSONNASCAR(livePath, nil)
-	}
-	if err := mergeLiveJSONNASCAR(livePath, []string{eventID}); err != nil {
+	if err := mergeLiveJSONNASCAR(livePath, ids); err != nil {
 		livesyncErrorsTotal.WithLabelValues("nascar", "write_live_json").Inc()
 		return err
 	}
 	livesyncLastSuccess.WithLabelValues("nascar").Set(float64(time.Now().Unix()))
 	return nil
+}
+
+// nascarLiveEventIDFromMainFeed resolves the session currently carried by the
+// shared live feed. Covers races moved off their scheduled date.
+func nascarLiveEventIDFromMainFeed(dataDir string, season int) string {
+	live, err := fetchNASCARLiveFeedFullFunc()
+	if err != nil || live == nil || live.RaceID == 0 {
+		livesyncErrorsTotal.WithLabelValues("nascar", "live_feed").Inc()
+		return ""
+	}
+	if nascarFeedRaceFinished(live) {
+		return ""
+	}
+	seriesID, err := nascarResolveSeriesID(live.RaceID, live.SeriesID, season)
+	if err != nil {
+		livesyncErrorsTotal.WithLabelValues("nascar", "unknown_series").Inc()
+		return ""
+	}
+	live.SeriesID = seriesID
+	meta, ok := nascarSeriesMeta[seriesID]
+	if !ok {
+		livesyncErrorsTotal.WithLabelValues("nascar", "unknown_series").Inc()
+		return ""
+	}
+	races, err := fetchNASCARRacesFunc(seriesID, season)
+	if err != nil {
+		livesyncErrorsTotal.WithLabelValues("nascar", "races_fetch").Inc()
+		return ""
+	}
+	race := nascarRaceFromList(races, live.RaceID)
+	if race == nil {
+		livesyncErrorsTotal.WithLabelValues("nascar", "race_not_found").Inc()
+		return ""
+	}
+	schedDate := dateOnly(race.DateScheduled)
+	if !nascarFeedCountsAsLiveRace(live, schedDate) {
+		return ""
+	}
+	return nascarEventIDOnDate(dataDir, meta.DataID, schedDate)
+}
+
+// nascarLiveEventIDForSeries returns our event ID when the given series has a
+// race scheduled today that is actually running.
+func nascarLiveEventIDForSeries(dataDir string, seriesID, season int, today string) string {
+	meta, ok := nascarSeriesMeta[seriesID]
+	if !ok {
+		return ""
+	}
+	races, err := fetchNASCARRacesFunc(seriesID, season)
+	if err != nil {
+		livesyncErrorsTotal.WithLabelValues("nascar", "races_fetch").Inc()
+		return ""
+	}
+	raceID := 0
+	for _, r := range races {
+		if r.RaceID != 0 && dateOnly(r.DateScheduled) == today {
+			raceID = r.RaceID
+			break
+		}
+	}
+	if raceID == 0 {
+		// No race for this series today: an ordinary state, not an error.
+		return ""
+	}
+	feed, err := fetchNASCARSeriesLiveFeedFunc(seriesID, raceID)
+	if err != nil {
+		livesyncErrorsTotal.WithLabelValues("nascar", "live_feed").Inc()
+		return ""
+	}
+	if feed.SeriesID == 0 {
+		feed.SeriesID = seriesID
+	}
+	if !nascarFeedCountsAsLiveRace(feed, today) {
+		return ""
+	}
+	return nascarEventIDOnDate(dataDir, meta.DataID, today)
+}
+
+func nascarEventIDOnDate(dataDir, dataID, date string) string {
+	events, err := schedulefile.LoadEvents(dataDir, dataID)
+	if err != nil || len(events) == 0 {
+		livesyncErrorsTotal.WithLabelValues("nascar", "no_events").Inc()
+		return ""
+	}
+	eventID := findEventByDate(events, date, false)
+	if eventID == "" {
+		livesyncErrorsTotal.WithLabelValues("nascar", "no_matching_event").Inc()
+	}
+	return eventID
 }
 
 // SyncOpenF1 updates only F1 entries in live.json.

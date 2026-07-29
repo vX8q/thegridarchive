@@ -7,7 +7,7 @@
   "end_date": "2026-05-10",
   "youtube_id": "laxcGBfCXVc",
   "track": "Watkins Glen International",
-  "location": "Watkins Glen, New York",
+  "location": "Watkins Glen, New York, USA",
   "laps": "100",
   "distance": "245.4 mi (394.9 km)",
   "stage1_laps": "20",
@@ -85,7 +85,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Andy Street",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",
@@ -310,7 +311,6 @@
       "team": "Live Fast Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "George Ingram",
-      "points_eligible": false,
       "driver_slug": "katherine-legge"
     },
     {

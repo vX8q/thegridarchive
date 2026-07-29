@@ -34,12 +34,14 @@
 
   /** Double-header weekends (e.g. Super Formula R1–2): no laps/distance table on overview. */
   var SERIES_EVENT_NAME_PREFIX = {
-    F1: /^F1\s*[—-]\s*/i,
-    F2: /^F2\s*[—-]\s*/i,
-    F3: /^F3\s*[—-]\s*/i,
-    FREC: /^FREC\s*[—-]\s*/i,
-    F4_IT: /^Italian F4\s*[—-]\s*/i,
-    DTM: /^DTM\s*[—-]\s*/i
+    F1: /^F1\s*[—–-]\s*/i,
+    F2: /^F2\s*[—–-]\s*/i,
+    F3: /^F3\s*[—–-]\s*/i,
+    FREC: /^FREC\s*[—–-]\s*/i,
+    F4_IT: /^Italian F4\s*[—–-]\s*/i,
+    DTM: /^DTM\s*[—–-]\s*/i,
+    GTWCE_SPRINT: /^GT World Challenge Europe Sprint\s*[—–-]\s*/i,
+    GTWCE_END: /^GT World Challenge Europe Endurance\s*[—–-]\s*/i
   };
 
   /** Drop "FREC — …" style prefix when breadcrumb already shows the series. */

@@ -108,8 +108,8 @@ func TestBuildStandingsFromEvents_FREC_GomezAfterHungaroring(t *testing.T) {
 	if gomez == nil {
 		t.Fatal("car #78 (Gomez) not found in standings")
 	}
-	if gomez.Points != "24" {
-		t.Errorf("total points: got %q want 24", gomez.Points)
+	if gomez.Points != "48" {
+		t.Errorf("total points: got %q want 48", gomez.Points)
 	}
 	if gomez.Races["R1-3"] != "7" {
 		t.Errorf("Spielberg R3: got %q want 7", gomez.Races["R1-3"])

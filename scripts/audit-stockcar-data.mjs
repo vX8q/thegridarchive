@@ -16,6 +16,7 @@ import {
   isSeparatorRow,
   maxQualifyingPos,
   looksLikeSponsorNotOrg,
+  carsMissingFromEntryList,
 } from './lib/stockcar-event-utils.mjs';
 
 const issues = [];
@@ -32,6 +33,13 @@ function auditTableTeams(eventId, relFile, tableKey, table, teamMap) {
   const carIdx = headerIndex(headers, CAR_HEADERS);
   const teamIdx = headerIndex(headers, TEAM_HEADERS);
   if (carIdx < 0 || teamIdx < 0) return;
+
+  const started = rows
+    .filter((row) => Array.isArray(row) && !isSeparatorRow(row) && row.length > carIdx)
+    .map((row) => row[carIdx]);
+  for (const car of carsMissingFromEntryList(teamMap, started)) {
+    push('car_not_in_entry_list', eventId, relFile, { table: tableKey, car });
+  }
 
   rows.forEach((row, ri) => {
     if (!Array.isArray(row) || isSeparatorRow(row)) return;
@@ -142,6 +150,8 @@ const show = (kind, limit = 20) => {
       console.log(`  ${r.eventId} ${r.table} #${r.car} row ${r.row}: "${r.got}" → should be "${r.want}"`);
     } else if (kind === 'dnq_pos_internal_numbering') {
       console.log(`  ${r.eventId}: got [${r.got}], want [${r.want}] (max qual ${r.maxQual})`);
+    } else if (kind === 'car_not_in_entry_list') {
+      console.log(`  ${r.eventId} ${r.table}: #${r.car} has no entry_list row`);
     } else if (kind === 'partnership_in_entry_list' || kind === 'partnership_in_table') {
       console.log(`  ${r.eventId} #${r.car || '?'} ${r.team || ''} (${r.table || 'entry_list'})`);
     } else {

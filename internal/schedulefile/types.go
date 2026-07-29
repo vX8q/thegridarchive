@@ -1,6 +1,7 @@
 package schedulefile
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -154,11 +155,22 @@ type StandingsPointsInfo struct {
 type StandingsData struct {
 	RaceOrder      []string             `json:"race_order,omitempty"`
 	EventNames     []string             `json:"event_names,omitempty"` // round name per race (len = len(RaceOrder))
+	EventIDs       []string             `json:"event_ids,omitempty"`   // event holding each race (len = len(RaceOrder))
 	CompletedRaces []string             `json:"completed_races,omitempty"`
 	Rows           []StandingRow        `json:"rows"`
 	Ineligible     []StandingRow        `json:"ineligible,omitempty"`
 	Classes        []StandingsClass     `json:"classes,omitempty"`
 	PointsInfo     *StandingsPointsInfo `json:"points_info,omitempty"`
+}
+
+// MarshalJSON keeps "rows" an array even for a season with no data, so clients
+// can iterate the response without a null check.
+func (d StandingsData) MarshalJSON() ([]byte, error) {
+	type standingsDataJSON StandingsData
+	if d.Rows == nil {
+		d.Rows = []StandingRow{}
+	}
+	return json.Marshal(standingsDataJSON(d))
 }
 
 // EventDetailJSON is race details: info, entry list, practice, qualifying, duels, results, etc.
@@ -171,6 +183,7 @@ type EventDetailJSON struct {
 	Location       string                `json:"location,omitempty"`
 	Laps           string                `json:"laps,omitempty"`
 	Distance       string                `json:"distance,omitempty"`
+	Stage4Laps     string                `json:"stage4_laps,omitempty"` // set on 4-stage Cup races (e.g. Coca-Cola 600)
 	EntryList      []EntryListRow        `json:"entry_list,omitempty"`
 	Tables         map[string]EventTable `json:"tables,omitempty"` // practice, qualifying, duel1, duel2, starting_lineup, practice2, final_practice, stage1, stage2, race_results, caution_breakdown
 	RaceStatistics map[string]string     `json:"race_statistics,omitempty"`

@@ -155,10 +155,21 @@ func TestHandleSeries_InvalidID(t *testing.T) {
 	}
 }
 
+func TestHandleSeries_UnknownSeriesSubResourcesReturn404(t *testing.T) {
+	for _, sub := range []string{"", "/standings", "/events", "/teams", "/stats"} {
+		req := httptest.NewRequest(http.MethodGet, "/api/series/not-a-series"+sub, nil)
+		rec := httptest.NewRecorder()
+		handleSeries(rec, req, "data", store.NoopStore{})
+		if rec.Code != http.StatusNotFound {
+			t.Errorf("/api/series/not-a-series%s: got status %d, want 404 (body %s)", sub, rec.Code, rec.Body.String())
+		}
+	}
+}
+
 func TestHandleEvent_InvalidID(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/api/events/../../../etc/passwd", nil)
 	rec := httptest.NewRecorder()
-	handleEvent(rec, req, "data", nil)
+	handleEvent(rec, req, "data")
 	if rec.Code != http.StatusBadRequest {
 		t.Errorf("got status %d, want 400", rec.Code)
 	}
@@ -167,7 +178,7 @@ func TestHandleEvent_InvalidID(t *testing.T) {
 func TestHandleEvent_NotFound(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/api/events/NONEXISTENT_EVENT_999", nil)
 	rec := httptest.NewRecorder()
-	handleEvent(rec, req, "data", nil)
+	handleEvent(rec, req, "data")
 	if rec.Code != http.StatusNotFound {
 		t.Errorf("got status %d, want 404", rec.Code)
 	}

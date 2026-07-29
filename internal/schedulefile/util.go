@@ -69,6 +69,32 @@ func canonicalDriverKey(name string) string {
 		return "s al maosherji"
 	case "giovanni ruggiero":
 		return "gio ruggiero"
+	case "matt payne":
+		return "matthew payne"
+	case "cam waters":
+		return "cameron waters"
+	case "nicolas varrone", "nico varrone":
+		return "nico varrone"
+	case "alexander dunne":
+		return "alex dunne"
+	case "dani juncadella":
+		return "daniel juncadella"
+	case "max lynn":
+		return "maxwell lynn"
+	case "dan harper":
+		return "daniel harper"
+	case "kaku ohta":
+		return "kakunoshin ohta"
+	case "joshua rattican":
+		return "josh rattican"
+	case "ben hanley":
+		return "benjamin hanley"
+	case "john h nemechek":
+		return "john hunter nemechek"
+	case "bobby earnhardt":
+		return "bobby dale earnhardt"
+	case "tobi lutke", "tobias lütke":
+		return "tobias lutke"
 	}
 	return s
 }

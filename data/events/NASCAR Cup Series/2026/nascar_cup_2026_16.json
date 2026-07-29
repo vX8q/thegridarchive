@@ -7,7 +7,7 @@
   "end_date": "2026-06-14",
   "youtube_id": "RjuWcXKgj3Q",
   "track": "Pocono Raceway",
-  "location": "Long Pond, Pennsylvania",
+  "location": "Long Pond, Pennsylvania, USA",
   "laps": "160",
   "distance": "400 mi (643.7 km)",
   "stage1_laps": "30",
@@ -286,8 +286,7 @@
       "team": "Beard Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Darren Shaw",
-      "driver_slug": "casey-mears",
-      "points_eligible": false
+      "driver_slug": "casey-mears"
     },
     {
       "number": "71",

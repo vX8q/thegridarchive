@@ -4,7 +4,7 @@
   "race": "1 of 25",
   "date": "Friday, February 13, 2026",
   "track": "Daytona International Speedway",
-  "location": "Daytona Beach, FL",
+  "location": "Daytona Beach, Florida, USA",
   "laps": "100*",
   "distance": "2.500 mile paved track (250.000 miles)",
   "stage1_laps": "20",
@@ -37,7 +37,7 @@
       "team": "Niece Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Mike Shiplett",
-      "driver_slug": "cleetus-mitchell"
+      "driver_slug": "garrett-mitchell"
     },
     {
       "number": "5",
@@ -94,7 +94,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Eddie Pardue",
-      "driver_slug": "brenden-queen-r"
+      "driver_slug": "brenden-queen"
     },
     {
       "number": "13",
@@ -102,7 +102,7 @@
       "team": "ThorSport Racing",
       "manufacturer": "Ford",
       "crew_chief": "Rich Lushes",
-      "driver_slug": "cole-butcher-r"
+      "driver_slug": "cole-butcher"
     },
     {
       "number": "14",
@@ -110,7 +110,7 @@
       "team": "Kaulig Racing",
       "manufacturer": "Ram",
       "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell-r"
+      "driver_slug": "mini-tyrrell"
     },
     {
       "number": "15",

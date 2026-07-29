@@ -74,6 +74,7 @@ TGA/
 │   ├── standings/               # База race_order для stock-car / IndyCar (очки всегда из events)
 │   ├── live.json                # Live-данные (обновляются livesync)
 │   ├── driver_profiles.json     # Профили пилотов
+│   ├── driver_slug_aliases.json # Nickname → канонический slug (Matt→Matthew, …)
 │   └── driver_profile_redirects.json  # Редиректы slug → канонический профиль
 ├── scripts/                     # Node.js-скрипты для подготовки/нормализации данных (см. ниже)
 ├── docs/                        # Заметки по архитектуре, метрикам и эксплуатации
@@ -152,6 +153,7 @@ $env:PORT="3000"; go run ./cmd/server
 | `build-multi-race-schedule-sessions.mjs` | Генерация `web/data/multi-race-schedule-sessions.js` |
 | `sync-stockcar-table-teams.mjs` | Колонка Team в stock-car tables ↔ `entry_list` |
 | `sync-driver-profiles-from-events.mjs` | Пересборка `driver_profiles.json` из events |
+| `fix-driver-slug-aliases.mjs` | Канонизация nickname-дублей (+ `--check` в CI) |
 | `sync-sf-table-teams.mjs` | Team-колонки в Super Formula events |
 
 ### Отдельные live-sync CLI (опционально)
@@ -343,7 +345,9 @@ Live-данные обновляются из внешних API фоновым 
 - `data/teams/{seriesID}.json` — составы команд
 - `data/standings/{seriesID}.json` — **только база колонок** `race_order` / `event_names` для stock-car и IndyCar (`nascar_cup`, `noaps`, `nascar_truck`, `arca`, `nascar_modified`, `indycar`); поле `rows` в этих файлах API **не читает** — очки и позиции пересобираются из `events/` при каждом запросе. Файлы `supercars.json` и `elms.json` — **legacy**, не источник API. Подробнее — раздел «Турнирные таблицы» ниже и `data/SERIES_TEMPLATES.md` § «Автоматическая сборка standings».
 - `data/driver_profiles.json` — профили пилотов
+- `data/driver_slug_aliases.json` — nickname → канон (`matt-payne` → `matthew-payne`, …)
 - `data/driver_profile_redirects.json` — старые slug → канонический профиль
+- После правок имён: `node scripts/fix-driver-slug-aliases.mjs` (или `--check`)
 - `data/live.json` — live-данные (пишет `livesync` в `cmd/server` или CLI `sync-*-live`)
 - `data/tga.sqlite` — кэш БД (создаётся при старте, не редактировать вручную)
 

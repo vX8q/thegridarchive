@@ -7,7 +7,7 @@
   "start_date": "2026-06-20",
   "end_date": "2026-06-20",
   "track": "Berlin Raceway",
-  "location": "Marne, Michigan",
+  "location": "Marne, Michigan, USA",
   "laps": "200",
   "distance": "87.5 mi (140.818 km)",
   "event_preview": "Berlin Raceway is a 0.4375-mile (0.704 km) D-shaped asphalt oval in Marne, Michigan. The Herr's Snacks 200 is the 200-lap race held on the ARCA Menards Series calendar. Pit stop breaks come around the second competition caution, with the race typically run under multiple cautions on the tight short track.\n\nGio Ruggiero has been the dominant force in the series through the middle portion of 2026, winning at Daytona, Kansas, and consecutive races at Michigan and Pocono in the weeks leading into Berlin. Max Reaves enters seeking to build on his recent form after an East Series win at Nashville Fairgrounds Speedway, with his best national-series finish so far in 2026 an eighth at Watkins Glen, where he started from pole. Thomas Annunziata, the 2025 Lime Rock Park winner, looks to bounce back on an oval after a season so far defined more by road-course success. Jake Bollman leads the championship standings heading into the race.",
@@ -68,7 +68,7 @@
       "team": "Joe Gibbs Racing",
       "manufacturer": "Toyota",
       "crew_chief": "Matt Ross",
-      "driver_slug": "max-reaves-r"
+      "driver_slug": "max-reaves"
     },
     {
       "number": "20",
@@ -76,7 +76,7 @@
       "team": "Nitro Motorsports",
       "manufacturer": "Toyota",
       "crew_chief": "Doug George",
-      "driver_slug": "jake-bollman-r"
+      "driver_slug": "jake-bollman"
     },
     {
       "number": "25",
@@ -148,7 +148,7 @@
       "team": "Clubb Racing Inc.",
       "manufacturer": "Ford",
       "crew_chief": "Jon Clubb",
-      "driver_slug": "jeff-maconi-r"
+      "driver_slug": "jeff-maconi"
     },
     {
       "number": "89",

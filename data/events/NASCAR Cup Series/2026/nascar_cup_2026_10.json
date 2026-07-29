@@ -7,7 +7,7 @@
   "end_date": "2026-04-26",
   "youtube_id": "N3bQ47dG0wU",
   "track": "Talladega Superspeedway",
-  "location": "Lincoln, Alabama",
+  "location": "Lincoln, Alabama, USA",
   "laps": "188",
   "distance": "500.08 mi (804.80 km)",
   "stage1_laps": "98",
@@ -85,7 +85,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "James Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",

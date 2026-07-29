@@ -6,24 +6,589 @@
   "start_date": "2026-07-10",
   "end_date": "2026-07-10",
   "track": "Lime Rock Park",
-  "location": "Lime Rock Park, Lakeville, Connecticut",
-  "entry_list": [],
+  "location": "Lakeville, Connecticut, USA",
+  "laps": "68",
+  "distance": "104.04 mi (167.436 km)",
+  "event_preview": "Lime Rock Park is a 1.53-mile (2.462 km), seven-turn permanent road course in Lakeville, Connecticut, that has hosted racing since 1955, with early winners there including Mario Andretti, Mark Donohue, Parnelli Jones and Bobby Rahal. The Lime Rock Park ARCA 100 is the 12th race of the 2026 ARCA Menards Series season and the second and final road course event of the year, contested over 68 laps with a five-minute break scheduled at or near lap 34 for tyres, fuel and repairs. It is only the second ARCA Menards Series national race at the circuit, following the inaugural running in 2025.\n\nThomas Annunziata, who won last year's inaugural race after spinning out on the first lap, sits second in the championship standings 16 points behind his Nitro Motorsports teammate Jake Bollman heading into the weekend. Andrew Ranger, the only driver in series history to win multiple ARCA Menards Series races on road courses with four victories at New Jersey Motorsports Park, returns in the Robert Torriere-owned No. 53 after a seventh-place finish at Watkins Glen in May. Tristan McKee, who scored his first career series victory on his 2025 debut at Watkins Glen, returns for his first start since winning at Toledo in May. Max Reaves arrives on a personal two-race win streak following victories at Berlin Raceway and Elko Speedway. Truck Series regulars Stewart Friesen and Dawson Sutton both make their ARCA Menards Series debuts in this race, driving for Cook Racing Technologies ahead of Saturday's Truck Series event at the same venue.",
+  "event_preview_ru": "Lime Rock Park — постоянный шоссейный курс длиной 1,53 мили (2,462 км) с семью поворотами в Lakeville, Connecticut, где гонки проводятся с 1955 года, а ранними победителями были Mario Andretti, Mark Donohue, Parnelli Jones и Bobby Rahal. Lime Rock Park ARCA 100 — 12-я гонка сезона ARCA Menards Series 2026 года и второй и последний шоссейный этап года, проходящий на 68 кругов с пятиминутным перерывом на 34-м круге для смены шин, дозаправки и ремонта. Это всего лишь вторая национальная гонка ARCA Menards Series на этой трассе, после дебюта в 2025 году.\n\nThomas Annunziata, выигравший прошлогоднюю дебютную гонку после разворота на первом круге, занимает второе место в зачёте чемпионата, отставая на 16 очков от своего товарища по Nitro Motorsports Jake Bollman перед уик-эндом. Andrew Ranger, единственный пилот в истории серии с несколькими победами на шоссейных трассах (четыре победы на New Jersey Motorsports Park), возвращается на No. 53 Robert Torriere после седьмого места в Watkins Glen в мае. Tristan McKee, одержавший первую победу в карьере на дебюте в Watkins Glen в 2025 году, возвращается впервые после победы в Toledo в мае. Max Reaves приезжает на серии из двух побед подряд на Berlin Raceway и Elko Speedway. Регулярные пилоты Truck Series Stewart Friesen и Dawson Sutton оба дебютируют в ARCA Menards Series в этой гонке за Cook Racing Technologies перед субботней гонкой Truck Series на той же трассе.",
+  "youtube_id": "EJJZwQGD4bY",
+  "entry_list": [
+    {
+      "number": "01",
+      "driver": "Graham Jacobson",
+      "team": "Fast Track Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "George Church",
+      "driver_slug": "graham-jacobson"
+    },
+    {
+      "number": "03",
+      "driver": "Alex Clubb",
+      "team": "Clubb Racing Inc.",
+      "manufacturer": "Ford",
+      "crew_chief": "Brian Clubb",
+      "driver_slug": "alex-clubb"
+    },
+    {
+      "number": "3",
+      "driver": "Alex Quarterley",
+      "team": "1/4 Ley Racing",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Willie Mullins",
+      "driver_slug": "alex-quarterley"
+    },
+    {
+      "number": "06",
+      "driver": "Nate Moeller",
+      "team": "Wayne Peterson Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Nate Moeller",
+      "driver_slug": "nate-moeller"
+    },
+    {
+      "number": "10",
+      "driver": "Ed Pompa",
+      "team": "Fast Track Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "Mike Sroufe",
+      "driver_slug": "ed-pompa"
+    },
+    {
+      "number": "11",
+      "driver": "Chase Buscaglia",
+      "team": "Fast Track Racing",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Dick Doheny",
+      "driver_slug": "chase-buscaglia"
+    },
+    {
+      "number": "12",
+      "driver": "Takuma Koga",
+      "team": "Fast Track Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "Andrew Kiernan",
+      "driver_slug": "takuma-koga"
+    },
+    {
+      "number": "15",
+      "driver": "Will Robinson",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Doug Richert",
+      "driver_slug": "will-robinson"
+    },
+    {
+      "number": "17",
+      "driver": "Stewart Friesen",
+      "team": "Cook Racing Technologies",
+      "manufacturer": "Toyota",
+      "crew_chief": "Sean Samuels",
+      "driver_slug": "stewart-friesen"
+    },
+    {
+      "number": "18",
+      "driver": "Max Reaves (R)",
+      "team": "Joe Gibbs Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "Matt Ross",
+      "driver_slug": "max-reaves"
+    },
+    {
+      "number": "19",
+      "driver": "Corey Aiken",
+      "team": "Maples Motorsports",
+      "manufacturer": "Ford",
+      "crew_chief": "Kenna Long",
+      "driver_slug": "corey-aiken"
+    },
+    {
+      "number": "20",
+      "driver": "Jake Bollman (R)",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Doug George",
+      "driver_slug": "jake-bollman"
+    },
+    {
+      "number": "25",
+      "driver": "Peter Portante",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Shane Wilson",
+      "driver_slug": "peter-portante"
+    },
+    {
+      "number": "28",
+      "driver": "Carson Brown (R)",
+      "team": "Pinnacle Racing Group",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Steven Dawson",
+      "driver_slug": "carson-brown"
+    },
+    {
+      "number": "29",
+      "driver": "Ryan Gemmell",
+      "team": "NEMCO Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Paul Chodora",
+      "driver_slug": "ryan-gemmell"
+    },
+    {
+      "number": "42",
+      "driver": "Dawson Sutton",
+      "team": "Cook Racing Technologies",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Alexis Penninger",
+      "driver_slug": "dawson-sutton"
+    },
+    {
+      "number": "44",
+      "driver": "Jeff Anton",
+      "team": "1/4 Ley Racing",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Greg Kelly",
+      "driver_slug": "jeff-anton"
+    },
+    {
+      "number": "48",
+      "driver": "Brad Smith",
+      "team": "Brad Smith Motorsports",
+      "manufacturer": "Ford",
+      "crew_chief": "Brian Pacheco",
+      "driver_slug": "brad-smith"
+    },
+    {
+      "number": "53",
+      "driver": "Andrew Ranger",
+      "team": "NDS Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Ben Torriere",
+      "driver_slug": "andrew-ranger"
+    },
+    {
+      "number": "55",
+      "driver": "Isabella Robusto",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Glenn Parker",
+      "driver_slug": "isabella-robusto"
+    },
+    {
+      "number": "70",
+      "driver": "Thomas Annunziata",
+      "team": "Nitro Motorsports",
+      "manufacturer": "Toyota",
+      "crew_chief": "Shannon Rursch",
+      "driver_slug": "thomas-annunziata"
+    },
+    {
+      "number": "71",
+      "driver": "Andy Jankowiak",
+      "team": "KLAS Motorsports",
+      "manufacturer": "Ford",
+      "crew_chief": "Mike Dayton",
+      "driver_slug": "andy-jankowiak"
+    },
+    {
+      "number": "77",
+      "driver": "Tristan McKee",
+      "team": "Pinnacle Racing Group",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Kevin Reed Jr",
+      "driver_slug": "tristan-mckee"
+    },
+    {
+      "number": "79",
+      "driver": "Isaac Kitzmiller",
+      "team": "ACR Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Doug Howe",
+      "driver_slug": "isaac-kitzmiller"
+    },
+    {
+      "number": "86",
+      "driver": "Jeff Maconi (R)",
+      "team": "Clubb Racing Inc.",
+      "manufacturer": "Ford",
+      "crew_chief": "Jon Clubb",
+      "driver_slug": "jeff-maconi"
+    },
+    {
+      "number": "89",
+      "driver": "Bobby Dale Earnhardt",
+      "team": "Rise Racing",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Jacob Petrowsky",
+      "driver_slug": "bobby-dale-earnhardt"
+    },
+    {
+      "number": "91",
+      "driver": "Ty Fredrickson",
+      "team": "Maples Motorsports",
+      "manufacturer": "Ford",
+      "crew_chief": "Jeff McClure",
+      "driver_slug": "ty-fredrickson"
+    },
+    {
+      "number": "97",
+      "driver": "Jason Kitzmiller",
+      "team": "CR7 Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Frank Kimmel",
+      "driver_slug": "jason-kitzmiller"
+    },
+    {
+      "number": "99",
+      "driver": "Michael Maples",
+      "team": "Maples Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Chris Vanscoy",
+      "driver_slug": "michael-maples"
+    }
+  ],
   "tables": {
     "practice": {
+      "title": "2026 ARCA Menards Series - Practice 1",
+      "subtitle": "Fri 10 Jul 2026 Lime Rock, CT",
+      "meta": {
+        "Championship": "2026 ARCA Menards Series",
+        "Session": "Practice",
+        "Date": "Fri 10 Jul 2026",
+        "Start": "",
+        "Length": ""
+      },
       "headers": [
-        "Pos",
-        "Trk",
+        "Rank",
         "Driver",
-        "Team",
-        "Make",
+        "Nbr",
+        "Car",
         "Time",
+        "Diff",
         "Speed",
-        "Lap #",
         "# Laps",
-        "-Fastest",
-        "-Next"
+        "Best Lap"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "Thomas Annunziata",
+          "70",
+          "Toyota",
+          "55.049",
+          "",
+          "96.656",
+          "20",
+          "3"
+        ],
+        [
+          "2",
+          "Tristan McKee",
+          "77",
+          "Chevrolet",
+          "55.091",
+          "0.042",
+          "96.582",
+          "24",
+          "24"
+        ],
+        [
+          "3",
+          "Isabella Robusto",
+          "55",
+          "Toyota",
+          "55.396",
+          "0.347",
+          "96.050",
+          "21",
+          "20"
+        ],
+        [
+          "4",
+          "Carson Brown",
+          "28",
+          "Chevrolet",
+          "55.562",
+          "0.513",
+          "95.763",
+          "17",
+          "4"
+        ],
+        [
+          "5",
+          "Max Reaves",
+          "18",
+          "Toyota",
+          "56.064",
+          "1.015",
+          "94.906",
+          "30",
+          "4"
+        ],
+        [
+          "6",
+          "Ryan Gemmell",
+          "29",
+          "Toyota",
+          "56.091",
+          "1.042",
+          "94.860",
+          "18",
+          "18"
+        ],
+        [
+          "7",
+          "Isaac Kitzmiller",
+          "79",
+          "Chevrolet",
+          "56.107",
+          "1.058",
+          "94.833",
+          "25",
+          "25"
+        ],
+        [
+          "8",
+          "Peter Portante",
+          "25",
+          "Toyota",
+          "56.215",
+          "1.166",
+          "94.651",
+          "22",
+          "9"
+        ],
+        [
+          "9",
+          "Jake Bollman",
+          "20",
+          "Toyota",
+          "56.491",
+          "1.442",
+          "94.188",
+          "23",
+          "20"
+        ],
+        [
+          "10",
+          "Andrew Ranger",
+          "53",
+          "Chevrolet",
+          "56.557",
+          "1.508",
+          "94.079",
+          "19",
+          "6"
+        ],
+        [
+          "11",
+          "Stewart Friesen",
+          "17",
+          "Toyota",
+          "56.700",
+          "1.651",
+          "93.841",
+          "28",
+          "17"
+        ],
+        [
+          "12",
+          "Dawson Sutton",
+          "42",
+          "Chevrolet",
+          "56.797",
+          "1.748",
+          "93.681",
+          "12",
+          "4"
+        ],
+        [
+          "13",
+          "Graham Jacobson",
+          "01",
+          "Toyota",
+          "56.837",
+          "1.788",
+          "93.615",
+          "12",
+          "7"
+        ],
+        [
+          "14",
+          "Will Robinson",
+          "15",
+          "Toyota",
+          "56.840",
+          "1.791",
+          "93.610",
+          "32",
+          "4"
+        ],
+        [
+          "15",
+          "Jeff Anton",
+          "44",
+          "Chevrolet",
+          "56.942",
+          "1.893",
+          "93.442",
+          "22",
+          "10"
+        ],
+        [
+          "16",
+          "Alex Quarterley",
+          "3",
+          "Chevrolet",
+          "57.656",
+          "2.607",
+          "92.285",
+          "26",
+          "6"
+        ],
+        [
+          "17",
+          "Andy Jankowiak",
+          "71",
+          "Ford",
+          "57.667",
+          "2.618",
+          "92.268",
+          "29",
+          "18"
+        ],
+        [
+          "18",
+          "Ty Fredrickson",
+          "91",
+          "Ford",
+          "57.818",
+          "2.769",
+          "92.027",
+          "26",
+          "22"
+        ],
+        [
+          "19",
+          "Jason Kitzmiller",
+          "97",
+          "Chevrolet",
+          "58.084",
+          "3.035",
+          "91.605",
+          "17",
+          "14"
+        ],
+        [
+          "20",
+          "Chase Buscaglia",
+          "11",
+          "Chevrolet",
+          "59.246",
+          "4.197",
+          "89.809",
+          "13",
+          "4"
+        ],
+        [
+          "21",
+          "Takuma Koga",
+          "12",
+          "Toyota",
+          "59.864",
+          "4.815",
+          "88.881",
+          "17",
+          "13"
+        ],
+        [
+          "22",
+          "Ed Pompa",
+          "10",
+          "Toyota",
+          "1:02.080",
+          "7.031",
+          "85.709",
+          "11",
+          "10"
+        ],
+        [
+          "23",
+          "Bobby Dale Earnhardt",
+          "89",
+          "Chevrolet",
+          "1:03.674",
+          "8.625",
+          "83.563",
+          "23",
+          "18"
+        ],
+        [
+          "24",
+          "Corey Aiken",
+          "19",
+          "Ford",
+          "1:05.406",
+          "10.357",
+          "81.350",
+          "3",
+          "3"
+        ],
+        [
+          "25",
+          "Alex Clubb",
+          "03",
+          "Ford",
+          "1:06.533",
+          "11.484",
+          "79.972",
+          "4",
+          "4"
+        ],
+        [
+          "26",
+          "Michael Maples",
+          "99",
+          "Chevrolet",
+          "1:06.582",
+          "11.533",
+          "79.913",
+          "11",
+          "10"
+        ],
+        [
+          "27",
+          "Nate Moeller",
+          "06",
+          "Toyota",
+          "1:13.089",
+          "18.040",
+          "72.799",
+          "6",
+          "2"
+        ],
+        [
+          "28",
+          "Brad Smith",
+          "48",
+          "Ford",
+          "1:17.237",
+          "22.188",
+          "68.889",
+          "2",
+          "2"
+        ],
+        [
+          "29",
+          "Jeff Maconi",
+          "86",
+          "Ford",
+          "",
+          "",
+          "0.000",
+          "0",
+          "0"
+        ]
+      ]
     },
     "qualifying": {
       "headers": [
@@ -35,7 +600,269 @@
         "Time",
         "Speed"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "28",
+          "Carson Brown (R)",
+          "Pinnacle Racing Group",
+          "Chevrolet",
+          "54.345",
+          "97.908"
+        ],
+        [
+          "2",
+          "70",
+          "Thomas Annunziata",
+          "Nitro Motorsports",
+          "Toyota",
+          "54.409",
+          "97.793"
+        ],
+        [
+          "3",
+          "77",
+          "Tristan McKee",
+          "Pinnacle Racing Group",
+          "Chevrolet",
+          "54.629",
+          "97.399"
+        ],
+        [
+          "4",
+          "20",
+          "Jake Bollman (R)",
+          "Nitro Motorsports",
+          "Toyota",
+          "54.808",
+          "97.081"
+        ],
+        [
+          "5",
+          "55",
+          "Isabella Robusto",
+          "Nitro Motorsports",
+          "Toyota",
+          "54.938",
+          "96.851"
+        ],
+        [
+          "6",
+          "25",
+          "Peter Portante",
+          "Nitro Motorsports",
+          "Toyota",
+          "55.124",
+          "96.524"
+        ],
+        [
+          "7",
+          "18",
+          "Max Reaves (R)",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "55.470",
+          "95.922"
+        ],
+        [
+          "8",
+          "53",
+          "Andrew Ranger",
+          "NDS Motorsports",
+          "Chevrolet",
+          "55.479",
+          "95.907"
+        ],
+        [
+          "9",
+          "17",
+          "Stewart Friesen",
+          "Cook Racing Technologies",
+          "Toyota",
+          "55.746",
+          "95.447"
+        ],
+        [
+          "10",
+          "29",
+          "Ryan Gemmell",
+          "NEMCO Motorsports",
+          "Toyota",
+          "55.772",
+          "95.403"
+        ],
+        [
+          "11",
+          "44",
+          "Jeff Anton",
+          "1/4 Ley Racing",
+          "Chevrolet",
+          "55.983",
+          "95.043"
+        ],
+        [
+          "12",
+          "3",
+          "Alex Quarterley",
+          "1/4 Ley Racing",
+          "Chevrolet",
+          "56.104",
+          "94.838"
+        ],
+        [
+          "13",
+          "42",
+          "Dawson Sutton",
+          "Cook Racing Technologies",
+          "Chevrolet",
+          "56.123",
+          "94.806"
+        ],
+        [
+          "14",
+          "79",
+          "Isaac Kitzmiller",
+          "ACR Motorsports",
+          "Chevrolet",
+          "56.159",
+          "94.745"
+        ],
+        [
+          "15",
+          "15",
+          "Will Robinson",
+          "Nitro Motorsports",
+          "Toyota",
+          "56.188",
+          "94.696"
+        ],
+        [
+          "16",
+          "71",
+          "Andy Jankowiak",
+          "KLAS Motorsports",
+          "Ford",
+          "56.271",
+          "94.557"
+        ],
+        [
+          "17",
+          "01",
+          "Graham Jacobson",
+          "Fast Track Racing",
+          "Toyota",
+          "56.339",
+          "94.443"
+        ],
+        [
+          "18",
+          "91",
+          "Ty Fredrickson",
+          "Maples Motorsports",
+          "Ford",
+          "56.385",
+          "94.366"
+        ],
+        [
+          "19",
+          "11",
+          "Chase Buscaglia",
+          "Fast Track Racing",
+          "Chevrolet",
+          "58.115",
+          "91.556"
+        ],
+        [
+          "20",
+          "97",
+          "Jason Kitzmiller",
+          "CR7 Motorsports",
+          "Chevrolet",
+          "58.221",
+          "91.390"
+        ],
+        [
+          "21",
+          "12",
+          "Takuma Koga",
+          "Fast Track Racing",
+          "Toyota",
+          "58.969",
+          "90.230"
+        ],
+        [
+          "22",
+          "19",
+          "Corey Aiken",
+          "Maples Motorsports",
+          "Ford",
+          "1:01.745",
+          "86.174"
+        ],
+        [
+          "23",
+          "89",
+          "Bobby Dale Earnhardt",
+          "Rise Racing",
+          "Chevrolet",
+          "1:02.305",
+          "85.399"
+        ],
+        [
+          "24",
+          "03",
+          "Alex Clubb",
+          "Clubb Racing Inc.",
+          "Ford",
+          "1:04.175",
+          "82.911"
+        ],
+        [
+          "25",
+          "99",
+          "Michael Maples",
+          "Maples Motorsports",
+          "Chevrolet",
+          "1:05.541",
+          "81.183"
+        ],
+        [
+          "26",
+          "06",
+          "Nate Moeller",
+          "Wayne Peterson Motorsports",
+          "Toyota",
+          "1:11.132",
+          "74.802"
+        ],
+        [
+          "27",
+          "48",
+          "Brad Smith",
+          "Brad Smith Motorsports",
+          "Ford",
+          "1:14.971",
+          "70.971"
+        ],
+        [
+          "28",
+          "10",
+          "Ed Pompa",
+          "Fast Track Racing",
+          "Toyota",
+          "",
+          ""
+        ],
+        [
+          "29",
+          "86",
+          "Jeff Maconi (R)",
+          "Clubb Racing Inc.",
+          "Ford",
+          "",
+          ""
+        ]
+      ]
     },
     "race_results": {
       "headers": [
@@ -50,7 +877,431 @@
         "Status",
         "Pts"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "2",
+          "70",
+          "Thomas Annunziata",
+          "Nitro Motorsports",
+          "Toyota",
+          "68",
+          "59",
+          "Running",
+          "48"
+        ],
+        [
+          "2",
+          "8",
+          "53",
+          "Andrew Ranger",
+          "NDS Motorsports",
+          "Chevrolet",
+          "68",
+          "0",
+          "Running",
+          "42"
+        ],
+        [
+          "3",
+          "1",
+          "28",
+          "Carson Brown (R)",
+          "Pinnacle Racing Group",
+          "Chevrolet",
+          "68",
+          "0",
+          "Running",
+          "42"
+        ],
+        [
+          "4",
+          "7",
+          "18",
+          "Max Reaves (R)",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "68",
+          "0",
+          "Running",
+          "40"
+        ],
+        [
+          "5",
+          "4",
+          "20",
+          "Jake Bollman (R)",
+          "Nitro Motorsports",
+          "Toyota",
+          "68",
+          "3",
+          "Running",
+          "40"
+        ],
+        [
+          "6",
+          "10",
+          "29",
+          "Ryan Gemmell",
+          "NEMCO Motorsports",
+          "Toyota",
+          "68",
+          "0",
+          "Running",
+          "38"
+        ],
+        [
+          "7",
+          "3",
+          "77",
+          "Tristan McKee",
+          "Pinnacle Racing Group",
+          "Chevrolet",
+          "68",
+          "6",
+          "Running",
+          "38"
+        ],
+        [
+          "8",
+          "14",
+          "79",
+          "Isaac Kitzmiller",
+          "ACR Motorsports",
+          "Chevrolet",
+          "68",
+          "0",
+          "Running",
+          "36"
+        ],
+        [
+          "9",
+          "13",
+          "42",
+          "Dawson Sutton",
+          "Cook Racing Technologies",
+          "Chevrolet",
+          "68",
+          "0",
+          "Running",
+          "35"
+        ],
+        [
+          "10",
+          "11",
+          "44",
+          "Jeff Anton",
+          "1/4 Ley Racing",
+          "Chevrolet",
+          "68",
+          "0",
+          "Running",
+          "34"
+        ],
+        [
+          "11",
+          "6",
+          "25",
+          "Peter Portante",
+          "Nitro Motorsports",
+          "Toyota",
+          "68",
+          "0",
+          "Running",
+          "33"
+        ],
+        [
+          "12",
+          "15",
+          "15",
+          "Will Robinson",
+          "Nitro Motorsports",
+          "Toyota",
+          "68",
+          "0",
+          "Running",
+          "32"
+        ],
+        [
+          "13",
+          "9",
+          "17",
+          "Stewart Friesen",
+          "Cook Racing Technologies",
+          "Toyota",
+          "68",
+          "0",
+          "Running",
+          "31"
+        ],
+        [
+          "14",
+          "16",
+          "71",
+          "Andy Jankowiak",
+          "KLAS Motorsports",
+          "Ford",
+          "68",
+          "0",
+          "Running",
+          "30"
+        ],
+        [
+          "15",
+          "18",
+          "91",
+          "Ty Fredrickson",
+          "Maples Motorsports",
+          "Ford",
+          "68",
+          "0",
+          "Running",
+          "29"
+        ],
+        [
+          "16",
+          "17",
+          "01",
+          "Graham Jacobson",
+          "Fast Track Racing",
+          "Toyota",
+          "68",
+          "0",
+          "Running",
+          "28"
+        ],
+        [
+          "17",
+          "20",
+          "97",
+          "Jason Kitzmiller",
+          "CR7 Motorsports",
+          "Chevrolet",
+          "68",
+          "0",
+          "Running",
+          "27"
+        ],
+        [
+          "18",
+          "19",
+          "11",
+          "Chase Buscaglia",
+          "Fast Track Racing",
+          "Chevrolet",
+          "68",
+          "0",
+          "Running",
+          "26"
+        ],
+        [
+          "19",
+          "21",
+          "12",
+          "Takuma Koga",
+          "Fast Track Racing",
+          "Toyota",
+          "68",
+          "0",
+          "Running",
+          "25"
+        ],
+        [
+          "20",
+          "23",
+          "89",
+          "Bobby Dale Earnhardt",
+          "Rise Racing",
+          "Chevrolet",
+          "66",
+          "0",
+          "Running",
+          "24"
+        ],
+        [
+          "21",
+          "12",
+          "3",
+          "Alex Quarterley",
+          "1/4 Ley Racing",
+          "Chevrolet",
+          "64",
+          "0",
+          "Running",
+          "23"
+        ],
+        [
+          "22",
+          "24",
+          "03",
+          "Alex Clubb",
+          "Clubb Racing Inc.",
+          "Ford",
+          "61",
+          "0",
+          "Running",
+          "22"
+        ],
+        [
+          "23",
+          "25",
+          "99",
+          "Michael Maples",
+          "Maples Motorsports",
+          "Chevrolet",
+          "60",
+          "0",
+          "Running",
+          "21"
+        ],
+        [
+          "24",
+          "26",
+          "06",
+          "Nate Moeller",
+          "Wayne Peterson Motorsports",
+          "Toyota",
+          "59",
+          "0",
+          "Running",
+          "20"
+        ],
+        [
+          "25",
+          "5",
+          "55",
+          "Isabella Robusto",
+          "Nitro Motorsports",
+          "Toyota",
+          "50",
+          "0",
+          "Running",
+          "19"
+        ],
+        [
+          "26",
+          "22",
+          "19",
+          "Corey Aiken",
+          "Maples Motorsports",
+          "Ford",
+          "10",
+          "0",
+          "Mechanical",
+          "18"
+        ],
+        [
+          "27",
+          "27",
+          "48",
+          "Brad Smith",
+          "Brad Smith Motorsports",
+          "Ford",
+          "1",
+          "0",
+          "Mechanical",
+          "17"
+        ],
+        [
+          "28",
+          "28",
+          "10",
+          "Ed Pompa",
+          "Fast Track Racing",
+          "Toyota",
+          "0",
+          "0",
+          "Did Not Start",
+          "16"
+        ],
+        [
+          "29",
+          "29",
+          "86",
+          "Jeff Maconi (R)",
+          "Clubb Racing Inc.",
+          "Ford",
+          "0",
+          "0",
+          "Did Not Start",
+          "15"
+        ]
+      ]
     }
+  },
+  "caution_breakdown": {
+    "headers": [
+      "Condition",
+      "From Lap",
+      "To Lap",
+      "# Of Laps",
+      "Reason",
+      "Free Pass"
+    ],
+    "rows": [
+      [
+        "",
+        "1",
+        "11",
+        "11",
+        "",
+        ""
+      ],
+      [
+        "",
+        "12",
+        "18",
+        "7",
+        "#19 debris",
+        "none"
+      ],
+      [
+        "",
+        "19",
+        "33",
+        "15",
+        "",
+        ""
+      ],
+      [
+        "",
+        "34",
+        "37",
+        "4",
+        "scheduled caution",
+        "#12"
+      ],
+      [
+        "",
+        "38",
+        "45",
+        "8",
+        "",
+        ""
+      ],
+      [
+        "",
+        "46",
+        "49",
+        "4",
+        "debris turn 3",
+        "#89"
+      ],
+      [
+        "",
+        "50",
+        "68",
+        "19",
+        "",
+        ""
+      ]
+    ]
+  },
+  "race_statistics": {
+    "Lead changes": "3 among 3 different drivers",
+    "Cautions / Laps": "3 for 15 laps",
+    "Red flags": "0",
+    "Time of race": "1 hour, 21 minutes and 18 seconds",
+    "Average speed": "74.173 miles per hour (119.370 km/h)"
   }
 }

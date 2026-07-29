@@ -12,6 +12,52 @@
     return m ? parseInt(m[1], 10) : 0;
   }
 
+  /**
+   * Unified schedule "Location" column — venue name (circuit_name / track).
+   * Legacy stockcar "Track, City, State" in circuit_name is split only when
+   * TGA.isStockCarLegacyCombinedCircuit says the row is still pre-migration.
+   */
+  function formatScheduleTrack(e) {
+    var circuit = String((e && (e.circuit_name || e.track)) || '').trim();
+    var loc = String((e && e.location) || '').trim();
+    var seriesSlug = String((e && (e._seriesId || e.series_id)) || '').toLowerCase();
+    var isStockCar = window.TGA.isStockCarSeriesId && window.TGA.isStockCarSeriesId(seriesSlug);
+
+    if (isStockCar && window.TGA.stockCarDisplayTrack) {
+      circuit = window.TGA.stockCarDisplayTrack(circuit, loc);
+    }
+
+    if (circuit) {
+      return (window.TGA && window.TGA.localizeVenueLine)
+        ? window.TGA.localizeVenueLine(circuit)
+        : circuit;
+    }
+    return '—';
+  }
+
+  function formatScheduleGeoLocation(e) {
+    var circuit = String((e && (e.circuit_name || e.track)) || '').trim();
+    var loc = String((e && e.location) || '').trim();
+    var seriesSlug = String((e && (e._seriesId || e.series_id)) || '').toLowerCase();
+    var isStockCar = window.TGA.isStockCarSeriesId && window.TGA.isStockCarSeriesId(seriesSlug);
+
+    if (isStockCar && window.TGA.stockCarDisplayLocation) {
+      loc = window.TGA.stockCarDisplayLocation(circuit, loc);
+    }
+
+    if (loc) {
+      return (window.TGA && window.TGA.localizeLocation)
+        ? window.TGA.localizeLocation(loc)
+        : loc;
+    }
+    return '—';
+  }
+
+  /** @deprecated Use formatScheduleTrack — kept for callers expecting track-only label. */
+  function formatScheduleLocation(e) {
+    return formatScheduleTrack(e);
+  }
+
   /** Circuit + locality on one line (Super Formula full schedule / series table). */
   function superFormulaVenueLine(e) {
     var c = (e && e.circuit_name && String(e.circuit_name).trim()) || '';
@@ -212,7 +258,7 @@
       // Weekend header: treat as past when the group's last day has ended (not only the first).
       var isPastGroup = g.endMs > 0 && g.endMs < todayMs;
       html += '<tr class="weekend-hdr' + (isPastGroup ? ' sched-past' : '') + '">' +
-        '<td colspan="5"><span class="wknd-date">' + esc(formatDateForGroup(g.startDs, g.endDs)) + '</span></td></tr>';
+        '<td colspan="6"><span class="wknd-date">' + esc(formatDateForGroup(g.startDs, g.endDs)) + '</span></td></tr>';
 
       var eventsInGroup = g.events.slice().sort(function (a, b) {
         return getEventSortTimeMs(a) - getEventSortTimeMs(b);
@@ -264,24 +310,14 @@
           if (rawTime && rawTime.toUpperCase() !== 'TBD') timeOnlyLabel = rawTime;
         }
 
-        var locCombined;
-        if (seriesIdUpper === 'SUPER_FORMULA') {
-          locCombined = superFormulaVenueLine(e);
-        } else if (e.circuit_name) {
-          locCombined = (window.TGA && window.TGA.localizeVenueLine)
-            ? window.TGA.localizeVenueLine(e.circuit_name)
-            : e.circuit_name;
-        } else {
-          locCombined = e.location || '—';
-          if (locCombined !== '—' && window.TGA && window.TGA.localizeLocation) {
-            locCombined = window.TGA.localizeLocation(locCombined);
-          }
-        }
+        var trackLabel = formatScheduleTrack(e);
+        var geoLabel = formatScheduleGeoLocation(e);
         html += '<tr class="sched-row' + (isPast ? ' sched-past' : isNext ? ' sched-next' : '') + '">' +
           '<td class="sched-series">'  + seriesBadge(e._seriesId || e.series_id || '') + '</td>' +
           '<td class="sched-race">'    + link + '</td>' +
           '<td class="sched-date">'    + esc(dateShort || '—') + '</td>' +
-          '<td class="sched-location">' + esc(locCombined) + '</td>' +
+          '<td class="sched-track">'   + esc(trackLabel) + '</td>' +
+          '<td class="sched-location">' + esc(geoLabel) + '</td>' +
           '<td class="col-time sched-time">' + esc(timeOnlyLabel) + '</td>' +
         '</tr>';
       });
@@ -322,4 +358,7 @@
   window.TGA.collapseSuperFormulaScheduleEvents = collapseSuperFormulaScheduleEvents;
   window.TGA.prepareScheduleSessionEvents = prepareScheduleSessionEvents;
   window.TGA.superFormulaVenueLine = superFormulaVenueLine;
+  window.TGA.formatScheduleTrack = formatScheduleTrack;
+  window.TGA.formatScheduleGeoLocation = formatScheduleGeoLocation;
+  window.TGA.formatScheduleLocation = formatScheduleLocation;
 })();

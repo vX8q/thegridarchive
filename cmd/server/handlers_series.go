@@ -85,6 +85,14 @@ func handleSeries(w http.ResponseWriter, r *http.Request, dataDir string, st sto
 		return
 	}
 	dataSeriesID := config.DataSeriesID(seriesID)
+	// Sub-resources answer 404 for an unknown series, same as the series itself,
+	// instead of serving an empty payload that looks like a real series.
+	if subPath != "" && !config.KnownSeriesID(seriesID) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Cache-Control", "no-store")
+		writeError(w, http.StatusNotFound, "not found")
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "no-store")
 

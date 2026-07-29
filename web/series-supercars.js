@@ -178,6 +178,8 @@ window.tgaSeries.supercars = window.TGA.seriesSupercars = {
 
           return {
             race_order: raceCodes,
+            // Every race of this fallback comes from one weekend file.
+            event_ids: raceCodes.map(function () { return eventId; }),
             completed_races: raceCodes.slice(),
             rows: rows,
             ineligible: []

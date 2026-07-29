@@ -1,0 +1,286 @@
+{
+  "event_id": "F1_2026_16",
+  "series": "FIA Formula 1 World Championship",
+  "race": "2026 Bahrain Grand Prix",
+  "date": "2–4 October 2026",
+  "start_date": "2026-10-02",
+  "end_date": "2026-10-04",
+  "track": "Sepang International Circuit",
+  "location": "Sepang, Selangor, Malaysia",
+  "entry_list": [
+    {
+      "number": "10",
+      "driver": "Pierre Gasly",
+      "team": "BWT Alpine F1 Team",
+      "manufacturer": "A526",
+      "constructor": "Alpine-Mercedes",
+      "driver_slug": "pierre-gasly"
+    },
+    {
+      "number": "43",
+      "driver": "Franco Colapinto",
+      "team": "BWT Alpine F1 Team",
+      "manufacturer": "A526",
+      "constructor": "Alpine-Mercedes",
+      "driver_slug": "franco-colapinto"
+    },
+    {
+      "number": "14",
+      "driver": "Fernando Alonso",
+      "team": "Aston Martin Aramco F1 Team",
+      "manufacturer": "AMR26",
+      "constructor": "Aston Martin Aramco-Honda",
+      "driver_slug": "fernando-alonso"
+    },
+    {
+      "number": "18",
+      "driver": "Lance Stroll",
+      "team": "Aston Martin Aramco F1 Team",
+      "manufacturer": "AMR26",
+      "constructor": "Aston Martin Aramco-Honda",
+      "driver_slug": "lance-stroll"
+    },
+    {
+      "number": "23",
+      "driver": "Alexander Albon",
+      "team": "Atlassian Williams F1 Team",
+      "manufacturer": "FW48",
+      "constructor": "Atlassian Williams-Mercedes",
+      "driver_slug": "alexander-albon"
+    },
+    {
+      "number": "55",
+      "driver": "Carlos Sainz Jr.",
+      "team": "Atlassian Williams F1 Team",
+      "manufacturer": "FW48",
+      "constructor": "Atlassian Williams-Mercedes",
+      "driver_slug": "carlos-sainz-jr"
+    },
+    {
+      "number": "5",
+      "driver": "Gabriel Bortoleto",
+      "team": "Audi Revolut F1 Team",
+      "manufacturer": "R26",
+      "constructor": "Audi",
+      "driver_slug": "gabriel-bortoleto"
+    },
+    {
+      "number": "27",
+      "driver": "Nico Hulkenberg",
+      "team": "Audi Revolut F1 Team",
+      "manufacturer": "R26",
+      "constructor": "Audi",
+      "driver_slug": "nico-hulkenberg"
+    },
+    {
+      "number": "11",
+      "driver": "Sergio Perez",
+      "team": "Cadillac Formula 1 Team",
+      "manufacturer": "MAC-26",
+      "constructor": "Cadillac-Ferrari",
+      "driver_slug": "sergio-perez"
+    },
+    {
+      "number": "77",
+      "driver": "Valtteri Bottas",
+      "team": "Cadillac Formula 1 Team",
+      "manufacturer": "MAC-26",
+      "constructor": "Cadillac-Ferrari",
+      "driver_slug": "valtteri-bottas"
+    },
+    {
+      "number": "16",
+      "driver": "Charles Leclerc",
+      "team": "Scuderia Ferrari HP",
+      "manufacturer": "SF-26",
+      "constructor": "Ferrari",
+      "driver_slug": "charles-leclerc"
+    },
+    {
+      "number": "44",
+      "driver": "Lewis Hamilton",
+      "team": "Scuderia Ferrari HP",
+      "manufacturer": "SF-26",
+      "constructor": "Ferrari",
+      "driver_slug": "lewis-hamilton"
+    },
+    {
+      "number": "31",
+      "driver": "Esteban Ocon",
+      "team": "TGR Haas F1 Team",
+      "manufacturer": "VF-26",
+      "constructor": "Haas-Ferrari",
+      "driver_slug": "esteban-ocon"
+    },
+    {
+      "number": "87",
+      "driver": "Oliver Bearman",
+      "team": "TGR Haas F1 Team",
+      "manufacturer": "VF-26",
+      "constructor": "Haas-Ferrari",
+      "driver_slug": "oliver-bearman"
+    },
+    {
+      "number": "1",
+      "driver": "Lando Norris",
+      "team": "McLaren Mastercard F1 Team",
+      "manufacturer": "MCL40",
+      "constructor": "McLaren-Mercedes",
+      "driver_slug": "lando-norris"
+    },
+    {
+      "number": "81",
+      "driver": "Oscar Piastri",
+      "team": "McLaren Mastercard F1 Team",
+      "manufacturer": "MCL40",
+      "constructor": "McLaren-Mercedes",
+      "driver_slug": "oscar-piastri"
+    },
+    {
+      "number": "12",
+      "driver": "Kimi Antonelli",
+      "team": "Mercedes-AMG Petronas F1 Team",
+      "manufacturer": "F1 W17",
+      "constructor": "Mercedes",
+      "driver_slug": "kimi-antonelli"
+    },
+    {
+      "number": "63",
+      "driver": "George Russell",
+      "team": "Mercedes-AMG Petronas F1 Team",
+      "manufacturer": "F1 W17",
+      "constructor": "Mercedes",
+      "driver_slug": "george-russell"
+    },
+    {
+      "number": "30",
+      "driver": "Liam Lawson",
+      "team": "Visa Cash App Racing Bulls F1 Team",
+      "manufacturer": "VCARB 03",
+      "constructor": "Racing Bulls-Red Bull Ford",
+      "driver_slug": "liam-lawson"
+    },
+    {
+      "number": "41",
+      "driver": "Arvid Lindblad",
+      "team": "Visa Cash App Racing Bulls F1 Team",
+      "manufacturer": "VCARB 03",
+      "constructor": "Racing Bulls-Red Bull Ford",
+      "driver_slug": "arvid-lindblad"
+    },
+    {
+      "number": "3",
+      "driver": "Max Verstappen",
+      "team": "Oracle Red Bull Racing",
+      "manufacturer": "RB22",
+      "constructor": "Red Bull Racing-Red Bull Ford",
+      "driver_slug": "max-verstappen"
+    },
+    {
+      "number": "6",
+      "driver": "Isack Hadjar",
+      "team": "Oracle Red Bull Racing",
+      "manufacturer": "RB22",
+      "constructor": "Red Bull Racing-Red Bull Ford",
+      "driver_slug": "isack-hadjar"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Practice 1",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Practice 2",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Practice 3",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        }
+      ]
+    },
+    "qualifying": {
+      "headers": null,
+      "rows": null,
+      "sessions": [
+        {
+          "title": "Qualifying",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Time",
+            "Gap",
+            "Int",
+            "KPH"
+          ],
+          "rows": []
+        }
+      ]
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "No.",
+        "Driver",
+        "Team",
+        "Laps",
+        "Time/Retired",
+        "Grid",
+        "Pts"
+      ],
+      "rows": []
+    },
+    "pit_stops": {
+      "headers": [],
+      "rows": []
+    },
+    "penalties": {
+      "headers": [],
+      "rows": []
+    },
+    "vsc": {
+      "headers": [],
+      "rows": []
+    }
+  }
+}

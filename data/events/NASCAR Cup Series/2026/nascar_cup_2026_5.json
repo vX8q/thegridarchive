@@ -4,7 +4,7 @@
   "race": "Pennzoil 400",
   "date": "Sunday, March 15, 2026",
   "track": "Las Vegas Motor Speedway",
-  "location": "Las Vegas, NV",
+  "location": "Las Vegas, Nevada, USA",
   "laps": "267",
   "distance": "1.500 mile tri-oval (400.500 miles)",
   "youtube_id": "QiPbZV4zRpo",
@@ -83,7 +83,8 @@
       "team": "Richard Childress Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Jim Pohlman",
-      "driver_slug": "kyle-busch"
+      "driver_slug": "kyle-busch",
+      "points_eligible": false
     },
     {
       "number": "9",

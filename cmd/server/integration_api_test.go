@@ -43,7 +43,7 @@ func TestIntegrationAPI_EventUnknown404(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/api/events/UNKNOWN_EVENT_999", nil)
 	rec := httptest.NewRecorder()
 
-	handleEvent(rec, req, t.TempDir(), nil)
+	handleEvent(rec, req, t.TempDir())
 
 	if rec.Code != http.StatusNotFound {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusNotFound)

@@ -53,14 +53,7 @@ func statsEntryLookup(entries []EntryListRow) (teamByCar, manufacturerByCar, dri
 		if num == "" {
 			continue
 		}
-		numKeys := map[string]struct{}{num: {}}
-		if n, err := strconv.Atoi(strings.TrimLeft(num, "0")); err == nil {
-			plain := strconv.Itoa(n)
-			numKeys[plain] = struct{}{}
-			if n >= 1 && n <= 9 {
-				numKeys[fmt.Sprintf("%02d", n)] = struct{}{}
-			}
-		}
+		numKeys := statsCarNumberKeys(num)
 		setAll := func(dst map[string]string, value string) {
 			value = strings.TrimSpace(value)
 			if value == "" {
@@ -101,6 +94,33 @@ func statsEntryLookup(entries []EntryListRow) (teamByCar, manufacturerByCar, dri
 		}
 	}
 	return teamByCar, manufacturerByCar, driverByCar, classByCar
+}
+
+func statsCarNumberKeys(num string) map[string]struct{} {
+	num = strings.TrimSpace(num)
+	numKeys := map[string]struct{}{num: {}}
+	if n, err := strconv.Atoi(strings.TrimLeft(num, "0")); err == nil {
+		plain := strconv.Itoa(n)
+		numKeys[plain] = struct{}{}
+		if n >= 1 && n <= 9 {
+			numKeys[fmt.Sprintf("%02d", n)] = struct{}{}
+		}
+	}
+	return numKeys
+}
+
+// statsPSCGuestCars maps entry_list guest car numbers (with # aliases) for stats exclusion.
+func statsPSCGuestCars(entries []EntryListRow) map[string]bool {
+	out := make(map[string]bool)
+	for _, e := range entries {
+		if !e.Guest {
+			continue
+		}
+		for key := range statsCarNumberKeys(e.Number) {
+			out[key] = true
+		}
+	}
+	return out
 }
 
 func statsSessionKind(title string) string {
@@ -172,16 +192,164 @@ func buildDriverStatsClasses(rows []DriverStatsRow, teamCanonByKey map[string]st
 	return out
 }
 
-func statsIsDNF(status string, laps, raceLaps int) bool {
+// statsIsDNF counts retirements from an explicit status / Time-Retired cell only.
+// Lapped finishers (empty Status, or "+1 lap" / race time in Time/Retired) are not DNFs.
+func statsIsDNF(status string, _ /*laps*/, _ /*raceLaps*/ int) bool {
 	status = strings.ToLower(strings.TrimSpace(status))
-	if status != "" && status != "running" && status != "classified" && status != "finished" && status != "running at finish" {
-		return true
+	if status == "" || status == "—" || status == "-" {
+		return false
 	}
-	return raceLaps > 0 && laps > 0 && laps < raceLaps
+	switch status {
+	case "running", "classified", "finished", "running at finish":
+		return false
+	}
+	// Classified finishes written into Time/Retired-style columns.
+	if strings.HasPrefix(status, "+") {
+		return false
+	}
+	if looksLikeRaceTimeOrGap(status) {
+		return false
+	}
+	return true
 }
 
-func statsPoleCars(tables map[string]EventTable, sessionCount int) []map[string]bool {
-	out := make([]map[string]bool, sessionCount)
+// statsIsDNFPos treats explicit non-finish Pos labels as DNF when Status is absent.
+func statsIsDNFPos(rawPosCell string) bool {
+	switch strings.ToLower(normalizeStatsRacePos(rawPosCell)) {
+	case "dnf", "dns", "dsq", "dq", "ret", "retired", "wd", "wth":
+		return true
+	default:
+		return false
+	}
+}
+
+func looksLikeRaceTimeOrGap(s string) bool {
+	hasDigit := false
+	for _, r := range s {
+		switch {
+		case r >= '0' && r <= '9':
+			hasDigit = true
+		case r == ':' || r == '.' || r == ' ' || r == ',':
+			// ok
+		default:
+			return false
+		}
+	}
+	return hasDigit
+}
+
+// statsPosColIndex finds finish-position columns including FREC-style "Fin / ST".
+func statsPosColIndex(headers []string) int {
+	if i := firstColIndex(headers, "Pos", "Fin", "Position", "POS"); i >= 0 {
+		return i
+	}
+	for i, h := range headers {
+		n := strings.ToLower(strings.TrimSpace(h))
+		if strings.Contains(n, "fin") && strings.Contains(n, "st") {
+			return i
+		}
+	}
+	return -1
+}
+
+// normalizeStatsRacePos mirrors standings: "1 / ST 2 ▲1" → "1", "NC / ST 28" → "NC".
+func normalizeStatsRacePos(raw string) string {
+	s := strings.TrimSpace(raw)
+	if s == "" {
+		return ""
+	}
+	if strings.Contains(s, "/") {
+		s = strings.TrimSpace(strings.SplitN(s, "/", 2)[0])
+	}
+	return s
+}
+
+// parseStatsStartFromFinST extracts grid from "1 / ST 11 ▲10" when there is no Grid column.
+func parseStatsStartFromFinST(raw string) int {
+	upper := strings.ToUpper(raw)
+	idx := strings.Index(upper, "ST")
+	if idx < 0 {
+		return 0
+	}
+	rest := strings.TrimSpace(raw[idx+2:])
+	if rest == "" {
+		return 0
+	}
+	end := 0
+	for end < len(rest) && rest[end] >= '0' && rest[end] <= '9' {
+		end++
+	}
+	if end == 0 {
+		return 0
+	}
+	return atoiSafe(rest[:end])
+}
+
+func statsPoleCars(seriesID string, tables map[string]EventTable, resultTables []statsResultTable) []map[string]bool {
+	out := make([]map[string]bool, len(resultTables))
+	starts := statsQualStartByCar(seriesID, tables, resultTables)
+	for i := 0; i < len(resultTables); i++ {
+		for car, pos := range starts[i] {
+			if pos == 1 {
+				if out[i] == nil {
+					out[i] = make(map[string]bool)
+				}
+				out[i][car] = true
+			}
+		}
+	}
+	return out
+}
+
+// statsQualSessionIndex chooses which qualifying session feeds race session raceIdx.
+// Rules:
+//   - F1/F2/F3 Sprint never inherits flat qualifying (reverse / separate grid).
+//   - A single Q table maps only to Feature / GP (or the sole non-sprint race).
+//   - Multiple Q sessions map 1:1 by index; never wrap to session 0 (avoids double poles).
+func statsQualSessionIndex(seriesID string, sessions []RaceSession, resultTables []statsResultTable, raceIdx int) int {
+	if len(sessions) == 0 || raceIdx < 0 || raceIdx >= len(resultTables) {
+		return -1
+	}
+	kind := statsSessionKind(resultTables[raceIdx].Title)
+	sprintFeature := isSprintFeatureSeriesID(seriesID)
+	if sprintFeature && kind == "sprint" {
+		return -1
+	}
+	if len(sessions) == 1 {
+		if sprintFeature {
+			if kind == "feature" {
+				return 0
+			}
+			// Lone "Race" / GP-style title on a weekend that also has a Sprint: treat as feature.
+			hasSprint := false
+			for _, rt := range resultTables {
+				if statsSessionKind(rt.Title) == "sprint" {
+					hasSprint = true
+					break
+				}
+			}
+			if hasSprint {
+				return 0
+			}
+			// Single race weekend with one Q.
+			return 0
+		}
+		// Non-sprint multi-race (e.g. DTM): only the first race reuses a lone Q.
+		if raceIdx == 0 {
+			return 0
+		}
+		return -1
+	}
+	if raceIdx < len(sessions) {
+		return raceIdx
+	}
+	return -1
+}
+
+// statsQualStartByCar maps car number → qualifying position per race-session index.
+// When race tables lack a Grid column, stats uses this (and Fin/ST) for avg start.
+func statsQualStartByCar(seriesID string, tables map[string]EventTable, resultTables []statsResultTable) []map[string]int {
+	out := make([]map[string]int, len(resultTables))
 	var sessions []RaceSession
 	if q, ok := tables["qualifying"]; ok {
 		if len(q.Sessions) > 0 {
@@ -193,31 +361,53 @@ func statsPoleCars(tables map[string]EventTable, sessionCount int) []map[string]
 			sessions = []RaceSession{{Title: q.Title, Headers: q.Headers, Rows: q.Rows}}
 		}
 	}
-	for i := 0; i < sessionCount; i++ {
-		srcIdx := i
-		if srcIdx >= len(sessions) {
-			srcIdx = 0
-		}
+	for i := range resultTables {
+		srcIdx := statsQualSessionIndex(seriesID, sessions, resultTables, i)
 		if srcIdx < 0 || srcIdx >= len(sessions) {
 			continue
 		}
 		s := sessions[srcIdx]
-		posCol := firstColIndex(s.Headers, "Pos", "Position")
-		noCol := firstColIndex(s.Headers, "No", "No.", "#", "Car", "Car No", "CAR NO")
+		posCol := statsPosColIndex(s.Headers)
+		if posCol < 0 {
+			posCol = firstColIndex(s.Headers, "Pos", "Position")
+		}
+		noCol := firstColIndex(s.Headers, "No", "No.", "#", "Car No", "CAR NO", "Car")
 		if posCol < 0 || noCol < 0 {
 			continue
 		}
+		m := make(map[string]int)
 		for _, row := range s.Rows {
-			if atoiSafe(valueAt(row, posCol)) == 1 {
-				if out[i] == nil {
-					out[i] = make(map[string]bool)
-				}
-				out[i][valueAt(row, noCol)] = true
-				break
+			raw := valueAt(row, posCol)
+			posStr := normalizeStatsRacePos(raw)
+			pos := atoiSafe(posStr)
+			if pos <= 0 {
+				continue
+			}
+			car := valueAt(row, noCol)
+			if car == "" {
+				continue
+			}
+			if _, exists := m[car]; !exists {
+				m[car] = pos
 			}
 		}
+		out[i] = m
 	}
 	return out
+}
+
+// statsClassifiedFinishPos returns a numeric finishing position only for classified results.
+// Non-numeric Pos (DNF, NC, Ret, …) must not inflate avg finish / top-N via row index.
+func statsClassifiedFinishPos(rawPosCell string) (pos int, classified bool) {
+	posStr := normalizeStatsRacePos(rawPosCell)
+	if posStr == "" || !isAllDigits(posStr) {
+		return 0, false
+	}
+	pos = atoiSafe(posStr)
+	if pos <= 0 {
+		return 0, false
+	}
+	return pos, true
 }
 
 // buildDriverStatsFromJSON builds DriverStatsData from JSON (events + details with race_results/stage1/stage2).
@@ -288,7 +478,9 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 		top15          int
 		top20          int
 		sumFinish      float64
+		finishCnt      int
 		sumStart       float64
+		startCnt       int
 		sumLaps        int
 		totalLaps      int
 		sumPosDiff     float64
@@ -303,10 +495,10 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 		if e.Season != season {
 			continue
 		}
-		if isExhibitionEvent(seriesID, e.ID) {
+		if skipChampionshipMetricsEvent(seriesID, e.ID) {
 			continue
 		}
-		if strings.EqualFold(seriesID, "NASCAR_CUP") && e.StartDate > today {
+		if isFutureScheduleEvent(e, today) {
 			continue
 		}
 		detail, err := LoadEventDetail(dataDir, e.ID)
@@ -319,18 +511,23 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 		}
 		eventsWithResults++
 		entryTeamByCar, entryManufacturerByCar, entryDriverByCar, entryClassByCar := statsEntryLookup(detail.EntryList)
-		poleCarsBySession := statsPoleCars(detail.Tables, len(resultTables))
+		poleCarsBySession := statsPoleCars(seriesID, detail.Tables, resultTables)
+		qualStartBySession := statsQualStartByCar(seriesID, detail.Tables, resultTables)
 		useStockCarStageRules := stockCarSeriesUsesStagePoints(seriesID)
 		var eligibleByCar map[string]bool
 		if useStockCarStageRules {
 			eligibleByCar = pointsEligibleByCarFromEntryList(detail.EntryList)
 		}
+		guestByCar := map[string]bool{}
+		if strings.EqualFold(seriesID, "PSC") {
+			guestByCar = statsPSCGuestCars(detail.EntryList)
+		}
 		stageWinsThisRace, stagePointsThisRace := accumulateStageStatsPerRace(seriesID, detail, eligibleByCar, useStockCarStageRules)
 		for rtIdx, rt := range resultTables {
 			sessionKind := statsSessionKind(rt.Title)
-			colPos := firstColIndex(rt.Headers, "Pos", "Fin", "Position")
+			colPos := statsPosColIndex(rt.Headers)
 			colGrid := firstColIndex(rt.Headers, "Grid", "St", "Start", "Started", "Start Pos")
-			colNo := firstColIndex(rt.Headers, "No", "No.", "#", "Car", "Car No", "CAR NO")
+			colNo := firstColIndex(rt.Headers, "No", "No.", "#", "Car No", "CAR NO", "Car")
 			colDriver := firstColIndex(rt.Headers, "Driver", "Drivers", "Driver(s)")
 			// Open-wheel series in event JSON often use "Constructor" instead of "Team".
 			// Endurance/touring tables may use entrant-style labels.
@@ -340,9 +537,10 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 			colLaps := firstColIndex(rt.Headers, "Laps", "No Laps", "NO LAPS")
 			colLed := firstColIndex(rt.Headers, "Led", "Laps Led")
 			colPts := firstColIndex(rt.Headers, "Points", "Pts", "DP", "TP")
-			colStatus := firstColIndex(rt.Headers, "Status", "Time / status", "Time/Status")
+			colStatus := firstColIndex(rt.Headers, "Status", "Time / status", "Time/Status", "Time/Retired", "Time / Retired")
 			colBest := firstColIndex(rt.Headers, "Best", "Best lap", "Fastest Lap", "FASTEST LAP")
-			if colDriver < 0 {
+			// ELMS-style results: Team/No/Class only — resolve drivers from entry_list.
+			if colDriver < 0 && len(entryDriverByCar) == 0 {
 				continue
 			}
 			raceLaps := 0
@@ -370,8 +568,14 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 			}
 			for rowIdx, row := range rt.Rows {
 				carNumber := valueAt(row, colNo)
-				driverName := valueAt(row, colDriver)
-				if entryDriverByCar[carNumber] != "" && strings.Contains(driverName, ".") {
+				if guestByCar[carNumber] {
+					continue
+				}
+				driverName := ""
+				if colDriver >= 0 {
+					driverName = valueAt(row, colDriver)
+				}
+				if entryDriverByCar[carNumber] != "" && (driverName == "" || strings.Contains(driverName, ".")) {
 					driverName = entryDriverByCar[carNumber]
 				}
 				// F1: normalize Carlos Sainz -> Carlos Sainz Jr.
@@ -399,13 +603,20 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 				if className == "" {
 					className = entryClassByCar[carNumber]
 				}
-				posStr := strings.TrimSpace(valueAt(row, colPos))
-				pos := atoiSafe(posStr)
-				if pos <= 0 && posStr != "" && !isAllDigits(posStr) {
-					// For non-numeric positions (DNF, NC, Ret, etc.) use row index as position.
-					pos = rowIdx + 1
+				rawPosCell := ""
+				if colPos >= 0 {
+					rawPosCell = valueAt(row, colPos)
 				}
-				grid := atoiSafe(valueAt(row, colGrid))
+				pos, classified := statsClassifiedFinishPos(rawPosCell)
+				grid := 0
+				if colGrid >= 0 {
+					grid = atoiSafe(valueAt(row, colGrid))
+				} else if rawPosCell != "" {
+					grid = parseStatsStartFromFinST(rawPosCell)
+				}
+				if grid <= 0 && carNumber != "" && rtIdx < len(qualStartBySession) && qualStartBySession[rtIdx] != nil {
+					grid = qualStartBySession[rtIdx][carNumber]
+				}
 				laps := atoiSafe(valueAt(row, colLaps))
 				led := 0
 				if colLed >= 0 {
@@ -432,8 +643,7 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 				// Count a start only if the driver actually ran (at least one lap).
 				didStart := laps > 0
 				if !didStart && colLaps < 0 {
-					ps := strings.TrimSpace(posStr)
-					if ps != "" && isAllDigits(ps) && atoiSafe(ps) > 0 {
+					if classified {
 						didStart = true
 					}
 				}
@@ -443,7 +653,7 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 				if (colGrid >= 0 && grid == 1) || (colGrid < 0 && rtIdx < len(poleCarsBySession) && poleCarsBySession[rtIdx] != nil && poleCarsBySession[rtIdx][carNumber]) {
 					acc.poles++
 				}
-				if pos == 1 {
+				if classified && pos == 1 {
 					acc.wins++
 					if sessionKind == "sprint" {
 						acc.sprintWins++
@@ -451,41 +661,43 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 						acc.featureWins++
 					}
 				}
-				if pos == 2 {
+				if classified && pos == 2 {
 					acc.top2++
 				}
-				if pos == 3 {
+				if classified && pos == 3 {
 					acc.top3++
 				}
-				if pos >= 1 && pos <= 3 {
+				if classified && pos >= 1 && pos <= 3 {
 					if sessionKind == "sprint" {
 						acc.sprintPodiums++
 					} else if sessionKind == "feature" {
 						acc.featurePodiums++
 					}
 				}
-				if pos >= 1 && pos <= 5 {
+				if classified && pos >= 1 && pos <= 5 {
 					acc.top5++
 				}
-				if pos >= 1 && pos <= 10 {
+				if classified && pos >= 1 && pos <= 10 {
 					acc.top10++
 				}
-				if pos >= 1 && pos <= 15 {
+				if classified && pos >= 1 && pos <= 15 {
 					acc.top15++
 				}
-				if pos >= 1 && pos <= 20 {
+				if classified && pos >= 1 && pos <= 20 {
 					acc.top20++
 				}
-				// Average finish includes only those who started.
-				if didStart && pos > 0 {
+				// Average finish: classified finishers only (not DNF/NC via row order).
+				if didStart && classified && pos > 0 {
 					acc.sumFinish += float64(pos)
+					acc.finishCnt++
 				}
 				if grid > 0 {
 					acc.sumStart += float64(grid)
+					acc.startCnt++
 				}
 				acc.sumLaps += laps
 				acc.totalLaps += raceLaps
-				if grid > 0 && pos > 0 {
+				if grid > 0 && classified && pos > 0 {
 					acc.sumPosDiff += float64(grid - pos)
 					acc.posDiffCnt++
 				}
@@ -497,7 +709,7 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 					acc.fastestLaps++
 					acc.bestLap = betterLap(acc.bestLap, bestLap)
 				}
-				if statsIsDNF(status, laps, raceLaps) {
+				if statsIsDNF(status, laps, raceLaps) || statsIsDNFPos(rawPosCell) {
 					acc.dnfs++
 				}
 			}
@@ -512,12 +724,12 @@ func buildDriverStatsFromJSON(dataDir string, seriesID string, season string) (*
 	var out []DriverStatsRow
 	for _, a := range byDriver {
 		avgFinish := 0.0
-		if a.races > 0 && a.sumFinish > 0 {
-			avgFinish = a.sumFinish / float64(a.races)
+		if a.finishCnt > 0 && a.sumFinish > 0 {
+			avgFinish = a.sumFinish / float64(a.finishCnt)
 		}
 		avgStart := 0.0
-		if a.races > 0 && a.sumStart > 0 {
-			avgStart = a.sumStart / float64(a.races)
+		if a.startCnt > 0 && a.sumStart > 0 {
+			avgStart = a.sumStart / float64(a.startCnt)
 		}
 		lapsPct := 0.0
 		if a.totalLaps > 0 {
@@ -738,6 +950,7 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 		top5      int
 		top10     int
 		sumFinish float64
+		finishCnt int
 		// Supercars race.sessions lack explicit start position, so
 		// sumStart/posDiffCount hold qualifying positions (avg qualifying column).
 		sumStart     float64
@@ -791,7 +1004,7 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 						if colDriver < 0 || colPos < 0 {
 							continue
 						}
-						for rowIdx, rAny := range rowsAny {
+						for _, rAny := range rowsAny {
 							rSlice, ok := rAny.([]interface{})
 							if !ok {
 								continue
@@ -801,14 +1014,11 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 								row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
 							}
 							posStr := valueAt(row, colPos)
-							pos := atoiSafe(posStr)
-							if pos <= 0 {
-								// Supercars: rows with Pos="NC" count as last in the race.
-								if strings.EqualFold(strings.TrimSpace(posStr), "NC") {
-									pos = rowIdx + 1
-								} else {
-									continue
-								}
+							pos, classified := statsClassifiedFinishPos(posStr)
+							isNC := strings.EqualFold(strings.TrimSpace(posStr), "NC")
+							// NC still counts as a start; other non-numeric Pos rows are skipped.
+							if !classified && !isNC {
+								continue
 							}
 							driver := supercarsStatsDriverName(valueAt(row, colDriver))
 							if driver == "" {
@@ -840,6 +1050,9 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 								a.engine = engine
 							}
 							a.races++
+							if !classified {
+								continue
+							}
 							if pos == 1 {
 								a.wins++
 							}
@@ -850,6 +1063,7 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 								a.top10++
 							}
 							a.sumFinish += float64(pos)
+							a.finishCnt++
 						}
 					}
 				}
@@ -1013,8 +1227,8 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 			continue
 		}
 		avgFinish := 0.0
-		if a.sumFinish > 0 {
-			avgFinish = a.sumFinish / float64(a.races)
+		if a.finishCnt > 0 && a.sumFinish > 0 {
+			avgFinish = a.sumFinish / float64(a.finishCnt)
 		}
 		avgStart := 0.0
 		if a.sumStart > 0 && a.posDiffCount > 0 {
@@ -1176,8 +1390,8 @@ func MergeSupercarsDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 }
 
 // mergeStockCarDriverStatsRows merges stock-car stats duplicate rows
-// (NASCAR Cup/Truck/Modified, ARCA, NOAPS) when driver_stats_stockcar view
-// has the same driver with different driver_id (e.g. import edits or name spelling).
+// (NASCAR Cup/Truck/Modified, ARCA, NOAPS) when the same driver appears
+// with different spelling or car numbers across events.
 // Key is canonicalDriverKey(driver) — aggregate by person, not car number.
 func mergeStockCarDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 	if len(rows) == 0 {

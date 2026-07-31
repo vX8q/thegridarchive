@@ -19,29 +19,30 @@ func TestBuildStandingsFromEvents_F2_2026_OfficialTotals(t *testing.T) {
 		t.Fatal("nil standings")
 	}
 
+	// Official FIA F2 2026 driver totals (after Hungary / round 9), matching event Pts sums.
 	want := map[string]string{
-		"Tsolov":         "161",
-		"Minì":           "134",
-		"Câmara":         "125",
+		"Tsolov":         "167",
+		"Mini":           "147",
+		"Camara":         "145",
 		"Dunne":          "108",
-		"León":           "69",
-		"Maini":          "63",
-		"Beganovic":      "63",
-		"Stenshorne":     "58",
-		"Hoepen":         "47",
-		"Villagómez":     "38",
+		"Leon":           "94",
+		"Maini":          "88",
+		"Beganovic":      "79",
+		"Hoepen":         "65",
+		"Stenshorne":     "59",
+		"Inthraphuvasak": "59",
+		"Durksen":        "42",
+		"Villagomez":     "38",
 		"Miyata":         "34",
-		"Montoya":        "28",
 		"Goethe":         "29",
-		"Inthraphuvasak": "46",
-		"Dürksen":        "36",
-		"Bilinski":       "24",
+		"Montoya":        "28",
 		"Herta":          "26",
-		"Bennett":        "17",
+		"Bilinski":       "24",
+		"Bennett":        "18",
 		"Varrone":        "14",
+		"Boya":           "12",
 		"Shields":        "10",
 		"Fittipaldi":     "10",
-		"Boya":           "12",
 	}
 
 	for key, wantPts := range want {

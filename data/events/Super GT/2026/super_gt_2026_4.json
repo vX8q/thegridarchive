@@ -175,7 +175,7 @@
     {
       "number": "4",
       "driver": "",
-      "team": "Goodsmile Racing \u0026 TeamUKYO",
+      "team": "Goodsmile Racing & TeamUKYO",
       "manufacturer": "",
       "class": "GT300",
       "car": "Mercedes-AMG GT3 Evo",
@@ -389,7 +389,7 @@
     {
       "number": "61",
       "driver": "",
-      "team": "R\u0026D Sport",
+      "team": "R&D Sport",
       "manufacturer": "",
       "class": "GT300",
       "car": "Subaru BRZ GT300 (ZD8)",
@@ -411,7 +411,7 @@
     {
       "number": "65",
       "driver": "",
-      "team": "K2 R\u0026D LEON Racing",
+      "team": "K2 R&D LEON Racing",
       "manufacturer": "",
       "class": "GT300",
       "car": "Mercedes-AMG GT3 Evo",
@@ -474,7 +474,7 @@
       "class": "GT300",
       "car": "Porsche 911 GT3 R (992.2)",
       "make": "Porsche",
-      "driver1": "Sven Müller",
+      "driver1": "Sven Muller",
       "driver2": "Kiyoto Fujinami"
     },
     {
@@ -517,5 +517,7 @@
       ],
       "rows": []
     }
-  }
+  },
+  "event_preview": "SUPER GT qualifying records at Fuji Speedway stand to Kenta Yamashita in GT500 (1:25.764, 2021) and Hideki Yamauchi in GT300 (1:34.395, 2021).",
+  "event_preview_ru": "Рекорды квалификации SUPER GT на Fuji Speedway: GT500 — Kenta Yamashita (1:25.764, 2021), GT300 — Hideki Yamauchi (1:34.395, 2021)."
 }

@@ -58,7 +58,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -367,5 +367,7 @@
       ],
       "rows": []
     }
-  }
+  },
+  "event_preview": "The all-time Cup Series qualifying record at Indianapolis belongs to Kevin Harvick, who turned a 47.647-second lap (188.889 mph) in 2014. The Brickyard 400 race record average speed is 155.912 mph, set by Bobby Labonte in 2000 (2:33:56).",
+  "event_preview_ru": "Абсолютный рекорд квалификации Cup Series на Indianapolis принадлежит Kevin Harvick — 47,647 секунды (188,889 mph) в 2014 году. Рекорд средней скорости Brickyard 400 — 155,912 mph, установлен Bobby Labonte в 2000 году (2:33:56)."
 }

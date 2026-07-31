@@ -128,7 +128,18 @@ export const CANON_DISPLAY_NAMES = {
   'benjamin-hanley': 'Benjamin Hanley',
   'john-hunter-nemechek': 'John Hunter Nemechek',
   'bobby-dale-earnhardt': 'Bobby Dale Earnhardt',
-  'tobias-lutke': 'Tobias Lütke',
+  'tobias-lutke': 'Tobias Lutke',
+  'matthew-bell': 'Matthew Bell',
+  'daniel-goldburg': 'Daniel Goldburg',
+  'jef-machiels': 'Jef Machiels',
+  'nick-yelloly': 'Nick Yelloly',
+  'bruno-del-pino': 'Bruno del Pino',
+  'laurens-van-hoepen': 'Laurens van Hoepen',
+  'matteo-de-palo': 'Matteo De Palo',
+  'rashid-al-dhaheri': 'Rashid Al Dhaheri',
+  'brenden-queen': 'Brenden Queen',
+  'gavan-boschele': 'Gavan Boschele',
+  'michael-christopher-jr': 'Michael Christopher Jr.',
 };
 
 export function repoRoot() {

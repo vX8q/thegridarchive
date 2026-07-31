@@ -50,7 +50,7 @@ func BuildHeadToHeadFromEvents(dataDir, seriesID, season, driverA, driverB strin
 		if season != "" && ev.Season != season {
 			continue
 		}
-		if isExhibitionEvent(seriesID, ev.ID) {
+		if skipChampionshipMetricsEvent(seriesID, ev.ID) {
 			continue
 		}
 

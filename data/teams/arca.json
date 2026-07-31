@@ -29,7 +29,7 @@
       "team": "Pinnacle Racing Group",
       "number": "28",
       "driver": "Carson Brown",
-      "crew_chief": "Steven Dawson",
+      "crew_chief": "Steve Dawson",
       "full_time": true
     },
     {
@@ -39,6 +39,24 @@
       "driver": "Connor Mosack",
       "crew_chief": "Steven Dawson",
       "full_time": true
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Pinnacle Racing Group",
+      "number": "28",
+      "driver": "Landon S. Huffman",
+      "crew_chief": "Steven Dawson",
+      "full_time": false,
+      "rounds": "10"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Pinnacle Racing Group",
+      "number": "28",
+      "driver": "Tyler Lupton",
+      "crew_chief": "Steven Dawson",
+      "full_time": false,
+      "rounds": "9"
     },
     {
       "manufacturer": "Chevrolet",
@@ -70,7 +88,17 @@
       "number": "89",
       "driver": "Bobby Dale Earnhardt",
       "crew_chief": "Matthew Wright",
-      "full_time": true
+      "full_time": true,
+      "rounds": "1–12, 14"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Rise Racing",
+      "number": "89",
+      "driver": "Brayton Laster",
+      "crew_chief": "Jacob Petrowsky",
+      "full_time": false,
+      "rounds": "13"
     },
     {
       "manufacturer": "Ford",
@@ -93,7 +121,7 @@
       "team": "Clubb Racing Inc.",
       "number": "86",
       "driver": "Jeff Maconi",
-      "crew_chief": "TBA",
+      "crew_chief": "Jonathan Clubb",
       "full_time": true
     },
     {
@@ -101,7 +129,7 @@
       "team": "Clubb Racing Inc.",
       "number": "86",
       "driver": "Chris Golden",
-      "crew_chief": "TBA",
+      "crew_chief": "Jon Clubb",
       "full_time": true
     },
     {
@@ -109,8 +137,17 @@
       "team": "Clubb Racing Inc.",
       "number": "86",
       "driver": "TBA",
-      "crew_chief": "TBA",
+      "crew_chief": "Jon Clubb",
       "full_time": true
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Clubb Racing Inc.",
+      "number": "83",
+      "driver": "Nate Moeller",
+      "crew_chief": "Chris Porter",
+      "full_time": false,
+      "rounds": "11, 14"
     },
     {
       "manufacturer": "Ford",
@@ -118,22 +155,32 @@
       "number": "24",
       "driver": "Daniel Dye",
       "crew_chief": "Blake Bainbridge",
-      "full_time": true
+      "full_time": false,
+      "rounds": "1, 3–4, 7–8, 11, 14"
     },
     {
       "manufacturer": "Ford",
       "team": "SPS Racing",
       "number": "24",
       "driver": "TBA",
-      "crew_chief": "TBA",
-      "full_time": true
+      "crew_chief": "Blake Bainbridge",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "SPS Racing",
+      "number": "24",
+      "driver": "Caden Kvapil",
+      "crew_chief": "Blake Bainbridge",
+      "full_time": false,
+      "rounds": "6"
     },
     {
       "manufacturer": "Toyota",
       "team": "Fast Track Racing",
       "number": "12",
       "driver": "Takuma Koga",
-      "crew_chief": "Andrew Kierman",
+      "crew_chief": "Andrew Kiernan",
       "full_time": true
     },
     {
@@ -157,8 +204,17 @@
       "team": "Joe Gibbs Racing",
       "number": "18",
       "driver": "TBA",
-      "crew_chief": "TBA",
+      "crew_chief": "Matt Ross",
       "full_time": true
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Joe Gibbs Racing",
+      "number": "18",
+      "driver": "William Sawalich",
+      "crew_chief": "Matt Ross",
+      "full_time": false,
+      "rounds": "11, 14"
     },
     {
       "manufacturer": "Toyota",
@@ -166,31 +222,78 @@
       "number": "15",
       "driver": "Jake Finch",
       "crew_chief": "Danny Johnson",
-      "full_time": true
+      "full_time": false,
+      "rounds": "1, 4"
     },
     {
       "manufacturer": "Toyota",
       "team": "Nitro Motorsports",
       "number": "15",
       "driver": "Mia Lovell",
-      "crew_chief": "TBA",
-      "full_time": true
+      "crew_chief": "Ryan London",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Toyota",
       "team": "Nitro Motorsports",
       "number": "15",
-      "driver": "Leland Honeyman Jr.",
-      "crew_chief": "TBA",
-      "full_time": true
+      "driver": "Leland Honeyman",
+      "crew_chief": "Doug Richert",
+      "full_time": false
     },
     {
       "manufacturer": "Toyota",
       "team": "Nitro Motorsports",
       "number": "15",
       "driver": "TBA",
-      "crew_chief": "TBA",
-      "full_time": true
+      "crew_chief": "Doug Richert",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "15",
+      "driver": "Ashton Higgins",
+      "crew_chief": "Doug Richert",
+      "full_time": false,
+      "rounds": "13"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "15",
+      "driver": "Jade Avedisian",
+      "crew_chief": "Doug Richert",
+      "full_time": false,
+      "rounds": "3, 8, 11, 14"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "15",
+      "driver": "Sam Corry",
+      "crew_chief": "Danny Johnson",
+      "full_time": false,
+      "rounds": "5"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "15",
+      "driver": "Wesley Slimp",
+      "crew_chief": "Mark Durgin",
+      "full_time": false,
+      "rounds": "7"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "15",
+      "driver": "Will Robinson",
+      "crew_chief": "Doug Richert",
+      "full_time": false,
+      "rounds": "12"
     },
     {
       "manufacturer": "Toyota",
@@ -213,7 +316,7 @@
       "team": "Nitro Motorsports",
       "number": "25",
       "driver": "Julian DaCosta",
-      "crew_chief": "TBA",
+      "crew_chief": "Danny Johnson",
       "full_time": true
     },
     {
@@ -221,7 +324,7 @@
       "team": "Nitro Motorsports",
       "number": "25",
       "driver": "Gavan Boschele",
-      "crew_chief": "TBA",
+      "crew_chief": "Shane Wilson",
       "full_time": true
     },
     {
@@ -229,8 +332,44 @@
       "team": "Nitro Motorsports",
       "number": "25",
       "driver": "TBA",
-      "crew_chief": "TBA",
+      "crew_chief": "Shane Wilson",
       "full_time": true
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "25",
+      "driver": "Peter Portante",
+      "crew_chief": "Shane Wilson",
+      "full_time": false,
+      "rounds": "12"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "25",
+      "driver": "Ty Fredrickson",
+      "crew_chief": "Shane Wilson",
+      "full_time": false,
+      "rounds": "10"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "25",
+      "driver": "Wesley Slimp",
+      "crew_chief": "Shane Wilson",
+      "full_time": false,
+      "rounds": "6"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "25",
+      "driver": "Will Robinson",
+      "crew_chief": "Shane Wilson",
+      "full_time": false,
+      "rounds": "9"
     },
     {
       "manufacturer": "Toyota",
@@ -254,15 +393,34 @@
       "number": "9",
       "driver": "Presley Sorah",
       "crew_chief": "Joseth Carabantes",
-      "full_time": true
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Ford",
       "team": "Fast Track Racing",
       "number": "9",
       "driver": "TBA",
-      "crew_chief": "TBA",
-      "full_time": true
+      "crew_chief": "Frank Kimmel",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Fast Track Racing",
+      "number": "9",
+      "driver": "Landon S. Huffman",
+      "crew_chief": "Frank Kimmel",
+      "full_time": false,
+      "rounds": "11, 14"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Fast Track Racing",
+      "number": "9",
+      "driver": "Nate Moeller",
+      "crew_chief": "Nate Moeller",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Chevrolet",
@@ -277,8 +435,44 @@
       "team": "Fast Track Racing",
       "number": "10",
       "driver": "TBA",
-      "crew_chief": "TBA",
+      "crew_chief": "Joseth Carabantes",
       "full_time": true
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Fast Track Racing",
+      "number": "10",
+      "driver": "Brad Perez",
+      "crew_chief": "Mike Sroufe",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Fast Track Racing",
+      "number": "10",
+      "driver": "Craig Pellegrini Jr. (R)",
+      "crew_chief": "Joseth Carabantes",
+      "full_time": false,
+      "rounds": "3, 6, 13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Fast Track Racing",
+      "number": "10",
+      "driver": "Dustin Hillenburg",
+      "crew_chief": "Joseth Carabantes",
+      "full_time": false,
+      "rounds": "7, 11, 14"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Fast Track Racing",
+      "number": "10",
+      "driver": "John Clagett",
+      "crew_chief": "Joseth Carabantes",
+      "full_time": false,
+      "rounds": "9–10"
     },
     {
       "manufacturer": "Toyota",
@@ -293,8 +487,62 @@
       "team": "Fast Track Racing",
       "number": "11",
       "driver": "TBA",
-      "crew_chief": "TBA",
+      "crew_chief": "Dick Doheny",
       "full_time": true
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Fast Track Racing",
+      "number": "11",
+      "driver": "Chase Buscaglia",
+      "crew_chief": "Dick Doheny",
+      "full_time": false,
+      "rounds": "12–13"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Fast Track Racing",
+      "number": "11",
+      "driver": "Dustin Hillenburg",
+      "crew_chief": "Joseth Carrabantes",
+      "full_time": false,
+      "rounds": "2, 8"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Fast Track Racing",
+      "number": "11",
+      "driver": "Matt Kemp",
+      "crew_chief": "Mike Sroufe",
+      "full_time": false,
+      "rounds": "6–7, 9"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Fast Track Racing",
+      "number": "11",
+      "driver": "Robbie Kennealy",
+      "crew_chief": "Mike Sroufe",
+      "full_time": false,
+      "rounds": "3"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Fast Track Racing",
+      "number": "11",
+      "driver": "Tim Monroe",
+      "crew_chief": "Nathan Davis",
+      "full_time": false,
+      "rounds": "11, 14"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Fast Track Racing",
+      "number": "11",
+      "driver": "Trent Curtis",
+      "crew_chief": "Dick Doheny",
+      "full_time": false,
+      "rounds": "5"
     },
     {
       "manufacturer": "Ford",
@@ -309,7 +557,7 @@
       "team": "Brad Smith Motorsports",
       "number": "48",
       "driver": "TBA",
-      "crew_chief": "TBA",
+      "crew_chief": "Jeff Smith",
       "full_time": true
     },
     {
@@ -318,15 +566,16 @@
       "number": "1",
       "driver": "Tony Cosentino",
       "crew_chief": "Jay Shaffer",
-      "full_time": true
+      "full_time": false,
+      "rounds": "1–2"
     },
     {
       "manufacturer": "Ford",
       "team": "Maples Motorsports",
       "number": "1",
       "driver": "TBA",
-      "crew_chief": "TBA",
-      "full_time": true
+      "crew_chief": "Collin Flueckiger",
+      "full_time": false
     },
     {
       "manufacturer": "Ford",
@@ -337,12 +586,67 @@
       "full_time": true
     },
     {
+      "manufacturer": "Ford",
+      "team": "Maples Motorsports",
+      "number": "91",
+      "driver": "Austin Vaughn",
+      "crew_chief": "Kyle Totman",
+      "full_time": false,
+      "rounds": "9–10"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Maples Motorsports",
+      "number": "91",
+      "driver": "Michael Maples",
+      "crew_chief": "Kyle Totman",
+      "full_time": false,
+      "rounds": "13"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Maples Motorsports",
+      "number": "91",
+      "driver": "Morgen Baird",
+      "crew_chief": "Chris Vanscoy",
+      "full_time": false,
+      "rounds": "11, 14"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Maples Motorsports",
+      "number": "91",
+      "driver": "Ty Fredrickson",
+      "crew_chief": "Jeff McClure",
+      "full_time": false,
+      "rounds": "12"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Maples Motorsports",
+      "number": "91",
+      "driver": "Tyler Kicera",
+      "crew_chief": "Vic Kicera",
+      "full_time": false,
+      "rounds": "5"
+    },
+    {
       "manufacturer": "Chevrolet",
       "team": "ACR Motorsports",
       "number": "79",
       "driver": "Isaac Kitzmiller",
-      "crew_chief": "TBA",
-      "full_time": false
+      "crew_chief": "Doug Howe",
+      "full_time": false,
+      "rounds": "2, 5–6, 8, 12–13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "ACR Motorsports",
+      "number": "79",
+      "driver": "Steve Lewis Jr.",
+      "crew_chief": "Steve Lewis Sr",
+      "full_time": false,
+      "rounds": "4"
     },
     {
       "manufacturer": "Chevrolet",
@@ -350,23 +654,43 @@
       "number": "40",
       "driver": "Andrew Patterson",
       "crew_chief": "Patrick Torbett",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 13"
     },
     {
       "manufacturer": "Chevrolet",
       "team": "Bill McAnally Racing",
       "number": "16",
       "driver": "Hailie Deegan",
-      "crew_chief": "TBA",
-      "full_time": false
+      "crew_chief": "Mario Isola",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Chevrolet",
       "team": "Bill McAnally Racing",
       "number": "19",
       "driver": "Mason Massey",
-      "crew_chief": "TBA",
+      "crew_chief": "Kenna Long",
       "full_time": false
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Bill McAnally Racing",
+      "number": "81",
+      "driver": "Mason Massey",
+      "crew_chief": "Ty Joiner",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Bill McAnally Racing",
+      "number": "81",
+      "driver": "Kevin Campbell",
+      "crew_chief": "Mason Campbell",
+      "full_time": false,
+      "rounds": "9–10, 13"
     },
     {
       "manufacturer": "Chevrolet",
@@ -374,7 +698,8 @@
       "number": "57",
       "driver": "Hunter Deshautelle",
       "crew_chief": "Todd Cooper",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Chevrolet",
@@ -382,7 +707,8 @@
       "number": "75",
       "driver": "Bryan Dauzat",
       "crew_chief": "Bob Rahilly",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 4"
     },
     {
       "manufacturer": "Chevrolet",
@@ -390,7 +716,62 @@
       "number": "17",
       "driver": "Mini Tyrrell",
       "crew_chief": "Sean Samuels",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Cook Racing Technologies",
+      "number": "17",
+      "driver": "Kaden Honeycutt",
+      "crew_chief": "Sean Samuels",
+      "full_time": false,
+      "rounds": "5, 13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Cook Racing Technologies",
+      "number": "17",
+      "driver": "Monty Tipton",
+      "crew_chief": "Sean Samuels",
+      "full_time": false,
+      "rounds": "3–4"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Cook Racing Technologies",
+      "number": "17",
+      "driver": "Stewart Friesen",
+      "crew_chief": "Sean Samuels",
+      "full_time": false,
+      "rounds": "12"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Cook Racing Technologies",
+      "number": "17",
+      "driver": "Taylor Mayhew",
+      "crew_chief": "Sean Samuels",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Cook Racing Technologies",
+      "number": "42",
+      "driver": "Dawson Sutton",
+      "crew_chief": "Alexis Penninger",
+      "full_time": false,
+      "rounds": "12"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Cook Racing Technologies",
+      "number": "42",
+      "driver": "Jaiden Reyna",
+      "crew_chief": "Travis Sharpe",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Chevrolet",
@@ -398,7 +779,17 @@
       "number": "93",
       "driver": "Caleb Costner",
       "crew_chief": "Unknown",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Costner Motorsports",
+      "number": "93",
+      "driver": "Alli Owens",
+      "crew_chief": "Derek Kearns",
+      "full_time": false,
+      "rounds": "4"
     },
     {
       "manufacturer": "Chevrolet",
@@ -406,7 +797,8 @@
       "number": "8",
       "driver": "Sean Corr",
       "crew_chief": "Dan Lorz",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 4, 8"
     },
     {
       "manufacturer": "Chevrolet",
@@ -414,7 +806,26 @@
       "number": "69",
       "driver": "Nolan Wilson",
       "crew_chief": "Bill Kimmel",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Kimmel Racing",
+      "number": "69",
+      "driver": "Landon Brown",
+      "crew_chief": "Bill Kimmel",
+      "full_time": false,
+      "rounds": "11, 13–14"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Kimmel Racing",
+      "number": "69",
+      "driver": "Will Kimmel",
+      "crew_chief": "Bill Kimmel",
+      "full_time": false,
+      "rounds": "3–4, 7"
     },
     {
       "manufacturer": "Chevrolet",
@@ -422,7 +833,53 @@
       "number": "19",
       "driver": "Greg Van Alst",
       "crew_chief": "Jim Long",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Maples Motorsports",
+      "number": "19",
+      "driver": "Austin Vaughn",
+      "crew_chief": "John Szulczewski",
+      "full_time": false,
+      "rounds": "6, 13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Maples Motorsports",
+      "number": "19",
+      "driver": "Corey Aiken",
+      "crew_chief": "Kenna Long",
+      "full_time": false,
+      "rounds": "5, 12"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Maples Motorsports",
+      "number": "19",
+      "driver": "Matt Kemp",
+      "crew_chief": "Kenna Long",
+      "full_time": false,
+      "rounds": "3–4, 11, 14"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Maples Motorsports",
+      "number": "19",
+      "driver": "Morgen Baird",
+      "crew_chief": "Kenna Long",
+      "full_time": false,
+      "rounds": "7"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Maples Motorsports",
+      "number": "19",
+      "driver": "Zachary Tinkle",
+      "crew_chief": "Nigel Bannister",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Chevrolet",
@@ -430,7 +887,8 @@
       "number": "88",
       "driver": "A. J. Moyer",
       "crew_chief": "Kevin Ingram",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 4"
     },
     {
       "manufacturer": "Chevrolet",
@@ -438,7 +896,44 @@
       "number": "34",
       "driver": "Bryce Applegate",
       "crew_chief": "Tony Furr",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Mullins Racing",
+      "number": "34",
+      "driver": "Logan Misuraca",
+      "crew_chief": "Ryan Bell",
+      "full_time": false,
+      "rounds": "4"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Mullins Racing",
+      "number": "34",
+      "driver": "Ryan Vargas",
+      "crew_chief": "Dee Vaughn",
+      "full_time": false,
+      "rounds": "5"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Mullins Racing",
+      "number": "34",
+      "driver": "Brian Barbarow",
+      "crew_chief": "Brandan Elter",
+      "full_time": false,
+      "rounds": "6"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Mullins Racing",
+      "number": "34",
+      "driver": "Ivis Earley",
+      "crew_chief": "Brandan Elter",
+      "full_time": false,
+      "rounds": "13"
     },
     {
       "manufacturer": "Chevrolet",
@@ -446,7 +941,8 @@
       "number": "62",
       "driver": "Steve Lewis Jr.",
       "crew_chief": "Steve Lewis Sr.",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Chevrolet",
@@ -454,7 +950,43 @@
       "number": "06",
       "driver": "Con Nicolopoulos",
       "crew_chief": "Michael Peterson",
-      "full_time": false
+      "full_time": true
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Wayne Peterson Motorsports",
+      "number": "06",
+      "driver": "Jackson McLerran",
+      "crew_chief": "David Noble",
+      "full_time": false,
+      "rounds": "13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Wayne Peterson Motorsports",
+      "number": "06",
+      "driver": "Bobby Hillis Jr.",
+      "crew_chief": "Tony Huffman",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Wayne Peterson Motorsports",
+      "number": "06",
+      "driver": "Brayton Laster",
+      "crew_chief": "Nate Moeller",
+      "full_time": false,
+      "rounds": "3, 8, 11, 14"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Wayne Peterson Motorsports",
+      "number": "06",
+      "driver": "Nate Moeller",
+      "crew_chief": "Sebastian Zeno",
+      "full_time": false,
+      "rounds": "5–6, 9–10, 12"
     },
     {
       "manufacturer": "Chevrolet",
@@ -462,22 +994,24 @@
       "number": "32",
       "driver": "Charles Weslowski Jr.",
       "crew_chief": "Tim Silva",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 7"
     },
     {
       "manufacturer": "Chevrolet",
       "team": "White Motorsports",
       "number": "22",
       "driver": "Nick White",
-      "crew_chief": "Unknown",
-      "full_time": false
+      "crew_chief": "Drew White",
+      "full_time": false,
+      "rounds": "1, 4, 7–8"
     },
     {
       "manufacturer": "Ford",
       "team": "City Garage Motorsports",
       "number": "5",
       "driver": "Quinn Davis",
-      "crew_chief": "TBA",
+      "crew_chief": "Stuart Weiss",
       "full_time": false
     },
     {
@@ -485,15 +1019,24 @@
       "team": "City Garage Motorsports",
       "number": "85",
       "driver": "Becca Monopoli",
-      "crew_chief": "TBA",
+      "crew_chief": "Ryan Bell",
       "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "City Garage Motorsports",
+      "number": "85",
+      "driver": "Quinn Davis (R)",
+      "crew_chief": "Ryan Bell",
+      "full_time": false,
+      "rounds": "6, 13"
     },
     {
       "manufacturer": "Ford",
       "team": "Direct Driver Development",
       "number": "50",
       "driver": "Ryan Pawloski",
-      "crew_chief": "TBA",
+      "crew_chief": "Jeff Schrader",
       "full_time": false
     },
     {
@@ -509,31 +1052,86 @@
       "team": "High Point Racing",
       "number": "50",
       "driver": "Trevor Huddleston",
-      "crew_chief": "TBA",
-      "full_time": false
+      "crew_chief": "Jeff Schrader",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "High Point Racing",
+      "number": "56",
+      "driver": "Andrew Chapman",
+      "crew_chief": "Travis Thirkettle",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Ford",
       "team": "Jan's Towing Racing",
       "number": "1",
       "driver": "Robbie Kennealy",
-      "crew_chief": "TBA",
+      "crew_chief": "Collin Flueckiger",
       "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Jan's Towing Racing",
+      "number": "1",
+      "driver": "Andrew Patterson",
+      "crew_chief": "Patrick Torbett",
+      "full_time": false,
+      "rounds": "4"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Jan's Towing Racing",
+      "number": "1",
+      "driver": "Andrew Rocque",
+      "crew_chief": "Collin Flueckiger",
+      "full_time": false,
+      "rounds": "5"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Jan's Towing Racing",
+      "number": "1",
+      "driver": "Kenna Long",
+      "crew_chief": "Colin Flueckiger",
+      "full_time": false,
+      "rounds": "6"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Jan's Towing Racing",
+      "number": "1",
+      "driver": "Nate Moeller",
+      "crew_chief": "Collin Flueckiger",
+      "full_time": false,
+      "rounds": "3"
     },
     {
       "manufacturer": "Ford",
       "team": "Jan's Towing Racing",
       "number": "41",
       "driver": "Tim Monroe",
-      "crew_chief": "TBA",
+      "crew_chief": "Tim Monroe",
       "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Jan's Towing Racing",
+      "number": "41",
+      "driver": "Robbie Kennealy",
+      "crew_chief": "Tim Monroe",
+      "full_time": false,
+      "rounds": "1–2, 4"
     },
     {
       "manufacturer": "Ford",
       "team": "Jan's Towing Racing",
       "number": "71",
       "driver": "Cole Denton",
-      "crew_chief": "TBA",
+      "crew_chief": "Mike Dayton",
       "full_time": false
     },
     {
@@ -542,15 +1140,17 @@
       "number": "68",
       "driver": "Alli Owens",
       "crew_chief": "Will Kimmel",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Ford",
       "team": "KLAS Motorsports",
       "number": "07",
       "driver": "Glen Reen",
-      "crew_chief": "Justin Link",
-      "full_time": false
+      "crew_chief": "Andy Jirik",
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Ford",
@@ -558,7 +1158,17 @@
       "number": "66",
       "driver": "Derek White",
       "crew_chief": "Jeremy Petty",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 4"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "MBM Motorsports",
+      "number": "66",
+      "driver": "Dystany Spurlock",
+      "crew_chief": "Jason Miller",
+      "full_time": false,
+      "rounds": "3, 5, 7–8, 13"
     },
     {
       "manufacturer": "Ford",
@@ -566,22 +1176,42 @@
       "number": "3",
       "driver": "Willie Mullins",
       "crew_chief": "Alex Quarterley",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 9–10"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Mullins Racing",
+      "number": "3",
+      "driver": "Alex Quarterley",
+      "crew_chief": "Willie Mullins",
+      "full_time": false,
+      "rounds": "12"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Mullins Racing",
+      "number": "3",
+      "driver": "Bryce Applegate",
+      "crew_chief": "Bryant Frazier",
+      "full_time": false,
+      "rounds": "13"
     },
     {
       "manufacturer": "Ford",
       "team": "Rette Jones Racing",
       "number": "30",
-      "driver": "Garrett Mitchell",
+      "driver": "Cleetus McFarland",
       "crew_chief": "Mark Rette",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 3–4, 7"
     },
     {
       "manufacturer": "Ford",
       "team": "Rette Jones Racing",
       "number": "30",
       "driver": "George Siciliano",
-      "crew_chief": "TBA",
+      "crew_chief": "Mark Rette",
       "full_time": false
     },
     {
@@ -590,7 +1220,8 @@
       "number": "76",
       "driver": "Kole Raz",
       "crew_chief": "Greg Zipadelli",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Ford",
@@ -598,7 +1229,8 @@
       "number": "36",
       "driver": "Ryan Huff",
       "crew_chief": "James Huff",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 4"
     },
     {
       "manufacturer": "Toyota",
@@ -606,23 +1238,35 @@
       "number": "7",
       "driver": "Eric Caudell",
       "crew_chief": "Andy Jirik",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 4"
     },
     {
       "manufacturer": "Toyota",
       "team": "Jerry Pitts Racing",
       "number": "5",
       "driver": "Eric Johnson Jr.",
-      "crew_chief": "TBA",
-      "full_time": false
+      "crew_chief": "Dustin Ash",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Jerry Pitts Racing",
+      "number": "5",
+      "driver": "Michael Clayton",
+      "crew_chief": "Stuart Weiss",
+      "full_time": false,
+      "rounds": "13"
     },
     {
       "manufacturer": "Toyota",
       "team": "Jerry Pitts Racing",
       "number": "7",
       "driver": "Gavin Ray",
-      "crew_chief": "TBA",
-      "full_time": false
+      "crew_chief": "RJ Johnson",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Toyota",
@@ -630,7 +1274,8 @@
       "number": "52",
       "driver": "Robert Martin",
       "crew_chief": "Jeff Spraker",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Toyota",
@@ -638,22 +1283,32 @@
       "number": "90",
       "driver": "Wesley Slimp",
       "crew_chief": "Jeff McClure",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1"
     },
     {
       "manufacturer": "Toyota",
       "team": "Nitro Motorsports",
       "number": "90",
       "driver": "TBA",
-      "crew_chief": "TBA",
+      "crew_chief": "Shane Wilson",
       "full_time": false
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nitro Motorsports",
+      "number": "90",
+      "driver": "Jade Avedisian",
+      "crew_chief": "Shane Wilson",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "Toyota",
       "team": "TBA",
       "number": "TBA",
       "driver": "Jake Finch",
-      "crew_chief": "TBA",
+      "crew_chief": "Danny Johnson",
       "full_time": false
     },
     {
@@ -661,7 +1316,7 @@
       "team": "TBA",
       "number": "TBA",
       "driver": "Gus Dean",
-      "crew_chief": "TBA",
+      "crew_chief": "Shane Wilson",
       "full_time": false
     },
     {
@@ -669,7 +1324,7 @@
       "team": "TBA",
       "number": "TBA",
       "driver": "Sam Corry",
-      "crew_chief": "TBA",
+      "crew_chief": "Danny Johnson",
       "full_time": false
     },
     {
@@ -677,7 +1332,7 @@
       "team": "TBA",
       "number": "TBA",
       "driver": "Jade Avedisian",
-      "crew_chief": "TBA",
+      "crew_chief": "Doug Richert",
       "full_time": false
     },
     {
@@ -686,7 +1341,8 @@
       "number": "98",
       "driver": "Dale Shearer",
       "crew_chief": "Vincenzo Valentin",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 6, 9–10, 13"
     },
     {
       "manufacturer": "Toyota",
@@ -694,15 +1350,17 @@
       "number": "27",
       "driver": "Tim Richmond",
       "crew_chief": "Adam Murphy",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1, 4, 11, 14"
     },
     {
       "manufacturer": "Toyota",
       "team": "Vanco Racing",
       "number": "26",
       "driver": "Ron Vandermeir Jr.",
-      "crew_chief": "Unknown",
-      "full_time": false
+      "crew_chief": "Ron Vandermeir Sr",
+      "full_time": false,
+      "rounds": "1, 4"
     },
     {
       "manufacturer": "Chevrolet",
@@ -710,15 +1368,61 @@
       "number": "71",
       "driver": "Andy Jankowiak",
       "crew_chief": "Mike Dayton",
-      "full_time": false
+      "full_time": false,
+      "rounds": "1–7, 11–12, 14"
     },
     {
       "manufacturer": "TBA",
       "team": "Fast Track Racing",
       "number": "TBA",
       "driver": "Craig Pellegrini Jr.",
-      "crew_chief": "TBA",
+      "crew_chief": "Joseth Carabantes",
       "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Fast Track Racing",
+      "number": "01",
+      "driver": "Cody Dennison",
+      "crew_chief": "Joseth Carabantes",
+      "full_time": false,
+      "rounds": "4"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Fast Track Racing",
+      "number": "01",
+      "driver": "Craig Pellegrini Jr.",
+      "crew_chief": "Joseth Carabantes",
+      "full_time": false,
+      "rounds": "5"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Fast Track Racing",
+      "number": "01",
+      "driver": "D. L. Wilson",
+      "crew_chief": "Andy Hillenburg",
+      "full_time": false,
+      "rounds": "3"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Fast Track Racing",
+      "number": "01",
+      "driver": "Graham Jacobson",
+      "crew_chief": "George Church",
+      "full_time": false,
+      "rounds": "12"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "Fast Track Racing",
+      "number": "01",
+      "driver": "Cole Denton (R)",
+      "crew_chief": "Chris Greaney",
+      "full_time": false,
+      "rounds": "2"
     },
     {
       "manufacturer": "TBA",
@@ -733,40 +1437,289 @@
       "team": "TBA",
       "number": "0",
       "driver": "Laci Ferno",
-      "crew_chief": "TBA",
+      "crew_chief": "Logan Yiengst",
       "full_time": false
+    },
+    {
+      "manufacturer": "TBA",
+      "team": "TBA",
+      "number": "0",
+      "driver": "George Siciliano",
+      "crew_chief": "Greg Zipadelli",
+      "full_time": false,
+      "rounds": "3–4, 7"
+    },
+    {
+      "manufacturer": "TBA",
+      "team": "TBA",
+      "number": "0",
+      "driver": "Nate Moeller",
+      "crew_chief": "Wayne Peterson",
+      "full_time": false,
+      "rounds": "13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "1/4 Ley Racing",
+      "number": "44",
+      "driver": "Jeff Anton",
+      "crew_chief": "Dale Quarterley",
+      "full_time": false,
+      "rounds": "5, 12"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Central Coast Racing",
+      "number": "13",
+      "driver": "Taylor Reimer",
+      "crew_chief": "Michael Munoz",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Central Coast Racing",
+      "number": "13",
+      "driver": "Rita Goulet",
+      "crew_chief": "John Sutton",
+      "full_time": false,
+      "rounds": "6, 13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "CK Motorsports",
+      "number": "72",
+      "driver": "Christopher Werth",
+      "crew_chief": "Tyler Lewis",
+      "full_time": false,
+      "rounds": "5"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "CK Motorsports",
+      "number": "72",
+      "driver": "Cody Dennison",
+      "crew_chief": "Al Lebert",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "MacZink Racing",
+      "number": "65",
+      "driver": "Jeffery MacZink",
+      "crew_chief": "Steve Peters",
+      "full_time": false,
+      "rounds": "7"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "MAN Motorsports",
+      "number": "95",
+      "driver": "Hunter Wright",
+      "crew_chief": "John Burns",
+      "full_time": false,
+      "rounds": "13"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "MAN Motorsports",
+      "number": "95",
+      "driver": "Jackson McLerran",
+      "crew_chief": "David Noble",
+      "full_time": false,
+      "rounds": "6"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Nascimento Motorsports",
+      "number": "4",
+      "driver": "Monty Tipton",
+      "crew_chief": "Mike Nascimento",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "NDS Motorsports",
+      "number": "53",
+      "driver": "Andrew Ranger",
+      "crew_chief": "Ben Torriere",
+      "full_time": false,
+      "rounds": "5, 12"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "NDS Motorsports",
+      "number": "53",
+      "driver": "Zachary Tinkle",
+      "crew_chief": "Adam Murphy",
+      "full_time": false,
+      "rounds": "9, 13"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "NEMCO Motorsports",
+      "number": "29",
+      "driver": "Ryan Gemmell",
+      "crew_chief": "Joe Nemechek",
+      "full_time": false,
+      "rounds": "5, 12"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "RAFA Racing Team",
+      "number": "2",
+      "driver": "Kyle Steckly",
+      "crew_chief": "Mike Tyska",
+      "full_time": false,
+      "rounds": "5, 7, 11, 14"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Rick Ware Racing",
+      "number": "51",
+      "driver": "Patrick Staropoli",
+      "crew_chief": "Jeff Spraker",
+      "full_time": false,
+      "rounds": "5"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Rick Ware Racing",
+      "number": "51",
+      "driver": "Tyler Tomassi",
+      "crew_chief": "John Reaume",
+      "full_time": false,
+      "rounds": "2"
+    },
+    {
+      "manufacturer": "Toyota",
+      "team": "Shockwave Motorsports",
+      "number": "05",
+      "driver": "David Smith",
+      "crew_chief": "Brandon Carlson",
+      "full_time": false,
+      "rounds": "2"
     }
   ],
   "car_models": [
-    { "manufacturer": "Chevrolet", "truck_brand": "Chevrolet", "model": "ARCA Race Car" },
-    { "manufacturer": "Ford", "truck_brand": "Ford", "model": "ARCA Race Car" },
-    { "manufacturer": "Toyota", "truck_brand": "Toyota", "model": "ARCA Race Car" }
+    {
+      "manufacturer": "Chevrolet",
+      "truck_brand": "Chevrolet",
+      "model": "ARCA Race Car"
+    },
+    {
+      "manufacturer": "Ford",
+      "truck_brand": "Ford",
+      "model": "ARCA Race Car"
+    },
+    {
+      "manufacturer": "Toyota",
+      "truck_brand": "Toyota",
+      "model": "ARCA Race Car"
+    }
   ],
   "technical_spec": [
-    { "key": "Series", "value": "ARCA Menards Series" },
-    { "key": "Generation / Chassis", "value": "Steel tube frame with integrated safety roll cage (ARCA‑spec chassis)" },
-    { "key": "Body Type", "value": "Composite / steel ARCA‑approved stock car body (styled to manufacturer brand)" },
-    { "key": "Length", "value": "~196–198 in (≈ 5000 mm)" },
-    { "key": "Width", "value": "~78 in (≈ 1980 mm)" },
-    { "key": "Height", "value": "~50 in (≈ 1270 mm)" },
-    { "key": "Wheelbase", "value": "110 in (2794 mm)" },
-    { "key": "Minimum Weight (with driver)", "value": "~3300 lb (≈ 1500 kg)" },
-    { "key": "Engine", "value": "5.86 L (358 cu in) naturally aspirated pushrod V8 (ARCA spec)" },
-    { "key": "Induction & Aspiration", "value": "Carburetor, naturally aspirated" },
-    { "key": "Power Output", "value": "~650 hp" },
-    { "key": "Torque", "value": "~680–700 Nm (≈ 500–515 ft·lb)" },
-    { "key": "Fuel Type", "value": "Sunoco Green E15" },
-    { "key": "Fuel Capacity", "value": "~18 US gal (≈ 68 L)" },
-    { "key": "Drivetrain", "value": "Rear‑wheel drive (RWD)" },
-    { "key": "Transmission", "value": "4‑speed manual gearbox (H‑pattern)" },
-    { "key": "Suspension (Front)", "value": "Independent double wishbone (coil spring)" },
-    { "key": "Suspension (Rear)", "value": "Solid rear axle (live axle)" },
-    { "key": "Brakes", "value": "Steel disc brakes, 4‑piston calipers" },
-    { "key": "Wheels", "value": "15″ steel wheels, 5‑lug" },
-    { "key": "Tires", "value": "Goodyear Eagle bias‑ply racing tires" },
-    { "key": "Aerodynamics", "value": "Front splitter, rear spoiler (ARCA‑approved)" },
-    { "key": "Underbody", "value": "Flat floor (no diffuser)" },
-    { "key": "Safety", "value": "Full roll cage, HANS device, 5/6‑point harness, onboard fire suppression" },
-    { "key": "Key Features", "value": "Carburetor V8, steel chassis, live rear axle, 4‑speed manual, low‑downforce stock‑car aero" }
+    {
+      "key": "Generation / Chassis",
+      "value": "Steel tube frame with integrated safety roll cage (ARCA‑spec chassis)"
+    },
+    {
+      "key": "Body Type",
+      "value": "Composite / steel ARCA‑approved stock car body (styled to manufacturer brand)"
+    },
+    {
+      "key": "Length",
+      "value": "~196–198 in (≈ 5000 mm)"
+    },
+    {
+      "key": "Width",
+      "value": "~78 in (≈ 1980 mm)"
+    },
+    {
+      "key": "Height",
+      "value": "~50 in (≈ 1270 mm)"
+    },
+    {
+      "key": "Wheelbase",
+      "value": "110 in (2794 mm)"
+    },
+    {
+      "key": "Minimum Weight (with driver)",
+      "value": "~3300 lb (≈ 1500 kg)"
+    },
+    {
+      "key": "Engine",
+      "value": "Ilmor 396 — 6.49 L (396 cu in) V8 (Ilmor Racing ARCA control engine)"
+    },
+    {
+      "key": "Induction & Aspiration",
+      "value": "Holley EFI with BRP throttle body (Ilmor ARCA package)"
+    },
+    {
+      "key": "Power Output",
+      "value": "700 HP (Ilmor Racing ARCA Ilmor 396)"
+    },
+    {
+      "key": "Torque",
+      "value": "530 ft-lb (Ilmor Racing ARCA Ilmor 396)"
+    },
+    {
+      "key": "Max RPM",
+      "value": "7500 RPM (Ilmor Racing ARCA Ilmor 396)"
+    },
+    {
+      "key": "Fuel Type",
+      "value": "Sunoco Green E15"
+    },
+    {
+      "key": "Fuel Capacity",
+      "value": "~18 US gal (≈ 68 L)"
+    },
+    {
+      "key": "Drivetrain",
+      "value": "Rear‑wheel drive (RWD)"
+    },
+    {
+      "key": "Transmission",
+      "value": "4‑speed manual gearbox (H‑pattern)"
+    },
+    {
+      "key": "Suspension (Front)",
+      "value": "Independent double wishbone (coil spring)"
+    },
+    {
+      "key": "Suspension (Rear)",
+      "value": "Solid rear axle (live axle)"
+    },
+    {
+      "key": "Brakes",
+      "value": "Steel disc brakes, 4‑piston calipers"
+    },
+    {
+      "key": "Wheels",
+      "value": "15″ steel wheels, 5‑lug"
+    },
+    {
+      "key": "Tires",
+      "value": "Goodyear Eagle bias‑ply racing tires"
+    },
+    {
+      "key": "Aerodynamics",
+      "value": "Front splitter, rear spoiler (ARCA‑approved)"
+    },
+    {
+      "key": "Underbody",
+      "value": "Flat floor (no diffuser)"
+    },
+    {
+      "key": "Safety",
+      "value": "Full roll cage, HANS device, 5/6‑point harness, onboard fire suppression"
+    },
+    {
+      "key": "Key Features",
+      "value": "Carburetor V8, steel chassis, live rear axle, 4‑speed manual, low‑downforce stock‑car aero"
+    }
   ]
 }

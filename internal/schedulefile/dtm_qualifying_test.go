@@ -27,16 +27,16 @@ func TestDTMNorisringGroupQualPointsMainiDorr(t *testing.T) {
 	if r1["Arjun Maini"] != 1 {
 		t.Errorf("NOR qual R1 Maini = %v, want 1", r1["Arjun Maini"])
 	}
-	if r1["Ben Dörr"] != 0 {
-		t.Errorf("NOR qual R1 Dörr = %v, want 0", r1["Ben Dörr"])
+	if r1["Ben Dorr"] != 0 {
+		t.Errorf("NOR qual R1 Dorr = %v, want 0", r1["Ben Dorr"])
 	}
 
 	r2 := qualPts(2)
 	if r2["Arjun Maini"] != 1 {
 		t.Errorf("NOR qual R2 Maini = %v, want 1", r2["Arjun Maini"])
 	}
-	if r2["Ben Dörr"] != 0 {
-		t.Errorf("NOR qual R2 Dörr = %v, want 0", r2["Ben Dörr"])
+	if r2["Ben Dorr"] != 0 {
+		t.Errorf("NOR qual R2 Dorr = %v, want 0", r2["Ben Dorr"])
 	}
 }
 

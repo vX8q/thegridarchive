@@ -14,11 +14,12 @@
   "stage2_laps": "60",
   "stage3_laps": "130",
   "race_statistics": {
-    "Average speed": "98.878 miles per hour (159.129 km/h)",
-    "Cautions / Laps": "7 for 44 laps",
+    "Average speed": "98.878 mph (159.129 km/h)",
+    "Cautions / Laps": "7 for 44",
     "Lead changes": "8 among 6 different drivers",
     "Red flags": "0",
-    "Time of race": "2 hours, 22 minutes and 36 seconds"
+    "Time of race": "2 hours, 22 minutes and 36 seconds",
+    "Margin of victory": "0.863 sec"
   },
   "event_preview": "Rockingham Speedway is a 0.940-mile (1.513 km) D-shaped oval in Rockingham, North Carolina, featuring 22–25 degrees of banking in the turns and 8 degrees on the straights. Opened in 1965, it hosted the NASCAR O'Reilly Auto Parts Series (then the Xfinity Series) from 1982 through 2004 before returning in 2025 for the first time in 21 years. The North Carolina Education Lottery 250 is the eighth race of the 2026 NASCAR O'Reilly Auto Parts Series season and only the second running of the event at the newly repaved circuit. The all-time qualifying lap record for the series at Rockingham belongs to Connor Zilisch, who turned a 22.630-second lap (149.536 mph) in April 2025. The fastest lap in race conditions - 23.41 seconds, set by Parker Retzlaff in that same 2025 race - remains the benchmark for race pace at The Rock.",
   "event_preview_ru": "Rockingham Speedway — D-образный овал длиной 0,940 мили (1,513 км) в Rockingham, North Carolina, с уклоном 22–25 градусов в поворотах и 8 градусов на прямых. Открытая в 1965 году, принимала NASCAR O'Reilly Auto Parts Series (тогда Xfinity Series) с 1982 по 2004 год, вернулась в 2025 впервые за 21 год. North Carolina Education Lottery 250 — восьмой этап сезона NASCAR O'Reilly Auto Parts Series 2026 и лишь второй заезд события на недавно реконструированной трассе. Абсолютный квалификационный рекорд серии на Rockingham принадлежит Connor Zilisch — 22,630 секунды (149,536 mph) в апреле 2025. Самый быстрый круг в гонке — 23,41 секунды Parker Retzlaff в той же гонке 2025 — ориентир гоночного темпа на The Rock.",
@@ -297,7 +298,7 @@
     },
     {
       "number": "91",
-      "driver": "Alex Labbé",
+      "driver": "Alex Labbe",
       "team": "DGM Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Mario Gosselin",
@@ -710,7 +711,7 @@
         [
           "30",
           "91",
-          "Alex Labbé",
+          "Alex Labbe",
           "DGM Racing",
           "23.800",
           "142.185",
@@ -1092,7 +1093,7 @@
         [
           "30",
           "91",
-          "Alex Labbé",
+          "Alex Labbe",
           "DGM Racing",
           "Chevrolet",
           "23.529",
@@ -1403,7 +1404,7 @@
           "18",
           "30",
           "91",
-          "Alex Labbé",
+          "Alex Labbe",
           "DGM Racing",
           "Chevrolet",
           "250",

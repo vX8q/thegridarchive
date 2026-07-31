@@ -23,6 +23,16 @@
     {
       "manufacturer": "Chevrolet",
       "model": "Camaro",
+      "team": "Matt Stone Racing",
+      "number": "30",
+      "driver": "Aaron Seton",
+      "rounds": "7",
+      "crew_chief": "",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "model": "Camaro",
       "team": "Erebus Motorsport",
       "number": "9",
       "driver": "Jobe Stewart",
@@ -59,6 +69,16 @@
       "rounds": "1",
       "crew_chief": "",
       "full_time": true
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "model": "Camaro",
+      "team": "Team 18",
+      "number": "500",
+      "driver": "David Reynolds",
+      "rounds": "4",
+      "crew_chief": "",
+      "full_time": false
     },
     {
       "manufacturer": "Chevrolet",
@@ -123,6 +143,26 @@
     {
       "manufacturer": "Ford",
       "model": "Mustang S650",
+      "team": "Tickford Racing",
+      "number": "55",
+      "driver": "Mark Winterbottom",
+      "rounds": "6",
+      "crew_chief": "",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "model": "Mustang S650",
+      "team": "Tickford Racing",
+      "number": "5",
+      "driver": "Reuben Goodall",
+      "rounds": "7",
+      "crew_chief": "",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Ford",
+      "model": "Mustang S650",
       "team": "Triple Eight Race Engineering",
       "number": "11",
       "driver": "Jackson Walls",
@@ -159,6 +199,16 @@
       "rounds": "1",
       "crew_chief": "",
       "full_time": true
+    },
+    {
+      "manufacturer": "Ford",
+      "model": "Mustang S650",
+      "team": "Dick Johnson Racing",
+      "number": "17",
+      "driver": "Todd Hazelwood",
+      "rounds": "6",
+      "crew_chief": "",
+      "full_time": false
     },
     {
       "manufacturer": "Ford",
@@ -244,21 +294,21 @@
   "car_models": [
     {
       "manufacturer": "Ford",
-      "model": "Mustang GT"
+      "model": "Mustang GT (S650)"
     },
     {
       "manufacturer": "Chevrolet",
-      "model": "Camaro ZL1"
+      "model": "Camaro ZL1-1LE"
     },
     {
       "manufacturer": "Toyota",
-      "model": "GR Supra"
+      "model": "GR Supra (A90)"
     }
   ],
   "technical_spec": [
     {
       "key": "Competition principle",
-      "value": "Technical parity"
+      "value": "Engine parity may be reviewed by the GMM via a power output test at any time/location (2026 Division C C8.12); not subject to protest or appeal"
     },
     {
       "key": "Drive layout",
@@ -266,123 +316,91 @@
     },
     {
       "key": "Engine configuration",
-      "value": "Naturally aspirated V8"
+      "value": "Naturally aspirated V8; capacity and detailed limits are in the relevant Engine Specification Document (ESD), not Division C"
     },
     {
       "key": "Power output",
-      "value": "~600 hp (≈447 kW)"
+      "value": "About 600 hp (Supercars Gen3 tech sheet; not a fixed Division C article — ESD / parity testing govern)"
     },
     {
-      "key": "Maximum torque",
-      "value": "690 Nm"
-    },
-    {
-      "key": "Body shell",
-      "value": "Production-based RHD body, homologated"
-    },
-    {
-      "key": "Body materials",
-      "value": "Steel body, composites/exotics restricted"
+      "key": "Maximum rpm",
+      "value": "About 7500 rpm (Supercars Gen3 tech sheet; ESD governs exact limits)"
     },
     {
       "key": "Chassis",
-      "value": "Standardised tubular steel frame"
+      "value": "Standardised tubular steel frame (Gen3)"
     },
     {
-      "key": "Aerodynamics",
-      "value": "Homologated splitter & rear wing"
-    },
-    {
-      "key": "Downforce level",
-      "value": "~170 kg @ 200 km/h (2024+ aero spec)"
+      "key": "Body shell",
+      "value": "Homologated models: Ford Mustang GT (S650), Chevrolet Camaro ZL1-1LE, Toyota GR Supra A90 (Division C C1.2)"
     },
     {
       "key": "Minimum weight",
-      "value": "1,335 kg (with driver, no fuel)"
+      "value": "1345 kg (with driver in full apparel; Division C C4.1.1)"
     },
     {
       "key": "Minimum front axle load",
-      "value": "725 kg"
+      "value": "730 kg (with driver; Division C C4.1.2)"
     },
     {
-      "key": "Fuel",
-      "value": "E75"
+      "key": "Fuel system capacity",
+      "value": "Must not exceed the marked volume of the Supercars fuel tank capacity checking vessel for each Circuit (Division C C9.4)"
     },
     {
-      "key": "Fuel tank capacity",
-      "value": "~130 L"
+      "key": "Fuel vessel — 121 L circuits",
+      "value": "Adelaide Parklands, Bathurst / Mt Panorama, Sandown, Surfers Paradise, The Bend (Division C C9.4 table)"
+    },
+    {
+      "key": "Fuel vessel — 133 L circuits",
+      "value": "All other listed Championship Circuits in the Division C C9.4 table (typical unmarked default vs the 121 L venues)"
+    },
+    {
+      "key": "Top speed",
+      "value": "About 300 km/h (Supercars Gen3 tech sheet)"
     },
     {
       "key": "Transmission",
       "value": "6-speed sequential transaxle"
     },
     {
-      "key": "Differential",
-      "value": "Spool (locked)"
-    },
-    {
-      "key": "Clutch",
-      "value": "Triple-plate"
-    },
-    {
-      "key": "Front suspension",
-      "value": "Double wishbone"
-    },
-    {
-      "key": "Rear suspension",
-      "value": "Independent"
-    },
-    {
-      "key": "Dampers",
-      "value": "Adjustable (not driver-adjustable)"
-    },
-    {
-      "key": "Brakes (front)",
-      "value": "395 mm discs, 6-piston calipers"
-    },
-    {
-      "key": "Brakes (rear)",
-      "value": "355 mm discs, 4-piston calipers"
-    },
-    {
-      "key": "Wheels",
-      "value": "18-inch control wheels"
+      "key": "ECU / data logger",
+      "value": "MoTeC Dash C185 (Division C C15.4.2); MoTeC Display Creator permitted (C15.5.3)"
     },
     {
       "key": "Tyres",
-      "value": "Dunlop (Soft / Supersoft / Hard / Wet)"
+      "value": "Dunlop control tyres"
     },
     {
-      "key": "ECU",
-      "value": "MoTeC (control)"
+      "key": "Source",
+      "value": "2026 Supercars Operations Manual Division C FINAL V2"
+    }
+  ],
+  "engines": [
+    {
+      "model": "Ford Mustang GT (S650)",
+      "spec": "Ford Coyote 5.4 L V8, quad camshaft, four valves per cylinder, aluminium block"
     },
     {
-      "key": "Engine allocation",
-      "value": "Single builder per model"
+      "model": "Chevrolet Camaro ZL1-1LE",
+      "spec": "GM 5.7 L V8, single camshaft, two valves per cylinder, aluminium block"
     },
     {
-      "key": "Engines per season",
-      "value": "Max 2 new engines per car"
+      "model": "Toyota GR Supra (A90)",
+      "spec": "2UR-GSE 5.2 L V8, quad camshaft, hydraulic variable valve timing"
+    }
+  ],
+  "homologation": [
+    {
+      "manufacturer": "Ford",
+      "team": "Red Bull Ampol Racing"
     },
     {
-      "key": "Top speed (historical max)",
-      "value": "300.5 km/h"
+      "manufacturer": "Chevrolet",
+      "team": "Team 18"
     },
     {
-      "key": "Expected 2026 top speed",
-      "value": "~290 km/h"
-    },
-    {
-      "key": "Relative performance",
-      "value": "Comparable to Porsche 992 GT3 Cup"
-    },
-    {
-      "key": "Target build cost (no engine)",
-      "value": "~AUD 250,000"
-    },
-    {
-      "key": "Estimated season cost",
-      "value": "AUD 1.2–3.0 million per car (staff, logistics, tyres, fuel, spares, race ops)"
+      "manufacturer": "Toyota",
+      "team": "Walkinshaw Andretti United"
     }
   ]
 }

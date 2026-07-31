@@ -57,7 +57,7 @@
         "Roman De Angelis",
         "Ross Gunn",
         "Alex Riberas",
-        "Marco Sørensen"
+        "Marco Sorensen"
       ],
       "rounds": "Rolex 24"
     },
@@ -139,6 +139,19 @@
       "rounds": "Rolex 24"
     },
     {
+      "class": "GTP",
+      "team": "JDC–Miller MotorSports",
+      "chassis": "Porsche 963",
+      "number": "5",
+      "drivers": [
+        "Kaylen Frederick",
+        "Laurin Heinrich",
+        "Nico Pino",
+        "Tijmen van der Helm"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
       "class": "LMP2",
       "team": "CrowdStrike Racing by APR",
       "chassis": "Oreca 07",
@@ -166,6 +179,32 @@
     },
     {
       "class": "LMP2",
+      "team": "Tower Motorsports",
+      "chassis": "Oreca 07",
+      "number": "8",
+      "drivers": [
+        "Sebastian Alvarez",
+        "Sebastien Bourdais",
+        "John Farano",
+        "Kyffin Simpson",
+        "Tristan Vautier"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
+      "class": "LMP2",
+      "team": "JDC–Miller MotorSports",
+      "chassis": "Oreca 07",
+      "number": "79",
+      "drivers": [
+        "Josh Burdon",
+        "Sennan Fielding",
+        "Gerry Kraut"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
+      "class": "LMP2",
       "team": "United Autosports USA",
       "chassis": "Oreca 07",
       "number": "22",
@@ -173,7 +212,8 @@
         "Paul di Resta",
         "Dan Goldburg",
         "Rasmus Lindh",
-        "Gregoire Saucy"
+        "Gregoire Saucy",
+        "Ben Hanley"
       ],
       "rounds": "Rolex 24"
     },
@@ -185,7 +225,7 @@
       "drivers": [
         "Mathias Beche",
         "David Heinemeier Hansson",
-        "Tobias Lütke",
+        "Tobias Lutke",
         "Charles Milesi"
       ],
       "rounds": "Rolex 24"
@@ -251,7 +291,8 @@
         "Misha Goikhberg",
         "Ben Keating",
         "Parker Thompson",
-        "Harry Tincknell"
+        "Harry Tincknell",
+        "Ricky Taylor"
       ],
       "rounds": "Rolex 24"
     },
@@ -262,7 +303,7 @@
       "number": "73",
       "drivers": [
         "Chris Cumming",
-        "Manuel Espírito Santo",
+        "Manuel Espirito Santo",
         "Enzo Fittipaldi",
         "Pietro Fittipaldi"
       ],
@@ -327,7 +368,7 @@
       "number": "3",
       "drivers": [
         "Antonio Garcia",
-        "Marvin Kirchhöfer",
+        "Marvin Kirchhofer",
         "Alexander Sims"
       ],
       "rounds": "Rolex 24"
@@ -347,7 +388,7 @@
     {
       "class": "GTD Pro",
       "team": "Pfaff Motorsports",
-      "chassis": "Lamborghini Huracán GT3 Evo 2 / Temerario GT3",
+      "chassis": "Lamborghini Huracan GT3 Evo 2 / Temerario GT3",
       "number": "9",
       "drivers": [
         "Mirko Bortolotti",
@@ -355,6 +396,17 @@
         "James Hinchcliffe",
         "Sandy Mitchell",
         "Franck Perera"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
+      "class": "GTD",
+      "team": "Pfaff Motorsports",
+      "chassis": "Lamborghini Temerario GT3",
+      "number": "46",
+      "drivers": [
+        "Andrea Caldarelli",
+        "Zachary Vanier"
       ],
       "rounds": "Rolex 24"
     },
@@ -367,6 +419,17 @@
         "Ben Barnicoat",
         "Jack Hawksworth",
         "Kyle Kirkwood"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
+      "class": "GTD Pro",
+      "team": "Vasser Sullivan Racing",
+      "chassis": "Lexus RC F GT3",
+      "number": "15",
+      "drivers": [
+        "Chaz Mostert",
+        "Aaron Telitz"
       ],
       "rounds": "Rolex 24"
     },
@@ -439,7 +502,7 @@
       "number": "69",
       "drivers": [
         "Anthony Bartone",
-        "Maximilian Götz",
+        "Maximilian Gotz",
         "Jules Gounon",
         "Fabian Schiller"
       ],
@@ -471,6 +534,17 @@
       "rounds": "Rolex 24"
     },
     {
+      "class": "GTD",
+      "team": "AO Racing",
+      "chassis": "Porsche 911 GT3 R (992.2)",
+      "number": "177",
+      "drivers": [
+        "Harry King",
+        "Mikkel O. Pedersen"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
       "class": "GTD Pro",
       "team": "Manthey Racing",
       "chassis": "Porsche 911 GT3 R (992.2)",
@@ -478,8 +552,10 @@
       "drivers": [
         "Klaus Bachler",
         "Ricardo Feller",
-        "Ayhancan Güven",
-        "Thomas Preining"
+        "Ayhancan Guven",
+        "Thomas Preining",
+        "Michael Christensen",
+        "Loek Hartog"
       ],
       "rounds": "Rolex 24"
     },
@@ -506,6 +582,17 @@
         "Frankie Montecalvo",
         "Benjamin Pedersen",
         "Aaron Telitz"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
+      "class": "GTD",
+      "team": "Vasser Sullivan Racing",
+      "chassis": "Lexus RC F GT3",
+      "number": "89",
+      "drivers": [
+        "Jack Hawksworth",
+        "Frankie Montecalvo"
       ],
       "rounds": "Rolex 24"
     },
@@ -541,10 +628,11 @@
       "chassis": "Aston Martin Vantage AMR GT3 Evo",
       "number": "19",
       "drivers": [
-        "Sébastien Baud",
+        "Sebastien Baud",
         "Carl Bennett",
         "Valentin Hasse-Clot",
-        "Rory van der Steur"
+        "Rory van der Steur",
+        "Scott Andrews"
       ],
       "rounds": "Rolex 24"
     },
@@ -557,7 +645,8 @@
         "Antonio Fuoco",
         "Simon Mann",
         "Tommaso Mosca",
-        "Lilou Wadoux"
+        "Lilou Wadoux",
+        "Alec Udell"
       ],
       "rounds": "Rolex 24"
     },
@@ -570,7 +659,9 @@
         "Eduardo Barrichello",
         "Mattia Drudi",
         "Tom Gamble",
-        "Zacharie Robichon"
+        "Zacharie Robichon",
+        "Roman De Angelis",
+        "Spencer Pumpelly"
       ],
       "rounds": "Rolex 24"
     },
@@ -582,8 +673,10 @@
       "drivers": [
         "Jan Heylen",
         "Dillon Machavern",
-        "Sven Müller",
-        "Eric Zitza"
+        "Sven Muller",
+        "Eric Zitza",
+        "Spencer Pumpelly",
+        "Eric Lux"
       ],
       "rounds": "Rolex 24"
     },
@@ -596,7 +689,8 @@
         "Albert Costa",
         "Manny Franco",
         "Lorenzo Patrese",
-        "Thierry Vermeulen"
+        "Thierry Vermeulen",
+        "Fran Rueda"
       ],
       "rounds": "Rolex 24"
     },
@@ -609,7 +703,8 @@
         "Charlie Eastwood",
         "Mason Filippi",
         "Scott McLaughlin",
-        "Salih Yoluç"
+        "Salih Yoluc",
+        "Robert Wickens"
       ],
       "rounds": "Rolex 24"
     },
@@ -622,20 +717,45 @@
         "John Potter",
         "Spencer Pumpelly",
         "Madison Snow",
-        "Nicki Thiim"
+        "Nicki Thiim",
+        "Mario Farnbacher"
       ],
       "rounds": "Rolex 24"
     },
     {
       "class": "GTD",
       "team": "Wayne Taylor Racing",
-      "chassis": "Lamborghini Huracán GT3 Evo 2",
+      "chassis": "Lamborghini Huracan GT3 Evo 2",
       "number": "45",
       "drivers": [
         "Graham Doyle",
         "Marcus Ericsson",
         "Danny Formal",
         "Trent Hindman"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
+      "class": "GTD",
+      "team": "Car Blanche",
+      "chassis": "Aston Martin Vantage AMR GT3 Evo",
+      "number": "068",
+      "drivers": [
+        "Trenton Estep",
+        "Marius Fossard",
+        "Valentin Hasse-Clot",
+        "Scott Andrews"
+      ],
+      "rounds": "Rolex 24"
+    },
+    {
+      "class": "GTD Pro",
+      "team": "Car Blanche",
+      "chassis": "Aston Martin Vantage AMR GT3 Evo",
+      "number": "68",
+      "drivers": [
+        "Scott Andrews",
+        "Valentin Hasse-Clot"
       ],
       "rounds": "Rolex 24"
     },
@@ -674,7 +794,8 @@
         "David Fumanelli",
         "Brendan Iribe",
         "Ollie Millroy",
-        "Frederik Schandorff"
+        "Frederik Schandorff",
+        "Jaxon Evans"
       ],
       "rounds": "Rolex 24"
     },
@@ -697,7 +818,7 @@
       "chassis": "Chevrolet Corvette Z06 GT3.R",
       "number": "81",
       "drivers": [
-        "Giacomo Altoè",
+        "Giacomo Altoe",
         "Matteo Cairoli",
         "Henrik Hedman",
         "Casper Stevenson"
@@ -732,7 +853,7 @@
     },
     {
       "class": "GTD",
-      "team": "Mühlner Motorsport",
+      "team": "Muhlner Motorsport",
       "chassis": "Porsche 911 GT3 R (992.2)",
       "number": "123",
       "drivers": [

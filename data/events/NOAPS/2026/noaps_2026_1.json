@@ -10,8 +10,8 @@
   "stage1_laps": "30",
   "stage2_laps": "30",
   "stage3_laps": "60",
-  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.",
-  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.",
+  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.\n\nThe all-time O'Reilly/Xfinity Series qualifying record at Daytona belongs to Tommy Houston, who turned a 46.298-second lap (194.389 mph) on February 14, 1987. The series race record average speed is 157.137 mph, set by Geoff Bodine in 1985.",
+  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.\n\nАбсолютный рекорд квалификации O'Reilly/Xfinity Series на Daytona принадлежит Tommy Houston — 46,298 секунды (194,389 mph) 14 февраля 1987 года. Рекорд средней скорости гонки серии — 157,137 mph, установлен Geoff Bodine в 1985 году.",
   "youtube_id": "ST0bWGV2Lhw",
   "entry_list": [
     {
@@ -2368,5 +2368,13 @@
         ]
       ]
     }
+  },
+  "race_statistics": {
+    "Average speed": "116.618 mph (187.678 km/h)",
+    "Cautions / Laps": "7 for 36",
+    "Lead changes": "15 among 8 different drivers",
+    "Red flags": "0",
+    "Time of race": "2 hours, 34 minutes and 21 seconds",
+    "Margin of victory": "0.081 sec"
   }
 }

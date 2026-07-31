@@ -13,14 +13,15 @@
   "stage1_laps": "30",
   "stage2_laps": "65",
   "stage3_laps": "65",
-  "event_preview": "Pocono Raceway is a 2.5-mile (4.023 km) tri-oval in Long Pond, Pennsylvania, featuring three unique corners modeled after Trenton Speedway, Indianapolis Motor Speedway and the Milwaukee Mile. The Great American Getaway 400 is the sixteenth race of the 2026 NASCAR Cup Series season, contested over 160 laps (400 miles) on Sunday, June 14. The event serves as the traditional Father's Day weekend race on the NASCAR calendar.\n\nDenny Hamlin holds the all-time record for most wins at Pocono with seven victories and has finished first or second in five of the last eight races at the circuit. Hamlin arrives as one of the championship contenders and a strong favourite given his historic dominance here. William Byron leads the overall Cup Series championship standings heading into the weekend. Christopher Bell, fresh off winning his third consecutive Cup Series race the previous weekend at Watkins Glen, will look to extend his hot streak. Chase Elliott, Ryan Blaney and other consistent performers round out the competitive field of 36 cars.",
-  "event_preview_ru": "Pocono Raceway — три-овал длиной 2,5 мили (4,023 км) в Long Pond, Pennsylvania, с тремя уникальными поворотами, смоделированными по Trenton Speedway, Indianapolis Motor Speedway и Milwaukee Mile. Great American Getaway 400 — шестнадцатый этап сезона NASCAR Cup Series 2026, на 160 кругов (400 миль) в воскресенье, 14 июня. Событие — традиционная гонка уик-энда Дня отца в календаре NASCAR.\n\nDenny Hamlin держит абсолютный рекорд по победам на Pocono — семь побед — и финишировал первым или вторым в пяти из последних восьми гонок на трассе. Hamlin приезжает как претендент на титул и явный фаворит с учётом исторического доминирования здесь. William Byron лидирует в общем зачёте Cup Series перед уик-эндом. Christopher Bell, одержавший победу в третьей подряд гонке Cup Series на прошлых выходных на Watkins Glen, попытается продлить серию. Chase Elliott, Ryan Blaney и другие стабильные гонщики дополняют конкурентное поле из 36 машин.",
+  "event_preview": "Pocono Raceway is a 2.5-mile (4.023 km) tri-oval in Long Pond, Pennsylvania, featuring three unique corners modeled after Trenton Speedway, Indianapolis Motor Speedway and the Milwaukee Mile. The Great American Getaway 400 is the sixteenth race of the 2026 NASCAR Cup Series season, contested over 160 laps (400 miles) on Sunday, June 14. The event serves as the traditional Father's Day weekend race on the NASCAR calendar.\n\nDenny Hamlin holds the all-time record for most wins at Pocono with seven victories and has finished first or second in five of the last eight races at the circuit. Hamlin arrives as one of the championship contenders and a strong favourite given his historic dominance here. William Byron leads the overall Cup Series championship standings heading into the weekend. Christopher Bell, fresh off winning his third consecutive Cup Series race the previous weekend at Watkins Glen, will look to extend his hot streak. Chase Elliott, Ryan Blaney and other consistent performers round out the competitive field of 36 cars.\n\nThe all-time Cup Series qualifying record at Pocono belongs to Kyle Larson, who turned a 49.063-second lap (183.438 mph) in 2014.\n\nThe Cup Series race record average speed for a 400-mile Pocono event is 144.202 mph, set by Jimmie Johnson in 2013 (2:46:26).",
+  "event_preview_ru": "Pocono Raceway — три-овал длиной 2,5 мили (4,023 км) в Long Pond, Pennsylvania, с тремя уникальными поворотами, смоделированными по Trenton Speedway, Indianapolis Motor Speedway и Milwaukee Mile. Great American Getaway 400 — шестнадцатый этап сезона NASCAR Cup Series 2026, на 160 кругов (400 миль) в воскресенье, 14 июня. Событие — традиционная гонка уик-энда Дня отца в календаре NASCAR.\n\nDenny Hamlin держит абсолютный рекорд по победам на Pocono — семь побед — и финишировал первым или вторым в пяти из последних восьми гонок на трассе. Hamlin приезжает как претендент на титул и явный фаворит с учётом исторического доминирования здесь. William Byron лидирует в общем зачёте Cup Series перед уик-эндом. Christopher Bell, одержавший победу в третьей подряд гонке Cup Series на прошлых выходных на Watkins Glen, попытается продлить серию. Chase Elliott, Ryan Blaney и другие стабильные гонщики дополняют конкурентное поле из 36 машин.\n\nАбсолютный рекорд квалификации Cup Series на Pocono принадлежит Kyle Larson — 49,063 секунды (183,438 mph) в 2014 году.\n\nРекорд средней скорости гонки Cup Series на дистанции 400 миль в Pocono — 144,202 mph, установлен Jimmie Johnson в 2013 году (2:46:26).",
   "race_statistics": {
+    "Average speed": "135.900 mph (218.710 km/h)",
+    "Cautions / Laps": "5 for 23",
     "Lead changes": "17 among 11 different drivers",
-    "Cautions / Laps": "5 for 23 laps",
     "Red flags": "0",
     "Time of race": "2 hours, 56 minutes, and 36 seconds",
-    "Average speed": "135.900 miles per hour (218.710 km/h)"
+    "Margin of victory": "1.678 sec"
   },
   "entry_list": [
     {
@@ -73,7 +74,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -375,7 +376,7 @@
         [
           "3",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "52.889",
@@ -874,7 +875,7 @@
         [
           "3",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "52.059",
@@ -1250,7 +1251,7 @@
         [
           "6",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "5"
@@ -1358,7 +1359,7 @@
         [
           "8",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "3"
@@ -1543,7 +1544,7 @@
           "13",
           "3",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "160",

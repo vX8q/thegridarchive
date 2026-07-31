@@ -11,8 +11,8 @@
   "stage1_laps": "60",
   "stage2_laps": "125",
   "stage3_laps": "127",
-  "event_preview": "Phoenix Raceway in its current form is measured at 1.000 mi (1.609 km), with 9° of banking in the first two turns, 11° of banking in the last two turns, 9° of banking on the frontstretch, and 3° of banking on the backstretch. The track is known for its frontstretch kink, commonly referred to as a \"dogleg\" that was added to accommodate the track's original road course, which used parts of the oval alongside specialized portions outside the oval.",
-  "event_preview_ru": "Phoenix Raceway в текущей конфигурации имеет длину 1,000 мили (1,609 км), уклон 9° в первых двух поворотах, 11° в последних двух, 9° на главной прямой и 3° на задней прямой. Трасса известна изломом на главной прямой, который обычно называют «dogleg» — его добавили, чтобы вместить оригинальный роуд-курс, использовавший части овала наряду со специальными участками за его пределами.",
+  "event_preview": "Phoenix Raceway in its current form is measured at 1.000 mi (1.609 km), with 9° of banking in the first two turns, 11° of banking in the last two turns, 9° of banking on the frontstretch, and 3° of banking on the backstretch. The track is known for its frontstretch kink, commonly referred to as a \"dogleg\" that was added to accommodate the track's original road course, which used parts of the oval alongside specialized portions outside the oval.\n\nThe all-time Cup Series qualifying record at Phoenix belongs to Jimmie Johnson, who turned a 25.147-second lap (143.158 mph) in 2015. The series race record average speed is 118.132 mph, set by Tony Stewart in 1999 (2:38:28).",
+  "event_preview_ru": "Phoenix Raceway в текущей конфигурации имеет длину 1,000 мили (1,609 км), уклон 9° в первых двух поворотах, 11° в последних двух, 9° на главной прямой и 3° на задней прямой. Трасса известна изломом на главной прямой, который обычно называют «dogleg» — его добавили, чтобы вместить оригинальный роуд-курс, использовавший части овала наряду со специальными участками за его пределами.\n\nАбсолютный рекорд квалификации Cup Series на Phoenix принадлежит Jimmie Johnson — 25,147 секунды (143,158 mph) в 2015 году. Рекорд средней скорости гонки серии — 118,132 mph, установлен Tony Stewart в 1999 году (2:38:28).",
   "entry_list": [
     {
       "number": "1",
@@ -64,7 +64,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -332,7 +332,7 @@
         [
           "1",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "26.877",
           "133.944",
@@ -816,7 +816,7 @@
         [
           "4",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "26.744",
@@ -1182,7 +1182,7 @@
         [
           "7",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "4"
@@ -1611,7 +1611,7 @@
           "30",
           "4",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "254",
@@ -1903,10 +1903,11 @@
     }
   },
   "race_statistics": {
-    "Lead changes": "23 among 8 different drivers",
+    "Average speed": "88.219 mph (141.975 km/h)",
     "Cautions / Laps": "12 for 86",
+    "Lead changes": "23 among 8 different drivers",
     "Red flags": "0",
     "Time of race": "3 hours, 32 minutes and 12 seconds",
-    "Average speed": "88.219 miles per hour (141.975 km/h)"
+    "Margin of victory": "0.399 sec"
   }
 }

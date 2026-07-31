@@ -612,7 +612,7 @@
       "kind": ""
     },
     {
-      "label": "Final Race",
+      "label": "Final",
       "date": "2026-07-26",
       "time_est": "15:50",
       "time_msk": "16:50",

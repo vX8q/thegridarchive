@@ -109,8 +109,12 @@ func NormalizeSlug(slug string) string {
 		return "a-j-allmendinger"
 	case "bj-mcleod", "b-j-mcleod-i", "bj-mcleod-i":
 		return "b-j-mcleod"
-	case "jj-yeley", "j-j-yeley-i", "jj-yeley-i":
+	case "jj-yeley", "j-j-yeley-i", "jj-yeley-i", "j-jj-yeley":
 		return "j-j-yeley"
+	case "garrett-mitchell", "cleetus-mitchell":
+		return "cleetus-mcfarland"
+	case "chris-werth":
+		return "christopher-werth"
 	case "corey-la-joie":
 		return "corey-lajoie"
 	case "matt-di-benedetto":

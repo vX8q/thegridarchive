@@ -78,7 +78,6 @@
       syncStandingsScrollBars: wrap('syncStandingsScrollBars', function () { return T.syncStandingsScrollBars(); }),
       adjustEventPanelPadding: wrap('adjustEventPanelPadding', function () { return T.adjustEventPanelPadding(); }),
       adjustDetailPanelPadding: wrap('adjustDetailPanelPadding', function () { return T.adjustDetailPanelPadding(); }),
-      renderSupercarsStaticSpecs: wrap('renderSupercarsStaticSpecs', function () { return T.renderSupercarsStaticSpecs(); }),
       translateStaticUI: wrap('translateStaticUI', function () { return T.translateStaticUI(); }),
       logger: T.logger || { error: function () {}, warn: function () {} },
       state: T._state,

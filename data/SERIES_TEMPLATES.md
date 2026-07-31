@@ -21,6 +21,7 @@
 - [Автоматическая сборка standings](#автоматическая-сборка-standings) и [Stats API](#stats-api)
 - [`data/teams/*.json`](#datateamsjson) — роли файлов команд
 - [Служебные файлы и скрипты](#служебные-файлы-и-скрипты)
+- [Рекорды круга в `event_preview`](#рекорды-круга-в-event_preview) — правила + проверенные источники
 - [Сводная таблица](#сводная-таблица-различий) различий
 
 **Связанные документы:** [`docs/WEB_TGA_API.md`](../docs/WEB_TGA_API.md) — публичные `/api/*` эндпоинты и фронтенд (`window.TGA.API`).
@@ -60,7 +61,7 @@
 ### Порядок работы
 
 1. **Найти файл** — `data/events/<Series>/<season>/<slug>.json` (напр. `F2/2026/f2_2026_6.json`). Сверить `event_id` с `data/schedules/<series>.json`. При **новом раунде** — добавить строку в schedule и (для stock-car / IndyCar) код колонки в `data/standings/<series>.json` → `race_order` / `event_names`.
-2. **Сначала метаданные** — `event_preview` (+ `event_preview_ru`), `youtube_highlights`, `entry_list`, даты `start_date` / `end_date`.
+2. **Сначала метаданные** — `event_preview` (+ `event_preview_ru`), YouTube (`youtube_id` и/или `youtube_highlights`), `entry_list`, даты `start_date` / `end_date`.
 3. **Сессии по порядку** — practice → qualifying → race (sprint → feature для F2/F3).
 4. **Эталон** — скопировать структуру headers / meta / ключей таблиц с **последнего полностью заполненного этапа** той же серии в том же сезоне.
 5. **Не ломать схему** — не добавлять ключи `tables.sprint` / `tables.feature`, если серия использует `tables.race.sessions[]` (F2, F3, Super Formula, F1 2026).
@@ -70,23 +71,41 @@
 
 | Поле | Правило |
 |------|---------|
-| `event_preview` | Только plain text, **без Markdown** (`**`, `#`, списков). Абзацы через `\n\n`. |
+| `event_preview` | Только plain text, **без Markdown** (`**`, `#`, списков). Абзацы через `\n\n`. Рекорды круга серии на трассе — финальный абзац EN+RU; правила и источники: [Рекорды круга в `event_preview`](#рекорды-круга-в-event_preview). |
 | `event_preview_ru` | Добавлять, если есть английский preview. |
 | `laps` | Только число кругов (напр. `"200"`), не текст «200 laps». |
-| `distance` | Только дистанция в mi/km — **не дублировать** lap count (см. stockcar rule). |
-| `entry_list` | Официальные имена с диакритикой (`Câmara`, `León`); `driver_slug` — ASCII (`rafael-camara`). |
+| `distance` | Только физическая дистанция гонки — **не** дублировать lap count. Формат зависит от серии: сток-кары `"X mi (Y km)"` (§1); IndyCar `"X.XXX miles (Y.YYY km)"` (§4). Не писать длину овала (`0.333 mile paved track …`). |
+| `youtube_id` / `youtube_highlights` | Сток-кары и многие 2026-файлы: достаточно строки `"youtube_id": "…"`. Массив `youtube_highlights: [{ "id", "title" }]` тоже поддерживается (F1 и др.). |
+| `entry_list` | Официальные полные имена **без латинской диакритики** (`Rafael Camara`, `Noel Leon`, `Niccolo Maccagnani`); то же для `event_preview` / мест (`Sao Paulo`, `Autodromo Jose Carlos Pace`). Кириллица в `event_preview_ru` сохраняется. `driver_slug` — ASCII-канон (`rafael-camara`). Nickname-дубли (Matt→Matthew, Cam→Cameron, …) — через `data/driver_slug_aliases.json`; после правок: `node scripts/fix-driver-slug-aliases.mjs` (или `--check` в CI). Массовая зачистка: `node scripts/strip-latin-diacritics.mjs`. Канон: всегда **Leland Honeyman** (без Jr.); slug `leland-honeyman` (алиас `leland-honeyman-jr`). |
+| `driver_profiles` / `citizenship` | Страна **гоночной лицензии ≠ гражданство**. В `citizenship` только реальное гражданство/национальность; dual — только при подтверждённом гражданстве, не по FIA licence. |
+| `track` / `circuit_name` vs `location` | `track` / `circuit_name` — название трассы (при необходимости суффикс лейаута, напр. `Charlotte Motor Speedway Roval`); `location` — только география (`City, State` / `City, Region`). Не дублировать город в имени трассы. Хелперы UI: `web/lib/schedule-location.js`. |
+| Full Schedule (серия) | Унифицированная схема **A** в `web/pages/series.js`: всегда **Circuit** + **Location** (не класть `circuit_name` в колонку Location). Колонка **Race** — только multi-race уик-энды (сессия: Sprint / Race 1 / GP). Single-race: `Round · Event · Circuit · Location · Date · Time`. |
 | Таблицы | У P1 в Gap и Int — `"—"`. DNF: `"Pos"` = `"DNF"`, `"Gap"` = `"DNF"`, `"Int"` = `"—"`. |
 | Колонки из протокола | Не переносить служебные колонки, которые сайт не рендерит (напр. **LAP SET ON** у F2). |
 | Формат JSON | **Новые** файлы — компактно (`event-json-format.mdc`). **Существующие** — не переформатировать целиком без запроса. |
 | Standings | Очки и позиции **не править** в `data/standings/*.json` — API пересобирает таблицу из `data/events/` при каждом запросе. Исключение: для stock-car и IndyCar в standings-файле поддерживать только `race_order` / `event_names` (коды колонок раундов). |
+| Event summary API | `GET /api/events/summaries` и `/api/events/{id}/summary` читают **те же** `tables.*`, что и страница этапа. Не изобретать отдельные layout’ы под Last Results — заполнять эталонные ключи серии. |
+
+**Full Schedule — колонки (схема A)**
+
+| Режим | Колонки | Серии |
+|-------|---------|--------|
+| Multi-race | Round · **Race** · Event · Circuit · Location · Date · Time | F2, F3, FREC, F4_IT, DTM, GTWCE Sprint, Supercars, F1 2025/2026 |
+| Multi-race SF | **Race** · Event · Circuit · Location · Date · Time | Super Formula |
+| Single-race | Round · Event · Circuit · Location · Date · Time | PSC, ELMS, WEC, GTWCE End, Super GT, stock-car, IndyCar |
+| IMSA | Round · Event · Length · Classes · Circuit · Location · Date | IMSA |
+| Historical F1 | Round · Grand Prix · Circuit · Location · Date | `/season/f1-20xx` кроме 2025/2026 |
 
 ### Имена в таблицах vs entry_list
 
 | Место | Формат |
 |-------|--------|
-| `entry_list.driver` | Полное имя: `Gabriele Minì`, `Nicolas Varrone` |
-| Practice / Qualifying / Race rows | Инициалы: `G. Minì`, `N. Varrone`, `E. Fittipaldi` (без `Jr.`) |
+| `entry_list.driver` | Полное имя без диакритики: `Gabriele Mini`, `Nicolas Varrone` |
+| Practice / Qualifying / Race rows (single-driver series) | По умолчанию то же полное имя, что в `entry_list`: `Gabriele Mini`, `Nikola Tsolov`, `Emerson Fittipaldi Jr.`. Не сокращать вручную до `N. Surname`. |
+| `Drivers` / crew columns (multi-driver series) | Полные имена всех пилотов; разделитель зависит от серии (`/` или `; `, см. ниже по разделам). |
 | Team в таблицах F2 | Как в протоколе FIA: `Hitech TGR`, `Trident`, `Prema Racing`, `DAMS Lucas Oil` (не ALL CAPS `TRIDENT` / `PREMA`) |
+
+Если в существующем файле уже есть сокращения вида `N. Surname`, при ручной правке разворачивать их в полную форму **из `entry_list` этого же event JSON**. Исключения допустимы только там, где официальный источник сам последовательно использует формат с несколькими инициалами/частями имени (`A. J. Allmendinger`, `J. J. Yeley`) и вы сознательно сохраняете именно эту официальную форму по всей серии.
 
 ### Даты на карточках (Next Race / Last Results / расписание)
 
@@ -98,10 +117,12 @@
 | **DTM, GTWCE Sprint** | Диапазон уик-энда | Race 1 / Race 2 по `start_date`–`end_date` | |
 | **F1** | Диапазон в sprint-уикенды | Sprint (сб) + GP (вс) — `static-schedules.js` `f1Sprint20xx` | Обычный уикенд — один день (воскресенье) |
 | **Super Formula** | Диапазон уик-энда | Несколько гонок; **merge** карточек на главной | Исключение: `SUPER_FORMULA_2026_6` (Fuji triple-header) — вручную в build-скрипте |
-| **Supercars** | Last Results: диапазон уик-энда, **merge** | **Next Race: отдельная карточка на каждую гонку** (`Race 1`, `Race 2`, …) | В названии карточки — номер гонки из schedule |
-| **IMSA, WEC, ELMS, GTWCE End, PSC** | **Один день** — день гонки | В JSON уикенд может быть `start_date`–`end_date` | Не путать с диапазоном расписания |
+| **Supercars** | Last Results: диапазон уик-энда, **merge** после **последней** гонки уик-энда | **Next Race: отдельная карточка на каждую гонку** (`Race 1`, `Race 2`, …) | В названии карточки — номер гонки из schedule; gate не показывает карточку после Race 1, пока не завершён финал уик-энда |
+| **IMSA, WEC, ELMS, GTWCE End** | **Один день** — день гонки | В JSON уикенд может быть `start_date`–`end_date` | Не путать с диапазоном расписания |
+| **PSC** | Обычный этап: **один день** гонки (`race_day_only`) | Double-header (отдельные `event_id`, напр. Zandvoort `_6`+`_7`): Last Results **merge** → диапазон дней гонок | Multi-day `start_date`–`end_date` у support-уикенда (Hungaroring 24–26) **не** значит интервал на карточке |
+| **IndyCar** | Обычно **один день** | Double-header (отдельные файлы, напр. Milwaukee): Last Results **merge** | `LAST_RESULTS_WEEKEND_MERGE_SERIES` в `web/lib/weekend-card-merge.js` |
 | **24h гонки** (Spa, Le Mans, …) | Два календарных дня | Из названия (`24 Hours`, `24h`) | Исключение из «один день» endurance |
-| **Остальные** (Cup, IndyCar, …) | Один день | — | По `getEventRaceStartDateIso` |
+| **Остальные** (Cup, Truck, …) | Один день | — | По `getEventRaceStartDateIso` |
 
 **Multi-race map** (`web/data/multi-race-schedule-sessions.js`): даты и метки — из `tables.race.sessions[]` в event JSON (`meta.Date`, `meta.Session`, `title`); время — `meta.Start` / `meta.time_msk` при наличии, иначе из `data/schedules/<series>.json`. Ручная правка только для исключений (см. `CURATED_OVERRIDES` в build-скрипте).
 
@@ -158,6 +179,47 @@ Championship ID в URL/API (`/api/series/f2-2026`, `/event/f2-2026-7`) норм�
 **Категория:** `stock_car_racing`  
 **Series IDs:** `nascar_cup`, `noaps`, `nascar_truck`, `nascar_modified`, `arca`
 
+### Laps / Distance
+
+| Поле | Правило |
+|------|---------|
+| `laps` | Только число кругов (`"150"`, `"200"`). |
+| `distance` | Только физическая дистанция гонки: **`"X mi (Y km)"`**. |
+
+Примеры (актуальный формат):
+
+```json
+"laps": "150",
+"distance": "49.950 mi (80.387 km)"
+```
+
+```json
+"laps": "200",
+"distance": "137.2 mi (220.802 km)"
+```
+
+**Не использовать** (устаревший / неправильный формат — часто встречался у Modified и ранних файлов):
+
+```json
+// ❌ BAD — длина овала + «paved track», без km
+"distance": "0.333 mile paved track (49.950 miles)"
+
+// ❌ BAD — дублирует lap count
+"distance": "150 laps, 49.950 mi (80.387 km)"
+```
+
+Длина овала (0.333 / 0.625 mi и т.п.) относится к описанию трассы в `event_preview`, не в поле `distance`. То же правило для **Cup / NOAPS / Truck / Modified / ARCA**.
+
+### YouTube
+
+Для сток-каров в 2026 обычно достаточно верхнеуровневого поля:
+
+```json
+"youtube_id": "ZuE8gdqZOVY"
+```
+
+Массив `youtube_highlights` допустим, если нужны несколько роликов / заголовки; UI читает оба варианта.
+
 ### Entry List
 
 | # | Driver | Team | Manufacturer | Crew Chief |
@@ -166,6 +228,7 @@ Championship ID в URL/API (`/api/series/f2-2026`, `/event/f2-2026-7`) норм�
 - Без rowspan-объединения
 - Сортировка: по номеру
 - **`points_eligible: false`** — пилот вне зачёта очков (в протоколе с `(i)`); в standings попадает в `ineligible[]`, очки стейджей не начисляются
+- **`Team`** (entry_list и колонка Team в practice / qualifying / race / stage) — официальное имя организации (`JR Motorsports`, `Joe Gibbs Racing`), **без** partnership-хвоста ` with …` и **без** primary sponsor / paint-scheme как имени команды. После массовых правок: `node scripts/sync-stockcar-table-teams.mjs`
 
 ### Practice (1, 2, 3, Final Practice)
 
@@ -227,13 +290,13 @@ Race
   "track": "Martinsville Speedway",
   "location": "Ridgeway, Virginia",
   "laps": "400",
-  "distance": "210.4 miles (338.6 km)",
+  "distance": "210.4 mi (338.6 km)",
   "stage1_laps": "80",
   "stage2_laps": "160",
   "stage3_laps": "160",
   "event_preview": "...",
   "event_preview_ru": "...",
-  "youtube_highlights": [{"id": "...", "title": "Race highlights"}],
+  "youtube_id": "...",
   "race_statistics": {
     "Lead changes": "...",
     "Cautions / Laps": "...",
@@ -481,7 +544,7 @@ Flat-таблица (не `sessions[]`):
         "Session": "Sprint Race",
         "Date": "Sat 27 Jun 2026"
       },
-      "headers": ["Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH", "Best", "Lap", "Pts"],
+      "headers": ["Pos", "ST", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH", "Best", "Lap", "Pts"],
       "rows": [...]
     },
     {
@@ -492,7 +555,7 @@ Flat-таблица (не `sessions[]`):
         "Session": "Feature Race",
         "Date": "Sun 28 Jun 2026"
       },
-      "headers": ["Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH", "Best", "Lap", "Pts"],
+      "headers": ["Pos", "ST", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH", "Best", "Lap", "Pts"],
       "rows": [...]
     }
   ]
@@ -500,6 +563,8 @@ Flat-таблица (не `sessions[]`):
 ```
 
 Колонки **Best** и **Lap** — две отдельные колонки (лучший круг и номер круга).
+
+**`ST`** — стартовая позиция с официального FIA **final starting grid** / **final grid** PDF для этой гонки (не provisional). Не выводить ST из qualifying / reverse-grid вручную: пенальти есть только в final grid. Сопоставление строк — по номеру машины; DNF/NC тоже получают `ST` с решётки. Если машина **Withdrawn** / отсутствует на решётке — `ST` = `"—"`. Отдельный `starting_lineup` не использовать (как Italian F4).
 
 #### DNF / NC
 
@@ -549,7 +614,7 @@ Flat-таблица (не `sessions[]`):
 | Pole position | +2 | победитель квалификации (Feature grid P1) |
 | Fastest lap | +1 | автор лучшего круга в Feature |
 
-Примеры: поул León + P7 в Feature → `6 + 2 = 8` в `Pts`. P3 Goethe + FL → `15 + 1 = 16`.
+Примеры: поул Leon + P7 в Feature → `6 + 2 = 8` в `Pts`. P3 Goethe + FL → `15 + 1 = 16`.
 
 ### YouTube
 
@@ -642,6 +707,7 @@ Race
 - Нулевые laps_led: `"0"` (не `"--"` или `"–"`)
 - **Формат distance (важно)**: `"214.200 miles (344.700 km)"` — строго `miles (km)` как в IndyCar 2026 (`indycar_2026_2/3`), без `mi / km`
 - **Driver** (в `race_results`) — формат `"Имя Фамилия"` (First Last), например `"Alex Palou"` (в отличие от practice/qualifying)
+- **Double-header** (напр. Milwaukee): **два** event JSON / два `event_id` в schedule, у каждого свой `race_results` — не `tables.race.sessions[]`. Last Results на главной merge’ит карточку после второй гонки (см. чеклист «Даты на карточках»)
 
 ### JSON-шаблон события (IndyCar)
 
@@ -985,6 +1051,24 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 }
 ```
 
+### Очки в колонке `Pts`
+
+В `tables.race.sessions[].rows` → `Pts` = **только финиш** (как в раундах 1–4). Бонус квалификации **не** класть в `Pts` гонки: `BuildStandingsFromEvents` начисляет 3/2/1 из `Qualifying (Race N)` отдельно (`applyDTMQualifyingAwards`). Иначе получится двойной счёт.
+
+**Гонка** (топ-15 классифицированных):
+
+| Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|-----|--:|--:|--:|--:|--:|--:|--:|--:|--:|---:|---:|---:|---:|---:|---:|
+| Pts | 25 | 20 | 16 | 13 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+
+**Квалификация** (топ-3 той же гонки: Qualifying Race 1 → Race 1, Qualifying Race 2 → Race 2) — только в standings-движке:
+
+| Q Pos | 1 | 2 | 3 |
+|-------|--:|--:|--:|
+| Pts | 3 | 2 | 1 |
+
+Пример: поул + победа → в JSON гонки `Pts` = `25`, плюс +3 из Q в standings (= 28 суммарно). DNF / P16+ → `0` в гонке; Q-бонус всё равно начислится из таблицы квалификации.
+
 ### YouTube
 
 ```json
@@ -1023,6 +1107,7 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 
 - Standings: колонки `R1-1`, `R1-2`, …; на 3-гоночных уикендах Race 2 = sprint (другая шкала очков).
 - Очки: `frec-2026-scoring.mdc`.
+- YouTube: **не заполнять** `youtube_highlights` / `youtube_id`.
 
 ### F4 Italian
 
@@ -1045,7 +1130,21 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 | Race | **`race_results`** | одна гонка за F1 support round |
 
 - Entry: `number`, `driver`, `team`, `driver_slug`; **`guest": true`** → `ineligible[]` в standings.
+- Обычный этап = один `event_id` и **день гонки** на карточке (не `start_date`–`end_date` уик-энда F1). Double-header (два id подряд на одной трассе, напр. Zandvoort) — merge на Last Results.
 - Очки: `psc-event-json.mdc`.
+- YouTube: **не заполнять** `youtube_highlights` / `youtube_id`.
+
+### YouTube (F4 Italian)
+
+Поле: `youtube_highlights: [{ "id", "title" }]`. Только официальный канал; live VOD / watch-along сторонних каналов не класть, если есть ролик с официального канала.
+
+**FREC / PSC:** поле `youtube_highlights` / `youtube_id` **не использовать**.
+
+| Серия | Канал | Что писать | `title` |
+|-------|--------|------------|---------|
+| **F4 Italian** | `@Italianf4-Euro4` | Отдельных highlight-пакетов нет — полные гонки уик-энда (Race 1–3 + Final). Не брать ACI Sport TV live-дубли, если есть ролик с `@Italianf4-Euro4`. | `Race 1` … `Race 3`, `Final` |
+
+Эталон 2026: `f4_it_2026_1.json`.
 
 ### GTWCE Sprint
 
@@ -1065,16 +1164,21 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 
 ## События вне championship
 
-Exhibition / pre-season файлы могут отображаться на сайте, но **по-разному** исключаются из standings и stats:
+Exhibition / pre-season / prologue файлы могут отображаться на сайте, но **не** входят в championship standings, stats и head-to-head (`skipChampionshipMetricsEvent` + `isFutureScheduleEvent`):
 
-| Событие | `event_id` (пример) | Standings | Stats |
-|---------|---------------------|-----------|-------|
-| NASCAR Cup Clash | `NASCAR_CUP_2026_0` (суффикс `_0`) | ❌ `isExhibitionEvent` | ❌ то же |
-| NASCAR All-Star | `...ALLSTAR...`, `...ALL_STAR...` | ❌ | ❌ |
-| F1 pre-season test | `F1_2026_PRE_SEASON_TEST_1` | ❌ `isF1PreSeasonEvent` | ✅ если есть таблицы гонок |
-| IMSA / ELMS pre-season | `...PRE_SEASON...` / `...PRESEASON...` | ❌ class standings builders | ✅ если есть таблицы гонок |
+| Событие | `event_id` (пример) | Standings / Stats / H2H |
+|---------|---------------------|-------------------------|
+| NASCAR Cup Clash | `NASCAR_CUP_2026_0` (суффикс `_0`) | ❌ |
+| NASCAR All-Star | `...ALLSTAR...`, `...ALL_STAR...` | ❌ |
+| F1 / IMSA / любое pre-season | `...PRE_SEASON...` / `...PRESEASON...` | ❌ |
+| ELMS Prologue | `...PROLOGUE...` | ❌ |
+| Будущие даты | `StartDate > today` | ❌ (все серии) |
 
-Перед добавлением раунда в календарь: `internal/schedulefile/enrich.go` (`isExhibitionEvent`), `f1_sprint_helper.go` (`isF1PreSeasonEvent`), `standings_imsa_elms.go` (pre-season filter).
+Перед добавлением раунда в календарь: `internal/schedulefile/enrich.go` (`skipChampionshipMetricsEvent`, `isExhibitionEvent`).
+
+**PSC guests:** в standings — таблица `ineligible` / 0 очков; в stats — guest-машины из `entry_list.guest` полностью исключаются из Driver/Team/Manufacturer metrics.
+
+**F2/F3 poles:** одна flat-таблица Qualifying мапится только на Feature (Sprint не наследует Q — reverse grid). Без wraparound Q→race, чтобы не дублировать poles.
 
 ---
 
@@ -1197,7 +1301,48 @@ race_order реально появились непустые значения. 
 
 **F1:** chassis/manufacturer из `data/teams/f1.json`; Q2/Q3 passes из qualifying tables.
 
-**Head-to-head:** `GET /api/series/{id}/head-to-head?season=2026&driverA=<slug>&driverB=<slug>` — сравнение двух пилотов по раундам (только серии с flat standings).
+**Head-to-head:** `GET /api/series/{id}/headtohead?season=2026&driverA=<slug>&driverB=<slug>` — сравнение двух пилотов по раундам (только серии с flat standings).
+
+### Car Specs (`GET /api/series/{id}/teams`)
+
+Поля `car_models`, `technical_spec`, опционально `engines` / `homologation` в `data/teams/{series}.json`.
+
+**Единицы (политика):**
+| Кластер | Primary | Secondary в скобках |
+|---------|---------|---------------------|
+| Stock-car (Cup, NOAPS, Truck, ARCA, Modified) | imperial (`in`, `lb`, `cu in`, `US gal`, `hp`) | SI (`mm`, `kg`, `L`) |
+| FIA open-wheel / endurance / touring (F1–F4, FREC, PSC, SF, IMSA Classes, Supercars, DTM, …) | SI (`mm`, `kg`, `L`/`litres`, `kW`) | hp/BHP где так в официальном источнике |
+| Мощность | как в источнике (`hp` / `HP` / `kW` / `BHP` / `cv`) — не «нормализовать» между системами | dual `kW (hp)` допустим, если оба официальны |
+
+Не выдумывать конверсии: SI↔imperial только если обе цифры есть в официальном материале или уже были в файле.
+
+Источник истины для stats: **event JSON** через `BuildDriverStatsFromEvents` (не SQLite-агрегаты).
+
+Источники (2026):
+
+| Серия | Источник |
+|-------|----------|
+| Italian F4 | ACI Sport Tatuus T-421 User Manual; Autotecnica Motori 414-F4 Gen2 Technical Manual; FIA F4 Gen2 weight reference |
+| Porsche Supercup | Porsche Newsroom Technical Data 911 Cup 992.2 MY2026; Michelin (PMSC playbook) |
+| Super Formula | TOYOTA GAZOO Racing fact sheet *Super Formula (as of March 2025)* (`fact-data_006_01_en.pdf`, source: JRP) — SF23 550+ hp / 677 kg / engines / tyre allocation; **no public JRP TR** for fuel / OTS Δhp / dimensions |
+| Supercars | 2026 Operations Manual Division C FINAL (C1.2 models, C4.1 weight/axle, C8.12 parity test, C9.4 fuel vessel by circuit, C15.4.2 MoTeC C185); Gen3 tech sheet only for ~600 hp / ~7500 rpm / ~300 km/h (ESD holds exact engine limits) |
+| NASCAR Cup power | nascar.com 2026 horsepower package announcements |
+| ARCA power | [Ilmor Racing ARCA](https://www.ilmor.com/racing/ARCA) (Ilmor 396: 700 HP / 530 ft-lb / 7500 RPM) |
+| Modified Spec Engine | [Robert Yates Racing Engines — NASCAR-Approved Spec Engine](https://www.ryr.com/nascar-spec-engine/) (~610 hp / ~500 ft-lb) |
+| NWMT (Modified) tech | [2025 NWMT Rule Book §20D](https://www.speedbowlct.com/wp-content/uploads/2025/08/2025-NASCAR-Modified-Rules.pdf) (weight 2645–3200 lb, spoiler 8×48″, fuel cell ≤24 gal, restrictor via Entry Blank); 2026 tyres **American Racer** ([nascar.com](https://www.nascar.com/news-media/2026/06/23/american-racer-modified-tour-tires/), RaceDayCT) — not Hoosier |
+| NOAPS / Truck power | Exact hp/torque, fuel capacity, track packages, wet policy — **not** in open NASCAR/Ilmor primary docs; Specs state unpublished |
+| FIA Formula 2 | [fiaformula2.com — The car and engine](https://www.fiaformula2.com/en/information/the-car-and-engine-f2.14LCsEEMG9yyx5DkhcN1J8); 2026 FIA Formula 2 Technical Regulations Art. 4.1 (min mass) |
+| FIA Formula 3 | [fiaformula3.com — The car and engine](https://www.fiaformula3.com/en/information/the-car-and-engine-f3.5tGE8Qr5FdTJJwaUN0YbWq) |
+| IndyCar hybrid | 2026 IndyCar Rulebook (epaddock) Art. 14.4 weight / 14.7 aero / 14.8 fuel / 14.12 EMS / 14.19 P2P; Honda HRC hybrid notes |
+| IMSA Classes | IMSA Sporting Art. 1.20–1.24; FIA 2026 LMP2 TR (homologated 2017); GTP LMDh/LMH architecture without BoP numbers (imsa.com ACO/IMSA regs hub) |
+| NASCAR Cup packages | nascar.com 2025/11/14 technical updates (750 hp / 3″ spoiler short-track–road package; A-post flaps) — full Rule Book not public |
+| FIA F3 | 2026 FIA Formula 3 Technical Regulations Issue 3 (Art. 4.1 min mass 729 kg) |
+| FREC | Tatuus T-326 = FR 2nd Gen Art. 275A; FREC Sporting Art. 29.2 min weight 695 kg |
+| FIA F2 | 2026 FIA Formula 2 Technical Regulations Issue 2 (Art. 4.1 / 3.5.1 DRS / 10.4 tyres) |
+| Italian F4 | 2026 FIA Formula 4 Technical Regulations Art. 274A + ACI Sport Italian F4 Sporting Regulations 2026 |
+| WEC / ELMS / GTWCE / DTM / Super GT Classes | `web/data/series-classes-spec.js` — class definitions only; no event BoP numbers |
+
+Вкладки **Classes** (не Car Specs): IMSA, WEC, ELMS, GTWCE End/Sprint, Super GT, DTM — `/series/{id}/classes`.
 
 Подробнее по эндпоинтам: [`docs/WEB_TGA_API.md`](../docs/WEB_TGA_API.md).
 
@@ -1248,9 +1393,77 @@ race_order реально появились непустые значения. 
 | `node scripts/validate-schedule-times.mjs` | Проверка согласованности времён в schedules |
 | `node scripts/sync-stockcar-table-teams.mjs` | Выровнять колонку `Team` в practice/qualifying/race/stage таблицах stock-car с `entry_list` |
 | `node scripts/check-data.mjs` | Общий gate: тесты данных и smoke-проверки перед коммитом |
+| `node scripts/fix-driver-slug-aliases.mjs` | Канонизация nickname-slug (`--check` в `make ci-data-audits`); правит events / profiles / redirects |
+| `node scripts/sync-driver-profiles-from-events.mjs` | Синк профилей из entry_list (учитывает aliases) |
 | `node scripts/audit-card-dates.mjs` | Аудит дат на карточках Next Race / Last Results |
 
 Правила часовых поясов: `data/timezones-reference.json`, `data/TIMEZONES.md`.
+
+---
+
+## Рекорды круга в `event_preview`
+
+Абзац(ы) про рекорд **серии на этой трассе** — в конце `event_preview` / `event_preview_ru` (plain text, `\n\n`, без Markdown). Не абсолют трассы и не чужой чемпионат.
+
+### Правила заполнения
+
+1. Рекорд = **конкретный чемпионат + конкретная трасса** (и класс, если мультикласс).
+2. Если лучший круг / поул **побит на этом же ивенте** — в preview писать **предыдущий** рекорд (состояние «на входе в уик-энд»).
+3. Нет надёжного источника → **не выдумывать**. Допустимы формулировки *fastest documented* / *qualifying benchmark* / *inaugural T-326 era*, если официального «all-time record» нет.
+4. Inaugural / смена шасси (FREC T-326) / первый визит серии — явная фраза, что рекорды будут установлены впервые.
+5. EN и RU зеркалят; имена пилотов латиницей в обоих языках.
+
+### Приоритет источников (по типу серии)
+
+| Тип | Куда смотреть в первую очередь |
+|-----|--------------------------------|
+| NASCAR Cup / NOAPS / Truck / ARCA | [Jayski](https://www.jayski.com/) Statistical Advance («Track Qualifying Record» / «Track Race Record»); [Racing-Reference](https://www.racing-reference.info/) / [nascarreference.com](https://www.nascarreference.com/); SPEED SPORT / SpeedwayMedia notes; ARCARacing.com |
+| Modified (NWMT) | Official NWMT / track release; SPEED SPORT; The Third Turn (только если совпадает с NWMT/пресс-релизом) |
+| F1 / F2 / F3 / F4 | FIA timing PDF; Wikipedia round/circuit «Lap record» **только** с цитатой протокола; motorsport.com / Formula Scout race reports |
+| IndyCar | IndyCar Fast Facts / track media notes; Racing-Reference |
+| IMSA / WEC / ELMS / GTWCE | Official timing (IMSA Results, FIA WEC, ELMS / Al Kamel, SRO); series «Facts and Figures» |
+| Supercars | Auto Action Event Guides (PDF); [supercars.com](https://www.supercars.com/) event pages («Lap Record») |
+| Super Formula | motorsport.com / Formula Scout + circuit course-record notes |
+| DTM | [dtm.com](https://www.dtm.com/) news (явно «qualifying record»); motorsport.com |
+| Porsche Supercup | [Porsche Newsroom](https://newsroom.porsche.com/) (PPDB / Supercup) |
+
+### Проверенные источники — батч gap-fill (июль 2026)
+
+Ниже — источники для этапов, которым не хватало рекордного абзаца. При обновлении цифр сверять с этими URL (или более свежим официальным релизом той же серии).
+
+| `event_id` | Claim (кратко) | Источник |
+|------------|----------------|----------|
+| `SUPERCARS_2026_1` | Q McLaughlin 1:27.7428 (2020); R Whincup 1:29.8424 | [Auto Action Sydney Event Guide PDF](https://autoaction.com.au/wp-content/uploads/2023/07/Supercars_2023-EventGuide_RD7-SydneyTM.pdf); [supercars.com Sydney](https://www.supercars.com/events/2023-beaurepaires-sydney-supernight) |
+| `SUPERCARS_2026_7` | Q McLaughlin 1:11.9908 (2017); R Percat 1:12.9311 (2017) | [Auto Action Townsville Event Guide PDF](https://autoaction.com.au/wp-content/uploads/2023/07/Supercars_2023-EventGuide_RD6-Townsville-TM.pdf); [supercars.com Townsville](https://www.supercars.com/events/2023-nti-townsville-500) |
+| `SUPERCARS_2026_4` | Inaugural modern-era Christchurch — records first set this weekend | Preview / calendar (нет исторических Q/R серии) |
+| `PSC_2026_2` | Q Schuring 1:43.784 (2025, Barcelona) | [Porsche Newsroom](https://newsroom.porsche.com/en/ppdb/2025/05/rookie-flynt-schuring-wins-the-qualifying-in-barcelona.html) |
+| `PSC_2026_3` | Fastest documented Q Andlauer 1:30.457 (2019, RBR) — не помечен как официальный all-time | Исторический протокол PSC 2019 / race reports (формулировка *documented*) |
+| `PSC_2026_4` | Q Marvin Klein 2:20.058 (2024, Spa) | Porsche Newsroom / PSC 2024 Spa qualifying reports |
+| `PSC_2026_5` | Q Harry King 1:45.933 (2023, Hungaroring) | [Porsche Newsroom](https://newsroom.porsche.com/en/2023/motorsports/porsche-mobil-1-supercup-pmsc-saison-2023-round-4-budapest-33200.html) |
+| `DTM_2026_3` | **Previous** Q Auer 1:19.827 (2025); Thiim 1:19.463 — рекорд **этого** уик-энда 2026 | [dtm.com Lausitzring](https://www.dtm.com/en/news/Second-DTM-pole-Viking-Thiim-takes-the-spoils-at-the-Dekra-Lausitzring); [motorsport.com 2025 Q](https://au.motorsport.com/dtm/results/2025/lausitzring-656532/?st=Q1) |
+| `DTM_2026_4` | **Previous** Q Pepper 48.467 (2025); Thiim 48.449 — сбит на Norisring 2026 | [motorsport.com Norisring](https://www.motorsport.com/dtm/news/dtm-qualifying-norisring-1-pole-for-thiim-debacle-for-porsche-and-bmw/10836095/) |
+| `F3_2026_6` | Race Voisin 2:05.770 (2024); documented Q Benavides 2:04.253 (2025) | Circuit / F3 Spa lap-record tables; FIA F3 timing |
+| `FREC_2026_1`, `_3`–`_6` | Inaugural T-326 modern-era wording (как `_2`) | Серия / шасси T-326 — нет прежних FREC records на этой машине |
+| `F4_IT_2026_2` | Race Fittipaldi 1:32.995 (2018, Vallelunga) | Circuit F4 lap-record tables |
+| `F4_IT_2026_3` | Race Pradel 1:51.179 (2024, Monza) | [Monza circuit lap records / F4](https://en.wikipedia.org/wiki/Monza_Circuit) (сверять с Euro 4 / Italian F4 protocol) |
+| `INDYCAR_2026_12` | Q Dixon 22.6952 / 206.211 mph (18 Jul 2003) | [Nashville Superspeedway Fast Facts](https://www.nashvillesuperspeedway.com/media/news/borchetta-bourbon-music-city-grand-prix-presented-willscot-fast-facts.html) |
+| `SUPER_FORMULA_2026_6` | Course record Nojiri 1:19.972 (20 Dec 2020 Q) | [motorsport.com Fuji Q](https://www.motorsport.com/super-formula/news/fuji-qualifying-nojiri-yamamoto-cassidy/4929836/) |
+| `ELMS_2026_3` | LMP2 Q Milesi 1:30.829; race Leclerc 1:31.757 (Jul 2024) | [ELMS Imola Facts and Figures](https://www.europeanlemansseries.com/en/news/imola-elms-facts-and-figures/13648) |
+| `ELMS_2026_PROLOGUE` | Barcelona LMP2 best / race (de Gerus / Ugran) | ELMS Barcelona facts / Al Kamel timing |
+| `WEC_2026_PROLOGUE` | Hypercar race Fuoco 1:31.794 (21 Apr 2024, Imola) | FIA WEC Imola timing / race reports |
+| `GTWCE_END_2026_1` | Qualifying benchmark Gounon 1:52.671 (2019, Paul Ricard) | SRO / GTWCE timing archives (*benchmark*, не жёсткий «official record») |
+| `GTWCE_END_2026_2` | GT3 Monza Pier Guidi 1:44.593 (2024) | SRO / GTWCE reports |
+| `GTWCE_END_2026_3` | Spa 24h — no confirmed modern GT3 single-lap series record in pre-event materials | Явный skip / disclaimer в preview |
+| `NASCAR_MODIFIED_2026_1` | Documented Q Hirschman 17.462 (Feb 2022, New Smyrna) | NWMT / SPEED SPORT reports |
+| `NASCAR_MODIFIED_2026_4` | Oxford Plains 2026 — quali washed out; no published modern Tour Q record | NWMT race notes |
+| `NASCAR_MODIFIED_2026_7` | Q Cravenho 11.739 / 102.121 mph (Jun 2000, Seekonk) | Track / NWMT historical notes |
+| `NASCAR_MODIFIED_2026_8` | Documented Q Jake Johnson 13.57 (Jul 2022, Claremont) | NWMT reports |
+| `NASCAR_MODIFIED_2026_9` | Documented Q Jake Johnson 11.537 / 78.01 mph (Jun 2025, White Mountain) | NWMT reports |
+| `NASCAR_MODIFIED_2026_10` | Documented Q Hirschman 11.637 / 77.34 mph (May 4, 2024 Granite State Derby, repave); race lap not published | [myracenews Q](https://myracenews.com/2024/05/qualifying-results-granite-state-derby-at-monadnock-speedway/); The Third Turn 2024 GSD |
+| `NASCAR_TRUCK_2026_2` | Q Crawford 30.339 / 182.735 mph (18 Mar 2005) — **pre-2022 Atlanta layout** | Racing-Reference / Jayski historical Atlanta Truck |
+| `NASCAR_TRUCK_2026_15` | **Previous** Q Heim 20.072 / 112.096 mph (2023); Riggs 18.502 — рекорд **этого** уик-энда на новом покрытии | [tobychristie.com 2023 pole](https://tobychristie.com/nascar/truck-series/corey-heim-scores-second-consecutive-nascar-truck-pole-with-quick-lap-at-north-wilkesboro/); [SPEED SPORT 2026 pole](https://speedsport.com/nascar/nascar-craftsman-truck-series/riggs-claims-north-wilkesboro-pole/) |
+
+При добавлении новых рекордов — **дописывать строку в эту таблицу** (или подсекцию по серии), чтобы следующий проход не начинал поиск с нуля.
 
 ---
 

@@ -14,14 +14,15 @@
   "stage2_laps": "15",
   "stage3_laps": "30",
   "race_statistics": {
+    "Average speed": "58.313 mph (93.846 km/h)",
+    "Cautions / Laps": "8 for 17",
     "Lead changes": "10 among 5 different drivers",
-    "Cautions / Laps": "8 for 17 laps",
     "Red flags": "2",
     "Time of race": "3 hours, 29 minutes and 54 seconds",
-    "Average speed": "58.313 miles per hour (93.846 km/h)"
+    "Margin of victory": "1.127 sec"
   },
-  "event_preview": "The Coronado Street Course, also known as Qualcomm Circuit, is a 3.4-mile (5.5 km) 16-turn street circuit on Naval Air Station North Island, part of Naval Base Coronado in San Diego, California. The United Rentals Driven to Serve 250 is the 18th race of the 2026 NASCAR O'Reilly Auto Parts Series season and the inaugural running of the event, contested over 60 laps with stages set at 15, 15 and 30 laps. The race forms part of NASCAR San Diego's historic inaugural weekend — the first national NASCAR event held aboard an active military installation, held in commemoration of the U.S. Navy's 250th anniversary.\n\nJustin Allgaier dominates the 2026 championship standings with 842 points and five wins, holding a 250-point lead over the field — a gap not seen in the series since Kevin Harvick's record 824-point margin in 2006. Allgaier seeks a third consecutive win this weekend. Jesse Love, Corey Day, Sheldon Creed and Brandon Jones round out the top five in points, with Love and Jones both still searching for their first win of the season. Joe Gibbs Racing brings strong road and street course pedigree to the weekend, having claimed 10 series victories on road courses in program history.",
-  "event_preview_ru": "Coronado Street Course, также известная как Qualcomm Circuit, — уличная трасса длиной 3,4 мили (5,5 км) с 16 поворотами на Naval Air Station North Island, часть Naval Base Coronado в San Diego, California. United Rentals Driven to Serve 250 — 18-й этап сезона NASCAR O'Reilly Auto Parts Series 2026 и дебютное проведение события, гонка на 60 кругов со стейджами 15, 15 и 30 кругов. Гонка входит в исторический дебютный уик-энд NASCAR San Diego — первое национальное событие NASCAR на действующей военной базе, приуроченное к 250-летию ВМС США.\n\nJustin Allgaier доминирует в чемпионате 2026 года с 842 очками и пятью победами, имея преимущество в 250 очков над полем — разрыв, не виденный в серии с рекордного отрыва Kevin Harvick в 824 очка в 2006 году. Олгайер стремится к третьей победе подряд на этих выходных. Jesse Love, Corey Day, Sheldon Creed и Brandon Jones замыкают топ-5 в очках; Лав и Джонс всё ещё ищут первую победу в сезоне. Joe Gibbs Racing привозит сильное наследие на роуд-курсах и уличных трассах — 10 побед серии на роуд-курсах за всю историю программы.",
+  "event_preview": "The Coronado Street Course, also known as Qualcomm Circuit, is a 3.4-mile (5.5 km) 16-turn street circuit on Naval Air Station North Island, part of Naval Base Coronado in San Diego, California. The United Rentals Driven to Serve 250 is the 18th race of the 2026 NASCAR O'Reilly Auto Parts Series season and the inaugural running of the event, contested over 60 laps with stages set at 15, 15 and 30 laps. The race forms part of NASCAR San Diego's historic inaugural weekend — the first national NASCAR event held aboard an active military installation, held in commemoration of the U.S. Navy's 250th anniversary.\n\nJustin Allgaier dominates the 2026 championship standings with 842 points and five wins, holding a 250-point lead over the field — a gap not seen in the series since Kevin Harvick's record 824-point margin in 2006. Allgaier seeks a third consecutive win this weekend. Jesse Love, Corey Day, Sheldon Creed and Brandon Jones round out the top five in points, with Love and Jones both still searching for their first win of the season. Joe Gibbs Racing brings strong road and street course pedigree to the weekend, having claimed 10 series victories on road courses in program history.\n\nAs the O'Reilly Auto Parts Series' first visit to this brand-new circuit, there are no prior series qualifying or race lap records — both will be established for the first time this weekend.",
+  "event_preview_ru": "Coronado Street Course, также известная как Qualcomm Circuit, — уличная трасса длиной 3,4 мили (5,5 км) с 16 поворотами на Naval Air Station North Island, часть Naval Base Coronado в San Diego, California. United Rentals Driven to Serve 250 — 18-й этап сезона NASCAR O'Reilly Auto Parts Series 2026 и дебютное проведение события, гонка на 60 кругов со стейджами 15, 15 и 30 кругов. Гонка входит в исторический дебютный уик-энд NASCAR San Diego — первое национальное событие NASCAR на действующей военной базе, приуроченное к 250-летию ВМС США.\n\nJustin Allgaier доминирует в чемпионате 2026 года с 842 очками и пятью победами, имея преимущество в 250 очков над полем — разрыв, не виденный в серии с рекордного отрыва Kevin Harvick в 824 очка в 2006 году. Олгайер стремится к третьей победе подряд на этих выходных. Jesse Love, Corey Day, Sheldon Creed и Brandon Jones замыкают топ-5 в очках; Лав и Джонс всё ещё ищут первую победу в сезоне. Joe Gibbs Racing привозит сильное наследие на роуд-курсах и уличных трассах — 10 побед серии на роуд-курсах за всю историю программы.\n\nПоскольку это первый визит O'Reilly Auto Parts Series на эту новую трассу, исторических рекордов квалификации и гоночного круга серии ещё нет — оба будут установлены впервые на этом уик-энде.",
   "entry_list": [
     {
       "number": "00",
@@ -33,7 +34,7 @@
     },
     {
       "number": "0",
-      "driver": "Alex Labbé",
+      "driver": "Alex Labbe",
       "team": "SS-Green Light Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Bryan Berry",
@@ -297,7 +298,7 @@
     },
     {
       "number": "92",
-      "driver": "Leland Honeyman Jr. (i)",
+      "driver": "Leland Honeyman (i)",
       "team": "DGM Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Steve Addington",
@@ -587,7 +588,7 @@
         [
           "20",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "139.939",
@@ -769,7 +770,7 @@
         [
           "34",
           "92",
-          "Leland Honeyman Jr. (i)",
+          "Leland Honeyman (i)",
           "DGM Racing",
           "Chevrolet",
           "145.033",
@@ -933,7 +934,7 @@
         [
           "12",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "2:16.520",
@@ -1050,7 +1051,7 @@
         [
           "25",
           "92",
-          "Leland Honeyman Jr. (i)",
+          "Leland Honeyman (i)",
           "DGM Racing",
           "Chevrolet",
           "2:18.683",
@@ -1493,7 +1494,7 @@
           "26",
           "25",
           "92",
-          "Leland Honeyman Jr. (i)",
+          "Leland Honeyman (i)",
           "DGM Racing",
           "Chevrolet",
           "59",
@@ -1505,7 +1506,7 @@
           "27",
           "12",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "52",

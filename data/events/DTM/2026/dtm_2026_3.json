@@ -7,8 +7,8 @@
   "end_date": "2026-06-21",
   "track": "Lausitzring",
   "location": "Klettwitz, Brandenburg, Germany",
-  "event_preview": "The DEKRA Lausitzring is a 3.478 km (2.161 mi) permanent road course near Kotten, Germany, part of a multi-configuration motorsport facility. The 2026 Deutsche Tourenwagen Masters round at Lausitzring takes place June 19-21 as the first German round of the season, featuring a compact support programme including ADAC GT Masters, Porsche Sixt Carrera Cup Deutschland and the new BMW M2 Cup.\n\nMaro Engel holds a narrow championship lead heading into the weekend after four races have each produced a different winner — underlining a highly competitive season where consistency rather than dominance has defined the standings. Lucas Auer, only six points behind Engel in second, arrives as a Lausitzring specialist with previous victories at the circuit in 2016 and most recently in 2025. Marco Wittmann of BMW remains close in third, while Kelvin van der Linde is seeking to build on a pair of victories here in 2024 and 2025. Rookie Finn Wiebelhaus topped recent DTM testing at the circuit and will look to convert that speed advantage into race-day performance. The championship remains tightly bunched with no driver establishing control through the opening two weekends.",
-  "event_preview_ru": "DEKRA Lausitzring — постоянная трасса длиной 3,478 км (2,161 мили) недалеко от Kotten, Германия; входит в много конфигурационный моторспортивный комплекс. Этап Deutsche Tourenwagen Masters 2026 на Lausitzring пройдёт с 19 по 21 июня как первый немецкий раунд сезона с компактной поддержкой ADAC GT Masters, Porsche Sixt Carrera Cup Deutschland и нового BMW M2 Cup.\n\nMaro Engel удерживает узкое лидерство в чемпионате перед уик-эндом: четыре гонки выиграли четыре разных пилота — наглядно конкурентный сезон, где в зачёте важнее стабильность, чем доминирование. Lucas Auer, отстающий всего на шесть очков на втором месте, приезжает специалистом Lausitzring с победами здесь в 2016 и недавно в 2025 году. Marco Wittmann из BMW остаётся близко на третьей позиции, а Kelvin van der Linde стремится продолжить серию из двух побед здесь в 2024 и 2025 годах. Новичок Finn Wiebelhaus возглавил недавние тесты DTM на трассе и постарается конвертировать преимущество в скорости в результат гоночного уик-энда. Чемпионат остаётся плотным — ни один пилот не установил контроль после первых двух уик-эндов.",
+  "event_preview": "The DEKRA Lausitzring is a 3.478 km (2.161 mi) permanent road course near Kotten, Germany, part of a multi-configuration motorsport facility. The 2026 Deutsche Tourenwagen Masters round at Lausitzring takes place June 19-21 as the first German round of the season, featuring a compact support programme including ADAC GT Masters, Porsche Sixt Carrera Cup Deutschland and the new BMW M2 Cup.\n\nMaro Engel holds a narrow championship lead heading into the weekend after four races have each produced a different winner — underlining a highly competitive season where consistency rather than dominance has defined the standings. Lucas Auer, only six points behind Engel in second, arrives as a Lausitzring specialist with previous victories at the circuit in 2016 and most recently in 2025. Marco Wittmann of BMW remains close in third, while Kelvin van der Linde is seeking to build on a pair of victories here in 2024 and 2025. Rookie Finn Wiebelhaus topped recent DTM testing at the circuit and will look to convert that speed advantage into race-day performance. The championship remains tightly bunched with no driver establishing control through the opening two weekends.\n\nThe DTM qualifying lap record at the Dekra Lausitzring going into the 2026 round belonged to Lucas Auer, who set a 1:19.827 during qualifying in 2025.",
+  "event_preview_ru": "DEKRA Lausitzring — постоянная трасса длиной 3,478 км (2,161 мили) недалеко от Kotten, Германия; входит в много конфигурационный моторспортивный комплекс. Этап Deutsche Tourenwagen Masters 2026 на Lausitzring пройдёт с 19 по 21 июня как первый немецкий раунд сезона с компактной поддержкой ADAC GT Masters, Porsche Sixt Carrera Cup Deutschland и нового BMW M2 Cup.\n\nMaro Engel удерживает узкое лидерство в чемпионате перед уик-эндом: четыре гонки выиграли четыре разных пилота — наглядно конкурентный сезон, где в зачёте важнее стабильность, чем доминирование. Lucas Auer, отстающий всего на шесть очков на втором месте, приезжает специалистом Lausitzring с победами здесь в 2016 и недавно в 2025 году. Marco Wittmann из BMW остаётся близко на третьей позиции, а Kelvin van der Linde стремится продолжить серию из двух побед здесь в 2024 и 2025 годах. Новичок Finn Wiebelhaus возглавил недавние тесты DTM на трассе и постарается конвертировать преимущество в скорости в результат гоночного уик-энда. Чемпионат остаётся плотным — ни один пилот не установил контроль после первых двух уик-эндов.\n\nКвалификационный рекорд DTM на Dekra Lausitzring на входе в этап 2026 принадлежал Lucas Auer — 1:19.827 в квалификации 2025 года.",
   "youtube_highlights": [
     {
       "id": "lEX409Yz9Ds",
@@ -230,7 +230,7 @@
       "power_unit": "McLaren M840T 4.0 L Turbo V8",
       "team": "Dorr Motorsport",
       "number": "25",
-      "driver": "Ben Dörr",
+      "driver": "Ben Dorr",
       "status": "",
       "rounds": "3",
       "ref": "[10]",
@@ -352,7 +352,7 @@
             [
               "7",
               "25",
-              "Ben Dörr",
+              "Ben Dorr",
               "Dorr Motorsport",
               "McLaren",
               "1:21.214",
@@ -557,7 +557,7 @@
             [
               "5",
               "25",
-              "Ben Dörr",
+              "Ben Dorr",
               "Dorr Motorsport",
               "McLaren",
               "1:20.633",
@@ -826,7 +826,7 @@
             [
               "10",
               "25",
-              "Ben Dörr",
+              "Ben Dorr",
               "Dorr Motorsport",
               "McLaren",
               "1:19.977",
@@ -1065,7 +1065,7 @@
             [
               "14",
               "25",
-              "Ben Dörr",
+              "Ben Dorr",
               "Dorr Motorsport",
               "McLaren",
               "1:20.169",
@@ -1157,7 +1157,7 @@
             [
               "1",
               "25",
-              "Ben Dörr",
+              "Ben Dorr",
               "Dorr Motorsport",
               "McLaren",
               "+-",
@@ -1569,7 +1569,7 @@
             [
               "16",
               "25",
-              "Ben Dörr",
+              "Ben Dorr",
               "Dorr Motorsport",
               "McLaren",
               "+50.744",

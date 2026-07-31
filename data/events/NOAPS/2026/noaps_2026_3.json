@@ -11,12 +11,12 @@
   "stage2_laps": "20",
   "stage3_laps": "25",
   "youtube_id": "CrmcvrbsR1g",
-  "event_preview": "Circuit of the Americas (COTA) is a grade 1 FIA-specification motorsports facility located within the extraterritorial jurisdiction of Austin, Texas. On November 20, 2024, it was announced that the race would move to the 2.400 mi (3.862 km) layout.",
-  "event_preview_ru": "Circuit of the Americas (COTA) — автодром класса 1 по спецификации FIA, расположенный в экстерриториальной юрисдикции Austin, Texas. 20 ноября 2024 года было объявлено, что гонка пройдёт по конфигурации длиной 2,400 мили (3,862 км).",
+  "event_preview": "Circuit of the Americas (COTA) is a grade 1 FIA-specification motorsports facility located within the extraterritorial jurisdiction of Austin, Texas. On November 20, 2024, it was announced that the race would move to the 2.400 mi (3.862 km) layout.\n\nOn the 2.4-mile NASCAR configuration at Circuit of the Americas, the O'Reilly/Xfinity Series qualifying record belongs to Connor Zilisch (97.262 seconds, 2025). The race record average speed is 70.095 mph, also set by Zilisch in 2025.",
+  "event_preview_ru": "Circuit of the Americas (COTA) — автодром класса 1 по спецификации FIA, расположенный в экстерриториальной юрисдикции Austin, Texas. 20 ноября 2024 года было объявлено, что гонка пройдёт по конфигурации длиной 2,400 мили (3,862 км).\n\nНа конфигурации NASCAR 2,4 мили Circuit of the Americas рекорд квалификации O'Reilly/Xfinity Series принадлежит Connor Zilisch (97,262 секунды, 2025). Рекорд средней скорости гонки — 70,095 mph, также установлен Zilisch в 2025 году.",
   "entry_list": [
     {
       "number": "0",
-      "driver": "Alex Labbé",
+      "driver": "Alex Labbe",
       "team": "SS-Green Light Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Bryan Berry",
@@ -227,11 +227,11 @@
     },
     {
       "number": "42",
-      "driver": "JJ Yeley",
+      "driver": "J. J. Yeley",
       "team": "Young's Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Andrew Abbott",
-      "driver_slug": "jj-yeley"
+      "driver_slug": "j-j-yeley"
     },
     {
       "number": "44",
@@ -630,7 +630,7 @@
         [
           "22",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "101.858",
@@ -851,7 +851,7 @@
         [
           "39",
           "42",
-          "JJ Yeley",
+          "J. J. Yeley",
           "Young's Motorsports",
           "Chevrolet",
           "104.721",
@@ -1133,7 +1133,7 @@
         [
           "28",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "1:40.243",
@@ -1613,7 +1613,7 @@
           "13",
           "28",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "65",
@@ -2010,10 +2010,11 @@
   },
   "race_results_note": "J. J. Yeley suffered an illness during the race and was relieved by Brad Perez after the second stage. Since Yeley started the race, he is officially credited with a 28th place finish.",
   "race_statistics": {
+    "Average speed": "70.411 mph (113.316 km/h)",
+    "Cautions / Laps": "4 for 12",
     "Lead changes": "16 among 8 different drivers",
-    "Cautions / Laps": "4 for 12 laps",
     "Red flags": "0",
     "Time of race": "2 hours, 12 minutes and 56 seconds",
-    "Average speed": "70.411 miles per hour (113.316 km/h)"
+    "Margin of victory": "0.780 sec"
   }
 }

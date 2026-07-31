@@ -6,13 +6,14 @@
   "track": "New Smyrna Speedway",
   "location": "New Smyrna Beach, Florida, USA",
   "laps": "200*",
-  "distance": "0.480 mile paved track (96.000 miles)",
+  "distance": "96 mi (154.497 km)",
   "race_statistics": {
-    "Average speed": "58.175 miles per hour (93.628 km/h)",
-    "Cautions / Laps": "11 for 61 laps",
-    "Lead changes": "8",
+    "Average speed": "58.175 mph (93.628 km/h)",
+    "Cautions / Laps": "11 for 61",
+    "Lead changes": "8 among 5 different drivers",
     "Red flags": "0",
-    "Time of race": "1 hour, 44 minutes and 4 seconds"
+    "Time of race": "1 hour, 44 minutes and 4 seconds",
+    "Margin of victory": "under caution"
   },
   "entry_list": [
     {
@@ -1779,12 +1780,14 @@
         ]
       ]
     },
-    "did_not_qualify": {
+        "did_not_qualify": {
       "headers": [
         "No.",
         "Driver",
         "Team",
         "Chassis",
+        "Time",
+        "Speed",
         "Status"
       ],
       "rows": [
@@ -1793,6 +1796,8 @@
           "Norman Newman",
           "Newman Motorsports",
           "LFR",
+          "18.343",
+          "98.130",
           "DNQ"
         ],
         [
@@ -1800,6 +1805,8 @@
           "Dave Sapienza",
           "Sapienza Racing",
           "FURY",
+          "18.674",
+          "96.391",
           "DNQ"
         ],
         [
@@ -1807,6 +1814,8 @@
           "Conner Jones",
           "PSR Racing",
           "PSR Products",
+          "18.314",
+          "98.285",
           "DNQ"
         ],
         [
@@ -1814,6 +1823,8 @@
           "Luke Fleming",
           "Frank Fleming Motorsports",
           "PSR Products",
+          "18.442",
+          "97.603",
           "DNQ"
         ],
         [
@@ -1821,6 +1832,8 @@
           "Cory Plummer",
           "Apex Racing",
           "Apex Race Cars",
+          "18.526",
+          "97.161",
           "DNQ"
         ]
       ]
@@ -2226,7 +2239,7 @@
       ]
     }
   },
-  "event_preview": "The New Smyrna Speedway is a high-banked, half-mile oval racetrack located near New Smyrna Beach, Florida. The 0.500-mile (0.805 km) asphalt surface features four turns with 23-degree banking, making it one of the faster short tracks in the United States. The straightaways are relatively flat compared to the corners, while the turns' steep banking helps maintain speed through each lap and promotes close, competitive racing.",
-  "event_preview_ru": "New Smyrna Speedway — высокобанковый полумильный овал, расположенный недалеко от New Smyrna Beach, Florida. Асфальтовая трасса длиной 0,500 мили (0,805 км) имеет четыре поворота с уклоном 23°, что делает её одной из быстрейших коротких трасс в Соединённых Штатах. Прямые относительно плоские по сравнению с поворотами, а крутой уклон в виражах помогает сохранять скорость на каждом круге и способствует плотной конкурентной борьбе.",
+  "event_preview": "The New Smyrna Speedway is a high-banked, half-mile oval racetrack located near New Smyrna Beach, Florida. The 0.500-mile (0.805 km) asphalt surface features four turns with 23-degree banking, making it one of the faster short tracks in the United States. The straightaways are relatively flat compared to the corners, while the turns' steep banking helps maintain speed through each lap and promotes close, competitive racing.\n\nThe fastest documented NASCAR Whelen Modified Tour qualifying lap at New Smyrna Speedway is Matt Hirschman's 17.462-second lap from February 2022.",
+  "event_preview_ru": "New Smyrna Speedway — высокобанковый полумильный овал, расположенный недалеко от New Smyrna Beach, Florida. Асфальтовая трасса длиной 0,500 мили (0,805 км) имеет четыре поворота с уклоном 23°, что делает её одной из быстрейших коротких трасс в Соединённых Штатах. Прямые относительно плоские по сравнению с поворотами, а крутой уклон в виражах помогает сохранять скорость на каждом круге и способствует плотной конкурентной борьбе.\n\nСамый быстрый задокументированный квалификационный круг NASCAR Whelen Modified Tour на New Smyrna Speedway — 17,462 секунды Matt Hirschman в феврале 2022 года.",
   "youtube_id": "A3cH4JyaCDE"
 }

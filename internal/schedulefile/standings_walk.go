@@ -19,13 +19,10 @@ func skipStandingsScheduleEvent(seriesID, season, today string, ev EventJSON) bo
 	if ev.Season != season {
 		return true
 	}
-	if isExhibitionEvent(seriesID, ev.ID) {
+	if skipChampionshipMetricsEvent(seriesID, ev.ID) {
 		return true
 	}
-	if strings.EqualFold(seriesID, "F1") && isF1PreSeasonEvent(ev.ID) {
-		return true
-	}
-	if strings.EqualFold(seriesID, "NASCAR_CUP") && ev.StartDate != "" && ev.StartDate > today {
+	if isFutureScheduleEvent(ev, today) {
 		return true
 	}
 	return false

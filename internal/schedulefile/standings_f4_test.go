@@ -43,15 +43,18 @@ func TestBuildStandingsFromEvents_F4IT_MisanoMergedByCar(t *testing.T) {
 	if aksoy.Driver != "Alp Aksoy" {
 		t.Errorf("driver name: got %q want Alp Aksoy", aksoy.Driver)
 	}
-	// Misano (R1) = 82; Vallelunga (R2) = 62; Monza (R3) = 22.
-	if aksoy.Points != "166" {
-		t.Errorf("total points: got %q want 166", aksoy.Points)
+	// Misano + Vallelunga + Monza + Mugello (after Round 4).
+	if aksoy.Points != "214" {
+		t.Errorf("total points: got %q want 214", aksoy.Points)
 	}
 	if aksoy.Races["R2-1"] == "" {
 		t.Errorf("expected Vallelunga R2-1 filled after round 2, got %#v", aksoy.Races)
 	}
 	if aksoy.Races["R3-1"] == "" {
 		t.Errorf("expected Monza R3-1 filled after round 3, got %#v", aksoy.Races)
+	}
+	if aksoy.Races["R4-1"] == "" {
+		t.Errorf("expected Mugello R4-1 filled after round 4, got %#v", aksoy.Races)
 	}
 }
 

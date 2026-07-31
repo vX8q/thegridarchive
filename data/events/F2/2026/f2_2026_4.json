@@ -9,8 +9,8 @@
   "end_date": "2026-06-07",
   "laps": "",
   "distance": "",
-  "event_preview": "Circuit de Monaco is a 3.337 km (2.074 mi) street circuit in Monte Carlo with 19 corners. The 2026 Formula 2 Monaco round is the fourth of 12 rounds on the calendar, held June 4-7 as a support to the Formula One Monaco Grand Prix. The weekend features a sprint race on Saturday and a feature race on Sunday.\n\nGabriele Minì leads the championship by 19 points heading to Monaco, showing consistency through scoring points in every race so far. Nikola Tsolov is the season's only multiple winner with victories at Melbourne and Miami, and arrives with significant psychological advantage — he has won the Formula 3 race at Monaco for the past two consecutive years and will be hunting a third. Colton Herta, the nine-time IndyCar winner on his partial-season F2 schedule, continues his pursuit of a Super Licence. Rafael Câmara remains competitive after his early-season performances.\n\nThe all-time Formula 2 qualifying record at Monaco belongs to Théo Pourchaire, who set a 1:20.985 during the 2021 Hyperpole session. The race fastest lap record is held by Zhou Guanyu, who clocked a 1:21.912 during the 2021 feature race.",
-  "event_preview_ru": "Circuit de Monaco — уличная трасса протяжённостью 3.337 km (2.074 mi) в Monte Carlo с 19 поворотами. Этап Formula 2 в Монако 2026 года — четвёртый из 12 на календаре, 4–7 июня в программе поддержки Гран-при Монако Формулы-1. Уик-энд включает спринт в субботу и основную гонку в воскресенье.\n\nGabriele Minì лидирует в чемпионате с отрывом в 19 очков перед Монако, демонстрируя стабильность — очки в каждой гонке сезона. Nikola Tsolov — единственный многократный победитель сезона с победами в Мельбурне и Майами — приезжает с существенным психологическим преимуществом: он выигрывал гонку Formula 3 в Монако два года подряд и будет охотиться за третьей. Colton Herta, девятикратный победитель IndyCar на частичном календаре F2, продолжает погоню за Super Licence. Rafael Câmara остаётся конкурентоспособным после сильных выступлений в начале сезона.\n\nАбсолютный рекорд квалификации Formula 2 в Монако принадлежит Théo Pourchaire — 1:20.985 в сессии Hyperpole 2021 года. Рекорд самого быстрого гоночного круга принадлежит Zhou Guanyu — 1:21.912 в основной гонке 2021 года.",
+  "event_preview": "Circuit de Monaco is a 3.337 km (2.074 mi) street circuit in Monte Carlo with 19 corners. The 2026 Formula 2 Monaco round is the fourth of 12 rounds on the calendar, held June 4-7 as a support to the Formula One Monaco Grand Prix. The weekend features a sprint race on Saturday and a feature race on Sunday.\n\nGabriele Mini leads the championship by 19 points heading to Monaco, showing consistency through scoring points in every race so far. Nikola Tsolov is the season's only multiple winner with victories at Melbourne and Miami, and arrives with significant psychological advantage — he has won the Formula 3 race at Monaco for the past two consecutive years and will be hunting a third. Colton Herta, the nine-time IndyCar winner on his partial-season F2 schedule, continues his pursuit of a Super Licence. Rafael Camara remains competitive after his early-season performances.\n\nThe all-time Formula 2 qualifying record at Monaco belongs to Charles Leclerc, who set a 1:19.309 in 2017. The race lap record is also Leclerc's, a 1:21.403 from the 2017 feature race.",
+  "event_preview_ru": "Circuit de Monaco — уличная трасса протяжённостью 3.337 km (2.074 mi) в Monte Carlo с 19 поворотами. Этап Formula 2 в Монако 2026 года — четвёртый из 12 на календаре, 4–7 июня в программе поддержки Гран-при Монако Формулы-1. Уик-энд включает спринт в субботу и основную гонку в воскресенье.\n\nGabriele Mini лидирует в чемпионате с отрывом в 19 очков перед Монако, демонстрируя стабильность — очки в каждой гонке сезона. Nikola Tsolov — единственный многократный победитель сезона с победами в Мельбурне и Майами — приезжает с существенным психологическим преимуществом: он выигрывал гонку Formula 3 в Монако два года подряд и будет охотиться за третьей. Colton Herta, девятикратный победитель IndyCar на частичном календаре F2, продолжает погоню за Super Licence. Rafael Camara остаётся конкурентоспособным после сильных выступлений в начале сезона.\n\nАбсолютный рекорд квалификации Formula 2 в Монако принадлежит Charles Leclerc — 1:19.309 в 2017 году. Рекорд гоночного круга также принадлежит Leclerc — 1:21.403 в основной гонке 2017 года. Рекорд самого быстрого гоночного круга принадлежит Zhou Guanyu — 1:21.912 в основной гонке 2021 года.",
   "youtube_highlights": [
     {
       "id": "-iP36Ls6guE",
@@ -24,13 +24,13 @@
   "entry_list": [
     {
       "number": "1",
-      "driver": "Rafael Câmara",
+      "driver": "Rafael Camara",
       "team": "Invicta Racing",
       "driver_slug": "rafael-camara"
     },
     {
       "number": "2",
-      "driver": "Joshua Dürksen",
+      "driver": "Joshua Durksen",
       "team": "Invicta Racing",
       "driver_slug": "joshua-durksen"
     },
@@ -48,7 +48,7 @@
     },
     {
       "number": "5",
-      "driver": "Noel León",
+      "driver": "Noel Leon",
       "team": "Campos Racing",
       "driver_slug": "noel-leon"
     },
@@ -72,7 +72,7 @@
     },
     {
       "number": "9",
-      "driver": "Gabriele Minì",
+      "driver": "Gabriele Mini",
       "team": "MP Motorsport",
       "driver_slug": "gabriele-mini"
     },
@@ -84,7 +84,7 @@
     },
     {
       "number": "11",
-      "driver": "Sebastián Montoya",
+      "driver": "Sebastian Montoya",
       "team": "Prema Racing",
       "driver_slug": "sebastian-montoya"
     },
@@ -138,7 +138,7 @@
     },
     {
       "number": "23",
-      "driver": "Rafael Villagómez",
+      "driver": "Rafael Villagomez",
       "team": "Van Amersfoort Racing",
       "driver_slug": "rafael-villagomez"
     },
@@ -181,7 +181,7 @@
         [
           "1",
           "9",
-          "G. Mini",
+          "Gabriele Mini",
           "MP Motorsport",
           "24",
           "1:21.809",
@@ -192,7 +192,7 @@
         [
           "2",
           "16",
-          "K. Maini",
+          "Kush Maini",
           "ART Grand Prix",
           "25",
           "1:21.829",
@@ -203,7 +203,7 @@
         [
           "3",
           "15",
-          "A. Dunne",
+          "Alex Dunne",
           "Rodin Motorsport",
           "25",
           "1:21.942",
@@ -214,7 +214,7 @@
         [
           "4",
           "7",
-          "D. Beganovic",
+          "Dino Beganovic",
           "DAMS Lucas Oil",
           "21",
           "1:21.997",
@@ -225,7 +225,7 @@
         [
           "5",
           "24",
-          "L. van Hoepen",
+          "Laurens van Hoepen",
           "Trident",
           "24",
           "1:22.009",
@@ -236,7 +236,7 @@
         [
           "6",
           "6",
-          "N. Tsolov",
+          "Nikola Tsolov",
           "Campos Racing",
           "23",
           "1:22.015",
@@ -247,7 +247,7 @@
         [
           "7",
           "5",
-          "N. Leon",
+          "Noel Leon",
           "Campos Racing",
           "24",
           "1:22.424",
@@ -258,7 +258,7 @@
         [
           "8",
           "8",
-          "R. Bilinski",
+          "Roman Bilinski",
           "DAMS Lucas Oil",
           "21",
           "1:22.452",
@@ -269,7 +269,7 @@
         [
           "9",
           "14",
-          "M. Stenshorne",
+          "Martinius Stenshorne",
           "Rodin Motorsport",
           "25",
           "1:22.518",
@@ -280,7 +280,7 @@
         [
           "10",
           "1",
-          "R. Câmara",
+          "Rafael Camara",
           "Invicta Racing",
           "24",
           "1:22.580",
@@ -291,7 +291,7 @@
         [
           "11",
           "25",
-          "J. Bennett",
+          "John Bennett",
           "Trident",
           "24",
           "1:22.961",
@@ -302,7 +302,7 @@
         [
           "12",
           "12",
-          "M. Boya",
+          "Mari Boya",
           "Prema Racing",
           "22",
           "1:23.111",
@@ -313,7 +313,7 @@
         [
           "13",
           "3",
-          "R. Miyata",
+          "Ritomo Miyata",
           "Hitech TGR",
           "24",
           "1:23.172",
@@ -324,7 +324,7 @@
         [
           "14",
           "17",
-          "T. Inthraphuvasak",
+          "Tasanapol Inthraphuvasak",
           "ART Grand Prix",
           "24",
           "1:23.198",
@@ -335,7 +335,7 @@
         [
           "15",
           "4",
-          "C. Herta",
+          "Colton Herta",
           "Hitech TGR",
           "24",
           "1:23.212",
@@ -346,7 +346,7 @@
         [
           "16",
           "11",
-          "S. Montoya",
+          "Sebastian Montoya",
           "Prema Racing",
           "21",
           "1:23.373",
@@ -357,7 +357,7 @@
         [
           "17",
           "22",
-          "N. Varrone",
+          "Nicolas Varrone",
           "Van Amersfoort Racing",
           "26",
           "1:23.538",
@@ -368,7 +368,7 @@
         [
           "18",
           "2",
-          "J. Durksen",
+          "Joshua Durksen",
           "Invicta Racing",
           "24",
           "1:23.565",
@@ -379,7 +379,7 @@
         [
           "19",
           "20",
-          "E. Fittipaldi",
+          "Emerson Fittipaldi Jr.",
           "AIX Racing",
           "24",
           "1:23.772",
@@ -390,7 +390,7 @@
         [
           "20",
           "21",
-          "C. Shields",
+          "Cian Shields",
           "AIX Racing",
           "25",
           "1:24.088",
@@ -401,7 +401,7 @@
         [
           "21",
           "23",
-          "R. Villagomez",
+          "Rafael Villagomez",
           "Van Amersfoort Racing",
           "14",
           "1:24.764",
@@ -412,7 +412,7 @@
         [
           "22",
           "10",
-          "O. Goethe",
+          "Oliver Goethe",
           "MP Motorsport",
           "4",
           "1:44.671",
@@ -448,7 +448,7 @@
             [
               "1",
               "1",
-              "R. Câmara",
+              "Rafael Camara",
               "Invicta Racing",
               "9",
               "1:20.923",
@@ -459,7 +459,7 @@
             [
               "2",
               "15",
-              "A. Dunne",
+              "Alex Dunne",
               "Rodin Motorsport",
               "12",
               "1:21.033",
@@ -470,7 +470,7 @@
             [
               "3",
               "7",
-              "D. Beganovic",
+              "Dino Beganovic",
               "DAMS Lucas Oil",
               "11",
               "1:21.099",
@@ -481,7 +481,7 @@
             [
               "4",
               "9",
-              "G. Mini",
+              "Gabriele Mini",
               "MP Motorsport",
               "12",
               "1:21.180",
@@ -492,7 +492,7 @@
             [
               "5",
               "5",
-              "N. Leon",
+              "Noel Leon",
               "Campos Racing",
               "10",
               "1:21.595",
@@ -503,7 +503,7 @@
             [
               "6",
               "3",
-              "R. Miyata",
+              "Ritomo Miyata",
               "Hitech TGR",
               "11",
               "1:21.804",
@@ -514,7 +514,7 @@
             [
               "7",
               "17",
-              "T. Inthraphuvasak",
+              "Tasanapol Inthraphuvasak",
               "ART Grand Prix",
               "11",
               "1:21.845",
@@ -525,7 +525,7 @@
             [
               "8",
               "11",
-              "S. Montoya",
+              "Sebastian Montoya",
               "Prema Racing",
               "11",
               "1:21.870",
@@ -536,7 +536,7 @@
             [
               "9",
               "25",
-              "J. Bennett",
+              "John Bennett",
               "Trident",
               "8",
               "1:22.664",
@@ -547,7 +547,7 @@
             [
               "10",
               "23",
-              "R. Villagomez",
+              "Rafael Villagomez",
               "Van Amersfoort Racing",
               "12",
               "1:22.850",
@@ -558,7 +558,7 @@
             [
               "11",
               "21",
-              "C. Shields",
+              "Cian Shields",
               "AIX Racing",
               "12",
               "1:23.077",
@@ -592,7 +592,7 @@
             [
               "1",
               "6",
-              "N. Tsolov",
+              "Nikola Tsolov",
               "Campos Racing",
               "11",
               "1:21.053",
@@ -603,7 +603,7 @@
             [
               "2",
               "14",
-              "M. Stenshorne",
+              "Martinius Stenshorne",
               "Rodin Motorsport",
               "11",
               "1:21.274",
@@ -614,7 +614,7 @@
             [
               "3",
               "16",
-              "K. Maini",
+              "Kush Maini",
               "ART Grand Prix",
               "10",
               "1:21.338",
@@ -625,7 +625,7 @@
             [
               "4",
               "8",
-              "R. Bilinski",
+              "Roman Bilinski",
               "DAMS Lucas Oil",
               "11",
               "1:21.362",
@@ -636,7 +636,7 @@
             [
               "5",
               "2",
-              "J. Durksen",
+              "Joshua Durksen",
               "Invicta Racing",
               "11",
               "1:21.557",
@@ -647,7 +647,7 @@
             [
               "6",
               "10",
-              "O. Goethe",
+              "Oliver Goethe",
               "MP Motorsport",
               "11",
               "1:21.673",
@@ -658,7 +658,7 @@
             [
               "7",
               "4",
-              "C. Herta",
+              "Colton Herta",
               "Hitech TGR",
               "11",
               "1:21.772",
@@ -669,7 +669,7 @@
             [
               "8",
               "22",
-              "N. Varrone",
+              "Nicolas Varrone",
               "Van Amersfoort Racing",
               "11",
               "1:21.819",
@@ -680,7 +680,7 @@
             [
               "9",
               "12",
-              "M. Boya",
+              "Mari Boya",
               "Prema Racing",
               "11",
               "1:22.370",
@@ -691,7 +691,7 @@
             [
               "10",
               "20",
-              "E. Fittipaldi",
+              "Emerson Fittipaldi Jr.",
               "AIX Racing",
               "12",
               "1:22.408",
@@ -715,6 +715,7 @@
           },
           "headers": [
             "Pos",
+            "ST",
             "No.",
             "Driver",
             "Team",
@@ -730,8 +731,9 @@
           "rows": [
             [
               "1",
+              "1",
               "5",
-              "N. Leon",
+              "Noel Leon",
               "Campos Racing",
               "30",
               "43:06.407",
@@ -744,8 +746,9 @@
             ],
             [
               "2",
+              "2",
               "8",
-              "R. Bilinski",
+              "Roman Bilinski",
               "DAMS Lucas Oil",
               "30",
               "43:09.813",
@@ -758,8 +761,9 @@
             ],
             [
               "3",
+              "3",
               "9",
-              "G. Mini",
+              "Gabriele Mini",
               "MP Motorsport",
               "30",
               "43:10.409",
@@ -772,8 +776,9 @@
             ],
             [
               "4",
+              "4",
               "2",
-              "J. Durksen",
+              "Joshua Durksen",
               "Invicta Racing",
               "30",
               "43:10.783",
@@ -786,8 +791,9 @@
             ],
             [
               "5",
+              "5",
               "7",
-              "D. Beganovic",
+              "Dino Beganovic",
               "DAMS Lucas Oil",
               "30",
               "43:11.361",
@@ -800,8 +806,9 @@
             ],
             [
               "6",
+              "6",
               "14",
-              "M. Stenshorne",
+              "Martinius Stenshorne",
               "Rodin Motorsport",
               "30",
               "43:12.780",
@@ -814,8 +821,9 @@
             ],
             [
               "7",
+              "8",
               "16",
-              "K. Maini",
+              "Kush Maini",
               "ART Grand Prix",
               "30",
               "43:14.040",
@@ -828,8 +836,9 @@
             ],
             [
               "8",
+              "10",
               "1",
-              "R. Câmara",
+              "Rafael Camara",
               "Invicta Racing",
               "30",
               "43:30.601",
@@ -842,8 +851,9 @@
             ],
             [
               "9",
+              "7",
               "15",
-              "A. Dunne",
+              "Alex Dunne",
               "Rodin Motorsport",
               "30",
               "43:35.438",
@@ -856,8 +866,9 @@
             ],
             [
               "10",
+              "9",
               "6",
-              "N. Tsolov",
+              "Nikola Tsolov",
               "Campos Racing",
               "30",
               "43:57.988",
@@ -870,8 +881,9 @@
             ],
             [
               "11",
+              "11",
               "3",
-              "R. Miyata",
+              "Ritomo Miyata",
               "Hitech TGR",
               "30",
               "44:05.567",
@@ -884,8 +896,9 @@
             ],
             [
               "12",
+              "16",
               "22",
-              "N. Varrone",
+              "Nicolas Varrone",
               "Van Amersfoort Racing",
               "30",
               "44:18.201",
@@ -898,8 +911,9 @@
             ],
             [
               "13",
+              "15",
               "11",
-              "S. Montoya",
+              "Sebastian Montoya",
               "Prema Racing",
               "30",
               "44:20.915",
@@ -912,8 +926,9 @@
             ],
             [
               "14",
+              "17",
               "12",
-              "M. Boya",
+              "Mari Boya",
               "Prema Racing",
               "30",
               "44:21.346",
@@ -926,8 +941,9 @@
             ],
             [
               "15",
+              "14",
               "4",
-              "C. Herta",
+              "Colton Herta",
               "Hitech TGR",
               "30",
               "44:23.806",
@@ -940,8 +956,9 @@
             ],
             [
               "16",
+              "18",
               "23",
-              "R. Villagomez",
+              "Rafael Villagomez",
               "Van Amersfoort Racing",
               "30",
               "44:26.524",
@@ -954,8 +971,9 @@
             ],
             [
               "17",
+              "19",
               "20",
-              "E. Fittipaldi",
+              "Emerson Fittipaldi Jr.",
               "AIX Racing",
               "30",
               "44:27.787",
@@ -968,8 +986,9 @@
             ],
             [
               "18",
+              "20",
               "21",
-              "C. Shields",
+              "Cian Shields",
               "AIX Racing",
               "30",
               "44:29.515",
@@ -982,8 +1001,9 @@
             ],
             [
               "19",
+              "21",
               "24",
-              "L. van Hoepen",
+              "Laurens van Hoepen",
               "Trident",
               "30",
               "44:32.051",
@@ -996,8 +1016,9 @@
             ],
             [
               "20",
+              "22",
               "25",
-              "J. Bennett",
+              "John Bennett",
               "Trident",
               "29",
               "43:07.227",
@@ -1010,8 +1031,9 @@
             ],
             [
               "21",
+              "13",
               "17",
-              "T. Inthraphuvasak",
+              "Tasanapol Inthraphuvasak",
               "ART Grand Prix",
               "26",
               "43:29.163",
@@ -1024,8 +1046,9 @@
             ],
             [
               "DNF",
+              "12",
               "10",
-              "O. Goethe",
+              "Oliver Goethe",
               "MP Motorsport",
               "20",
               "30:01.830",
@@ -1048,6 +1071,7 @@
           },
           "headers": [
             "Pos",
+            "ST",
             "No.",
             "Driver",
             "Team",
@@ -1063,8 +1087,9 @@
           "rows": [
             [
               "1",
+              "2",
               "6",
-              "N. Tsolov",
+              "Nikola Tsolov",
               "Campos Racing",
               "42",
               "1:00:19.442",
@@ -1077,8 +1102,9 @@
             ],
             [
               "2",
+              "3",
               "15",
-              "A. Dunne",
+              "Alex Dunne",
               "Rodin Motorsport",
               "42",
               "1:00:28.455",
@@ -1091,8 +1117,9 @@
             ],
             [
               "3",
+              "5",
               "7",
-              "D. Beganovic",
+              "Dino Beganovic",
               "DAMS Lucas Oil",
               "42",
               "1:00:45.913",
@@ -1105,8 +1132,9 @@
             ],
             [
               "4",
+              "12",
               "16",
-              "K. Maini",
+              "Kush Maini",
               "ART Grand Prix",
               "42",
               "1:00:49.645",
@@ -1119,8 +1147,9 @@
             ],
             [
               "5",
+              "4",
               "14",
-              "M. Stenshorne",
+              "Martinius Stenshorne",
               "Rodin Motorsport",
               "42",
               "1:00:49.736",
@@ -1133,8 +1162,9 @@
             ],
             [
               "6",
+              "9",
               "3",
-              "R. Miyata",
+              "Ritomo Miyata",
               "Hitech TGR",
               "42",
               "1:00:50.301",
@@ -1147,8 +1177,9 @@
             ],
             [
               "7",
+              "18",
               "20",
-              "E. Fittipaldi",
+              "Emerson Fittipaldi Jr.",
               "AIX Racing",
               "42",
               "1:00:59.984",
@@ -1161,8 +1192,9 @@
             ],
             [
               "8",
+              "14",
               "11",
-              "S. Montoya",
+              "Sebastian Montoya",
               "Prema Racing",
               "42",
               "1:01:01.599",
@@ -1175,8 +1207,9 @@
             ],
             [
               "9",
+              "8",
               "5",
-              "N. Leon",
+              "Noel Leon",
               "Campos Racing",
               "42",
               "1:01:01.948",
@@ -1189,8 +1222,9 @@
             ],
             [
               "10",
+              "7",
               "8",
-              "R. Bilinski",
+              "Roman Bilinski",
               "DAMS Lucas Oil",
               "42",
               "1:01:02.457",
@@ -1203,8 +1237,9 @@
             ],
             [
               "11",
+              "6",
               "9",
-              "G. Mini",
+              "Gabriele Mini",
               "MP Motorsport",
               "42",
               "1:01:03.015",
@@ -1217,8 +1252,9 @@
             ],
             [
               "12",
+              "20",
               "24",
-              "L. van Hoepen",
+              "Laurens van Hoepen",
               "Trident",
               "42",
               "1:01:06.765",
@@ -1231,8 +1267,9 @@
             ],
             [
               "13",
+              "11",
               "17",
-              "T. Inthraphuvasak",
+              "Tasanapol Inthraphuvasak",
               "ART Grand Prix",
               "42",
               "1:01:07.452",
@@ -1246,7 +1283,8 @@
             [
               "14",
               "10",
-              "O. Goethe",
+              "10",
+              "Oliver Goethe",
               "MP Motorsport",
               "42",
               "1:01:15.052",
@@ -1259,8 +1297,9 @@
             ],
             [
               "15",
+              "22",
               "2",
-              "J. Durksen",
+              "Joshua Durksen",
               "Invicta Racing",
               "42",
               "1:01:25.176",
@@ -1273,8 +1312,9 @@
             ],
             [
               "16",
+              "16",
               "12",
-              "M. Boya",
+              "Mari Boya",
               "Prema Racing",
               "42",
               "1:01:30.045",
@@ -1287,8 +1327,9 @@
             ],
             [
               "17",
+              "19",
               "21",
-              "C. Shields",
+              "Cian Shields",
               "AIX Racing",
               "42",
               "1:01:30.133",
@@ -1301,8 +1342,9 @@
             ],
             [
               "18",
+              "21",
               "25",
-              "J. Bennett",
+              "John Bennett",
               "Trident",
               "42",
               "1:01:32.671",
@@ -1315,8 +1357,9 @@
             ],
             [
               "19",
+              "13",
               "4",
-              "C. Herta",
+              "Colton Herta",
               "Hitech TGR",
               "42",
               "1:01:34.639",
@@ -1329,8 +1372,9 @@
             ],
             [
               "20",
+              "15",
               "22",
-              "N. Varrone",
+              "Nicolas Varrone",
               "Van Amersfoort Racing",
               "42",
               "1:01:36.601",
@@ -1343,8 +1387,9 @@
             ],
             [
               "21",
+              "17",
               "23",
-              "R. Villagomez",
+              "Rafael Villagomez",
               "Van Amersfoort Racing",
               "42",
               "1:01:40.988",
@@ -1358,7 +1403,8 @@
             [
               "DNF",
               "1",
-              "R. Câmara",
+              "1",
+              "Rafael Camara",
               "Invicta Racing",
               "34",
               "49:03.379",

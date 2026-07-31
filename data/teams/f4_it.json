@@ -1,0 +1,474 @@
+{
+  "teams": [
+    {
+      "driver": "Evan Michelini",
+      "number": "44",
+      "rounds": "1–3",
+      "team": "AKM Motorsport"
+    },
+    {
+      "driver": "George Proudford-Nalder",
+      "number": "66",
+      "rounds": "3",
+      "team": "AKM Motorsport"
+    },
+    {
+      "driver": "Vittorio Orsini",
+      "number": "88",
+      "rounds": "1–4",
+      "team": "AKM Motorsport"
+    },
+    {
+      "driver": "Fabricio Fogaca",
+      "number": "99",
+      "rounds": "1–4",
+      "team": "AKM Motorsport"
+    },
+    {
+      "driver": "Thiago Palotini",
+      "number": "11",
+      "rounds": "1–2",
+      "team": "Alpha 54 Racing"
+    },
+    {
+      "driver": "Federico Diaz",
+      "number": "54",
+      "rounds": "1–4",
+      "team": "Alpha 54 Racing"
+    },
+    {
+      "driver": "Ignacio Diaz",
+      "number": "55",
+      "rounds": "3",
+      "team": "Alpha 54 Racing"
+    },
+    {
+      "driver": "Kirill Kutskov",
+      "number": "56",
+      "rounds": "4",
+      "team": "Alpha 54 Racing"
+    },
+    {
+      "driver": "Simon Rechenmacher",
+      "number": "36",
+      "rounds": "3–4",
+      "team": "Cram Motorsport"
+    },
+    {
+      "driver": "Rafaela Ferreira",
+      "number": "38",
+      "rounds": "1, 3–4",
+      "team": "Cram Motorsport"
+    },
+    {
+      "driver": "Andre Rodriguez",
+      "number": "40",
+      "rounds": "1–3",
+      "team": "Cram Motorsport"
+    },
+    {
+      "driver": "Teo Borenstein",
+      "number": "20",
+      "rounds": "4",
+      "team": "Jenzer Motorsport"
+    },
+    {
+      "driver": "Levi Arn",
+      "number": "21",
+      "rounds": "1–4",
+      "team": "Jenzer Motorsport"
+    },
+    {
+      "driver": "Elia Weiss",
+      "number": "22",
+      "rounds": "1–4",
+      "team": "Jenzer Motorsport"
+    },
+    {
+      "driver": "Artem Severiukhin",
+      "number": "23",
+      "rounds": "2",
+      "team": "Jenzer Motorsport"
+    },
+    {
+      "driver": "Nicolas Cortes",
+      "number": "24",
+      "rounds": "1–4",
+      "team": "Jenzer Motorsport"
+    },
+    {
+      "driver": "Georgiy Zasov",
+      "number": "25",
+      "rounds": "1",
+      "team": "Jenzer Motorsport"
+    },
+    {
+      "driver": "Bader Al Sulaiti",
+      "number": "26",
+      "rounds": "1–4",
+      "team": "Jenzer Motorsport"
+    },
+    {
+      "driver": "Rosanne den Drijver",
+      "number": "80",
+      "rounds": "3",
+      "team": "Maffi Racing"
+    },
+    {
+      "driver": "David Walther",
+      "number": "83",
+      "rounds": "1, 3–4",
+      "team": "Maffi Racing"
+    },
+    {
+      "driver": "Igor Polak",
+      "number": "83",
+      "rounds": "2",
+      "team": "Maffi Racing"
+    },
+    {
+      "driver": "Andreas Lo Bue",
+      "number": "84",
+      "rounds": "4",
+      "team": "Maffi Racing"
+    },
+    {
+      "driver": "Igor Polak",
+      "number": "86",
+      "rounds": "1, 4",
+      "team": "Maffi Racing"
+    },
+    {
+      "driver": "David Walther",
+      "number": "86",
+      "rounds": "2",
+      "team": "Maffi Racing"
+    },
+    {
+      "driver": "Ginevra Panzeri",
+      "number": "64",
+      "rounds": "1–2, 4",
+      "team": "PA Racing"
+    },
+    {
+      "driver": "Oscar Repetto",
+      "number": "6",
+      "rounds": "1–4",
+      "team": "PHM Racing"
+    },
+    {
+      "driver": "Iacopo Martinese",
+      "number": "28",
+      "rounds": "1–4",
+      "team": "PHM Racing"
+    },
+    {
+      "driver": "Roland Kuklane",
+      "number": "47",
+      "rounds": "1–4",
+      "team": "PHM Racing"
+    },
+    {
+      "driver": "Emma Felbermayr",
+      "number": "60",
+      "rounds": "1, 3–4",
+      "team": "PHM Racing"
+    },
+    {
+      "driver": "Alexander Chartier",
+      "number": "81",
+      "rounds": "1, 3–4",
+      "team": "PHM Racing"
+    },
+    {
+      "driver": "Christian Costoya",
+      "number": "1",
+      "rounds": "1–4",
+      "team": "Prema Racing"
+    },
+    {
+      "driver": "Roman Kamyab",
+      "number": "4",
+      "rounds": "2–4",
+      "team": "Prema Racing"
+    },
+    {
+      "driver": "Alp Aksoy",
+      "number": "10",
+      "rounds": "1–4",
+      "team": "Prema Racing"
+    },
+    {
+      "driver": "Niccolo Maccagnani",
+      "number": "19",
+      "rounds": "1–4",
+      "team": "Prema Racing"
+    },
+    {
+      "driver": "Oleksandr Bondarev",
+      "number": "27",
+      "rounds": "1–4",
+      "team": "Prema Racing"
+    },
+    {
+      "driver": "Kingsley Zheng",
+      "number": "69",
+      "rounds": "1–4",
+      "team": "Prema Racing"
+    },
+    {
+      "driver": "David Cosma Cristofor",
+      "number": "98",
+      "rounds": "1–4",
+      "team": "Prema Racing"
+    },
+    {
+      "driver": "Andy Consani",
+      "number": "30",
+      "rounds": "1–4",
+      "team": "R-ace GP"
+    },
+    {
+      "driver": "Tamas Gender",
+      "number": "33",
+      "rounds": "1–4",
+      "team": "R-ace GP"
+    },
+    {
+      "driver": "Kenzo Craigie",
+      "number": "34",
+      "rounds": "1–4",
+      "team": "R-ace GP"
+    },
+    {
+      "driver": "Payton Westcott",
+      "number": "35",
+      "rounds": "1, 3–4",
+      "team": "R-ace GP"
+    },
+    {
+      "driver": "Emily Cotty",
+      "number": "42",
+      "rounds": "1–4",
+      "team": "R-ace GP"
+    },
+    {
+      "driver": "Knud Nielsen",
+      "number": "41",
+      "rounds": "1–4",
+      "team": "Real Racing"
+    },
+    {
+      "driver": "Zoe Florescu",
+      "number": "43",
+      "rounds": "4",
+      "team": "Real Racing"
+    },
+    {
+      "driver": "Joaquin Rubino",
+      "number": "52",
+      "rounds": "4",
+      "team": "Scuderia Buell"
+    },
+    {
+      "driver": "Beco Bernoldi",
+      "number": "16",
+      "rounds": "1",
+      "team": "Trident Motorsport"
+    },
+    {
+      "driver": "Bernardo Bernoldi",
+      "number": "16",
+      "rounds": "2–4",
+      "team": "Trident Motorsport"
+    },
+    {
+      "driver": "Florentin Hattemer",
+      "number": "50",
+      "rounds": "1–4",
+      "team": "Trident Motorsport"
+    },
+    {
+      "driver": "Augustus Toniolo",
+      "number": "51",
+      "rounds": "1–4",
+      "team": "Trident Motorsport"
+    },
+    {
+      "driver": "Dominik Simek",
+      "number": "67",
+      "rounds": "1–4",
+      "team": "Trident Motorsport"
+    },
+    {
+      "driver": "Lyuboslav Ruykov",
+      "number": "73",
+      "rounds": "1–4",
+      "team": "Trident Motorsport"
+    },
+    {
+      "driver": "Luka Sammalisto",
+      "number": "7",
+      "rounds": "1–4",
+      "team": "US Racing"
+    },
+    {
+      "driver": "Edu Robinson",
+      "number": "9",
+      "rounds": "1–4",
+      "team": "US Racing"
+    },
+    {
+      "driver": "Noah Killion",
+      "number": "13",
+      "rounds": "1–4",
+      "team": "US Racing"
+    },
+    {
+      "driver": "Oleksandr Savinkov",
+      "number": "17",
+      "rounds": "1–4",
+      "team": "US Racing"
+    },
+    {
+      "driver": "Ludovico Busso",
+      "number": "29",
+      "rounds": "1–4",
+      "team": "US Racing"
+    },
+    {
+      "driver": "Ary Bansal",
+      "number": "46",
+      "rounds": "1–4",
+      "team": "US Racing"
+    },
+    {
+      "driver": "Arjen Kraling",
+      "number": "62",
+      "rounds": "1–4",
+      "team": "US Racing"
+    },
+    {
+      "driver": "Aleksander Ruta",
+      "number": "3",
+      "rounds": "1–4",
+      "team": "Van Amersfoort Racing"
+    },
+    {
+      "driver": "Pedro Lima",
+      "number": "53",
+      "rounds": "1–4",
+      "team": "Van Amersfoort Racing"
+    },
+    {
+      "driver": "Thomas Bearman",
+      "number": "87",
+      "rounds": "1–4",
+      "team": "Van Amersfoort Racing"
+    },
+    {
+      "driver": "Benett Gaspar",
+      "number": "85",
+      "rounds": "3",
+      "team": "Zengo Motorsport"
+    }
+  ],
+  "technical_spec": [
+    {
+      "key": "Chassis",
+      "value": "Tatuus F4-T421 (FIA Formula 4 Gen2)"
+    },
+    {
+      "key": "Homologation",
+      "value": "FIA 2021-05-F4-Tatuus"
+    },
+    {
+      "key": "Overall length",
+      "value": "4700 mm (max)"
+    },
+    {
+      "key": "Overall width",
+      "value": "1750 mm (max)"
+    },
+    {
+      "key": "Overall height",
+      "value": "950 mm (from reference plane)"
+    },
+    {
+      "key": "Wheelbase",
+      "value": "2800 mm"
+    },
+    {
+      "key": "Front track",
+      "value": "1515 mm"
+    },
+    {
+      "key": "Rear track",
+      "value": "1470 mm"
+    },
+    {
+      "key": "Monocoque",
+      "value": "Carbon-fibre sandwich with Al/Nomex honeycomb; integrated side anti-intrusion panels; FIA F4/2022-2 Gen (Appendix J Art. 274A)"
+    },
+    {
+      "key": "Front suspension",
+      "value": "Pushrod / twin damper / spring (Eibach 36 mm; Andreani dampers)"
+    },
+    {
+      "key": "Rear suspension",
+      "value": "Pushrod / twin damper / spring (Eibach 36 mm; Andreani dampers)"
+    },
+    {
+      "key": "Brakes",
+      "value": "TM calipers"
+    },
+    {
+      "key": "Wheels",
+      "value": "OZ Racing"
+    },
+    {
+      "key": "Engine",
+      "value": "Autotecnica Motori 414-F4 Gen2, 1368 cm³ turbocharged I4"
+    },
+    {
+      "key": "Maximum power",
+      "value": "173 cv / 127 kW (DIN)"
+    },
+    {
+      "key": "Maximum torque",
+      "value": "245 Nm (DIN, 3500 rpm)"
+    },
+    {
+      "key": "Fuel",
+      "value": "102 RON"
+    },
+    {
+      "key": "ECU",
+      "value": "Marelli Motorsport SRG-140 / SRG-141"
+    },
+    {
+      "key": "Gearbox",
+      "value": "SADEV SLR75 six-speed sequential"
+    },
+    {
+      "key": "Gearshift",
+      "value": "Magneti Marelli ESA 2"
+    },
+    {
+      "key": "Minimum weight (FIA F4 Gen2 reference)",
+      "value": "Defined in championship Sporting Regulations; must not be less than homologation weight + minimum 75 kg for the driver (2026 FIA Formula 4 Technical Regulations Art. 4.1). Italian F4 reference commonly cited as 605 kg including driver"
+    },
+    {
+      "key": "Halo",
+      "value": "Halo required under FIA Formula 4 Gen2 / Appendix J Art. 274A survival-cell standards"
+    },
+    {
+      "key": "Tyres",
+      "value": "Pirelli control tyres (Italian F4 Sporting Regulations 2026)"
+    },
+    {
+      "key": "Source",
+      "value": "2026 FIA Formula 4 Technical Regulations Art. 274A; ACI Sport Italian F4 Sporting Regulations 2026"
+    }
+  ]
+}

@@ -7,8 +7,8 @@
   "location": "Avondale, Arizona, USA",
   "laps": "150*",
   "distance": "1.000 mile paved track (150.000 miles)",
-  "event_preview": "Phoenix Raceway in its current form is measured at 1.000 mi (1.609 km), with 9° of banking in the first two turns, 11° of banking in the last two turns, 9° of banking on the frontstretch, and 3° of banking on the backstretch. The track is known for its frontstretch kink, commonly referred to as a \"dogleg\" that was added to accommodate the track's original road course, which used parts of the oval alongside specialized portions outside the oval.",
-  "event_preview_ru": "Phoenix Raceway в нынешней конфигурации имеет длину 1,000 мили (1,609 км): уклон 9° в первых двух поворотах, 11° в последних двух, 9° на передней прямой и 3° на задней прямой. Трасса известна изломом на передней прямой — так называемым «dogleg», добавленным для совмещения с исходной конфигурацией шоссейного курса, который использовал части овала наряду со специализированными участками за пределами овала.",
+  "event_preview": "Phoenix Raceway in its current form is measured at 1.000 mi (1.609 km), with 9° of banking in the first two turns, 11° of banking in the last two turns, 9° of banking on the frontstretch, and 3° of banking on the backstretch. The track is known for its frontstretch kink, commonly referred to as a \"dogleg\" that was added to accommodate the track's original road course, which used parts of the oval alongside specialized portions outside the oval.\n\nThe all-time ARCA Menards Series qualifying record at Phoenix belongs to Sammy Smith, who set a 26.912-second lap (133.769 mph) in 2022. The series race record average speed is 86.409 mph, set by Taylor Gray in 2022 (1:46:46).",
+  "event_preview_ru": "Phoenix Raceway в нынешней конфигурации имеет длину 1,000 мили (1,609 км): уклон 9° в первых двух поворотах, 11° в последних двух, 9° на передней прямой и 3° на задней прямой. Трасса известна изломом на передней прямой — так называемым «dogleg», добавленным для совмещения с исходной конфигурацией шоссейного курса, который использовал части овала наряду со специализированными участками за пределами овала.\n\nАбсолютный рекорд квалификации ARCA Menards Series на Phoenix принадлежит Sammy Smith — 26,912 секунды (133,769 mph) в 2022 году. Рекорд средней скорости гонки серии — 86,409 mph, установлен Taylor Gray в 2022 году (1:46:46).",
   "entry_list": [
     {
       "number": "01",
@@ -1855,11 +1855,12 @@
     }
   },
   "race_statistics": {
-    "Lead changes": "1 among 1 different driver",
-    "Cautions / Laps": "9 for 56 laps",
+    "Average speed": "80.536 mph (129.610 km/h)",
+    "Cautions / Laps": "9 for 56",
+    "Lead changes": "1 among 1 different drivers",
     "Red flags": "0",
     "Time of race": "1 hour, 56 minutes and 5 seconds",
-    "Average speed": "80.536 miles per hour (129.610 km/h)"
+    "Margin of victory": "0.299 sec"
   },
   "youtube_highlights": [
     {

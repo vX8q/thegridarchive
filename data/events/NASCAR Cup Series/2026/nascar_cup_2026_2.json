@@ -11,8 +11,8 @@
   "stage2_laps": "100",
   "stage3_laps": "100",
   "youtube_id": "h6NRbydlp9w",
-  "event_preview": "The track is a quad-oval intermediate speedway. In its current form, it is measured at 1.54 miles (2.48 km), with 28 degrees of banking in the turns and five degrees of banking in the straightaways. The racing surface width varies, with a recorded 52 feet on the frontstretch, 42 feet on the backstretch, and 40 feet in the turns.",
-  "event_preview_ru": "Трасса представляет собой промежуточный квад-овал. В текущей конфигурации её длина составляет 1,54 мили (2,48 км), уклон в поворотах — 28 градусов, на прямых — пять градусов. Ширина покрытия варьируется: 52 фута на главной прямой, 42 фута на задней прямой и 40 футов в поворотах.",
+  "event_preview": "The track is a quad-oval intermediate speedway. In its current form, it is measured at 1.54 miles (2.48 km), with 28 degrees of banking in the turns and five degrees of banking in the straightaways. The racing surface width varies, with a recorded 52 feet on the frontstretch, 42 feet on the backstretch, and 40 feet in the turns.\n\nThe all-time Cup Series qualifying record at Atlanta (EchoPark Speedway) belongs to Geoffrey Bodine, who turned a 28.074-second lap (197.478 mph) in 1997. The series race record average speed is 159.904 mph, set by Bobby Labonte in 1997 (3:07:48).",
+  "event_preview_ru": "Трасса представляет собой промежуточный квад-овал. В текущей конфигурации её длина составляет 1,54 мили (2,48 км), уклон в поворотах — 28 градусов, на прямых — пять градусов. Ширина покрытия варьируется: 52 фута на главной прямой, 42 фута на задней прямой и 40 футов в поворотах.\n\nАбсолютный рекорд квалификации Cup Series на Atlanta (EchoPark Speedway) принадлежит Geoffrey Bodine — 28,074 секунды (197,478 mph) в 1997 году. Рекорд средней скорости гонки серии — 159,904 mph, установлен Bobby Labonte в 1997 году (3:07:48).",
   "entry_list": [
     {
       "number": "1",
@@ -64,7 +64,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -225,12 +225,12 @@
     },
     {
       "number": "44",
-      "driver": "JJ Yeley",
+      "driver": "J. J. Yeley",
       "team": "NY Racing Team",
       "manufacturer": "Chevrolet",
       "crew_chief": "Jay Guy",
       "points_eligible": false,
-      "driver_slug": "jj-yeley"
+      "driver_slug": "j-j-yeley"
     },
     {
       "number": "45",
@@ -577,7 +577,7 @@
           "5",
           "12",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "271",
@@ -1131,11 +1131,11 @@
     }
   },
   "race_statistics": {
+    "Average speed": "117.865 mph (189.685 km/h)",
+    "Cautions / Laps": "10 for 67",
     "Lead changes": "57 among 14 different drivers",
-    "Cautions / Laps": "10 for 67 laps",
     "Red flags": "1 for 10 minutes and 31 seconds",
     "Time of race": "3 hours, 32 minutes and 27 seconds",
-    "Average speed": "117.865 miles per hour (189.685 km/h)",
-    "Margin of victory": ".164 sec"
+    "Margin of victory": "0.164 sec"
   }
 }

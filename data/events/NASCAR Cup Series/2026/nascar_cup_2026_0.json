@@ -8,13 +8,14 @@
   "laps": "200",
   "distance": "0.250 mile paved track (50.000 miles)",
   "youtube_id": "aQR5HLSPOfk",
-  "event_preview": "Bowman Gray Stadium is a multi-use sports facility in Winston-Salem, North Carolina. The complex consists of a 0.250 mi (0.402 km) paved oval short track and a gridiron football field.",
-  "event_preview_ru": "Bowman Gray Stadium — многофункциональный спортивный комплекс в Winston-Salem, North Carolina. В состав входят асфальтовый короткий овал длиной 0,250 мили (0,402 км) и поле для американского футбола.",
+  "event_preview": "Bowman Gray Stadium is a multi-use sports facility in Winston-Salem, North Carolina. The complex consists of a 0.250 mi (0.402 km) paved oval short track and a gridiron football field. The 2026 Cook Out Clash was the first NASCAR Cup Series event at the venue since 1971.\n\nFrom the Grand National / Winston Cup era at Bowman Gray (1958–1971), the Cup Series qualifying record belongs to Richard Petty, who turned a 15.793-second lap (55.283 mph) in 1971. The race record average speed is 44.792 mph, set by Bobby Allison in the 1971 Myers Brothers 250 (1:23:47).",
+  "event_preview_ru": "Bowman Gray Stadium — многофункциональный спортивный комплекс в Winston-Salem, North Carolina. В состав входят асфальтовый короткий овал длиной 0,250 мили (0,402 км) и поле для американского футбола. Cook Out Clash 2026 стал первым событием NASCAR Cup Series на этой трассе с 1971 года.\n\nИз эпохи Grand National / Winston Cup на Bowman Gray (1958–1971) рекорд квалификации Cup Series принадлежит Richard Petty — 15,793 секунды (55,283 mph) в 1971 году. Рекорд средней скорости гонки серии — 44,792 mph, установлен Bobby Allison в Myers Brothers 250 1971 года (1:23:47).",
   "race_statistics": {
-    "Lead changes": "11",
-    "Cautions / Laps": "17 for 17 laps",
-    "Time of race": "2:20:15",
-    "Average speed": "21.39 mph",
+    "Average speed": "21.39 mph (34.424 km/h)",
+    "Cautions / Laps": "17 for 17",
+    "Lead changes": "11 among 7 different drivers",
+    "Red flags": "0",
+    "Time of race": "2 hours, 20 minutes and 15 seconds",
     "Margin of victory": "1.752 sec"
   },
   "entry_list": [
@@ -68,7 +69,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -630,7 +631,7 @@
         [
           "25",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "14.445",
           "62.305",
@@ -1042,7 +1043,7 @@
         [
           "20",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "14.242",
           "63.193",
@@ -1505,7 +1506,7 @@
           "4",
           "20",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "200"
@@ -1927,13 +1928,15 @@
         ]
       ]
     },
-    "did_not_qualify": {
+        "did_not_qualify": {
       "headers": [
         "Pos",
         "No.",
         "Driver",
         "Team",
         "Manufacturer",
+        "Time",
+        "Speed",
         "Notes"
       ],
       "rows": [
@@ -1943,6 +1946,8 @@
           "Noah Gragson",
           "Front Row Motorsports",
           "Ford",
+          "14.413",
+          "62.444",
           ""
         ],
         [
@@ -1951,6 +1956,8 @@
           "Brad Keselowski",
           "RFK Racing",
           "Ford",
+          "14.272",
+          "63.061",
           ""
         ],
         [
@@ -1959,6 +1966,8 @@
           "Ty Dillon",
           "Kaulig Racing",
           "Chevrolet",
+          "14.392",
+          "62.535",
           ""
         ],
         [
@@ -1967,6 +1976,8 @@
           "A. J. Allmendinger",
           "Kaulig Racing",
           "Chevrolet",
+          "14.323",
+          "62.836",
           ""
         ],
         [
@@ -1975,6 +1986,8 @@
           "Todd Gilliland",
           "Front Row Motorsports",
           "Ford",
+          "14.372",
+          "62.622",
           ""
         ],
         [
@@ -1983,6 +1996,8 @@
           "Riley Herbst",
           "23XI Racing",
           "Toyota",
+          "14.299",
+          "62.942",
           ""
         ],
         [
@@ -1991,6 +2006,8 @@
           "Zane Smith",
           "Front Row Motorsports",
           "Ford",
+          "14.455",
+          "62.262",
           ""
         ],
         [
@@ -1999,6 +2016,8 @@
           "Cole Custer",
           "Haas Factory Team",
           "Chevrolet",
+          "14.334",
+          "62.788",
           ""
         ],
         [
@@ -2007,6 +2026,8 @@
           "John Hunter Nemechek",
           "Legacy Motor Club",
           "Toyota",
+          "14.351",
+          "62.713",
           ""
         ],
         [
@@ -2015,6 +2036,8 @@
           "Erik Jones",
           "Legacy Motor Club",
           "Toyota",
+          "14.493",
+          "62.099",
           ""
         ],
         [
@@ -2023,6 +2046,8 @@
           "Ricky Stenhouse Jr.",
           "Hyak Motorsports",
           "Chevrolet",
+          "14.448",
+          "62.292",
           ""
         ],
         [
@@ -2031,6 +2056,8 @@
           "Burt Myers (i)",
           "Team AmeriVet",
           "Chevrolet",
+          "15.024",
+          "59.904",
           ""
         ],
         [
@@ -2039,6 +2066,8 @@
           "Cody Ware",
           "Rick Ware Racing",
           "Chevrolet",
+          "14.314",
+          "62.876",
           ""
         ],
         [
@@ -2047,6 +2076,8 @@
           "Chad Finchum",
           "Garage 66",
           "Ford",
+          "14.515",
+          "62.005",
           ""
         ],
         [
@@ -2055,6 +2086,8 @@
           "Michael McDowell",
           "Spire Motorsports",
           "Chevrolet",
+          "14.245",
+          "63.180",
           ""
         ]
       ]

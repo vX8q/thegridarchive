@@ -10,8 +10,8 @@
   "location": "Brooklyn, Michigan, USA",
   "laps": "57",
   "distance": "114 mi (183.466 km)",
-  "event_preview": "Michigan International Speedway is a 2-mile (3.2 km) permanent D-shaped oval in Brooklyn, Michigan, with moderate banking designed for competitive racing across multiple series. The Henry Ford Health 200 is the seventh race of the 2026 ARCA Menards Series season, contested over 100 laps (200 miles) on Friday, June 5, at 5 p.m. ET on FS2. The 38th running of this event will feature 30 drivers competing for the win.\n\nBrenden Queen is the defending winner after leading a race-high 65 laps and claiming victory in 2025. Gio Ruggiero, who won twice earlier this season at Daytona and Kansas, qualified fifth at Michigan in 2025 and led 35 laps in his debut at the track. Ruggiero has shown consistency with two wins already in 2026 and will be among the contenders. Championship contenders Isabella Robusto, Thomas Annunziata and Jake Bollman round out the notable entries seeking to capitalize on their strong early-season campaigns.\n\nThe all-time ARCA Menards Series qualifying lap record at Michigan belongs to Brenden Queen, who turned a 38.841-second lap during qualifying for the 2025 Henry Ford Health 200.",
-  "event_preview_ru": "Michigan International Speedway — постоянный D-образный овал длиной 2 мили (3,2 км) в Brooklyn, Michigan, с умеренным уклоном, рассчитанным на конкурентную гонку в нескольких сериях. Henry Ford Health 200 — седьмая гонка сезона ARCA Menards Series 2026 года, проходящая на 100 кругов (200 миль) в пятницу, 5 июня, в 17:00 по восточному времени на FS2. 38-й запуск этого этапа соберёт 30 пилотов, борющихся за победу.\n\nBrenden Queen — действующий победитель после лидирования в 65 кругах и победы в 2025 году. Gio Ruggiero, дважды побеждавший ранее в этом сезоне в Daytona и Kansas, квалифицировался пятым в Michigan в 2025 году и лидировал 35 кругов на дебюте на трассе. Ruggiero уже имеет две победы в 2026 году и будет среди претендентов. Претенденты на титул Isabella Robusto, Thomas Annunziata и Jake Bollman дополняют заметный состав, стремясь использовать сильное начало сезона.\n\nРекорд квалификационного круга ARCA Menards Series на Michigan принадлежит Brenden Queen — 38,841 секунды в квалификации Henry Ford Health 200 2025 года.",
+  "event_preview": "Michigan International Speedway is a 2-mile (3.2 km) permanent D-shaped oval in Brooklyn, Michigan, with moderate banking designed for competitive racing across multiple series. The Henry Ford Health 200 is the seventh race of the 2026 ARCA Menards Series season, contested over 100 laps (200 miles) on Friday, June 5, at 5 p.m. ET on FS2. The 38th running of this event will feature 30 drivers competing for the win.\n\nBrenden Queen is the defending winner after leading a race-high 65 laps and claiming victory in 2025. Gio Ruggiero, who won twice earlier this season at Daytona and Kansas, qualified fifth at Michigan in 2025 and led 35 laps in his debut at the track. Ruggiero has shown consistency with two wins already in 2026 and will be among the contenders. Championship contenders Isabella Robusto, Thomas Annunziata and Jake Bollman round out the notable entries seeking to capitalize on their strong early-season campaigns.\n\nThe all-time ARCA Menards Series qualifying record at Michigan belongs to Michael Self, who turned a 37.296-second lap (193.050 mph) in June 2019.841-second lap during qualifying for the 2025 Henry Ford Health 200.",
+  "event_preview_ru": "Michigan International Speedway — постоянный D-образный овал длиной 2 мили (3,2 км) в Brooklyn, Michigan, с умеренным уклоном, рассчитанным на конкурентную гонку в нескольких сериях. Henry Ford Health 200 — седьмая гонка сезона ARCA Menards Series 2026 года, проходящая на 100 кругов (200 миль) в пятницу, 5 июня, в 17:00 по восточному времени на FS2. 38-й запуск этого этапа соберёт 30 пилотов, борющихся за победу.\n\nBrenden Queen — действующий победитель после лидирования в 65 кругах и победы в 2025 году. Gio Ruggiero, дважды побеждавший ранее в этом сезоне в Daytona и Kansas, квалифицировался пятым в Michigan в 2025 году и лидировал 35 кругов на дебюте на трассе. Ruggiero уже имеет две победы в 2026 году и будет среди претендентов. Претенденты на титул Isabella Robusto, Thomas Annunziata и Jake Bollman дополняют заметный состав, стремясь использовать сильное начало сезона.\n\nАбсолютный рекорд квалификации ARCA Menards Series на Michigan принадлежит Michael Self — 37,296 секунды (193,050 mph) в июне 2019 года.",
   "youtube_id": "SgvK29QAjCg",
   "entry_list": [
     {
@@ -136,11 +136,11 @@
     },
     {
       "number": "30",
-      "driver": "Garrett Mitchell",
+      "driver": "Cleetus McFarland",
       "team": "Rette Jones Racing",
       "manufacturer": "Ford",
       "crew_chief": "Mark Rette",
-      "driver_slug": "garrett-mitchell"
+      "driver_slug": "cleetus-mcfarland"
     },
     {
       "number": "32",
@@ -370,7 +370,7 @@
         ],
         [
           "10",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "30",
           "Ford",
           "39.914",
@@ -615,7 +615,7 @@
         [
           "1",
           "30",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Rette Jones Racing",
           "Ford",
           "38.987",
@@ -1058,7 +1058,7 @@
           "14",
           "1",
           "30",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Rette Jones Racing",
           "Ford",
           "57",
@@ -1338,10 +1338,11 @@
     }
   },
   "race_statistics": {
+    "Average speed": "105.420 mph (169.657 km/h)",
+    "Cautions / Laps": "4 for 23",
     "Lead changes": "3 among 4 different drivers",
-    "Cautions / Laps": "4 for 23 laps",
     "Red flags": "1",
     "Time of race": "1 hour, 4 minutes and 5 seconds",
-    "Average speed": "105.420 miles per hour (169.657 km/h)"
+    "Margin of victory": "under caution"
   }
 }

@@ -96,8 +96,11 @@
       return get(BASE + '/series/' + seriesPath(seriesId) + '/standings' + q);
     },
 
-    getSeriesStats: function (seriesId) {
-      return get(BASE + '/series/' + seriesPath(seriesId) + '/stats');
+    getSeriesStats: function (seriesId, options) {
+      var params = {};
+      if (options && options.season != null && options.season !== '') params.season = options.season;
+      if (!options || options.cacheBust !== false) params._ = Date.now();
+      return get(BASE + '/series/' + seriesPath(seriesId) + '/stats' + buildQuery(params));
     },
 
     getSeriesEvents: function (seriesId, season, options) {

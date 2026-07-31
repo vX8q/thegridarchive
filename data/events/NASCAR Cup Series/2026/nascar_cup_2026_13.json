@@ -15,11 +15,12 @@
   "stage3_laps": "100",
   "stage4_laps": "100",
   "race_statistics": {
+    "Average speed": "119.921 mph (192.994 km/h)",
+    "Cautions / Laps": "12 for 75",
     "Lead changes": "32 among 13 different drivers",
-    "Cautions / Laps": "12 for 75 laps",
     "Red flags": "2 for inclement weather",
     "Time of race": "4 hours, 39 minutes, and 56 seconds",
-    "Average speed": "119.921 miles per hour (192.994 km/h)"
+    "Margin of victory": "under caution"
   },
   "entry_list": [
     {
@@ -72,7 +73,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -578,7 +579,7 @@
         [
           "18",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "29.454",
@@ -1167,7 +1168,7 @@
           "1",
           "14",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "373",

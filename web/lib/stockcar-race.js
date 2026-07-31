@@ -180,6 +180,115 @@
     return 1;
   }
 
+  function isQualifyingSeparatorRow(row) {
+    if (!row || row.length === 0) return false;
+    var first = String(row[0] || '').trim();
+    if (!first) return false;
+    for (var i = 1; i < row.length; i++) {
+      if (row[i] != null && String(row[i]).trim() !== '') return false;
+    }
+    return true;
+  }
+
+  /** True when qualifying already has a Failed to qualify / Did not qualify block with driver rows (usually Time/Speed). */
+  function qualifyingHasFailedToQualifyDrivers(qualTable) {
+    if (!qualTable || !Array.isArray(qualTable.rows)) return false;
+    var inBlock = false;
+    for (var i = 0; i < qualTable.rows.length; i++) {
+      var row = qualTable.rows[i];
+      if (isQualifyingSeparatorRow(row)) {
+        var label = String(row[0] || '').trim().toLowerCase();
+        inBlock = label === 'failed to qualify' || label === 'did not qualify';
+        continue;
+      }
+      if (inBlock) return true;
+    }
+    return false;
+  }
+
+  function headerIndexCI(headers, name) {
+    var want = String(name || '').toLowerCase().trim();
+    if (!Array.isArray(headers) || !want) return -1;
+    for (var i = 0; i < headers.length; i++) {
+      if (String(headers[i] || '').toLowerCase().trim() === want) return i;
+    }
+    return -1;
+  }
+
+  /**
+   * Copy Time/Speed from qualifying into did_not_qualify for display when DNQ JSON
+   * only has Pts/Notes (standings) and timing lives in the FTQ block of qualifying.
+   */
+  function enrichDidNotQualifyWithQualTiming(dnqTable, qualTable) {
+    if (!dnqTable || !Array.isArray(dnqTable.headers) || !Array.isArray(dnqTable.rows)) return dnqTable;
+    if (!qualTable || !Array.isArray(qualTable.headers) || !Array.isArray(qualTable.rows)) return dnqTable;
+    var qTimeIdx = headerIndexCI(qualTable.headers, 'Time');
+    var qSpeedIdx = headerIndexCI(qualTable.headers, 'Speed');
+    if (qTimeIdx < 0) qTimeIdx = headerIndexCI(qualTable.headers, 'Time (R1)');
+    if (qSpeedIdx < 0) qSpeedIdx = headerIndexCI(qualTable.headers, 'Speed (R1)');
+    if (qTimeIdx < 0 && qSpeedIdx < 0) return dnqTable;
+    var dnqHasTime = headerIndexCI(dnqTable.headers, 'Time') >= 0;
+    var dnqHasSpeed = headerIndexCI(dnqTable.headers, 'Speed') >= 0;
+    if ((qTimeIdx < 0 || dnqHasTime) && (qSpeedIdx < 0 || dnqHasSpeed)) return dnqTable;
+
+    var qNoIdx = qualCarNoColumnIndex(qualTable.headers);
+    var timingByNo = {};
+    qualTable.rows.forEach(function (row) {
+      if (!row || isQualifyingSeparatorRow(row)) return;
+      var no = String(row[qNoIdx] || '').trim();
+      if (!no) return;
+      timingByNo[no] = {
+        time: qTimeIdx >= 0 && qTimeIdx < row.length ? String(row[qTimeIdx] || '') : '',
+        speed: qSpeedIdx >= 0 && qSpeedIdx < row.length ? String(row[qSpeedIdx] || '') : ''
+      };
+    });
+    if (!Object.keys(timingByNo).length) return dnqTable;
+
+    var headers = dnqTable.headers.slice();
+    var insertAt = headers.length;
+    for (var hi = 0; hi < headers.length; hi++) {
+      var h = String(headers[hi] || '').toLowerCase().trim().replace(/\.$/, '');
+      if (h === 'pts' || h === 'points' || h === 'note' || h === 'notes') {
+        insertAt = hi;
+        break;
+      }
+    }
+    var addTime = !dnqHasTime && qTimeIdx >= 0;
+    var addSpeed = !dnqHasSpeed && qSpeedIdx >= 0;
+    if (addTime) {
+      headers.splice(insertAt, 0, 'Time');
+      insertAt++;
+    }
+    if (addSpeed) headers.splice(insertAt, 0, 'Speed');
+
+    var dnqNoIdx = qualCarNoColumnIndex(dnqTable.headers);
+    var rows = dnqTable.rows.map(function (row) {
+      if (!Array.isArray(row)) return row;
+      var no = String(row[dnqNoIdx] || '').trim();
+      var t = timingByNo[no] || { time: '', speed: '' };
+      var rebuilt = [];
+      var src = 0;
+      for (var ci = 0; ci < headers.length; ci++) {
+        var hn = String(headers[ci] || '').toLowerCase().trim();
+        if (hn === 'time' && addTime) {
+          rebuilt.push(t.time);
+        } else if (hn === 'speed' && addSpeed) {
+          rebuilt.push(t.speed);
+        } else {
+          rebuilt.push(src < row.length ? row[src] : '');
+          src++;
+        }
+      }
+      return rebuilt;
+    });
+    var outTbl = { headers: headers, rows: rows };
+    Object.keys(dnqTable).forEach(function (k) {
+      if (k === 'headers' || k === 'rows') return;
+      outTbl[k] = dnqTable[k];
+    });
+    return outTbl;
+  }
+
   function qualifyingExcludingDidNotQualify(qualTable, dnqTable) {
     if (!qualTable || !dnqTable || !Array.isArray(qualTable.rows) || !Array.isArray(dnqTable.rows) || !dnqTable.rows.length) {
       return qualTable;
@@ -193,12 +302,32 @@
       if (no) dnqNos[no] = true;
     });
     if (!Object.keys(dnqNos).length) return qualTable;
+    var filtered = qualTable.rows.filter(function (row) {
+      if (!row || row.length <= qualNoIdx) return true;
+      if (isQualifyingSeparatorRow(row)) return true;
+      return !dnqNos[String(row[qualNoIdx] || '').trim()];
+    });
+    // Drop orphan FTQ/DNQ separators that no longer have driver rows after them.
+    var cleaned = [];
+    for (var i = 0; i < filtered.length; i++) {
+      var row = filtered[i];
+      if (isQualifyingSeparatorRow(row)) {
+        var label = String(row[0] || '').trim().toLowerCase();
+        if (label === 'failed to qualify' || label === 'did not qualify') {
+          var hasFollowing = false;
+          for (var j = i + 1; j < filtered.length; j++) {
+            if (isQualifyingSeparatorRow(filtered[j])) break;
+            hasFollowing = true;
+            break;
+          }
+          if (!hasFollowing) continue;
+        }
+      }
+      cleaned.push(row);
+    }
     return {
       headers: qualTable.headers,
-      rows: qualTable.rows.filter(function (row) {
-        if (!row || row.length <= qualNoIdx) return true;
-        return !dnqNos[String(row[qualNoIdx] || '').trim()];
-      }),
+      rows: cleaned,
       meta: qualTable.meta,
       title: qualTable.title,
       format: qualTable.format,
@@ -219,6 +348,8 @@
   window.TGA.stockCarStage3TableTitle = stockCarStage3TableTitle;
   window.TGA.stockCarRaceResultsTitles = stockCarRaceResultsTitles;
   window.TGA.qualCarNoColumnIndex = qualCarNoColumnIndex;
+  window.TGA.qualifyingHasFailedToQualifyDrivers = qualifyingHasFailedToQualifyDrivers;
+  window.TGA.enrichDidNotQualifyWithQualTiming = enrichDidNotQualifyWithQualTiming;
   window.TGA.qualifyingExcludingDidNotQualify = qualifyingExcludingDidNotQualify;
   window.TGA.cautionBreakdownReasonColIndex = cautionBreakdownReasonColIndex;
   window.TGA.cautionBreakdownFreePassColIndex = cautionBreakdownFreePassColIndex;

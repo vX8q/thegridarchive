@@ -49,7 +49,7 @@
       "team": "Wayne Taylor Racing",
       "manufacturer": "Lamborghini",
       "class": "GTD",
-      "car": "Lamborghini Huracán GT3 Evo 2",
+      "car": "Lamborghini Huracan GT3 Evo 2",
       "driver_slug": "graham-doyle-marcus-ericsson-danny-formal-trent-hindman"
     },
     {
@@ -301,7 +301,7 @@
       "team": "Pfaff Motorsports",
       "manufacturer": "Lamborghini",
       "class": "GTD Pro",
-      "car": "Lamborghini Huracán GT3 Evo 2",
+      "car": "Lamborghini Huracan GT3 Evo 2",
       "driver_slug": "mirko-bortolotti-andrea-caldarelli-james-hinchcliffe-sandy-mitchell"
     },
     {
@@ -532,7 +532,7 @@
     {
       "number": "123",
       "driver": "Peter Ludwig / Dave Musial Jr. / Ryan Yardley",
-      "team": "Mühlner Motorsport",
+      "team": "Muhlner Motorsport",
       "manufacturer": "Porsche",
       "class": "GTD",
       "car": "Porsche 911 GT3 R",
@@ -7527,7 +7527,7 @@
       ]
     }
   },
-  "event_preview": "The race takes place on the 12-turn, 3.560-mile (5.729 km) Daytona International Speedway road course, combining high-speed oval sections with technical infield corners.",
-  "event_preview_ru": "Гонка проходит по 12-поворотной конфигурации автодрома Daytona International Speedway длиной 3,560 мили (5,729 км), сочетающей скоростные овальные участки и техничные виражи внутренней части трассы.",
+  "event_preview": "The race takes place on the 12-turn, 3.560-mile (5.729 km) Daytona International Speedway road course, combining high-speed oval sections with technical infield corners.\n\nIMSA WeatherTech Championship track qualifying records at Daytona stand to Pipo Derani in GTP (1:32.656, 2024), Paul-Loup Chatin in LMP2 (1:35.532, 2022), Seb Priaulx in GTD Pro (1:44.382, 2024) and Parker Thompson in GTD (1:44.494, 2024).",
+  "event_preview_ru": "Гонка проходит по 12-поворотной конфигурации автодрома Daytona International Speedway длиной 3,560 мили (5,729 км), сочетающей скоростные овальные участки и техничные виражи внутренней части трассы.\n\nРекорды квалификации IMSA WeatherTech Championship на Daytona: GTP — Pipo Derani (1:32.656, 2024), LMP2 — Paul-Loup Chatin (1:35.532, 2022), GTD Pro — Seb Priaulx (1:44.382, 2024), GTD — Parker Thompson (1:44.494, 2024).",
   "youtube_id": "TrnpIMLa0z8"
 }

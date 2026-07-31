@@ -73,7 +73,6 @@
   var syncStandingsScrollBars = P.syncStandingsScrollBars;
   var adjustEventPanelPadding = P.adjustEventPanelPadding;
   var adjustDetailPanelPadding = P.adjustDetailPanelPadding;
-  var renderSupercarsStaticSpecs = P.renderSupercarsStaticSpecs;
   var translateStaticUI = P.translateStaticUI;
   var localizeDriverName = P.localizeDriverName;
   var localizeCountryName = function (n) {
@@ -86,6 +85,30 @@
   var renderNextRaceCards = (window.TGA && window.TGA.renderNextRaceCards) || function () {};
   var stopNextRaceTimers = (window.TGA && window.TGA.stopNextRaceTimers) || function () {};
   var renderList = (window.TGA && window.TGA.renderList) || function () {};
+
+  // Preload canonical driver slugs + display names so abbreviated event-table
+  // names like "N. Tsolov" can expand to full display names across the UI.
+  if (!window.TGA.driverNameBootstrapStarted && API) {
+    window.TGA.driverNameBootstrapStarted = true;
+    API.getDriverProfileRedirects()
+      .catch(function () { return {}; })
+      .then(function (redirects) {
+        window.TGA.driverProfileRedirects = (redirects && typeof redirects === 'object') ? redirects : {};
+        return API.getDrivers().catch(function () { return []; });
+      })
+      .then(function (drivers) {
+        var bySlug = {};
+        (Array.isArray(drivers) ? drivers : []).forEach(function (d) {
+          if (!d || typeof d !== 'object') return;
+          var slug = String(d.slug || '').trim().toLowerCase();
+          var name = String(d.name || '').trim();
+          if (!slug || !name) return;
+          bySlug[slug] = name;
+        });
+        window.TGA.driverDisplayNamesBySlug = bySlug;
+      })
+      .catch(function () {});
+  }
 
   var allViewIds = ['view-list', 'view-search', 'view-detail', 'view-event', 'view-track', 'view-driver', 'view-team', 'view-crew-chief', 'view-schedule', 'view-feedback'];
   function showView(activeId) {
@@ -360,8 +383,32 @@
     };
   }
 
+  function titleFromDriverSlugLocal(slug) {
+    slug = String(slug || '').trim().toLowerCase();
+    if (!slug) return '';
+    return slug.split('-').map(function (part) {
+      if (!part) return '';
+      if (part === 'jr') return 'Jr.';
+      if (part === 'sr') return 'Sr.';
+      if (part === 'ii' || part === 'iii' || part === 'iv') return part.toUpperCase();
+      return part.charAt(0).toUpperCase() + part.slice(1);
+    }).join(' ').trim();
+  }
+
+  function aliasSearchExtrasForSlug(canonSlug, redirects) {
+    var extras = [];
+    var map = redirects && typeof redirects === 'object' ? redirects : {};
+    Object.keys(map).forEach(function (from) {
+      var to = String(map[from] || '').trim().toLowerCase();
+      if (to !== canonSlug) return;
+      var titled = titleFromDriverSlugLocal(from);
+      if (titled) extras.push(titled);
+    });
+    return extras;
+  }
+
   function ensureSearchIndex() {
-    var SEARCH_INDEX_VERSION = 3;
+    var SEARCH_INDEX_VERSION = 4;
     if (state.searchIndexVersion !== SEARCH_INDEX_VERSION) {
       state.searchIndexVersion = SEARCH_INDEX_VERSION;
       state.searchIndexReady = false;
@@ -374,11 +421,14 @@
     var dedupe = {};
     var driverAggBySlug = {};
     var legalNameBySlug = {};
+    var canonicalNameBySlug = {};
+    var redirectsMap = {};
     return API.getDriverProfileRedirects()
       .catch(function () { return {}; })
       .then(function (redirects) {
         window.TGA = window.TGA || {};
-        window.TGA.driverProfileRedirects = (redirects && typeof redirects === 'object') ? redirects : {};
+        redirectsMap = (redirects && typeof redirects === 'object') ? redirects : {};
+        window.TGA.driverProfileRedirects = redirectsMap;
         return API.getDriversPrimaryContext();
       })
       .catch(function () { return {}; })
@@ -391,8 +441,13 @@
               drivers.forEach(function (d) {
                 if (!d || typeof d !== 'object') return;
                 var slug = String(d.slug || '').trim();
+                if (window.TGA && typeof window.TGA.resolveDriverSlug === 'function') {
+                  slug = window.TGA.resolveDriverSlug(slug);
+                }
+                var name = driverDisplayName(String(d.name || '').trim());
                 var extra = String(d.search_extra || '').trim();
                 if (slug && extra) legalNameBySlug[slug] = extra;
+                if (slug && name) canonicalNameBySlug[slug] = name;
               });
             }
             return primaryBySlug;
@@ -445,11 +500,15 @@
                     }
                     drivers.forEach(function (driverNameRaw) {
                       var driverName = driverDisplayName(String(driverNameRaw || '').trim());
-                      var driverTitleEn = driverName;
-                      var driverTitleRu = driverSearchTitleRu(driverName);
                       if (!driverName || /^(?:tba|tbc|tbd)$/i.test(driverName)) return;
                       var dSlug = slugify(driverName);
                       if (!dSlug) return;
+                      // Prefer canonical profile display name over short/alias forms.
+                      if (canonicalNameBySlug[dSlug]) {
+                        driverName = canonicalNameBySlug[dSlug];
+                      }
+                      var driverTitleEn = driverName;
+                      var driverTitleRu = driverSearchTitleRu(driverName);
                       if (!driverAggBySlug[dSlug]) {
                         driverAggBySlug[dSlug] = {
                           titleEn: driverTitleEn,
@@ -459,6 +518,12 @@
                           seriesNames: {},
                           teamCountsBySeries: {}
                         };
+                      } else {
+                        var existingAgg = driverAggBySlug[dSlug];
+                        if (driverTitleEn.length > String(existingAgg.titleEn || '').length) {
+                          existingAgg.titleEn = driverTitleEn;
+                          existingAgg.titleRu = driverTitleRu;
+                        }
                       }
                       var agg = driverAggBySlug[dSlug];
                       if (!agg.seriesCounts[id]) agg.seriesCounts[id] = 0;
@@ -493,15 +558,20 @@
       .then(function (primaryBySlug) {
         Object.keys(driverAggBySlug).forEach(function (slugKey) {
           var agg = driverAggBySlug[slugKey];
+          if (canonicalNameBySlug[slugKey]) {
+            agg.titleEn = canonicalNameBySlug[slugKey];
+            agg.titleRu = driverSearchTitleRu(agg.titleEn);
+          }
           var primary = pickPrimaryDriverContext(agg, primaryBySlug, slugKey);
           var legalExtra = legalNameBySlug[slugKey] || '';
+          var aliasExtra = aliasSearchExtrasForSlug(slugKey, redirectsMap).join(' ');
           pushSearchItem(
             items,
             dedupe,
             agg.titleEn,
             'driver',
             agg.href,
-            [primary.seriesName, primary.teamName, legalExtra].filter(Boolean).join(' '),
+            [primary.seriesName, primary.teamName, legalExtra, aliasExtra].filter(Boolean).join(' '),
             primary.teamName || primary.seriesName,
             primary.seriesID,
             primary.teamName,
@@ -516,8 +586,6 @@
             drivers.forEach(function (d) {
               if (!d || typeof d !== 'object') return;
               var driverName = driverDisplayName(String(d.name || '').trim());
-              var driverTitleEn = driverName;
-              var driverTitleRu = driverSearchTitleRu(driverName);
               var dSlug = String(d.slug || '').trim();
               if (!driverName) return;
               if (!dSlug) dSlug = slugify(driverName);
@@ -525,8 +593,17 @@
                 dSlug = window.TGA.resolveDriverSlug(dSlug);
               }
               if (!dSlug) return;
-              if (driverAggBySlug[dSlug]) return;
-              var searchExtra = String(d.search_extra || '').trim();
+              if (canonicalNameBySlug[dSlug]) driverName = canonicalNameBySlug[dSlug];
+              var driverTitleEn = driverName;
+              var driverTitleRu = driverSearchTitleRu(driverName);
+              if (driverAggBySlug[dSlug]) {
+                // Already indexed from teams — keep series/team, just ensure canonical title.
+                return;
+              }
+              var searchExtra = [String(d.search_extra || '').trim()]
+                .concat(aliasSearchExtrasForSlug(dSlug, redirectsMap))
+                .filter(Boolean)
+                .join(' ');
               pushSearchItem(
                 items,
                 dedupe,
@@ -681,7 +758,10 @@
             '</tr></thead><tbody>';
           list.forEach(function (item) {
             var slug = decodeURIComponent((item.href || '').replace(/^\/driver\//, ''));
-            var m = driverMetaBySlug[slug] || {};
+            if (window.TGA && typeof window.TGA.resolveDriverSlug === 'function') {
+              slug = window.TGA.resolveDriverSlug(slug) || slug;
+            }
+            var m = driverMetaBySlug[slug] || driverMetaBySlug[decodeURIComponent((item.href || '').replace(/^\/driver\//, ''))] || {};
             var inferredSeries = '';
             var inferredTeam = '';
             if (m.primary_series_name && String(m.primary_series_name).trim()) {
@@ -730,8 +810,15 @@
               ? '<img class="search-driver-photo" src="' + esc(photoSrc) + '"' +
                 ' width="44" height="56" alt="" loading="lazy" decoding="async">'
               : '<span class="search-driver-photo search-driver-photo--empty" aria-hidden="true"></span>';
+            // Prefer canonical profile name from API over short/alias titles in the index.
+            var apiName = (m.name && String(m.name).trim()) ? String(m.name).trim() : '';
+            var displayNameEn = apiName || String(item.titleEn || item.title || '').trim();
+            var displayTitle = getLang() === 'ru'
+              ? (apiName ? driverSearchTitleRu(apiName) : searchItemTitle(item))
+              : displayNameEn;
+            var driverHref = '/driver/' + encodeURIComponent(slug);
             html += '<tr>' +
-              '<td><a class="search-page-link search-driver-link" href="' + item.href + '">' + photoHtml + '<span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
+              '<td><a class="search-page-link search-driver-link" href="' + driverHref + '">' + photoHtml + '<span class="search-page-title">' + esc(displayTitle) + '</span></a></td>' +
               '<td>' + esc(localizeNationList(nation)) + '</td>' +
               '<td>' + esc(localizeSeriesName(item.seriesName || inferredSeries, item.seriesID) || '—') + '</td>' +
               '<td>' + esc(normalizeDisplayTeamName(item.teamName || inferredTeam) || '—') + '</td>' +
@@ -817,13 +904,22 @@
       var drivers = matches.filter(function (m) { return m.kind === 'driver'; });
       var driverReqs = drivers.map(function (m) {
         var slug = decodeURIComponent((m.href || '').replace(/^\/driver\//, ''));
+        if (window.TGA && typeof window.TGA.resolveDriverSlug === 'function') {
+          slug = window.TGA.resolveDriverSlug(slug) || slug;
+        }
         return API.getDriver(slug)
-          .then(function (d) { return { slug: slug, data: d || {} }; })
-          .catch(function () { return { slug: slug, data: {} }; });
+          .then(function (d) {
+            var canon = (d && d.canonical_slug) ? String(d.canonical_slug).trim() : '';
+            return { slug: slug, canon: canon || slug, data: d || {} };
+          })
+          .catch(function () { return { slug: slug, canon: slug, data: {} }; });
       });
       Promise.all(driverReqs).then(function (arr) {
         var bySlug = {};
-        arr.forEach(function (x) { bySlug[x.slug] = x.data || {}; });
+        arr.forEach(function (x) {
+          bySlug[x.slug] = x.data || {};
+          if (x.canon) bySlug[x.canon] = x.data || {};
+        });
         renderFromMatches(matches, bySlug, {});
       }).catch(function () {
         renderFromMatches(matches, {}, {});
@@ -1059,6 +1155,8 @@
         }
         var displayName = (data.name && String(data.name).trim()) ? String(data.name).trim() : '';
         var legalFullName = (data.legal_full_name && String(data.legal_full_name).trim()) ? String(data.legal_full_name).trim() : '';
+        // Always show Full name row; duplicate of racing/display name is OK.
+        if (!legalFullName && displayName) legalFullName = displayName;
         var metaPartsHtml = [];
         var flagPrefetchIsos = {};
         var flagPrefetchPromises = [];

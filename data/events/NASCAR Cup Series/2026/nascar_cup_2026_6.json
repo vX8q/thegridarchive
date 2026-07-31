@@ -12,11 +12,12 @@
   "distance": "400.238 mi (644.121 km)",
   "youtube_id": "_oz2J1uO3Is",
   "race_statistics": {
-    "Average speed": "129.854 miles per hour (208.980 km/h)",
-    "Cautions / Laps": "4 for 26 laps",
+    "Average speed": "129.854 mph (208.980 km/h)",
+    "Cautions / Laps": "4 for 26",
     "Lead changes": "16 among 8 different drivers",
     "Red flags": "0",
-    "Time of race": "3 hours, 4 minutes, and 56 seconds"
+    "Time of race": "3 hours, 4 minutes, and 56 seconds",
+    "Margin of victory": "5.847 sec"
   },
   "entry_list": [
     {
@@ -69,7 +70,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -377,7 +378,7 @@
         [
           "4",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "30.049",
@@ -922,7 +923,7 @@
         [
           "11",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "29.550",
@@ -1254,7 +1255,7 @@
           "7",
           "11",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "293",
@@ -1701,7 +1702,7 @@
         [
           "9",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "2"
@@ -1801,7 +1802,7 @@
         [
           "10",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "1"
@@ -1893,6 +1894,6 @@
       ]
     }
   },
-  "event_preview": "Darlington Raceway is a 1.366-mile (2.198 km) egg-shaped oval in Darlington, South Carolina, nicknamed \"The Lady in Black\" and \"The Track Too Tough to Tame.\" The unique asymmetrical shape — wide and sweeping through Turns 1–2, tight and pinched through Turns 3–4 — arose from a minnow pond the landowner refused to relocate during construction, and to this day makes it nearly impossible to find a setup that works equally well at both ends. Last repaved after the May 2007 meeting, the abrasive surface chews through tyres mercilessly and punishes even the slightest sideways moment. The Goodyear 400 is contested over 293 laps — one of the most celebrated spring dates on the NASCAR Cup calendar, held annually as part of Throwback Weekend. The defending race winner is Denny Hamlin, who capitalised on a late caution to claim his 56th career Cup Series victory in 2025, edging William Byron by 0.597 seconds after a perfectly-executed final pit stop by his Joe Gibbs Racing crew. The all-time qualifying record at Darlington belongs to Hamlin himself — a 28.694 seconds (171.381 mph) pole lap set during the 2025 Cook Out Southern 500 weekend.",
-  "event_preview_ru": "Darlington Raceway — овальная трасса яйцевидной формы длиной 1,366 мили (2,198 км) в Darlington, South Carolina, прозванная «The Lady in Black» и «The Track Too Tough to Tame». Уникальная асимметричная форма — широкие и плавные повороты 1–2, узкие и стянутые повороты 3–4 — возникла из-за пруда, который владелец земли отказался сносить при строительстве; и по сей день найти сетап, одинаково работающий на обоих концах, почти невозможно. После реконструкции покрытия после майской гонки 2007 года абразивное покрытие безжалостно изнашивает шины и наказывает за малейший занос. Goodyear 400 проходит на 293 круга — одна из самых знаменитых весенних дат календаря NASCAR Cup, ежегодно в рамках Throwback Weekend. Действующий победитель — Denny Hamlin, который воспользовался поздней машиной безопасности, чтобы одержать 56-ю победу в карьере в Cup Series в 2025 году, опередив William Byron на 0,597 секунды после безупречного финального пит-стопа команды Joe Gibbs Racing. Абсолютный квалификационный рекорд на Darlington принадлежит самому Hamlin — круг на поул 28,694 секунды (171,381 mph) на квалификации Cook Out Southern 500 2025 года."
+  "event_preview": "Darlington Raceway is a 1.366-mile (2.198 km) egg-shaped oval in Darlington, South Carolina, nicknamed \"The Lady in Black\" and \"The Track Too Tough to Tame.\" The unique asymmetrical shape — wide and sweeping through Turns 1–2, tight and pinched through Turns 3–4 — arose from a minnow pond the landowner refused to relocate during construction, and to this day makes it nearly impossible to find a setup that works equally well at both ends. Last repaved after the May 2007 meeting, the abrasive surface chews through tyres mercilessly and punishes even the slightest sideways moment. The Goodyear 400 is contested over 293 laps — one of the most celebrated spring dates on the NASCAR Cup calendar, held annually as part of Throwback Weekend. The defending race winner is Denny Hamlin, who capitalised on a late caution to claim his 56th career Cup Series victory in 2025, edging William Byron by 0.597 seconds after a perfectly-executed final pit stop by his Joe Gibbs Racing crew. The all-time qualifying record at Darlington belongs to Hamlin himself — a 28.694 seconds (171.381 mph) pole lap set during the 2025 Cook Out Southern 500 weekend.\n\nThe Cup Series race record average speed for the 400-mile Darlington event is 132.703 mph, set by David Pearson in 1968 (3:00:54).\n\nThe all-time Cup Series qualifying record at Darlington belongs to Aric Almirola, who turned a 26.705-second lap (184.145 mph) in 2014.",
+  "event_preview_ru": "Darlington Raceway — овальная трасса яйцевидной формы длиной 1,366 мили (2,198 км) в Darlington, South Carolina, прозванная «The Lady in Black» и «The Track Too Tough to Tame». Уникальная асимметричная форма — широкие и плавные повороты 1–2, узкие и стянутые повороты 3–4 — возникла из-за пруда, который владелец земли отказался сносить при строительстве; и по сей день найти сетап, одинаково работающий на обоих концах, почти невозможно. После реконструкции покрытия после майской гонки 2007 года абразивное покрытие безжалостно изнашивает шины и наказывает за малейший занос. Goodyear 400 проходит на 293 круга — одна из самых знаменитых весенних дат календаря NASCAR Cup, ежегодно в рамках Throwback Weekend. Действующий победитель — Denny Hamlin, который воспользовался поздней машиной безопасности, чтобы одержать 56-ю победу в карьере в Cup Series в 2025 году, опередив William Byron на 0,597 секунды после безупречного финального пит-стопа команды Joe Gibbs Racing. Абсолютный квалификационный рекорд на Darlington принадлежит самому Hamlin — круг на поул 28,694 секунды (171,381 mph) на квалификации Cook Out Southern 500 2025 года.\n\nРекорд средней скорости гонки Cup Series на дистанции 400 миль в Darlington — 132,703 mph, установлен David Pearson в 1968 году (3:00:54).\n\nАбсолютный рекорд квалификации Cup Series на Darlington принадлежит Aric Almirola — 26,705 секунды (184,145 mph) в 2014 году."
 }

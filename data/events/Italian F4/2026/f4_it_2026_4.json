@@ -5,538 +5,3496 @@
   "date": "24–26 July 2026",
   "start_date": "2026-07-24",
   "end_date": "2026-07-26",
-  "track": "Mugello Circuit",
+  "track": "Autodromo Internazionale del Mugello",
   "location": "Scarperia e San Piero, Tuscany, Italy",
+  "youtube_highlights": [
+    {
+      "id": "af0Gx3F_UL8",
+      "title": "Race 1"
+    },
+    {
+      "id": "Mc_NexhKmGE",
+      "title": "Race 2"
+    },
+    {
+      "id": "oUkVMvnFWb4",
+      "title": "Race 3"
+    },
+    {
+      "id": "mEDXaU_ivug",
+      "title": "Final"
+    }
+  ],
   "entry_list": [
     {
       "number": "1",
       "driver": "Christian Costoya",
       "team": "Prema Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "christian-costoya"
     },
     {
       "number": "3",
       "driver": "Aleksander Ruta",
       "team": "Van Amersfoort Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "aleksander-ruta"
     },
     {
       "number": "4",
       "driver": "Roman Kamyab",
       "team": "Prema Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "2–3",
+      "rounds": "2–4",
       "driver_slug": "roman-kamyab"
     },
     {
       "number": "6",
       "driver": "Oscar Repetto",
       "team": "PHM Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "oscar-repetto"
     },
     {
       "number": "7",
       "driver": "Luka Sammalisto",
       "team": "US Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "luka-sammalisto"
     },
     {
       "number": "9",
       "driver": "Edu Robinson",
       "team": "US Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "edu-robinson"
     },
     {
       "number": "10",
       "driver": "Alp Aksoy",
       "team": "Prema Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "alp-aksoy"
     },
     {
       "number": "13",
       "driver": "Noah Killion",
       "team": "US Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "noah-killion"
     },
     {
       "number": "16",
       "driver": "Bernardo Bernoldi",
       "team": "Trident Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "bernardo-bernoldi"
     },
     {
       "number": "17",
       "driver": "Oleksandr Savinkov",
       "team": "US Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "oleksandr-savinkov"
     },
     {
       "number": "19",
       "driver": "Niccolo Maccagnani",
       "team": "Prema Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "niccolo-maccagnani"
+    },
+    {
+      "number": "20",
+      "driver": "Teo Borenstein",
+      "team": "Jenzer Motorsport",
+      "status": "",
+      "rounds": "4",
+      "driver_slug": "teo-borenstein"
     },
     {
       "number": "21",
       "driver": "Levi Arn",
       "team": "Jenzer Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "levi-arn"
     },
     {
       "number": "22",
       "driver": "Elia Weiss",
       "team": "Jenzer Motorsport",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "elia-weiss"
     },
     {
       "number": "24",
       "driver": "Nicolas Cortes",
       "team": "Jenzer Motorsport",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "nicolas-cortes"
     },
     {
       "number": "26",
       "driver": "Bader Al Sulaiti",
       "team": "Jenzer Motorsport",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "bader-al-sulaiti"
     },
     {
       "number": "27",
       "driver": "Oleksandr Bondarev",
       "team": "Prema Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "oleksandr-bondarev"
     },
     {
       "number": "28",
       "driver": "Iacopo Martinese",
       "team": "PHM Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "iacopo-martinese"
     },
     {
       "number": "29",
       "driver": "Ludovico Busso",
       "team": "US Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "ludovico-busso"
     },
     {
       "number": "30",
       "driver": "Andy Consani",
       "team": "R-ace GP",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "andy-consani"
     },
     {
       "number": "33",
       "driver": "Tamas Gender",
       "team": "R-ace GP",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "tamas-gender"
     },
     {
       "number": "34",
       "driver": "Kenzo Craigie",
       "team": "R-ace GP",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "kenzo-craigie"
     },
     {
       "number": "35",
       "driver": "Payton Westcott",
       "team": "R-ace GP",
-      "manufacturer": "",
       "status": "W",
-      "rounds": "1, 3",
-      "driver_slug": "payton-wescott"
+      "rounds": "1, 3–4",
+      "driver_slug": "payton-westcott"
     },
     {
       "number": "36",
       "driver": "Simon Rechenmacher",
       "team": "Cram Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "3",
+      "rounds": "3–4",
       "driver_slug": "simon-rechenmacher"
     },
     {
       "number": "38",
       "driver": "Rafaela Ferreira",
       "team": "Cram Motorsport",
-      "manufacturer": "",
       "status": "W",
-      "rounds": "1, 3",
+      "rounds": "1, 3–4",
       "driver_slug": "rafaela-ferreira"
-    },
-    {
-      "number": "40",
-      "driver": "Andre Rodriguez",
-      "team": "Cram Motorsport",
-      "manufacturer": "",
-      "rounds": "1–3",
-      "driver_slug": "andre-rodriguez"
     },
     {
       "number": "41",
       "driver": "Knud Nielsen",
       "team": "Real Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "knud-nielsen"
     },
     {
       "number": "42",
       "driver": "Emily Cotty",
       "team": "R-ace GP",
-      "manufacturer": "",
       "status": "W",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "emily-cotty"
     },
     {
-      "number": "44",
-      "driver": "Evan Michelini",
-      "team": "AKM Motorsport",
-      "manufacturer": "",
-      "status": "R",
-      "rounds": "1–3",
-      "driver_slug": "evan-michelini"
+      "number": "43",
+      "driver": "Zoe Florescu",
+      "team": "Real Racing",
+      "status": "W",
+      "rounds": "4",
+      "driver_slug": "zoe-florescu"
     },
     {
       "number": "46",
       "driver": "Ary Bansal",
       "team": "US Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "ary-bansal"
     },
     {
       "number": "47",
       "driver": "Roland Kuklane",
       "team": "PHM Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "roland-kuklane"
     },
     {
       "number": "50",
       "driver": "Florentin Hattemer",
       "team": "Trident Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "florentin-hattemer"
     },
     {
       "number": "51",
       "driver": "Augustus Toniolo",
       "team": "Trident Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "augustus-toniolo"
+    },
+    {
+      "number": "52",
+      "driver": "Joaquin Rubino",
+      "team": "Scuderia Buell",
+      "status": "",
+      "rounds": "4",
+      "driver_slug": "joaquin-rubino"
     },
     {
       "number": "53",
       "driver": "Pedro Lima",
       "team": "Van Amersfoort Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "pedro-lima"
     },
     {
       "number": "54",
       "driver": "Federico Diaz",
       "team": "Alpha 54 Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "federico-diaz"
     },
     {
-      "number": "55",
-      "driver": "Ignacio Diaz",
+      "number": "56",
+      "driver": "Kirill Kutskov",
       "team": "Alpha 54 Racing",
-      "manufacturer": "",
-      "rounds": "3",
-      "driver_slug": "ignacio-diaz"
+      "status": "",
+      "rounds": "4",
+      "driver_slug": "kirill-kutskov"
     },
     {
       "number": "60",
       "driver": "Emma Felbermayr",
       "team": "PHM Racing",
-      "manufacturer": "",
       "status": "W",
-      "rounds": "1, 3",
+      "rounds": "1, 3–4",
       "driver_slug": "emma-felbermayr"
     },
     {
       "number": "62",
       "driver": "Arjen Kraling",
       "team": "US Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "arjen-kraling"
     },
     {
-      "number": "66",
-      "driver": "George Proudford-Nalder",
-      "team": "AKM Motorsport",
-      "manufacturer": "",
-      "status": "R",
-      "rounds": "3",
-      "driver_slug": "george-proudford-nalder"
+      "number": "64",
+      "driver": "Ginevra Panzeri",
+      "team": "PA Racing",
+      "status": "W",
+      "rounds": "1–2, 4",
+      "driver_slug": "ginevra-panzeri"
     },
     {
       "number": "67",
       "driver": "Dominik Simek",
       "team": "Trident Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "dominik-simek"
     },
     {
       "number": "69",
       "driver": "Kingsley Zheng",
       "team": "Prema Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "kingsley-zheng"
     },
     {
       "number": "73",
       "driver": "Lyuboslav Ruykov",
       "team": "Trident Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "lyuboslav-ruykov"
-    },
-    {
-      "number": "80",
-      "driver": "Rosanne den Drijver",
-      "team": "Maffi Racing",
-      "manufacturer": "",
-      "status": "W",
-      "rounds": "3",
-      "driver_slug": "rosanne-den-drijver"
     },
     {
       "number": "81",
       "driver": "Alexander Chartier",
       "team": "PHM Racing",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1, 3",
+      "rounds": "1, 3–4",
       "driver_slug": "alexander-chartier"
     },
     {
       "number": "83",
       "driver": "David Walther",
       "team": "Maffi Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "david-walther"
     },
     {
-      "number": "85",
-      "driver": "Benett Gaspar",
-      "team": "Zengő Motorsport",
-      "manufacturer": "",
-      "rounds": "3",
-      "driver_slug": "benett-gaspar"
+      "number": "84",
+      "driver": "Andreas Lo Bue",
+      "team": "Maffi Racing",
+      "status": "",
+      "rounds": "4",
+      "driver_slug": "andreas-lo-bue"
+    },
+    {
+      "number": "86",
+      "driver": "Igor Polak",
+      "team": "Maffi Racing",
+      "status": "R",
+      "rounds": "1–2, 4",
+      "driver_slug": "igor-polak"
     },
     {
       "number": "87",
       "driver": "Thomas Bearman",
       "team": "Van Amersfoort Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "thomas-bearman"
     },
     {
       "number": "88",
       "driver": "Vittorio Orsini",
       "team": "AKM Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "vittorio-orsini"
     },
     {
       "number": "98",
       "driver": "David Cosma Cristofor",
       "team": "Prema Racing",
-      "manufacturer": "",
-      "rounds": "1–3",
+      "status": "",
+      "rounds": "1–4",
       "driver_slug": "david-cosma-cristofor"
     },
     {
       "number": "99",
       "driver": "Fabricio Fogaca",
       "team": "AKM Motorsport",
-      "manufacturer": "",
       "status": "R",
-      "rounds": "1–3",
+      "rounds": "1–4",
       "driver_slug": "fabricio-fogaca"
     }
   ],
   "tables": {
     "practice": {
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Laps",
-        "Time",
-        "Gap",
-        "Int",
-        "KPH"
-      ],
-      "rows": []
+      "sessions": [
+        {
+          "title": "Free practice 1",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "30",
+              "Andy Consani",
+              "R-ace GP",
+              "13",
+              "1:50.256",
+              "—",
+              "171.3"
+            ],
+            [
+              "2",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "12",
+              "1:50.359",
+              "+0.103",
+              "171.1"
+            ],
+            [
+              "3",
+              "22",
+              "Elia Weiss",
+              "Jenzer Motorsport",
+              "14",
+              "1:50.414",
+              "+0.158",
+              "171.0"
+            ],
+            [
+              "4",
+              "50",
+              "Florentin Hattemer",
+              "Trident Motorsport",
+              "12",
+              "1:50.510",
+              "+0.254",
+              "170.9"
+            ],
+            [
+              "5",
+              "34",
+              "Kenzo Craigie",
+              "R-ace GP",
+              "14",
+              "1:50.520",
+              "+0.264",
+              "170.8"
+            ],
+            [
+              "6",
+              "46",
+              "Ary Bansal",
+              "US Racing",
+              "13",
+              "1:50.586",
+              "+0.330",
+              "170.7"
+            ],
+            [
+              "7",
+              "69",
+              "Kingsley Zheng",
+              "Prema Racing",
+              "12",
+              "1:50.612",
+              "+0.35",
+              "170.7"
+            ],
+            [
+              "8",
+              "19",
+              "Niccolo Maccagnani",
+              "Prema Racing",
+              "13",
+              "1:50.790",
+              "+0.534",
+              "170.4"
+            ],
+            [
+              "9",
+              "67",
+              "Dominik Simek",
+              "Trident Motorsport",
+              "13",
+              "1:50.805",
+              "+0.549",
+              "170.4"
+            ],
+            [
+              "10",
+              "20",
+              "Teo Borenstein",
+              "Jenzer Motorsport",
+              "13",
+              "1:50.829",
+              "+0.573",
+              "170.4"
+            ],
+            [
+              "11",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "13",
+              "1:50.857",
+              "+0.60",
+              "170.3"
+            ],
+            [
+              "12",
+              "10",
+              "Alp Aksoy",
+              "Prema Racing",
+              "14",
+              "1:50.867",
+              "+0.611",
+              "170.3"
+            ],
+            [
+              "13",
+              "81",
+              "Alexander Chartier",
+              "PHM Racing",
+              "12",
+              "1:50.876",
+              "+0.620",
+              "170.3"
+            ],
+            [
+              "14",
+              "98",
+              "David Cosma Cristofor",
+              "Prema Racing",
+              "15",
+              "1:50.981",
+              "+0.725",
+              "170.1"
+            ],
+            [
+              "15",
+              "6",
+              "Oscar Repetto",
+              "PHM Racing",
+              "13",
+              "1:51.133",
+              "+0.877",
+              "169.9"
+            ],
+            [
+              "16",
+              "28",
+              "Iacopo Martinese",
+              "PHM Racing",
+              "11",
+              "1:51.151",
+              "+0.895",
+              "169.9"
+            ],
+            [
+              "17",
+              "27",
+              "Oleksandr Bondarev",
+              "Prema Racing",
+              "14",
+              "1:51.191",
+              "+0.935",
+              "169.8"
+            ],
+            [
+              "18",
+              "13",
+              "Noah Killion",
+              "US Racing",
+              "11",
+              "1:51.206",
+              "+0.950",
+              "169.8"
+            ],
+            [
+              "19",
+              "62",
+              "Arjen Kraling",
+              "US Racing",
+              "13",
+              "1:51.210",
+              "+0.954",
+              "169.8"
+            ],
+            [
+              "20",
+              "41",
+              "Knud Nielsen",
+              "Real Racing",
+              "14",
+              "1:51.211",
+              "+0.955",
+              "169.8"
+            ],
+            [
+              "21",
+              "69",
+              "Kingsley Zheng",
+              "Prema Racing",
+              "13",
+              "1:51.311",
+              "+1.055",
+              "169.6"
+            ],
+            [
+              "22",
+              "29",
+              "Ludovico Busso",
+              "US Racing",
+              "13",
+              "1:51.334",
+              "+1.078",
+              "169.6"
+            ],
+            [
+              "23",
+              "21",
+              "Levi Arn",
+              "Jenzer Motorsport",
+              "13",
+              "1:51.336",
+              "+1.080",
+              "169.6"
+            ],
+            [
+              "24",
+              "87",
+              "Thomas Bearman",
+              "Van Amersfoort Racing",
+              "15",
+              "1:51.349",
+              "+1.093",
+              "169.6"
+            ],
+            [
+              "25",
+              "1",
+              "Christian Costoya",
+              "Prema Racing",
+              "13",
+              "1:51.372",
+              "+1.116",
+              "169.5"
+            ],
+            [
+              "26",
+              "47",
+              "Roland Kuklane",
+              "PHM Racing",
+              "12",
+              "1:51.423",
+              "+1.167",
+              "169.5"
+            ],
+            [
+              "27",
+              "73",
+              "Lyuboslav Ruykov",
+              "Trident Motorsport",
+              "11",
+              "1:51.436",
+              "+1.180",
+              "169.4"
+            ],
+            [
+              "28",
+              "16",
+              "Bernardo Bernoldi",
+              "Trident Motorsport",
+              "11",
+              "1:51.466",
+              "+1.210",
+              "169.4"
+            ],
+            [
+              "29",
+              "36",
+              "Simon Rechenmacher",
+              "Cram Motorsport",
+              "13",
+              "1:51.501",
+              "+1.245",
+              "169.3"
+            ],
+            [
+              "30",
+              "3",
+              "Aleksander Ruta",
+              "Van Amersfoort Racing",
+              "12",
+              "1:51.526",
+              "+1.270",
+              "169.3"
+            ],
+            [
+              "31",
+              "26",
+              "Bader Al Sulaiti",
+              "Jenzer Motorsport",
+              "12",
+              "1:51.624",
+              "+1.368",
+              "169.2"
+            ],
+            [
+              "32",
+              "56",
+              "Kirill Kutskov",
+              "Alpha 54 Racing",
+              "12",
+              "1:51.631",
+              "+1.375",
+              "169.1"
+            ],
+            [
+              "33",
+              "24",
+              "Nicolas Cortes",
+              "Jenzer Motorsport",
+              "13",
+              "1:51.736",
+              "+1.480",
+              "169.0"
+            ],
+            [
+              "34",
+              "42",
+              "Emily Cotty",
+              "R-ace GP",
+              "7",
+              "1:51.796",
+              "+1.540",
+              "168.9"
+            ],
+            [
+              "35",
+              "64",
+              "Ginevra Panzeri",
+              "PA Racing",
+              "12",
+              "1:51.852",
+              "+1.59",
+              "168.8"
+            ],
+            [
+              "36",
+              "60",
+              "Emma Felbermayr",
+              "PHM Racing",
+              "11",
+              "1:51.914",
+              "+1.658",
+              "168.7"
+            ],
+            [
+              "37",
+              "33",
+              "Tamas Gender",
+              "R-ace GP",
+              "14",
+              "1:51.928",
+              "+1.672",
+              "168.7"
+            ],
+            [
+              "38",
+              "35",
+              "Payton Westcott",
+              "R-ace GP",
+              "14",
+              "1:51.979",
+              "+1.723",
+              "168.6"
+            ],
+            [
+              "39",
+              "51",
+              "Augustus Toniolo",
+              "Trident Motorsport",
+              "12",
+              "1:52.017",
+              "+1.761",
+              "168.6"
+            ],
+            [
+              "40",
+              "53",
+              "Pedro Lima",
+              "Van Amersfoort Racing",
+              "14",
+              "1:52.046",
+              "+1.790",
+              "168.5"
+            ],
+            [
+              "41",
+              "64",
+              "Ginevra Panzeri",
+              "PA Racing",
+              "16",
+              "1:52.097",
+              "+1.841",
+              "168.4"
+            ],
+            [
+              "42",
+              "99",
+              "Fabricio Fogaca",
+              "AKM Motorsport",
+              "12",
+              "1:52.125",
+              "+1.869",
+              "168.4"
+            ],
+            [
+              "43",
+              "54",
+              "Federico Diaz",
+              "Alpha 54 Racing",
+              "12",
+              "1:52.244",
+              "+1.988",
+              "168.2"
+            ],
+            [
+              "44",
+              "38",
+              "Rafaela Ferreira",
+              "Cram Motorsport",
+              "13",
+              "1:52.255",
+              "+1.999",
+              "168.2"
+            ],
+            [
+              "45",
+              "43",
+              "Zoe Florescu",
+              "Real Racing",
+              "14",
+              "1:52.324",
+              "+2.068",
+              "168.1"
+            ],
+            [
+              "46",
+              "88",
+              "Vittorio Orsini",
+              "AKM Motorsport",
+              "12",
+              "1:52.830",
+              "+2.574",
+              "167.3"
+            ]
+          ]
+        },
+        {
+          "title": "Free practice 2",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "27",
+              "Oleksandr Bondarev",
+              "Prema Racing",
+              "13",
+              "1:49.547",
+              "—",
+              "172.4"
+            ],
+            [
+              "2",
+              "34",
+              "Kenzo Craigie",
+              "R-ace GP",
+              "14",
+              "1:49.615",
+              "+0.068",
+              "172.3"
+            ],
+            [
+              "3",
+              "47",
+              "Roland Kuklane",
+              "PHM Racing",
+              "12",
+              "1:49.741",
+              "+0.19",
+              "172.1"
+            ],
+            [
+              "4",
+              "30",
+              "Andy Consani",
+              "R-ace GP",
+              "14",
+              "1:49.762",
+              "+0.215",
+              "172.0"
+            ],
+            [
+              "5",
+              "10",
+              "Alp Aksoy",
+              "Prema Racing",
+              "13",
+              "1:49.771",
+              "+0.224",
+              "172.0"
+            ],
+            [
+              "6",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "13",
+              "1:49.924",
+              "+0.377",
+              "171.8"
+            ],
+            [
+              "7",
+              "19",
+              "Niccolo Maccagnani",
+              "Prema Racing",
+              "13",
+              "1:49.934",
+              "+0.387",
+              "171.8"
+            ],
+            [
+              "8",
+              "1",
+              "Christian Costoya",
+              "Prema Racing",
+              "14",
+              "1:49.990",
+              "+0.443",
+              "171.7"
+            ],
+            [
+              "9",
+              "62",
+              "Arjen Kraling",
+              "US Racing",
+              "11",
+              "1:50.109",
+              "+0.562",
+              "171.5"
+            ],
+            [
+              "10",
+              "42",
+              "Emily Cotty",
+              "R-ace GP",
+              "14",
+              "1:50.111",
+              "+0.564",
+              "171.5"
+            ],
+            [
+              "11",
+              "98",
+              "David Cosma Cristofor",
+              "Prema Racing",
+              "14",
+              "1:50.112",
+              "+0.565",
+              "171.5"
+            ],
+            [
+              "12",
+              "87",
+              "Thomas Bearman",
+              "Van Amersfoort Racing",
+              "14",
+              "1:50.223",
+              "+0.676",
+              "171.3"
+            ],
+            [
+              "13",
+              "22",
+              "Elia Weiss",
+              "Jenzer Motorsport",
+              "12",
+              "1:50.266",
+              "+0.719",
+              "171.2"
+            ],
+            [
+              "14",
+              "50",
+              "Florentin Hattemer",
+              "Trident Motorsport",
+              "16",
+              "1:50.288",
+              "+0.741",
+              "171.2"
+            ],
+            [
+              "15",
+              "13",
+              "Noah Killion",
+              "US Racing",
+              "13",
+              "1:50.321",
+              "+0.774",
+              "171.2"
+            ],
+            [
+              "16",
+              "24",
+              "Nicolas Cortes",
+              "Jenzer Motorsport",
+              "12",
+              "1:50.334",
+              "+0.787",
+              "171.1"
+            ],
+            [
+              "17",
+              "67",
+              "Dominik Simek",
+              "Trident Motorsport",
+              "14",
+              "1:50.371",
+              "+0.824",
+              "171.1"
+            ],
+            [
+              "18",
+              "21",
+              "Levi Arn",
+              "Jenzer Motorsport",
+              "12",
+              "1:50.375",
+              "+0.828",
+              "171.1"
+            ],
+            [
+              "19",
+              "9",
+              "Edu Robinson",
+              "US Racing",
+              "11",
+              "1:50.394",
+              "+0.847",
+              "171.0"
+            ],
+            [
+              "20",
+              "20",
+              "Teo Borenstein",
+              "Jenzer Motorsport",
+              "11",
+              "1:50.414",
+              "+0.867",
+              "171.0"
+            ],
+            [
+              "21",
+              "83",
+              "David Walther",
+              "Maffi Racing",
+              "14",
+              "1:50.425",
+              "+0.87",
+              "171.0"
+            ],
+            [
+              "22",
+              "35",
+              "Payton Westcott",
+              "R-ace GP",
+              "15",
+              "1:50.434",
+              "+0.887",
+              "171.0"
+            ],
+            [
+              "23",
+              "41",
+              "Knud Nielsen",
+              "Real Racing",
+              "15",
+              "1:50.442",
+              "+0.895",
+              "171.0"
+            ],
+            [
+              "24",
+              "46",
+              "Ary Bansal",
+              "US Racing",
+              "13",
+              "1:50.471",
+              "+0.924",
+              "170.9"
+            ],
+            [
+              "25",
+              "36",
+              "Simon Rechenmacher",
+              "Cram Motorsport",
+              "12",
+              "1:50.479",
+              "+0.932",
+              "170.9"
+            ],
+            [
+              "26",
+              "28",
+              "Iacopo Martinese",
+              "PHM Racing",
+              "14",
+              "1:50.580",
+              "+1.033",
+              "170.8"
+            ],
+            [
+              "27",
+              "29",
+              "Ludovico Busso",
+              "US Racing",
+              "10",
+              "1:50.659",
+              "+1.112",
+              "170.6"
+            ],
+            [
+              "28",
+              "51",
+              "Augustus Toniolo",
+              "Trident Motorsport",
+              "16",
+              "1:50.697",
+              "+1.150",
+              "170.6"
+            ],
+            [
+              "29",
+              "16",
+              "Bernardo Bernoldi",
+              "Trident Motorsport",
+              "15",
+              "1:50.749",
+              "+1.202",
+              "170.5"
+            ],
+            [
+              "30",
+              "83",
+              "David Walther",
+              "Maffi Racing",
+              "14",
+              "1:50.860",
+              "+1.313",
+              "170.3"
+            ],
+            [
+              "31",
+              "26",
+              "Bader Al Sulaiti",
+              "Jenzer Motorsport",
+              "12",
+              "1:50.879",
+              "+1.332",
+              "170.3"
+            ],
+            [
+              "32",
+              "81",
+              "Alexander Chartier",
+              "PHM Racing",
+              "12",
+              "1:50.914",
+              "+1.367",
+              "170.2"
+            ],
+            [
+              "33",
+              "53",
+              "Pedro Lima",
+              "Van Amersfoort Racing",
+              "14",
+              "1:50.929",
+              "+1.382",
+              "170.2"
+            ],
+            [
+              "34",
+              "47",
+              "Roland Kuklane",
+              "PHM Racing",
+              "15",
+              "1:50.934",
+              "+1.387",
+              "170.2"
+            ],
+            [
+              "35",
+              "69",
+              "Kingsley Zheng",
+              "Prema Racing",
+              "14",
+              "1:50.984",
+              "+1.437",
+              "170.1"
+            ],
+            [
+              "36",
+              "34",
+              "Kenzo Craigie",
+              "R-ace GP",
+              "15",
+              "1:51.150",
+              "+1.60",
+              "169.9"
+            ],
+            [
+              "37",
+              "73",
+              "Lyuboslav Ruykov",
+              "Trident Motorsport",
+              "15",
+              "1:51.151",
+              "+1.604",
+              "169.9"
+            ],
+            [
+              "38",
+              "60",
+              "Emma Felbermayr",
+              "PHM Racing",
+              "15",
+              "1:51.305",
+              "+1.758",
+              "169.6"
+            ],
+            [
+              "39",
+              "54",
+              "Federico Diaz",
+              "Alpha 54 Racing",
+              "13",
+              "1:51.407",
+              "+1.860",
+              "169.5"
+            ],
+            [
+              "40",
+              "88",
+              "Vittorio Orsini",
+              "AKM Motorsport",
+              "14",
+              "1:51.521",
+              "+1.974",
+              "169.3"
+            ],
+            [
+              "41",
+              "56",
+              "Kirill Kutskov",
+              "Alpha 54 Racing",
+              "12",
+              "1:51.554",
+              "+2.007",
+              "169.3"
+            ],
+            [
+              "42",
+              "33",
+              "Tamas Gender",
+              "R-ace GP",
+              "13",
+              "1:51.561",
+              "+2.014",
+              "169.3"
+            ],
+            [
+              "43",
+              "43",
+              "Zoe Florescu",
+              "Real Racing",
+              "15",
+              "1:51.580",
+              "+2.033",
+              "169.2"
+            ],
+            [
+              "44",
+              "38",
+              "Rafaela Ferreira",
+              "Cram Motorsport",
+              "12",
+              "1:51.837",
+              "+2.290",
+              "168.8"
+            ],
+            [
+              "45",
+              "64",
+              "Ginevra Panzeri",
+              "PA Racing",
+              "16",
+              "1:52.250",
+              "+2.703",
+              "168.2"
+            ],
+            [
+              "46",
+              "99",
+              "Fabricio Fogaca",
+              "AKM Motorsport",
+              "13",
+              "1:52.500",
+              "+2.953",
+              "167.8"
+            ],
+            [
+              "47",
+              "86",
+              "Igor Polak",
+              "Maffi Racing",
+              "17",
+              "1:52.571",
+              "+3.024",
+              "167.7"
+            ],
+            [
+              "48",
+              "6",
+              "Oscar Repetto",
+              "PHM Racing",
+              "13",
+              "1:52.874",
+              "+3.327",
+              "167.3"
+            ],
+            [
+              "49",
+              "84",
+              "Andreas Lo Bue",
+              "Maffi Racing",
+              "9",
+              "1:52.962",
+              "+3.415",
+              "167.2"
+            ]
+          ]
+        }
+      ]
     },
     "qualifying": {
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Time",
-        "Gap",
-        "Int",
-        "KPH"
-      ],
-      "rows": []
+      "sessions": [
+        {
+          "title": "Qualifying 1",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "22",
+              "Elia Weiss",
+              "Jenzer Motorsport",
+              "9",
+              "1:49.035",
+              "—",
+              "173.2"
+            ],
+            [
+              "2",
+              "10",
+              "Alp Aksoy",
+              "Prema Racing",
+              "6",
+              "1:49.368",
+              "+0.333",
+              "172.6"
+            ],
+            [
+              "3",
+              "19",
+              "Niccolo Maccagnani",
+              "Prema Racing",
+              "8",
+              "1:49.461",
+              "+0.426",
+              "172.5"
+            ],
+            [
+              "4",
+              "27",
+              "Oleksandr Bondarev",
+              "Prema Racing",
+              "7",
+              "1:49.636",
+              "+0.601",
+              "172.2"
+            ],
+            [
+              "5",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "6",
+              "1:49.656",
+              "+0.62",
+              "172.2"
+            ],
+            [
+              "6",
+              "50",
+              "Florentin Hattemer",
+              "Trident Motorsport",
+              "10",
+              "1:49.920",
+              "+0.885",
+              "171.8"
+            ],
+            [
+              "7",
+              "46",
+              "Ary Bansal",
+              "US Racing",
+              "6",
+              "1:49.941",
+              "+0.906",
+              "171.7"
+            ],
+            [
+              "8",
+              "21",
+              "Levi Arn",
+              "Jenzer Motorsport",
+              "6",
+              "1:49.942",
+              "+0.907",
+              "171.7"
+            ],
+            [
+              "9",
+              "20",
+              "Teo Borenstein",
+              "Jenzer Motorsport",
+              "6",
+              "1:49.947",
+              "+0.912",
+              "171.7"
+            ],
+            [
+              "10",
+              "87",
+              "Thomas Bearman",
+              "Van Amersfoort Racing",
+              "6",
+              "1:50.039",
+              "+1.004",
+              "171.6"
+            ],
+            [
+              "11",
+              "69",
+              "Kingsley Zheng",
+              "Prema Racing",
+              "8",
+              "1:50.226",
+              "+1.191",
+              "171.3"
+            ],
+            [
+              "12",
+              "83",
+              "David Walther",
+              "Maffi Racing",
+              "6",
+              "1:50.263",
+              "+1.22",
+              "171.2"
+            ],
+            [
+              "13",
+              "28",
+              "Iacopo Martinese",
+              "PHM Racing",
+              "7",
+              "1:50.328",
+              "+1.293",
+              "171.1"
+            ],
+            [
+              "14",
+              "42",
+              "Emily Cotty",
+              "R-ace GP",
+              "7",
+              "1:50.359",
+              "+1.324",
+              "171.1"
+            ],
+            [
+              "15",
+              "62",
+              "Arjen Kraling",
+              "US Racing",
+              "6",
+              "1:50.374",
+              "+1.339",
+              "171.1"
+            ],
+            [
+              "16",
+              "60",
+              "Emma Felbermayr",
+              "PHM Racing",
+              "4",
+              "1:50.504",
+              "+1.469",
+              "170.9"
+            ],
+            [
+              "17",
+              "24",
+              "Nicolas Cortes",
+              "Jenzer Motorsport",
+              "6",
+              "1:50.621",
+              "+1.586",
+              "170.7"
+            ],
+            [
+              "18",
+              "35",
+              "Payton Westcott",
+              "R-ace GP",
+              "7",
+              "1:50.683",
+              "+1.648",
+              "170.6"
+            ],
+            [
+              "19",
+              "47",
+              "Roland Kuklane",
+              "PHM Racing",
+              "6",
+              "1:50.723",
+              "+1.688",
+              "170.5"
+            ],
+            [
+              "20",
+              "53",
+              "Pedro Lima",
+              "Van Amersfoort Racing",
+              "7",
+              "1:50.895",
+              "+1.860",
+              "170.3"
+            ],
+            [
+              "21",
+              "99",
+              "Fabricio Fogaca",
+              "AKM Motorsport",
+              "8",
+              "1:51.059",
+              "+2.024",
+              "170.0"
+            ],
+            [
+              "22",
+              "43",
+              "Zoe Florescu",
+              "Real Racing",
+              "7",
+              "1:51.281",
+              "+2.246",
+              "169.7"
+            ],
+            [
+              "23",
+              "81",
+              "Alexander Chartier",
+              "PHM Racing",
+              "7",
+              "1:51.334",
+              "+2.299",
+              "169.6"
+            ],
+            [
+              "24",
+              "84",
+              "Andreas Lo Bue",
+              "Maffi Racing",
+              "9",
+              "1:52.156",
+              "+3.121",
+              "168.4"
+            ]
+          ]
+        },
+        {
+          "title": "Qualifying 2",
+          "headers": [
+            "#",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Best time",
+            "Gap",
+            "km/h"
+          ],
+          "rows": [
+            [
+              "1",
+              "98",
+              "David Cosma Cristofor",
+              "Prema Racing",
+              "8",
+              "1:49.035",
+              "—",
+              "173.2"
+            ],
+            [
+              "2",
+              "30",
+              "Andy Consani",
+              "R-ace GP",
+              "7",
+              "1:49.384",
+              "+0.349",
+              "172.6"
+            ],
+            [
+              "3",
+              "34",
+              "Kenzo Craigie",
+              "R-ace GP",
+              "7",
+              "1:49.553",
+              "+0.518",
+              "172.4"
+            ],
+            [
+              "4",
+              "81",
+              "Alexander Chartier",
+              "PHM Racing",
+              "9",
+              "1:49.593",
+              "+0.55",
+              "172.3"
+            ],
+            [
+              "5",
+              "67",
+              "Dominik Simek",
+              "Trident Motorsport",
+              "9",
+              "1:49.601",
+              "+0.566",
+              "172.3"
+            ],
+            [
+              "6",
+              "26",
+              "Bader Al Sulaiti",
+              "Jenzer Motorsport",
+              "8",
+              "1:49.648",
+              "+0.613",
+              "172.2"
+            ],
+            [
+              "7",
+              "36",
+              "Simon Rechenmacher",
+              "Cram Motorsport",
+              "7",
+              "1:49.658",
+              "+0.62",
+              "172.2"
+            ],
+            [
+              "8",
+              "36",
+              "Simon Rechenmacher",
+              "Cram Motorsport",
+              "9",
+              "1:49.663",
+              "+0.628",
+              "172.2"
+            ],
+            [
+              "9",
+              "51",
+              "Augustus Toniolo",
+              "Trident Motorsport",
+              "10",
+              "1:49.728",
+              "+0.693",
+              "172.1"
+            ],
+            [
+              "10",
+              "16",
+              "Bernardo Bernoldi",
+              "Trident Motorsport",
+              "9",
+              "1:49.907",
+              "+0.872",
+              "171.8"
+            ],
+            [
+              "11",
+              "29",
+              "Ludovico Busso",
+              "US Racing",
+              "6",
+              "1:49.950",
+              "+0.915",
+              "171.7"
+            ],
+            [
+              "12",
+              "13",
+              "Noah Killion",
+              "US Racing",
+              "6",
+              "1:50.082",
+              "+1.047",
+              "171.5"
+            ],
+            [
+              "13",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "5",
+              "1:50.124",
+              "+1.089",
+              "171.5"
+            ],
+            [
+              "14",
+              "24",
+              "Nicolas Cortes",
+              "Jenzer Motorsport",
+              "9",
+              "1:50.127",
+              "+1.09",
+              "171.5"
+            ],
+            [
+              "15",
+              "83",
+              "David Walther",
+              "Maffi Racing",
+              "7",
+              "1:50.284",
+              "+1.249",
+              "171.2"
+            ],
+            [
+              "16",
+              "73",
+              "Lyuboslav Ruykov",
+              "Trident Motorsport",
+              "9",
+              "1:50.422",
+              "+1.387",
+              "171.0"
+            ],
+            [
+              "17",
+              "56",
+              "Kirill Kutskov",
+              "Alpha 54 Racing",
+              "7",
+              "1:50.458",
+              "+1.423",
+              "170.9"
+            ],
+            [
+              "18",
+              "99",
+              "Fabricio Fogaca",
+              "AKM Motorsport",
+              "5",
+              "1:50.524",
+              "+1.48",
+              "170.8"
+            ],
+            [
+              "19",
+              "38",
+              "Rafaela Ferreira",
+              "Cram Motorsport",
+              "9",
+              "1:50.569",
+              "+1.534",
+              "170.8"
+            ],
+            [
+              "20",
+              "54",
+              "Federico Diaz",
+              "Alpha 54 Racing",
+              "9",
+              "1:50.755",
+              "+1.720",
+              "170.5"
+            ],
+            [
+              "21",
+              "88",
+              "Vittorio Orsini",
+              "AKM Motorsport",
+              "9",
+              "1:50.974",
+              "+1.939",
+              "170.1"
+            ],
+            [
+              "22",
+              "33",
+              "Tamas Gender",
+              "R-ace GP",
+              "7",
+              "1:51.035",
+              "+2.000",
+              "170.1"
+            ],
+            [
+              "23",
+              "64",
+              "Ginevra Panzeri",
+              "PA Racing",
+              "11",
+              "1:51.424",
+              "+2.389",
+              "169.5"
+            ],
+            [
+              "24",
+              "86",
+              "Igor Polak",
+              "Maffi Racing",
+              "10",
+              "1:51.628",
+              "+2.593",
+              "169.2"
+            ]
+          ]
+        }
+      ]
     },
     "race": {
       "headers": null,
-      "rows": null,
+      "rows": [],
       "sessions": [
         {
-          "title": "Race 1",
+          "title": "Race 1 (Gr.B–Gr.C)",
+          "headers": [
+            "Fin",
+            "ST",
+            "No.",
+            "Driver",
+            "Team",
+            "Laps",
+            "Gap",
+            "Best lap",
+            "Pts"
+          ],
           "meta": {
             "Date": "25 Jul 2026",
-            "Start": "11:10 AM",
+            "Start": "12:09 PM",
             "Session": "Gr.B – Gr.C",
-            "time_msk": "12:10"
+            "time_msk": "13:09"
           },
+          "rows": [
+            [
+              "1",
+              "2",
+              "19",
+              "Niccolo Maccagnani",
+              "Prema Racing",
+              "13",
+              "—",
+              "1:50.754",
+              "30"
+            ],
+            [
+              "2",
+              "3",
+              "34",
+              "Kenzo Craigie",
+              "R-ace GP",
+              "13",
+              "+0.271",
+              "1:50.647",
+              "26"
+            ],
+            [
+              "3",
+              "5",
+              "7",
+              "Luka Sammalisto",
+              "US Racing",
+              "13",
+              "+0.838",
+              "1:50.445",
+              "22"
+            ],
+            [
+              "4",
+              "1",
+              "98",
+              "David Cosma Cristofor",
+              "Prema Racing",
+              "13",
+              "+2.011",
+              "1:50.844",
+              "20"
+            ],
+            [
+              "5",
+              "8",
+              "6",
+              "Oscar Repetto",
+              "PHM Racing",
+              "13",
+              "+3.023",
+              "1:50.614",
+              "18"
+            ],
+            [
+              "6",
+              "6",
+              "50",
+              "Florentin Hattemer",
+              "Trident Motorsport",
+              "13",
+              "+3.561",
+              "1:51.211",
+              "16"
+            ],
+            [
+              "7",
+              "10",
+              "10",
+              "Alp Aksoy",
+              "Prema Racing",
+              "13",
+              "+3.972",
+              "1:51.453",
+              "14"
+            ],
+            [
+              "8",
+              "4",
+              "1",
+              "Christian Costoya",
+              "Prema Racing",
+              "13",
+              "+4.211",
+              "1:51.140",
+              "12"
+            ],
+            [
+              "9",
+              "11",
+              "20",
+              "Teo Borenstein",
+              "Jenzer Motorsport",
+              "13",
+              "+4.946",
+              "1:51.402",
+              "10"
+            ],
+            [
+              "10",
+              "15",
+              "3",
+              "Aleksander Ruta",
+              "Van Amersfoort Racing",
+              "13",
+              "+4.971",
+              "1:51.514",
+              "9"
+            ],
+            [
+              "11",
+              "16",
+              "13",
+              "Noah Killion",
+              "US Racing",
+              "13",
+              "+5.373",
+              "1:51.299",
+              "8"
+            ],
+            [
+              "12",
+              "12",
+              "51",
+              "Augustus Toniolo",
+              "Trident Motorsport",
+              "13",
+              "+5.901",
+              "1:51.835",
+              "6"
+            ],
+            [
+              "13",
+              "14",
+              "69",
+              "Kingsley Zheng",
+              "Prema Racing",
+              "13",
+              "+6.261",
+              "1:51.643",
+              "4"
+            ],
+            [
+              "14",
+              "23",
+              "9",
+              "Edu Robinson",
+              "US Racing",
+              "13",
+              "+6.545",
+              "1:51.137",
+              "2"
+            ],
+            [
+              "15",
+              "19",
+              "73",
+              "Lyuboslav Ruykov",
+              "Trident Motorsport",
+              "13",
+              "+6.939",
+              "1:52.106",
+              "1"
+            ],
+            [
+              "16",
+              "29",
+              "81",
+              "Alexander Chartier",
+              "PHM Racing",
+              "13",
+              "+6.959",
+              "1:51.830",
+              "0"
+            ],
+            [
+              "17",
+              "28",
+              "24",
+              "Nicolas Cortes",
+              "Jenzer Motorsport",
+              "13",
+              "+7.574",
+              "1:52.089",
+              "0"
+            ],
+            [
+              "18",
+              "22",
+              "62",
+              "Arjen Kraling",
+              "US Racing",
+              "13",
+              "+8.237",
+              "1:51.710",
+              "0"
+            ],
+            [
+              "19",
+              "13",
+              "16",
+              "Bernardo Bernoldi",
+              "Trident Motorsport",
+              "13",
+              "+8.719",
+              "1:52.169",
+              "0"
+            ],
+            [
+              "20",
+              "21",
+              "35",
+              "Payton Westcott",
+              "R-ace GP",
+              "13",
+              "+9.394",
+              "1:52.180",
+              "0"
+            ],
+            [
+              "21",
+              "31",
+              "86",
+              "Igor Polak",
+              "Maffi Racing",
+              "13",
+              "+10.024",
+              "1:52.419",
+              "0"
+            ],
+            [
+              "22",
+              "9",
+              "21",
+              "Levi Arn",
+              "Jenzer Motorsport",
+              "13",
+              "+10.026",
+              "1:51.365",
+              "0"
+            ],
+            [
+              "23",
+              "30",
+              "84",
+              "Andreas Lo Bue",
+              "Maffi Racing",
+              "13",
+              "+10.607",
+              "1:52.215",
+              "0"
+            ],
+            [
+              "24",
+              "25",
+              "53",
+              "Pedro Lima",
+              "Van Amersfoort Racing",
+              "13",
+              "+11.026",
+              "1:52.993",
+              "0"
+            ],
+            [
+              "25",
+              "27",
+              "33",
+              "Tamas Gender",
+              "R-ace GP",
+              "13",
+              "+11.491",
+              "1:52.122",
+              "0"
+            ],
+            [
+              "26",
+              "7",
+              "26",
+              "Bader Al Sulaiti",
+              "Jenzer Motorsport",
+              "13",
+              "+12.677",
+              "1:51.214",
+              "0"
+            ],
+            [
+              "27",
+              "26",
+              "99",
+              "Fabricio Fogaca",
+              "AKM Motorsport",
+              "13",
+              "+12.837",
+              "1:51.717",
+              "0"
+            ],
+            [
+              "28",
+              "32",
+              "88",
+              "Vittorio Orsini",
+              "AKM Motorsport",
+              "13",
+              "+13.097",
+              "1:52.745",
+              "0"
+            ],
+            [
+              "29",
+              "24",
+              "38",
+              "Rafaela Ferreira",
+              "Cram Motorsport",
+              "13",
+              "+13.135",
+              "1:51.768",
+              "0"
+            ],
+            [
+              "30",
+              "18",
+              "83",
+              "David Walther",
+              "Maffi Racing",
+              "10",
+              "+3 Laps",
+              "1:51.789",
+              "0"
+            ],
+            [
+              "RET",
+              "17",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "7",
+              "",
+              "1:51.772",
+              "0"
+            ],
+            [
+              "RET",
+              "20",
+              "42",
+              "Emily Cotty",
+              "R-ace GP",
+              "7",
+              "",
+              "1:51.982",
+              "0"
+            ]
+          ]
+        },
+        {
+          "title": "Race 2 (Gr.A–Gr.B)",
           "headers": [
-            "Fin / ST",
+            "Fin",
+            "ST",
             "No.",
             "Driver",
             "Team",
             "Laps",
-            "Time/Retired",
+            "Gap",
+            "Best lap",
             "Pts"
           ],
-          "rows": []
-        },
-        {
-          "title": "Race 2",
           "meta": {
             "Date": "25 Jul 2026",
-            "Start": "5:10 PM",
+            "Start": "5:54 PM",
             "Session": "Gr.A – Gr.B",
-            "time_msk": "18:10"
+            "time_msk": "18:54"
           },
+          "rows": [
+            [
+              "1",
+              "9",
+              "46",
+              "Ary Bansal",
+              "US Racing",
+              "15",
+              "—",
+              "1:50.914",
+              "30"
+            ],
+            [
+              "2",
+              "4",
+              "19",
+              "Niccolo Maccagnani",
+              "Prema Racing",
+              "15",
+              "+5.577",
+              "1:51.721",
+              "26"
+            ],
+            [
+              "3",
+              "2",
+              "98",
+              "David Cosma Cristofor",
+              "Prema Racing",
+              "15",
+              "+6.405",
+              "1:51.693",
+              "22"
+            ],
+            [
+              "4",
+              "5",
+              "27",
+              "Oleksandr Bondarev",
+              "Prema Racing",
+              "15",
+              "+7.053",
+              "1:51.530",
+              "20"
+            ],
+            [
+              "5",
+              "18",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "15",
+              "+7.180",
+              "1:51.204",
+              "18"
+            ],
+            [
+              "6",
+              "6",
+              "1",
+              "Christian Costoya",
+              "Prema Racing",
+              "15",
+              "+8.093",
+              "1:51.969",
+              "16"
+            ],
+            [
+              "7",
+              "13",
+              "87",
+              "Thomas Bearman",
+              "Van Amersfoort Racing",
+              "15",
+              "+8.961",
+              "1:51.718",
+              "14"
+            ],
+            [
+              "8",
+              "10",
+              "6",
+              "Oscar Repetto",
+              "PHM Racing",
+              "15",
+              "+9.180",
+              "1:51.862",
+              "12"
+            ],
+            [
+              "9",
+              "7",
+              "67",
+              "Dominik Simek",
+              "Trident Motorsport",
+              "15",
+              "+12.752",
+              "1:51.879",
+              "10"
+            ],
+            [
+              "10",
+              "8",
+              "50",
+              "Florentin Hattemer",
+              "Trident Motorsport",
+              "15",
+              "+13.009",
+              "1:51.741",
+              "9"
+            ],
+            [
+              "11",
+              "16",
+              "3",
+              "Aleksander Ruta",
+              "Van Amersfoort Racing",
+              "15",
+              "+13.857",
+              "1:51.664",
+              "8"
+            ],
+            [
+              "12",
+              "11",
+              "36",
+              "Simon Rechenmacher",
+              "Cram Motorsport",
+              "15",
+              "+18.871",
+              "1:51.604",
+              "6"
+            ],
+            [
+              "13",
+              "15",
+              "29",
+              "Ludovico Busso",
+              "US Racing",
+              "15",
+              "+18.919",
+              "1:50.944",
+              "4"
+            ],
+            [
+              "14",
+              "21",
+              "60",
+              "Emma Felbermayr",
+              "PHM Racing",
+              "15",
+              "+19.884",
+              "1:51.623",
+              "2"
+            ],
+            [
+              "15",
+              "17",
+              "28",
+              "Iacopo Martinese",
+              "PHM Racing",
+              "15",
+              "+20.229",
+              "1:51.572",
+              "1"
+            ],
+            [
+              "16",
+              "23",
+              "56",
+              "Kirill Kutskov",
+              "Alpha 54 Racing",
+              "15",
+              "+20.332",
+              "1:52.263",
+              "0"
+            ],
+            [
+              "17",
+              "22",
+              "73",
+              "Lyuboslav Ruykov",
+              "Trident Motorsport",
+              "15",
+              "+21.724",
+              "1:52.300",
+              "0"
+            ],
+            [
+              "18",
+              "19",
+              "4",
+              "Roman Kamyab",
+              "Prema Racing",
+              "15",
+              "+21.859",
+              "1:52.252",
+              "0"
+            ],
+            [
+              "19",
+              "33",
+              "41",
+              "Knud Nielsen",
+              "Real Racing",
+              "15",
+              "+22.481",
+              "1:51.502",
+              "0"
+            ],
+            [
+              "20",
+              "25",
+              "47",
+              "Roland Kuklane",
+              "PHM Racing",
+              "15",
+              "+24.407",
+              "1:51.898",
+              "0"
+            ],
+            [
+              "21",
+              "27",
+              "54",
+              "Federico Diaz",
+              "Alpha 54 Racing",
+              "15",
+              "+24.709",
+              "1:52.342",
+              "0"
+            ],
+            [
+              "22",
+              "3",
+              "30",
+              "Andy Consani",
+              "R-ace GP",
+              "15",
+              "+27.299",
+              "1:50.647",
+              "0"
+            ],
+            [
+              "23",
+              "24",
+              "35",
+              "Payton Westcott",
+              "R-ace GP",
+              "15",
+              "+27.452",
+              "1:52.414",
+              "0"
+            ],
+            [
+              "24",
+              "28",
+              "43",
+              "Zoe Florescu",
+              "Real Racing",
+              "15",
+              "+27.560",
+              "1:52.577",
+              "0"
+            ],
+            [
+              "25",
+              "31",
+              "84",
+              "Andreas Lo Bue",
+              "Maffi Racing",
+              "15",
+              "+28.839",
+              "1:52.255",
+              "0"
+            ],
+            [
+              "26",
+              "26",
+              "38",
+              "Rafaela Ferreira",
+              "Cram Motorsport",
+              "15",
+              "+29.539",
+              "1:52.315",
+              "0"
+            ],
+            [
+              "27",
+              "30",
+              "64",
+              "Ginevra Panzeri",
+              "PA Racing",
+              "15",
+              "+30.605",
+              "1:52.310",
+              "0"
+            ],
+            [
+              "28",
+              "29",
+              "33",
+              "Tamas Gender",
+              "R-ace GP",
+              "15",
+              "+37.431",
+              "1:52.140",
+              "0"
+            ],
+            [
+              "29",
+              "14",
+              "16",
+              "Bernardo Bernoldi",
+              "Trident Motorsport",
+              "15",
+              "+53.558",
+              "1:51.204",
+              "0"
+            ],
+            [
+              "30",
+              "32",
+              "99",
+              "Fabricio Fogaca",
+              "AKM Motorsport",
+              "15",
+              "+1:24.407",
+              "1:52.130",
+              "0"
+            ],
+            [
+              "31",
+              "20",
+              "62",
+              "Arjen Kraling",
+              "US Racing",
+              "11",
+              "+4 Laps",
+              "1:51.923",
+              "0"
+            ],
+            [
+              "RET",
+              "12",
+              "20",
+              "Teo Borenstein",
+              "Jenzer Motorsport",
+              "8",
+              "",
+              "1:51.331",
+              "0"
+            ],
+            [
+              "RET",
+              "1",
+              "22",
+              "Elia Weiss",
+              "Jenzer Motorsport",
+              "7",
+              "",
+              "1:50.971",
+              "0"
+            ]
+          ]
+        },
+        {
+          "title": "Race 3 (Gr.A–Gr.C)",
           "headers": [
-            "Fin / ST",
+            "Fin",
+            "ST",
             "No.",
             "Driver",
             "Team",
             "Laps",
-            "Time/Retired",
+            "Gap",
+            "Best lap",
             "Pts"
           ],
-          "rows": []
-        },
-        {
-          "title": "Race 3",
           "meta": {
             "Date": "26 Jul 2026",
-            "Start": "9:00 AM",
+            "Start": "9:30 AM",
             "Session": "Gr.A – Gr.C",
-            "time_msk": "10:00"
+            "time_msk": "10:30"
           },
-          "headers": [
-            "Fin / ST",
-            "No.",
-            "Driver",
-            "Team",
-            "Laps",
-            "Time/Retired",
-            "Pts"
-          ],
-          "rows": []
+          "rows": [
+            [
+              "1",
+              "3",
+              "30",
+              "Andy Consani",
+              "R-ace GP",
+              "11",
+              "—",
+              "2:02.987",
+              "30"
+            ],
+            [
+              "2",
+              "8",
+              "26",
+              "Bader Al Sulaiti",
+              "Jenzer Motorsport",
+              "11",
+              "+0.866",
+              "2:04.806",
+              "26"
+            ],
+            [
+              "3",
+              "5",
+              "27",
+              "Oleksandr Bondarev",
+              "Prema Racing",
+              "11",
+              "+1.264",
+              "2:02.377",
+              "22"
+            ],
+            [
+              "4",
+              "4",
+              "34",
+              "Kenzo Craigie",
+              "R-ace GP",
+              "11",
+              "+2.023",
+              "2:03.645",
+              "20"
+            ],
+            [
+              "5",
+              "7",
+              "67",
+              "Dominik Simek",
+              "Trident Motorsport",
+              "11",
+              "+2.415",
+              "2:05.290",
+              "18"
+            ],
+            [
+              "6",
+              "2",
+              "10",
+              "Alp Aksoy",
+              "Prema Racing",
+              "11",
+              "+2.549",
+              "2:00.198",
+              "16"
+            ],
+            [
+              "7",
+              "16",
+              "13",
+              "Noah Killion",
+              "US Racing",
+              "11",
+              "+3.742",
+              "2:04.696",
+              "14"
+            ],
+            [
+              "8",
+              "6",
+              "7",
+              "Luka Sammalisto",
+              "US Racing",
+              "11",
+              "+3.876",
+              "1:59.894",
+              "12"
+            ],
+            [
+              "9",
+              "10",
+              "21",
+              "Levi Arn",
+              "Jenzer Motorsport",
+              "11",
+              "+4.455",
+              "2:05.582",
+              "10"
+            ],
+            [
+              "10",
+              "9",
+              "46",
+              "Ary Bansal",
+              "US Racing",
+              "11",
+              "+5.749",
+              "2:01.243",
+              "9"
+            ],
+            [
+              "11",
+              "13",
+              "87",
+              "Thomas Bearman",
+              "Van Amersfoort Racing",
+              "11",
+              "+5.898",
+              "2:01.763",
+              "8"
+            ],
+            [
+              "12",
+              "33",
+              "41",
+              "Knud Nielsen",
+              "Real Racing",
+              "11",
+              "+6.400",
+              "2:00.151",
+              "6"
+            ],
+            [
+              "13",
+              "23",
+              "83",
+              "David Walther",
+              "Maffi Racing",
+              "11",
+              "+7.114",
+              "2:00.404",
+              "4"
+            ],
+            [
+              "14",
+              "12",
+              "51",
+              "Augustus Toniolo",
+              "Trident Motorsport",
+              "11",
+              "+7.313",
+              "2:02.793",
+              "2"
+            ],
+            [
+              "15",
+              "21",
+              "24",
+              "Nicolas Cortes",
+              "Jenzer Motorsport",
+              "11",
+              "+7.468",
+              "2:02.842",
+              "1"
+            ],
+            [
+              "16",
+              "17",
+              "28",
+              "Iacopo Martinese",
+              "PHM Racing",
+              "11",
+              "+7.906",
+              "2:04.379",
+              "0"
+            ],
+            [
+              "17",
+              "22",
+              "56",
+              "Kirill Kutskov",
+              "Alpha 54 Racing",
+              "11",
+              "+9.203",
+              "2:04.842",
+              "0"
+            ],
+            [
+              "18",
+              "30",
+              "53",
+              "Pedro Lima",
+              "Van Amersfoort Racing",
+              "11",
+              "+10.074",
+              "2:04.801",
+              "0"
+            ],
+            [
+              "19",
+              "11",
+              "36",
+              "Simon Rechenmacher",
+              "Cram Motorsport",
+              "11",
+              "+11.192",
+              "2:04.252",
+              "0"
+            ],
+            [
+              "20",
+              "25",
+              "47",
+              "Roland Kuklane",
+              "PHM Racing",
+              "11",
+              "+11.932",
+              "2:04.999",
+              "0"
+            ],
+            [
+              "21",
+              "20",
+              "60",
+              "Emma Felbermayr",
+              "PHM Racing",
+              "11",
+              "+12.251",
+              "2:06.982",
+              "0"
+            ],
+            [
+              "22",
+              "29",
+              "81",
+              "Alexander Chartier",
+              "PHM Racing",
+              "11",
+              "+12.483",
+              "2:05.861",
+              "0"
+            ],
+            [
+              "23",
+              "19",
+              "4",
+              "Roman Kamyab",
+              "Prema Racing",
+              "11",
+              "+14.694",
+              "2:07.016",
+              "0"
+            ],
+            [
+              "24",
+              "24",
+              "9",
+              "Edu Robinson",
+              "US Racing",
+              "11",
+              "+15.418",
+              "2:07.514",
+              "0"
+            ],
+            [
+              "25",
+              "26",
+              "54",
+              "Federico Diaz",
+              "Alpha 54 Racing",
+              "11",
+              "+18.760",
+              "2:11.943",
+              "0"
+            ],
+            [
+              "26",
+              "27",
+              "88",
+              "Vittorio Orsini",
+              "AKM Motorsport",
+              "11",
+              "+19.027",
+              "2:07.347",
+              "0"
+            ],
+            [
+              "27",
+              "18",
+              "42",
+              "Emily Cotty",
+              "R-ace GP",
+              "11",
+              "+19.247",
+              "2:07.228",
+              "0"
+            ],
+            [
+              "28",
+              "32",
+              "86",
+              "Igor Polak",
+              "Maffi Racing",
+              "11",
+              "+19.896",
+              "2:13.806",
+              "0"
+            ],
+            [
+              "29",
+              "28",
+              "43",
+              "Zoe Florescu",
+              "Real Racing",
+              "9",
+              "+2 Laps",
+              "2:09.285",
+              "0"
+            ],
+            [
+              "30",
+              "15",
+              "29",
+              "Ludovico Busso",
+              "US Racing",
+              "7",
+              "+4 Laps",
+              "2:16.009",
+              "0"
+            ],
+            [
+              "RET",
+              "14",
+              "69",
+              "Kingsley Zheng",
+              "Prema Racing",
+              "4",
+              "",
+              "2:44.160",
+              "0"
+            ],
+            [
+              "RET",
+              "1",
+              "22",
+              "Elia Weiss",
+              "Jenzer Motorsport",
+              "2",
+              "",
+              "3:20.449",
+              "0"
+            ],
+            [
+              "RET",
+              "31",
+              "64",
+              "Ginevra Panzeri",
+              "PA Racing",
+              "2",
+              "",
+              "3:04.228",
+              "0"
+            ]
+          ]
         },
         {
           "title": "Final Race",
-          "meta": {
-            "Date": "26 Jul 2026",
-            "Start": "3:50 PM",
-            "Session": "Final",
-            "time_msk": "16:50"
-          },
           "headers": [
-            "Fin / ST",
+            "Fin",
+            "ST",
             "No.",
             "Driver",
             "Team",
             "Laps",
-            "Time/Retired",
+            "Gap",
+            "Best lap",
             "Pts"
           ],
-          "rows": []
+          "meta": {
+            "Date": "26 Jul 2026",
+            "Start": "4:26 PM",
+            "Session": "Final",
+            "time_msk": "17:26"
+          },
+          "rows": [
+            [
+              "1",
+              "2",
+              "34",
+              "Kenzo Craigie",
+              "R-ace GP",
+              "13",
+              "—",
+              "1:51.117",
+              "30"
+            ],
+            [
+              "2",
+              "6",
+              "7",
+              "Luka Sammalisto",
+              "US Racing",
+              "13",
+              "+0.642",
+              "1:50.925",
+              "26"
+            ],
+            [
+              "3",
+              "1",
+              "19",
+              "Niccolo Maccagnani",
+              "Prema Racing",
+              "13",
+              "+4.668",
+              "1:51.665",
+              "22"
+            ],
+            [
+              "4",
+              "4",
+              "27",
+              "Oleksandr Bondarev",
+              "Prema Racing",
+              "13",
+              "+6.157",
+              "1:51.926",
+              "20"
+            ],
+            [
+              "5",
+              "9",
+              "10",
+              "Alp Aksoy",
+              "Prema Racing",
+              "13",
+              "+6.574",
+              "1:51.897",
+              "18"
+            ],
+            [
+              "6",
+              "5",
+              "46",
+              "Ary Bansal",
+              "US Racing",
+              "13",
+              "+7.186",
+              "1:51.528",
+              "16"
+            ],
+            [
+              "7",
+              "12",
+              "26",
+              "Bader Al Sulaiti",
+              "Jenzer Motorsport",
+              "13",
+              "+8.201",
+              "1:51.702",
+              "14"
+            ],
+            [
+              "8",
+              "7",
+              "30",
+              "Andy Consani",
+              "R-ace GP",
+              "13",
+              "+8.469",
+              "1:51.774",
+              "12"
+            ],
+            [
+              "9",
+              "3",
+              "98",
+              "David Cosma Cristofor",
+              "Prema Racing",
+              "13",
+              "+13.574",
+              "1:52.854",
+              "10"
+            ],
+            [
+              "10",
+              "8",
+              "6",
+              "Oscar Repetto",
+              "PHM Racing",
+              "13",
+              "+13.912",
+              "1:52.814",
+              "9"
+            ],
+            [
+              "11",
+              "10",
+              "67",
+              "Dominik Simek",
+              "Trident Motorsport",
+              "13",
+              "+14.224",
+              "1:52.800",
+              "8"
+            ],
+            [
+              "12",
+              "14",
+              "87",
+              "Thomas Bearman",
+              "Van Amersfoort Racing",
+              "13",
+              "+14.409",
+              "1:52.458",
+              "6"
+            ],
+            [
+              "13",
+              "11",
+              "1",
+              "Christian Costoya",
+              "Prema Racing",
+              "13",
+              "+15.681",
+              "1:52.845",
+              "4"
+            ],
+            [
+              "14",
+              "18",
+              "21",
+              "Levi Arn",
+              "Jenzer Motorsport",
+              "13",
+              "+15.819",
+              "1:52.533",
+              "2"
+            ],
+            [
+              "15",
+              "15",
+              "13",
+              "Noah Killion",
+              "US Racing",
+              "13",
+              "+16.943",
+              "1:52.708",
+              "1"
+            ],
+            [
+              "16",
+              "21",
+              "36",
+              "Simon Rechenmacher",
+              "Cram Motorsport",
+              "13",
+              "+17.062",
+              "1:52.191",
+              "0"
+            ],
+            [
+              "17",
+              "23",
+              "29",
+              "Ludovico Busso",
+              "US Racing",
+              "13",
+              "+17.479",
+              "1:51.435",
+              "0"
+            ],
+            [
+              "18",
+              "16",
+              "17",
+              "Oleksandr Savinkov",
+              "US Racing",
+              "13",
+              "+19.493",
+              "1:52.028",
+              "0"
+            ],
+            [
+              "19",
+              "13",
+              "50",
+              "Florentin Hattemer",
+              "Trident Motorsport",
+              "13",
+              "+20.591",
+              "1:53.228",
+              "0"
+            ],
+            [
+              "20",
+              "30",
+              "24",
+              "Nicolas Cortes",
+              "Jenzer Motorsport",
+              "13",
+              "+20.859",
+              "1:52.291",
+              "0"
+            ],
+            [
+              "21",
+              "22",
+              "41",
+              "Knud Nielsen",
+              "Real Racing",
+              "13",
+              "+21.107",
+              "1:52.936",
+              "0"
+            ],
+            [
+              "22",
+              "24",
+              "69",
+              "Kingsley Zheng",
+              "Prema Racing",
+              "13",
+              "+21.618",
+              "1:52.848",
+              "0"
+            ],
+            [
+              "23",
+              "34",
+              "53",
+              "Pedro Lima",
+              "Van Amersfoort Racing",
+              "13",
+              "+23.142",
+              "1:53.154",
+              "0"
+            ],
+            [
+              "24",
+              "31",
+              "56",
+              "Kirill Kutskov",
+              "Alpha 54 Racing",
+              "13",
+              "+23.330",
+              "1:52.889",
+              "0"
+            ],
+            [
+              "25",
+              "20",
+              "51",
+              "Augustus Toniolo",
+              "Trident Motorsport",
+              "13",
+              "+23.830",
+              "1:52.611",
+              "0"
+            ],
+            [
+              "26",
+              "28",
+              "28",
+              "Iacopo Martinese",
+              "PHM Racing",
+              "13",
+              "+25.054",
+              "1:53.080",
+              "0"
+            ],
+            [
+              "27",
+              "26",
+              "60",
+              "Emma Felbermayr",
+              "PHM Racing",
+              "13",
+              "+25.087",
+              "1:53.224",
+              "0"
+            ],
+            [
+              "28",
+              "27",
+              "9",
+              "Edu Robinson",
+              "US Racing",
+              "13",
+              "+25.314",
+              "1:53.152",
+              "0"
+            ],
+            [
+              "29",
+              "36",
+              "16",
+              "Bernardo Bernoldi",
+              "Trident Motorsport",
+              "13",
+              "+26.690",
+              "1:53.408",
+              "0"
+            ],
+            [
+              "30",
+              "35",
+              "4",
+              "Roman Kamyab",
+              "Prema Racing",
+              "13",
+              "+27.555",
+              "1:53.332",
+              "0"
+            ],
+            [
+              "31",
+              "32",
+              "81",
+              "Alexander Chartier",
+              "PHM Racing",
+              "13",
+              "+28.195",
+              "1:53.073",
+              "0"
+            ],
+            [
+              "RET",
+              "25",
+              "83",
+              "David Walther",
+              "Maffi Racing",
+              "8",
+              "",
+              "1:53.447",
+              "0"
+            ],
+            [
+              "RET",
+              "33",
+              "62",
+              "Arjen Kraling",
+              "US Racing",
+              "7",
+              "",
+              "1:54.028",
+              "0"
+            ],
+            [
+              "RET",
+              "17",
+              "3",
+              "Aleksander Ruta",
+              "Van Amersfoort Racing",
+              "4",
+              "",
+              "1:54.902",
+              "0"
+            ],
+            [
+              "RET",
+              "19",
+              "20",
+              "Teo Borenstein",
+              "Jenzer Motorsport",
+              "4",
+              "",
+              "1:54.539",
+              "0"
+            ],
+            [
+              "RET",
+              "29",
+              "73",
+              "Lyuboslav Ruykov",
+              "Trident Motorsport",
+              "0",
+              "",
+              "",
+              "0"
+            ]
+          ]
         }
       ]
     }
-  }
+  },
+  "event_preview": "Autodromo Internazionale del Mugello is a 5.245 km (3.259 mi) clockwise permanent road course in the Tuscan hills near Scarperia, Italy, featuring 15 corners across dramatic elevation changes and one of the longest main straights in Italian motorsport. Round 4 of the 2026 Italian F4 Championship, held 24-26 July, arrived with a record 50 cars entered — the largest single-class F4 grid in European history — using the now-familiar three-heat qualifying format feeding into a Final restricted to the top 36.\n\nLuka Sammalisto arrived at Mugello as the man to beat, having swept all three races at both Vallelunga and Monza to complete back-to-back hat-tricks — six consecutive victories that carried him to a 47-point championship lead over David Cosma Cristofor heading into Tuscany. Alp Aksoy, the early-season pace-setter who had led the standings after Misano, had since slipped to third overall while retaining the Rookie Championship lead. US Racing's dominance extended to the Teams' standings as well, with a 126-point advantage over Prema Racing following Monza's near-total sweep of the podiums.\n\nThe all-time Italian F4 qualifying record at Mugello belongs to Kacper Sztuka, who set a 1:47.191 for pole in 2023. The race lap record is held by Juan Manuel Correa, a 1:47.236 set in 2016.",
+  "event_preview_ru": "Autodromo Internazionale del Mugello — постоянная трасса протяжённостью 5,245 км (3,259 мили) по часовой стрелке в тосканских холмах близ Scarperia, Италия: 15 поворотов, заметные перепады высот и одна из самых длинных стартовых прямых в итальянском автоспорте. Четвёртый этап Italian F4 Championship 2026, 24–26 июля, собрал рекордные 50 заявок — крупнейшая одноклассная сетка F4 в европейской истории — в привычном формате трёх квалификационных заездов с финалом для топ-36.\n\nLuka Sammalisto приехал в Mugello главным фаворитом после хет-триков на Vallelunga и Monza — шесть побед подряд и отрыв в 47 очков от David Cosma Cristofor перед Тосканой. Alp Aksoy, лидер после Misano, опустился на третье место в общем зачёте, сохранив лидерство среди новичков. Доминирование US Racing распространялось и на командный зачёт: преимущество в 126 очков над Prema Racing после почти полного захвата подиумов в Monza.\n\nАбсолютный рекорд квалификации Italian F4 на Mugello принадлежит Kacper Sztuka — 1:47.191 с поула в 2023 году. Рекорд гоночного круга держит Juan Manuel Correa — 1:47.236, установленный в 2016 году."
 }

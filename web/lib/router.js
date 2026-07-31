@@ -141,9 +141,13 @@
         renderDetail('f1-2026', '');
         return;
       }
-      // IMSA: /specs maps to same panel as /classes — rewrite URL to /classes
-      if (id === 'imsa' && subPath === 'specs') {
-        history.replaceState(null, '', '/series/imsa/classes');
+      // Classes-tab series: /specs maps to /classes
+      var classesTabSeries = {
+        imsa: 1, wec: 1, elms: 1, gtwce_end: 1, gtwce_sprint: 1, super_gt: 1, dtm: 1
+      };
+      if (classesTabSeries[id] && subPath === 'specs') {
+        var classesSlug = id.replace(/_/g, '-');
+        history.replaceState(null, '', '/series/' + classesSlug + '/classes');
         subPath = 'classes';
       }
       if (id) {

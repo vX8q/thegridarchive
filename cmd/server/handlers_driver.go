@@ -226,10 +226,22 @@ func profileDisplayName(profileSlug string, p driverProfile) string {
 	if legal == "" {
 		return titleFromDriverSlug(profileSlug)
 	}
+	// Stage name / racing moniker where both given name and surname differ from legal.
+	switch strings.ToLower(strings.TrimSpace(profileSlug)) {
+	case "cleetus-mcfarland":
+		return "Cleetus McFarland"
+	}
 	parts := strings.Fields(legal)
 	if len(parts) <= 2 {
 		if slugUsesDifferentFirstName(profileSlug, legal) {
 			slugParts := strings.Fields(titleFromDriverSlug(profileSlug))
+			if len(slugParts) >= 2 && len(parts) >= 2 &&
+				!strings.EqualFold(
+					driverutil.FoldDiacritics(slugParts[len(slugParts)-1]),
+					driverutil.FoldDiacritics(parts[len(parts)-1]),
+				) {
+				return driverutil.FoldDiacritics(strings.Join(slugParts, " "))
+			}
 			if len(slugParts) >= 1 && len(parts) >= 2 {
 				return strings.TrimSpace(slugParts[0] + " " + parts[len(parts)-1])
 			}
@@ -259,20 +271,10 @@ func slugUsesDifferentFirstName(profileSlug, legalFullName string) bool {
 	return !strings.EqualFold(slugParts[0], legalParts[0])
 }
 
-// profileLegalName returns the legal full name when it should be shown separately from display name.
-func profileLegalName(profileSlug string, p driverProfile) string {
-	legal := strings.TrimSpace(p.FullName)
-	if legal == "" {
-		return ""
-	}
-	parts := strings.Fields(legal)
-	if len(parts) > 2 {
-		return legal
-	}
-	if slugUsesDifferentFirstName(profileSlug, legal) {
-		return legal
-	}
-	return ""
+// profileLegalName returns the profile full_name for the driver page "Full name" row.
+// Always expose a non-empty full_name, even when it matches the racing/display name.
+func profileLegalName(_ string, p driverProfile) string {
+	return strings.TrimSpace(p.FullName)
 }
 
 func attachProfileMetadata(resp map[string]interface{}, profileSlug string, p driverProfile, displayName string) {
@@ -369,6 +371,8 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 			return "B. J. McLeod"
 		case "j-j-yeley":
 			return "J. J. Yeley"
+		case "cleetus-mcfarland":
+			return "Cleetus McFarland"
 		default:
 			return normalizeSearchDriverName(name)
 		}
@@ -393,15 +397,15 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 		if shouldSkipSearchDriverName(n) {
 			return
 		}
-		rawSlug := driverutil.NormalizeSlug(driverutil.Slug(n))
-		s := resolveSearchSlug(rawSlug)
+		// Keep the pre-NormalizeSlug form so alias detection still works when
+		// NormalizeSlug already maps chris-werth → christopher-werth.
+		preNormSlug := driverutil.Slug(n)
+		s := resolveSearchSlug(preNormSlug)
 		if s == "" {
 			return
 		}
-		if _, isAlias := redirectSource[rawSlug]; isAlias {
-			n = nameForSearchSlug(rawSlug, n)
-		}
-		n = canonicalDriverName(s, n)
+		// Always prefer the canonical profile display name when one exists.
+		n = nameForSearchSlug(preNormSlug, n)
 		if shouldSkipSearchDriverName(n) {
 			return
 		}
@@ -414,19 +418,20 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 	}
 	addWithSlug := func(name, slug, searchExtra string) {
 		n := normalizeSearchDriverName(name)
-		rawSlug := driverutil.NormalizeSlug(strings.TrimSpace(slug))
+		rawSlug := strings.TrimSpace(slug)
 		if rawSlug == "" {
 			add(n)
 			return
 		}
 		s := resolveSearchSlug(rawSlug)
+		if s == "" {
+			return
+		}
 		if n == "" {
 			n = strings.ReplaceAll(s, "-", " ")
 		}
-		if _, isAlias := redirectSource[rawSlug]; isAlias {
-			n = nameForSearchSlug(rawSlug, n)
-		}
-		n = canonicalDriverName(s, n)
+		// Always prefer canonical profile display name (never title-case an alias slug).
+		n = nameForSearchSlug(rawSlug, n)
 		if shouldSkipSearchDriverName(n) {
 			return
 		}
@@ -449,14 +454,25 @@ func handleDriversList(w http.ResponseWriter, r *http.Request, dataDir string, s
 		}
 	}
 	for slug, p := range profiles {
-		if _, skip := redirectSource[slug]; skip {
+		slugKey := strings.TrimSpace(strings.ToLower(slug))
+		if slugKey == "" {
 			continue
 		}
-		display := profileDisplayName(slug, p)
+		// Skip redirect/alias keys — only index the canonical profile once.
+		if _, skip := redirectSource[slugKey]; skip {
+			continue
+		}
+		if driverutil.NormalizeSlug(slugKey) != slugKey {
+			continue
+		}
+		if resolveSearchSlug(slugKey) != slugKey {
+			continue
+		}
+		display := profileDisplayName(slugKey, p)
 		if display == "" {
 			continue
 		}
-		addWithSlug(display, slug, profileLegalName(slug, p))
+		addWithSlug(display, slugKey, profileLegalName(slugKey, p))
 	}
 
 	out := make([]driverItem, 0, len(dedupe))
@@ -841,7 +857,10 @@ func loadDriverSourceImage(photoURL, dataDir string) (image.Image, error) {
 		return nil, os.ErrNotExist
 	}
 	if isLocalDriverPhoto(raw) {
-		localPath := resolveLocalDriverPhotoPath(raw, dataDir)
+		localPath, ok := resolveLocalDriverPhotoPath(raw, dataDir)
+		if !ok {
+			return nil, os.ErrNotExist
+		}
 		f, err := os.Open(localPath) //nolint:gosec
 		if err != nil {
 			return nil, err
@@ -880,20 +899,45 @@ func loadDriverSourceImage(photoURL, dataDir string) (image.Image, error) {
 
 func isLocalDriverPhoto(v string) bool {
 	s := strings.TrimSpace(strings.ToLower(v))
-	return strings.HasPrefix(s, "/web/") || strings.HasPrefix(s, "web/") || filepath.IsAbs(v)
+	return strings.HasPrefix(s, "/web/") || strings.HasPrefix(s, "web/")
 }
 
-func resolveLocalDriverPhotoPath(raw, dataDir string) string {
+// resolveLocalDriverPhotoPath confines local photos under <repo>/web (typically web/drivers/).
+// Rejects absolute paths, volume paths, and ".." traversal.
+func resolveLocalDriverPhotoPath(raw, dataDir string) (string, bool) {
 	raw = strings.TrimSpace(raw)
 	if u, err := url.PathUnescape(raw); err == nil {
 		raw = u
 	}
-	if filepath.IsAbs(raw) {
-		return raw
+	raw = strings.TrimSpace(raw)
+	if raw == "" || strings.Contains(raw, "..") {
+		return "", false
+	}
+	rel := strings.TrimPrefix(raw, "/")
+	rel = strings.TrimPrefix(rel, `\`)
+	fromSlash := filepath.FromSlash(rel)
+	if filepath.IsAbs(fromSlash) || filepath.VolumeName(fromSlash) != "" {
+		return "", false
+	}
+	slash := filepath.ToSlash(fromSlash)
+	lower := strings.ToLower(slash)
+	if lower != "web" && !strings.HasPrefix(lower, "web/") {
+		return "", false
+	}
+	ext := strings.ToLower(filepath.Ext(fromSlash))
+	switch ext {
+	case ".jpg", ".jpeg", ".png", ".webp", ".gif":
+	default:
+		return "", false
 	}
 	repoRoot := filepath.Dir(dataDir)
-	raw = strings.TrimPrefix(raw, "/")
-	return filepath.Join(repoRoot, filepath.FromSlash(raw))
+	webRoot := filepath.Join(repoRoot, "web")
+	srcPath := filepath.Clean(filepath.Join(repoRoot, fromSlash))
+	relUnderWeb, err := filepath.Rel(webRoot, srcPath)
+	if err != nil || relUnderWeb == ".." || strings.HasPrefix(relUnderWeb, ".."+string(os.PathSeparator)) {
+		return "", false
+	}
+	return srcPath, true
 }
 
 func jsonMarshalTo(w http.ResponseWriter, v interface{}) error {

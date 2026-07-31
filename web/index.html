@@ -132,7 +132,7 @@
           <h3 data-i18n="section.h3.schedule">Schedule</h3>
           <div class="table-wrap">
             <table class="data-table" id="schedule-table">
-              <thead><tr><th>#</th><th data-i18n="th.date">date</th><th data-i18n="th.race_col">Race</th><th class="col-location" data-i18n="th.location">Location</th><th data-i18n="th.time">Time</th></tr></thead>
+              <thead><tr><th data-i18n="th.round">Round</th><th data-i18n="th.event">Event</th><th data-i18n="th.circuit">Circuit</th><th data-i18n="th.location">Location</th><th data-i18n="th.date">Date</th><th data-i18n="th.time">Time</th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -253,7 +253,7 @@
           <div class="stats-controls">
           <div class="stats-controls-left">
           <label id="stats-class-control" class="hidden">
-                <span>Class</span>
+                <span data-i18n="stats.class">Class</span>
                 <select id="stats-class-filter"></select>
               </label>
           <label>
@@ -362,6 +362,7 @@
                     <th data-i18n="stats.q3">Q3</th>
                     <th data-i18n="standings.laps_led">Laps Led</th>
                     <th data-i18n="stats.laps_completed">Laps Completed</th>
+                    <th>DNF</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -490,6 +491,7 @@
   <script src="/web/data/f1-tech-spec-2025.js" defer></script>
   <script src="/web/data/f1-tech-spec-2026.js" defer></script>
   <script src="/web/data/imsa-classes-spec.js" defer></script>
+  <script src="/web/data/series-classes-spec.js" defer></script>
   <script src="/web/data/static-schedules.js" defer></script>
   <script src="/web/utils/localize-ru-data.js" defer></script>
   <script src="/web/utils/driver-season-ru.js" defer></script>
@@ -529,7 +531,6 @@
   <script src="/web/pages/schedule.js" defer></script>
   <script src="/web/pages/list.js" defer></script>
   <script src="/web/pages/home-feed.js" defer></script>
-  <script src="/web/series-supercars.js" defer></script>
   <script src="/web/tga-series.js" defer></script>
   <script src="/web/lib/series-stockcar.js" defer></script>
   <script src="/web/pages/series.js" defer></script>

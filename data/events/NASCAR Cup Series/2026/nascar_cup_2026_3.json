@@ -10,8 +10,8 @@
   "stage1_laps": "20",
   "stage2_laps": "25",
   "stage3_laps": "50",
-  "event_preview": "Circuit of the Americas (COTA) is a grade 1 FIA-specification motorsports facility located within the extraterritorial jurisdiction of Austin, Texas. On November 20, 2024, it was announced that the race would move to the 2.400 mi (3.862 km) layout.",
-  "event_preview_ru": "Circuit of the Americas (COTA) — автодром класса 1 по спецификации FIA, расположенный в экстерриториальной юрисдикции Austin, Texas. 20 ноября 2024 года было объявлено, что гонка пройдёт по конфигурации длиной 2,400 мили (3,862 км).",
+  "event_preview": "Circuit of the Americas (COTA) is a grade 1 FIA-specification motorsports facility located within the extraterritorial jurisdiction of Austin, Texas. On November 20, 2024, it was announced that the race would move to the 2.400 mi (3.862 km) layout.\n\nOn the 2.40-mile Circuit of the Americas configuration, the Cup Series qualifying record belongs to Tyler Reddick (98.076 seconds, 88.095 mph, 2025). The race record average speed is 73.025 mph, set by Christopher Bell in 2025 (3:07:20).",
+  "event_preview_ru": "Circuit of the Americas (COTA) — автодром класса 1 по спецификации FIA, расположенный в экстерриториальной юрисдикции Austin, Texas. 20 ноября 2024 года было объявлено, что гонка пройдёт по конфигурации длиной 2,400 мили (3,862 км).\n\nНа конфигурации Circuit of the Americas 2,40 мили рекорд квалификации Cup Series принадлежит Tyler Reddick (98,076 секунды, 88,095 mph, 2025). Рекорд средней скорости гонки — 73,025 mph, установлен Christopher Bell в 2025 году (3:07:20).",
   "youtube_id": "otwwnGChIIY",
   "entry_list": [
     {
@@ -64,7 +64,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -423,7 +423,7 @@
         [
           "8",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "99.557",
@@ -1024,7 +1024,7 @@
         [
           "23",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "1:38.836",
@@ -1279,7 +1279,7 @@
         [
           "3",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "8"
@@ -1623,7 +1623,7 @@
           "25",
           "23",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "95",
@@ -1835,11 +1835,11 @@
   },
   "race_results_note": "Alex Bowman fell ill late in the race and was relieved by Myatt Snider.",
   "race_statistics": {
-    "Lead changes": "14 among 9 different drivers",
+    "Average speed": "76.474 mph (123.073 km/h)",
     "Cautions / Laps": "3 for 10",
+    "Lead changes": "14 among 9 different drivers",
     "Red flags": "0",
     "Time of race": "2 hours, 58 minutes and 53 seconds",
-    "Average speed": "76.474 miles per hour (123.073 km/h)",
     "Margin of victory": "3.944 sec"
   }
 }

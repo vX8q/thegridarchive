@@ -50,6 +50,9 @@ func canonicalDriverKey(name string) string {
 	// Strip diacritics (Strømsted → Stromsted, Gładysz → Gladysz, etc.).
 	s = driverutil.FoldDiacritics(s)
 
+	// Treat hyphens like spaces (Al-Maosherji → Al Maosherji).
+	s = strings.ReplaceAll(s, "-", " ")
+
 	// Normalize whitespace.
 	s = strings.Join(strings.Fields(s), " ")
 	s = strings.ToLower(s)

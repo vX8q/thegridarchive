@@ -37,7 +37,7 @@
     },
     {
       "number": "8",
-      "driver": "Sebastián Álvarez / John Farano",
+      "driver": "Sebastian Alvarez / John Farano",
       "team": "Tower Motorsports",
       "manufacturer": "Oreca",
       "class": "LMP2",
@@ -46,7 +46,7 @@
     },
     {
       "number": "11",
-      "driver": "Tobias Lütke / Mathias Beche",
+      "driver": "Tobias Lutke / Mathias Beche",
       "team": "TDS Racing",
       "manufacturer": "Oreca",
       "class": "LMP2",
@@ -239,7 +239,7 @@
       "team": "Wayne Taylor Racing",
       "manufacturer": "Lamborghini",
       "class": "GTD",
-      "car": "Lamborghini Huracán GT3 Evo 2",
+      "car": "Lamborghini Huracan GT3 Evo 2",
       "driver_slug": "danny-formal-trent-hindman"
     },
     {
@@ -271,7 +271,7 @@
     },
     {
       "number": "81",
-      "driver": "Giacomo Altoè / Casper Stevenson",
+      "driver": "Giacomo Altoe / Casper Stevenson",
       "team": "DragonSpeed",
       "manufacturer": "Chevrolet",
       "class": "GTD",
@@ -325,5 +325,7 @@
       ],
       "rows": []
     }
-  }
+  },
+  "event_preview": "IMSA WeatherTech Championship track qualifying records at Road America stand to Pipo Derani in GTP (1:47.730, 2023), Ben Hanley in LMP2 (1:51.846, 2023), Nicky Catsburg in GTD Pro (2:02.198, 2024) and Madison Snow in GTD (2:03.291, 2023).",
+  "event_preview_ru": "Рекорды квалификации IMSA WeatherTech Championship на Road America: GTP — Pipo Derani (1:47.730, 2023), LMP2 — Ben Hanley (1:51.846, 2023), GTD Pro — Nicky Catsburg (2:02.198, 2024), GTD — Madison Snow (2:03.291, 2023)."
 }

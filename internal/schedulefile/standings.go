@@ -291,7 +291,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if ev.Season != season {
 				continue
 			}
-			if strings.EqualFold(seriesID, "F1") && isF1PreSeasonEvent(ev.ID) {
+			if skipChampionshipMetricsEvent(seriesID, ev.ID) {
 				continue
 			}
 			round++
@@ -348,7 +348,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if ev.Season != season {
 				continue
 			}
-			if strings.EqualFold(seriesID, "F1") && isF1PreSeasonEvent(ev.ID) {
+			if skipChampionshipMetricsEvent(seriesID, ev.ID) {
 				continue
 			}
 			round++
@@ -609,7 +609,6 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	var completedRaces []string
 	raceIdx := 0
 	today := time.Now().Format(dateFormat)
-	isCupSeries := strings.EqualFold(seriesID, "NASCAR_CUP")
 	isStockCarSeries := strings.EqualFold(seriesID, "NASCAR_CUP") ||
 		strings.EqualFold(seriesID, "NOAPS") ||
 		strings.EqualFold(seriesID, "NASCAR_TRUCK") ||
@@ -731,12 +730,8 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		if ev.Season != season {
 			continue
 		}
-		// Exhibition races (e.g. Cook Out Clash) must not count toward championship.
-		// Cup Series: skip events with index ..._0 (NASCAR_CUP_2026_0, etc.).
-		if isExhibitionEvent(seriesID, ev.ID) {
-			continue
-		}
-		if strings.EqualFold(seriesID, "F1") && isF1PreSeasonEvent(ev.ID) {
+		// Exhibition / pre-season / prologue must not count toward championship.
+		if skipChampionshipMetricsEvent(seriesID, ev.ID) {
 			continue
 		}
 		if strings.EqualFold(seriesID, "SUPERCARS") {
@@ -792,11 +787,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			completedRaces = append(completedRaces, raceCode)
 			continue
 		}
-		// Cup: also skip events not yet past on the calendar.
-		if isCupSeries {
-			if ev.StartDate != "" && ev.StartDate > today {
-				continue
-			}
+		// Skip future-dated events (no provisional scoring before the weekend).
+		if isFutureScheduleEvent(ev, today) {
+			continue
 		}
 		if raceIdx >= len(raceOrder) {
 			break
@@ -1126,6 +1119,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			dnqCarCol := firstColIndex(dnq.Headers, "No", "No.", "#", "Car")
 			dnqTeamCol := colIndex(dnq.Headers, "Team")
 			dnqManuCol := colIndex(dnq.Headers, "Manufacturer")
+			dnqPtsCol := pointsColIndex(dnq.Headers)
 			// Modified and some series: chassis may be in "Chassis" or "Make" column.
 			if dnqManuCol < 0 {
 				dnqManuCol = colIndex(dnq.Headers, "Chassis")
@@ -1167,7 +1161,15 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				if _, has := r.races[raceCode]; !has {
 					r.races[raceCode] = "DNQ"
 				}
-				if modDNQPts != nil {
+				// Explicit Pts/Points on DNQ rows (e.g. post-race championship penalties).
+				// When absent, Modified still awards DNQ points from qualifying order.
+				rowPts := 0.0
+				if dnqPtsCol >= 0 && dnqPtsCol < len(row) {
+					rowPts = parsePointsValue(row[dnqPtsCol])
+				}
+				if rowPts != 0 {
+					r.points += rowPts
+				} else if modDNQPts != nil {
 					if pts, ok := modDNQPts[key]; ok && pts > 0 {
 						r.points += float64(pts)
 					}

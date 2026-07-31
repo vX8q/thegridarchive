@@ -10,8 +10,8 @@
   "location": "Lincoln, Alabama, USA",
   "laps": "76",
   "distance": "2.660 mile paved track (202.160 miles)",
-  "event_preview": "Talladega Superspeedway is a 2.66-mile (4.28 km) tri-oval in Lincoln, Alabama, opened in 1969 and the longest oval on the NASCAR calendar. With 33-degree banking in the turns and a backstretch that allows cars to reach 190 mph in the draft, Talladega produces pack racing unlike anything else the schedule offers — positioning, patience and a willingness to make contact in the final laps are as decisive as engine power. The Alabama Manufactured Housing 200 is the fourth race of the 2026 ARCA Menards Series season and the 64th ARCA Menards Series race at Talladega since 1969.\n\nRuggiero arrives fresh off his second victory of 2026 at Kansas and looks to deliver JGR its first ARCA Menards Series win at Talladega. The only past Talladega winners in the field are Gus Dean (2016) and Jake Finch (2024), both with Nitro Motorsports, which is fielding five cars this weekend. Jake Bollman leads the championship standings by 12 points over Jason Kitzmiller heading in, though Bollman has never previously started at Talladega. There has not been a repeat winner in the last 19 ARCA Menards Series races at Talladega — the last driver to win the event twice was Frank Kimmel in 2006 and 2013.",
-  "event_preview_ru": "Talladega Superspeedway — три-овал длиной 2,66 мили (4,28 км) в Lincoln, Alabama, открытый в 1969 году и самый длинный овал в календаре NASCAR. С уклоном 33° в поворотах и задней прямой, где машины в драфте разгоняются до 190 mph, Talladega даёт пакетную гонку, не имеющую аналогов в расписании — позиция, терпение и готовность к контакту на финальных кругах не менее важны, чем мощность двигателя. Alabama Manufactured Housing 200 — четвёртая гонка сезона ARCA Menards Series 2026 года и 64-я гонка серии на Talladega с 1969 года.\n\nRuggiero приезжает после второй победы 2026 года в Kansas и нацелен принести JGR первую победу ARCA Menards Series на Talladega. Единственные прежние победители Talladega в составе — Gus Dean (2016) и Jake Finch (2024), оба за Nitro Motorsports, которая выставляет на этот уик-энд пять машин. Jake Bollman лидирует в зачёте чемпионата с преимуществом в 12 очков над Jason Kitzmiller перед стартом, хотя Bollman ранее ни разу не стартовал на Talladega. Повторной победы не было уже 19 гонок ARCA Menards Series на Talladega — последним, кто выиграл этап дважды, был Frank Kimmel в 2006 и 2013 годах.",
+  "event_preview": "Talladega Superspeedway is a 2.66-mile (4.28 km) tri-oval in Lincoln, Alabama, opened in 1969 and the longest oval on the NASCAR calendar. With 33-degree banking in the turns and a backstretch that allows cars to reach 190 mph in the draft, Talladega produces pack racing unlike anything else the schedule offers — positioning, patience and a willingness to make contact in the final laps are as decisive as engine power. The Alabama Manufactured Housing 200 is the fourth race of the 2026 ARCA Menards Series season and the 64th ARCA Menards Series race at Talladega since 1969.\n\nRuggiero arrives fresh off his second victory of 2026 at Kansas and looks to deliver JGR its first ARCA Menards Series win at Talladega. The only past Talladega winners in the field are Gus Dean (2016) and Jake Finch (2024), both with Nitro Motorsports, which is fielding five cars this weekend. Jake Bollman leads the championship standings by 12 points over Jason Kitzmiller heading in, though Bollman has never previously started at Talladega. There has not been a repeat winner in the last 19 ARCA Menards Series races at Talladega — the last driver to win the event twice was Frank Kimmel in 2006 and 2013.\n\nThe all-time ARCA Menards Series qualifying record at Talladega belongs to Bill Venturini, who turned a 46.614-second lap (205.432 mph) on May 1, 1987.",
+  "event_preview_ru": "Talladega Superspeedway — три-овал длиной 2,66 мили (4,28 км) в Lincoln, Alabama, открытый в 1969 году и самый длинный овал в календаре NASCAR. С уклоном 33° в поворотах и задней прямой, где машины в драфте разгоняются до 190 mph, Talladega даёт пакетную гонку, не имеющую аналогов в расписании — позиция, терпение и готовность к контакту на финальных кругах не менее важны, чем мощность двигателя. Alabama Manufactured Housing 200 — четвёртая гонка сезона ARCA Menards Series 2026 года и 64-я гонка серии на Talladega с 1969 года.\n\nRuggiero приезжает после второй победы 2026 года в Kansas и нацелен принести JGR первую победу ARCA Menards Series на Talladega. Единственные прежние победители Talladega в составе — Gus Dean (2016) и Jake Finch (2024), оба за Nitro Motorsports, которая выставляет на этот уик-энд пять машин. Jake Bollman лидирует в зачёте чемпионата с преимуществом в 12 очков над Jason Kitzmiller перед стартом, хотя Bollman ранее ни разу не стартовал на Talladega. Повторной победы не было уже 19 гонок ARCA Menards Series на Talladega — последним, кто выиграл этап дважды, был Frank Kimmel в 2006 и 2013 годах.\n\nАбсолютный рекорд квалификации ARCA Menards Series на Talladega принадлежит Bill Venturini — 46,614 секунды (205,432 mph) 1 мая 1987 года.",
   "youtube_id": "",
   "entry_list": [
     {
@@ -184,11 +184,11 @@
     },
     {
       "number": "30",
-      "driver": "Garrett Mitchell",
+      "driver": "Cleetus McFarland",
       "team": "Rette Jones Racing",
       "manufacturer": "Ford",
       "crew_chief": "Mark Rette",
-      "driver_slug": "garrett-mitchell"
+      "driver_slug": "cleetus-mcfarland"
     },
     {
       "number": "34",
@@ -414,7 +414,7 @@
         ],
         [
           "6",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "30",
           "Ford",
           "52.474",
@@ -850,7 +850,7 @@
           "2",
           "20",
           "30",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Rette Jones Racing",
           "Ford",
           "76",
@@ -1418,11 +1418,12 @@
     }
   },
   "race_statistics": {
+    "Average speed": "105.997 mph (170.586 km/h)",
+    "Cautions / Laps": "5 for 26",
     "Lead changes": "9 among 5 different drivers",
-    "Cautions / Laps": "5 for 26 laps",
     "Red flags": "1",
     "Time of race": "1 hour, 54 minutes and 2 seconds",
-    "Average speed": "105.997 miles per hour (170.586 km/h)"
+    "Margin of victory": "0.111 sec"
   },
   "youtube_highlights": [
     {

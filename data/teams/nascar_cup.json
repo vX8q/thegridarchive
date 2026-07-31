@@ -42,6 +42,24 @@
     },
     {
       "manufacturer": "Chevrolet",
+      "team": "Hendrick Motorsports",
+      "number": "48",
+      "driver": "Anthony Alfredo",
+      "crew_chief": "Blake Harris",
+      "full_time": false,
+      "rounds": "4"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Hendrick Motorsports",
+      "number": "48",
+      "driver": "Justin Allgaier",
+      "crew_chief": "Blake Harris",
+      "full_time": false,
+      "rounds": "5–7"
+    },
+    {
+      "manufacturer": "Chevrolet",
       "team": "Hyak Motorsports",
       "number": "47",
       "driver": "Ricky Stenhouse Jr.",
@@ -53,7 +71,7 @@
       "team": "Kaulig Racing",
       "number": "10",
       "driver": "Ty Dillon",
-      "crew_chief": "Mike Cook",
+      "crew_chief": "Andrew Dickeson",
       "full_time": true
     },
     {
@@ -82,6 +100,14 @@
     },
     {
       "manufacturer": "Chevrolet",
+      "team": "Richard Childress Racing",
+      "number": "33",
+      "driver": "Austin Hill",
+      "crew_chief": "Andy Street",
+      "full_time": true
+    },
+    {
+      "manufacturer": "Chevrolet",
       "team": "Rick Ware Racing",
       "number": "51",
       "driver": "Cody Ware",
@@ -92,7 +118,7 @@
       "manufacturer": "Chevrolet",
       "team": "Spire Motorsports",
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "crew_chief": "Ryan Sparks",
       "full_time": true
     },
@@ -291,95 +317,166 @@
   ],
   "teams_non_chartered": [
     {
+      "manufacturer": "Toyota",
+      "team": "23XI Racing",
+      "number": "67",
+      "driver": "Corey Heim",
+      "crew_chief": "Robert Barker",
+      "rounds": "1, 9, 11, 13–14, 17, 19",
+      "full_time": false
+    },
+    {
       "manufacturer": "Chevrolet",
       "team": "Beard Motorsports",
       "number": "62",
       "driver": "Anthony Alfredo",
-      "crew_chief": "Darren Shaw"
+      "crew_chief": "Darren Shaw",
+      "rounds": "1",
+      "full_time": false
     },
     {
       "manufacturer": "Chevrolet",
-      "team": "JR Motorsports",
-      "number": "40",
-      "driver": "Justin Allgaier",
-      "crew_chief": "Greg Ives"
-    },
-    {
-      "manufacturer": "Chevrolet",
-      "team": "Live Fast Motorsports",
-      "number": "78",
-      "driver": "B. J. McLeod",
-      "crew_chief": "David Ingram"
-    },
-    {
-      "manufacturer": "Chevrolet",
-      "team": "NY Racing Team",
-      "number": "44",
-      "driver": "J. J. Yeley",
-      "crew_chief": "Jay Guy"
-    },
-    {
-      "manufacturer": "Chevrolet",
-      "team": "Richard Childress Racing",
-      "number": "33",
-      "driver": "Jesse Love",
-      "crew_chief": "Andy Street"
+      "team": "Beard Motorsports",
+      "number": "62",
+      "driver": "Casey Mears",
+      "crew_chief": "Darren Shaw",
+      "full_time": false,
+      "rounds": "10, 16"
     },
     {
       "manufacturer": "Ford",
       "team": "Front Row Motorsports",
       "number": "36",
       "driver": "Chandler Smith",
-      "crew_chief": "Seth Barbour"
+      "crew_chief": "Seth Barbour",
+      "rounds": "1",
+      "full_time": false
     },
     {
       "manufacturer": "Ford",
       "team": "Garage 66",
       "number": "66",
       "driver": "Casey Mears",
-      "crew_chief": "Jason Miller"
+      "crew_chief": "Carl Long",
+      "rounds": "1",
+      "full_time": false
     },
     {
       "manufacturer": "Ford",
       "team": "Garage 66",
       "number": "66",
       "driver": "Chad Finchum",
-      "crew_chief": "Jason Miller"
+      "crew_chief": "Carl Long",
+      "rounds": "8, 10–11, 14, 20–21",
+      "full_time": false
     },
     {
       "manufacturer": "Ford",
       "team": "Garage 66",
       "number": "66",
       "driver": "Josh Bilicki",
-      "crew_chief": "Jason Miller"
+      "crew_chief": "Carl Long",
+      "rounds": "12",
+      "full_time": false
     },
     {
       "manufacturer": "Ford",
       "team": "Garage 66",
       "number": "66",
-      "driver": "TBA",
-      "crew_chief": "Jason Miller"
+      "driver": "Timmy Hill",
+      "crew_chief": "Carl Long",
+      "full_time": false,
+      "rounds": "6, 13"
     },
     {
-      "manufacturer": "Ford",
-      "team": "RFK Racing",
-      "number": "99",
-      "driver": "Corey LaJoie",
-      "crew_chief": "Mike Skarbowski"
-    },
-    {
-      "manufacturer": "Toyota",
-      "team": "23XI Racing",
-      "number": "67",
-      "driver": "Corey Heim",
-      "crew_chief": "Bootie Barker"
+      "manufacturer": "Chevrolet",
+      "team": "JR Motorsports",
+      "number": "40",
+      "driver": "Justin Allgaier",
+      "crew_chief": "Greg Ives",
+      "rounds": "1",
+      "full_time": false
     },
     {
       "manufacturer": "Toyota",
       "team": "Legacy Motor Club",
       "number": "84",
       "driver": "Jimmie Johnson",
-      "crew_chief": "Chad Johnston"
+      "crew_chief": "Chad Johnston",
+      "rounds": "1, 17",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Live Fast Motorsports",
+      "number": "78",
+      "driver": "B. J. McLeod",
+      "crew_chief": "George Ingram",
+      "rounds": "1–2, 20",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Live Fast Motorsports",
+      "number": "78",
+      "driver": "Daniel Dye",
+      "crew_chief": "George Ingram",
+      "full_time": false,
+      "rounds": "10, 16"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Live Fast Motorsports",
+      "number": "78",
+      "driver": "Katherine Legge",
+      "crew_chief": "David Ingram",
+      "full_time": false,
+      "rounds": "12–13"
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "NY Racing Team",
+      "number": "44",
+      "driver": "J. J. Yeley",
+      "crew_chief": "Jay Guy",
+      "rounds": "1–2, 15, 19",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "NY Racing Team",
+      "number": "44",
+      "driver": "Joey Gase",
+      "crew_chief": "Jay Guy",
+      "full_time": false,
+      "rounds": "10"
+    },
+    {
+      "manufacturer": "Ford",
+      "team": "RFK Racing",
+      "number": "99",
+      "driver": "Corey LaJoie",
+      "crew_chief": "Mike Skarbowski",
+      "rounds": "1",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Richard Childress Racing",
+      "number": "33",
+      "driver": "Jesse Love",
+      "crew_chief": "Andy Street",
+      "rounds": "3, 10",
+      "full_time": false
+    },
+    {
+      "manufacturer": "Chevrolet",
+      "team": "Trackhouse Racing",
+      "number": "91",
+      "driver": "Kevin Magnussen",
+      "crew_chief": "Philip Surgen",
+      "rounds": "17",
+      "full_time": false
     }
   ],
   "car_models": [
@@ -415,31 +512,39 @@
     },
     {
       "key": "Length",
-      "value": "4912 mm"
+      "value": "193.4 in (4912 mm)"
     },
     {
       "key": "Width",
-      "value": "1996 mm"
+      "value": "78.6 in (1996 mm)"
     },
     {
       "key": "Height",
-      "value": "1280 mm"
+      "value": "50.4 in (1280 mm)"
     },
     {
       "key": "Wheelbase",
-      "value": "2794 mm"
+      "value": "110 in (2794 mm)"
     },
     {
       "key": "Minimum Weight",
-      "value": "1542 kg (with driver)"
+      "value": "3400 lb (1542 kg, with driver)"
     },
     {
       "key": "Engine",
-      "value": "5.86 L (358 cu in) naturally aspirated V8"
+      "value": "358 cu in (5.86 L) naturally aspirated V8"
     },
     {
       "key": "Power Output",
-      "value": "~670 hp / ~550 hp (restricted packages)"
+      "value": "Target packages by track type (NASCAR 2026 technical updates): ~670 hp intermediate; target 750 hp on road courses and ovals under 1.5 miles; restricted package on designated superspeedways"
+    },
+    {
+      "key": "Track packages (2026)",
+      "value": "Short-track / road-course package (3″ rear spoiler, fewer diffuser strakes, 750 hp target) used on road courses and ovals under 1.5 miles — including Bristol, Darlington, Dover, Nashville Superspeedway and World Wide Technology Raceway (Gateway) from 2026. Intermediate tracks use the higher-downforce / ~670 hp configuration (4″ spoiler in the short-track vs intermediate package contrast published with the 2026 updates). Superspeedways use the restricted package."
+    },
+    {
+      "key": "A-post flaps (2026)",
+      "value": "Mandated at every Cup track from 2026 (deploy with roof flaps to reduce liftoff risk in a spin); superspeedway flap undersides bright orange"
     },
     {
       "key": "Drivetrain",
@@ -471,11 +576,15 @@
     },
     {
       "key": "Aerodynamics",
-      "value": "Front splitter + rear diffuser"
+      "value": "Front splitter + rear diffuser; spoiler / diffuser package varies by track type (see Track packages)"
     },
     {
       "key": "Key Features",
-      "value": "Single-lug wheels, rear diffuser, independent rear suspension (IRS)"
+      "value": "Single-lug wheels, rear diffuser, independent rear suspension (IRS), A-post flaps"
+    },
+    {
+      "key": "Sources",
+      "value": "nascar.com/news-media/2025/11/14/nascar-2026-rule-book-technical-updates (no public full Rule Book PDF)"
     }
   ]
 }

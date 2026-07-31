@@ -4,7 +4,7 @@
       "team": "Campos Racing",
       "team_country": "Spain",
       "number": "1",
-      "driver": "Théophile Naël",
+      "driver": "Theophile Nael",
       "driver_country": "France",
       "rounds": "1"
     },
@@ -25,10 +25,18 @@
       "rounds": "1"
     },
     {
+      "team": "Campos Racing",
+      "team_country": "Spain",
+      "number": "3",
+      "driver": "Ernesto Rivera",
+      "driver_country": "Mexico",
+      "rounds": "2–7"
+    },
+    {
       "team": "Trident",
       "team_country": "Italy",
       "number": "4",
-      "driver": "Noah Strømsted",
+      "driver": "Noah Stromsted",
       "driver_country": "Denmark",
       "rounds": "1"
     },
@@ -84,7 +92,7 @@
       "team": "ART Grand Prix",
       "team_country": "France",
       "number": "11",
-      "driver": "Maciej Gładysz",
+      "driver": "Maciej Gladysz",
       "driver_country": "Poland",
       "rounds": "1"
     },
@@ -164,7 +172,7 @@
       "team": "Prema Racing",
       "team_country": "Italy",
       "number": "22",
-      "driver": "José Garfias",
+      "driver": "Jose Garfias",
       "driver_country": "Mexico",
       "rounds": "1"
     },
@@ -198,7 +206,23 @@
       "number": "26",
       "driver": "Brad Benavides",
       "driver_country": "United States",
-      "rounds": "1"
+      "rounds": "1–2"
+    },
+    {
+      "team": "AIX Racing",
+      "team_country": "United Arab Emirates",
+      "number": "26",
+      "driver": "Ricardo Escotto",
+      "driver_country": "Mexico",
+      "rounds": "3, 5–6"
+    },
+    {
+      "team": "AIX Racing",
+      "team_country": "United Arab Emirates",
+      "number": "26",
+      "driver": "Salim Hanna",
+      "driver_country": "Colombia",
+      "rounds": "4, 7"
     },
     {
       "team": "AIX Racing",
@@ -239,6 +263,68 @@
       "driver": "Gerrard Xie",
       "driver_country": "China",
       "rounds": "1"
+    }
+  ],
+  "technical_spec": [
+    {
+      "key": "Chassis",
+      "value": "Dallara (FIA Formula 3)"
+    },
+    {
+      "key": "Monocoque",
+      "value": "Carbon monocoque complying to FIA F3 safety standards (Dallara)"
+    },
+    {
+      "key": "Bodywork",
+      "value": "Carbon-Kevlar honeycomb structures (Dallara); front and rear wing in carbon composite"
+    },
+    {
+      "key": "Minimum mass (FIA Technical Regulations)",
+      "value": "729 kg without fuel at all times during Competition and Official Test (2026 FIA Formula 3 Technical Regulations Art. 4.1; provisional until first Official Test weighing, then may be revised)"
+    },
+    {
+      "key": "Engine",
+      "value": "Bespoke Mecachrome 6-cylinder 3.4-litre naturally aspirated V6"
+    },
+    {
+      "key": "Power",
+      "value": "380 HP @ 8000 rpm"
+    },
+    {
+      "key": "Throttle",
+      "value": "Fly-by-wire"
+    },
+    {
+      "key": "Transmission",
+      "value": "Bespoke 3Mo six-speed longitudinal sequential; Marelli electro-hydraulic paddle shift"
+    },
+    {
+      "key": "Electronics",
+      "value": "Marelli all-in-one ECU / GCU / data logger; high-speed data acquisition (no telemetry)"
+    },
+    {
+      "key": "Tyres",
+      "value": "16-inch Pirelli control tyres — dry- and wet-weather specifications (2026 FIA F3 Technical Regulations Art. 10)"
+    },
+    {
+      "key": "Fuel",
+      "value": "Advanced fuel meeting the FIA 100% sustainable fuel standard"
+    },
+    {
+      "key": "Halo",
+      "value": "Steel Halo"
+    },
+    {
+      "key": "DRS",
+      "value": "F1-style DRS with hydraulic activation"
+    },
+    {
+      "key": "Safety systems",
+      "value": "Anti-intrusion panels; wheel tether cables; F1-type VSC & marshalling system"
+    },
+    {
+      "key": "Source",
+      "value": "2026 FIA Formula 3 Technical Regulations Issue 3 (2026.02.23)"
     }
   ]
 }

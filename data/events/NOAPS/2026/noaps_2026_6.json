@@ -12,11 +12,12 @@
   "distance": "200.802 mi (323.159 km)",
   "youtube_id": "2dP8GODLH0E",
   "race_statistics": {
-    "Average speed": "112.442 miles per hour (180.958 km/h)",
-    "Cautions / Laps": "3 for 25 laps",
+    "Average speed": "112.442 mph (180.958 km/h)",
+    "Cautions / Laps": "3 for 25",
     "Lead changes": "6 among 4 different drivers",
     "Red flags": "0",
-    "Time of race": "1 hour, 47 minutes and 9 seconds"
+    "Time of race": "1 hour, 47 minutes and 9 seconds",
+    "Margin of victory": "0.578 sec"
   },
   "entry_list": [
     {
@@ -304,7 +305,7 @@
     },
     {
       "number": "91",
-      "driver": "Alex Labbé",
+      "driver": "Alex Labbe",
       "team": "DGM Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Mario Gosselin",
@@ -665,7 +666,7 @@
         [
           "27",
           "5",
-          "JJ Yeley",
+          "J. J. Yeley",
           "Hettinger Racing",
           "31.253",
           "157.348",
@@ -761,7 +762,7 @@
         [
           "35",
           "91",
-          "Alex Labbé",
+          "Alex Labbe",
           "DGM Racing",
           "31.518",
           "156.025",
@@ -1140,7 +1141,7 @@
         [
           "34",
           "91",
-          "Alex Labbé",
+          "Alex Labbe",
           "DGM Racing",
           "Chevrolet",
           "31.225",
@@ -1664,7 +1665,7 @@
           "38",
           "34",
           "91",
-          "Alex Labbé",
+          "Alex Labbe",
           "DGM Racing",
           "Chevrolet",
           "120",

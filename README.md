@@ -23,8 +23,8 @@
 |-----------|-------|
 | **Открытые колеса** | Formula 1, IndyCar, Super Formula, Formula 2, Formula 3, FREC, Italian F4 |
 | **Сток-кар** | NASCAR Cup, NASCAR O'Reilly Auto Parts (Xfinity), NASCAR Craftsman Truck, ARCA Menards, Whelen Modified Tour |
-| **Марафоны** | WEC, ELMS, IMSA |
-| **Туринг** | Supercars, GT World Challenge Europe (Endurance & Sprint), Porsche Supercup, DTM, Super GT |
+| **Марафоны** | WEC, ELMS, IMSA, GT World Challenge Europe Endurance |
+| **Туринг** | Supercars, GT World Challenge Europe Sprint, Porsche Supercup, DTM, Super GT |
 
 ## Технологии
 
@@ -57,10 +57,9 @@ TGA/
 │   ├── schedulefile/            # Загрузка JSON-данных: расписания, результаты, standings
 │   ├── eventscaffold/           # Автосоздание пустых JSON-скелетов этапов при старте сервера
 │   ├── livesync/                # Live-синхронизация NASCAR, OpenF1, WEC, Super Formula
-│   ├── driverutil/              # Slug-генерация для пилотов
+│   ├── driverutil/              # Slug-генерация и канонизация nickname-aliases
 │   ├── tableutil/               # Вспомогательные функции для таблиц
-│   ├── appenv/                  # Поиск data-директории (TGA_DATA, CWD, рядом с бинарником)
-│   └── cache/                   # TTL-кэш
+│   └── appenv/                  # Поиск data-директории (TGA_DATA, CWD, рядом с бинарником)
 ├── web/                         # Фронтенд: index.html, style.css, app.js, компоненты
 │   ├── utils/                   # Словари RU (пилоты, места, этапы), translit, spec-маппинги
 │   ├── data/                    # Статические справочники (translations, IMSA classes и т.д.)
@@ -155,6 +154,7 @@ $env:PORT="3000"; go run ./cmd/server
 | `sync-driver-profiles-from-events.mjs` | Пересборка `driver_profiles.json` из events |
 | `fix-driver-slug-aliases.mjs` | Канонизация nickname-дублей (+ `--check` в CI) |
 | `sync-sf-table-teams.mjs` | Team-колонки в Super Formula events |
+| `stats-columns-sanity.mjs` | Ручной аудит колонок stats по `data/events` |
 
 ### Отдельные live-sync CLI (опционально)
 
@@ -247,6 +247,8 @@ Compose запускает два сервиса:
 | `GET` | `/api/series/{id}/headtohead` | H2H-сравнения пилотов |
 | `GET` | `/api/series/f1/history` | История F1 (1950–2026) |
 | `GET` | `/api/events/{eventID}` | Детали этапа (сессии, результаты) |
+| `GET` | `/api/events/summaries` | Slim-сводки для Last Results (`?ids=A,B`) |
+| `GET` | `/api/events/{eventID}/summary` | Slim-сводка одного этапа |
 | `GET` | `/api/live-events` | Текущие/ближайшие live-события |
 | `GET` | `/api/live-boards` | Live-борды (NASCAR, OpenF1); алиас: `/api/nascar-live` |
 | `POST` | `/api/feedback` | Отправка сообщения с формы обратной связи |
@@ -308,6 +310,7 @@ Compose запускает два сервиса:
 
 Данные хранятся в JSON-файлах в `data/`.
 SQLite (`data/tga.sqlite`) используется для быстрых запросов и обновляется при старте через `bootstrapStoreFromFiles`.
+**Stats** (`GET /api/series/{id}/stats`) всегда пересчитываются из event JSON (`BuildDriverStatsFromEvents`), не из SQLite-агрегатов.
 Live-данные обновляются из внешних API фоновым циклом внутри `cmd/server`.
 
 ## Интернационализация (RU)

@@ -16,8 +16,8 @@
       "title": "Race Highlights"
     }
   ],
-  "event_preview": "Okayama International Circuit is a 3.703 km (2.301 mi) road course in Mimasaka, Okayama Prefecture, Japan - a compact, technically demanding layout featuring 11 corners, a track width of 12-15 metres and 29 metres of elevation change. Originally opened in 1990 as a private motor racing facility and best known for hosting the 1994 and 1995 Formula One Pacific Grand Prix, it has served as the Super GT season opener since 2021. The Okayama GT 300km Race is Round 1 of the 2026 AUTOBACS SUPER GT Series, contested over 82 laps (303.6 km) with a full 43-car grid - 14 in GT500 and 29 in GT300. Both classes race simultaneously, and the gap between GT500 and GT300 lap times - roughly seven seconds - means mixed-class traffic is a constant strategic variable throughout the race. This is also one of only two rounds without Balance of Performance active, making it a clean benchmark for each car's natural performance level. The GT500 qualifying lap record belongs to Nirei Fukuzumi, who turned a 1:16.441 in the No. 14 ENEOS X PRIME GR Supra during Q2 at the 2025 season opener. The GT300 qualifying lap record belongs to Hideki Yamauchi, who set a 1:24.286 in the No. 61 Subaru BRZ R&D Sport during Q2 at the 2022 opening round - a mark that has now stood for four seasons.",
-  "event_preview_ru": "Okayama International Circuit — шоссейный курс длиной 3,703 км (2,301 мили) в Mimasaka, префектура Okayama, Япония — компактная техничная конфигурация с 11 поворотами, шириной 12–15 метров и перепадом высот 29 метров. Первоначально открытая в 1990 году как частный автодром и известная проведением Гран-при Тихого океана Formula 1 в 1994 и 1995 годах, с 2021 года она открывает сезон Super GT. Okayama GT 300km Race — 1-й этап AUTOBACS SUPER GT Series 2026 года, гонка на 82 круга (303,6 км) с полным составом 43 машин — 14 в GT500 и 29 в GT300. Оба класса стартуют одновременно, а разрыв в времени круга между GT500 и GT300 — около семи секунд — делает смешанный трафик постоянным стратегическим фактором. Это также один из двух этапов без Balance of Performance, что даёт чистый ориентир для естественного уровня производительности каждой машины. Рекорд квалификационного круга GT500 принадлежит Nirei Fukuzumi — 1:16,441 на ENEOS X PRIME GR Supra No. 14 в Q2 на открытии сезона 2025 года. Рекорд квалификации GT300 — у Hideki Yamauchi: 1:24,286 на Subaru BRZ R&D Sport No. 61 в Q2 на открытии 2022 года — отметка держится уже четыре сезона.",
+  "event_preview": "Okayama International Circuit is a 3.703 km (2.301 mi) road course in Mimasaka, Okayama Prefecture, Japan - a compact, technically demanding layout featuring 11 corners, a track width of 12-15 metres and 29 metres of elevation change. Originally opened in 1990 as a private motor racing facility and best known for hosting the 1994 and 1995 Formula One Pacific Grand Prix, it has served as the Super GT season opener since 2021. The Okayama GT 300km Race is Round 1 of the 2026 AUTOBACS SUPER GT Series, contested over 82 laps (303.6 km) with a full 43-car grid - 14 in GT500 and 29 in GT300. Both classes race simultaneously, and the gap between GT500 and GT300 lap times - roughly seven seconds - means mixed-class traffic is a constant strategic variable throughout the race. This is also one of only two rounds without Balance of Performance active, making it a clean benchmark for each car's natural performance level. The GT500 qualifying lap record belongs to Nirei Fukuzumi, who turned a 1:16.441 in the No. 14 ENEOS X PRIME GR Supra during Q2 at the 2025 season opener. The GT300 qualifying lap record belongs to Hideki Yamauchi, who set a 1:24.286 in the No. 61 Subaru BRZ R&D Sport during Q2 at the 2022 opening round - a mark that has now stood for four seasons.\n\nThe SUPER GT GT500 qualifying record at Okayama belongs to Nirei Fukuzumi, who set a 1:16.441 in 2025.",
+  "event_preview_ru": "Okayama International Circuit — шоссейный курс длиной 3,703 км (2,301 мили) в Mimasaka, префектура Okayama, Япония — компактная техничная конфигурация с 11 поворотами, шириной 12–15 метров и перепадом высот 29 метров. Первоначально открытая в 1990 году как частный автодром и известная проведением Гран-при Тихого океана Formula 1 в 1994 и 1995 годах, с 2021 года она открывает сезон Super GT. Okayama GT 300km Race — 1-й этап AUTOBACS SUPER GT Series 2026 года, гонка на 82 круга (303,6 км) с полным составом 43 машин — 14 в GT500 и 29 в GT300. Оба класса стартуют одновременно, а разрыв в времени круга между GT500 и GT300 — около семи секунд — делает смешанный трафик постоянным стратегическим фактором. Это также один из двух этапов без Balance of Performance, что даёт чистый ориентир для естественного уровня производительности каждой машины. Рекорд квалификационного круга GT500 принадлежит Nirei Fukuzumi — 1:16,441 на ENEOS X PRIME GR Supra No. 14 в Q2 на открытии сезона 2025 года. Рекорд квалификации GT300 — у Hideki Yamauchi: 1:24,286 на Subaru BRZ R&D Sport No. 61 в Q2 на открытии 2022 года — отметка держится уже четыре сезона.\n\nРекорд квалификации SUPER GT в классе GT500 на Okayama принадлежит Nirei Fukuzumi — 1:16.441 в 2025 году.",
   "entry_list": [
     {
       "class": "GT500",
@@ -435,7 +435,7 @@
       "team": "Seven x Seven Racing",
       "make": "Porsche",
       "car": "Porsche 911 GT3 R (992.2)",
-      "driver1": "Sven Müller",
+      "driver1": "Sven Muller",
       "driver2": "Kiyoto Fujinami",
       "tire": "Y"
     },
@@ -791,7 +791,7 @@
               "17",
               "666",
               "Seven x Seven Racing",
-              "Sven Müller; Kiyoto Fujinami",
+              "Sven Muller; Kiyoto Fujinami",
               "1'27.348",
               "1.000",
               "48",
@@ -1372,7 +1372,7 @@
               "A-10",
               "666",
               "Seven x Seven Racing",
-              "Sven Müller; Kiyoto Fujinami",
+              "Sven Muller; Kiyoto Fujinami",
               "1'26.533",
               "1.102",
               "5/5",
@@ -1768,7 +1768,7 @@
               "19",
               "666",
               "Seven x Seven Racing",
-              "Sven Müller; Kiyoto Fujinami",
+              "Sven Muller; Kiyoto Fujinami",
               "",
               "",
               "",
@@ -2283,7 +2283,7 @@
           "Porsche 911 GT3 R (992.2)",
           "666",
           "Seven x Seven Racing",
-          "Sven Müller; Kiyoto Fujinami",
+          "Sven Muller; Kiyoto Fujinami",
           "76",
           "1 Lap",
           "",

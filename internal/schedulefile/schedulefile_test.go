@@ -436,9 +436,12 @@ func TestBuildDriverStatsFromJSON_NascarNonNumericPositions(t *testing.T) {
 	if finisher.Races != 1 {
 		t.Errorf("Finisher races = %d, want 1", finisher.Races)
 	}
-	// Position "DNF" should be interpreted as row index (2).
-	if finisher.AvgFinish != 2 {
-		t.Errorf("Finisher AvgFinish = %v, want 2", finisher.AvgFinish)
+	// Position "DNF" is not a classified finish — exclude from avg finish.
+	if finisher.AvgFinish != 0 {
+		t.Errorf("Finisher AvgFinish = %v, want 0 (DNF not classified)", finisher.AvgFinish)
+	}
+	if finisher.DNFs != 1 {
+		t.Errorf("Finisher DNFs = %d, want 1", finisher.DNFs)
 	}
 	// Completed laps: 80 of 100.
 	if finisher.LapsCompletedPct != 80 {
@@ -646,9 +649,16 @@ func TestBuildSupercarsDriverStatsFromJSON_Basic(t *testing.T) {
 	if b.Races != 1 {
 		t.Errorf("Driver B races = %d, want 1", b.Races)
 	}
-	// NC expected as last place (2) in its session.
-	if b.AvgFinish != 2 {
-		t.Errorf("Driver B AvgFinish = %v, want 2 (NC treated as last)", b.AvgFinish)
+	// NC is not a classified finish — exclude from avg finish (wins/top-N likewise).
+	if b.AvgFinish != 0 {
+		t.Errorf("Driver B AvgFinish = %v, want 0 (NC not classified)", b.AvgFinish)
+	}
+	if b.Wins != 0 || b.Top2 != 0 || b.Top3 != 0 {
+		t.Errorf("Driver B wins/topN = (%d,%d,%d), want zeros for NC", b.Wins, b.Top2, b.Top3)
+	}
+	// Grid from qualifying Pos when race has no Grid column.
+	if b.AvgStart != 2 {
+		t.Errorf("Driver B AvgStart = %v, want 2 (from qualifying)", b.AvgStart)
 	}
 }
 

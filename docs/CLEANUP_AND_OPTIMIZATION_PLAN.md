@@ -4,6 +4,8 @@
 
 Связанные документы: [`PERFORMANCE.md`](PERFORMANCE.md), [`RUNBOOK.md`](RUNBOOK.md), [`data/SERIES_TEMPLATES.md`](../data/SERIES_TEMPLATES.md).
 
+**Актуализация (2026-07):** фазы 0–1 закрыты; 2.1–2.3, 3.2–3.4 и sandbox локальных driver photos — сделаны. Открыты: 2.4 (optional event cache), 3.1 bootstrap, 3.5 codegen, фаза 4+.
+
 ---
 
 ## Фаза 0 — Срочно (сегодня, низкий риск)
@@ -107,6 +109,8 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 2.1 Mtime-кэш для standings и stats
 
+**Статус: сделано** — `cmd/server/computed_cache.go`, `tryWriteSeriesJSONCache` в handlers standings/stats/schedule; см. `docs/PERFORMANCE.md`.
+
 **Где:** `cmd/server/handlers_series.go`, `cmd/server/computed_cache.go` (mtime + TTL).
 
 **Дизайн:**
@@ -129,6 +133,8 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 2.2 Один проход по events в standings pipeline
 
+**Статус: сделано** — shared detail cache в `internal/schedulefile/standings_walk.go` / `standings.go`.
+
 **Где:** `BuildStandingsFromEvents` + `EnsureCompletedRaces` + `EnrichStagesFromEvents` (`internal/schedulefile/standings.go`).
 
 **Проблема:** три цикла, каждый вызывает `LoadEventDetail`.
@@ -145,7 +151,9 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 2.3 Убрать N× `EventDetailExists` на `/api/series/{id}/events`
 
-**Где:** `handlers_series.go` → `schedulefile.EventDetailExists` на каждый раунд.
+**Статус: сделано** — `schedulefile.EventDetailFileSet` (один walk `data/events/`).
+
+**Где:** `handlers_series.go` / `handlers_schedule.go` → `schedulefile.EventDetailFileSet`.
 
 **Варианты (выбрать один):**
 
@@ -189,7 +197,9 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 3.2 Агрегированный endpoint расписания
 
-**Новый:** `GET /api/schedule?season=2026` — merged events всех серий (то, что сейчас делает фронт через 22 вызова).
+**Статус: сделано** — `GET /api/schedule?season=`; фронт: `API.getSchedule`, Home / Full Schedule.
+
+**Новый:** `GET /api/schedule?season=2026` — merged events всех серий (то, что раньше делал фронт через 22 вызова).
 
 **Эффект:** Home / Full Schedule — **1 запрос** вместо 22+; проще кэшировать на сервере.  
 **Риск:** средний — новый контракт API, обновить `web/lib/api.js`, `schedule.js`, `list.js`.  
@@ -210,11 +220,11 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 3.4 Убрать double-fetch на event page
 
-**Где:** `web/pages/event.js` (~501–521) — повторный fetch если «короткий payload».
+**Статус: сделано** — убран retry «short payload» в `web/pages/event.js`. Root cause ушёл после отдельных summary endpoints; stub-раунды без tables больше не триггерят второй `getEvent`.
 
-**Действия:** найти root cause (форма `eventCache` при SPA navigation); исправить кэш, убрать retry.
+**Где:** `web/pages/event.js` — один `API.getEvent` + `normalizeEventPayload`.
 
-**Эффект:** −50% latency на части навигаций.  
+**Эффект:** −50% latency на части навигаций (stub / пустые preview).  
 **Готово когда:** переход series → event → другой event без второго fetch в Network.
 
 ---
@@ -235,11 +245,7 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 4.1 Решить судьбу `BuildDriverStatsFromDB`
 
-SQLite views и `driver_stats_stockcar` есть; HTTP всегда идёт в `BuildDriverStatsFromEvents`.
-
-**Варианты:** (a) удалить DB path как неиспользуемый; (b) включить для stock-car/F1 с parity-тестами JSON vs DB.
-
-**Не делать**, пока не зафиксирована политика «JSON единственный source» в README.
+**Статус: сделано** — DB path удалён (`db_stats.go`); HTTP всегда `BuildDriverStatsFromEvents` (JSON). View `driver_stats_stockcar` дропается schema migration v3. Политика: JSON = source of truth для stats (см. `SERIES_TEMPLATES.md` § Car Specs).
 
 ---
 
@@ -298,7 +304,7 @@ SQLite views и `driver_stats_stockcar` есть; HTTP всегда идёт в 
 | `sync-stockcar-table-teams.mjs` | после правок team в stock-car |
 | `sync-driver-profiles-from-events.mjs` | обновление `driver_profiles.json` |
 | `sync-sf-table-teams.mjs` | Super Formula teams |
-| `stats-columns-sanity.mjs` | ручной аудит stats |
+| `stats-columns-sanity.mjs` | ручной аудит: какие stats-колонки покрывают race tables (`node scripts/stats-columns-sanity.mjs`) |
 | `compare-wiki-schedules.mjs` | локально, warn-only (не для CI) |
 
 ---
@@ -318,31 +324,34 @@ SQLite views и `driver_stats_stockcar` есть; HTTP всегда идёт в 
 ```
 Фаза 0  [x] 0.1 PNG          [x] 0.2 standings rows  [x] 0.3 archive scripts  [x] 0.4 frontend quick wins
 Фаза 1  [x] 1.1 dead Go      [x] 1.2 handler fallback [x] 1.3 schedule cache dedup
-Фаза 2  [ ] 2.1 mtime cache  [ ] 2.2 single pass     [ ] 2.3 has_detail       [ ] 2.4 event cache
-Фаза 3  [ ] 3.1 bootstrap    [ ] 3.2 /api/schedule   [ ] 3.3 last results   [ ] 3.4 event double-fetch  [ ] 3.5 codegen
-Фаза 4  [ ] 4.1 DB stats     [ ] 4.2 bundling        [ ] 4.3 search           [ ] 4.4 split series.js   [ ] 4.5 perf docs  [ ] 4.6 script docs
+Фаза 2  [x] 2.1 mtime cache  [x] 2.2 single pass     [x] 2.3 has_detail       [ ] 2.4 event cache (optional)
+Фаза 3  [ ] 3.1 bootstrap    [x] 3.2 /api/schedule   [x] 3.3 last results   [x] 3.4 event double-fetch  [ ] 3.5 codegen
+Фаза 4  [x] 4.1 DB stats     [ ] 4.2 bundling        [ ] 4.3 search           [ ] 4.4 split series.js   [ ] 4.5 perf docs  [x] 4.6 script docs (partial: sanity restored)
 Фаза 5  [ ] по необходимости
 ```
 
+Дополнительно (вне фаз): sandbox локальных driver photos (`resolveLocalDriverPhotoPath` → только `<repo>/web/…`); удалены мёртвые `buildF1TeamsTableHTML` / `buildStandingsFromEvents`.
+
 **Рекомендуемые PR (разбивка):**
-1. `chore: cleanup temp files, standings rows, archive scripts`
-2. `chore: remove dead schedulefile exports`
-3. `perf(frontend): schedule cache + stats retry`
-4. `perf(server): standings/stats mtime cache`
-5. `perf(server): shared detail cache + has_detail`
-6. `perf(dev): incremental bootstrap`
-7. `feat(api): GET /api/schedule`
+1. ~~`chore: cleanup temp files, standings rows, archive scripts`~~
+2. ~~`chore: remove dead schedulefile exports`~~
+3. ~~`perf(frontend): schedule cache + stats retry`~~
+4. ~~`perf(server): standings/stats mtime cache`~~
+5. ~~`perf(server): shared detail cache + has_detail`~~
+6. `perf(dev): incremental bootstrap` (открыто)
+7. ~~`feat(api): GET /api/schedule`~~
+8. `chore: split series.js / style.css` (фаза 4.4, когда будет время)
 
 ---
 
 ## Метрики успеха
 
-| Метрика | Сейчас (оценка) | Цель после фаз 0–2 |
-|---------|-----------------|---------------------|
-| Home load API calls | ~22+ events + 5–10 full events | ≤23 или 1 aggregated |
-| Standings p95 (Cup, warm) | 100–500 ms | &lt;30 ms |
-| Air restart to ready | 5–30 s | &lt;5 s (фаза 3) |
-| Мёртвый Go код | ~200 строк | 0 |
+| Метрика | Было (оценка) | После фаз 0–3.4 (оценка) |
+|---------|---------------|---------------------------|
+| Home load API calls | ~22+ events + 5–10 full events | 1× `/api/schedule` + batch summaries |
+| Standings p95 (Cup, warm) | 100–500 ms | &lt;30 ms (mtime cache) |
+| Air restart to ready | 5–30 s | ещё открыто (фаза 3.1) |
+| Мёртвый Go / JS helpers | ~200 строк + dead F1/Supercars builders | убрано |
 | One-off scripts в `scripts/` | 9 | 0 (в archive) |
 
 ---

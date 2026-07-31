@@ -16,8 +16,8 @@
       "title": "Race Highlights"
     }
   ],
-  "event_preview": "Fuji Speedway is a 4.563 km (2.836 mi) road course at the foothills of Mount Fuji in Oyama, Shizuoka Prefecture — Toyota's home circuit and the fastest track on the Super GT calendar, built around a 1.5 km front straight that feeds a heavy braking zone at Turn 1. The Fuji GT 3 Hours Race GW Special is one of only two three-hour races on the 2026 calendar and the 31st edition of the Golden Week race dating back to 1994. With Sepang postponed to 2027, it is also the last race before a three-month break.\n\nThe GT500 qualifying record belongs to Kenta Yamashita, who set a 1:25.764 in the No. 14 ENEOS GR Supra during Q2 at the November 2021 round. The GT300 record is Hideki Yamauchi's 1:34.395 in the No. 61 Subaru BRZ from the same session.",
-  "event_preview_ru": "Fuji Speedway — шоссейный курс длиной 4,563 км (2,836 мили) у подножия горы Fuji в Oyama, префектура Shizuoka — домашняя трасса Toyota и самая быстрая в календаре Super GT, построенная вокруг 1,5-километровой передней прямой с тяжёлым торможением на 1-м повороте. Fuji GT 3 Hours Race GW Special — одна из двух трёхчасовых гонок календаря 2026 года и 31-й Golden Week race, восходящий к 1994 году. После переноса Sepang на 2027 год это также последняя гонка перед трёхмесячным перерывом.\n\nРекорд квалификации GT500 принадлежит Kenta Yamashita — 1:25,764 на ENEOS GR Supra No. 14 в Q2 на этапе ноября 2021 года. Рекорд GT300 — 1:34,395 Hideki Yamauchi на Subaru BRZ No. 61 из той же сессии.",
+  "event_preview": "Fuji Speedway is a 4.563 km (2.836 mi) road course at the foothills of Mount Fuji in Oyama, Shizuoka Prefecture — Toyota's home circuit and the fastest track on the Super GT calendar, built around a 1.5 km front straight that feeds a heavy braking zone at Turn 1. The Fuji GT 3 Hours Race GW Special is one of only two three-hour races on the 2026 calendar and the 31st edition of the Golden Week race dating back to 1994. With Sepang postponed to 2027, it is also the last race before a three-month break.\n\nThe GT500 qualifying record belongs to Kenta Yamashita, who set a 1:25.764 in the No. 14 ENEOS GR Supra during Q2 at the November 2021 round. The GT300 record is Hideki Yamauchi's 1:34.395 in the No. 61 Subaru BRZ from the same session.\n\nSUPER GT qualifying records at Fuji Speedway stand to Kenta Yamashita in GT500 (1:25.764, 2021) and Hideki Yamauchi in GT300 (1:34.395, 2021).",
+  "event_preview_ru": "Fuji Speedway — шоссейный курс длиной 4,563 км (2,836 мили) у подножия горы Fuji в Oyama, префектура Shizuoka — домашняя трасса Toyota и самая быстрая в календаре Super GT, построенная вокруг 1,5-километровой передней прямой с тяжёлым торможением на 1-м повороте. Fuji GT 3 Hours Race GW Special — одна из двух трёхчасовых гонок календаря 2026 года и 31-й Golden Week race, восходящий к 1994 году. После переноса Sepang на 2027 год это также последняя гонка перед трёхмесячным перерывом.\n\nРекорд квалификации GT500 принадлежит Kenta Yamashita — 1:25,764 на ENEOS GR Supra No. 14 в Q2 на этапе ноября 2021 года. Рекорд GT300 — 1:34,395 Hideki Yamauchi на Subaru BRZ No. 61 из той же сессии.\n\nРекорды квалификации SUPER GT на Fuji Speedway: GT500 — Kenta Yamashita (1:25.764, 2021), GT300 — Hideki Yamauchi (1:34.395, 2021).",
   "entry_list": [
     {
       "class": "GT500",
@@ -442,7 +442,7 @@
       "team": "Seven x Seven Racing",
       "make": "Porsche",
       "car": "Porsche 911 GT3 R (992.2)",
-      "driver1": "Sven Müller",
+      "driver1": "Sven Muller",
       "driver2": "Kiyoto Fujinami",
       "tire": "Y"
     },
@@ -658,7 +658,7 @@
               "3",
               "666",
               "Seven x Seven Racing",
-              "Sven Müller; Kiyoto Fujinami",
+              "Sven Muller; Kiyoto Fujinami",
               "1'36.695",
               "0.318",
               "31",
@@ -1456,7 +1456,7 @@
               "B-5",
               "666",
               "Seven x Seven Racing",
-              "Sven Müller; Kiyoto Fujinami",
+              "Sven Muller; Kiyoto Fujinami",
               "1'35.963",
               "0.438",
               "5/6",
@@ -1642,7 +1642,7 @@
               "8",
               "666",
               "Seven x Seven Racing",
-              "Sven Müller; Kiyoto Fujinami",
+              "Sven Muller; Kiyoto Fujinami",
               "1'35.407",
               "",
               "5/6",
@@ -1937,7 +1937,7 @@
           "Porsche 911 GT3 R (992.2)",
           "666",
           "Seven x Seven Racing",
-          "Sven Müller; Kiyoto Fujinami",
+          "Sven Muller; Kiyoto Fujinami",
           "106",
           "1 Lap",
           "",

@@ -14,11 +14,12 @@
   "stage2_laps": "12",
   "stage3_laps": "26",
   "race_statistics": {
+    "Average speed": "64.274 mph (103.439 km/h)",
+    "Cautions / Laps": "7 for 13",
     "Lead changes": "16 among 6 different drivers",
-    "Cautions / Laps": "7 for 13 laps",
     "Red flags": "1",
     "Time of race": "2 hours, 48 minutes and 13 seconds",
-    "Average speed": "64.274 miles per hour (103.439 km/h)"
+    "Margin of victory": "1.332 sec"
   },
   "event_preview": "The Naval Base Coronado Street Circuit is a temporary 3.4-mile (5.5 km), 16-turn street course built across runways, roads and tarmac on an active U.S. Navy base in San Diego, California — the first time any NASCAR national series has raced on active military property. The Navy 250 is the thirteenth race of the 2026 NASCAR Craftsman Truck Series season and the inaugural running of the event, scheduled for 50 laps on a road course that represents the series' second street race and third road course event of 2026. The race marks the centerpiece of a historic weekend commemorating the 250th anniversary of both the United States Navy and the nation itself, with 36 entries filling the field, including Jimmie Johnson in the No. 1 Tricon Garage truck and Jamie McMurray piloting Kaulig Racing's Ram 1500 as part of the manufacturer's Free Agent Driver Program.\n\nLayne Riggs enters as the championship leader and the form driver of 2026, having won three of his last four starts. The Ram 1500 Rumble Bee SRT serves as the official pace truck, marking the first time a Ram has paced a NASCAR national series race in two decades. As the series' first-ever visit to this brand-new circuit, all qualifying and race lap records will be set for the first time this weekend.",
   "event_preview_ru": "Naval Base Coronado Street Circuit — временная уличная трасса длиной 3,4 мили (5,5 км) с 16 поворотами на взлётных полосах, дорогах и асфальте действующей базы ВМС США в San Diego, California — впервые любая национальная серия NASCAR гоняет на действующей военной территории. Navy 250 — тринадцатый этап сезона NASCAR Craftsman Truck Series 2026 и дебютное проведение события, запланированное на 50 кругов на роуд-курсе — второй уличной гонке серии и третьем роуд-курс-событии 2026 года. Гонка — центральное событие исторического уик-энда в честь 250-летия ВМС США и самой нации; 36 заявок заполняют состав, включая Jimmie Johnson на No. 1 Tricon Garage и Jamie McMurray за Ram 1500 Kaulig Racing в рамках Free Agent Driver Program производителя.\n\nLayne Riggs приезжает лидером зачёта и гонщиком лучшей формы 2026 года, выиграв три из последних четырёх стартов. Ram 1500 Rumble Bee SRT — официальный pace truck, впервые за два десятилетия Ram ведёт гонку национальной серии NASCAR. При первом визите серии на совершенно новую трассу все квалификационные и гоночные рекорды будут установлены впервые в эти выходные.",
@@ -210,7 +211,7 @@
     },
     {
       "number": "44",
-      "driver": "Andrés Pérez de Lara",
+      "driver": "Andres Perez de Lara",
       "team": "Niece Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Wally Rogers",
@@ -506,7 +507,7 @@
         [
           "15",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "140.582",
@@ -887,7 +888,7 @@
         [
           "8",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "139.358",
@@ -1279,7 +1280,7 @@
         [
           "7",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "136.729",
@@ -1618,7 +1619,7 @@
         [
           "8",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "3"
@@ -1687,7 +1688,7 @@
         [
           "5",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "6"
@@ -2004,7 +2005,7 @@
           "21",
           "7",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "53",

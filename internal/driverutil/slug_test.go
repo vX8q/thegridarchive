@@ -109,12 +109,16 @@ func TestMakeDriverID(t *testing.T) {
 func TestNormalizeSlug(t *testing.T) {
 	cases := map[string]string{
 		"aj-allmendinger":  "a-j-allmendinger",
-		"jj-yeley":         "j-j-yeley",
-		"bj-mcleod":        "b-j-mcleod",
-		"lewis-hamilton":   "lewis-hamilton",
-		"woohyun-shin":     "michael-shin",
-		"w-shin":           "michael-shin",
-		"m-shin":           "michael-shin",
+		"jj-yeley":           "j-j-yeley",
+		"j-jj-yeley":         "j-j-yeley",
+		"bj-mcleod":          "b-j-mcleod",
+		"garrett-mitchell":   "cleetus-mcfarland",
+		"cleetus-mitchell":   "cleetus-mcfarland",
+		"chris-werth":        "christopher-werth",
+		"lewis-hamilton":     "lewis-hamilton",
+		"woohyun-shin":       "michael-shin",
+		"w-shin":             "michael-shin",
+		"m-shin":             "michael-shin",
 	}
 	for in, want := range cases {
 		if got := NormalizeSlug(in); got != want {

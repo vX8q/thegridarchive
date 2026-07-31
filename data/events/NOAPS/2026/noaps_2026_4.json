@@ -331,11 +331,12 @@
   "location": "Avondale, Arizona, USA",
   "race": "GOVX 200",
   "race_statistics": {
-    "Average speed": "93.909 miles per hour (151.132 km/h)",
-    "Cautions / Laps": "4 for 37 laps",
+    "Average speed": "93.909 mph (151.132 km/h)",
+    "Cautions / Laps": "4 for 37",
     "Lead changes": "20 among 9 different drivers",
     "Red flags": "0",
-    "Time of race": "2 hours, 7 minutes and 47 seconds"
+    "Time of race": "2 hours, 7 minutes and 47 seconds",
+    "Margin of victory": "0.449 sec"
   },
   "series": "NASCAR O'Reilly Auto Parts Series",
   "stage1_laps": "45",
@@ -1971,7 +1972,7 @@
     }
   },
   "track": "Phoenix Raceway",
-  "event_preview": "Phoenix Raceway in its current form is measured at 1.000 mi (1.609 km), with 9° of banking in the first two turns, 11° of banking in the last two turns, 9° of banking on the frontstretch, and 3° of banking on the backstretch. The track is known for its frontstretch kink, commonly referred to as a \"dogleg\" that was added to accommodate the track's original road course, which used parts of the oval alongside specialized portions outside the oval.",
-  "event_preview_ru": "Phoenix Raceway в текущей конфигурации имеет длину 1,000 мили (1,609 км), уклон 9° в первых двух поворотах, 11° в последних двух, 9° на главной прямой и 3° на задней прямой. Трасса известна изломом на главной прямой, который обычно называют «dogleg» — его добавили, чтобы вместить оригинальный роуд-курс, использовавший части овала наряду со специальными участками за его пределами.",
+  "event_preview": "Phoenix Raceway in its current form is measured at 1.000 mi (1.609 km), with 9° of banking in the first two turns, 11° of banking in the last two turns, 9° of banking on the frontstretch, and 3° of banking on the backstretch. The track is known for its frontstretch kink, commonly referred to as a \"dogleg\" that was added to accommodate the track's original road course, which used parts of the oval alongside specialized portions outside the oval.\n\nThe all-time O'Reilly/Xfinity Series qualifying record at Phoenix belongs to Kyle Busch, who turned a 25.992-second lap (138.504 mph) in 2015. The series race record average speed is 116.317 mph, set by Elliott Sadler in 2012.",
+  "event_preview_ru": "Phoenix Raceway в текущей конфигурации имеет длину 1,000 мили (1,609 км), уклон 9° в первых двух поворотах, 11° в последних двух, 9° на главной прямой и 3° на задней прямой. Трасса известна изломом на главной прямой, который обычно называют «dogleg» — его добавили, чтобы вместить оригинальный роуд-курс, использовавший части овала наряду со специальными участками за его пределами.\n\nАбсолютный рекорд квалификации O'Reilly/Xfinity Series на Phoenix принадлежит Kyle Busch — 25,992 секунды (138,504 mph) в 2015 году. Рекорд средней скорости гонки серии — 116,317 mph, установлен Elliott Sadler в 2012 году.",
   "youtube_id": "RnaLPRUsj5k"
 }

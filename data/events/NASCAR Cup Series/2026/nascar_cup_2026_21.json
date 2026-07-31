@@ -9,8 +9,8 @@
   "location": "North Wilkesboro, North Carolina, USA",
   "laps": "450",
   "distance": "281.25 mi (452.54 km)",
-  "event_preview": "North Wilkesboro Speedway is a 0.625-mile (1.006 km) asphalt short track in North Wilkesboro, North Carolina, that has hosted racing since 1947 and returned to the Cup Series schedule for All-Star Race duty from 2023-25. The Window World 450 was the 21st points-paying race of the 2026 NASCAR Cup Series season and the track's first points contest since 1996, contested over 450 laps (281.25 miles) on Sunday, July 19, and doubling as the fourth round of the NASCAR In-Season Challenge tournament.\n\nRyan Blaney was awarded the pole after qualifying was cancelled due to rain, the starting order set by a formula averaging each team's owner-points position (30%) with its finish in the most recent race (70%) — his third pole of the season. Ty Gibbs lined up alongside him on the front row, with Christopher Bell, Carson Hocevar and Tyler Reddick rounding out the top five. Several contenders were relegated deep in the field by the formula, including Ryan Preece, Brad Keselowski, Alex Bowman, Kyle Larson, Josh Berry, Chase Briscoe, Connor Zilisch and AJ Allmendinger, all starting 20th or worse. In the In-Season Challenge bracket, No. 3 seed Blaney — fresh off his EchoPark victory — faced No. 10 seed Bell, while No. 4 seed Chase Elliott squared off against No. 25 seed Todd Gilliland on the other side of the bracket.",
-  "event_preview_ru": "North Wilkesboro Speedway — асфальтовый шорт-трек длиной 0,625 мили (1,006 км) в North Wilkesboro, North Carolina, принимающий гонки с 1947 года и вернувшийся в календарь Cup Series для All-Star Race в 2023–25 годах. Window World 450 стал 21-й очковой гонкой сезона NASCAR Cup Series 2026 и первым очковым этапом на трассе с 1996 года: 450 кругов (281,25 мили) в воскресенье, 19 июля, а также четвёртый раунд турнира NASCAR In-Season Challenge.\n\nRyan Blaney получил поул после отмены квалификации из-за дождя; стартовый порядок определили по формуле, усредняющей позицию команды в owner points (30%) и результат последней гонки (70%) — это его третий поул сезона. Ty Gibbs стартовал рядом с ним на первом ряду, а Christopher Bell, Carson Hocevar и Tyler Reddick замкнули топ-5. Несколько претендентов формула отправила глубоко в пелотон, в том числе Ryan Preece, Brad Keselowski, Alex Bowman, Kyle Larson, Josh Berry, Chase Briscoe, Connor Zilisch и AJ Allmendinger — все стартовали 20-ми или ниже. В сетке In-Season Challenge 3-й сеяный Blaney — после победы на EchoPark — встретился с 10-м сеяным Bell, а 4-й сеяный Chase Elliott — с 25-м сеяным Todd Gilliland на другой стороне сетки.",
+  "event_preview": "North Wilkesboro Speedway is a 0.625-mile (1.006 km) asphalt short track in North Wilkesboro, North Carolina, that has hosted racing since 1947 and returned to the Cup Series schedule for All-Star Race duty from 2023-25. The Window World 450 was the 21st points-paying race of the 2026 NASCAR Cup Series season and the track's first points contest since 1996, contested over 450 laps (281.25 miles) on Sunday, July 19, and doubling as the fourth round of the NASCAR In-Season Challenge tournament.\n\nIn the In-Season Challenge bracket, No. 3 seed Ryan Blaney — fresh off his EchoPark victory — faced No. 10 seed Christopher Bell, while No. 4 seed Chase Elliott squared off against No. 25 seed Todd Gilliland on the other side of the bracket. Short-track specialists and playoff contenders alike arrived with little recent Cup points-racing history at the refurbished oval, raising the stakes for a venue last used for a points race nearly three decades earlier.\n\nThe all-time Cup Series qualifying record at North Wilkesboro belongs to Ernie Irvan, who turned an 18.905-second lap (119.016 mph) in 1994. The series race record average speed for a 250-mile event is 107.360 mph, set by Geoffrey Bodine in 1992 (2:19:43).",
+  "event_preview_ru": "North Wilkesboro Speedway — асфальтовый шорт-трек длиной 0,625 мили (1,006 км) в North Wilkesboro, North Carolina, принимающий гонки с 1947 года и вернувшийся в календарь Cup Series для All-Star Race в 2023–25 годах. Window World 450 стал 21-й очковой гонкой сезона NASCAR Cup Series 2026 и первым очковым этапом на трассе с 1996 года: 450 кругов (281,25 мили) в воскресенье, 19 июля, а также четвёртый раунд турнира NASCAR In-Season Challenge.\n\nВ сетке In-Season Challenge 3-й сеяный Ryan Blaney — после победы на EchoPark — встретился с 10-м сеяным Christopher Bell, а 4-й сеяный Chase Elliott — с 25-м сеяным Todd Gilliland на другой стороне сетки. Специалисты шорт-трека и претенденты плей-офф приехали почти без недавней очковой истории Cup на обновлённом овале, повышая ставки для трассы, где очковая гонка в последний раз проводилась почти три десятилетия назад.\n\nАбсолютный рекорд квалификации Cup Series на North Wilkesboro принадлежит Ernie Irvan — 18,905 секунды (119,016 mph) в 1994 году. Рекорд средней скорости гонки серии на дистанции 250 миль — 107,360 mph, установлен Geoffrey Bodine в 1992 году (2:19:43).",
   "entry_list": [
     {
       "number": "1",
@@ -62,7 +62,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -564,7 +564,7 @@
         [
           "19",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "18.433",
@@ -968,7 +968,7 @@
         [
           "17",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "",
@@ -1270,7 +1270,7 @@
           "9",
           "17",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "449",
@@ -1795,7 +1795,7 @@
         [
           "10",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "1"
@@ -1905,11 +1905,12 @@
   },
   "youtube_id": "sdgBDf_Y9jQ",
   "race_statistics": {
-    "Lead changes": "17 among 9 different drivers",
+    "Average speed": "88.397 mph (142.261 km/h)",
     "Cautions / Laps": "5 for 43",
+    "Lead changes": "17 among 9 different drivers",
     "Red flags": "0",
     "Time of race": "2 hours, 50 minutes and 54 seconds",
-    "Average speed": "88.397 miles per hour (142.261 km/h)"
+    "Margin of victory": "0.859 sec"
   },
   "stage1_laps": "80",
   "stage2_laps": "185",

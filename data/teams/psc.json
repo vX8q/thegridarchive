@@ -1,0 +1,305 @@
+{
+  "teams": [
+    {
+      "driver": "Robert de Haan",
+      "number": "1",
+      "rounds": "1–5",
+      "team": "BWT Lechner Racing"
+    },
+    {
+      "driver": "Marcus Amand",
+      "number": "2",
+      "rounds": "1–5",
+      "team": "BWT Lechner Racing"
+    },
+    {
+      "driver": "Caleb Sumich",
+      "number": "3",
+      "rounds": "1–5",
+      "team": "BWT Lechner Racing"
+    },
+    {
+      "driver": "Andrea Bristot",
+      "number": "7",
+      "rounds": "1–5",
+      "team": "Dinamic Motorsport"
+    },
+    {
+      "driver": "William Mezzetti",
+      "number": "8",
+      "rounds": "1–5",
+      "team": "Dinamic Motorsport"
+    },
+    {
+      "driver": "Eugenio Pisani",
+      "guest": true,
+      "number": "9",
+      "rounds": "1–2, 4–5",
+      "team": "Dinamic Motorsport"
+    },
+    {
+      "driver": "Gianmarco Quaresmini",
+      "guest": true,
+      "number": "9",
+      "rounds": "3",
+      "team": "Dinamic Motorsport"
+    },
+    {
+      "driver": "Samer Shahin",
+      "number": "23",
+      "rounds": "1–5",
+      "team": "GP Elite"
+    },
+    {
+      "driver": "Jonas Greif",
+      "number": "24",
+      "rounds": "1–5",
+      "team": "GP Elite"
+    },
+    {
+      "driver": "Maik Rosenberg",
+      "guest": true,
+      "number": "31",
+      "rounds": "4",
+      "team": "GP Elite"
+    },
+    {
+      "driver": "Taichi Watarai",
+      "guest": true,
+      "number": "21",
+      "rounds": "1",
+      "team": "Looping by CarTech"
+    },
+    {
+      "driver": "Jukka Honkavuori",
+      "guest": true,
+      "number": "21",
+      "rounds": "2, 5",
+      "team": "Looping by CarTech"
+    },
+    {
+      "driver": "Bert de Heus",
+      "guest": true,
+      "number": "21",
+      "rounds": "3",
+      "team": "Looping by CarTech"
+    },
+    {
+      "driver": "Alexander Tauscher",
+      "guest": true,
+      "number": "21",
+      "rounds": "4",
+      "team": "Looping by CarTech"
+    },
+    {
+      "driver": "Dirk Schouten",
+      "number": "22",
+      "rounds": "1–5",
+      "team": "Looping by CarTech"
+    },
+    {
+      "driver": "Theo Oeverhaus",
+      "number": "15",
+      "rounds": "1–5",
+      "team": "Martinet by Almeras"
+    },
+    {
+      "driver": "Paul Cauhaupe",
+      "number": "16",
+      "rounds": "1–5",
+      "team": "Martinet by Almeras"
+    },
+    {
+      "driver": "Jaap van Lagen",
+      "number": "17",
+      "rounds": "1–5",
+      "team": "Martinet by Almeras"
+    },
+    {
+      "driver": "Liam McNeilly",
+      "number": "18",
+      "rounds": "1–5",
+      "team": "Ombra Racing"
+    },
+    {
+      "driver": "Luciano Martinez",
+      "number": "19",
+      "rounds": "1–5",
+      "team": "Ombra Racing"
+    },
+    {
+      "driver": "Filip Ugran",
+      "number": "20",
+      "rounds": "1–5",
+      "team": "Ombra Racing"
+    },
+    {
+      "driver": "Jacques Villeneuve",
+      "guest": true,
+      "number": "911",
+      "rounds": "2–5",
+      "team": "Porsche Motorsport"
+    },
+    {
+      "driver": "Keagan Masters",
+      "number": "4",
+      "rounds": "1–5",
+      "team": "Proton Competition"
+    },
+    {
+      "driver": "Kai Pfister",
+      "number": "5",
+      "rounds": "1–5",
+      "team": "Proton Competition"
+    },
+    {
+      "driver": "Rodin Younessi",
+      "guest": true,
+      "number": "6",
+      "rounds": "1",
+      "team": "Proton Competition"
+    },
+    {
+      "driver": "Alexander Tauscher",
+      "guest": true,
+      "number": "6",
+      "rounds": "2–3",
+      "team": "Proton Competition"
+    },
+    {
+      "driver": "Rodin Younessi",
+      "guest": true,
+      "number": "30",
+      "rounds": "3",
+      "team": "Proton Competition"
+    },
+    {
+      "driver": "Jorge Ramirez",
+      "number": "13",
+      "rounds": "1–5",
+      "team": "RGB Racing"
+    },
+    {
+      "driver": "Juan Pablo Vega Dieppa",
+      "number": "14",
+      "rounds": "1–5",
+      "team": "RGB Racing"
+    },
+    {
+      "driver": "Chester Kieffer",
+      "number": "11",
+      "rounds": "1–5",
+      "team": "Schumacher CLRT"
+    },
+    {
+      "driver": "Flynt Schuring",
+      "number": "12",
+      "rounds": "1–5",
+      "team": "Schumacher CLRT"
+    },
+    {
+      "driver": "Aldo Festante",
+      "number": "28",
+      "rounds": "1–5",
+      "team": "Target Competition"
+    },
+    {
+      "driver": "Jack Young",
+      "number": "29",
+      "rounds": "1–5",
+      "team": "Target Competition"
+    },
+    {
+      "driver": "Wouter Boerekamps",
+      "number": "25",
+      "rounds": "1–5",
+      "team": "Team GP Elite"
+    },
+    {
+      "driver": "Gustav Burton",
+      "number": "26",
+      "rounds": "1–5",
+      "team": "Team GP Elite"
+    },
+    {
+      "driver": "Matheus Ferreira",
+      "number": "27",
+      "rounds": "1–5",
+      "team": "Team GP Elite"
+    }
+  ],
+  "technical_spec": [
+    {
+      "key": "Model",
+      "value": "Porsche 911 Cup (Generation 992.2), model year 2026"
+    },
+    {
+      "key": "Base weight",
+      "value": "ca. 1288 kg"
+    },
+    {
+      "key": "Length",
+      "value": "4599 mm"
+    },
+    {
+      "key": "Width",
+      "value": "1920 mm (front axle) / 1902 mm (rear axle)"
+    },
+    {
+      "key": "Wheelbase",
+      "value": "2468 mm"
+    },
+    {
+      "key": "Engine",
+      "value": "Water-cooled six-cylinder boxer; 3996 cm³; stroke 81.5 mm; bore 102 mm"
+    },
+    {
+      "key": "Power output",
+      "value": "ca. 382 kW (520 hp) at 8400 rpm"
+    },
+    {
+      "key": "Maximum torque",
+      "value": "470 Nm at 6150 rpm"
+    },
+    {
+      "key": "Maximum rpm",
+      "value": "8750"
+    },
+    {
+      "key": "Engine control",
+      "value": "Bosch MS 6.6 with Porsche Motorsport Traction Control (PMTC); Push-2-Pass prepared"
+    },
+    {
+      "key": "Fuel",
+      "value": "Superplus unleaded to E20 (min. 98 octane); eFuels per FIA Appendix J"
+    },
+    {
+      "key": "Transmission",
+      "value": "Porsche six-speed sequential dog-type gearbox; paddle shift; mechanical LSD; four-plate sintered metal clutch"
+    },
+    {
+      "key": "Fuel cell",
+      "value": "110-litre FT3 safety fuel cell (front)"
+    },
+    {
+      "key": "Front brakes",
+      "value": "Six-piston aluminium monobloc; ventilated steel discs 380 mm × 35 mm; Bosch Generation 5 racing ABS"
+    },
+    {
+      "key": "Rear brakes",
+      "value": "Four-piston aluminium monobloc; ventilated steel discs 380 mm × 32 mm"
+    },
+    {
+      "key": "Front wheels / tyres",
+      "value": "12.0 J × 18 centre-lock forged; 30/65-18"
+    },
+    {
+      "key": "Rear wheels / tyres",
+      "value": "13.0 J × 18 centre-lock forged; 31/71-18"
+    },
+    {
+      "key": "Tyre supplier (Porsche Mobil 1 Supercup)",
+      "value": "Michelin"
+    }
+  ]
+}

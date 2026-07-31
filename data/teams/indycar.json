@@ -271,79 +271,67 @@
   "technical_spec": [
     {
       "key": "Chassis",
-      "value": "Dallara DW12 Safety Cell (IR-18 / UAK-18 specification)"
+      "value": "Dallara DW12 (UAK-18 specification) with aeroscreen"
     },
     {
-      "key": "Aero Kit Introduction",
-      "value": "2018 season"
+      "key": "Aeroscreen",
+      "value": "Red Bull Advanced Technologies / Dallara (from 2020)"
     },
     {
-      "key": "Aerodynamic Concept",
-      "value": "Increased ground-effect downforce, reduced wing dependency"
+      "key": "Engine",
+      "value": "2.2 L V6 twin-turbocharged (Chevrolet / Honda)"
     },
     {
-      "key": "Design Inspiration",
-      "value": "1980s–1990s Indy car styling"
+      "key": "Minimum weight (excl. driver / fuel)",
+      "value": "Road/Street 1785 lb; Short Oval 1770 lb; Speedway 1740 lb (2026 IndyCar Rulebook Art. 14.4.1.1)"
     },
     {
-      "key": "Removed Components (2018 redesign)",
-      "value": "Airbox, rear-wheel guards, auxiliary winglets"
+      "key": "Driver equivalency weight",
+      "value": "Driver + ballast brought to 185 lb; ballast in keel / approved locations (Art. 14.4.2)"
     },
     {
-      "key": "Track Compatibility",
-      "value": "One base chassis for road, street, short oval, and superspeedways"
+      "key": "Aerodynamic packages",
+      "value": "Race Location Specific configurations: Road/Street & Short Oval vs Speedway front/rear wing and bodywork/underwing charts (Art. 14.7); movable aero devices while the car is in motion prohibited"
     },
     {
-      "key": "Steering Wheel",
-      "value": "Cosworth CCW Mk2"
+      "key": "Hybrid ERS / EMS (2024–present)",
+      "value": "Dallara-supplied Energy Management System (EMS) as approved by IndyCar (Art. 14.12); 48 V MGU + ultracapacitor ESS in the bellhousing; about 60 hp hybrid deployment (IndyCar / Honda HRC)"
     },
     {
-      "key": "Display System",
-      "value": "Configurable Display Unit 4.3"
+      "key": "Push-to-Pass (road / street)",
+      "value": "ECU-controlled extra boost on road/street Events; prohibited at race starts until first alternate S/F after green, and when under lapped-car blue (Art. 14.19.13–14.19.16); oval Events use separate Event notes"
     },
     {
-      "key": "Cockpit Modifications",
-      "value": "Enlarged cockpit dimensions, improved seat ergonomics"
+      "key": "Combined boost (road / street)",
+      "value": "Hybrid + Push-to-Pass about 120 hp extra (IndyCar)"
     },
     {
-      "key": "Cockpit Protection (2019)",
-      "value": "Advanced Frontal Protection (AFP)"
+      "key": "ERS mass",
+      "value": "42.5 kg (MGU, ESS, DC/DC, VCD — Honda HRC)"
     },
     {
-      "key": "Aeroscreen (2020–present)",
-      "value": "Developed by Red Bull Advanced Technologies"
+      "key": "ESS",
+      "value": "20 supercapacitors; max operating about 60 V / 2000 A (Honda HRC)"
     },
     {
-      "key": "Engine (2018–2023)",
-      "value": "2.2L V6 twin-turbocharged (Chevrolet / Honda)"
+      "key": "Fuel cell capacity",
+      "value": "Maximum 18.500 U.S. gallons (Art. 14.8)"
     },
     {
-      "key": "Hybrid Powertrain (2024–present)",
-      "value": "2.4L V6 with 100 bhp ERS hybrid unit (Mahle)"
+      "key": "Tire supplier",
+      "value": "Firestone (exclusive)"
     },
     {
-      "key": "Current Chassis Status",
-      "value": "Successor confirmed from 2028 season onward"
+      "key": "Tire types – road / street",
+      "value": "Primary (black) and Alternate (red, softer compound); rain tyres available"
     },
     {
-      "key": "Tire Supplier",
-      "value": "Firestone (exclusive supplier)"
-    },
-    {
-      "key": "Tire Types – Road/Street",
-      "value": "Primary (black), Alternate (red, softer compound)"
-    },
-    {
-      "key": "Tire Types – Ovals",
+      "key": "Tire types – ovals",
       "value": "Single primary compound"
     },
     {
-      "key": "Rain Tires",
-      "value": "Available for road and street circuits"
-    },
-    {
-      "key": "Tire Construction",
-      "value": "Firestone Firehawk racing slicks"
+      "key": "Source",
+      "value": "epaddock.indycar.com — 2026 IndyCar Rulebook (living PDF)"
     }
   ]
 }

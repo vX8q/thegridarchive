@@ -401,7 +401,7 @@ func (s *sqliteTxStore) RunInTransaction(_ context.Context, fn func(Store) error
 	return fn(s)
 }
 
-const schemaVersion = 2
+const schemaVersion = 3
 
 // initSchema creates tables and indexes; maintains schema_version for migrations.
 func initSchema(db *sql.DB) error {
@@ -504,79 +504,7 @@ CREATE TABLE IF NOT EXISTS feedback_messages (
   created_at TEXT NOT NULL
 );
 
-	DROP VIEW IF EXISTS driver_stats_stockcar;
-	CREATE VIEW driver_stats_stockcar AS
-	WITH base AS (
-	  SELECT
-	    e.series_id AS series_id,
-	    e.season AS season,
-	    r.race_id AS race_id,
-	    COALESCE(d.id, '') AS driver_id,
-	    COALESCE(d.name, '') AS driver_name,
-	    COALESCE(t.name, '') AS team_name,
-	    COALESCE(t.car, '') AS manufacturer,
-	    COALESCE(r.car_number, '') AS car_number,
-	    r.position,
-	    r.grid_position,
-	    r.laps,
-	    COALESCE(r.laps_led, 0) AS laps_led,
-	    ra.laps AS race_laps,
-	    LOWER(COALESCE(r.status, '')) AS status
-	  FROM results r
-	  JOIN races ra ON r.race_id = ra.id
-	  JOIN events e ON ra.event_id = e.id
-	  LEFT JOIN drivers d ON r.driver_id = d.id
-	  LEFT JOIN teams t ON r.team_id = t.id
-	  WHERE NOT (
-	    UPPER(e.series_id) = 'NASCAR_CUP' AND substr(e.id, -1, 1) = '0'
-	  )
-	    AND (UPPER(e.series_id) <> 'NASCAR_CUP' OR DATE(e.start_date) <= DATE('now'))
-	),
-	stage_per_race AS (
-	  SELECT
-	    sr.race_id,
-	    sr.driver_id,
-	    SUM(CASE WHEN sr.position = 1 THEN 1 ELSE 0 END) AS stage_wins,
-	    SUM(COALESCE(sr.points, 0)) AS stage_points
-	  FROM stage_results sr
-	  GROUP BY sr.race_id, sr.driver_id
-	)
-	SELECT
-	  b.series_id AS series_id,
-	  b.season AS season,
-	  b.driver_id AS driver_id,
-	  b.driver_name AS driver_name,
-	  b.team_name AS team_name,
-	  b.manufacturer AS manufacturer,
-	  b.car_number AS car_number,
-	  COUNT(*) AS races,
-	  SUM(CASE WHEN b.position = 1 THEN 1 ELSE 0 END) AS wins,
-	  SUM(CASE WHEN b.grid_position = 1 THEN 1 ELSE 0 END) AS poles,
-	  SUM(CASE WHEN b.position BETWEEN 1 AND 5 THEN 1 ELSE 0 END) AS top5,
-	  SUM(CASE WHEN b.position BETWEEN 1 AND 10 THEN 1 ELSE 0 END) AS top10,
-	  SUM(CASE WHEN b.position BETWEEN 1 AND 15 THEN 1 ELSE 0 END) AS top15,
-	  SUM(CASE WHEN b.position BETWEEN 1 AND 20 THEN 1 ELSE 0 END) AS top20,
-	  AVG(NULLIF(b.position, 0)) AS avg_finish,
-	  AVG(NULLIF(b.grid_position, 0)) AS avg_start,
-	  COALESCE(SUM(sp.stage_wins), 0) AS stage_wins,
-	  COALESCE(SUM(sp.stage_points), 0) AS stage_points,
-	  CASE
-	    WHEN COUNT(*) > 0
-	    THEN (1.0 * COALESCE(SUM(sp.stage_points), 0)) / COUNT(*)
-	    ELSE 0
-	  END AS avg_stage_points,
-	  SUM(b.laps_led) AS laps_led,
-	  100.0 * SUM(b.laps) / NULLIF(SUM(CASE WHEN b.race_laps > 0 THEN b.race_laps ELSE 0 END), 0) AS laps_completed_pct,
-	  AVG(
-	    CASE
-	      WHEN b.grid_position > 0 AND b.position > 0
-	      THEN CAST(b.grid_position - b.position AS REAL)
-	    END
-	  ) AS pos_diff
-	FROM base b
-	LEFT JOIN stage_per_race sp ON sp.race_id = b.race_id AND sp.driver_id = b.driver_id
-	GROUP BY
-	  b.series_id, b.season, b.driver_id, b.driver_name, b.team_name, b.manufacturer, b.car_number;
+DROP VIEW IF EXISTS driver_stats_stockcar;
 
 CREATE INDEX IF NOT EXISTS idx_events_series_season ON events(series_id, season);
 CREATE INDEX IF NOT EXISTS idx_races_event ON races(event_id);
@@ -640,82 +568,10 @@ func runMigration(db *sql.DB, version int) error {
 		if _, err := db.Exec(`ALTER TABLE results ADD COLUMN laps_led INTEGER DEFAULT 0`); err != nil && !strings.Contains(err.Error(), "duplicate column") {
 			return err
 		}
+		return nil
+	case 3:
+		// Stats HTTP path is JSON-only; drop unused aggregate view.
 		if _, err := db.Exec(`DROP VIEW IF EXISTS driver_stats_stockcar`); err != nil {
-			return err
-		}
-		if _, err := db.Exec(`
-CREATE VIEW driver_stats_stockcar AS
-WITH base AS (
-  SELECT
-    e.series_id AS series_id,
-    e.season AS season,
-    r.race_id AS race_id,
-    COALESCE(d.id, '') AS driver_id,
-    COALESCE(d.name, '') AS driver_name,
-    COALESCE(t.name, '') AS team_name,
-    COALESCE(t.car, '') AS manufacturer,
-    COALESCE(r.car_number, '') AS car_number,
-    r.position,
-    r.grid_position,
-    r.laps,
-    COALESCE(r.laps_led, 0) AS laps_led,
-    ra.laps AS race_laps,
-    LOWER(COALESCE(r.status, '')) AS status
-  FROM results r
-  JOIN races ra ON r.race_id = ra.id
-  JOIN events e ON ra.event_id = e.id
-  LEFT JOIN drivers d ON r.driver_id = d.id
-  LEFT JOIN teams t ON r.team_id = t.id
-  WHERE NOT (
-    UPPER(e.series_id) = 'NASCAR_CUP' AND substr(e.id, -1, 1) = '0'
-  )
-    AND (UPPER(e.series_id) <> 'NASCAR_CUP' OR DATE(e.start_date) <= DATE('now'))
-),
-stage_per_race AS (
-  SELECT
-    sr.race_id,
-    sr.driver_id,
-    SUM(CASE WHEN sr.position = 1 THEN 1 ELSE 0 END) AS stage_wins,
-    SUM(COALESCE(sr.points, 0)) AS stage_points
-  FROM stage_results sr
-  GROUP BY sr.race_id, sr.driver_id
-)
-SELECT
-  b.series_id AS series_id,
-  b.season AS season,
-  b.driver_id AS driver_id,
-  b.driver_name AS driver_name,
-  b.team_name AS team_name,
-  b.manufacturer AS manufacturer,
-  b.car_number AS car_number,
-  COUNT(*) AS races,
-  SUM(CASE WHEN b.position = 1 THEN 1 ELSE 0 END) AS wins,
-  SUM(CASE WHEN b.grid_position = 1 THEN 1 ELSE 0 END) AS poles,
-  SUM(CASE WHEN b.position BETWEEN 1 AND 5 THEN 1 ELSE 0 END) AS top5,
-  SUM(CASE WHEN b.position BETWEEN 1 AND 10 THEN 1 ELSE 0 END) AS top10,
-  SUM(CASE WHEN b.position BETWEEN 1 AND 15 THEN 1 ELSE 0 END) AS top15,
-  SUM(CASE WHEN b.position BETWEEN 1 AND 20 THEN 1 ELSE 0 END) AS top20,
-  AVG(NULLIF(b.position, 0)) AS avg_finish,
-  AVG(NULLIF(b.grid_position, 0)) AS avg_start,
-  COALESCE(SUM(sp.stage_wins), 0) AS stage_wins,
-  COALESCE(SUM(sp.stage_points), 0) AS stage_points,
-  CASE
-    WHEN COUNT(*) > 0
-    THEN (1.0 * COALESCE(SUM(sp.stage_points), 0)) / COUNT(*)
-    ELSE 0
-  END AS avg_stage_points,
-  SUM(b.laps_led) AS laps_led,
-  100.0 * SUM(b.laps) / NULLIF(SUM(CASE WHEN b.race_laps > 0 THEN b.race_laps ELSE 0 END), 0) AS laps_completed_pct,
-  AVG(
-    CASE
-      WHEN b.grid_position > 0 AND b.position > 0
-      THEN CAST(b.grid_position - b.position AS REAL)
-    END
-  ) AS pos_diff
-FROM base b
-LEFT JOIN stage_per_race sp ON sp.race_id = b.race_id AND sp.driver_id = b.driver_id
-GROUP BY
-  b.series_id, b.season, b.driver_id, b.driver_name, b.team_name, b.manufacturer, b.car_number`); err != nil {
 			return err
 		}
 		return nil

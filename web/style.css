@@ -965,12 +965,15 @@ body.series-indycar .series-nav {
 .schedule-section .data-table td:nth-child(1) { white-space: nowrap; }
 .schedule-section .data-table th:nth-child(2),
 .schedule-section .data-table td:nth-child(2) { white-space: nowrap; }
+/* A single-race: Date=5 Time=6; multi-race A: Date=6 Time=7 — nowrap both tails */
 .schedule-section .data-table th:nth-child(5),
-.schedule-section .data-table td:nth-child(5) { white-space: nowrap; }
+.schedule-section .data-table td:nth-child(5),
 .schedule-section .data-table th:nth-child(6),
-.schedule-section .data-table td:nth-child(6) { white-space: nowrap; }
+.schedule-section .data-table td:nth-child(6),
+.schedule-section .data-table th:nth-child(7),
+.schedule-section .data-table td:nth-child(7) { white-space: nowrap; }
 .schedule-section .col-location,
-.schedule-section .data-table td:nth-child(4) {
+.schedule-section .col-location-span {
   line-height: 1.35;
 }
 .schedule-section .schedule-section-banner td {
@@ -1190,14 +1193,6 @@ body.series-f1 #technical-spec-table-wrap {
 body.series-indycar #car-models-table-wrap {
   display: none;
 }
-/* F2/F3 Car Specs: убираем обёртку (рамку, фон) у контейнера с текстом Chassis. */
-body.series-f2 #car-models-table-wrap:has(.specs-chassis-line),
-body.series-f3 #car-models-table-wrap:has(.specs-chassis-line) {
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
-}
 .data-table {
   width: max-content;
   max-width: 100%;
@@ -1284,8 +1279,15 @@ body.series-f3 #car-models-table-wrap:has(.specs-chassis-line) {
 .data-table tbody tr:nth-child(odd) td { background: transparent; }
 .data-table tbody tr:nth-child(even) td { background: var(--row-alt); }
 /* Сток-кары Teams: полосатость по группам команд (каждый <tbody> — одна команда) */
-.data-table.stockcar-teams-table tbody.group-odd tr td { background: transparent; }
-.data-table.stockcar-teams-table tbody.group-even tr td { background: var(--row-alt); }
+.data-table.stockcar-teams-table tbody.group-odd tr td,
+.data-table.stockcar-teams-table tr.group-odd td { background: transparent; }
+.data-table.stockcar-teams-table tbody.group-even tr td,
+.data-table.stockcar-teams-table tr.group-even td { background: var(--row-alt); }
+.data-table.stockcar-teams-table .stockcar-manufacturer-cell {
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+}
 /* IMSA teams: зебра по командами (Team+Chassis), а не по # */
 .imsa-teams-table tbody tr td { background: transparent; }
 .imsa-teams-table tbody tr.imsa-band-alt td { background: var(--row-alt); }
@@ -1301,7 +1303,7 @@ body.series-f3 #car-models-table-wrap:has(.specs-chassis-line) {
 .tech-spec-by-section .tech-spec-section-table .data-table { width: max-content; max-width: 100%; table-layout: auto; }
 .tech-spec-by-section .tech-spec-section-table .data-table td:first-child { white-space: nowrap; min-width: 8rem; }
 .tech-spec-by-section .tech-spec-section-table .data-table td.col-spec-value,
-.tech-spec-by-section .tech-spec-section-table .data-table td:last-child { white-space: normal; word-break: break-word; overflow-wrap: anywhere; max-width: 28rem; }
+.tech-spec-by-section .tech-spec-section-table .data-table td:last-child { white-space: pre-line; word-break: break-word; overflow-wrap: anywhere; max-width: 28rem; }
 .tech-spec-by-section .tech-spec-section-table .data-table th,
 .tech-spec-by-section .tech-spec-section-table .data-table td { padding: 0.4rem 0.6rem; }
 /* Таблицы FIELD / VALUE (laps, race statistics) — контейнер и таблица по ширине контента */
@@ -1309,6 +1311,7 @@ body.series-f3 #car-models-table-wrap:has(.specs-chassis-line) {
 .table-wrap .data-table.table-field-value { width: max-content; max-width: 100%; min-width: 0; }
 .data-table.table-field-value th { text-align: left; }
 .data-table.table-field-value td:first-child { width: 1%; white-space: nowrap; }
+.data-table.table-field-value td:last-child { white-space: pre-line; word-break: break-word; overflow-wrap: anywhere; max-width: 36rem; }
 .qualifying-table {
   width: auto;
   table-layout: auto;
@@ -1847,7 +1850,8 @@ body.cat-openwheel #stats-panel .stats-controls-left {
   width: max-content;
   table-layout: auto;
 }
-/* IMSA qualifying: auto column widths — each column only as wide as its content */
+/* DEPRECATED: IMSA qual "fit" typography/alignment overridden by end-of-file unified table block.
+   Keep only sizing/nowrap rules in this section. */
 #view-event .table-wrap:has(.data-table.qualifying-results-table.imsa-qual-fit) {
   width: 100%;
   max-width: 100%;
@@ -1997,7 +2001,8 @@ body.series-gtwce_sprint #view-event #event-content[data-event-section="practice
   min-width: 0 !important;
   table-layout: auto !important;
 }
-/* GTWCE: колонки Team / Car — не центрировать как в дефолтном race-session (там другая сетка) */
+/* DEPRECATED: GTWCE race table text-align adjustments overridden by end-of-file unified table block.
+   Keep only white-space/word-break rules here if needed. */
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .gtwce-race-results-table.race-session-results-table th:nth-child(5),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .gtwce-race-results-table.race-session-results-table td:nth-child(5),
 :is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] .gtwce-race-results-table.race-session-results-table th:nth-child(6),
@@ -2034,6 +2039,8 @@ body.series-super_gt #view-event #event-content[data-event-section="race"] .data
   word-break: normal;
   overflow-wrap: normal;
 }
+/* DEPRECATED: pre-season-results-table nth-child block contains legacy left/right/center text-align.
+   end-of-file unified table typography forces `text-align: center !important` across event tables. */
 .data-table.pre-season-results-table th:nth-child(1),
 .data-table.pre-season-results-table td:nth-child(1) {
   width: 5%;
@@ -3119,7 +3126,8 @@ body.ev-supercars-2026-8 .video-embed-wrap:has(.video-facade-wrap) {
 .race-stage-table--points th:nth-child(6),
 .race-stage-table--points td:nth-child(6) { width: 10%; min-width: 3rem; text-align: right; white-space: nowrap; }
 
-/* Race results: 8 колонок (Cup) или 10 (Xfinity: + Led, Status) */
+/* DEPRECATED: stockcar `.race-results-table` column text-align (left/right) overridden by end-of-file unified table block.
+   Width/min-width constraints are still safe to keep. */
 .race-results-table { table-layout: fixed; width: 100%; }
 .race-results-table th:nth-child(1),
 .race-results-table td:nth-child(1) { width: 6%; min-width: 5rem; text-align: right; white-space: nowrap; }
@@ -8409,4 +8417,37 @@ tr.table-separator-row td {
 .footer-link:hover {
   color: var(--link-hover);
   text-decoration: underline;
+}
+
+/* ── UNIFIED EVENT TABLE TYPOGRAPHY ─────────────────────────────────────────
+   Цель: единый визуальный стиль таблиц на страницах события (practice /
+   qualifying / race / entry list) между всеми сериями.
+
+   Важно:
+   - не трогаем white-space/word-break (чтобы таблицы не “поплыли” на узких
+     колонках с длинными именами)
+   - bьём по каскаду последним блоком + !important только для типографики и
+     выравнивания
+--------------------------------------------------------------------------- */
+#view-event .data-table th,
+#view-event .data-table td {
+  padding: 0.75rem !important;
+  text-align: center !important;
+}
+
+#view-event .data-table th {
+  font-size: 0.72rem !important;
+  line-height: 1 !important;
+}
+
+#view-event .data-table td {
+  font-size: 0.9rem !important;
+  line-height: 1.35 !important;
+}
+
+/* Driver/Team names: фиксируем “наследуемый” стиль текста у ссылок. */
+#view-event .data-table a.track-link {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-weight: inherit !important;
 }

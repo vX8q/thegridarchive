@@ -61,6 +61,109 @@ test('qualifyingExcludingDidNotQualify removes DNQ car numbers', () => {
   assert.strictEqual(out.rows[0][1], '5');
 });
 
+test('qualifyingExcludingDidNotQualify drops orphan Failed to qualify separator', () => {
+  const out = TGA.qualifyingExcludingDidNotQualify(
+    {
+      headers: ['Pos', '#', 'Driver', 'Time', 'Speed'],
+      rows: [
+        ['1', '5', 'A', '22.1', '100'],
+        ['Failed to qualify', '', '', '', ''],
+        ['37', '99', 'B', '23.8', '103'],
+      ],
+    },
+    { headers: ['Pos', 'No.', 'Driver'], rows: [['37', '99', 'B']] }
+  );
+  assert.strictEqual(out.rows.length, 1);
+  assert.strictEqual(out.rows[0][1], '5');
+});
+
+test('qualifyingHasFailedToQualifyDrivers detects FTQ block', () => {
+  const q = {
+    headers: ['Pos', '#', 'Driver', 'Time', 'Speed'],
+    rows: [
+      ['1', '5', 'A', '22.1', '100'],
+      ['Failed to qualify', '', '', '', ''],
+      ['37', '90', 'Justin Carroll', '23.888', '103.382'],
+    ],
+  };
+  assert.strictEqual(TGA.qualifyingHasFailedToQualifyDrivers(q), true);
+  assert.strictEqual(
+    TGA.qualifyingHasFailedToQualifyDrivers({ headers: q.headers, rows: q.rows.slice(0, 1) }),
+    false
+  );
+});
+
+test('enrichDidNotQualifyWithQualTiming adds Time and Speed before Pts', () => {
+  const dnq = {
+    headers: ['Pos', 'No.', 'Driver', 'Team', 'Manufacturer', 'Pts', 'Notes'],
+    rows: [['37', '90', 'Justin Carroll', 'TC Motorsports', 'Toyota', '0', '']],
+  };
+  const qual = {
+    headers: ['Pos', '#', 'Driver', 'Team', 'Make', 'Time', 'Speed'],
+    rows: [
+      ['Failed to qualify', '', '', '', '', '', ''],
+      ['37', '90', 'Justin Carroll', 'TC Motorsports', 'Toyota', '23.888', '103.382'],
+    ],
+  };
+  const out = TGA.enrichDidNotQualifyWithQualTiming(dnq, qual);
+  assert.deepStrictEqual(out.headers, [
+    'Pos', 'No.', 'Driver', 'Team', 'Manufacturer', 'Time', 'Speed', 'Pts', 'Notes',
+  ]);
+  assert.strictEqual(out.rows[0][5], '23.888');
+  assert.strictEqual(out.rows[0][6], '103.382');
+  assert.strictEqual(out.rows[0][7], '0');
+});
+
+test('enrichDidNotQualifyWithQualTiming reads Time (R1)/Speed (R1)', () => {
+  const dnq = {
+    headers: ['Pos', 'No.', 'Driver', 'Team', 'Manufacturer'],
+    rows: [['39', '74', 'Dawson Cram', 'Mike Harmon Racing', 'Chevrolet']],
+  };
+  const qual = {
+    headers: ['Pos', '#', 'Driver', 'Team', 'Make', 'Time (R1)', 'Speed (R1)', 'Time (R2)', 'Speed (R2)'],
+    rows: [
+      ['Failed to qualify', '', '', '', '', '', '', '', ''],
+      ['39', '74', 'Dawson Cram', 'Mike Harmon Racing', 'Chevrolet', '33.577', '165.113', '—', '—'],
+    ],
+  };
+  const out = TGA.enrichDidNotQualifyWithQualTiming(dnq, qual);
+  assert.ok(out.headers.includes('Time'));
+  assert.ok(out.headers.includes('Speed'));
+  assert.strictEqual(out.rows[0][5], '33.577');
+  assert.strictEqual(out.rows[0][6], '165.113');
+});
+
+test('NOAPS Atlanta R2: FTQ Cram keeps full R1/R2 columns', () => {
+  const d = load('data/events/NOAPS/2026/noaps_2026_2.json');
+  assert.strictEqual(TGA.qualifyingHasFailedToQualifyDrivers(d.tables.qualifying), true);
+  assert.deepStrictEqual(d.tables.qualifying.headers, [
+    'Pos', '#', 'Driver', 'Team', 'Make', 'Time (R1)', 'Speed (R1)', 'Time (R2)', 'Speed (R2)',
+  ]);
+  const ftqIdx = d.tables.qualifying.rows.findIndex(
+    (r) => String(r[0] || '').trim().toLowerCase() === 'failed to qualify'
+  );
+  const cram = d.tables.qualifying.rows[ftqIdx + 1];
+  assert.strictEqual(cram.length, 9);
+  assert.strictEqual(cram[2], 'Dawson Cram');
+  assert.strictEqual(cram[5], '33.577');
+  assert.strictEqual(cram[6], '165.113');
+  assert.strictEqual(cram[7], '—');
+  assert.strictEqual(cram[8], '—');
+});
+
+test('Truck IRP: FTQ block has Time/Speed; DNQ has Pts for standings', () => {
+  const d = load('data/events/NASCAR Truck/2026/nascar_truck_2026_16.json');
+  assert.strictEqual(TGA.qualifyingHasFailedToQualifyDrivers(d.tables.qualifying), true);
+  const ftqIdx = d.tables.qualifying.rows.findIndex(
+    (r) => String(r[0] || '').trim().toLowerCase() === 'failed to qualify'
+  );
+  assert.ok(ftqIdx >= 0);
+  const carroll = d.tables.qualifying.rows[ftqIdx + 1];
+  assert.strictEqual(carroll[2], 'Justin Carroll');
+  assert.strictEqual(carroll[5], '23.888');
+  assert.strictEqual(carroll[6], '103.382');
+});
+
 test('shouldSkipStage3PointsTable for 3-stage with race_results', () => {
   // 3-stage events no longer keep a separate stage_3 table in JSON; race_results
   // is stage 3. Skip only when a redundant stage_3 points table is still present.

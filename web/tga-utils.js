@@ -133,6 +133,56 @@
     return foldDiacritics(s).replace(/([a-z])([A-Z])/g, '$1 $2').replace(/\s+/g, ' ').trim();
   }
 
+  function looksAbbreviatedDriverName(name) {
+    var s = String(name == null ? '' : name).trim();
+    if (!s) return false;
+    return /^[A-Z]\.(?:\s*[A-Z]\.)?\s+\S+/.test(s);
+  }
+
+  function titleFromDriverSlug(slug) {
+    slug = String(slug == null ? '' : slug).trim().toLowerCase();
+    if (!slug) return '';
+    return slug.split('-').map(function (part) {
+      if (!part) return '';
+      if (part === 'jr') return 'Jr.';
+      if (part === 'sr') return 'Sr.';
+      if (part === 'ii' || part === 'iii' || part === 'iv') return part.toUpperCase();
+      return part.charAt(0).toUpperCase() + part.slice(1);
+    }).join(' ').trim();
+  }
+
+  function expandedDriverNameFromSlug(name) {
+    var raw = String(name == null ? '' : name).trim();
+    if (!raw || !looksAbbreviatedDriverName(raw)) return '';
+    var currentEntryList = (typeof window !== 'undefined' && window.TGA && window.TGA.currentEventEntryList) || null;
+    var canonicalSlug = resolveDriverSlug(slugify(raw));
+    if (!canonicalSlug) return '';
+    if (currentEntryList && currentEntryList.length) {
+      for (var i = 0; i < currentEntryList.length; i++) {
+        var entry = currentEntryList[i];
+        if (!entry || typeof entry !== 'object') continue;
+        var fields = ['driver', 'driver1', 'driver2', 'driver3', 'driver4'];
+        for (var f = 0; f < fields.length; f++) {
+          var entryRaw = entry[fields[f]];
+          if (entryRaw == null || String(entryRaw).trim() === '') continue;
+          var entryNames = splitDriverNames(entryRaw);
+          for (var n = 0; n < entryNames.length; n++) {
+            var full = String(entryNames[n] || '').trim();
+            if (!full) continue;
+            if (resolveDriverSlug(slugify(full)) === canonicalSlug) return full;
+          }
+        }
+      }
+    }
+    var displayMap = (typeof window !== 'undefined' && window.TGA && window.TGA.driverDisplayNamesBySlug) || null;
+    var mapped = displayMap && displayMap[canonicalSlug] ? String(displayMap[canonicalSlug]).trim() : '';
+    if (mapped && !looksAbbreviatedDriverName(mapped)) return mapped;
+    var titled = titleFromDriverSlug(canonicalSlug);
+    var firstToken = canonicalSlug.split('-')[0] || '';
+    if (titled && firstToken.length > 1) return titled;
+    return '';
+  }
+
   function driverDisplayName(name) {
     if (name == null || typeof name !== 'string') return name;
     var trimmed = normalizeDriverFragment(name);
@@ -157,6 +207,8 @@
     var withoutRaces = trimmed.replace(/\s*\(\d+\s+races?\)\s*$/i, '').trim();
     var normalized = driverDisplayNames[withoutRaces] || driverDisplayNames[trimmed] || withoutRaces || trimmed;
     normalized = foldDiacritics(normalized);
+    var expanded = expandedDriverNameFromSlug(normalized);
+    if (expanded) normalized = expanded;
     if (normalized === 'AJ Allmendinger') return 'A. J. Allmendinger';
     return normalized;
   }
@@ -300,6 +352,9 @@
         else if (slug === 'bobby-earnhardt') next = 'bobby-dale-earnhardt';
         else if (slug === 'tobi-lutke') next = 'tobias-lutke';
         else if (slug === 'mike-christopher-jr') next = 'michael-christopher-jr';
+        else if (slug === 'chris-werth') next = 'christopher-werth';
+        else if (slug === 'garrett-mitchell' || slug === 'cleetus-mitchell') next = 'cleetus-mcfarland';
+        else if (slug === 'jj-yeley' || slug === 'j-jj-yeley') next = 'j-j-yeley';
         else if (/-(i|r|g)$/.test(slug)) next = slug.replace(/-(i|r|g)$/, '');
         else break;
       }
@@ -486,99 +541,6 @@
     adjustSeasonPanelPadding();
   });
 
-  // ─── Static Car Specs render for Supercars ──────────────────────────
-  // (fallback when API is unavailable)
-  function renderSupercarsStaticSpecs() {
-    var carWrap = document.getElementById('car-spec-wrap');
-    var modelsWrap = document.getElementById('car-models-table-wrap');
-    var techWrap = document.getElementById('technical-spec-table-wrap');
-    var enginesTitle = document.getElementById('engines-spec-title');
-    var enginesWrap = document.getElementById('engines-spec-table-wrap');
-    var homologTitle = document.getElementById('homologation-spec-title');
-    var homologWrap = document.getElementById('homologation-spec-table-wrap');
-    if (!carWrap || !modelsWrap || !techWrap) return;
-
-    var sc = window.tgaSeries && window.tgaSeries.supercars;
-    if (!sc) return;
-
-    var carModels = sc.carModels || [];
-    var techSpec = sc.technicalSpec || [];
-    var engines = sc.engines || [];
-    var homologation = sc.homologation || [];
-
-    carWrap.classList.remove('hidden');
-
-    // Car models
-    modelsWrap.innerHTML =
-      '<table class="data-table"><thead><tr>' +
-        '<th>' + t('th.manufacturer') + '</th>' +
-        '<th>' + t('th.model') + '</th>' +
-      '</tr></thead><tbody>' +
-      carModels.map(function (c) {
-        return '<tr><td>' + esc(dash(c.manufacturer)) + '</td><td>' + esc(dash(c.model)) + '</td></tr>';
-      }).join('') +
-      '</tbody></table>';
-    if (typeof makeTableSortable === 'function') {
-      makeTableSortable(modelsWrap.querySelector('.data-table'), carModels.map(function (c) { return [c.manufacturer, c.model]; }), esc);
-    }
-
-    // Technical spec
-    techWrap.innerHTML =
-      '<table class="data-table"><thead><tr>' +
-      '<th>' + t('th.field') + '</th>' +
-      '<th>' + t('th.value') + '</th>' +
-      '</tr></thead><tbody>' +
-      techSpec.map(function (s) {
-        var rawVal = dash(localizeSpecValue(s.value));
-        var cellVal;
-        if (String(s.key || '').toLowerCase().trim() === 'estimated season cost') {
-          var idx = rawVal.indexOf(' (');
-          if (idx > 0) {
-            cellVal = esc(rawVal.slice(0, idx)) + '<br>' + esc(rawVal.slice(idx + 1));
-          } else {
-            cellVal = esc(rawVal);
-          }
-        } else {
-          cellVal = esc(rawVal);
-        }
-        return '<tr><td class="col-field">' + esc(dash(localizeSpecKey(s.key))) + '</td><td>' + cellVal + '</td></tr>';
-      }).join('') +
-      '</tbody></table>';
-    if (typeof makeTableSortable === 'function') {
-      makeTableSortable(techWrap.querySelector('.data-table'), techSpec.map(function (s) { return [s.key, s.value]; }), esc);
-    }
-
-    // Engines
-    if (enginesWrap && enginesTitle) {
-      enginesWrap.classList.remove('hidden');
-      enginesTitle.classList.remove('hidden');
-      enginesWrap.innerHTML =
-        '<table class="data-table"><thead><tr><th>' + t('th.model') + '</th><th>' + t('th.engine') + '</th></tr></thead><tbody>' +
-        engines.map(function (e) {
-          return '<tr><td>' + esc(dash(e.model)) + '</td><td>' + esc(dash(localizeSpecValue(e.spec))) + '</td></tr>';
-        }).join('') +
-        '</tbody></table>';
-      if (typeof makeTableSortable === 'function') {
-        makeTableSortable(enginesWrap.querySelector('.data-table'), engines.map(function (e) { return [e.model, e.spec]; }), esc);
-      }
-    }
-
-    // Homologation
-    if (homologWrap && homologTitle) {
-      homologWrap.classList.remove('hidden');
-      homologTitle.classList.remove('hidden');
-      homologWrap.innerHTML =
-        '<table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('th.team') + '</th></tr></thead><tbody>' +
-        homologation.map(function (h) {
-          return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(teamLabel(h.team))) + '</td></tr>';
-        }).join('') +
-        '</tbody></table>';
-      if (typeof makeTableSortable === 'function') {
-        makeTableSortable(homologWrap.querySelector('.data-table'), homologation.map(function (h) { return [h.manufacturer, h.team]; }), esc);
-      }
-    }
-  }
-
   // ─── Object table sorting ─────────────────────────────────────────
   function addObjectTableSort(tableEl, dataArray, rowRenderer, keys, fullBodyRenderer) {
     if (!tableEl || !dataArray || dataArray.length === 0) return;
@@ -690,9 +652,9 @@
   var categories = [
     { key: 'openwheel', ids: ['F1', 'INDYCAR', 'SUPER_FORMULA', 'F2', 'F3', 'FREC', 'F4_IT'] },
     { key: 'stockcar',  ids: ['NASCAR_CUP', 'NOAPS', 'NASCAR_TRUCK', 'ARCA', 'NASCAR_MODIFIED'] },
-    { key: 'endurance', ids: ['WEC', 'ELMS', 'IMSA'] },
+    { key: 'endurance', ids: ['WEC', 'ELMS', 'IMSA', 'GTWCE_END'] },
     // In Touring, show Supercars first
-    { key: 'touring',   ids: ['SUPERCARS', 'GTWCE_END', 'GTWCE_SPRINT', 'PSC', 'DTM', 'SUPER_GT'] }
+    { key: 'touring',   ids: ['SUPERCARS', 'GTWCE_SPRINT', 'PSC', 'DTM', 'SUPER_GT'] }
   ];
 
   var categoryBySeriesId = {};
@@ -1669,7 +1631,6 @@
   window.TGA.adjustEventPanelPadding  = adjustEventPanelPadding;
   window.TGA.adjustDetailPanelPadding = adjustDetailPanelPadding;
   window.TGA.adjustSeasonPanelPadding = adjustSeasonPanelPadding;
-  window.TGA.renderSupercarsStaticSpecs = renderSupercarsStaticSpecs;
   window.TGA.supercarsWeekendEventSlug = supercarsWeekendEventSlug;
   window.TGA.addObjectTableSort       = addObjectTableSort;
   window.TGA.typeLabel                = typeLabel;

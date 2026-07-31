@@ -38,7 +38,7 @@
     },
     {
       "number": "8",
-      "driver": "Sebastián Álvarez / John Farano",
+      "driver": "Sebastian Alvarez / John Farano",
       "team": "Tower Motorsports",
       "manufacturer": "Oreca",
       "class": "LMP2",
@@ -47,7 +47,7 @@
     },
     {
       "number": "11",
-      "driver": "Tobias Lütke / Mathias Beche",
+      "driver": "Tobias Lutke / Mathias Beche",
       "team": "TDS Racing",
       "manufacturer": "Oreca",
       "class": "LMP2",
@@ -240,7 +240,7 @@
       "team": "Wayne Taylor Racing",
       "manufacturer": "Lamborghini",
       "class": "GTD",
-      "car": "Lamborghini Huracán GT3 Evo 2",
+      "car": "Lamborghini Huracan GT3 Evo 2",
       "driver_slug": "danny-formal-trent-hindman"
     },
     {
@@ -272,7 +272,7 @@
     },
     {
       "number": "81",
-      "driver": "Giacomo Altoè / Casper Stevenson",
+      "driver": "Giacomo Altoe / Casper Stevenson",
       "team": "DragonSpeed",
       "manufacturer": "Chevrolet",
       "class": "GTD",
@@ -585,7 +585,7 @@
           "28",
           "81",
           "10",
-          "Casper Stevenson / Giacomo Altoè",
+          "Casper Stevenson / Giacomo Altoe",
           "DragonSpeed / Chevrolet Corvette Z06 GT3.R",
           "39",
           "1:16.735",
@@ -949,7 +949,7 @@
           "31",
           "81",
           "12",
-          "Casper Stevenson / Giacomo Altoè",
+          "Casper Stevenson / Giacomo Altoe",
           "DragonSpeed / Chevrolet Corvette Z06 GT3.R",
           "50",
           "1:16.746",
@@ -1004,20 +1004,9 @@
         ],
         [
           "3",
-          "99",
-          "LMP2",
-          "3",
-          "Dane Cameron / PJ Hyett",
-          "AO Racing / ORECA LMP2 07",
-          "13",
-          "1:08.186",
-          "Running"
-        ],
-        [
-          "4",
           "22",
           "LMP2",
-          "4",
+          "3",
           "Daniel Goldburg / Ben Hanley",
           "United Autosports USA / ORECA LMP2 07",
           "12",
@@ -1025,10 +1014,10 @@
           "Running"
         ],
         [
-          "5",
+          "4",
           "04",
           "LMP2",
-          "5",
+          "4",
           "George Kurtz / Alex Quinn",
           "Crowdstrike Racing by APR / ORECA LMP2 07",
           "13",
@@ -1036,10 +1025,10 @@
           "Running"
         ],
         [
-          "6",
+          "5",
           "2",
           "LMP2",
-          "6",
+          "5",
           "Mikkel Jensen / Phil Fayer",
           "United Autosports USA / ORECA LMP2 07",
           "12",
@@ -1047,10 +1036,10 @@
           "Running"
         ],
         [
-          "7",
+          "6",
           "73",
           "LMP2",
-          "7",
+          "6",
           "Pietro Fittipaldi / Chris Cumming",
           "Pratt Miller Motorsports / ORECA LMP2 07",
           "12",
@@ -1058,10 +1047,10 @@
           "Running"
         ],
         [
-          "8",
+          "7",
           "11",
           "LMP2",
-          "8",
+          "7",
           "Tobi Lutke / Mathias Beche",
           "TDS Racing / ORECA LMP2 07",
           "12",
@@ -1069,15 +1058,26 @@
           "Running"
         ],
         [
-          "9",
+          "8",
           "8",
           "LMP2",
-          "9",
+          "8",
           "John Farano / Sebastian Alvarez",
           "Tower Motorsports / ORECA LMP2 07",
           "12",
           "1:10.410",
           "Running"
+        ],
+        [
+          "9",
+          "99",
+          "LMP2",
+          "9",
+          "Dane Cameron / PJ Hyett",
+          "AO Racing / ORECA LMP2 07",
+          "13",
+          "1:08.186",
+          "Grid penalty (min. height)"
         ],
         [
           "10",
@@ -1260,7 +1260,7 @@
           "81",
           "GTD",
           "7",
-          "Casper Stevenson / Giacomo Altoè",
+          "Casper Stevenson / Giacomo Altoe",
           "DragonSpeed / Chevrolet Corvette Z06 GT3.R",
           "10",
           "1:15.783",
@@ -1639,7 +1639,7 @@
         [
           "25",
           "81",
-          "Casper Stevenson / Giacomo Altoè",
+          "Casper Stevenson / Giacomo Altoe",
           "DragonSpeed / Chevrolet Corvette Z06 GT3.R",
           "GTD",
           "10",
@@ -1750,8 +1750,8 @@
         "v1": 190,
         "v2": 200,
         "rear_wing_angle": {
-          "min": 5.0,
-          "max": 11.0
+          "min": 5,
+          "max": 11
         },
         "stint_energy_mj": 893,
         "stint_replenishment_rate": 22.325
@@ -1768,8 +1768,8 @@
         "v1": 190,
         "v2": 200,
         "rear_wing_angle": {
-          "min": -2.0,
-          "max": 5.0
+          "min": -2,
+          "max": 5
         },
         "stint_energy_mj": 895,
         "stint_replenishment_rate": 22.375
@@ -1841,7 +1841,7 @@
         "v1": 190,
         "v2": 200,
         "rear_wing_angle": {
-          "min": 2.0,
+          "min": 2,
           "max": 8.4
         },
         "stint_energy_mj": 918,
@@ -1859,7 +1859,7 @@
         "v1": 190,
         "v2": 200,
         "rear_wing_angle": {
-          "min": 1.0,
+          "min": 1,
           "max": 6.8
         },
         "stint_energy_mj": 933,
@@ -1871,14 +1871,14 @@
         "weight_kg": 1356,
         "nmax": 7200,
         "power_percent": {
-          "v1": 96.0,
+          "v1": 96,
           "v2": 95.8
         },
         "v1": 190,
         "v2": 200,
         "rear_wing_angle": {
-          "min": 4.0,
-          "max": 11.0
+          "min": 4,
+          "max": 11
         },
         "stint_energy_mj": 947,
         "stint_replenishment_rate": 23.675
@@ -1913,8 +1913,8 @@
         "v1": 190,
         "v2": 200,
         "rear_wing_angle": {
-          "min": 0.0,
-          "max": 9.0
+          "min": 0,
+          "max": 9
         },
         "stint_energy_mj": 946,
         "stint_replenishment_rate": 23.65
@@ -1925,8 +1925,8 @@
         "weight_kg": 1381,
         "nmax": 8950,
         "power_percent": {
-          "v1": 100.0,
-          "v2": 100.0
+          "v1": 100,
+          "v2": 100
         },
         "v1": 190,
         "v2": 200,
@@ -1940,13 +1940,13 @@
     ],
     "regulatory_params": {
       "ppu_limit_bop": 0,
-      "ppu_limit_rate_bop": 1.0,
+      "ppu_limit_rate_bop": 1,
       "ppu_max_integral_bop": 10,
       "ppu_rate_bop": 20
     },
     "notes": "Linear interpolation used between V1 and V2. For N/Nmax < 0.55, maximum power is equal to N/Nmax = 0.55. Linear interpolation used between each 0.025 step from 0.55 to 1.025 N/Nmax. For N/Nmax >= 1.025, maximum power is 0.856 of maximum power at N/Nmax = 1.000. Declared power varies - comparisons between cars are invalid. Rear wing angle measured at Y = 0 using measurement described in ITEF (stated angle includes tolerance)."
   },
-  "event_preview": "Canadian Tire Motorsport Park is a 2.459-mile (3.957 km), 10-turn permanent road course in Bowmanville, Ontario — IMSA's only stop north of the border. The Chevrolet Grand Prix was the seventh round of the 2026 IMSA WeatherTech SportsCar Championship, held July 10-12, contested over 2 hours and 40 minutes across LMP2, GTD Pro and GTD, with GTP absent from the entry list for this event.\nSix Canadian drivers featured across the field, including Misha Goikhberg, Chris Cumming, Phil Fayer, John Farano and Shopify co-founder Tobi Lütke, giving the round a distinctly home-crowd flavour. In LMP2, PJ Hyett and Dane Cameron entered aboard AO Racing's No. 99 Oreca as one of the class frontrunners. In GTD Pro, reigning class contenders Albert Costa and Giacomo Altoè lined up in DragonSpeed's No. 81 Ferrari 296, facing competition from Vasser Sullivan's Lexus pairing of Jack Hawksworth and Ben Barnicoat and AO Racing's Porsche entries.",
-  "event_preview_ru": "Canadian Tire Motorsport Park — постоянная 10-поворотная трасса длиной 2,459 мили (3,957 км) в Bowmanville, Ontario — единственная остановка IMSA за пределами США. Chevrolet Grand Prix был седьмым этапом IMSA WeatherTech SportsCar Championship 2026, проходил 10–12 июля, продолжительностью 2 часа 40 минут в классах LMP2, GTD Pro и GTD, без GTP на старте.\nВ гонке участвовали шесть канадских пилотов, включая Misha Goikhberg, Chris Cumming, Phil Fayer, John Farano и сооснователя Shopify Tobi Lütke, что придало этапу особый домашний колорит. В LMP2 PJ Hyett и Dane Cameron выступали на Oreca No. 99 AO Racing в числе лидеров класса. В GTD Pro действующие претенденты Albert Costa и Giacomo Altoè стартовали на Ferrari 296 No. 81 DragonSpeed, соперничая с Lexus Vasser Sullivan в составе Jack Hawksworth и Ben Barnicoat, а также Porsche AO Racing.",
+  "event_preview": "Canadian Tire Motorsport Park is a 2.459-mile (3.957 km), 10-turn permanent road course in Bowmanville, Ontario — IMSA's only stop north of the border. The Chevrolet Grand Prix was the seventh round of the 2026 IMSA WeatherTech SportsCar Championship, held July 10-12, contested over 2 hours and 40 minutes across LMP2, GTD Pro and GTD, with GTP absent from the entry list for this event.\nSix Canadian drivers featured across the field, including Misha Goikhberg, Chris Cumming, Phil Fayer, John Farano and Shopify co-founder Tobi Lutke, giving the round a distinctly home-crowd flavour. In LMP2, PJ Hyett and Dane Cameron entered aboard AO Racing's No. 99 Oreca as one of the class frontrunners. In GTD Pro, reigning class contenders Albert Costa and Giacomo Altoe lined up in DragonSpeed's No. 81 Ferrari 296, facing competition from Vasser Sullivan's Lexus pairing of Jack Hawksworth and Ben Barnicoat and AO Racing's Porsche entries.\n\nIMSA WeatherTech Championship records at Canadian Tire Motorsport Park include Matthew McMurry's LMP2 race lap of 1:08.197 (2019), plus qualifying marks by Alexander Sims in GTD Pro (1:14.373, 2024) and Frankie Montecalvo in GTD (1:15.060, 2024).",
+  "event_preview_ru": "Canadian Tire Motorsport Park — постоянная 10-поворотная трасса длиной 2,459 мили (3,957 км) в Bowmanville, Ontario — единственная остановка IMSA за пределами США. Chevrolet Grand Prix был седьмым этапом IMSA WeatherTech SportsCar Championship 2026, проходил 10–12 июля, продолжительностью 2 часа 40 минут в классах LMP2, GTD Pro и GTD, без GTP на старте.\nВ гонке участвовали шесть канадских пилотов, включая Misha Goikhberg, Chris Cumming, Phil Fayer, John Farano и сооснователя Shopify Tobi Lutke, что придало этапу особый домашний колорит. В LMP2 PJ Hyett и Dane Cameron выступали на Oreca No. 99 AO Racing в числе лидеров класса. В GTD Pro действующие претенденты Albert Costa и Giacomo Altoe стартовали на Ferrari 296 No. 81 DragonSpeed, соперничая с Lexus Vasser Sullivan в составе Jack Hawksworth и Ben Barnicoat, а также Porsche AO Racing.\n\nРекорды IMSA WeatherTech Championship на Canadian Tire Motorsport Park: гоночный круг LMP2 — Matthew McMurry (1:08.197, 2019); квалификация GTD Pro — Alexander Sims (1:14.373, 2024), GTD — Frankie Montecalvo (1:15.060, 2024).",
   "youtube_id": "YKNRESdQoKE"
 }

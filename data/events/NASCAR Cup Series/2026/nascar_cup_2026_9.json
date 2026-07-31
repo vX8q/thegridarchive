@@ -14,14 +14,15 @@
   "stage3_laps": "102",
   "distance": "411 mi (661.438 km)",
   "race_statistics": {
-    "Average speed": "146.22 miles per hour (235.32 km/h)",
+    "Average speed": "146.22 mph (235.32 km/h)",
     "Cautions / Laps": "3 for 20",
     "Lead changes": "17 among 7 different drivers",
     "Red flags": "0",
-    "Time of race": "2 hours, 48 minutes and 39 seconds"
+    "Time of race": "2 hours, 48 minutes and 39 seconds",
+    "Margin of victory": "0.118 sec"
   },
-  "event_preview": "Kansas Speedway is a 1.5-mile (2.4 km) tri-oval in Kansas City, Kansas, opened in 2001 and extensively reconfigured in 2012 with variable banking — 17 to 20 degrees in the turns, 9 to 11 on the frontstretch, 5 on the backstretch. The AdventHealth 400 is the ninth race of the 2026 NASCAR Cup Series season and the first of two annual spring/fall weekends at Kansas, run over 274 laps (411 miles) with stage breaks at laps 80 and 165. In 40 Cup Series races at the track, Kansas has yet to produce a first-time winner. The all-time Cup Series qualifying record at Kansas belongs to Joey Logano, who turned a 28.509-second lap (189.414 mph) in September 2013 — a mark set on the freshly repaved surface that has stood for over a decade. The all-time race lap speed record belongs to Denny Hamlin, who averaged 144.122 mph during his win at the April 2012 event — the fastest race run in Kansas Cup Series history.",
-  "event_preview_ru": "Kansas Speedway — три-овал длиной 1,5 мили (2,4 км) в Kansas City, Kansas, открытый в 2001 году и масштабно переконфигурированный в 2012 году с переменным уклоном — от 17 до 20 градусов в поворотах, от 9 до 11 на главной прямой, 5 на задней. AdventHealth 400 — девятый этап сезона NASCAR Cup Series 2026 и первая из двух ежегодных весенне-осенних гонок на Kansas, на 274 круга (411 миль) со стейдж-брейками на 80-м и 165-м кругах. За 40 гонок Cup Series на трассе Kansas ещё не подарила победу дебютанту. Абсолютный квалификационный рекорд Cup Series на Kansas принадлежит Joey Logano — 28,509 секунды (189,414 mph) в сентябре 2013 года, установленный на свежереконструированном покрытии и не побитый более десяти лет. Абсолютный рекорд скорости круга в гонке принадлежит Denny Hamlin — средняя 144,122 mph при победе на апрельском этапе 2012 года, самой быстрой гонке Cup Series в истории Kansas.",
+  "event_preview": "Kansas Speedway is a 1.5-mile (2.4 km) tri-oval in Kansas City, Kansas, opened in 2001 and extensively reconfigured in 2012 with variable banking — 17 to 20 degrees in the turns, 9 to 11 on the frontstretch, 5 on the backstretch. The AdventHealth 400 is the ninth race of the 2026 NASCAR Cup Series season and the first of two annual spring/fall weekends at Kansas, run over 274 laps (411 miles) with stage breaks at laps 80 and 165. In 40 Cup Series races at the track, Kansas has yet to produce a first-time winner. The all-time Cup Series qualifying record at Kansas belongs to Kevin Harvick, who turned a 27.304-second lap (197.773 mph) on October 3, 2014. The series race record average speed is 152.057 mph, set by Chase Elliott on October 21, 2018 (2:38:02).",
+  "event_preview_ru": "Kansas Speedway — три-овал длиной 1,5 мили (2,4 км) в Kansas City, Kansas, открытый в 2001 году и масштабно переконфигурированный в 2012 году с переменным уклоном — от 17 до 20 градусов в поворотах, от 9 до 11 на главной прямой, 5 на задней. AdventHealth 400 — девятый этап сезона NASCAR Cup Series 2026 и первая из двух ежегодных весенне-осенних гонок на Kansas, на 274 круга (411 миль) со стейдж-брейками на 80-м и 165-м кругах. За 40 гонок Cup Series на трассе Kansas ещё не подарила победу дебютанту.Абсолютный рекорд квалификации Cup Series на Kansas принадлежит Kevin Harvick — 27,304 секунды (197,773 mph) 3 октября 2014 года. Рекорд средней скорости гонки серии — 152,057 mph, установлен Chase Elliott 21 октября 2018 года (2:38:02).",
   "entry_list": [
     {
       "number": "1",
@@ -73,7 +74,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -419,7 +420,7 @@
         [
           "7",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "29.993",
@@ -898,7 +899,7 @@
         [
           "8",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "29.230",
@@ -1401,7 +1402,7 @@
           "19",
           "8",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "274",

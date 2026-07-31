@@ -175,8 +175,9 @@
             }
     
             if (raceRows.length > 0) {
+              var raceTitleHasResults = /\bresults\b|результат/i.test(String(titleText || ''));
               // For all F1 events do not show separate "Results" heading (already in session title).
-              if (!evKeyEvent || evKeyEvent.indexOf('F1_') !== 0) {
+              if ((!evKeyEvent || evKeyEvent.indexOf('F1_') !== 0) && !raceTitleHasResults) {
                 out += '<h4 class="table-section-title">Results</h4>';
               }
               var raceTbl = { headers: raceHeaders, rows: raceRows };

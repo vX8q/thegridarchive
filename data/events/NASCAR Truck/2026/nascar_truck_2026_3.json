@@ -10,8 +10,8 @@
   "stage1_laps": "23",
   "stage2_laps": "20",
   "stage3_laps": "37",
-  "event_preview": "The 1.8-mile, 14-turn (5 lefts, 9 rights) circuit incorporates streets of downtown St. Petersburg and a section of runway of Albert Whitted Airport. After the long frontstretch, there's a tight right-hander into Turn 1 and then a quick left-hand turn. Plenty of drivers have gotten into trouble in these two turns over the years. There are two other long straights with heavy braking zones that afford opportunities to overtake.",
-  "event_preview_ru": "Кольцо длиной 1,8 мили с 14 поворотами (5 левых, 9 правых) проходит по улицам центра St. Petersburg и участку ВПП Albert Whitted Airport. После длинной главной прямой — резкий правый поворот 1 и быстрый левый. Многие гонщики попадали в неприятности в этих двух поворотах за годы. Ещё две длинные прямые с зонами интенсивного торможения дают возможности для обгонов.",
+  "event_preview": "The 1.8-mile, 14-turn (5 lefts, 9 rights) circuit incorporates streets of downtown St. Petersburg and a section of runway of Albert Whitted Airport. After the long frontstretch, there's a tight right-hander into Turn 1 and then a quick left-hand turn. Plenty of drivers have gotten into trouble in these two turns over the years. There are two other long straights with heavy braking zones that afford opportunities to overtake.\n\nAs the Craftsman Truck Series' first visit to the Streets of St. Petersburg, there are no prior series qualifying or race lap records — both will be established for the first time this weekend.",
+  "event_preview_ru": "Кольцо длиной 1,8 мили с 14 поворотами (5 левых, 9 правых) проходит по улицам центра St. Petersburg и участку ВПП Albert Whitted Airport. После длинной главной прямой — резкий правый поворот 1 и быстрый левый. Многие гонщики попадали в неприятности в этих двух поворотах за годы. Ещё две длинные прямые с зонами интенсивного торможения дают возможности для обгонов.\n\nПоскольку это первый визит Craftsman Truck Series на Streets of St. Petersburg, исторических рекордов квалификации и гоночного круга серии ещё нет — оба будут установлены впервые на этом уик-энде.",
   "youtube_id": "WodyC19f5JY",
   "entry_list": [
     {
@@ -200,7 +200,7 @@
     },
     {
       "number": "44",
-      "driver": "Andrés Pérez de Lara",
+      "driver": "Andres Perez de Lara",
       "team": "Niece Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Wally Rogers",
@@ -661,7 +661,7 @@
         [
           "16",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "80.663",
@@ -1028,7 +1028,7 @@
         [
           "10",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "1"
@@ -1120,7 +1120,7 @@
         [
           "10",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "1"
@@ -1217,7 +1217,7 @@
           "7",
           "14",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "80",
@@ -1575,5 +1575,13 @@
         ]
       ]
     }
+  },
+  "race_statistics": {
+    "Average speed": "58.756 mph (94.559 km/h)",
+    "Cautions / Laps": "8 for 17",
+    "Lead changes": "9 among 5 different drivers",
+    "Red flags": "0",
+    "Time of race": "2 hours, 27 minutes and 3 seconds",
+    "Margin of victory": "0.879 sec"
   }
 }

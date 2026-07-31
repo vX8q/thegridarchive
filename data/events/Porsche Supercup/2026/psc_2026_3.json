@@ -7,8 +7,8 @@
   "end_date": "2026-06-28",
   "track": "Red Bull Ring",
   "location": "Spielberg, Styria, Austria",
-  "event_preview": "The Red Bull Ring is a 4.318 km (2.682 mi) permanent road course in Spielberg, Styria, Austria, featuring 10 corners and significant elevation changes. Round 3 of the 2026 Porsche Mobil 1 Supercup takes place June 26-28, supporting the Austrian Grand Prix, with a single Friday practice session, Saturday qualifying and Sunday's 30-minute sprint race covering approximately 70 km.\n\nTheo Oeverhaus leads the championship after winning at Monaco and following up with a podium in Barcelona, where Porsche Junior Flynt Schuring took his maiden Supercup victory to move up to second overall. Paul Cauhaupe leads the Rookie classification after his own podium finish in Barcelona. Marcus Amand, the second Porsche Junior in the field, has also shown strong pace through the opening two rounds. Formula One World Champion Jacques Villeneuve continues his guest appearances in the series after a difficult Barcelona debut.",
-  "event_preview_ru": "Red Bull Ring — постоянная трасса длиной 4,318 км (2,682 мили) в Spielberg, Styria, Austria: 10 поворотов и заметный перепад высот. Третий этап Porsche Mobil 1 Supercup 2026 пройдёт с 26 по 28 июня в поддержку Гран-при Austria Formula One — одна пятничная практика, субботняя квалификация и воскресный спринт на 30 минут (~70 км).\n\nTheo Oeverhaus лидирует в чемпионате после победы в Monaco и подиума в Barcelona, где Porsche Junior Flynt Schuring одержал первую победу в Supercup и поднялся на второе место в общем зачёте. Paul Cauhaupe возглавляет зачёт новичков после собственного подиума в Barcelona. Marcus Amand, второй Porsche Junior в составе, также показывал сильный темп в первых двух этапах. Чемпион мира Formula One Jacques Villeneuve продолжает гостевые выступления в серии после трудного дебюта в Barcelona.",
+  "event_preview": "The Red Bull Ring is a 4.318 km (2.682 mi) permanent road course in Spielberg, Styria, Austria, featuring 10 corners and significant elevation changes. Round 3 of the 2026 Porsche Mobil 1 Supercup takes place June 26-28, supporting the Austrian Grand Prix, with a single Friday practice session, Saturday qualifying and Sunday's 30-minute sprint race covering approximately 70 km.\n\nTheo Oeverhaus leads the championship after winning at Monaco and following up with a podium in Barcelona, where Porsche Junior Flynt Schuring took his maiden Supercup victory to move up to second overall. Paul Cauhaupe leads the Rookie classification after his own podium finish in Barcelona. Marcus Amand, the second Porsche Junior in the field, has also shown strong pace through the opening two rounds. Formula One World Champion Jacques Villeneuve continues his guest appearances in the series after a difficult Barcelona debut.\n\nThe fastest Porsche Supercup qualifying lap documented at the Red Bull Ring is Julien Andlauer's 1:30.457 from the 2019 Formula One support weekend.",
+  "event_preview_ru": "Red Bull Ring — постоянная трасса длиной 4,318 км (2,682 мили) в Spielberg, Styria, Austria: 10 поворотов и заметный перепад высот. Третий этап Porsche Mobil 1 Supercup 2026 пройдёт с 26 по 28 июня в поддержку Гран-при Austria Formula One — одна пятничная практика, субботняя квалификация и воскресный спринт на 30 минут (~70 км).\n\nTheo Oeverhaus лидирует в чемпионате после победы в Monaco и подиума в Barcelona, где Porsche Junior Flynt Schuring одержал первую победу в Supercup и поднялся на второе место в общем зачёте. Paul Cauhaupe возглавляет зачёт новичков после собственного подиума в Barcelona. Marcus Amand, второй Porsche Junior в составе, также показывал сильный темп в первых двух этапах. Чемпион мира Formula One Jacques Villeneuve продолжает гостевые выступления в серии после трудного дебюта в Barcelona.\n\nСамый быстрый задокументированный квалификационный круг Porsche Supercup на Red Bull Ring — 1:30.457 Julien Andlauer на уик-энде поддержки Formula One 2019 года.",
   "entry_list": [
     {
       "number": "1",
@@ -98,20 +98,20 @@
     {
       "number": "15",
       "driver": "Theo Oeverhaus",
-      "team": "Martinet by Alméras",
+      "team": "Martinet by Almeras",
       "driver_slug": "theo-oeverhaus"
     },
     {
       "number": "16",
       "driver": "Paul Cauhaupe",
-      "team": "Martinet by Alméras",
+      "team": "Martinet by Almeras",
       "status": "R",
       "driver_slug": "paul-cauhaupe"
     },
     {
       "number": "17",
       "driver": "Jaap van Lagen",
-      "team": "Martinet by Alméras",
+      "team": "Martinet by Almeras",
       "driver_slug": "jaap-van-lagen"
     },
     {
@@ -239,7 +239,7 @@
           "2",
           "16",
           "Paul Cauhaupe",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:31.892",
           "+0.002"
         ],
@@ -311,7 +311,7 @@
           "11",
           "17",
           "Jaap van Lagen",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:32.333",
           "+0.443"
         ],
@@ -359,7 +359,7 @@
           "17",
           "15",
           "Theo Oeverhaus",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:32.521",
           "+0.631"
         ],
@@ -489,7 +489,7 @@
           "1",
           "16",
           "Paul Cauhaupe",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:30.462",
           "—"
         ],
@@ -537,7 +537,7 @@
           "7",
           "15",
           "Theo Oeverhaus",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:30.820",
           "+0.358"
         ],
@@ -593,7 +593,7 @@
           "14",
           "17",
           "Jaap van Lagen",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:31.124",
           "+0.662"
         ],
@@ -793,7 +793,7 @@
           "6",
           "15",
           "Theo Oeverhaus",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "18",
           "1:32.292",
           "10"
@@ -820,7 +820,7 @@
           "9",
           "16",
           "Paul Cauhaupe",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "18",
           "1:32.457",
           "7"
@@ -874,7 +874,7 @@
           "15",
           "17",
           "Jaap van Lagen",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "18",
           "1:32.530",
           "1"

@@ -12,11 +12,12 @@
   "distance": "210.4 miles (338.613 km)",
   "youtube_id": "jpS7hpTwmdc",
   "race_statistics": {
-    "Average speed": "75.457 miles per hour (121.436 km/h)",
-    "Cautions / Laps": "5 for 54 laps",
+    "Average speed": "75.457 mph (121.436 km/h)",
+    "Cautions / Laps": "5 for 54",
     "Lead changes": "8 among 6 different drivers",
     "Red flags": "0",
-    "Time of race": "2 hours, 47 minutes, and 18 seconds"
+    "Time of race": "2 hours, 47 minutes, and 18 seconds",
+    "Margin of victory": "0.565 sec"
   },
   "entry_list": [
     {
@@ -69,7 +70,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -520,7 +521,7 @@
         [
           "15",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "19.782",
@@ -1021,7 +1022,7 @@
         [
           "22",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "19.508",
@@ -1594,7 +1595,7 @@
           "20",
           "22",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "399",
@@ -1909,6 +1910,6 @@
       ]
     }
   },
-  "event_preview": "Martinsville Speedway is a 0.526-mile (0.847 km) oval in Ridgeway, Virginia, shaped like a paperclip — two long flat straights connected by tight, heavily-braked concrete-paved turns with just 12 degrees of banking. Founded in 1947 by H. Clay Earles, it is the only track to have hosted NASCAR Cup Series races every year since the division's inception in 1949 — a record no other venue on the calendar can match. The Cook Out 400 is the seventh race of the 2026 season and the first true short track event of the year. Racing here is an exercise in attrition, aggression and patience in equal measure — track position is king, the walls are always close, and contact is not so much a risk as a certainty. The winner receives not a conventional trophy but a grandfather clock — a tradition dating back to 1964, a nod to Martinsville's heritage as the furniture capital of Virginia. The all-time qualifying lap record belongs to Joey Logano, who set a 18.898-second lap in March 2014, while the all-time fastest lap in race conditions — 18.845 seconds, set by Ross Chastain on the final lap of the 2022 fall race — remains one of the most extraordinary laps in NASCAR history.",
-  "event_preview_ru": "Martinsville Speedway — овал длиной 0,526 мили (0,847 км) в Ridgeway, Virginia, формой напоминающий скрепку: две длинные плоские прямые соединены узкими, с интенсивным торможением, бетонными поворотами с уклоном всего 12 градусов. Основанная в 1947 году H. Clay Earles, это единственная трасса, принимавшая гонки NASCAR Cup Series каждый год с момента основания дивизиона в 1949 году — рекорд, которому не может сравниться ни одна другая площадка календаря. Cook Out 400 — седьмой этап сезона 2026 и первое настоящее шорт-трек-событие года. Гонка здесь — испытание на износ, агрессию и терпение в равной мере: позиция на трассе решает всё, стены всегда рядом, а контакт — не столько риск, сколько неизбежность. Победитель получает не обычный трофей, а напольные часы — традиция с 1964 года, отсылка к наследию Martinsville как столицы мебельной промышленности Virginia. Абсолютный квалификационный рекорд круга принадлежит Joey Logano — 18,898 секунды в марте 2014 года, а самый быстрый круг в гонке — 18,845 секунды Ross Chastain на финальном круге осенней гонки 2022 года — остаётся одним из самых выдающихся кругов в истории NASCAR."
+  "event_preview": "Martinsville Speedway is a 0.526-mile (0.847 km) oval in Ridgeway, Virginia, shaped like a paperclip — two long flat straights connected by tight, heavily-braked concrete-paved turns with just 12 degrees of banking. Founded in 1947 by H. Clay Earles, it is the only track to have hosted NASCAR Cup Series races every year since the division's inception in 1949 — a record no other venue on the calendar can match. The Cook Out 400 is the seventh race of the 2026 season and the first true short track event of the year. Racing here is an exercise in attrition, aggression and patience in equal measure — track position is king, the walls are always close, and contact is not so much a risk as a certainty. The winner receives not a conventional trophy but a grandfather clock — a tradition dating back to 1964, a nod to Martinsville's heritage as the furniture capital of Virginia. The all-time qualifying lap record belongs to Joey Logano, who set a 18.898-second lap in March 2014, while the all-time fastest lap in race conditions — 18.845 seconds, set by Ross Chastain on the final lap of the 2022 fall race — remains one of the most extraordinary laps in NASCAR history.\n\nThe Cup Series race record average speed at Martinsville is 82.223 mph, set by Jeff Gordon in 1996 (3:11:55).",
+  "event_preview_ru": "Martinsville Speedway — овал длиной 0,526 мили (0,847 км) в Ridgeway, Virginia, формой напоминающий скрепку: две длинные плоские прямые соединены узкими, с интенсивным торможением, бетонными поворотами с уклоном всего 12 градусов. Основанная в 1947 году H. Clay Earles, это единственная трасса, принимавшая гонки NASCAR Cup Series каждый год с момента основания дивизиона в 1949 году — рекорд, которому не может сравниться ни одна другая площадка календаря. Cook Out 400 — седьмой этап сезона 2026 и первое настоящее шорт-трек-событие года. Гонка здесь — испытание на износ, агрессию и терпение в равной мере: позиция на трассе решает всё, стены всегда рядом, а контакт — не столько риск, сколько неизбежность. Победитель получает не обычный трофей, а напольные часы — традиция с 1964 года, отсылка к наследию Martinsville как столицы мебельной промышленности Virginia. Абсолютный квалификационный рекорд круга принадлежит Joey Logano — 18,898 секунды в марте 2014 года, а самый быстрый круг в гонке — 18,845 секунды Ross Chastain на финальном круге осенней гонки 2022 года — остаётся одним из самых выдающихся кругов в истории NASCAR.\n\nРекорд средней скорости гонки Cup Series на Martinsville — 82,223 mph, установлен Jeff Gordon в 1996 году (3:11:55)."
 }

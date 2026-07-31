@@ -7,8 +7,8 @@
   "location": "Daytona Beach, Florida, USA",
   "laps": "80*",
   "distance": "2.500 mile paved track (200.000 miles)",
-  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.",
-  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.",
+  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.\n\nThe all-time ARCA Menards Series qualifying record at Daytona belongs to Bill Venturini, who turned a 44.953-second lap (200.209 mph) in February 1987. The series race record average speed is 153.191 mph, set by Kenny Irwin Jr. in February 1998.",
+  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.\n\nАбсолютный рекорд квалификации ARCA Menards Series на Daytona принадлежит Bill Venturini — 44,953 секунды (200,209 mph) в феврале 1987 года. Рекорд средней скорости гонки серии — 153,191 mph, установлен Kenny Irwin Jr. в феврале 1998 года.",
   "youtube_id": "XtZG_0-6Ma8",
   "entry_list": [
     {
@@ -189,11 +189,11 @@
     },
     {
       "number": "30",
-      "driver": "Garrett Mitchell",
+      "driver": "Cleetus McFarland",
       "team": "Rette Jones Racing",
       "manufacturer": "Ford",
       "crew_chief": "Mark Rette",
-      "driver_slug": "garrett-mitchell"
+      "driver_slug": "cleetus-mcfarland"
     },
     {
       "number": "32",
@@ -610,7 +610,7 @@
         [
           "16",
           "30",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Rette Jones Racing",
           "Ford",
           "50.385",
@@ -1199,7 +1199,7 @@
         [
           "5",
           "30",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Rette Jones Racing",
           "Ford",
           "49.732",
@@ -1759,7 +1759,7 @@
           "11",
           "5",
           "30",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Rette Jones Racing",
           "Ford",
           "84",
@@ -2119,10 +2119,11 @@
     }
   },
   "race_statistics": {
+    "Average speed": "121.429 mph (195.421 km/h)",
+    "Cautions / Laps": "7 for 32",
     "Lead changes": "7 among 6 different drivers",
-    "Cautions / Laps": "7 for 32 laps",
     "Red flags": "1",
     "Time of race": "2 hours, 1 minute and 40 seconds",
-    "Average speed": "121.429 miles per hour (195.421 km/h)"
+    "Margin of victory": "0.142 sec"
   }
 }

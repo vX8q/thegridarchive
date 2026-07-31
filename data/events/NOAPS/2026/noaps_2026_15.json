@@ -14,11 +14,12 @@
   "stage2_laps": "45",
   "stage3_laps": "1",
   "race_statistics": {
+    "Average speed": "159.480 mph (256.658 km/h)",
+    "Cautions / Laps": "6 for 54",
     "Lead changes": "14 among 7 different drivers",
-    "Cautions / Laps": "6 for 54 laps",
     "Red flags": "1",
     "Time of race": "1 hour, 52 minutes and 52 seconds",
-    "Average speed": "159.480 miles per hour (256.658 km/h)"
+    "Margin of victory": "under caution"
   },
   "entry_list": [
     {
@@ -338,7 +339,7 @@
     },
     {
       "number": "92",
-      "driver": "Leland Honeyman Jr. (i)",
+      "driver": "Leland Honeyman (i)",
       "team": "DGM Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Steve Addington",
@@ -755,7 +756,7 @@
           "15",
           "30",
           "92",
-          "Leland Honeyman Jr. (i)",
+          "Leland Honeyman (i)",
           "DGM Racing",
           "Chevrolet",
           "91",

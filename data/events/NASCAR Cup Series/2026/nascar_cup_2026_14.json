@@ -13,14 +13,15 @@
   "stage2_laps": "95",
   "stage3_laps": "115",
   "youtube_id": "eXY2SBiRdfU",
-  "event_preview": "Nashville Superspeedway is a 1.333-mile (2.145 km) D-shaped concrete oval in Lebanon, Tennessee, featuring 14 degrees of banking in the turns. The Cracker Barrel 400 is the fourteenth points-paying race of the 2026 NASCAR Cup Series season.\n\nThe all-time Cup Series qualifying record at Nashville belongs to Chase Briscoe, who turned a 29.125-second lap at 164.395 mph to claim pole for the 2025 Cracker Barrel 400. The race average speed record is held by Kyle Busch, who averaged 136.459 mph during his victory on 2 April 2010.",
-  "event_preview_ru": "Nashville Superspeedway — D-образный бетонный овал длиной 1,333 мили (2,145 км) в Lebanon, Tennessee, с уклоном 14 градусов в поворотах. Cracker Barrel 400 — четырнадцатый зачётный этап сезона NASCAR Cup Series 2026.\n\nАбсолютный квалификационный рекорд Cup Series на Nashville принадлежит Chase Briscoe — 29,125 секунды при 164,395 mph и поул на Cracker Barrel 400 2025 года. Рекорд средней скорости гонки держит Kyle Busch — 136,459 mph при победе 2 апреля 2010 года.",
+  "event_preview": "Nashville Superspeedway is a 1.333-mile (2.145 km) D-shaped concrete oval in Lebanon, Tennessee, featuring 14 degrees of banking in the turns. The Cracker Barrel 400 is the fourteenth points-paying race of the 2026 NASCAR Cup Series season.\n\nThe all-time Cup Series qualifying record at Nashville belongs to Chase Briscoe, who turned a 29.125-second lap at 164.395 mph to claim pole for the 2025 Cracker Barrel 400. The Cup Series race record average speed at Nashville is 132.914 mph, set by Ross Chastain in 2023 (3:00:07).",
+  "event_preview_ru": "Nashville Superspeedway — D-образный бетонный овал длиной 1,333 мили (2,145 км) в Lebanon, Tennessee, с уклоном 14 градусов в поворотах. Cracker Barrel 400 — четырнадцатый зачётный этап сезона NASCAR Cup Series 2026.\n\nАбсолютный квалификационный рекорд Cup Series на Nashville принадлежит Chase Briscoe — 29,125 секунды при 164,395 mph и поул на Cracker Barrel 400 2025 года.Рекорд средней скорости гонки Cup Series на Nashville — 132,914 mph, установлен Ross Chastain в 2023 году (3:00:07).",
   "race_statistics": {
+    "Average speed": "106.424 mph (171.273 km/h)",
+    "Cautions / Laps": "12 for 75",
     "Lead changes": "31 among 15 different drivers",
-    "Cautions / Laps": "12 for 75 laps",
     "Red flags": "0",
     "Time of race": "3 hours, 44 minutes, and 57 seconds",
-    "Average speed": "106.424 miles per hour (171.273 km/h)"
+    "Margin of victory": "0.115 sec"
   },
   "entry_list": [
     {
@@ -73,7 +74,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -805,7 +806,7 @@
         [
           "36",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "30.335",
@@ -958,7 +959,7 @@
         [
           "1",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "10"
@@ -1271,7 +1272,7 @@
           "19",
           "3",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "299",

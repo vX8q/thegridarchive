@@ -171,3 +171,30 @@ func isExhibitionEvent(seriesID string, eventID string) bool {
 	return false
 }
 
+// skipChampionshipMetricsEvent excludes exhibition / pre-season / prologue rounds
+// from standings, stats, and head-to-head (calendar pages may still list them).
+func skipChampionshipMetricsEvent(seriesID, eventID string) bool {
+	if isExhibitionEvent(seriesID, eventID) {
+		return true
+	}
+	u := strings.ToUpper(strings.TrimSpace(eventID))
+	if u == "" {
+		return false
+	}
+	if isF1PreSeasonEvent(eventID) {
+		return true
+	}
+	if strings.Contains(u, "PROLOGUE") {
+		return true
+	}
+	return false
+}
+
+// isFutureScheduleEvent is true when the event's start date is after today (YYYY-MM-DD).
+func isFutureScheduleEvent(ev EventJSON, today string) bool {
+	if today == "" || ev.StartDate == "" {
+		return false
+	}
+	return ev.StartDate > today
+}
+

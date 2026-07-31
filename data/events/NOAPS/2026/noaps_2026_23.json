@@ -18,7 +18,7 @@
     },
     {
       "number": "0",
-      "driver": "Alex Labbé",
+      "driver": "Alex Labbe",
       "team": "SS-Green Light Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Bryan Berry",
@@ -385,5 +385,7 @@
       ],
       "rows": []
     }
-  }
+  },
+  "event_preview": "The all-time O'Reilly/Xfinity Series qualifying record at Iowa belongs to Austin Dillon, who turned a 23.037-second lap (136.737 mph) in 2013. The series race record average speed is 115.622 mph, set by Elliott Sadler in 2012 (1:53:31).",
+  "event_preview_ru": "Абсолютный рекорд квалификации O'Reilly/Xfinity Series на Iowa принадлежит Austin Dillon — 23,037 секунды (136,737 mph) в 2013 году. Рекорд средней скорости гонки серии — 115,622 mph, установлен Elliott Sadler в 2012 году (1:53:31)."
 }

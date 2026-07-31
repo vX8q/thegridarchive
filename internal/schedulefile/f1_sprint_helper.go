@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-// isF1PreSeasonEvent — pre-season tests are excluded from championship standings.
+// isF1PreSeasonEvent reports pre-season / preseason event IDs (any series).
 func isF1PreSeasonEvent(eventID string) bool {
 	u := strings.ToUpper(strings.TrimSpace(eventID))
 	return strings.Contains(u, "PRE_SEASON") || strings.Contains(u, "PRESEASON")

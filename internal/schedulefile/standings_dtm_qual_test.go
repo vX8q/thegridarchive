@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestBuildDTMStandings2026PointsAfterNorisring(t *testing.T) {
+func TestBuildDTMStandings2026PointsAfterOschersleben(t *testing.T) {
 	dataDir, err := filepath.Abs(filepath.Join("..", "..", "data"))
 	if err != nil {
 		t.Fatal(err)
@@ -18,26 +18,28 @@ func TestBuildDTMStandings2026PointsAfterNorisring(t *testing.T) {
 		t.Fatal("nil standings")
 	}
 
+	// Totals after Round 5 (Oschersleben): race Pts are finish-only;
+	// qualifying 3/2/1 added by applyDTMQualifyingAwards (matches dtm.com).
 	want := map[string]string{
-		"Nicki Thiim":          "117",
-		"Maro Engel":           "108",
-		"Lucas Auer":           "106",
-		"Matteo Cairoli":       "83",
-		"Marco Wittmann":       "77",
-		"Ben Dörr":             "76",
-		"Arjun Maini":          "74",
-		"Thomas Preining":      "70",
-		"Thierry Vermeulen":    "67",
+		"Maro Engel":           "145",
+		"Nicki Thiim":          "124",
+		"Lucas Auer":           "123",
+		"Thomas Preining":      "117",
+		"Matteo Cairoli":       "94",
+		"Arjun Maini":          "94",
+		"Marco Wittmann":       "91",
+		"Ben Dorr":             "76",
+		"Thierry Vermeulen":    "75",
+		"Mirko Bortolotti":     "73",
+		"Kelvin van der Linde": "72",
+		"Luca Engstler":        "67",
+		"Jules Gounon":         "66",
+		"Ricardo Feller":       "64",
 		"Finn Wiebelhaus":      "63",
-		"Jules Gounon":         "59",
-		"Kelvin van der Linde": "54",
-		"Ricardo Feller":       "50",
-		"Mirko Bortolotti":     "37",
-		"Luca Engstler":        "32",
-		"Marco Mapelli":        "31",
-		"Bastian Buus":         "23",
-		"Tom Kalender":         "21",
-		"Timo Glock":           "13",
+		"Marco Mapelli":        "33",
+		"Bastian Buus":         "30",
+		"Tom Kalender":         "24",
+		"Timo Glock":           "21",
 		"Maximilian Paul":      "5",
 		"Nicolas Baert":        "2",
 	}
@@ -55,11 +57,11 @@ func TestBuildDTMStandings2026PointsAfterNorisring(t *testing.T) {
 
 func TestDTMQualifyingRaceIndexFromTitle(t *testing.T) {
 	cases := map[string]int{
-		"Qualifying (Race 1)":             1,
-		"Qualifying (Race 2)":             2,
-		"Qualifying (Race 1) - Group A":   1,
-		"Qualifying (Race 2) - Group B":   2,
-		"Practice 1":                      0,
+		"Qualifying (Race 1)":           1,
+		"Qualifying (Race 2)":           2,
+		"Qualifying (Race 1) - Group A": 1,
+		"Qualifying (Race 2) - Group B": 2,
+		"Practice 1":                    0,
 	}
 	for title, want := range cases {
 		if got := dtmQualifyingRaceIndexFromTitle(title); got != want {

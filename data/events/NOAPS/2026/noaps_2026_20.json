@@ -14,14 +14,15 @@
   "stage2_laps": "45",
   "stage3_laps": "111",
   "race_statistics": {
+    "Average speed": "118.119 mph (190.094 km/h)",
+    "Cautions / Laps": "7 for 40",
     "Lead changes": "16 among 6 different drivers",
-    "Cautions / Laps": "7 for 40 laps",
     "Red flags": "0",
     "Time of race": "2 hours, 33 minutes and 9 seconds",
-    "Average speed": "118.119 miles per hour (190.094 km/h)"
+    "Margin of victory": "0.171 sec"
   },
-  "event_preview": "Chicagoland Speedway is a 1.5-mile (2.4 km) tri-oval in Joliet, Illinois, southwest of Chicago. The Cuervo 300 is the 20th race of the 2026 NASCAR O'Reilly Auto Parts Series season and the O'Reilly Series' first appearance at the venue since 2019, contested over 200 laps (300 miles) with stages of 45, 45 and 110 laps. Practice, originally scheduled for Friday, was postponed by heavy rain and moved into Saturday's qualifying slot, leading NASCAR to cancel qualifying and set the grid via its rulebook metric. Connor Zilisch was awarded the pole as a result, starting ahead of Brent Crews, with Carson Kvapil and Corey Day on Row 2 and Parker Retzlaff and Jesse Love on Row 3.\n\nJustin Allgaier leads Jesse Love by 207 points in the championship with just five races remaining before the Chase begins, and Day, Sheldon Creed and Austin Hill round out the top five. Zilisch arrives off a runner-up finish at Sonoma the previous week and starts on the front row for a track long known for its abrasive, multi-groove racing surface and heavy tyre wear. Further back in the standings, Taylor Gray holds a 20-point edge over William Sawalich for the final transfer spot into the Chase, with Rajah Caruth trailing by 26 points.",
-  "event_preview_ru": "Chicagoland Speedway — три-овал длиной 1,5 мили (2,4 км) в Joliet, Illinois, к юго-западу от Чикаго. Cuervo 300 — 20-й этап сезона NASCAR O'Reilly Auto Parts Series 2026 и первый визит серии на трассу с 2019 года; гонка на 200 кругов (300 миль) со стейджами 45, 45 и 110 кругов. Практика, изначально запланированная на пятницу, была перенесена из-за сильного дождя на субботний слот квалификации, после чего NASCAR отменила квалификацию и сформировала стартовую решётку по метрике rulebook. Поэль получил Connor Zilisch, впереди Brent Crews; во втором ряду Carson Kvapil и Corey Day, в третьем Parker Retzlaff и Jesse Love.\n\nJustin Allgaier опережает Jesse Love на 207 очков в чемпионате при пяти гонках до начала Chase; Day, Sheldon Creed и Austin Hill замыкают топ-5. Zilisch приезжает после второго места в Sonoma на прошлой неделе и стартует в первом ряду на трассе, известной абразивным покрытием с несколькими траекториями и высоким износом шин. Ниже в зачёте Taylor Gray опережает William Sawalich на 20 очков за последнюю путёвку в Chase, Rajah Caruth отстаёт на 26.",
+  "event_preview": "Chicagoland Speedway is a 1.5-mile (2.4 km) tri-oval in Joliet, Illinois, southwest of Chicago. The Cuervo 300 is the 20th race of the 2026 NASCAR O'Reilly Auto Parts Series season and the O'Reilly Series' first appearance at the venue since 2019, contested over 200 laps (300 miles) with stages of 45, 45 and 110 laps.\n\nJustin Allgaier leads Jesse Love by 207 points in the championship with just five races remaining before the Chase begins, and Corey Day, Sheldon Creed and Austin Hill round out the top five. Connor Zilisch arrives off a runner-up finish at Sonoma the previous week at a track long known for its abrasive, multi-groove racing surface and heavy tyre wear. Further back in the standings, Taylor Gray holds a 20-point edge over William Sawalich for the final transfer spot into the Chase, with Rajah Caruth trailing by 26 points.\n\nThe all-time O'Reilly/Xfinity Series qualifying record at Chicagoland belongs to Ryan Newman, who turned a 28.964-second lap (186.438 mph) in 2005. The series race record average speed is 148.637 mph, set by Brad Keselowski in 2011.",
+  "event_preview_ru": "Chicagoland Speedway — три-овал длиной 1,5 мили (2,4 км) в Joliet, Illinois, к юго-западу от Чикаго. Cuervo 300 — 20-й этап сезона NASCAR O'Reilly Auto Parts Series 2026 и первый визит серии на трассу с 2019 года; гонка на 200 кругов (300 миль) со стейджами 45, 45 и 110 кругов.\n\nJustin Allgaier опережает Jesse Love на 207 очков в чемпионате при пяти гонках до начала Chase; Corey Day, Sheldon Creed и Austin Hill замыкают топ-5. Connor Zilisch приезжает после второго места в Sonoma на прошлой неделе на трассу, известную абразивным покрытием с несколькими траекториями и высоким износом шин. Ниже в зачёте Taylor Gray опережает William Sawalich на 20 очков за последнюю путёвку в Chase, Rajah Caruth отстаёт на 26.\n\nАбсолютный рекорд квалификации O'Reilly/Xfinity Series на Chicagoland принадлежит Ryan Newman — 28,964 секунды (186,438 mph) в 2005 году. Рекорд средней скорости гонки серии — 148,637 mph, установлен Brad Keselowski в 2011 году.",
   "entry_list": [
     {
       "number": "00",
@@ -191,7 +192,7 @@
       "team": "RSS Racing",
       "manufacturer": "Ford",
       "crew_chief": "Rb Bracken",
-      "driver_slug": "jj-yeley"
+      "driver_slug": "j-j-yeley"
     },
     {
       "number": "39",

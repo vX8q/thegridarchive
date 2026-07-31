@@ -10,8 +10,8 @@
   "stage1_laps": "20",
   "stage2_laps": "20",
   "stage3_laps": "60",
-  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.",
-  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.",
+  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.\n\nThe all-time Craftsman Truck Series qualifying record at Daytona belongs to Ty Dillon, who turned a 47.676-second lap (188.774 mph) in 2015.",
+  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.\n\nАбсолютный рекорд квалификации Craftsman Truck Series на Daytona принадлежит Ty Dillon — 47,676 секунды (188,774 mph) в 2015 году.",
   "youtube_id": "qpTXXT8akvg",
   "entry_list": [
     {
@@ -33,11 +33,11 @@
     },
     {
       "number": "4",
-      "driver": "Garrett Mitchell",
+      "driver": "Cleetus McFarland",
       "team": "Niece Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Mike Shiplett",
-      "driver_slug": "garrett-mitchell"
+      "driver_slug": "cleetus-mcfarland"
     },
     {
       "number": "5",
@@ -234,7 +234,7 @@
     },
     {
       "number": "44",
-      "driver": "Andrés Pérez de Lara",
+      "driver": "Andres Perez de Lara",
       "team": "Niece Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Wally Rogers",
@@ -651,7 +651,7 @@
         [
           "12",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "48.942",
@@ -794,7 +794,7 @@
         [
           "23",
           "4",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Niece Motorsports",
           "Chevrolet",
           "50.061",
@@ -1136,7 +1136,7 @@
         [
           "12",
           "4",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Niece Motorsports",
           "Chevrolet",
           "51.459",
@@ -1312,7 +1312,7 @@
         [
           "28",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "51.751",
@@ -1693,7 +1693,7 @@
           "13",
           "28",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "102",
@@ -1981,7 +1981,7 @@
           "37",
           "12",
           "4",
-          "Garrett Mitchell",
+          "Cleetus McFarland",
           "Niece Motorsports",
           "Chevrolet",
           "5",
@@ -2203,5 +2203,13 @@
         ]
       ]
     }
+  },
+  "race_statistics": {
+    "Average speed": "131.429 mph (211.514 km/h)",
+    "Cautions / Laps": "6 for 31",
+    "Lead changes": "32 among 12 different drivers",
+    "Red flags": "0",
+    "Time of race": "2 hours and 6 minutes",
+    "Margin of victory": "0.044 sec"
   }
 }

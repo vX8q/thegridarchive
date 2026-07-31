@@ -13,14 +13,15 @@
   "stage1_laps": "20",
   "stage2_laps": "20",
   "stage3_laps": "35",
-  "event_preview": "The Coronado Street Course, also known as Qualcomm Circuit, is a 3.4-mile (5.5 km) 16-turn street circuit on Naval Air Station North Island, part of Naval Base Coronado in San Diego, California. The Anduril 250 is the 17th race of the 2026 NASCAR Cup Series season and the inaugural running of the event, contested over 75 laps (255 miles) with stages at laps 20 and 40. The race marks the first NASCAR Cup Series event held on an active U.S. military base, held in commemoration of the U.S. Navy's 250th anniversary.\n\nShane van Gisbergen is the clear favourite, holding all seven of his career Cup Series victories on road or street courses. He claimed the pole with a 90.809 mph lap, bouncing off the wall twice during his qualifying effort and still securing the top spot ahead of Carson Hocevar. Van Gisbergen defeated Tyler Reddick in a dramatic finish at Watkins Glen the previous month and arrives as the sport's best road racer by wide margin. Denny Hamlin enters seeking to extend his three-race winning streak to four — a feat not accomplished since Jimmie Johnson in 2007 — though he starts 26th. Kyle Larson topped practice at 89.613 mph and represents a secondary contender, while Jimmie Johnson makes an appearance in the No. 84 for Legacy Motor Club and former Formula One driver Kevin Magnussen pilots the Project 91 entry.",
-  "event_preview_ru": "Coronado Street Course, также известная как Qualcomm Circuit, — уличная трасса длиной 3,4 мили (5,5 км) с 16 поворотами на Naval Air Station North Island, часть Naval Base Coronado в San Diego, California. Anduril 250 — семнадцатый этап сезона NASCAR Cup Series 2026 и дебютное проведение события, гонка на 75 кругов (255 миль) со стейджами на 20-м и 40-м кругах. Гонка станет первым этапом NASCAR Cup Series на действующей военной базе США, приуроченным к 250-летию ВМС США.\n\nShane van Gisbergen — явный фаворит: все семь его карьерных побед в Cup Series пришлись на роуд- или уличные трассы. Он взял поул с кругом 90,809 mph, дважды задев стену в квалификации и всё равно обеспечив себе первое место впереди Carson Hocevar. Van Gisbergen одержал драматическую победу над Tyler Reddick на Watkins Glen в прошлом месяце и приезжает как лучший роуд-гонщик серии с большим отрывом. Denny Hamlin стремится продлить трёхпобедную серию до четырёх — такого не удавалось с Jimmie Johnson в 2007 году — однако стартует с 26-го места. Kyle Larson лидировал в практике с 89,613 mph и выглядит вторым претендентом, а Jimmie Johnson выступает на No. 84 за Legacy Motor Club, а бывший гонщик Формулы-1 Kevin Magnussen пилотирует заявку Project 91.",
+  "event_preview": "The Coronado Street Course, also known as Qualcomm Circuit, is a 3.4-mile (5.5 km) 16-turn street circuit on Naval Air Station North Island, part of Naval Base Coronado in San Diego, California. The Anduril 250 is the 17th race of the 2026 NASCAR Cup Series season and the inaugural running of the event, contested over 75 laps (255 miles) with stages at laps 20 and 40. The race marks the first NASCAR Cup Series event held on an active U.S. military base, held in commemoration of the U.S. Navy's 250th anniversary.\n\nShane van Gisbergen is the clear favourite, holding all seven of his career Cup Series victories on road or street courses. Van Gisbergen defeated Tyler Reddick in a dramatic finish at Watkins Glen the previous month and arrives as the sport's best road racer by wide margin. Denny Hamlin enters seeking to extend his three-race winning streak to four — a feat not accomplished since Jimmie Johnson in 2007. Kyle Larson represents a secondary contender, while Jimmie Johnson makes an appearance in the No. 84 for Legacy Motor Club and former Formula One driver Kevin Magnussen pilots the Project 91 entry.\n\nAs the NASCAR Cup Series' first visit to this brand-new circuit, there are no prior series qualifying or race lap records — both will be established for the first time this weekend.",
+  "event_preview_ru": "Coronado Street Course, также известная как Qualcomm Circuit, — уличная трасса длиной 3,4 мили (5,5 км) с 16 поворотами на Naval Air Station North Island, часть Naval Base Coronado в San Diego, California. Anduril 250 — семнадцатый этап сезона NASCAR Cup Series 2026 и дебютное проведение события, гонка на 75 кругов (255 миль) со стейджами на 20-м и 40-м кругах. Гонка станет первым этапом NASCAR Cup Series на действующей военной базе США, приуроченным к 250-летию ВМС США.\n\nShane van Gisbergen — явный фаворит: все семь его карьерных побед в Cup Series пришлись на роуд- или уличные трассы. Van Gisbergen одержал драматическую победу над Tyler Reddick на Watkins Glen в прошлом месяце и приезжает как лучший роуд-гонщик серии с большим отрывом. Denny Hamlin стремится продлить трёхпобедную серию до четырёх — такого не удавалось с Jimmie Johnson в 2007 году. Kyle Larson выглядит вторым претендентом, а Jimmie Johnson выступает на No. 84 за Legacy Motor Club, а бывший гонщик Формулы-1 Kevin Magnussen пилотирует заявку Project 91.\n\nПоскольку это первый визит NASCAR Cup Series на эту новую трассу, исторических рекордов квалификации и гоночного круга серии ещё нет — оба будут установлены впервые на этом уик-энде.",
   "race_statistics": {
+    "Average speed": "70.561 mph (113.557 km/h)",
+    "Cautions / Laps": "7 for 11",
     "Lead changes": "20 among 13 different drivers",
-    "Cautions / Laps": "7 for 11 laps",
     "Red flags": "1",
     "Time of race": "3 hours, 36 minutes, and 50 seconds",
-    "Average speed": "70.561 miles per hour (113.557 km/h)"
+    "Margin of victory": "10.365 sec"
   },
   "entry_list": [
     {
@@ -73,7 +74,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -773,7 +774,7 @@
         [
           "33",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "139.693",
@@ -922,7 +923,7 @@
         [
           "6",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "2:15.433",
@@ -1389,7 +1390,7 @@
           "13",
           "6",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "75",
@@ -1864,7 +1865,7 @@
         [
           "7",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "4"

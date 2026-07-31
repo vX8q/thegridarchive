@@ -291,6 +291,7 @@
     applyScheduleHeaderFallback(apiEventId.toUpperCase(), titleEl, metaEl);
 
     function renderWithData(d) {
+      window.TGA.currentEventEntryList = Array.isArray(d && d.entry_list) ? d.entry_list : [];
       if (d.canonical_event_id && (G.eventSeriesId(d.canonical_event_id) || '').toLowerCase() === 'supercars') {
         var canonSlug = String(d.canonical_event_id).toLowerCase().replace(/_/g, '-');
         var routeSlug = (eventId || '').toLowerCase();
@@ -483,47 +484,13 @@
       return d;
     }
 
-    function hasDetailedEventPayload(d) {
-      if (!d || typeof d !== 'object') return false;
-      var tables = d.tables && typeof d.tables === 'object' ? d.tables : null;
-      if (tables && Object.keys(tables).length > 0) return true;
-      if (Array.isArray(d.entry_list) && d.entry_list.length > 0) return true;
-      if (d.event_preview && String(d.event_preview).trim()) return true;
-      if (d.event_preview_ru && String(d.event_preview_ru).trim()) return true;
-      if (d.laps != null && String(d.laps).trim() !== '') return true;
-      if (d.distance != null && String(d.distance).trim() !== '') return true;
-      if (Array.isArray(d.youtube_highlights) && d.youtube_highlights.length > 0) return true;
-      if (d.youtube_id && String(d.youtube_id).trim()) return true;
-      if (d.highlights_url && String(d.highlights_url).trim()) return true;
-      return false;
-    }
-
-    function fetchEventPayloadOnce() {
-      return API.getEvent(apiEventId)
-        .then(normalizeEventPayload);
-    }
-
-    fetchEventPayloadOnce()
+    // Full event JSON only (GET /api/events/{id}). Summaries use separate endpoints —
+    // no retry: stub calendar rounds legitimately lack tables/preview.
+    API.getEvent(apiEventId)
+      .then(normalizeEventPayload)
       .then(function (d) {
-        if (loadGen !== state.eventPageLoadGeneration) return null;
+        if (loadGen !== state.eventPageLoadGeneration) return;
         if (!d || typeof d !== 'object') throw new Error('Invalid response');
-        // Sometimes SPA navigation returns short payload without tables.
-        // Make second request and prefer more detailed response.
-        if (!hasDetailedEventPayload(d)) {
-          return fetchEventPayloadOnce()
-            .then(function (d2) {
-              if (loadGen !== state.eventPageLoadGeneration) return null;
-              if (d2 && hasDetailedEventPayload(d2)) return d2;
-              return d;
-            })
-            .catch(function () {
-              return d;
-            });
-        }
-        return d;
-      })
-      .then(function (d) {
-        if (loadGen !== state.eventPageLoadGeneration || !d) return;
         state.eventCache[apiEventId] = d;
         try {
           renderWithData(d);
@@ -822,6 +789,33 @@
         })
       };
     }
+    // Drop named columns for display only (source JSON unchanged; standings still read Pts).
+    function dropColumnsByHeader(td, namesToHide) {
+      if (!td || !Array.isArray(td.headers) || !Array.isArray(td.rows) || !namesToHide || !namesToHide.length) return td;
+      var hide = {};
+      for (var n = 0; n < namesToHide.length; n++) {
+        hide[String(namesToHide[n] || '').toLowerCase().trim().replace(/\.$/, '')] = true;
+      }
+      var keepIdx = [];
+      for (var i = 0; i < td.headers.length; i++) {
+        var h = String(td.headers[i] || '').toLowerCase().trim().replace(/\.$/, '');
+        if (hide[h]) continue;
+        keepIdx.push(i);
+      }
+      if (keepIdx.length === td.headers.length) return td;
+      var out = {
+        headers: keepIdx.map(function (i) { return td.headers[i]; }),
+        rows: td.rows.map(function (r) {
+          if (!Array.isArray(r)) return r;
+          return keepIdx.map(function (i) { return i < r.length ? r[i] : ''; });
+        })
+      };
+      Object.keys(td).forEach(function (k) {
+        if (k === 'headers' || k === 'rows') return;
+        out[k] = td[k];
+      });
+      return out;
+    }
     function appendTable(title, tableData, extraClass, getRowClass, mergeTeamCells) {
       function dropTimeOfDayColumn(td) {
         if (!td || !Array.isArray(td.headers) || !Array.isArray(td.rows)) return td;
@@ -1005,7 +999,10 @@
           if (evKeyPst !== 'F1_2026_PRE_SEASON_TEST_1' && evKeyPst !== 'F1_2026_PRE_SEASON_TEST_2') {
             rows = applyTeamNameByNumber(rows, numberColIdx, teamColIdxAfterSplit);
           }
-          var resultsTitle = (evKeyPst === 'F1_2026_PRE_SEASON_TEST_1' || evKeyPst === 'F1_2026_PRE_SEASON_TEST_2') ? '' : '<h4 class="table-section-title">' + esc(t('table.results')) + '</h4>';
+          var pstTitleHasResults = /\bresults\b|результат/i.test(String(sess.title || ''));
+          var resultsTitle = (evKeyPst === 'F1_2026_PRE_SEASON_TEST_1' || evKeyPst === 'F1_2026_PRE_SEASON_TEST_2' || pstTitleHasResults)
+            ? ''
+            : '<h4 class="table-section-title">' + esc(t('table.results')) + '</h4>';
           out += resultsTitle;
           var defaultHeaders = ['POS', 'CAR NO', 'DRIVERS', 'TEAM', 'CAR', 'CLASS', 'CLASS POS', 'ST POS', 'NO LAPS', 'FASTEST LAP', 'STATUS'];
           var headersForTable = sess.headers && sess.headers.length > 0 ? sess.headers : defaultHeaders;
@@ -1209,7 +1206,10 @@
       appendTable(t('table.duel2'),           d.tables && d.tables.duel2, null, null, false);
       var q = d.tables && d.tables.qualifying;
       var dnqForQualFilter = d.tables && d.tables.did_not_qualify;
-      if (q && dnqForQualFilter && Array.isArray(dnqForQualFilter.rows) && dnqForQualFilter.rows.length > 0) {
+      // When qualifying already has a Failed to qualify block with Time/Speed, keep it.
+      // Stripping those rows left only tables.did_not_qualify (often Pts/Notes only).
+      var qualHasFtqBlock = G.qualifyingHasFailedToQualifyDrivers(q);
+      if (q && dnqForQualFilter && Array.isArray(dnqForQualFilter.rows) && dnqForQualFilter.rows.length > 0 && !qualHasFtqBlock) {
         q = G.qualifyingExcludingDidNotQualify(q, dnqForQualFilter);
       }
       if (evKeyEvent === 'SUPER_GT_2026_1' && q && Array.isArray(q.sessions) && q.sessions.length > 0) {
@@ -1270,9 +1270,12 @@
           var qualRows = qualData.rows.map(function (r) { return r.slice(); });
           qualRows = applyTeamNameByNumber(qualRows, 1, 3);
           // CLASS POS and POINTS already normalized in normalizeImsaQualTable().
+          // Do not add a second "Results" heading when the session title already
+          // says "... Results" / "... Результаты".
+          var qualHeadingHasResults = /\bresults\b|результат/i.test(String(qualHeading || ''));
           // For IndyCar, F1, F2/F3/FREC do not insert extra "Results" heading before table,
           // to avoid duplicating session context (Sprint Qualifying / Qualifying, etc.).
-          if (G.shouldShowOpenwheelQualResultsHeading(evKeyEvent, seriesId)) {
+          if (!qualHeadingHasResults && G.shouldShowOpenwheelQualResultsHeading(evKeyEvent, seriesId)) {
             out += '<h4 class="table-section-title">Results</h4>';
           }
 
@@ -1554,8 +1557,11 @@
             appendTable(qTitle, { headers: qBase.headers, rows: qualRowsWithTeamNames(segmentsQ[0]) }, qExtraClass, null, false);
             // others — by headings from separator rows
             for (var si = 1; si < segmentsQ.length; si++) {
-              var lbl = localizeQualifyingSeparator(labelsQ[si - 1] || t('table.qualifying'));
-              appendTable(lbl, { headers: qBase.headers, rows: qualRowsWithTeamNames(segmentsQ[si]) }, qExtraClass, null, false);
+              var sepLabelRaw = labelsQ[si - 1] || t('table.qualifying');
+              var lbl = localizeQualifyingSeparator(sepLabelRaw);
+              var segRows = qualRowsWithTeamNames(segmentsQ[si]);
+              // Same headers as main qualifying (incl. empty R2 Time/Speed as —).
+              appendTable(lbl, { headers: qBase.headers, rows: segRows }, qExtraClass, null, false);
             }
           }
         }
@@ -1572,8 +1578,18 @@
       }
       appendTable(t('table.last_chance'),     d.tables && d.tables.last_chance, null, null, false);
       var dnqTable = d.tables && d.tables.did_not_qualify;
-      if (dnqTable && Array.isArray(dnqTable.rows) && dnqTable.rows.length > 0) {
-        appendTable(t('table.did_not_qualify'), dnqTable, null, null, false);
+      // Prefer FTQ separator block in qualifying (has Time/Speed). Skip duplicate DNQ table.
+      if (dnqTable && Array.isArray(dnqTable.rows) && dnqTable.rows.length > 0 && !qualHasFtqBlock) {
+        // Hide Pts/Notes in UI only; JSON keeps them for standings (e.g. championship penalties).
+        // Pull Time/Speed from qualifying when DNQ JSON lacks them.
+        var dnqForDisplay = G.enrichDidNotQualifyWithQualTiming(dnqTable, d.tables && d.tables.qualifying);
+        appendTable(
+          t('table.did_not_qualify'),
+          dropColumnsByHeader(dnqForDisplay, ['Pts', 'Points', 'Note', 'Notes']),
+          null,
+          null,
+          false
+        );
       }
       }
     }

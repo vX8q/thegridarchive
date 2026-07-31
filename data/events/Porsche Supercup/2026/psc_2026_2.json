@@ -9,8 +9,8 @@
   "location": "Montmelo, Catalonia, Spain",
   "laps": "16",
   "distance": "46.3 mi (74.5 km)",
-  "event_preview": "Circuit de Barcelona-Catalunya is a 4.657 km (2.894 mi) permanent road course in Montmeló, north of Barcelona. The second round of the 2026 Porsche Mobil 1 Supercup takes place June 12-14, supporting the Spanish Grand Prix. Jacques Villeneuve, the 1997 Formula One World Champion, makes his debut as a VIP guest driver at this round. The season marks the first to use the new Porsche 911 Cup based on the 992.2 generation, alongside the 25th consecutive season of Michelin as tyre supply partner.\n\nTen teams share the 28 permanent entries, with Porsche Juniors Flynt Schuring and Marcus Amand among the standout names to watch, alongside eleven Supercup newcomers making their series debuts this season. Following the season-opening race in Monaco, the field heads to Barcelona's faster, more flowing layout — a circuit that traditionally rewards strong aerodynamic efficiency and tends to produce closer racing than the tight streets of Monte Carlo.",
-  "event_preview_ru": "Circuit de Barcelona-Catalunya — постоянная трасса длиной 4,657 км (2,894 мили) в Montmeló к северу от Barcelona. Второй этап Porsche Mobil 1 Supercup 2026 пройдёт с 12 по 14 июня в поддержку Гран-при Spain Formula One. Jacques Villeneuve, чемпион мира Formula One 1997 года, дебютирует как VIP-guest driver на этом этапе. Сезон — первый с новым Porsche 911 Cup на базе 992.2 и 25-й подряд сезон Michelin в качестве поставщика шин.\n\nДесять команд делят 28 постоянных заявок; среди имён, за которыми стоит следить, — Porsche Juniors Flynt Schuring и Marcus Amand, а также одиннадцать новичков Supercup, дебютирующих в серии в этом сезоне. После стартовой гонки в Monaco поле переезжает на более быструю и плавную конфигурацию Barcelona — трассу, которая традиционно награждает сильную аэродинамическую эффективность и чаще даёт более плотную борьбу, чем тесные улицы Monte Carlo.",
+  "event_preview": "Circuit de Barcelona-Catalunya is a 4.657 km (2.894 mi) permanent road course in Montmelo, north of Barcelona. The second round of the 2026 Porsche Mobil 1 Supercup takes place June 12-14, supporting the Spanish Grand Prix. Jacques Villeneuve, the 1997 Formula One World Champion, makes his debut as a VIP guest driver at this round. The season marks the first to use the new Porsche 911 Cup based on the 992.2 generation, alongside the 25th consecutive season of Michelin as tyre supply partner.\n\nTen teams share the 28 permanent entries, with Porsche Juniors Flynt Schuring and Marcus Amand among the standout names to watch, alongside eleven Supercup newcomers making their series debuts this season. Following the season-opening race in Monaco, the field heads to Barcelona's faster, more flowing layout — a circuit that traditionally rewards strong aerodynamic efficiency and tends to produce closer racing than the tight streets of Monte Carlo.\n\nThe Porsche Supercup qualifying lap record at Circuit de Barcelona-Catalunya belongs to Flynt Schuring, who set a 1:43.784 during qualifying for the 2025 race.",
+  "event_preview_ru": "Circuit de Barcelona-Catalunya — постоянная трасса длиной 4,657 км (2,894 мили) в Montmelo к северу от Barcelona. Второй этап Porsche Mobil 1 Supercup 2026 пройдёт с 12 по 14 июня в поддержку Гран-при Spain Formula One. Jacques Villeneuve, чемпион мира Formula One 1997 года, дебютирует как VIP-guest driver на этом этапе. Сезон — первый с новым Porsche 911 Cup на базе 992.2 и 25-й подряд сезон Michelin в качестве поставщика шин.\n\nДесять команд делят 28 постоянных заявок; среди имён, за которыми стоит следить, — Porsche Juniors Flynt Schuring и Marcus Amand, а также одиннадцать новичков Supercup, дебютирующих в серии в этом сезоне. После стартовой гонки в Monaco поле переезжает на более быструю и плавную конфигурацию Barcelona — трассу, которая традиционно награждает сильную аэродинамическую эффективность и чаще даёт более плотную борьбу, чем тесные улицы Monte Carlo.\n\nКвалификационный рекорд Porsche Supercup на Circuit de Barcelona-Catalunya принадлежит Flynt Schuring — 1:43.784 в квалификации гонки 2025 года.",
   "entry_list": [
     {
       "number": "1",
@@ -100,20 +100,20 @@
     {
       "number": "15",
       "driver": "Theo Oeverhaus",
-      "team": "Martinet by Alméras",
+      "team": "Martinet by Almeras",
       "driver_slug": "theo-oeverhaus"
     },
     {
       "number": "16",
       "driver": "Paul Cauhaupe",
-      "team": "Martinet by Alméras",
+      "team": "Martinet by Almeras",
       "status": "R",
       "driver_slug": "paul-cauhaupe"
     },
     {
       "number": "17",
       "driver": "Jaap van Lagen",
-      "team": "Martinet by Alméras",
+      "team": "Martinet by Almeras",
       "driver_slug": "jaap-van-lagen"
     },
     {
@@ -240,7 +240,7 @@
           "3",
           "17",
           "Jaap van Lagen",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:43.064",
           "+0.633"
         ],
@@ -248,7 +248,7 @@
           "4",
           "16",
           "Paul Cauhaupe",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:43.102",
           "+0.671"
         ],
@@ -264,7 +264,7 @@
           "6",
           "15",
           "Theo Oeverhaus",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:43.206",
           "+0.775"
         ],
@@ -482,7 +482,7 @@
           "2",
           "16",
           "Paul Cauhaupe",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:42.671",
           "+0.034"
         ],
@@ -490,7 +490,7 @@
           "3",
           "15",
           "Theo Oeverhaus",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:42.700",
           "+0.063"
         ],
@@ -570,7 +570,7 @@
           "13",
           "17",
           "Jaap van Lagen",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "1:43.089",
           "+0.452"
         ],
@@ -734,7 +734,7 @@
           "2",
           "16",
           "Paul Cauhaupe",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "16",
           "1:44.870",
           "20"
@@ -743,7 +743,7 @@
           "3",
           "15",
           "Theo Oeverhaus",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "16",
           "1:44.950",
           "17"
@@ -842,7 +842,7 @@
           "14",
           "17",
           "Jaap van Lagen",
-          "Martinet by Alméras",
+          "Martinet by Almeras",
           "16",
           "1:45.336",
           "4"

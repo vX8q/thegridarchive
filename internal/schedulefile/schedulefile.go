@@ -1,17 +1,9 @@
 package schedulefile
 
 import (
-	"database/sql"
 	"encoding/json"
 	"strings"
 )
-
-func nullFloat64(v sql.NullFloat64) float64 {
-	if v.Valid {
-		return v.Float64
-	}
-	return 0
-}
 
 // LoadEvents loads events from data/schedules/{seriesID}.json
 func LoadEvents(dataDir string, seriesID string) ([]EventJSON, error) {
@@ -238,8 +230,8 @@ func LoadEventDetailAtID(dataDir, fileID string) (*EventDetailJSON, error) {
 	return &out, nil
 }
 
-// BuildDriverStatsFromEvents keeps legacy API compatibility and always uses the JSON path.
-// For server endpoints with DB, call BuildDriverStatsFromDB with an open *sql.DB.
+// BuildDriverStatsFromEvents builds driver stats from event JSON (data/events).
+// HTTP /api/series/{id}/stats always uses this path — JSON is the source of truth.
 func BuildDriverStatsFromEvents(dataDir string, seriesID string, season string) (*DriverStatsData, error) {
 	return buildDriverStatsFromJSON(dataDir, seriesID, season)
 }

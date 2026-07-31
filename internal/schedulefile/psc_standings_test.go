@@ -58,13 +58,14 @@ func TestBuildStandingsFromEvents_PSC_ZeroPointsByBestFinish(t *testing.T) {
 		}
 		zeroFinishers = append(zeroFinishers, r.Driver)
 	}
+	// Greif scored P15 (2 pts) at round 5; remaining zero-point drivers
+	// ordered by best race finish (then tie-breakers in BuildStandingsFromEvents).
 	wantOrder := []string{
-		"Jonas Greif",
 		"Samer Shahin",
-		"Luciano Martinez",
 		"Juan Pablo Vega Dieppa",
-		"Jorge Ramirez",
+		"Luciano Martinez",
 		"Kai Pfister",
+		"Jorge Ramirez",
 	}
 	if len(zeroFinishers) != len(wantOrder) {
 		t.Fatalf("zero-point drivers: got %d, want %d (%v)", len(zeroFinishers), len(wantOrder), zeroFinishers)

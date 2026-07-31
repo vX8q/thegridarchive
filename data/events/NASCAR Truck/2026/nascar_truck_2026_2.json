@@ -10,8 +10,8 @@
   "stage1_laps": "41",
   "stage2_laps": "41",
   "stage3_laps": "53",
-  "event_preview": "The track is a quad-oval intermediate speedway. In its current form, it is measured at 1.54 miles (2.48 km), with 28 degrees of banking in the turns and five degrees of banking in the straightaways. The racing surface width varies, with a recorded 52 feet on the frontstretch, 42 feet on the backstretch, and 40 feet in the turns.",
-  "event_preview_ru": "Трасса представляет собой промежуточный квад-овал. В текущей конфигурации её длина составляет 1,54 мили (2,48 км), уклон в поворотах — 28 градусов, на прямых — пять градусов. Ширина покрытия варьируется: 52 фута на главной прямой, 42 фута на задней прямой и 40 футов в поворотах.",
+  "event_preview": "The track is a quad-oval intermediate speedway. In its current form, it is measured at 1.54 miles (2.48 km), with 28 degrees of banking in the turns and five degrees of banking in the straightaways. The racing surface width varies, with a recorded 52 feet on the frontstretch, 42 feet on the backstretch, and 40 feet in the turns.\n\nThe all-time Craftsman Truck Series qualifying record at EchoPark Speedway (Atlanta) belongs to Rick Crawford, who turned a 30.339-second lap (182.735 mph) on 18 March 2005 — set on the pre-2022 track configuration.",
+  "event_preview_ru": "Трасса представляет собой промежуточный квад-овал. В текущей конфигурации её длина составляет 1,54 мили (2,48 км), уклон в поворотах — 28 градусов, на прямых — пять градусов. Ширина покрытия варьируется: 52 фута на главной прямой, 42 фута на задней прямой и 40 футов в поворотах.\n\nАбсолютный квалификационный рекорд Craftsman Truck Series на EchoPark Speedway (Atlanta) принадлежит Rick Crawford — 30,339 секунды (182,735 mph) 18 марта 2005 года; установлен на конфигурации трассы до реконструкции 2022 года.",
   "youtube_id": "l3w3hTyiNuo",
   "entry_list": [
     {
@@ -194,7 +194,7 @@
     },
     {
       "number": "44",
-      "driver": "Andrés Pérez de Lara",
+      "driver": "Andres Perez de Lara",
       "team": "Niece Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Wally Rogers",
@@ -413,7 +413,7 @@
         [
           "9",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "32.242",
@@ -917,7 +917,7 @@
           "15",
           "9",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "125",
@@ -1268,7 +1268,7 @@
         [
           "7",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "4"
@@ -1368,7 +1368,7 @@
         [
           "8",
           "44",
-          "Andrés Pérez de Lara",
+          "Andres Perez de Lara",
           "Niece Motorsports",
           "Chevrolet",
           "3"
@@ -1459,5 +1459,13 @@
         ]
       ]
     }
+  },
+  "race_statistics": {
+    "Average speed": "131.027 mph (210.868 km/h)",
+    "Cautions / Laps": "3 for 18",
+    "Lead changes": "14 among 5 different drivers",
+    "Red flags": "0",
+    "Time of race": "1 hour, 28 minutes and 9 seconds",
+    "Margin of victory": "0.114 sec"
   }
 }

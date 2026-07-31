@@ -9,8 +9,8 @@
   "location": "Elko New Market, Minnesota, USA",
   "laps": "250",
   "distance": "93.750 mi (150.878 km)",
-  "event_preview": "Elko Speedway is a 0.375-mile (0.604 km) asphalt oval in Elko New Market, Minnesota — the shortest track on the ARCA Menards Series calendar. The Shore Lunch 250 presented by Dutch Boy is a 250-lap, 93.750-mile race with pit stop breaks near the conclusion of laps 75 and 175, using a two-lap, single-car qualifying format.\n\nMax Reaves arrives as the defending winner and the hottest driver in the series, having strung together consecutive victories at Daytona, Kansas, Michigan and Pocono for Joe Gibbs Racing, plus a recent triumph at Berlin Raceway. Jake Bollman leads the championship standings, with Thomas Annunziata — who has multiple oval runner-up finishes already this season — in pursuit. Taylor Reimer and Isabella Robusto, both regulars with strong recent form, round out the contenders to watch on the tight short track.",
-  "event_preview_ru": "Elko Speedway — асфальтовый овал длиной 0,375 мили (0,604 км) в Elko New Market, Minnesota; самая короткая трасса календаря ARCA Menards Series. Shore Lunch 250 presented by Dutch Boy — гонка на 250 кругов и 93,750 мили с пит-стопами около завершения 75-го и 175-го кругов; квалификация — два круга, по одной машине.\n\nMax Reaves приезжает как прошлогодний победитель и самый горячий пилот серии: подряд победы в Daytona, Kansas, Michigan и Pocono за Joe Gibbs Racing и недавний триумф на Berlin Raceway. Jake Bollman лидирует в зачёте чемпионата, Thomas Annunziata — с несколькими вторыми местами на овалах в этом сезоне — идёт вслед. Taylor Reimer и Isabella Robusto, обе с сильной недавней формой, — ещё из тех, за кем стоит следить на этом тесном шорт-треке.",
+  "event_preview": "Elko Speedway is a 0.375-mile (0.604 km) asphalt oval in Elko New Market, Minnesota — the shortest track on the ARCA Menards Series calendar. The Shore Lunch 250 presented by Dutch Boy is a 250-lap, 93.750-mile race with pit stop breaks near the conclusion of laps 75 and 175, using a two-lap, single-car qualifying format.\n\nMax Reaves arrives as the defending winner and the hottest driver in the series, having strung together consecutive victories at Daytona, Kansas, Michigan and Pocono for Joe Gibbs Racing, plus a recent triumph at Berlin Raceway. Jake Bollman leads the championship standings, with Thomas Annunziata — who has multiple oval runner-up finishes already this season — in pursuit. Taylor Reimer and Isabella Robusto, both regulars with strong recent form, round out the contenders to watch on the tight short track.\n\nThe all-time ARCA Menards Series qualifying record at Elko belongs to Justin Haley, who set a 14.282-second lap (94.525 mph) in 2014. The series race record average speed is 74.090 mph, set by Brennan Poole in a 200-lap race in 2012.",
+  "event_preview_ru": "Elko Speedway — асфальтовый овал длиной 0,375 мили (0,604 км) в Elko New Market, Minnesota; самая короткая трасса календаря ARCA Menards Series. Shore Lunch 250 presented by Dutch Boy — гонка на 250 кругов и 93,750 мили с пит-стопами около завершения 75-го и 175-го кругов; квалификация — два круга, по одной машине.\n\nMax Reaves приезжает как прошлогодний победитель и самый горячий пилот серии: подряд победы в Daytona, Kansas, Michigan и Pocono за Joe Gibbs Racing и недавний триумф на Berlin Raceway. Jake Bollman лидирует в зачёте чемпионата, Thomas Annunziata — с несколькими вторыми местами на овалах в этом сезоне — идёт вслед. Taylor Reimer и Isabella Robusto, обе с сильной недавней формой, — ещё из тех, за кем стоит следить на этом тесном шорт-треке.\n\nАбсолютный рекорд квалификации ARCA Menards Series на Elko принадлежит Justin Haley — 14,282 секунды (94,525 mph) в 2014 году. Рекорд средней скорости гонки серии — 74,090 mph, установлен Brennan Poole на дистанции 200 кругов в 2012 году.",
   "youtube_id": "wPhj2nHtXOM",
   "entry_list": [
     {
@@ -1001,10 +1001,11 @@
     }
   },
   "race_statistics": {
+    "Average speed": "65.995 mph (106.209 km/h)",
+    "Cautions / Laps": "5 for 40",
     "Lead changes": "4 among 3 different drivers",
-    "Cautions / Laps": "5 for 40 laps",
     "Red flags": "0",
     "Time of race": "1 hour, 25 minutes and 1 second",
-    "Average speed": "65.995 miles per hour (106.209 km/h)"
+    "Margin of victory": "5.432 sec"
   }
 }

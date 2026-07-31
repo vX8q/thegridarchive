@@ -43,10 +43,7 @@ func standingsRaceColumnEventIDs(dataDir, seriesID, season string, events []Even
 		if idx >= len(ids) {
 			break
 		}
-		if ev.Season != season || isExhibitionEvent(seriesID, ev.ID) {
-			continue
-		}
-		if strings.EqualFold(seriesID, "F1") && isF1PreSeasonEvent(ev.ID) {
+		if ev.Season != season || skipChampionshipMetricsEvent(seriesID, ev.ID) {
 			continue
 		}
 		columns := 1

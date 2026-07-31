@@ -10,8 +10,8 @@
   "stage1_laps": "65",
   "stage2_laps": "65",
   "stage3_laps": "70",
-  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.",
-  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.",
+  "event_preview": "Daytona's tri-oval is 2.500 mi (4.023 km) long with 31° banking in the turns and 18° banking at the start/finish line. The front straight is 3,800 ft (1,200 m) long and the back straight (or \"superstretch\") is 3,000 ft (910 m) long. The tri-oval shape was revolutionary at the time as it greatly improved sight lines for fans. It is one of the three tracks on the NASCAR Cup Series circuit that are considered \"drafting tracks\", the others being Talladega Superspeedway and Atlanta Motor Speedway.\n\nThe all-time Cup Series qualifying record at Daytona belongs to Bill Elliott, who turned a 42.783-second lap (210.364 mph) in 1987. The Daytona 500 race record average speed is 177.602 mph, set by Buddy Baker in 1980 (2:48:55).",
+  "event_preview_ru": "Три-овал Daytona длиной 2,500 мили (4,023 км) с уклоном 31° в поворотах и 18° на линии старта/финиша. Передняя прямая — 3 800 футов (1 200 м), задняя прямая (или «superstretch») — 3 000 футов (910 м). Форма три-овала тогда была революционной и значительно улучшила обзор для зрителей. Это одна из трёх трасс NASCAR Cup Series, считающихся «трассами драфтинга»; две другие — Talladega Superspeedway и Atlanta Motor Speedway.\n\nАбсолютный рекорд квалификации Cup Series на Daytona принадлежит Bill Elliott — 42,783 секунды (210,364 mph) в 1987 году. Рекорд средней скорости Daytona 500 — 177,602 mph, установлен Buddy Baker в 1980 году (2:48:55).",
   "youtube_id": "fy8eGJ7qzMc",
   "entry_list": [
     {
@@ -64,7 +64,7 @@
     },
     {
       "number": "7",
-      "driver": "Daniel Suárez",
+      "driver": "Daniel Suarez",
       "team": "Spire Motorsports",
       "manufacturer": "Chevrolet",
       "crew_chief": "Ryan Sparks",
@@ -477,13 +477,15 @@
         ]
       ]
     },
-    "did_not_qualify": {
+            "did_not_qualify": {
       "headers": [
         "Pos",
         "No.",
         "Driver",
         "Team",
         "Manufacturer",
+        "Time",
+        "Speed",
         "Notes"
       ],
       "rows": [
@@ -493,6 +495,8 @@
           "Chandler Smith (i)",
           "Front Row Motorsports",
           "Ford",
+          "49.758",
+          "—",
           ""
         ],
         [
@@ -501,6 +505,8 @@
           "Corey LaJoie",
           "RFK Racing",
           "Ford",
+          "49.205",
+          "—",
           ""
         ],
         [
@@ -509,6 +515,8 @@
           "J. J. Yeley (i)",
           "NY Racing Team",
           "Chevrolet",
+          "50.482",
+          "—",
           ""
         ],
         [
@@ -517,6 +525,8 @@
           "Anthony Alfredo (i)",
           "Beard Motorsports",
           "Chevrolet",
+          "49.485",
+          "—",
           "Disallowed after post-race inspection"
         ]
       ]
@@ -597,7 +607,7 @@
           "7",
           "20",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "63",
@@ -1333,7 +1343,7 @@
         [
           "5",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "48.494",
@@ -1827,7 +1837,7 @@
         [
           "43",
           "44",
-          "JJ Yeley",
+          "J. J. Yeley",
           "NY Racing Team",
           "Chevrolet",
           "50.126",
@@ -2078,7 +2088,7 @@
         [
           "18",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "46.389",
@@ -2693,7 +2703,7 @@
         [
           "39",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "49.552",
@@ -2904,7 +2914,7 @@
           "13",
           "15",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "200",
@@ -3266,7 +3276,7 @@
         [
           "5",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "6"
@@ -3398,7 +3408,7 @@
         [
           "10",
           "7",
-          "Daniel Suárez",
+          "Daniel Suarez",
           "Spire Motorsports",
           "Chevrolet",
           "1"
@@ -3407,10 +3417,11 @@
     }
   },
   "race_statistics": {
-    "Lead changes": "66 among 26 different drivers",
+    "Average speed": "147.107 mph (236.746 km/h)",
     "Cautions / Laps": "5 for 32",
+    "Lead changes": "66 among 26 different drivers",
     "Red flags": "0",
     "Time of race": "3 hours, 23 minutes and 56 seconds",
-    "Average speed": "147.107 miles per hour (236.746 km/h)"
+    "Margin of victory": "0.308 sec"
   }
 }

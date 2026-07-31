@@ -14,14 +14,15 @@
   "stage2_laps": "25",
   "stage3_laps": "34",
   "race_statistics": {
+    "Average speed": "76.305 mph (122.801 km/h)",
+    "Cautions / Laps": "4 for 11",
     "Lead changes": "8 among 6 different drivers",
-    "Cautions / Laps": "4 for 11 laps",
     "Red flags": "0",
     "Time of race": "2 hours, 3 minutes and 37 seconds",
-    "Average speed": "76.305 miles per hour (122.801 km/h)"
+    "Margin of victory": "1.324 sec"
   },
-  "event_preview": "Sonoma Raceway is a 1.99-mile (3.20 km) road course on the landform known as Sears Point in the southern Sonoma Mountains, California, featuring 12 turns and 160 feet (49 m) of total elevation change. The Pit Boss/FoodMaxx 250 is the 19th race of the 2026 NASCAR O'Reilly Auto Parts Series season, contested over 79 laps on Saturday, June 27, marking the series' second consecutive road-course weekend after San Diego.\n\nAustin Hill returns fresh off victory in the inaugural United Rentals Driven to Serve 250 at Naval Base Coronado the previous weekend, driving the No. 21 Richard Childress Racing Chevrolet. Connor Zilisch is the defending winner at Sonoma and has led 369 laps across 10 career O'Reilly Series road-course starts — a 50.96 percent lead ratio. Justin Allgaier carries a strong 6.3 average finish at Sonoma across three series starts, while Shane van Gisbergen — the sport's most accomplished current road racer — steps down from Cup Series competition to join the field, along with several other road-course specialists. Rajah Caruth makes his series debut at the circuit.",
-  "event_preview_ru": "Sonoma Raceway — роуд-курс длиной 1,99 мили (3,20 км) на возвышенности Sears Point в южных горах Sonoma в Калифорнии: 12 поворотов и 160 футов (49 м) суммарного перепада высот. Pit Boss/FoodMaxx 250 — 19-й этап сезона NASCAR O'Reilly Auto Parts Series 2026, гонка на 79 кругов в субботу, 27 июня; второй роуд-курс подряд после San Diego.\n\nAustin Hill приезжает после победы на дебютном United Rentals Driven to Serve 250 на Naval Base Coronado на прошлых выходных за рулём Chevrolet No. 21 Richard Childress Racing. Connor Zilisch — действующий победитель в Sonoma; за 10 карьерных стартов серии на роуд-курсах он провёл в лидерстве 369 кругов — 50,96% от всех кругов. Justin Allgaier имеет средний финиш 6,3 в Sonoma за три старта в серии; Shane van Gisbergen — самый титулованный современный роуд-рейсер — спускается из Cup Series в состав поля вместе с другими специалистами роуд-курсов. Rajah Caruth дебютирует в серии на этой трассе.",
+  "event_preview": "Sonoma Raceway is a 1.99-mile (3.20 km) road course on the landform known as Sears Point in the southern Sonoma Mountains, California, featuring 12 turns and 160 feet (49 m) of total elevation change. The Pit Boss/FoodMaxx 250 is the 19th race of the 2026 NASCAR O'Reilly Auto Parts Series season, contested over 79 laps on Saturday, June 27, marking the series' second consecutive road-course weekend after San Diego.\n\nAustin Hill returns fresh off victory in the inaugural United Rentals Driven to Serve 250 at Naval Base Coronado the previous weekend, driving the No. 21 Richard Childress Racing Chevrolet. Connor Zilisch is the defending winner at Sonoma and has led 369 laps across 10 career O'Reilly Series road-course starts — a 50.96 percent lead ratio. Justin Allgaier carries a strong 6.3 average finish at Sonoma across three series starts, while Shane van Gisbergen — the sport's most accomplished current road racer — steps down from Cup Series competition to join the field, along with several other road-course specialists. Rajah Caruth makes his series debut at the circuit.\n\nThe O'Reilly/Xfinity Series qualifying record at Sonoma belongs to Shane van Gisbergen, who set a 1:14.677 (95.933 mph) in 2024. The series race record average speed is 81.176 mph, set by Connor Zilisch in 2025.",
+  "event_preview_ru": "Sonoma Raceway — роуд-курс длиной 1,99 мили (3,20 км) на возвышенности Sears Point в южных горах Sonoma в Калифорнии: 12 поворотов и 160 футов (49 м) суммарного перепада высот. Pit Boss/FoodMaxx 250 — 19-й этап сезона NASCAR O'Reilly Auto Parts Series 2026, гонка на 79 кругов в субботу, 27 июня; второй роуд-курс подряд после San Diego.\n\nAustin Hill приезжает после победы на дебютном United Rentals Driven to Serve 250 на Naval Base Coronado на прошлых выходных за рулём Chevrolet No. 21 Richard Childress Racing. Connor Zilisch — действующий победитель в Sonoma; за 10 карьерных стартов серии на роуд-курсах он провёл в лидерстве 369 кругов — 50,96% от всех кругов. Justin Allgaier имеет средний финиш 6,3 в Sonoma за три старта в серии; Shane van Gisbergen — самый титулованный современный роуд-рейсер — спускается из Cup Series в состав поля вместе с другими специалистами роуд-курсов. Rajah Caruth дебютирует в серии на этой трассе.\n\nРекорд квалификации O'Reilly/Xfinity Series на Sonoma принадлежит Shane van Gisbergen — 1:14.677 (95,933 mph) в 2024 году. Рекорд средней скорости гонки серии — 81,176 mph, установлен Connor Zilisch в 2025 году.",
   "entry_list": [
     {
       "number": "00",
@@ -33,7 +34,7 @@
     },
     {
       "number": "0",
-      "driver": "Alex Labbé",
+      "driver": "Alex Labbe",
       "team": "SS-Green Light Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Bryan Berry",
@@ -455,7 +456,7 @@
         [
           "9",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "77.364",
@@ -1065,7 +1066,7 @@
         [
           "24",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "1:16.898",
@@ -1442,7 +1443,7 @@
           "19",
           "24",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "79",
@@ -1766,7 +1767,7 @@
         [
           "10",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "1"
@@ -1851,7 +1852,7 @@
         [
           "9",
           "0",
-          "Alex Labbé",
+          "Alex Labbe",
           "SS-Green Light Racing",
           "Chevrolet",
           "2"

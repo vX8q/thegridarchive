@@ -10,8 +10,8 @@
   "location": "Marne, Michigan, USA",
   "laps": "200",
   "distance": "87.5 mi (140.818 km)",
-  "event_preview": "Berlin Raceway is a 0.4375-mile (0.704 km) D-shaped asphalt oval in Marne, Michigan. The Herr's Snacks 200 is the 200-lap race held on the ARCA Menards Series calendar. Pit stop breaks come around the second competition caution, with the race typically run under multiple cautions on the tight short track.\n\nGio Ruggiero has been the dominant force in the series through the middle portion of 2026, winning at Daytona, Kansas, and consecutive races at Michigan and Pocono in the weeks leading into Berlin. Max Reaves enters seeking to build on his recent form after an East Series win at Nashville Fairgrounds Speedway, with his best national-series finish so far in 2026 an eighth at Watkins Glen, where he started from pole. Thomas Annunziata, the 2025 Lime Rock Park winner, looks to bounce back on an oval after a season so far defined more by road-course success. Jake Bollman leads the championship standings heading into the race.",
-  "event_preview_ru": "Berlin Raceway — D-образный асфальтовый овал длиной 0,4375 мили (0,704 км) в Marne, Michigan. Herr's Snacks 200 — гонка на 200 кругов в календаре ARCA Menards Series. Пит-стопы запланированы около второго периода жёлтых флагов, а гонка на этом тесном шорт-треке обычно проходит при множественных периодах жёлтых флагов.\n\nGio Ruggiero был доминирующей силой серии в середине 2026 года, побеждая в Daytona, Kansas и подряд в Michigan и Pocono в недели перед Berlin. Max Reaves приезжает, стремясь развить недавнюю форму после победы в East Series на Nashville Fairgrounds Speedway; его лучший финиш в национальной серии в 2026 году — восьмое место в Watkins Glen с поула. Thomas Annunziata, победитель Lime Rock Park 2025 года, стремится вернуться к силе на овале после сезона, в котором больше успехов на шоссе. Jake Bollman лидирует в зачёте чемпионата перед этой гонкой.",
+  "event_preview": "Berlin Raceway is a 0.4375-mile (0.704 km) D-shaped asphalt oval in Marne, Michigan. The Herr's Snacks 200 is the 200-lap race held on the ARCA Menards Series calendar. Pit stop breaks come around the second competition caution, with the race typically run under multiple cautions on the tight short track.\n\nGio Ruggiero has been the dominant force in the series through the middle portion of 2026, winning at Daytona, Kansas, and consecutive races at Michigan and Pocono in the weeks leading into Berlin. Max Reaves enters seeking to build on his recent form after an East Series win at Nashville Fairgrounds Speedway, with his best national-series finish so far in 2026 an eighth at Watkins Glen, where he started from pole. Thomas Annunziata, the 2025 Lime Rock Park winner, looks to bounce back on an oval after a season so far defined more by road-course success. Jake Bollman leads the championship standings heading into the race.\n\nThe all-time ARCA Menards Series qualifying record at Berlin Raceway belongs to Brian Campbell, who set a 15.014-second lap (105.018 mph) in 2010. The series race record average speed for a 200-lap event is 85.272 mph, set by Mett Merrell in 2011 (1:10:21).",
+  "event_preview_ru": "Berlin Raceway — D-образный асфальтовый овал длиной 0,4375 мили (0,704 км) в Marne, Michigan. Herr's Snacks 200 — гонка на 200 кругов в календаре ARCA Menards Series. Пит-стопы запланированы около второго периода жёлтых флагов, а гонка на этом тесном шорт-треке обычно проходит при множественных периодах жёлтых флагов.\n\nGio Ruggiero был доминирующей силой серии в середине 2026 года, побеждая в Daytona, Kansas и подряд в Michigan и Pocono в недели перед Berlin. Max Reaves приезжает, стремясь развить недавнюю форму после победы в East Series на Nashville Fairgrounds Speedway; его лучший финиш в национальной серии в 2026 году — восьмое место в Watkins Glen с поула. Thomas Annunziata, победитель Lime Rock Park 2025 года, стремится вернуться к силе на овале после сезона, в котором больше успехов на шоссе. Jake Bollman лидирует в зачёте чемпионата перед этой гонкой.\n\nАбсолютный рекорд квалификации ARCA Menards Series на Berlin Raceway принадлежит Brian Campbell — 15,014 секунды (105,018 mph) в 2010 году. Рекорд средней скорости гонки серии на дистанции 200 кругов — 85,272 mph, установлен Mett Merrell в 2011 году (1:10:21).",
   "youtube_id": "fjW-ikYd1UQ",
   "entry_list": [
     {
@@ -1050,10 +1050,11 @@
     }
   },
   "race_statistics": {
+    "Average speed": "63.542 mph (102.261 km/h)",
+    "Cautions / Laps": "6 for 42",
     "Lead changes": "3 among 2 different drivers",
-    "Cautions / Laps": "6 for 42 laps",
     "Red flags": "0",
     "Time of race": "1 hour, 22 minutes and 4 seconds",
-    "Average speed": "63.542 miles per hour (102.261 km/h)"
+    "Margin of victory": "1.057 sec"
   }
 }

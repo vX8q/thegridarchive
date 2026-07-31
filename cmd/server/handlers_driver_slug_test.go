@@ -23,8 +23,12 @@ func TestProfileLegalName(t *testing.T) {
 		t.Fatal("expected legal name")
 	}
 	short := profileLegalName("lando-norris", driverProfile{FullName: "Lando Norris"})
-	if short != "" {
-		t.Fatalf("two-part name should not be legal-only, got %q", short)
+	if short != "Lando Norris" {
+		t.Fatalf("two-part name should still be shown as full name, got %q", short)
+	}
+	chi := profileLegalName("zhenrui-chi", driverProfile{FullName: "Zhenrui Chi"})
+	if chi != "Zhenrui Chi" {
+		t.Fatalf("chi full name = %q, want Zhenrui Chi", chi)
 	}
 	got := profileLegalName("nico-hulkenberg", driverProfile{FullName: "Nicolas Hülkenberg"})
 	if got != "Nicolas Hülkenberg" {
@@ -33,6 +37,13 @@ func TestProfileLegalName(t *testing.T) {
 	display := profileDisplayName("nico-hulkenberg", driverProfile{FullName: "Nicolas Hülkenberg"})
 	if display != "Nico Hülkenberg" {
 		t.Fatalf("display = %q, want Nico Hülkenberg", display)
+	}
+	cleetus := profileDisplayName("cleetus-mcfarland", driverProfile{FullName: "Garrett Mitchell"})
+	if cleetus != "Cleetus McFarland" {
+		t.Fatalf("cleetus display = %q, want Cleetus McFarland", cleetus)
+	}
+	if legal := profileLegalName("cleetus-mcfarland", driverProfile{FullName: "Garrett Mitchell"}); legal != "Garrett Mitchell" {
+		t.Fatalf("cleetus legal = %q, want Garrett Mitchell", legal)
 	}
 }
 

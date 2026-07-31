@@ -53,7 +53,6 @@
   var syncStandingsScrollBars = P.syncStandingsScrollBars;
   var adjustEventPanelPadding = P.adjustEventPanelPadding;
   var adjustDetailPanelPadding = P.adjustDetailPanelPadding;
-  var renderSupercarsStaticSpecs = P.renderSupercarsStaticSpecs;
   var translateStaticUI = P.translateStaticUI;
   var logger = P.logger;
   var state = P.state;
@@ -236,8 +235,10 @@ function renderDetail(seriesId, subPath) {
   var state = window.TGA._state || {};
   var categoryBySeriesId = window.TGA.categoryBySeriesId || {};
   var specKeySkip = window.TGA.specKeySkip || {};
-  // IMSA: URL may be /specs; in app the tab is named "classes"
-  if ((seriesId || '').toLowerCase() === 'imsa' && subPath === 'specs') subPath = 'classes';
+  // Classes-tab series: URL may be /specs; tab path is /classes
+  if (['imsa', 'wec', 'elms', 'gtwce_end', 'gtwce_sprint', 'super_gt', 'dtm'].indexOf((seriesId || '').toLowerCase()) >= 0 && subPath === 'specs') {
+    subPath = 'classes';
+  }
   var detailTitle = document.getElementById('detail-title');
   var detailMeta = document.getElementById('detail-meta');
   var detailBreadcrumb = document.getElementById('detail-breadcrumb');
@@ -306,14 +307,19 @@ function renderDetail(seriesId, subPath) {
   var sameSeries = (state.loadedSeriesId === seriesId);
   var scheduleEmptyNeedReload = (subPath === '' && scheduleBody && !scheduleBody.querySelector('tr'));
   if (sameSeries && !scheduleEmptyNeedReload && subPath !== 'stats') {
-    var isImsaSeriesSame = (seriesId || '').toLowerCase() === 'imsa';
-    var specsPathSame = isImsaSeriesSame ? 'classes' : 'specs';
+    var skSame = (seriesId || '').toLowerCase();
+    var isClassesSeriesSame = ['imsa', 'wec', 'elms', 'gtwce_end', 'gtwce_sprint', 'super_gt', 'dtm'].indexOf(skSame) >= 0;
+    if (isClassesSeriesSame && subPath === 'specs') subPath = 'classes';
+    var specsPathSame = isClassesSeriesSame ? 'classes' : 'specs';
     var navIdx = 0;
     if (subPath === 'standings') navIdx = 1;
     else if (subPath === 'teams') navIdx = 2;
     else if (subPath === specsPathSame) navIdx = 3;
-    else if (subPath === 'stats') navIdx = hasStats ? 4 : 0;
-    else if (subPath === 'history') navIdx = isF1 ? (hasStats ? 5 : 4) : 0;
+    else if (subPath === 'stats') {
+      navIdx = 4;
+    } else if (subPath === 'history') {
+      navIdx = isF1 ? (hasStats ? 5 : 4) : 0;
+    }
     seriesNav.querySelectorAll('.nav-link').forEach(function (link, i) {
       link.classList.toggle('active', i === navIdx);
     });
@@ -323,9 +329,8 @@ function renderDetail(seriesId, subPath) {
     specsPanel.classList.toggle('hidden', subPath !== specsPathSame);
     if (statsPanel) statsPanel.classList.toggle('hidden', subPath !== 'stats');
     if (historyPanel) historyPanel.classList.toggle('hidden', subPath !== 'history');
-    // IMSA: when switching tabs without full reload also need to
-    // show / hide Classes block vs regular Car Specs in time.
-    if (isImsaSeriesSame) {
+    // Classes-tab series: show static class definitions vs regular Car Specs.
+    if (isClassesSeriesSame) {
       var imsaClassesSame = document.getElementById('imsa-classes-static');
       var carSpecSame = document.getElementById('car-spec-wrap');
       if (subPath === 'classes') {
@@ -339,7 +344,7 @@ function renderDetail(seriesId, subPath) {
     }
     // For F1: when switching to Specs tab without full reload
     // apply static regulations (otherwise table stays empty).
-    if (!isImsaSeriesSame && subPath === 'specs' && typeof renderF1StaticSpecsIfNeeded === 'function') {
+    if (!isClassesSeriesSame && subPath === 'specs' && typeof renderF1StaticSpecsIfNeeded === 'function') {
       renderF1StaticSpecsIfNeeded();
     }
     if (subPath === 'history' && typeof renderF1HistoryFromStatic === 'function') {
@@ -375,13 +380,24 @@ function renderDetail(seriesId, subPath) {
       '<span class="breadcrumb-sep">/</span>' +
       '<span>' + esc('F1 ' + seasonYear) + '</span>';
   }
-  var isImsaSeries = (seriesId || '').toLowerCase() === 'imsa';
+  var seriesKeyForSpecsTab = (seriesId || '').toLowerCase();
+  var isClassesSeries = ['imsa', 'wec', 'elms', 'gtwce_end', 'gtwce_sprint', 'super_gt', 'dtm'].indexOf(seriesKeyForSpecsTab) >= 0;
+  if (isClassesSeries && subPath === 'specs') {
+    subPath = 'classes';
+    if (typeof history !== 'undefined' && history.replaceState) {
+      try { history.replaceState(null, '', (base || ('/series/' + seriesIdLower)) + '/classes'); } catch (e) { /* ignore */ }
+    }
+  }
   var navPages = [
     { path: '',          labelKey: 'nav.schedule'  },
     { path: 'standings', labelKey: 'nav.standings' },
-    { path: 'teams',     labelKey: 'nav.teams'     },
-    { path: isImsaSeries ? 'classes' : 'specs', labelKey: isImsaSeries ? 'nav.classes' : 'nav.carspecs'  }
+    { path: 'teams',     labelKey: 'nav.teams'     }
   ];
+  if (isClassesSeries) {
+    navPages.push({ path: 'classes', labelKey: 'nav.classes' });
+  } else {
+    navPages.push({ path: 'specs', labelKey: 'nav.carspecs' });
+  }
   if (hasStats) {
     navPages.push({ path: 'stats', labelKey: 'nav.stats' });
   }
@@ -393,9 +409,8 @@ function renderDetail(seriesId, subPath) {
     var active = (subPath === p.path) ? ' nav-link active' : ' nav-link';
     return '<a href="' + href + '" class="' + active.trim() + '">' + esc(t(p.labelKey)) + '</a>';
   }).join('');
-  // For IMSA: Classes tab uses static block with classes,
-  // hide heading inside panel.
-  if (isImsaSeries) {
+  // Classes tab: static class definitions; hide default Specs heading.
+  if (isClassesSeries) {
     var specsTitleElInit = document.querySelector('#specs-panel h3[data-i18n="section.h3.specs"]');
     if (specsTitleElInit) specsTitleElInit.classList.add('hidden');
     var imsaClassesBlock = document.getElementById('imsa-classes-static');
@@ -411,7 +426,7 @@ function renderDetail(seriesId, subPath) {
   if (schedulePanel) schedulePanel.classList.toggle('hidden', subPath !== '');
   if (standingsPanel) standingsPanel.classList.toggle('hidden', subPath !== 'standings');
   if (teamsPanel) teamsPanel.classList.toggle('hidden', subPath !== 'teams');
-  if (specsPanel) specsPanel.classList.toggle('hidden', subPath !== (isImsaSeries ? 'classes' : 'specs'));
+  if (specsPanel) specsPanel.classList.toggle('hidden', subPath !== (isClassesSeries ? 'classes' : 'specs'));
   if (statsPanel) statsPanel.classList.toggle('hidden', subPath !== 'stats');
   if (historyPanel) historyPanel.classList.toggle('hidden', subPath !== 'history');
   // After panel switch try to apply static F1 regulations (for /series/f1/specs and /season/f1-{year}/specs).
@@ -490,14 +505,6 @@ function renderDetail(seriesId, subPath) {
   })();
 
   API.getSeriesTeams(seriesId)
-    .catch(function (err) {
-      // Fallback for Supercars when backend does not yet serve Car Specs
-      if ((seriesId || '').toLowerCase() === 'supercars') {
-        var sc = window.tgaSeries && window.tgaSeries.supercars;
-        return { teams: [], car_models: sc && sc.carModels ? sc.carModels.slice() : [], technical_spec: sc && sc.technicalSpec ? sc.technicalSpec.slice() : [] };
-      }
-      return {};
-    })
     .then(function (data) {
       var seriesKeyTeams = (seriesId || '').toLowerCase();
       // Legacy format for some series: backend may return plain team array.
@@ -525,13 +532,6 @@ function renderDetail(seriesId, subPath) {
         }
       }
 
-      // For Supercars always hard-set Car Specs regardless of backend data.
-      if (seriesKeyTeams === 'supercars') {
-        var sc = window.tgaSeries && window.tgaSeries.supercars;
-        data.car_models = sc && sc.carModels ? sc.carModels.slice() : [];
-        data.technical_spec = sc && sc.technicalSpec ? sc.technicalSpec.slice() : [];
-        hasSpec = !!((data.car_models && data.car_models.length) || (data.technical_spec && data.technical_spec.length));
-      }
       if (seriesKeyTeams === 'f1-2025' && window.F1_2025_TECH_SPEC) {
         data.technical_spec = window.F1_2025_TECH_SPEC;
         hasSpec = true;
@@ -542,47 +542,6 @@ function renderDetail(seriesId, subPath) {
       }
       if (seriesKeyTeams === 'f1' && window.F1_2026_TECH_SPEC) {
         data.technical_spec = window.F1_2026_TECH_SPEC;
-        hasSpec = true;
-      }
-      // Car Specs for F3: vehicle technical specs only (no points rules).
-      if (seriesKeyTeams === 'f3') {
-        data.car_models = [];
-        data.technical_spec = [
-          { key: 'Chassis', value: 'Carbon fibre kevlar monocoque with honeycomb structure' },
-          { key: 'Suspension', value: 'Double steel wishbones, pushrod operated, twin dampers, helicoidally spring suspension' },
-          { key: 'Length', value: '4,965 mm (195 in)' },
-          { key: 'Width', value: '1,885 mm (74 in)' },
-          { key: 'Height', value: '1,043 mm (41 in)' },
-          { key: 'Engine', value: 'Mecachrome V634 3,396 cubic centimetres (207 cubic inches) V6 95° naturally aspirated, rear-mounted, rear-wheel-drive' },
-          { key: 'Transmission', value: '3Mo 6-speed sequential paddle-shift' },
-          { key: 'Power', value: '380 horsepower (283 kilowatts) @8,000 rpm\n420 newton-metres (310 pound force-feet)' },
-          { key: 'Weight', value: '673 kg (1,484 lb) (including driver)' },
-          { key: 'Fuel', value: 'Aramco Advanced 100% sustainable fuel' },
-          { key: 'Lubricants', value: 'Aramco Orizon' },
-          { key: 'Tyres', value: 'Pirelli P Zero (dry) and Pirelli Cinturato (wet) tyres' }
-        ];
-        hasSpec = true;
-      }
-      // Car Specs for F2: chassis/engine technical specs only (no sporting points rules).
-      if (seriesKeyTeams === 'f2') {
-        data.car_models = [];
-        data.technical_spec = [
-          { key: 'Chassis', value: 'Sandwich Carbon fibre/Aluminium monocoque with honeycomb structure' },
-          { key: 'Suspension (front)', value: 'Pushrod operated double steel wishbones with twin dampers and torsion bars suspension' },
-          { key: 'Suspension (rear)', value: 'Pushrod operated double steel wishbones with twin dampers and spring suspension' },
-          { key: 'Length', value: '5,284 mm (208 in)' },
-          { key: 'Width', value: '1,900 mm (75 in)' },
-          { key: 'Height', value: '1,097 mm (43 in)' },
-          { key: 'Wheelbase', value: '3,135 mm (123 in)' },
-          { key: 'Engine', value: 'Mecachrome V634T 3.4 L (207 cu in) V6 single-turbo charged longitudinally mounted in a rear-engined, rear-wheel drive format' },
-          { key: 'Transmission', value: 'Hewland 6-speed + 1 reverse sequential semi-automatic paddle-shift limited-slip differential' },
-          { key: 'Power', value: '620 hp (462 kW) @ 8,750 rpm, 583 N⋅m (430 ft⋅lbf) torque' },
-          { key: 'Weight', value: '795 kg (1,753 lb) including driver and fuel' },
-          { key: 'Fuel', value: 'Aramco Advanced 55% sustainable fuel' },
-          { key: 'Lubricants', value: 'Aramco Orizon' },
-          { key: 'Brakes', value: 'Carbone Industrie carbon brake discs and pads' },
-          { key: 'Tyres', value: 'Pirelli P Zero (dry) and Pirelli Cinturato (wet) tyres' }
-        ];
         hasSpec = true;
       }
 
@@ -617,50 +576,38 @@ function renderDetail(seriesId, subPath) {
         teamsEmpty.classList.add('hidden');
       }
 
-      // For series without Car Specs (except Supercars and IMSA with static data) show
-      // a clear message; keep panel content hidden.
-      if (!hasSpec && seriesKeyTeams !== 'supercars' && seriesKeyTeams !== 'imsa') {
+      // For series without Car Specs / Classes content show empty message.
+      var hasClassesSpec = seriesKeyTeams === 'imsa'
+        ? !!window.IMSA_CLASSES_SPEC
+        : !!(window.SERIES_CLASSES_SPEC && window.SERIES_CLASSES_SPEC[seriesKeyTeams]);
+          if (!hasSpec && !hasClassesSpec) {
         if (specsEmpty) specsEmpty.classList.remove('hidden');
       }
 
-      // Static Car Specs for IndyCar: ignore backend data presence
-      if (seriesKeyTeams === 'indycar') {
-        var carWrapIndy = document.getElementById('car-spec-wrap');
-        var techSpecWrapIndy = document.getElementById('technical-spec-table-wrap');
-        var carModelsTitleIndy = carWrapIndy && carWrapIndy.querySelector('h4[data-i18n="specs.car_models"]');
-        var carModelsWrapIndy = document.getElementById('car-models-table-wrap');
-        if (carModelsTitleIndy) carModelsTitleIndy.classList.add('hidden');
-        if (carModelsWrapIndy) carModelsWrapIndy.innerHTML = '';
-        if (carWrapIndy && techSpecWrapIndy) {
-          carWrapIndy.classList.remove('hidden');
-          var indySpec = [
-            { key: 'Chassis', value: 'Dallara DW12 Safety Cell (IR-18 / UAK-18 specification)' },
-            { key: 'Aero Kit Introduction', value: '2018 season' },
-            { key: 'Aerodynamic Concept', value: 'Increased ground-effect downforce, reduced wing dependency' },
-            { key: 'Design Inspiration', value: '1980s–1990s Indy car styling' },
-            { key: 'Removed Components (2018 redesign)', value: 'Airbox, rear-wheel guards, auxiliary winglets' },
-            { key: 'Track Compatibility', value: 'One base chassis for road, street, short oval, and superspeedways' },
-            { key: 'Steering Wheel', value: 'Cosworth CCW Mk2' },
-            { key: 'Display System', value: 'Configurable Display Unit 4.3' },
-            { key: 'Cockpit Modifications', value: 'Enlarged cockpit dimensions, improved seat ergonomics' },
-            { key: 'Cockpit Protection (2019)', value: 'Advanced Frontal Protection (AFP)' },
-            { key: 'Aeroscreen (2020–present)', value: 'Developed by Red Bull Advanced Technologies' },
-            { key: 'Engine (2018–2023)', value: '2.2L V6 twin-turbocharged (Chevrolet / Honda)' },
-            { key: 'Hybrid Powertrain (2024–present)', value: '2.4L V6 with 100 bhp ERS hybrid unit (Mahle)' },
-            { key: 'Current Chassis Status', value: 'Successor confirmed from 2028 season onward' },
-            { key: 'Tire Supplier', value: 'Firestone (exclusive supplier)' },
-            { key: 'Tire Types – Road/Street', value: 'Primary (black), Alternate (red, softer compound)' },
-            { key: 'Tire Types – Ovals', value: 'Single primary compound' },
-            { key: 'Rain Tires', value: 'Available for road and street circuits' },
-            { key: 'Tire Construction', value: 'Firestone Firehawk racing slicks' }
-          ];
-          techSpecWrapIndy.innerHTML =
-            '<table class="data-table"><thead><tr><th>' + t('th.field') + '</th><th>' + t('th.value') + '</th></tr></thead><tbody>' +
-            indySpec.map(function (s) {
-              return '<tr><td class="col-field">' + esc(dash(localizeSpecKey(s.key))) + '</td><td>' + esc(dash(localizeSpecValue(s.value))) + '</td></tr>';
-            }).join('') +
-            '</tbody></table>';
+      // IndyCar Car Specs come from data/teams/indycar.json via /teams (no hardcode).
+      function paintTechnicalSpecFromTeamsData(specData) {
+        var carWrapPaint = document.getElementById('car-spec-wrap');
+        var carModelsWrapPaint = document.getElementById('car-models-table-wrap');
+        var carModelsTitlePaint = carWrapPaint && carWrapPaint.querySelector('h4[data-i18n="specs.car_models"]');
+        var techSpecWrapPaint = document.getElementById('technical-spec-table-wrap');
+        if (!carWrapPaint || !techSpecWrapPaint || !specData || !specData.technical_spec || !specData.technical_spec.length) {
+          return false;
         }
+        carWrapPaint.classList.remove('hidden');
+        if (carModelsTitlePaint) carModelsTitlePaint.classList.add('hidden');
+        if (carModelsWrapPaint) carModelsWrapPaint.innerHTML = '';
+        if (specsEmpty) specsEmpty.classList.add('hidden');
+        var paintRows = specData.technical_spec.filter(function (s) {
+          return s && s.key != null && s.value != null && String(s.key).trim() !== '';
+        });
+        techSpecWrapPaint.className = 'table-wrap';
+        techSpecWrapPaint.innerHTML =
+          '<table class="data-table table-field-value"><thead><tr><th>' + t('th.field') + '</th><th>' + t('th.value') + '</th></tr></thead><tbody>' +
+          paintRows.map(function (s) {
+            return '<tr><td class="col-field">' + esc(dash(localizeSpecKey(s.key))) + '</td><td>' + esc(dash(localizeSpecValue(s.value))) + '</td></tr>';
+          }).join('') +
+          '</tbody></table>';
+        return true;
       }
       function crewChiefLink(name) {
         return name ? '<a href="/crew-chief/' + encodeURIComponent(slugify(name)) + '" class="track-link">' + esc(name) + '</a>' : '—';
@@ -853,15 +800,35 @@ function renderDetail(seriesId, subPath) {
       function teamNonCharteredRow(tm, i) {
         return '<tr><td class="col-num">' + (i + 1) + '</td><td>' + esc(dash(tm.manufacturer)) + '</td><td>' + teamLink(tm.team) + '</td><td>' + esc(dash(tm.number)) + '</td><td>' + driverLink(tm.driver) + '</td><td>' + crewChiefLink(tm.crew_chief) + '</td></tr>';
       }
-      // Stock cars: merge cells by team/number/Crew Chief + group by team in <tbody> for striping
+      // Stock cars: merge Manufacturer / Team / No. / Crew Chief (rowspan).
+      // Single <tbody> so manufacturer rowspan can span consecutive teams of the same make.
+      // Team striping via tr.group-odd / tr.group-even (not separate tbodies).
       function buildStockCarTeamsBody(teamsArr) {
         if (!teamsArr || teamsArr.length === 0) return '';
+        var manRowSpan = [];
         var teamRowSpan = [];
         var numberRowSpan = [];
+        var teamGroupClass = [];
         for (var i = 0; i < teamsArr.length; i++) {
+          manRowSpan[i] = 0;
           teamRowSpan[i] = 0;
           numberRowSpan[i] = 0;
+          teamGroupClass[i] = 'group-odd';
         }
+        for (var i = 0; i < teamsArr.length; i++) {
+          if (manRowSpan[i] === -1) continue;
+          var manVal = String(teamsArr[i].manufacturer || '').trim();
+          var manTeamVal = String(teamsArr[i].team || '').trim();
+          var spanMan = 1;
+          for (var j = i + 1; j < teamsArr.length; j++) {
+            if (String(teamsArr[j].manufacturer || '').trim() !== manVal) break;
+            if (String(teamsArr[j].team || '').trim() !== manTeamVal) break;
+            spanMan++;
+            manRowSpan[j] = -1;
+          }
+          manRowSpan[i] = spanMan;
+        }
+        var groupIndex = 0;
         for (var i = 0; i < teamsArr.length; i++) {
           if (teamRowSpan[i] === -1) continue;
           var teamVal = String(teamsArr[i].team || '').trim();
@@ -872,6 +839,9 @@ function renderDetail(seriesId, subPath) {
             teamRowSpan[j] = -1;
           }
           teamRowSpan[i] = spanTeam;
+          var gClass = groupIndex % 2 === 0 ? 'group-odd' : 'group-even';
+          for (var k = i; k < i + spanTeam; k++) teamGroupClass[k] = gClass;
+          groupIndex++;
         }
         for (var i = 0; i < teamsArr.length; i++) {
           if (numberRowSpan[i] === -1) continue;
@@ -888,26 +858,14 @@ function renderDetail(seriesId, subPath) {
         var rows = [];
         for (var i = 0; i < teamsArr.length; i++) {
           var tm = teamsArr[i];
+          var manCell = manRowSpan[i] === -1 ? '' : (manRowSpan[i] > 0 ? '<td rowspan="' + manRowSpan[i] + '" class="stockcar-manufacturer-cell">' + esc(dash(tm.manufacturer)) + '</td>' : '');
           var teamCell = teamRowSpan[i] === -1 ? '' : (teamRowSpan[i] > 0 ? '<td rowspan="' + teamRowSpan[i] + '" class="stockcar-team-cell">' + teamLink(tm.team) + '</td>' : '');
           var numberCell = numberRowSpan[i] === -1 ? '' : (numberRowSpan[i] > 0 ? '<td rowspan="' + numberRowSpan[i] + '" class="stockcar-number-cell">' + esc(dash(tm.number)) + '</td>' : '');
           var crewChiefCell = numberRowSpan[i] === -1 ? '' : (numberRowSpan[i] > 0 ? '<td rowspan="' + numberRowSpan[i] + '" class="stockcar-crewchief-cell">' + crewChiefLink(tm.crew_chief) + '</td>' : '');
           var roundsCell = '<td class="stockcar-rounds-cell">' + esc(dash(tm.rounds)) + '</td>';
-          rows.push('<tr><td class="col-num">' + (i + 1) + '</td><td>' + esc(dash(tm.manufacturer)) + '</td>' + teamCell + numberCell + '<td>' + driverLink(tm.driver) + '</td>' + roundsCell + crewChiefCell + '</tr>');
+          rows.push('<tr class="' + teamGroupClass[i] + '"><td class="col-num">' + (i + 1) + '</td>' + manCell + teamCell + numberCell + '<td>' + driverLink(tm.driver) + '</td>' + roundsCell + crewChiefCell + '</tr>');
         }
-        // Group by team into separate <tbody> for alternating group background
-        var groupStart = 0;
-        var groupIndex = 0;
-        var tbodyParts = [];
-        while (groupStart < teamsArr.length) {
-          var teamVal = String(teamsArr[groupStart].team || '').trim();
-          var groupEnd = groupStart + 1;
-          while (groupEnd < teamsArr.length && String(teamsArr[groupEnd].team || '').trim() === teamVal) groupEnd++;
-          var groupClass = groupIndex % 2 === 0 ? 'group-odd' : 'group-even';
-          tbodyParts.push('<tbody class="' + groupClass + '">' + rows.slice(groupStart, groupEnd).join('') + '</tbody>');
-          groupStart = groupEnd;
-          groupIndex++;
-        }
-        return tbodyParts.join('');
+        return '<tbody>' + rows.join('') + '</tbody>';
       }
       var seriesKeyTeams = (seriesId || '').toLowerCase();
       var isStockCarSeriesTeams = ['nascar_cup', 'noaps', 'nascar_xfinity', 'nascar_truck', 'arca', 'nascar_modified'].indexOf(seriesKeyTeams) >= 0;
@@ -1133,37 +1091,49 @@ function renderDetail(seriesId, subPath) {
           }
           return nameHtml;
         }
-        // Groups of consecutive rows with same team and engine
-        var groups = [];
-        for (var g = 0; g < teams.length;) {
-          var teamName = teams[g].team || '';
-          var engine = teams[g].manufacturer || '';
-          var count = 0;
-          while (g + count < teams.length &&
-                 (teams[g + count].team || '') === teamName &&
-                 (teams[g + count].manufacturer || '') === engine) {
-            count++;
-          }
-          groups.push({ team: teamName, engine: engine, rows: teams.slice(g, g + count) });
-          g += count;
-        }
+        // Nested groups: contiguous same team, then same engine within team only
         var indyRows = [];
-        groups.forEach(function (gr) {
-          var teamCell = '<td rowspan="' + gr.rows.length + '" class="team-cell">' + teamLink(gr.team) + '</td>';
-          var engineCell = '<td rowspan="' + gr.rows.length + '">' + esc(gr.engine) + '</td>';
-          gr.rows.forEach(function (tm, i) {
-            var cells = (i === 0 ? teamCell + engineCell : '') +
-              '<td class="col-num">' + esc(tm.number || '') + '</td>' +
-              '<td>' + indyCarDriverCell(tm) + '</td>' +
-              '<td>' + esc(tm.rounds || '') + '</td>';
-            indyRows.push('<tr>' + cells + '</tr>');
-          });
-        });
+        for (var ti = 0; ti < teams.length;) {
+          var teamName = String(teams[ti].team || '');
+          var teamSpan = 1;
+          while (ti + teamSpan < teams.length &&
+                 String(teams[ti + teamSpan].team || '') === teamName) {
+            teamSpan++;
+          }
+          var teamFirst = true;
+          for (var ei = ti; ei < ti + teamSpan;) {
+            var engine = String(teams[ei].manufacturer || '');
+            var engSpan = 1;
+            while (ei + engSpan < ti + teamSpan &&
+                   String(teams[ei + engSpan].manufacturer || '') === engine) {
+              engSpan++;
+            }
+            for (var ri = 0; ri < engSpan; ri++) {
+              var tm = teams[ei + ri];
+              var cells = '';
+              if (teamFirst) {
+                cells += '<td rowspan="' + teamSpan + '" class="team-cell">' + teamLink(teamName) + '</td>';
+                teamFirst = false;
+              }
+              if (ri === 0) {
+                cells += '<td rowspan="' + engSpan + '" class="manufacturer-cell">' + esc(engine) + '</td>';
+              }
+              cells +=
+                '<td class="col-num">' + esc(tm.number || '') + '</td>' +
+                '<td>' + indyCarDriverCell(tm) + '</td>' +
+                '<td>' + esc(tm.rounds || '') + '</td>';
+              indyRows.push('<tr>' + cells + '</tr>');
+            }
+            ei += engSpan;
+          }
+          ti += teamSpan;
+        }
         tableWrap.innerHTML =
           '<table class="data-table indycar-teams-table">' +
           '<thead><tr>' +
           '<th>' + t('th.team') + '</th><th>' + t('th.engine') + '</th><th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.rounds') + '</th>' +
           '</tr></thead><tbody>' + indyRows.join('') + '</tbody></table>';
+        paintTechnicalSpecFromTeamsData(data);
         return;
       }
 
@@ -1192,32 +1162,44 @@ function renderDetail(seriesId, subPath) {
         var sfRows = [];
         for (var sfi = 0; sfi < sfTeams.length;) {
           var sfTeam = String(sfTeams[sfi].team || '');
-          var sfEngine = String(sfTeams[sfi].manufacturer || '');
-          var sfSpan = 1;
-          while (sfi + sfSpan < sfTeams.length &&
-                 String(sfTeams[sfi + sfSpan].team || '') === sfTeam &&
-                 String(sfTeams[sfi + sfSpan].manufacturer || '') === sfEngine) {
-            sfSpan++;
+          var sfTeamSpan = 1;
+          while (sfi + sfTeamSpan < sfTeams.length &&
+                 String(sfTeams[sfi + sfTeamSpan].team || '') === sfTeam) {
+            sfTeamSpan++;
           }
-          for (var sfj = 0; sfj < sfSpan; sfj++) {
-            var sft = sfTeams[sfi + sfj];
-            var row = '<tr>' +
-              '<td class="col-num">' + esc(dash(sft.number)) + '</td>';
-            if (sfj === 0) {
-              row += '<td rowspan="' + sfSpan + '">' + esc(dash(sfEngine)) + '</td>' +
-                '<td rowspan="' + sfSpan + '" class="team-cell">' + teamLink(sfTeam) + '</td>';
+          var sfTeamFirst = true;
+          for (var sfei = sfi; sfei < sfi + sfTeamSpan;) {
+            var sfEngine = String(sfTeams[sfei].manufacturer || '');
+            var sfEngSpan = 1;
+            while (sfei + sfEngSpan < sfi + sfTeamSpan &&
+                   String(sfTeams[sfei + sfEngSpan].manufacturer || '') === sfEngine) {
+              sfEngSpan++;
             }
-            row += '<td>' + driverLink(sft.driver) + '</td>' +
-              '<td>' + esc(dash(sft.rounds)) + '</td></tr>';
-            sfRows.push(row);
+            for (var sfj = 0; sfj < sfEngSpan; sfj++) {
+              var sft = sfTeams[sfei + sfj];
+              var row = '<tr><td class="col-num">' + esc(dash(sft.number)) + '</td>';
+              if (sfj === 0) {
+                row += '<td rowspan="' + sfEngSpan + '" class="manufacturer-cell">' + esc(dash(sfEngine)) + '</td>';
+              }
+              if (sfTeamFirst) {
+                row += '<td rowspan="' + sfTeamSpan + '" class="team-cell">' + teamLink(sfTeam) + '</td>';
+                sfTeamFirst = false;
+              }
+              row += '<td>' + driverLink(sft.driver) + '</td>' +
+                '<td>' + esc(dash(sft.rounds)) + '</td></tr>';
+              sfRows.push(row);
+            }
+            sfei += sfEngSpan;
           }
-          sfi += sfSpan;
+          sfi += sfTeamSpan;
         }
 
         tableWrapSf.innerHTML =
           '<table class="data-table super-formula-teams-table" id="teams-table">' +
           '<thead><tr><th>#</th><th>' + t('th.engine') + '</th><th>' + t('th.team') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.rounds') + '</th></tr></thead>' +
           '<tbody>' + sfRows.join('') + '</tbody></table>';
+        // Early return skips shared Car Specs block — paint from data/teams/super_formula.json.
+        paintTechnicalSpecFromTeamsData(data);
         return;
       }
 
@@ -1279,26 +1261,7 @@ function renderDetail(seriesId, subPath) {
         );
 
         // FREC specs: this branch returns early, so render technical spec here.
-        var carWrapFrec = document.getElementById('car-spec-wrap');
-        var carModelsWrapFrec = document.getElementById('car-models-table-wrap');
-        var carModelsTitleFrec = carWrapFrec && carWrapFrec.querySelector('h4[data-i18n="specs.car_models"]');
-        var techSpecWrapFrec = document.getElementById('technical-spec-table-wrap');
-        if (carWrapFrec && techSpecWrapFrec && data && data.technical_spec && data.technical_spec.length > 0) {
-          carWrapFrec.classList.remove('hidden');
-          if (carModelsTitleFrec) carModelsTitleFrec.classList.add('hidden');
-          if (carModelsWrapFrec) carModelsWrapFrec.innerHTML = '';
-          if (specsEmpty) specsEmpty.classList.add('hidden');
-
-          var frecSpecRows = data.technical_spec.filter(function (s) {
-            return s && s.key != null && s.value != null && String(s.key).trim() !== '';
-          });
-          techSpecWrapFrec.innerHTML =
-            '<table class="data-table table-field-value"><thead><tr><th>' + t('th.field') + '</th><th>' + t('th.value') + '</th></tr></thead><tbody>' +
-            frecSpecRows.map(function (s) {
-              return '<tr><td class="col-field">' + esc(dash(localizeSpecKey(s.key))) + '</td><td>' + esc(dash(localizeSpecValue(s.value))) + '</td></tr>';
-            }).join('') +
-            '</tbody></table>';
-        }
+        paintTechnicalSpecFromTeamsData(data);
         return;
       }
 
@@ -1364,6 +1327,7 @@ function renderDetail(seriesId, subPath) {
           pscTeamRow,
           ['team', 'number', 'driver', 'rounds']
         );
+        paintTechnicalSpecFromTeamsData(data);
         return;
       }
 
@@ -1401,31 +1365,43 @@ function renderDetail(seriesId, subPath) {
         function buildDtmTeamsBody(teamsArr) {
           var rows = [];
           for (var i = 0; i < teamsArr.length;) {
-            var base = teamsArr[i] || {};
-            var teamName = String(base.team || '');
-            var carName = dtmCarValue(base);
-            var span = 1;
-            while (i + span < teamsArr.length) {
-              var next = teamsArr[i + span] || {};
-              if (String(next.team || '') !== teamName || dtmCarValue(next) !== carName) break;
-              span++;
+            var teamName = String((teamsArr[i] || {}).team || '');
+            var teamSpan = 1;
+            while (i + teamSpan < teamsArr.length &&
+                   String((teamsArr[i + teamSpan] || {}).team || '') === teamName) {
+              teamSpan++;
             }
-
-            for (var j = 0; j < span; j++) {
-              var tm = teamsArr[i + j] || {};
-              var row = '<tr>';
-              if (j === 0) {
-                row += '<td rowspan="' + span + '">' + teamLink(teamName) + '</td>';
-                row += '<td rowspan="' + span + '">' + esc(dash(carName)) + '</td>';
-                row += '<td rowspan="' + span + '">' + esc(dash(tm.power_unit)) + '</td>';
+            var teamFirst = true;
+            for (var ci = i; ci < i + teamSpan;) {
+              var base = teamsArr[ci] || {};
+              var carName = dtmCarValue(base);
+              var engineName = String(base.power_unit || '');
+              var carSpan = 1;
+              while (ci + carSpan < i + teamSpan) {
+                var nextCar = teamsArr[ci + carSpan] || {};
+                if (dtmCarValue(nextCar) !== carName || String(nextCar.power_unit || '') !== engineName) break;
+                carSpan++;
               }
-              row += '<td class="col-num">' + esc(dash(tm.number)) + '</td>';
-              row += '<td>' + driverLink(tm.driver) + '</td>';
-              row += '<td>' + esc(dash(tm.rounds)) + '</td>';
-              row += '</tr>';
-              rows.push(row);
+              for (var j = 0; j < carSpan; j++) {
+                var tm = teamsArr[ci + j] || {};
+                var row = '<tr>';
+                if (teamFirst) {
+                  row += '<td rowspan="' + teamSpan + '">' + teamLink(teamName) + '</td>';
+                  teamFirst = false;
+                }
+                if (j === 0) {
+                  row += '<td rowspan="' + carSpan + '">' + esc(dash(carName)) + '</td>';
+                  row += '<td rowspan="' + carSpan + '">' + esc(dash(engineName)) + '</td>';
+                }
+                row += '<td class="col-num">' + esc(dash(tm.number)) + '</td>';
+                row += '<td>' + driverLink(tm.driver) + '</td>';
+                row += '<td>' + esc(dash(tm.rounds)) + '</td>';
+                row += '</tr>';
+                rows.push(row);
+              }
+              ci += carSpan;
             }
-            i += span;
+            i += teamSpan;
           }
           return rows.join('');
         }
@@ -1574,8 +1550,54 @@ function renderDetail(seriesId, subPath) {
         if (theadEl) theadEl.innerHTML = theadHtml;
         if (tbodyEl) tbodyEl.innerHTML = bodyRows.join('');
         tableWrap.classList.remove('hidden');
-        // Also always show static Car Specs block for Supercars
-        renderSupercarsStaticSpecs();
+        // Car Specs from API (data/teams/supercars.json) — no static JS fallback.
+        (function paintSupercarsSpecsFromApi() {
+          var carWrap = document.getElementById('car-spec-wrap');
+          var carModelsWrap = document.getElementById('car-models-table-wrap');
+          var carModelsTitle = carWrap && carWrap.querySelector('h4[data-i18n="specs.car_models"]');
+          var techSpecWrap = document.getElementById('technical-spec-table-wrap');
+          var enginesTitle = document.getElementById('engines-spec-title');
+          var enginesWrap = document.getElementById('engines-spec-table-wrap');
+          var homologationTitle = document.getElementById('homologation-spec-title');
+          var homologationWrap = document.getElementById('homologation-spec-table-wrap');
+          if (!carWrap) return;
+          if (data.car_models && data.car_models.length > 0) {
+            carWrap.classList.remove('hidden');
+            if (carModelsTitle) carModelsTitle.classList.remove('hidden');
+            if (carModelsWrap) {
+              carModelsWrap.innerHTML = '<table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('th.model') + '</th></tr></thead><tbody>' +
+                data.car_models.map(function (c) {
+                  return '<tr><td>' + esc(dash(c.manufacturer)) + '</td><td>' + esc(dash(c.model)) + '</td></tr>';
+                }).join('') + '</tbody></table>';
+            }
+          }
+          if (techSpecWrap && data.technical_spec && data.technical_spec.length > 0) {
+            carWrap.classList.remove('hidden');
+            if (specsEmpty) specsEmpty.classList.add('hidden');
+            techSpecWrap.innerHTML = '<table class="data-table table-field-value"><thead><tr><th>' + t('th.field') + '</th><th>' + t('th.value') + '</th></tr></thead><tbody>' +
+              data.technical_spec.map(function (s) {
+                return '<tr><td class="col-field">' + esc(dash(localizeSpecKey(s.key))) + '</td><td>' + esc(dash(localizeSpecValue(s.value))) + '</td></tr>';
+              }).join('') + '</tbody></table>';
+          }
+          var scEngines = Array.isArray(data.engines) ? data.engines : [];
+          if (scEngines.length > 0 && enginesWrap) {
+            enginesWrap.innerHTML = '<table class="data-table"><thead><tr><th>' + t('specs.car_model') + '</th><th>' + t('specs.engine_spec') + '</th></tr></thead><tbody>' +
+              scEngines.map(function (e) {
+                return '<tr><td>' + esc(dash(e.model)) + '</td><td>' + esc(dash(e.spec)) + '</td></tr>';
+              }).join('') + '</tbody></table>';
+            enginesWrap.classList.remove('hidden');
+            if (enginesTitle) enginesTitle.classList.remove('hidden');
+          }
+          var scHomolog = Array.isArray(data.homologation) ? data.homologation : [];
+          if (scHomolog.length > 0 && homologationWrap) {
+            homologationWrap.innerHTML = '<table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('specs.homologating_team') + '</th></tr></thead><tbody>' +
+              scHomolog.map(function (h) {
+                return '<tr><td>' + esc(dash(h.manufacturer)) + '</td><td>' + esc(dash(teamLabel(h.team))) + '</td></tr>';
+              }).join('') + '</tbody></table>';
+            homologationWrap.classList.remove('hidden');
+            if (homologationTitle) homologationTitle.classList.remove('hidden');
+          }
+        })();
         return;
       }
 
@@ -2008,14 +2030,6 @@ function renderDetail(seriesId, subPath) {
         if (carModelsWrap) carModelsWrap.innerHTML = '';
         if (carModelsTitle) carModelsTitle.classList.add('hidden');
       }
-      if ((seriesKeyTeams === 'f3' || seriesKeyTeams === 'f2') && carWrap && carModelsWrap) {
-        if (carModelsTitle) carModelsTitle.classList.add('hidden');
-        carModelsWrap.classList.remove('table-wrap');
-        carModelsWrap.innerHTML = seriesKeyTeams === 'f3'
-          ? '<p class="specs-chassis-line">Chassis Dallara F3 2025</p>'
-          : '<p class="specs-chassis-line">Chassis Dallara F2 2024</p>';
-        carWrap.classList.remove('hidden');
-      }
       if (carWrap && data.technical_spec && data.technical_spec.length > 0) {
         carWrap.classList.remove('hidden');
         var specHeaderFirst = ((seriesId || '').toLowerCase() === 'arca' || (seriesId || '').toLowerCase() === 'nascar_modified') ? t('th.characteristic') : t('th.field');
@@ -2030,8 +2044,10 @@ function renderDetail(seriesId, subPath) {
         var hasSpecSections = specRows.some(function (s) { return (s.key || '') === '__SECTION__'; });
         if (techSpecWrap) {
           function specCellVal(s, val) {
-            if (s.key && s.key.toLowerCase().trim() === 'power output') {
-              return esc(dash(val)) + '<br>' + esc(localizeSpecValue('750 hp at tracks under 1.5 miles and road courses.'));
+            var seriesForPowerNote = (seriesId || '').toLowerCase();
+            if (seriesForPowerNote === 'nascar_cup' && s.key && s.key.toLowerCase().trim() === 'power output') {
+              // Packages already listed in data/teams/nascar_cup.json (NASCAR 2026 rule updates).
+              return esc(dash(val));
             }
             return (val || '').indexOf('\n') >= 0
               ? (val || '').split('\n').map(function (p) { return esc(p); }).join('<br>')
@@ -2075,7 +2091,6 @@ function renderDetail(seriesId, subPath) {
         var specRowsForSort = hasSpecSections ? specRows.filter(function (s) { return (s.key || '') !== '__SECTION__'; }) : specRows;
         if (specTbl && specRowsForSort.length > 0 && !hasSpecSections) makeTableSortable(specTbl, specRowsForSort.map(function (s) {
           var val = localizeSpecValue(s.value);
-          if (s.key && s.key.toLowerCase().trim() === 'power output') val += '\n' + localizeSpecValue('750 hp at tracks under 1.5 miles and road courses.');
           return [localizeSpecKey(s.key), val];
         }), esc);
         if (hasSpecSections && techSpecWrap) {
@@ -2086,22 +2101,19 @@ function renderDetail(seriesId, subPath) {
             var rowsSlice = specRowsForSort.slice(start, start + (sections[idx] ? sections[idx].rows.length : 0));
             if (tbl && rowsSlice.length > 0) makeTableSortable(tbl, rowsSlice.map(function (s) {
               var val = localizeSpecValue(s.value);
-              if (s.key && s.key.toLowerCase().trim() === 'power output') val += '\n' + localizeSpecValue('750 hp at tracks under 1.5 miles and road courses.');
               return [localizeSpecKey(s.key), val];
             }), esc);
           });
         }
 
-        // Extra Engines and Homologation tables for Supercars only
+        // Extra Engines and Homologation tables for Supercars (from teams JSON / API).
         if ((seriesId || '').toLowerCase() === 'supercars') {
-          // Engines table
           if (enginesWrap) {
             enginesWrap.innerHTML = '';
             enginesWrap.classList.add('hidden');
           }
           if (enginesTitle) enginesTitle.classList.add('hidden');
-          var scSpec = window.tgaSeries && window.tgaSeries.supercars;
-          var scEngines = scSpec && scSpec.engines ? scSpec.engines : [];
+          var scEngines = (data && Array.isArray(data.engines)) ? data.engines : [];
           if (scEngines.length > 0 && enginesWrap) {
             var enginesTableHtml = '<div class="table-wrap"><table class="data-table"><thead><tr><th>' + t('specs.car_model') + '</th><th>' + t('specs.engine_spec') + '</th></tr></thead><tbody>' +
               scEngines.map(function (e) {
@@ -2113,13 +2125,12 @@ function renderDetail(seriesId, subPath) {
             if (enginesTitle) enginesTitle.classList.remove('hidden');
           }
 
-          // Homologation table
           if (homologationWrap) {
             homologationWrap.innerHTML = '';
             homologationWrap.classList.add('hidden');
           }
           if (homologationTitle) homologationTitle.classList.add('hidden');
-          var scHomolog = scSpec && scSpec.homologation ? scSpec.homologation : [];
+          var scHomolog = (data && Array.isArray(data.homologation)) ? data.homologation : [];
           if (scHomolog.length > 0 && homologationWrap) {
             var homologTableHtml = '<div class="table-wrap"><table class="data-table"><thead><tr><th>' + t('th.manufacturer') + '</th><th>' + t('specs.homologating_team') + '</th></tr></thead><tbody>' +
               scHomolog.map(function (h) {
@@ -2160,49 +2171,18 @@ function renderDetail(seriesId, subPath) {
         if (homologationTitle) homologationTitle.classList.add('hidden');
       }
 
-      // IMSA: "Classes" tab with fixed class list
-      var currentSeriesSlug = (window.location.pathname.split('/')[2] || '').toLowerCase();
-      if (currentSeriesSlug === 'imsa') {
+      // Classes-tab series: title + static definitions (imsa-classes-static).
+      var currentSeriesSlug = (window.location.pathname.split('/')[2] || '').toLowerCase().replace(/-/g, '_');
+      if (['imsa', 'wec', 'elms', 'gtwce_end', 'gtwce_sprint', 'super_gt', 'dtm'].indexOf(currentSeriesSlug) >= 0) {
         var specsPanelEl = document.getElementById('specs-panel');
         var specsTitleEl = specsPanelEl && specsPanelEl.querySelector('h3[data-i18n="section.h3.specs"]');
-        if (specsTitleEl) specsTitleEl.textContent = t('nav.classes');
-
-        var specsSectionEl = specsPanelEl && specsPanelEl.querySelector('.specs-section');
-        // If section missing yet (e.g. IMSA without car specs) — create it
-        if (specsPanelEl && !specsSectionEl) {
-          specsSectionEl = document.createElement('div');
-          specsSectionEl.className = 'specs-section';
-          specsPanelEl.appendChild(specsSectionEl);
+        if (specsTitleEl) {
+          specsTitleEl.textContent = t('nav.classes');
+          specsTitleEl.classList.add('hidden');
         }
-
-        if (specsSectionEl) {
-          var imsaWrap = document.getElementById('imsa-classes-wrap');
-          var imsaClasses = [
-            'Grand Touring Prototype (GTP) (LMDh and LMH)',
-            'Le Mans Prototype 2 (LMP2)',
-            'GT Daytona Pro (GTD Pro)',
-            'GT Daytona (GTD)'
-          ];
-          var imsaHtml =
-            '<h4 class="table-section-title">' + t('nav.classes') + '</h4>' +
-            '<div class="table-wrap">' +
-              '<table class="data-table">' +
-                '<thead><tr><th>' + t('th.class') + '</th></tr></thead>' +
-                '<tbody>' +
-                  imsaClasses.map(function (name) {
-                    return '<tr><td>' + esc(localizeSpecValue(name)) + '</td></tr>';
-                  }).join('') +
-                '</tbody>' +
-              '</table>' +
-            '</div>';
-          if (!imsaWrap) {
-            imsaWrap = document.createElement('div');
-            imsaWrap.id = 'imsa-classes-wrap';
-            imsaWrap.className = 'car-spec';
-            specsSectionEl.appendChild(imsaWrap);
-          }
-          imsaWrap.innerHTML = imsaHtml;
-        }
+        var legacyImsaWrap = document.getElementById('imsa-classes-wrap');
+        if (legacyImsaWrap) legacyImsaWrap.classList.add('hidden');
+        if (typeof renderImsaClassesSpecIfNeeded === 'function') renderImsaClassesSpecIfNeeded();
       }
       translateStaticUI();
     })
@@ -3230,7 +3210,7 @@ function renderDetail(seriesId, subPath) {
 
           var f1StatsNumericKeys = [
             'races', 'wins', 'top2', 'top3', 'podiums', 'top5', 'top10', 'poles',
-            'avg_start', 'avg_qualifying', 'avg_finish', 'q2_passes', 'q3_passes', 'laps_led', 'laps_completed'
+            'avg_start', 'avg_qualifying', 'avg_finish', 'q2_passes', 'q3_passes', 'laps_led', 'laps_completed', 'dnfs'
           ];
           applyDefaultStatsSort(rows, sidLowerForStats, f1StatsNumericKeys, 'driver');
 
@@ -3253,7 +3233,8 @@ function renderDetail(seriesId, subPath) {
             '<th class="col-stat-num">' + t('stats.q2') + '</th>' +
             '<th class="col-stat-num">' + t('stats.q3') + '</th>' +
             '<th class="col-stat-num">' + t('standings.laps_led') + '</th>' +
-            '<th class="col-stat-num">' + t('stats.laps_completed') + '</th>';
+            '<th class="col-stat-num">' + t('stats.laps_completed') + '</th>' +
+            '<th class="col-stat-num">DNF</th>';
 
           var html = rows.map(function (row, idx) {
             var pos = idx + 1;
@@ -3281,6 +3262,7 @@ function renderDetail(seriesId, subPath) {
             var lapsCompleted = row.laps_completed != null ? row.laps_completed : '—';
             var top2 = row.top2 || 0;
             var top3 = row.top3 || 0;
+            var dnfs = row.dnfs || 0;
 
             return '' +
               '<tr>' +
@@ -3303,6 +3285,7 @@ function renderDetail(seriesId, subPath) {
                 '<td class="col-stat-num">' + q3 + '</td>' +
                 '<td class="col-stat-num">' + lapsLed + '</td>' +
                 '<td class="col-stat-num">' + lapsCompleted + '</td>' +
+                '<td class="col-stat-num">' + dnfs + '</td>' +
               '</tr>';
           }).join('');
 
@@ -3345,6 +3328,7 @@ function renderDetail(seriesId, subPath) {
                   '<td class="col-stat-num">' + (row.q3_passes != null ? row.q3_passes : 0) + '</td>' +
                   '<td class="col-stat-num">' + (row.laps_led || 0) + '</td>' +
                   '<td class="col-stat-num">' + (row.laps_completed != null ? row.laps_completed : '—') + '</td>' +
+                  '<td class="col-stat-num">' + (row.dnfs || 0) + '</td>' +
                   '</tr>';
               }).join('');
               // Enable simple column sorting for F1 manufacturer stats.
@@ -3552,15 +3536,14 @@ function renderDetail(seriesId, subPath) {
           }
         }
 
-        // Prepare object array for sorting and render.
-        // For F1 use single template for current and historical seasons (f1-YYYY).
+        // F1 uses a dedicated early-return renderer; this flag only affects shared column extras.
         var isF1Stats = (seriesKeyStats === 'f1' || seriesKeyStats.indexOf('f1-') === 0);
-        // Force-enable F1 template for f1-2025 season page.
         if (!isF1Stats && window.location && window.location.pathname.indexOf('/season/f1-2025/') === 0) {
           isF1Stats = true;
         }
-        var statsRows = rows.map(function (row) {
-          var r = {
+
+        function mapDriverStatsRow(row) {
+          return {
             pos: 0,
             car: row.car || '',
             driver: row.driver || '',
@@ -3598,8 +3581,73 @@ function renderDetail(seriesId, subPath) {
             laps_completed_pct: row.laps_completed_pct,
             pos_diff: row.pos_diff
           };
-          return r;
-        });
+        }
+        function mapTeamStatsRow(row) {
+          return {
+            pos: 0,
+            team: row.team || '',
+            races: row.races || 0,
+            wins: row.wins || 0,
+            points: row.points || 0,
+            poles: row.poles || 0,
+            top2: row.top2 || 0,
+            top3: row.top3 || 0,
+            podiums: row.podiums != null ? row.podiums : (row.wins || 0) + (row.top2 || 0) + (row.top3 || 0),
+            top5: row.top5 || 0,
+            top10: row.top10 || 0,
+            top15: row.top15 || 0,
+            top20: row.top20 || 0,
+            fastest_laps: row.fastest_laps || 0,
+            dnfs: row.dnfs || 0,
+            sprint_wins: row.sprint_wins || 0,
+            sprint_podiums: row.sprint_podiums || 0,
+            feature_wins: row.feature_wins || 0,
+            feature_podiums: row.feature_podiums || 0,
+            avg_start: row.avg_start,
+            avg_finish: row.avg_finish,
+            stage_wins: row.stage_wins || 0,
+            stage_points: row.stage_points || 0,
+            avg_stage_points: row.avg_stage_points,
+            laps_led: row.laps_led || 0,
+            laps_completed_pct: row.laps_completed_pct,
+            pos_diff: row.pos_diff
+          };
+        }
+        function mapManufacturerStatsRow(row) {
+          return {
+            pos: 0,
+            manufacturer: row.manufacturer || '',
+            races: row.races || 0,
+            wins: row.wins || 0,
+            points: row.points || 0,
+            poles: row.poles || 0,
+            top2: row.top2 || 0,
+            top3: row.top3 || 0,
+            podiums: row.podiums != null ? row.podiums : (row.wins || 0) + (row.top2 || 0) + (row.top3 || 0),
+            top5: row.top5 || 0,
+            top10: row.top10 || 0,
+            top15: row.top15 || 0,
+            top20: row.top20 || 0,
+            fastest_laps: row.fastest_laps || 0,
+            dnfs: row.dnfs || 0,
+            sprint_wins: row.sprint_wins || 0,
+            sprint_podiums: row.sprint_podiums || 0,
+            feature_wins: row.feature_wins || 0,
+            feature_podiums: row.feature_podiums || 0,
+            avg_start: row.avg_start,
+            avg_qualifying: row.avg_qualifying,
+            avg_finish: row.avg_finish,
+            stage_wins: row.stage_wins || 0,
+            stage_points: row.stage_points || 0,
+            avg_stage_points: row.avg_stage_points,
+            q2_passes: row.q2_passes != null ? row.q2_passes : 0,
+            q3_passes: row.q3_passes != null ? row.q3_passes : 0,
+            laps_led: row.laps_led || 0,
+            laps_completed: row.laps_completed != null ? row.laps_completed : 0,
+            laps_completed_pct: row.laps_completed_pct,
+            pos_diff: row.pos_diff
+          };
+        }
 
         var statsFilterInput = document.getElementById('stats-filter');
         var statsMinStartsSelect = document.getElementById('stats-min-starts');
@@ -3615,7 +3663,7 @@ function renderDetail(seriesId, subPath) {
             'f1', 'indycar', 'super_formula',
             'nascar_cup', 'noaps', 'nascar_truck', 'arca', 'nascar_modified',
             'supercars', 'dtm', 'wec', 'imsa', 'elms',
-            'gtwce_end', 'gtwce_sprint', 'gtwc_america', 'super_gt'
+            'gtwce_end', 'gtwce_sprint', 'super_gt'
           ].indexOf(key) >= 0;
         }
         var hasClassStats = data && Array.isArray(data.classes) && data.classes.length > 0;
@@ -3624,12 +3672,49 @@ function renderDetail(seriesId, subPath) {
           statsClassSelect.innerHTML = '<option value="">' + esc(t('stats.all_classes') || 'All classes') + '</option>' + data.classes.map(function (cls) {
             return '<option value="' + esc(cls.name || cls.id || '') + '">' + esc(cls.name || cls.id || '') + '</option>';
           }).join('');
-          if (['imsa', 'wec', 'elms', 'gtwce_end', 'gtwce_sprint', 'gtwc_america', 'super_gt'].indexOf(seriesKeyStats) >= 0 && data.classes[0]) {
+          if (['imsa', 'wec', 'elms', 'gtwce_end', 'gtwce_sprint', 'super_gt'].indexOf(seriesKeyStats) >= 0 && data.classes[0]) {
             statsClassSelect.value = data.classes[0].name || data.classes[0].id || '';
           }
         } else if (statsClassSelect) {
           statsClassSelect.innerHTML = '';
         }
+
+        function resolveClassStatsPayload() {
+          var sel = statsClassSelect && statsClassSelect.value ? String(statsClassSelect.value) : '';
+          if (sel && hasClassStats) {
+            for (var i = 0; i < data.classes.length; i++) {
+              var cls = data.classes[i] || {};
+              if (String(cls.name || '') === sel || String(cls.id || '') === sel) {
+                return {
+                  rows: Array.isArray(cls.rows) ? cls.rows : [],
+                  teams: Array.isArray(cls.teams) ? cls.teams : [],
+                  manufacturers: Array.isArray(cls.manufacturers) ? cls.manufacturers : []
+                };
+              }
+            }
+          }
+          return {
+            rows: rows,
+            teams: data && data.teams ? data.teams : [],
+            manufacturers: data && data.manufacturers ? data.manufacturers : []
+          };
+        }
+
+        // Mutable datasets so Class filter can refresh Driver / Team / Manufacturer together.
+        var statsRows = [];
+        var teamData = [];
+        var manData = [];
+        function refillStatsDatasets() {
+          var payload = resolveClassStatsPayload();
+          statsRows.length = 0;
+          payload.rows.forEach(function (row) { statsRows.push(mapDriverStatsRow(row)); });
+          teamData.length = 0;
+          payload.teams.forEach(function (row) { teamData.push(mapTeamStatsRow(row)); });
+          manData.length = 0;
+          payload.manufacturers.forEach(function (row) { manData.push(mapManufacturerStatsRow(row)); });
+        }
+        refillStatsDatasets();
+
         var avgStartLabel = seriesKeyStats === 'supercars' ? t('stats.avg_qualifying') : t('standings.avg_start');
 
         function passesStatsFilter(row) {
@@ -3639,7 +3724,6 @@ function renderDetail(seriesId, subPath) {
             if (!isNaN(parsed) && parsed > 0) minStarts = parsed;
           }
           if (minStarts && (row.races || 0) < minStarts) return false;
-          if (statsClassSelect && statsClassSelect.value && row.class !== statsClassSelect.value) return false;
           var q = statsFilterInput && statsFilterInput.value
             ? statsFilterInput.value.trim().toLowerCase()
             : '';
@@ -3734,7 +3818,7 @@ function renderDetail(seriesId, subPath) {
         if (hasAnyValue(statsRows, 'fastest_laps')) {
           driverColumns.push(makeStatsColumn('fastest_laps', t('stats.fastest_laps'), function (row) { return row.fastest_laps; }));
         }
-        if (isEngineStatsSeries && hasAnyValue(statsRows, 'dnfs')) {
+        if (hasAnyValue(statsRows, 'dnfs')) {
           driverColumns.push(makeStatsColumn('dnfs', 'DNF', function (row) { return row.dnfs; }));
         }
         if (shouldShowStatsColumn('stage_wins') && (hasAnyValue(statsRows, 'stage_wins') || hasAnyValue(statsRows, 'stage_points'))) {
@@ -3783,56 +3867,20 @@ function renderDetail(seriesId, subPath) {
             renderStatsTable(statsRows);
           });
         }
-        if (statsClassSelect) {
-          statsClassSelect.addEventListener('change', function () {
-            renderStatsTable(statsRows);
-          });
-        }
 
         renderStatsTable(statsRows);
 
-        // Team stats (from backend data: data.teams).
-        var teamRowsRaw = data && data.teams ? data.teams : [];
+        // Team stats — dataset comes from refillStatsDatasets() (class-aware).
         var teamTable = document.getElementById('team-stats-table');
         var teamEmpty = document.getElementById('team-stats-empty');
         var teamStatsFilterInput = document.getElementById('team-stats-filter');
         var teamStatsMinStartsSelect = document.getElementById('team-stats-min-starts');
         setupMinStartsSelect(teamStatsMinStartsSelect, 'team');
+        var renderTeamTable = null;
+        var teamColumns = null;
         if (teamTable) {
           var teamTbody = teamTable.querySelector('tbody');
-          if (teamRowsRaw && teamRowsRaw.length > 0 && teamTbody) {
-            if (teamEmpty) teamEmpty.classList.add('hidden');
-            var teamData = teamRowsRaw.map(function (row) {
-              return {
-                pos: 0,
-                team: row.team || '',
-                races: row.races || 0,
-                wins: row.wins || 0,
-                points: row.points || 0,
-                poles: row.poles || 0,
-                top2: row.top2 || 0,
-                top3: row.top3 || 0,
-                podiums: row.podiums != null ? row.podiums : (row.wins || 0) + (row.top2 || 0) + (row.top3 || 0),
-                top5: row.top5 || 0,
-                top10: row.top10 || 0,
-                top15: row.top15 || 0,
-                top20: row.top20 || 0,
-                fastest_laps: row.fastest_laps || 0,
-                dnfs: row.dnfs || 0,
-                sprint_wins: row.sprint_wins || 0,
-                sprint_podiums: row.sprint_podiums || 0,
-                feature_wins: row.feature_wins || 0,
-                feature_podiums: row.feature_podiums || 0,
-                avg_start: row.avg_start,
-                avg_finish: row.avg_finish,
-                stage_wins: row.stage_wins || 0,
-                stage_points: row.stage_points || 0,
-                avg_stage_points: row.avg_stage_points,
-                laps_led: row.laps_led || 0,
-                laps_completed_pct: row.laps_completed_pct,
-                pos_diff: row.pos_diff
-              };
-            });
+          if (teamTbody) {
             function teamPassesFilter(row) {
               var minStarts = 0;
               if (teamStatsMinStartsSelect && teamStatsMinStartsSelect.value) {
@@ -3848,7 +3896,7 @@ function renderDetail(seriesId, subPath) {
               return haystack.indexOf(q) !== -1;
             }
 
-            function renderTeamTable(list) {
+            renderTeamTable = function (list) {
               var filtered = list.filter(teamPassesFilter);
               teamTbody.innerHTML = filtered.map(function (row, idx) {
                 var displayRow = Object.assign({}, row, { pos: idx + 1 });
@@ -3857,10 +3905,12 @@ function renderDetail(seriesId, subPath) {
                 }).join('');
                 return '<tr>' + td + '</tr>';
               }).join('');
-            }
+            };
 
+            if (teamData.length > 0) {
+            if (teamEmpty) teamEmpty.classList.add('hidden');
             var teamHeadRow = teamTable.querySelector('thead tr');
-            var teamColumns = [
+            teamColumns = [
               makeStatsColumn('pos', t('th.pos'), function (row) { return row.pos; }),
               makeStatsColumn('team', t('th.team'), function (row) { return row.team === '—' ? '—' : teamLink(row.team); }),
               makeStatsColumn('races', t('stats.starts_short'), function (row) { return row.races; }),
@@ -3943,13 +3993,13 @@ function renderDetail(seriesId, subPath) {
                 renderTeamTable(teamData);
               });
             }
-          } else if (teamEmpty) {
-            teamEmpty.classList.remove('hidden');
+            } else if (teamEmpty) {
+              teamEmpty.classList.remove('hidden');
+            }
           }
         }
 
-        // Manufacturer stats (from backend data: data.manufacturers).
-        var manRowsRaw = data && data.manufacturers ? data.manufacturers : [];
+        // Manufacturer stats — dataset from refillStatsDatasets() (class-aware).
         var manTable = document.getElementById('manufacturer-stats-table');
         var manEmpty = document.getElementById('manufacturer-stats-empty');
         var manStatsFilterInput = document.getElementById('manufacturer-stats-filter');
@@ -3957,6 +4007,8 @@ function renderDetail(seriesId, subPath) {
         setupMinStartsSelect(manStatsMinStartsSelect, 'manufacturer');
         var manWrap = document.getElementById('manufacturer-stats-wrap');
         var showManufacturerStats = shouldShowManufacturerStats(seriesKeyStats);
+        var renderManTable = null;
+        var manColumns = null;
         if (manWrap) manWrap.classList.toggle('hidden', !showManufacturerStats);
         if (!showManufacturerStats) {
           if (manTable) {
@@ -3966,43 +4018,7 @@ function renderDetail(seriesId, subPath) {
           if (manEmpty) manEmpty.classList.add('hidden');
         } else if (manTable) {
           var manTbody = manTable.querySelector('tbody');
-          if (manRowsRaw && manRowsRaw.length > 0 && manTbody) {
-            if (manEmpty) manEmpty.classList.add('hidden');
-            var manData = manRowsRaw.map(function (row) {
-              return {
-                pos: 0,
-                manufacturer: row.manufacturer || '',
-                races: row.races || 0,
-                wins: row.wins || 0,
-                points: row.points || 0,
-                poles: row.poles || 0,
-                top2: row.top2 || 0,
-                top3: row.top3 || 0,
-                podiums: row.podiums != null ? row.podiums : (row.wins || 0) + (row.top2 || 0) + (row.top3 || 0),
-                top5: row.top5 || 0,
-                top10: row.top10 || 0,
-                top15: row.top15 || 0,
-                top20: row.top20 || 0,
-                fastest_laps: row.fastest_laps || 0,
-                dnfs: row.dnfs || 0,
-                sprint_wins: row.sprint_wins || 0,
-                sprint_podiums: row.sprint_podiums || 0,
-                feature_wins: row.feature_wins || 0,
-                feature_podiums: row.feature_podiums || 0,
-                avg_start: row.avg_start,
-                avg_qualifying: row.avg_qualifying,
-                avg_finish: row.avg_finish,
-                stage_wins: row.stage_wins || 0,
-                stage_points: row.stage_points || 0,
-                avg_stage_points: row.avg_stage_points,
-                q2_passes: row.q2_passes != null ? row.q2_passes : 0,
-                q3_passes: row.q3_passes != null ? row.q3_passes : 0,
-                laps_led: row.laps_led || 0,
-                laps_completed: row.laps_completed != null ? row.laps_completed : 0,
-                laps_completed_pct: row.laps_completed_pct,
-                pos_diff: row.pos_diff
-              };
-            });
+          if (manTbody) {
             function manPassesFilter(row) {
               var minStarts = 0;
               if (manStatsMinStartsSelect && manStatsMinStartsSelect.value) {
@@ -4018,7 +4034,7 @@ function renderDetail(seriesId, subPath) {
               return haystack.indexOf(q) !== -1;
             }
 
-            function renderManTable(list) {
+            renderManTable = function (list) {
               var filtered = list.filter(manPassesFilter);
               manTbody.innerHTML = filtered.map(function (row, idx) {
                 var displayRow = Object.assign({}, row, { pos: idx + 1 });
@@ -4027,10 +4043,12 @@ function renderDetail(seriesId, subPath) {
                 }).join('');
                 return '<tr>' + td + '</tr>';
               }).join('');
-            }
+            };
 
+            if (manData.length > 0) {
+            if (manEmpty) manEmpty.classList.add('hidden');
             var manHeadRow = manTable.querySelector('thead tr');
-            var manColumns = [
+            manColumns = [
               makeStatsColumn('pos', t('th.pos'), function (row) { return row.pos; }),
               makeStatsColumn('manufacturer', isEngineStatsSeries ? t('th.engine') : t('th.manufacturer'), function (row) { return esc(dash(row.manufacturer || '')); }),
               makeStatsColumn('races', t('stats.starts'), function (row) { return row.races; }),
@@ -4125,11 +4143,38 @@ function renderDetail(seriesId, subPath) {
                 renderManTable(manData);
               });
             }
-          } else if (manEmpty) {
-            manEmpty.classList.remove('hidden');
+            } else if (manEmpty) {
+              manEmpty.classList.remove('hidden');
+            }
           }
         }
+
+        if (statsClassSelect) {
+          statsClassSelect.addEventListener('change', function () {
+            refillStatsDatasets();
+            applyDefaultStatsSort(statsRows, seriesKeyStats, driverNumericKeys, 'driver');
+            renderStatsTable(statsRows);
+            if (renderTeamTable && teamColumns) {
+              if (teamEmpty) teamEmpty.classList.toggle('hidden', teamData.length === 0);
+              if (teamData.length > 0) {
+                applyDefaultStatsSort(teamData, seriesKeyStats, driverNumericKeys, 'team');
+                renderTeamTable(teamData);
+              } else if (teamTable && teamTable.querySelector('tbody')) {
+                teamTable.querySelector('tbody').innerHTML = '';
+              }
+            }
+            if (showManufacturerStats && renderManTable && manColumns) {
+              if (manEmpty) manEmpty.classList.toggle('hidden', manData.length === 0);
+              if (manData.length > 0) {
+                applyDefaultStatsSort(manData, seriesKeyStats, driverNumericKeys, 'manufacturer');
+                renderManTable(manData);
+              } else if (manTable && manTable.querySelector('tbody')) {
+                manTable.querySelector('tbody').innerHTML = '';
+              }
+            }
+          });
         }
+        } // end renderStatsInner
 
       })
       .catch(function () {
@@ -4177,11 +4222,13 @@ function renderDetail(seriesId, subPath) {
         var schedTable = document.getElementById('schedule-table');
         var schedWrap = schedTable && schedTable.closest('.table-wrap');
         var schedBody = document.querySelector('#schedule-table tbody');
-        var regularBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.regular_season')) + '</td></tr>';
-        var inSeasonBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.in_season_challenge')) + '</td></tr>';
-        var playoffsBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.playoffs')) + '</td></tr>';
-        var cupChaseBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.cup_series_chase')) + '</td></tr>';
-        var theChaseBanner = '<tr class="schedule-section-banner"><td colspan="5">' + esc(t('schedule.the_chase')) + '</td></tr>';
+        // Full Schedule column layouts (A): Circuit + Location always.
+        // Multi-race adds Race (session); single-race weekends omit Race.
+        var regularBanner = '<tr class="schedule-section-banner"><td colspan="6">' + esc(t('schedule.regular_season')) + '</td></tr>';
+        var inSeasonBanner = '<tr class="schedule-section-banner"><td colspan="6">' + esc(t('schedule.in_season_challenge')) + '</td></tr>';
+        var playoffsBanner = '<tr class="schedule-section-banner"><td colspan="6">' + esc(t('schedule.playoffs')) + '</td></tr>';
+        var cupChaseBanner = '<tr class="schedule-section-banner"><td colspan="6">' + esc(t('schedule.cup_series_chase')) + '</td></tr>';
+        var theChaseBanner = '<tr class="schedule-section-banner"><td colspan="6">' + esc(t('schedule.the_chase')) + '</td></tr>';
         var supercarsSprintBanner = '<tr class="schedule-section-banner"><td colspan="7">' + esc(t('schedule.supercars_sprint')) + '</td></tr>';
         var supercarsEnduroBanner  = '<tr class="schedule-section-banner"><td colspan="7">' + esc(t('schedule.supercars_enduro')) + '</td></tr>';
         var supercarsFinalsBanner  = '<tr class="schedule-section-banner"><td colspan="7">' + esc(t('schedule.supercars_finals')) + '</td></tr>';
@@ -4191,9 +4238,7 @@ function renderDetail(seriesId, subPath) {
         var isSupercars = (seriesKeySched === 'supercars');
         var isIndycar = (seriesKeySched === 'indycar' || pathSeriesSlug === 'indycar');
         var isSuperFormula = (seriesKeySched === 'super_formula' || pathSeriesSlug === 'super_formula');
-        // Current F1 season slug: /season/f1-2026. This URL should show
-        // current F1 season schedule in the same layout as /series/f1 used to
-        // (5 columns with Time), not the "historical" 4-column template.
+        // Current F1 season slug: /season/f1-2026. Live 2025/2026 F1 go through grouped multi-race (A).
         var F1_CURRENT_SEASON_SLUG = 'f1-2026';
         var F1_2025_SEASON_SLUG = 'f1-2025';
         var isF1CurrentSeasonSlug = (seriesKeySched === F1_CURRENT_SEASON_SLUG || pathSeriesSlug === F1_CURRENT_SEASON_SLUG);
@@ -4201,8 +4246,8 @@ function renderDetail(seriesId, subPath) {
           || seriesKeySched === F1_2025_SEASON_SLUG
           || pathSeriesSlug === F1_2025_SEASON_SLUG;
         var isF1 = (seriesKeySched === 'f1' || pathSeriesSlug === 'f1' || isF1CurrentSeasonSlug);
-        // Historical F1 seasons: /season/f1-2025, etc. (but NOT the current season).
-        var isF1Season = !isF1CurrentSeasonSlug && (seriesKeySched.indexOf('f1-') === 0 || pathSeriesSlug.indexOf('f1-') === 0);
+        // Historical F1 seasons: /season/f1-20xx excluding live 2025/2026 (those use grouped A).
+        var isF1Season = !isF1ScheduleWithTime && (seriesKeySched.indexOf('f1-') === 0 || pathSeriesSlug.indexOf('f1-') === 0);
         var isF2 = (seriesKeySched === 'f2' || pathSeriesSlug === 'f2');
         var isF3 = (seriesKeySched === 'f3' || pathSeriesSlug === 'f3');
         var isMultiRaceSchedule = (window.TGA && window.TGA.isMultiRaceSeriesSchedule)
@@ -4210,7 +4255,7 @@ function renderDetail(seriesId, subPath) {
           : false;
         var isGroupedRaceSchedule = isSupercars || isMultiRaceSchedule;
         var isStockCarSeries = ['nascar_cup', 'noaps', 'nascar_truck', 'arca', 'nascar_modified'].indexOf(seriesKeySched) >= 0;
-        var schedColspan = isStockCarSeries ? 6 : 5;
+        var schedColspan = 6;
         var regularBannerStock = '<tr class="schedule-section-banner"><td colspan="' + schedColspan + '">' + esc(t('schedule.regular_season')) + '</td></tr>';
         var inSeasonBannerStock = '<tr class="schedule-section-banner"><td colspan="' + schedColspan + '">' + esc(t('schedule.in_season_challenge')) + '</td></tr>';
         var playoffsBannerStock = '<tr class="schedule-section-banner"><td colspan="' + schedColspan + '">' + esc(t('schedule.playoffs')) + '</td></tr>';
@@ -4244,7 +4289,7 @@ function renderDetail(seriesId, subPath) {
         if (schedHeadRow) {
           var seriesKey = seriesKeySched;
           if (isGroupedRaceSchedule && isSuperFormula) {
-            // Super Formula: no separate Round column — the round link lives on the Race cell.
+            // A SF: Race | Event | Circuit | Location | Date | Time (no Round)
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.race_num')) + '</th>' +
               '<th>' + esc(t('th.event')) + '</th>' +
@@ -4253,6 +4298,7 @@ function renderDetail(seriesId, subPath) {
               '<th>' + esc(t('th.date')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else if (isGroupedRaceSchedule) {
+            // A multi-race: Round | Race | Event | Circuit | Location | Date | Time
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.round')) + '</th>' +
               '<th>' + esc(t('th.race_num')) + '</th>' +
@@ -4262,58 +4308,40 @@ function renderDetail(seriesId, subPath) {
               '<th>' + esc(t('th.date')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else if (seriesKey === 'imsa') {
-            // IMSA: Rnd. | Race | Length | Classes | Circuit | Location | Date
+            // A IMSA: Round | Event | Length | Classes | Circuit | Location | Date
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.round')) + '</th>' +
-              '<th>' + esc(t('th.race_col')) + '</th>' +
+              '<th>' + esc(t('th.event')) + '</th>' +
               '<th>' + esc(t('schedule.length')) + '</th>' +
               '<th>' + esc(t('schedule.classes')) + '</th>' +
               '<th>' + esc(t('th.circuit')) + '</th>' +
               '<th>' + esc(t('th.location')) + '</th>' +
               '<th>' + esc(t('th.date')) + '</th>';
-          } else if (isIndycar) {
-            schedHeadRow.innerHTML =
-              '<th>' + esc(t('th.rd')) + '</th>' +
-              '<th>' + esc(t('th.date')) + '</th>' +
-              '<th>' + esc(t('th.race_col')) + '</th>' +
-              '<th>' + esc(t('th.track')) + '</th>' +
-              '<th>' + esc(t('th.location')) + '</th>' +
-              '<th>' + esc(t('th.time')) + '</th>';
-          } else if (isSuperFormula) {
-            schedHeadRow.innerHTML =
-              '<th>' + esc(t('th.rd')) + '</th>' +
-              '<th>' + esc(t('th.date')) + '</th>' +
-              '<th>' + esc(t('th.venue')) + '</th>' +
-              '<th>' + esc(t('th.time')) + '</th>';
-          } else if (isF1ScheduleWithTime && !isMultiRaceSchedule) {
-            // F1 (2026 / 2025): Round | Grand Prix | Circuit | Date | Time
-            schedHeadRow.innerHTML =
-              '<th>' + esc(t('th.round')) + '</th>' +
-              '<th>' + esc(t('standings.grand_prix')) + '</th>' +
-              '<th>' + esc(t('th.circuit')) + '</th>' +
-              '<th>' + esc(t('th.date')) + '</th>' +
-              '<th>' + esc(t('th.time')) + '</th>';
           } else if (isF1Season) {
-            // Historical F1 seasons: Round | Grand Prix | Circuit | Race date (no Time column)
+            // A historical F1: Round | Grand Prix | Circuit | Location | Date (no Time)
             schedHeadRow.innerHTML =
               '<th>' + esc(t('th.round')) + '</th>' +
               '<th>' + esc(t('standings.grand_prix')) + '</th>' +
               '<th>' + esc(t('th.circuit')) + '</th>' +
+              '<th>' + esc(t('th.location')) + '</th>' +
               '<th>' + esc(t('th.race_date')) + '</th>';
           } else if (isStockCarSeries) {
+            // A single-race: Round | Event | Circuit | Location | Date | Time
             schedHeadRow.innerHTML =
-              '<th>' + esc(t('th.no')) + '</th>' +
-              '<th>' + esc(t('th.race_col')) + '</th>' +
-              '<th>' + esc(t('th.track')) + '</th>' +
+              '<th>' + esc(t('th.round')) + '</th>' +
+              '<th>' + esc(t('th.event')) + '</th>' +
+              '<th>' + esc(t('th.circuit')) + '</th>' +
               '<th>' + esc(t('th.location')) + '</th>' +
               '<th>' + esc(t('th.date')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           } else {
+            // A single-race (PSC, ELMS, WEC, GTWCE End, Super GT, IndyCar, …)
             schedHeadRow.innerHTML =
-              '<th>' + esc(t('th.no')) + '</th>' +
+              '<th>' + esc(t('th.round')) + '</th>' +
+              '<th>' + esc(t('th.event')) + '</th>' +
+              '<th>' + esc(t('th.circuit')) + '</th>' +
+              '<th>' + esc(t('th.location')) + '</th>' +
               '<th>' + esc(t('th.date')) + '</th>' +
-              '<th>' + esc(t('th.race_col')) + '</th>' +
-              '<th class="col-location">' + esc(t('th.location')) + '</th>' +
               '<th>' + esc(t('th.time')) + '</th>';
           }
         }
@@ -4363,11 +4391,11 @@ function renderDetail(seriesId, subPath) {
                 ? '<a href="/event/' + encodeURIComponent((r.event_id + '').toLowerCase().replace(/_/g, '-')) + '" class="event-link">' + esc(r.race) + '</a>'
                 : esc(r.race);
               return '<tr>' +
-                '<td>' + r.rd + '</td>' +
-                '<td>' + esc(r.date) + '</td>' +
+                '<td class="col-num">' + r.rd + '</td>' +
                 '<td>' + raceCell + '</td>' +
                 '<td>' + esc(localizeVenueLine(r.track)) + '</td>' +
                 '<td>' + esc(localizeLocation(r.location)) + '</td>' +
+                '<td>' + esc(r.date) + '</td>' +
                 '<td class="col-time">' + esc(timeLabel) + '</td>' +
                 '</tr>';
             }).join('');
@@ -4385,6 +4413,7 @@ function renderDetail(seriesId, subPath) {
                 '<td class="col-num">' + r.rd + '</td>' +
                 '<td>' + esc(localizeEventName(r.grand_prix)) + '</td>' +
                 '<td>' + esc(localizeVenueLine(r.circuit)) + '</td>' +
+                '<td>' + esc(localizeLocation(r.location || '')) + '</td>' +
                 '<td>' + esc(r.date) + '</td>' +
                 '</tr>';
             }).join('');
@@ -4399,13 +4428,12 @@ function renderDetail(seriesId, subPath) {
             schedBody.innerHTML = f1SeasonSched.map(function (r) {
               var dateParts = String(r.date || '').split(', ');
               var dateOnly = dateParts.length > 1 ? dateParts.slice(0, -1).join(', ') : (r.date || '—');
-              var timeOnly = dateParts.length > 1 ? dateParts[dateParts.length - 1] : '—';
               return '<tr>' +
                 '<td class="col-num">' + r.rd + '</td>' +
                 '<td>' + esc(localizeEventName(r.grand_prix)) + '</td>' +
                 '<td>' + esc(localizeVenueLine(r.circuit)) + '</td>' +
+                '<td>' + esc(localizeLocation(r.location || '')) + '</td>' +
                 '<td>' + esc(dateOnly) + '</td>' +
-                '<td class="col-time">' + esc(timeOnly) + '</td>' +
                 '</tr>';
             }).join('');
             if (schedTable) makeSimpleTableSortable(schedTable);
@@ -4566,9 +4594,27 @@ function renderDetail(seriesId, subPath) {
             );
           }
 
+          // Single-race A helpers: Circuit + geo Location (never put circuit_name in Location).
+          var locTextSingleRaw = e.location || '';
+          if (isStockCarSeries && window.TGA.stockCarDisplayLocation) {
+            locTextSingleRaw = window.TGA.stockCarDisplayLocation(e.circuit_name || '', e.location || '') || '';
+          }
+          var locTextSingle = locTextSingleRaw ? localizeLocation(locTextSingleRaw) : '—';
+          var locationCellSingle;
+          if (opts.continuation || opts.groupContinuation) {
+            locationCellSingle = '';
+          } else if (opts.groupFirst && opts.groupRowSpan && opts.groupRowSpan > 1) {
+            locationCellSingle = '<td rowspan="' + opts.groupRowSpan + '" class="col-location-span">' + esc(locTextSingle) + '</td>';
+          } else if (opts.circuitContinuation) {
+            locationCellSingle = '';
+          } else if (opts.circuitFirst && opts.circuitRowSpan && opts.circuitRowSpan > 1) {
+            locationCellSingle = '<td rowspan="' + opts.circuitRowSpan + '" class="col-location-span">' + esc(locTextSingle) + '</td>';
+          } else {
+            locationCellSingle = '<td>' + esc(locTextSingle) + '</td>';
+          }
+
           if (seriesKeyRow === 'imsa') {
-            // IMSA: Rnd. | Race | Length | Classes | Circuit | Location | Date
-            // Extra race length and class data set on the client.
+            // A IMSA: Round | Event | Length | Classes | Circuit | Location | Date
             var imsaMeta = {
               'IMSA_2026_PRE_SEASON_TEST': { classes: 'All' },
               'IMSA_2026_1': { length: '24 hours', classes: 'All' },
@@ -4586,8 +4632,6 @@ function renderDetail(seriesId, subPath) {
             var meta = imsaMeta[e.id] || {};
             var lengthCell = '<td>' + esc(localizeImsaScheduleLength(meta.length || '—')) + '</td>';
             var classesCell = '<td>' + esc(localizeImsaScheduleClasses(meta.classes || '—')) + '</td>';
-            var locTextImsa = e.location ? localizeLocation(e.location) : '—';
-            var locationCellImsa = '<td>' + esc(locTextImsa) + '</td>';
             var dateLabelImsa = (window.TGA && window.TGA.formatEventRaceStartDate)
               ? window.TGA.formatEventRaceStartDate(e)
               : (formatShortDate ? formatShortDate((e.start_date || e.date || '').slice(0, 10)) : (e.start_date || e.date || ''));
@@ -4595,115 +4639,40 @@ function renderDetail(seriesId, subPath) {
             return (
               '<tr>' +
                 numCell +
-              '<td>' + link + '</td>' +
+                eventCell +
                 lengthCell +
                 classesCell +
                 trackCell +
-                locationCellImsa +
+                locationCellSingle +
                 dateCellImsa +
               '</tr>'
             );
           }
 
-          if ((seriesKeyRow === 'f1' || seriesKeyRow === F1_CURRENT_SEASON_SLUG || seriesKeyRow === F1_2025_SEASON_SLUG) && !isGroupedRaceSchedule) {
-            // F1 (2026 / 2025) from API: # | Grand Prix | Circuit | Date | Time
-            var timeLabelF1 = getScheduleTimeLabel(e, seriesKeyRow);
+          if (seriesKeyRow.indexOf('f1-') === 0) {
+            // A historical F1: Round | Grand Prix | Circuit | Location | Date
             return (
               '<tr>' +
                 numCell +
                 eventCell +
                 trackCell +
-                dateCell +
-                '<td class="col-time">' + esc(timeLabelF1 || '—') + '</td>' +
-              '</tr>'
-            );
-          }
-
-          if (seriesKeyRow.indexOf('f1-') === 0 && seriesKeyRow !== F1_2025_SEASON_SLUG) {
-            // Historical F1 seasons: # | Grand Prix | Circuit | Date (no Time)
-            return (
-              '<tr>' +
-                numCell +
-                eventCell +
-                trackCell +
+                locationCellSingle +
                 dateCell +
               '</tr>'
             );
           }
 
-          if (seriesKeyRow === 'indycar') {
-            var locCellIndy = '<td>' + esc(e.location ? localizeLocation(e.location) : '—') + '</td>';
-            var timeLabelIndy = getScheduleTimeLabel(e, seriesKeyRow);
-            return (
-              '<tr>' +
-                numCell +
-                dateCell +
-                eventCell +
-                trackCell +
-                locCellIndy +
-                '<td class="col-time">' + esc(timeLabelIndy || '—') + '</td>' +
-              '</tr>'
-            );
-          }
-
-          if (seriesKeyRow === 'super_formula') {
-            var venueSfRaw = (window.TGA && window.TGA.superFormulaVenueLine)
-              ? window.TGA.superFormulaVenueLine(e)
-              : ((e.circuit_name || '') + (e.location ? ' — ' + e.location : '') || '—');
-            var venueSf = venueSfRaw === '—' ? '—' : venueSfRaw;
-            var trackSlugSf = slugify(e.circuit_name || e.location || venueSf);
-            var venueCellSf = trackSlugSf && trackSlugSf !== '—'
-              ? '<td><a href="/track/' + encodeURIComponent(trackSlugSf) + '" class="track-link" data-track-name="' + esc(e.circuit_name || venueSfRaw) + '">' + esc(venueSf) + '</a></td>'
-              : '<td>' + esc(venueSf) + '</td>';
-            var timeLabelSf = getScheduleTimeLabel(e, seriesKeyRow);
-            return (
-              '<tr>' +
-                numCell +
-                dateCell +
-                venueCellSf +
-                '<td class="col-time">' + esc(timeLabelSf || '—') + '</td>' +
-              '</tr>'
-            );
-          }
-
-          if (isStockCarSeries) {
-            // NASCAR: # | Race | Track | Location | Date | Local (date + time) | MSK (date + time)
-            // Track — track name only; Location — city/state only, no duplication
-            var raceCellStock = '<td>' + link + '</td>';
-            var locTextStockRaw = (window.TGA.stockCarDisplayLocation)
-              ? window.TGA.stockCarDisplayLocation(e.circuit_name || '', e.location || '')
-              : (e.location || '—');
-            if (!locTextStockRaw) locTextStockRaw = '—';
-            var locTextStock = locTextStockRaw === '—' ? '—' : localizeLocation(locTextStockRaw);
-            var locationCellStock;
-            if (opts.continuation || opts.groupContinuation) {
-              locationCellStock = '';
-            } else if (opts.groupFirst && opts.groupRowSpan && opts.groupRowSpan > 1) {
-              locationCellStock = '<td rowspan="' + opts.groupRowSpan + '" class="col-location-span">' + esc(locTextStock) + '</td>';
-            } else {
-              locationCellStock = '<td>' + esc(locTextStock) + '</td>';
-            }
-            var timeLabelStock = getScheduleTimeLabel(e, seriesKeyRow);
-            return (
-              '<tr>' +
-                numCell +
-                raceCellStock +
-                trackCell +
-                locationCellStock +
-                dateCell +
-                '<td class="col-time">' + esc(timeLabelStock || '—') + '</td>' +
-              '</tr>'
-            );
-          }
-
-          var timeLabelDefault = getScheduleTimeLabel(e, seriesKeyRow);
+          // A single-race: Round | Event | Circuit | Location | Date | Time
+          // (stock-car, IndyCar, PSC, ELMS, WEC, GTWCE End, Super GT, …)
+          var timeLabelSingle = getScheduleTimeLabel(e, seriesKeyRow);
           return (
             '<tr' + (opts.continuation ? ' class="schedule-row-continuation"' : '') + '>' +
               numCell +
-              dateCell +
               eventCell +
               trackCell +
-              '<td class="col-time">' + esc(timeLabelDefault || '—') + '</td>' +
+              locationCellSingle +
+              dateCell +
+              '<td class="col-time">' + esc(timeLabelSingle || '—') + '</td>' +
             '</tr>'
           );
         }
@@ -5162,13 +5131,17 @@ function rebuildNascarCupDayFromDaytona(baseData) {
     .catch(function () { return baseData; });
 }
 
-// ─── IMSA static class/regulations tables (/series/imsa/classes) ─────────────
+// ─── Static class/regulations tables (/series/{id}/classes) ───────────────────
 function renderImsaClassesSpecIfNeeded() {
   var path = (window.location && window.location.pathname) || '';
-  if (path.indexOf('/series/imsa/classes') !== 0) return;
+  var m = path.match(/^\/series\/([a-z0-9_-]+)\/classes/i);
+  if (!m) return;
+  var seriesKey = String(m[1] || '').toLowerCase().replace(/-/g, '_');
   var el = document.getElementById('imsa-classes-static');
-  var spec = window.IMSA_CLASSES_SPEC;
+  var catalog = window.SERIES_CLASSES_SPEC || {};
+  var spec = seriesKey === 'imsa' ? window.IMSA_CLASSES_SPEC : catalog[seriesKey];
   if (!el || !spec) return;
+  el.classList.remove('hidden');
 
   var locHeader = (typeof localizeTableHeader === 'function') ? localizeTableHeader : function (h) { return h; };
   var locKey = (typeof localizeSpecKey === 'function') ? localizeSpecKey : function (k) { return k; };

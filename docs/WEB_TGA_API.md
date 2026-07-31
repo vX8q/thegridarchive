@@ -7,7 +7,7 @@ The frontend uses **IIFE scripts** + `window.TGA` as a shared namespace (no ES m
 ```
 data/*  →  utils/fetch-json.js  →  lib/api.js  →  lib/state.js
   →  tga-i18n.js  →  tga-utils.js  →  components/*  →  pages/schedule.js  →  pages/list.js
-  →  series-supercars.js  →  tga-series.js  →  pages/series.js  →  lib/router.js  →  app.js
+  →  tga-series.js  →  pages/series.js  →  lib/router.js  →  app.js
 ```
 
 ## `lib/api.js` — HTTP API client
@@ -20,7 +20,7 @@ Wraps `window.TGA.fetchJSON` with typed methods. All `/api/*` fetches should go 
 | `getSeriesMeta(seriesId)` | `/api/series/:id` |
 | `getSeriesTeams(seriesId)` | `/api/series/:id/teams` |
 | `getSeriesStandings(seriesId, options?)` | `/api/series/:id/standings` |
-| `getSeriesStats(seriesId)` | `/api/series/:id/stats` |
+| `getSeriesStats(seriesId, options?)` | `/api/series/:id/stats` (`options.season`, cache-bust) |
 | `getSeriesEvents(seriesId, season?, options?)` | `/api/series/:id/events` |
 | `getSeriesHistory(seriesId)` | `/api/series/:id/history` |
 | `getEvent(eventId, options?)` | `/api/events/:id` |
@@ -72,7 +72,7 @@ Single source for: `esc`, `dash`, `slugify`, `driverDisplayName`, guest-entry he
 
 ## `tga-series.js` — F1 static data helpers
 
-Exports F1 2025 teams/chassis/engine/tech-spec data and `buildF1TeamsTableHTML`.
+Exports F1 2025 teams/chassis/engine/tech-spec data (`window.TGA.F1_2025_*`). Teams table HTML is built in `web/pages/series.js`.
 
 **Does not** export `renderDetail` — see `pages/series.js`.
 

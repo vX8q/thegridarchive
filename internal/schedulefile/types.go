@@ -111,10 +111,24 @@ type SpecRow struct {
 
 // TeamsWithSpec is teams + car models + technical specification.
 type TeamsWithSpec struct {
-	Teams             []TeamJSON `json:"teams"`
-	TeamsNonChartered []TeamJSON `json:"teams_non_chartered,omitempty"` // Cup: non-chartered teams
-	CarModels         []CarModel `json:"car_models,omitempty"`
-	TechnicalSpec     []SpecRow  `json:"technical_spec,omitempty"`
+	Teams             []TeamJSON         `json:"teams"`
+	TeamsNonChartered []TeamJSON         `json:"teams_non_chartered,omitempty"` // Cup: non-chartered teams
+	CarModels         []CarModel         `json:"car_models,omitempty"`
+	TechnicalSpec     []SpecRow          `json:"technical_spec,omitempty"`
+	Engines           []EngineSpecRow    `json:"engines,omitempty"`
+	Homologation      []HomologationRow  `json:"homologation,omitempty"`
+}
+
+// EngineSpecRow is a car-model → engine line for Car Specs (e.g. Supercars).
+type EngineSpecRow struct {
+	Model string `json:"model"`
+	Spec  string `json:"spec"`
+}
+
+// HomologationRow is manufacturer → homologating team for Car Specs.
+type HomologationRow struct {
+	Manufacturer string `json:"manufacturer"`
+	Team         string `json:"team"`
 }
 
 // StandingRow is a championship standings row (Pos, Driver, Team, Manufacturer/Car, Pts, Stages + per-race).

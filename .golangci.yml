@@ -6,6 +6,7 @@ linters-settings:
   misspell:
     ignore-words:
       - Greif # Jonas Greif (Porsche Supercup driver surname)
+      - Sargeant # Logan Sargeant (F1 driver surname)
 
 linters:
   enable:

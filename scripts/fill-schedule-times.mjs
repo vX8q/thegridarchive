@@ -71,9 +71,9 @@ const supercars = [
   ['SUPERCARS_2026_23', '2026-07-31', '6:00 PM', 'Australia/Perth'],
   ['SUPERCARS_2026_24', '2026-08-01', '12:55 PM', 'Australia/Perth'],
   ['SUPERCARS_2026_25', '2026-08-02', '3:15 PM', 'Australia/Perth'],
-  ['SUPERCARS_2026_26', '2026-08-21', '12:45 PM', 'Australia/Brisbane'],
-  ['SUPERCARS_2026_27', '2026-08-22', '4:10 PM', 'Australia/Brisbane'],
-  ['SUPERCARS_2026_28', '2026-08-23', '3:15 PM', 'Australia/Brisbane'],
+  ['SUPERCARS_2026_26', '2026-08-22', '12:45 PM', 'Australia/Brisbane'],
+  ['SUPERCARS_2026_27', '2026-08-22', '4:15 PM', 'Australia/Brisbane'],
+  ['SUPERCARS_2026_28', '2026-08-23', '3:20 PM', 'Australia/Brisbane'],
   ['SUPERCARS_2026_29', '2026-09-13', '2:30 PM', 'Australia/Adelaide'],
   ['SUPERCARS_2026_30', '2026-10-11', '11:45 AM', 'Australia/Sydney'],
   ['SUPERCARS_2026_31', '2026-10-24', '3:15 PM', 'Australia/Brisbane'],
@@ -289,7 +289,7 @@ patchSchedule('gtwce_sprint.json', [
   ['GTWCE_SPRINT_2026_1', '2026-05-02', '15:30', 'Europe/London'],
   ['GTWCE_SPRINT_2026_2', '2026-07-18', '21:30', 'Europe/Rome'],
   ['GTWCE_SPRINT_2026_3', '2026-08-01', '15:30', 'Europe/Berlin'],
-  ['GTWCE_SPRINT_2026_4', '2026-08-21', '15:30', 'Europe/Amsterdam'],
+  ['GTWCE_SPRINT_2026_4', '2026-09-19', '14:45', 'Europe/Amsterdam'],
   ['GTWCE_SPRINT_2026_5', '2026-10-02', '15:30', 'Europe/Madrid'],
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
 
@@ -303,7 +303,7 @@ const imsaLocal = [
   ['IMSA_2026_6', '2026-06-28', 'America/New_York'],
   ['IMSA_2026_7', '2026-07-12', 'America/Toronto', '2:05 PM'],
   ['IMSA_2026_8', '2026-08-02', 'America/Chicago'],
-  ['IMSA_2026_9', '2026-08-23', 'America/New_York'],
+  ['IMSA_2026_9', '2026-08-23', 'America/New_York', '12:10 PM'],
   ['IMSA_2026_10', '2026-09-20', 'America/Indiana/Indianapolis'],
   ['IMSA_2026_11', '2026-10-03', 'America/New_York'],
 ];
@@ -321,10 +321,13 @@ const indycarLocal = [
   ['INDYCAR_2026_9', '2026-06-07', 'America/Chicago'],
   ['INDYCAR_2026_10', '2026-06-21', 'America/Chicago'],
   ['INDYCAR_2026_11', '2026-07-05', 'America/New_York'],
+  ['INDYCAR_2026_12', '2026-07-20', 'America/New_York', '3:00 PM'],
   ['INDYCAR_2026_13', '2026-08-09', 'America/Los_Angeles'],
   ['INDYCAR_2026_14', '2026-08-16', 'America/Toronto'],
-  ['INDYCAR_2026_16', '2026-08-29', 'America/Chicago'],
-  ['INDYCAR_2026_17', '2026-08-30', 'America/Chicago'],
+  // Official IndyCar times are ET; store track-local wall clock for America/*.
+  ['INDYCAR_2026_15', '2026-08-23', 'America/New_York', '11:30 AM'],
+  ['INDYCAR_2026_16', '2026-08-29', 'America/Chicago', '1:30 PM'],
+  ['INDYCAR_2026_17', '2026-08-30', 'America/Chicago', '12:00 PM'],
   ['INDYCAR_2026_18', '2026-09-06', 'America/Los_Angeles'],
 ];
 patchLocal12Times('indycar.json', indycarLocal);
@@ -334,7 +337,7 @@ patchRaceTimes('super_gt.json', [
   ['SUPER_GT_2026_1', '2026-04-12', '14:00', 'Asia/Tokyo'],
   ['SUPER_GT_2026_2', '2026-05-04', '14:00', 'Asia/Tokyo'],
   ['SUPER_GT_2026_4', '2026-08-02', '14:00', 'Asia/Tokyo'],
-  ['SUPER_GT_2026_5', '2026-08-23', '14:00', 'Asia/Tokyo'],
+  ['SUPER_GT_2026_5', '2026-08-23', '13:30', 'Asia/Tokyo'],
   ['SUPER_GT_2026_6', '2026-09-20', '14:00', 'Asia/Tokyo'],
   ['SUPER_GT_2026_7', '2026-10-18', '14:00', 'Asia/Tokyo'],
   ['SUPER_GT_2026_8', '2026-11-08', '14:00', 'Asia/Tokyo'],

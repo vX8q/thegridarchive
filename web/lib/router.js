@@ -110,7 +110,7 @@
       var crewChiefSlug = path.slice('/crew-chief/'.length).replace(/\/.*$/, '');
       if (crewChiefSlug) { renderCrewChiefDetail(crewChiefSlug); return; }
     }
-    // F1 season pages: /season/f1-2025, /season/f1-2025/standings, etc. (1950–2025)
+    // F1 season pages: /season/f1-2024, /season/f1-2025/standings, etc.
     if (path.indexOf('/season/') === 0) {
       var seasonRest = path.slice('/season/'.length);
       var seasonSlash = seasonRest.indexOf('/');

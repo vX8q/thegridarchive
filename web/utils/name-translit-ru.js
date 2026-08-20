@@ -306,9 +306,9 @@
     var t = stripDriverMarkers(name);
     var m = t.match(/^((?:[A-Z]\.\s*)+)\s*(.+)$/i);
     if (!m) return translitDriverNameCore(t);
-    var initials = m[1].trim().split(/\s+/).map(function (init) {
-      var letter = init.replace(/\./g, '').charAt(0);
-      return latinInitialToRu(letter) + '.';
+    var initToks = m[1].match(/[A-Za-z]\./g) || [];
+    var initials = initToks.map(function (tok) {
+      return latinInitialToRu(tok.charAt(0)) + '.';
     }).join(' ');
     var surname = translitWord(m[2].trim());
     return initials + ' ' + surname;

@@ -199,7 +199,7 @@
     "pre_season_tests": {
       "sessions": [
         {
-          "title": "2026 Repco Supercars Championship - Test Day - Session #1",
+          "title": "Test Day - Session #1",
           "subtitle": "Wed 18 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -437,7 +437,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Test Day - Session #2",
+          "title": "Test Day - Session #2",
           "subtitle": "Thu 19 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -677,7 +677,7 @@
       ]
     },
     "practice": {
-      "title": "2026 Repco Supercars Championship - Practice 1",
+      "title": "Practice 1",
       "subtitle": "Fri 20 Feb 2026 Sydney, NSW",
       "meta": {
         "Championship": "2026 Repco Supercars Championship",
@@ -917,7 +917,7 @@
     "qualifying": {
       "sessions": [
         {
-          "title": "2026 Repco Supercars Championship - Qualifying - Race 1",
+          "title": "Qualifying - Race 1",
           "subtitle": "Fri 20 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -1180,7 +1180,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Qualifying - Race 2",
+          "title": "Qualifying - Race 2",
           "subtitle": "Sat 21 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -1553,7 +1553,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Qualifying - Race 3",
+          "title": "Qualifying - Race 3",
           "subtitle": "Sun 22 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -1930,7 +1930,7 @@
     "race": {
       "sessions": [
         {
-          "title": "2026 Repco Supercars Championship - Race 1",
+          "title": "Race 1",
           "subtitle": "Fri 20 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -2193,7 +2193,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Race 2",
+          "title": "Race 2",
           "subtitle": "Sat 21 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -2456,7 +2456,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Race 3",
+          "title": "Race 3",
           "subtitle": "Sun 22 Feb 2026 Sydney, NSW",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",

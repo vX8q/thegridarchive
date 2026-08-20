@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestBuildDTMStandings2026PointsAfterOschersleben(t *testing.T) {
+func TestBuildDTMStandings2026PointsAfterLausitzring(t *testing.T) {
 	dataDir, err := filepath.Abs(filepath.Join("..", "..", "data"))
 	if err != nil {
 		t.Fatal(err)
@@ -18,30 +18,30 @@ func TestBuildDTMStandings2026PointsAfterOschersleben(t *testing.T) {
 		t.Fatal("nil standings")
 	}
 
-	// Totals after Round 5 (Oschersleben): race Pts are finish-only;
+	// Totals after Round 6 (Lausitzring): race Pts are finish-only;
 	// qualifying 3/2/1 added by applyDTMQualifyingAwards (matches dtm.com).
 	want := map[string]string{
-		"Maro Engel":           "145",
-		"Nicki Thiim":          "124",
-		"Lucas Auer":           "123",
-		"Thomas Preining":      "117",
-		"Matteo Cairoli":       "94",
-		"Arjun Maini":          "94",
-		"Marco Wittmann":       "91",
-		"Ben Dorr":             "76",
-		"Thierry Vermeulen":    "75",
-		"Mirko Bortolotti":     "73",
+		"Maro Engel":           "155",
+		"Thomas Preining":      "155",
+		"Nicki Thiim":          "138",
+		"Lucas Auer":           "135",
+		"Marco Wittmann":       "132",
+		"Matteo Cairoli":       "126",
+		"Arjun Maini":          "107",
+		"Ben Dorr":             "91",
+		"Luca Engstler":        "86",
+		"Mirko Bortolotti":     "84",
+		"Jules Gounon":         "79",
+		"Thierry Vermeulen":    "79",
+		"Ricardo Feller":       "76",
 		"Kelvin van der Linde": "72",
-		"Luca Engstler":        "67",
-		"Jules Gounon":         "66",
-		"Ricardo Feller":       "64",
 		"Finn Wiebelhaus":      "63",
-		"Marco Mapelli":        "33",
-		"Bastian Buus":         "30",
-		"Tom Kalender":         "24",
-		"Timo Glock":           "21",
+		"Tom Kalender":         "44",
+		"Bastian Buus":         "42",
+		"Marco Mapelli":        "40",
+		"Timo Glock":           "29",
+		"Nicolas Baert":        "7",
 		"Maximilian Paul":      "5",
-		"Nicolas Baert":        "2",
 	}
 
 	got := make(map[string]string, len(st.Rows))

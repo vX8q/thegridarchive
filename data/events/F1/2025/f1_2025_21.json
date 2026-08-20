@@ -3,18 +3,1546 @@
   "series": "FIA Formula 1 World Championship",
   "race": "2025 Sao Paulo Grand Prix",
   "date": "2025-11-09",
-  "track": "Interlagos Circuit",
+  "track": "Autodromo Jose Carlos Pace",
   "location": "Sao Paulo, Brazil",
-  "laps": "",
-  "distance": "",
-  "event_preview": "",
-  "entry_list": [],
+  "laps": "71",
+  "distance": "305.879 km (190.064 miles)",
+  "event_preview": "Autodromo Jose Carlos Pace — better known as Interlagos — measures 4.309 km (2.677 mi) and features 15 turns in Sao Paulo, Brazil, a compact anti-clockwise layout set between two artificial lakes that gave the venue its name. Built in the late 1930s and a Formula 1 World Championship venue since 1973, the circuit is defined by the Senna S through Turns 1–2, a steep climb to the midfield and a long back straight that funnels into the braking zone for Turn 4, rewarding commitment and traction as much as outright power. Running at altitude with frequent weather swings, Interlagos has a long history of safety-car interventions and late race drama. Round 21 of the 2025 Formula 1 World Championship is the fifth Sprint weekend of the season and the penultimate Sprint event of the year, compressing Sprint Qualifying, the Sprint, Grand Prix Qualifying and the 71-lap race into a single weekend. The official race lap record stands at 1:10.540, set by Valtteri Bottas for Mercedes during the 2018 Brazilian Grand Prix, while the all-time qualifying lap record belongs to Bottas as well — a 1:07.281 from Q3 of that same weekend.",
+  "event_preview_ru": "Autodromo Jose Carlos Pace — более известный как Interlagos — имеет протяжённость 4.309 km (2.677 mi) и включает 15 поворотов в Sao Paulo, Бразилия: компактная конфигурация против часовой стрелки между двумя искусственными озёрами, давшими трассе имя. Построенная в конце 1930-х и принимающая этапы чемпионата мира Формулы-1 с 1973 года, трасса узнаётся по Senna S через Turn 1–2, крутому подъёму в середину круга и длинной задней прямой, ведущей к зоне торможения Turn 4, где важны смелость и тяга не меньше абсолютной мощности. Высота над уровнем моря и переменчивая погода давно делают Interlagos местом частых выездов автомобиля безопасности и поздней драмы. 21-й этап сезона Формулы-1 2025 — пятый спринт-уик-энд года и предпоследний спринт сезона: Sprint Qualifying, Sprint, квалификация Гран-при и 71-круговая гонка укладываются в один уик-энд. Официальный рекорд гоночного круга — 1:10.540, установленный Valtteri Bottas за Mercedes на Гран-при Бразилии 2018 года; абсолютный рекорд квалификационного круга также принадлежит Bottas — 1:07.281 из Q3 того же уик-энда.",
+  "tyre_compounds": "Tyre supplier Pirelli brought the C2, C3, and C4 tyre compounds.",
+  "youtube_highlights": [
+    {
+      "id": "55_LalL3E6Y",
+      "title": "Sprint Highlights"
+    },
+    {
+      "id": "MK83clSv6-k",
+      "title": "Race Highlights"
+    }
+  ],
+  "entry_list": [
+    {
+      "number": "1",
+      "driver": "Max Verstappen",
+      "team": "Oracle Red Bull Racing",
+      "manufacturer": "RB21",
+      "constructor": "Red Bull Racing-Honda RBPT",
+      "driver_slug": "max-verstappen"
+    },
+    {
+      "number": "4",
+      "driver": "Lando Norris",
+      "team": "McLaren Formula 1 Team",
+      "manufacturer": "MCL39",
+      "constructor": "McLaren-Mercedes",
+      "driver_slug": "lando-norris"
+    },
+    {
+      "number": "5",
+      "driver": "Gabriel Bortoleto",
+      "team": "Stake F1 Team Kick Sauber",
+      "manufacturer": "C45",
+      "constructor": "Kick Sauber-Ferrari",
+      "driver_slug": "gabriel-bortoleto"
+    },
+    {
+      "number": "6",
+      "driver": "Isack Hadjar",
+      "team": "Visa Cash App Racing Bulls F1 Team",
+      "manufacturer": "VCARB02",
+      "constructor": "Racing Bulls-Honda RBPT",
+      "driver_slug": "isack-hadjar"
+    },
+    {
+      "number": "10",
+      "driver": "Pierre Gasly",
+      "team": "BWT Alpine F1 Team",
+      "manufacturer": "A525",
+      "constructor": "Alpine-Renault",
+      "driver_slug": "pierre-gasly"
+    },
+    {
+      "number": "12",
+      "driver": "Kimi Antonelli",
+      "team": "Mercedes-AMG Petronas F1 Team",
+      "manufacturer": "F1 W16",
+      "constructor": "Mercedes",
+      "driver_slug": "kimi-antonelli"
+    },
+    {
+      "number": "14",
+      "driver": "Fernando Alonso",
+      "team": "Aston Martin Aramco F1 Team",
+      "manufacturer": "AMR25",
+      "constructor": "Aston Martin Aramco-Mercedes",
+      "driver_slug": "fernando-alonso"
+    },
+    {
+      "number": "16",
+      "driver": "Charles Leclerc",
+      "team": "Scuderia Ferrari HP",
+      "manufacturer": "SF-25",
+      "constructor": "Ferrari",
+      "driver_slug": "charles-leclerc"
+    },
+    {
+      "number": "18",
+      "driver": "Lance Stroll",
+      "team": "Aston Martin Aramco F1 Team",
+      "manufacturer": "AMR25",
+      "constructor": "Aston Martin Aramco-Mercedes",
+      "driver_slug": "lance-stroll"
+    },
+    {
+      "number": "22",
+      "driver": "Yuki Tsunoda",
+      "team": "Oracle Red Bull Racing",
+      "manufacturer": "RB21",
+      "constructor": "Red Bull Racing-Honda RBPT",
+      "driver_slug": "yuki-tsunoda"
+    },
+    {
+      "number": "23",
+      "driver": "Alexander Albon",
+      "team": "Atlassian Williams Racing",
+      "manufacturer": "FW47",
+      "constructor": "Williams-Mercedes",
+      "driver_slug": "alexander-albon"
+    },
+    {
+      "number": "27",
+      "driver": "Nico Hulkenberg",
+      "team": "Stake F1 Team Kick Sauber",
+      "manufacturer": "C45",
+      "constructor": "Kick Sauber-Ferrari",
+      "driver_slug": "nico-hulkenberg"
+    },
+    {
+      "number": "30",
+      "driver": "Liam Lawson",
+      "team": "Visa Cash App Racing Bulls F1 Team",
+      "manufacturer": "VCARB02",
+      "constructor": "Racing Bulls-Honda RBPT",
+      "driver_slug": "liam-lawson"
+    },
+    {
+      "number": "31",
+      "driver": "Esteban Ocon",
+      "team": "MoneyGram Haas F1 Team",
+      "manufacturer": "VF-25",
+      "constructor": "Haas-Ferrari",
+      "driver_slug": "esteban-ocon"
+    },
+    {
+      "number": "43",
+      "driver": "Franco Colapinto",
+      "team": "BWT Alpine F1 Team",
+      "manufacturer": "A525",
+      "constructor": "Alpine-Renault",
+      "driver_slug": "franco-colapinto"
+    },
+    {
+      "number": "44",
+      "driver": "Lewis Hamilton",
+      "team": "Scuderia Ferrari HP",
+      "manufacturer": "SF-25",
+      "constructor": "Ferrari",
+      "driver_slug": "lewis-hamilton"
+    },
+    {
+      "number": "55",
+      "driver": "Carlos Sainz Jr.",
+      "team": "Atlassian Williams Racing",
+      "manufacturer": "FW47",
+      "constructor": "Williams-Mercedes",
+      "driver_slug": "carlos-sainz-jr"
+    },
+    {
+      "number": "63",
+      "driver": "George Russell",
+      "team": "Mercedes-AMG Petronas F1 Team",
+      "manufacturer": "F1 W16",
+      "constructor": "Mercedes",
+      "driver_slug": "george-russell"
+    },
+    {
+      "number": "81",
+      "driver": "Oscar Piastri",
+      "team": "McLaren Formula 1 Team",
+      "manufacturer": "MCL39",
+      "constructor": "McLaren-Mercedes",
+      "driver_slug": "oscar-piastri"
+    },
+    {
+      "number": "87",
+      "driver": "Oliver Bearman",
+      "team": "MoneyGram Haas F1 Team",
+      "manufacturer": "VF-25",
+      "constructor": "Haas-Ferrari",
+      "driver_slug": "oliver-bearman"
+    }
+  ],
   "tables": {
     "practice": {
-      "sessions": []
+      "sessions": [
+        {
+          "title": "Practice 1",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Team",
+            "Time / Gap",
+            "Laps"
+          ],
+          "rows": [
+            [
+              "1",
+              "4",
+              "Lando Norris",
+              "McLaren",
+              "1:09.975",
+              "31"
+            ],
+            [
+              "2",
+              "81",
+              "Oscar Piastri",
+              "McLaren",
+              "+0.023s",
+              "33"
+            ],
+            [
+              "3",
+              "27",
+              "Nico Hulkenberg",
+              "Kick Sauber",
+              "+0.619s",
+              "32"
+            ],
+            [
+              "4",
+              "14",
+              "Fernando Alonso",
+              "Aston Martin",
+              "+0.631s",
+              "26"
+            ],
+            [
+              "5",
+              "5",
+              "Gabriel Bortoleto",
+              "Kick Sauber",
+              "+0.641s",
+              "32"
+            ],
+            [
+              "6",
+              "63",
+              "George Russell",
+              "Mercedes",
+              "+0.670s",
+              "35"
+            ],
+            [
+              "7",
+              "10",
+              "Pierre Gasly",
+              "Alpine",
+              "+0.706s",
+              "33"
+            ],
+            [
+              "8",
+              "55",
+              "Carlos Sainz",
+              "Williams",
+              "+0.711s",
+              "36"
+            ],
+            [
+              "9",
+              "6",
+              "Isack Hadjar",
+              "Racing Bulls",
+              "+0.732s",
+              "31"
+            ],
+            [
+              "10",
+              "12",
+              "Kimi Antonelli",
+              "Mercedes",
+              "+0.769s",
+              "37"
+            ],
+            [
+              "11",
+              "30",
+              "Liam Lawson",
+              "Racing Bulls",
+              "+0.819s",
+              "36"
+            ],
+            [
+              "12",
+              "23",
+              "Alexander Albon",
+              "Williams",
+              "+0.832s",
+              "35"
+            ],
+            [
+              "13",
+              "31",
+              "Esteban Ocon",
+              "Haas F1 Team",
+              "+0.931s",
+              "29"
+            ],
+            [
+              "14",
+              "87",
+              "Oliver Bearman",
+              "Haas F1 Team",
+              "+0.986s",
+              "32"
+            ],
+            [
+              "15",
+              "18",
+              "Lance Stroll",
+              "Aston Martin",
+              "+1.095s",
+              "31"
+            ],
+            [
+              "16",
+              "43",
+              "Franco Colapinto",
+              "Alpine",
+              "+1.185s",
+              "30"
+            ],
+            [
+              "17",
+              "1",
+              "Max Verstappen",
+              "Red Bull Racing",
+              "+1.393s",
+              "31"
+            ],
+            [
+              "18",
+              "16",
+              "Charles Leclerc",
+              "Ferrari",
+              "+1.518s",
+              "30"
+            ],
+            [
+              "19",
+              "44",
+              "Lewis Hamilton",
+              "Ferrari",
+              "+1.551s",
+              "28"
+            ],
+            [
+              "20",
+              "22",
+              "Yuki Tsunoda",
+              "Red Bull Racing",
+              "+1.788s",
+              "20"
+            ]
+          ]
+        }
+      ]
     },
     "qualifying": {
-      "sessions": []
+      "sessions": [
+        {
+          "title": "Sprint Qualifying",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Constructor",
+            "SQ1",
+            "SQ2",
+            "SQ3",
+            "Grid"
+          ],
+          "rows": [
+            [
+              "1",
+              "4",
+              "Lando Norris",
+              "McLaren-Mercedes",
+              "1:09.627",
+              "1:09.373",
+              "1:09.243",
+              "1"
+            ],
+            [
+              "2",
+              "12",
+              "Kimi Antonelli",
+              "Mercedes",
+              "1:10.381",
+              "1:09.504",
+              "1:09.340",
+              "2"
+            ],
+            [
+              "3",
+              "81",
+              "Oscar Piastri",
+              "McLaren-Mercedes",
+              "1:10.017",
+              "1:09.416",
+              "1:09.428",
+              "3"
+            ],
+            [
+              "4",
+              "63",
+              "George Russell",
+              "Mercedes",
+              "1:10.048",
+              "1:09.384",
+              "1:09.495",
+              "4"
+            ],
+            [
+              "5",
+              "14",
+              "Fernando Alonso",
+              "Aston Martin Aramco-Mercedes",
+              "1:10.011",
+              "1:09.330",
+              "1:09.496",
+              "5"
+            ],
+            [
+              "6",
+              "1",
+              "Max Verstappen",
+              "Red Bull Racing-Honda RBPT",
+              "1:09.975",
+              "1:09.707",
+              "1:09.580",
+              "6"
+            ],
+            [
+              "7",
+              "18",
+              "Lance Stroll",
+              "Aston Martin Aramco-Mercedes",
+              "1:10.326",
+              "1:09.647",
+              "1:09.671",
+              "7"
+            ],
+            [
+              "8",
+              "16",
+              "Charles Leclerc",
+              "Ferrari",
+              "1:10.324",
+              "1:09.732",
+              "1:09.725",
+              "8"
+            ],
+            [
+              "9",
+              "6",
+              "Isack Hadjar",
+              "Racing Bulls-Honda RBPT",
+              "1:10.095",
+              "1:09.608",
+              "1:09.775",
+              "9"
+            ],
+            [
+              "10",
+              "27",
+              "Nico Hulkenberg",
+              "Kick Sauber-Ferrari",
+              "1:10.333",
+              "1:09.735",
+              "1:09.935",
+              "10"
+            ],
+            [
+              "11",
+              "44",
+              "Lewis Hamilton",
+              "Ferrari",
+              "1:10.224",
+              "1:09.811",
+              "N/A",
+              "11"
+            ],
+            [
+              "12",
+              "23",
+              "Alexander Albon",
+              "Williams-Mercedes",
+              "1:10.275",
+              "1:09.813",
+              "N/A",
+              "12"
+            ],
+            [
+              "13",
+              "10",
+              "Pierre Gasly",
+              "Alpine-Renault",
+              "1:10.097",
+              "1:09.852",
+              "N/A",
+              "13"
+            ],
+            [
+              "14",
+              "5",
+              "Gabriel Bortoleto",
+              "Kick Sauber-Ferrari",
+              "1:10.217",
+              "1:09.923",
+              "N/A",
+              "14"
+            ],
+            [
+              "15",
+              "87",
+              "Oliver Bearman",
+              "Haas-Ferrari",
+              "1:10.066",
+              "1:09.946",
+              "N/A",
+              "15"
+            ],
+            [
+              "16",
+              "43",
+              "Franco Colapinto",
+              "Alpine-Renault",
+              "1:10.441",
+              "N/A",
+              "N/A",
+              "16"
+            ],
+            [
+              "17",
+              "30",
+              "Liam Lawson",
+              "Racing Bulls-Honda RBPT",
+              "1:10.666",
+              "N/A",
+              "N/A",
+              "17"
+            ],
+            [
+              "18",
+              "22",
+              "Yuki Tsunoda",
+              "Red Bull Racing-Honda RBPT",
+              "1:10.692",
+              "N/A",
+              "N/A",
+              "PL"
+            ],
+            [
+              "19",
+              "31",
+              "Esteban Ocon",
+              "Haas-Ferrari",
+              "1:10.872",
+              "N/A",
+              "N/A",
+              "18"
+            ],
+            [
+              "20",
+              "55",
+              "Carlos Sainz Jr.",
+              "Williams-Mercedes",
+              "1:11.120",
+              "N/A",
+              "N/A",
+              "PL"
+            ]
+          ]
+        },
+        {
+          "title": "Qualifying",
+          "headers": [
+            "Pos",
+            "No.",
+            "Driver",
+            "Constructor",
+            "Q1",
+            "Q2",
+            "Q3",
+            "Grid"
+          ],
+          "rows": [
+            [
+              "1",
+              "4",
+              "Lando Norris",
+              "McLaren-Mercedes",
+              "1:09.656",
+              "1:09.616",
+              "1:09.511",
+              "1"
+            ],
+            [
+              "2",
+              "12",
+              "Kimi Antonelli",
+              "Mercedes",
+              "1:10.192",
+              "1:09.774",
+              "1:09.685",
+              "2"
+            ],
+            [
+              "3",
+              "16",
+              "Charles Leclerc",
+              "Ferrari",
+              "1:09.934",
+              "1:09.801",
+              "1:09.805",
+              "3"
+            ],
+            [
+              "4",
+              "81",
+              "Oscar Piastri",
+              "McLaren-Mercedes",
+              "1:09.928",
+              "1:09.835",
+              "1:09.886",
+              "4"
+            ],
+            [
+              "5",
+              "6",
+              "Isack Hadjar",
+              "Racing Bulls-Honda RBPT",
+              "1:10.083",
+              "1:09.970",
+              "1:09.931",
+              "5"
+            ],
+            [
+              "6",
+              "63",
+              "George Russell",
+              "Mercedes",
+              "1:09.935",
+              "1:09.880",
+              "1:09.942",
+              "6"
+            ],
+            [
+              "7",
+              "30",
+              "Liam Lawson",
+              "Racing Bulls-Honda RBPT",
+              "1:10.108",
+              "1:09.950",
+              "1:09.962",
+              "7"
+            ],
+            [
+              "8",
+              "87",
+              "Oliver Bearman",
+              "Haas-Ferrari",
+              "1:09.891",
+              "1:09.755",
+              "1:09.977",
+              "8"
+            ],
+            [
+              "9",
+              "10",
+              "Pierre Gasly",
+              "Alpine-Renault",
+              "1:09.885",
+              "1:09.857",
+              "1:10.002",
+              "9"
+            ],
+            [
+              "10",
+              "27",
+              "Nico Hulkenberg",
+              "Kick Sauber-Ferrari",
+              "1:10.337",
+              "1:09.985",
+              "1:10.039",
+              "10"
+            ],
+            [
+              "11",
+              "14",
+              "Fernando Alonso",
+              "Aston Martin Aramco-Mercedes",
+              "1:10.181",
+              "1:10.001",
+              "N/A",
+              "11"
+            ],
+            [
+              "12",
+              "23",
+              "Alexander Albon",
+              "Williams-Mercedes",
+              "1:10.115",
+              "1:10.053",
+              "N/A",
+              "12"
+            ],
+            [
+              "13",
+              "44",
+              "Lewis Hamilton",
+              "Ferrari",
+              "1:10.016",
+              "1:10.100",
+              "N/A",
+              "13"
+            ],
+            [
+              "14",
+              "18",
+              "Lance Stroll",
+              "Aston Martin Aramco-Mercedes",
+              "1:10.041",
+              "1:10.161",
+              "N/A",
+              "14"
+            ],
+            [
+              "15",
+              "55",
+              "Carlos Sainz Jr.",
+              "Williams-Mercedes",
+              "1:10.184",
+              "1:10.472",
+              "N/A",
+              "15"
+            ],
+            [
+              "16",
+              "1",
+              "Max Verstappen",
+              "Red Bull Racing-Honda RBPT",
+              "1:10.403",
+              "N/A",
+              "N/A",
+              "PL"
+            ],
+            [
+              "17",
+              "31",
+              "Esteban Ocon",
+              "Haas-Ferrari",
+              "1:10.438",
+              "N/A",
+              "N/A",
+              "PL1"
+            ],
+            [
+              "18",
+              "43",
+              "Franco Colapinto",
+              "Alpine-Renault",
+              "1:10.632",
+              "N/A",
+              "N/A",
+              "16"
+            ],
+            [
+              "19",
+              "22",
+              "Yuki Tsunoda",
+              "Red Bull Racing-Honda RBPT",
+              "1:10.711",
+              "N/A",
+              "N/A",
+              "17"
+            ],
+            [
+              "—",
+              "5",
+              "Gabriel Bortoleto",
+              "Kick Sauber-Ferrari",
+              "No time",
+              "N/A",
+              "N/A",
+              "18"
+            ]
+          ]
+        }
+      ]
+    },
+    "race": {
+      "sessions": [
+        {
+          "title": "Sprint",
+          "headers": [
+            "Pos",
+            "St",
+            "No.",
+            "Driver",
+            "Constructor",
+            "Laps",
+            "Time / Retired",
+            "Laps led",
+            "Best lap",
+            "Points"
+          ],
+          "rows": [
+            [
+              "1",
+              "1",
+              "4",
+              "Lando Norris",
+              "McLaren-Mercedes",
+              "24",
+              "53:25.928",
+              "24",
+              "1:12.120",
+              "8"
+            ],
+            [
+              "2",
+              "2",
+              "12",
+              "Kimi Antonelli",
+              "Mercedes",
+              "24",
+              "+0.845",
+              "",
+              "1:12.138",
+              "7"
+            ],
+            [
+              "3",
+              "4",
+              "63",
+              "George Russell",
+              "Mercedes",
+              "24",
+              "+2.318",
+              "",
+              "1:12.263",
+              "6"
+            ],
+            [
+              "4",
+              "6",
+              "1",
+              "Max Verstappen",
+              "Red Bull Racing-Honda RBPT",
+              "24",
+              "+4.423",
+              "",
+              "1:12.617",
+              "5"
+            ],
+            [
+              "5",
+              "8",
+              "16",
+              "Charles Leclerc",
+              "Ferrari",
+              "24",
+              "+16.483",
+              "",
+              "1:13.111",
+              "4"
+            ],
+            [
+              "6",
+              "5",
+              "14",
+              "Fernando Alonso",
+              "Aston Martin Aramco-Mercedes",
+              "24",
+              "+18.306",
+              "",
+              "1:13.226",
+              "3"
+            ],
+            [
+              "7",
+              "11",
+              "44",
+              "Lewis Hamilton",
+              "Ferrari",
+              "24",
+              "+18.603",
+              "",
+              "1:12.955",
+              "2"
+            ],
+            [
+              "8",
+              "13",
+              "10",
+              "Pierre Gasly",
+              "Alpine-Renault",
+              "24",
+              "+19.366",
+              "",
+              "1:13.155",
+              "1"
+            ],
+            [
+              "9",
+              "7",
+              "18",
+              "Lance Stroll",
+              "Aston Martin Aramco-Mercedes",
+              "24",
+              "+23.933",
+              "",
+              "1:13.197",
+              ""
+            ],
+            [
+              "10",
+              "9",
+              "6",
+              "Isack Hadjar",
+              "Racing Bulls-Honda RBPT",
+              "24",
+              "+29.548",
+              "",
+              "1:13.444",
+              ""
+            ],
+            [
+              "11",
+              "18",
+              "31",
+              "Esteban Ocon",
+              "Haas-Ferrari",
+              "24",
+              "+31.000",
+              "",
+              "1:13.791",
+              ""
+            ],
+            [
+              "12",
+              "15",
+              "87",
+              "Oliver Bearman",
+              "Haas-Ferrari",
+              "24",
+              "+36.334",
+              "",
+              "1:13.757",
+              ""
+            ],
+            [
+              "13",
+              "PL",
+              "22",
+              "Yuki Tsunoda",
+              "Red Bull Racing-Honda RBPT",
+              "24",
+              "+38.462",
+              "",
+              "1:13.921",
+              ""
+            ],
+            [
+              "14",
+              "PL",
+              "55",
+              "Carlos Sainz Jr.",
+              "Williams-Mercedes",
+              "24",
+              "+38.951",
+              "",
+              "1:13.712",
+              ""
+            ],
+            [
+              "15",
+              "10",
+              "27",
+              "Nico Hulkenberg",
+              "Kick Sauber-Ferrari",
+              "24",
+              "+42.349",
+              "",
+              "1:12.186",
+              ""
+            ],
+            [
+              "16",
+              "17",
+              "30",
+              "Liam Lawson",
+              "Racing Bulls-Honda RBPT",
+              "24",
+              "+43.090",
+              "",
+              "1:13.896",
+              ""
+            ],
+            [
+              "17",
+              "12",
+              "23",
+              "Alexander Albon",
+              "Williams-Mercedes",
+              "24",
+              "+55.456",
+              "",
+              "1:13.372",
+              ""
+            ],
+            [
+              "18",
+              "14",
+              "5",
+              "Gabriel Bortoleto",
+              "Kick Sauber-Ferrari",
+              "23",
+              "Accident",
+              "",
+              "1:13.517",
+              ""
+            ],
+            [
+              "Ret",
+              "3",
+              "81",
+              "Oscar Piastri",
+              "McLaren-Mercedes",
+              "5",
+              "Accident",
+              "",
+              "1:12.992",
+              ""
+            ],
+            [
+              "Ret",
+              "16",
+              "43",
+              "Franco Colapinto",
+              "Alpine-Renault",
+              "5",
+              "Accident",
+              "",
+              "1:14.056",
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "St",
+        "No.",
+        "Driver",
+        "Constructor",
+        "Laps",
+        "Time/Retired",
+        "Laps led",
+        "Best lap",
+        "Points"
+      ],
+      "rows": [
+        [
+          "1",
+          "1",
+          "4",
+          "Lando Norris",
+          "McLaren-Mercedes",
+          "71",
+          "1:32:01.596",
+          "59",
+          "1:13.040",
+          "25"
+        ],
+        [
+          "2",
+          "2",
+          "12",
+          "Kimi Antonelli",
+          "Mercedes",
+          "71",
+          "+10.388",
+          "",
+          "1:13.123",
+          "18"
+        ],
+        [
+          "3",
+          "PL",
+          "1",
+          "Max Verstappen",
+          "Red Bull Racing-Honda RBPT",
+          "71",
+          "+10.750",
+          "4",
+          "1:12.447",
+          "15"
+        ],
+        [
+          "4",
+          "6",
+          "63",
+          "George Russell",
+          "Mercedes",
+          "71",
+          "+15.267",
+          "",
+          "1:13.097",
+          "12"
+        ],
+        [
+          "5",
+          "4",
+          "81",
+          "Oscar Piastri",
+          "McLaren-Mercedes",
+          "71",
+          "+15.749",
+          "8",
+          "1:12.742",
+          "10"
+        ],
+        [
+          "6",
+          "8",
+          "87",
+          "Oliver Bearman",
+          "Haas-Ferrari",
+          "71",
+          "+29.630",
+          "",
+          "1:13.483",
+          "8"
+        ],
+        [
+          "7",
+          "7",
+          "30",
+          "Liam Lawson",
+          "Racing Bulls-Honda RBPT",
+          "71",
+          "+52.642",
+          "",
+          "1:14.029",
+          "6"
+        ],
+        [
+          "8",
+          "5",
+          "6",
+          "Isack Hadjar",
+          "Racing Bulls-Honda RBPT",
+          "71",
+          "+52.873",
+          "",
+          "1:13.694",
+          "4"
+        ],
+        [
+          "9",
+          "10",
+          "27",
+          "Nico Hulkenberg",
+          "Kick Sauber-Ferrari",
+          "71",
+          "+53.324",
+          "",
+          "1:13.474",
+          "2"
+        ],
+        [
+          "10",
+          "9",
+          "10",
+          "Pierre Gasly",
+          "Alpine-Renault",
+          "71",
+          "+53.914",
+          "",
+          "1:13.736",
+          "1"
+        ],
+        [
+          "11",
+          "12",
+          "23",
+          "Alexander Albon",
+          "Williams-Mercedes",
+          "71",
+          "+54.184",
+          "",
+          "1:12.400",
+          ""
+        ],
+        [
+          "12",
+          "PL",
+          "31",
+          "Esteban Ocon",
+          "Haas-Ferrari",
+          "71",
+          "+54.696",
+          "",
+          "1:13.481",
+          ""
+        ],
+        [
+          "13",
+          "15",
+          "55",
+          "Carlos Sainz Jr.",
+          "Williams-Mercedes",
+          "71",
+          "+55.420",
+          "",
+          "1:13.683",
+          ""
+        ],
+        [
+          "14",
+          "11",
+          "14",
+          "Fernando Alonso",
+          "Aston Martin Aramco-Mercedes",
+          "71",
+          "+55.766",
+          "",
+          "1:13.312",
+          ""
+        ],
+        [
+          "15",
+          "16",
+          "43",
+          "Franco Colapinto",
+          "Alpine-Renault",
+          "71",
+          "+57.777",
+          "",
+          "1:12.816",
+          ""
+        ],
+        [
+          "16",
+          "14",
+          "18",
+          "Lance Stroll",
+          "Aston Martin Aramco-Mercedes",
+          "71",
+          "+58.247",
+          "",
+          "1:13.094",
+          ""
+        ],
+        [
+          "17",
+          "17",
+          "22",
+          "Yuki Tsunoda",
+          "Red Bull Racing-Honda RBPT",
+          "71",
+          "+1:09.176",
+          "",
+          "1:12.774",
+          ""
+        ],
+        [
+          "Ret",
+          "13",
+          "44",
+          "Lewis Hamilton",
+          "Ferrari",
+          "37",
+          "Collision damage",
+          "",
+          "1:13.844",
+          ""
+        ],
+        [
+          "Ret",
+          "3",
+          "16",
+          "Charles Leclerc",
+          "Ferrari",
+          "5",
+          "Collision",
+          "",
+          "1:43.560",
+          ""
+        ],
+        [
+          "Ret",
+          "18",
+          "5",
+          "Gabriel Bortoleto",
+          "Kick Sauber-Ferrari",
+          "0",
+          "Accident",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    "vsc_sprint": {
+      "title": "Race neutralisation",
+      "headers": [
+        "Type",
+        "Laps"
+      ],
+      "rows": [
+        [
+          "SC №1",
+          "6–7"
+        ],
+        [
+          "Red Flag",
+          "7"
+        ],
+        [
+          "SC №2",
+          "8"
+        ]
+      ]
+    },
+    "vsc": {
+      "title": "Race neutralisation",
+      "headers": [
+        "Type",
+        "Laps"
+      ],
+      "rows": [
+        [
+          "SC №1",
+          "2–5"
+        ],
+        [
+          "VSC №1",
+          "7–8"
+        ]
+      ]
+    },
+    "pit_stops": {
+      "title": "Pit Stops",
+      "subtitle": "H = Hard (C2), M = Medium (C3), S = Soft (C4). Total: 37 pit stops.",
+      "headers": [
+        "Driver",
+        "Stint 1",
+        "Stint 2",
+        "Stint 3",
+        "Stint 4",
+        "Stint 5",
+        "Laps"
+      ],
+      "rows": [
+        [
+          "Norris",
+          "M 1–30",
+          "S 31–50",
+          "M 51–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Antonelli",
+          "S 1–21",
+          "M 22–47",
+          "M 48–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Verstappen",
+          "H 1–7",
+          "M 8–34",
+          "M 35–54",
+          "S 55–71",
+          "",
+          "71"
+        ],
+        [
+          "Russell",
+          "M 1–34",
+          "S 35–48",
+          "M 49–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Piastri",
+          "M 1–38",
+          "S 39–51",
+          "M 52–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Bearman",
+          "S 1–17",
+          "M 18–42",
+          "M 43–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Lawson",
+          "S 1–19",
+          "M 20–71",
+          "",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Hadjar",
+          "S 1–18",
+          "M 19–37",
+          "M 38–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Hulkenberg",
+          "M 1–36",
+          "S 37–71",
+          "",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Gasly",
+          "S 1–18",
+          "M 19–39",
+          "M 40–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Albon",
+          "M 1–35",
+          "S 36–55",
+          "M 56–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Ocon",
+          "H 1–8",
+          "M 9–47",
+          "M 48–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Sainz",
+          "S 1–17",
+          "M 18–38",
+          "M 39–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Alonso",
+          "H 1–28",
+          "M 29–46",
+          "M 47–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Colapinto",
+          "M 1–29",
+          "S 30–43",
+          "M 44–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Stroll",
+          "H 1–29",
+          "M 30–54",
+          "M 55–71",
+          "",
+          "",
+          "71"
+        ],
+        [
+          "Tsunoda",
+          "H 1–2",
+          "M 3–24",
+          "M 25–47",
+          "M 48–71",
+          "",
+          "71"
+        ],
+        [
+          "Hamilton",
+          "S 1–2",
+          "H 3–14",
+          "M 15–32",
+          "M 33–37",
+          "",
+          "37"
+        ],
+        [
+          "Leclerc",
+          "M 1–5",
+          "",
+          "",
+          "",
+          "",
+          "5"
+        ],
+        [
+          "Bortoleto",
+          "S 0 (DNF)",
+          "",
+          "",
+          "",
+          "",
+          "0"
+        ]
+      ]
     }
   }
 }

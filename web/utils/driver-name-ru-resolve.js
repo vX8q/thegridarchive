@@ -83,12 +83,19 @@
     return [ruFirst].concat(middleRu).concat(ruSur).join(' ');
   }
 
+  function extractLatinInitials(prefix) {
+    var matches = String(prefix || '').match(/[A-Za-z]\./g);
+    if (!matches || !matches.length) return [];
+    return matches.map(function (tok) { return tok.charAt(0).toUpperCase(); });
+  }
+
   function ruAbbrevFromEtalon(latinAbbrev, shortKey, shortRu) {
     var t = stripMarkers(latinAbbrev);
     var m = t.match(/^((?:[A-Z]\.\s*)+)\s*(.+)$/i);
     if (!m) return null;
 
-    var initCount = m[1].trim().split(/\s+/).filter(Boolean).length;
+    var initCount = extractLatinInitials(m[1]).length;
+    if (!initCount) return null;
     var surWords = surnameWordCount(shortKey);
     var ruParts = String(shortRu || '').trim().split(/\s+/).filter(Boolean);
     if (ruParts.length < initCount + 1) return null;
@@ -110,24 +117,48 @@
     var m = t.match(/^((?:[A-Z]\.\s*)+)\s*(.+)$/i);
     if (!m) return null;
 
-    var inits = m[1].trim().split(/\s+/).map(function (s) {
-      return s.replace(/\./g, '').charAt(0).toUpperCase();
-    });
+    var inits = extractLatinInitials(m[1]);
+    if (!inits.length) return null;
     var surLatin = m[2].trim();
+    var surFold = foldKey(surLatin);
+    var dottedSpaced = inits.map(function (c) { return c.toLowerCase() + '.'; }).join(' ') + ' ' + surFold;
+    var dottedGlued = inits.map(function (c) { return c.toLowerCase() + '.'; }).join('') + ' ' + surFold;
+    var compact = inits.join('').toLowerCase() + ' ' + surFold;
+    if (map[dottedSpaced]) return map[dottedSpaced];
+    if (map[dottedGlued]) return map[dottedGlued];
+    if (map[compact]) return map[compact];
 
     for (var k in map) {
       if (!Object.prototype.hasOwnProperty.call(map, k)) continue;
       if (driverSurnameLatin(k).toLowerCase() !== driverSurnameLatin(surLatin).toLowerCase()) continue;
       var kp = k.split(/\s+/);
+      var keyInits = null;
+      if (kp[0] && /^[a-z]{2,4}$/i.test(kp[0]) && kp[0].length === inits.length) {
+        keyInits = kp[0].toUpperCase().split('');
+      } else {
+        keyInits = [];
+        for (var i = 0; i < inits.length; i++) {
+          if (!kp[i]) {
+            keyInits = null;
+            break;
+          }
+          keyInits.push(kp[i].replace(/\./g, '').charAt(0).toUpperCase());
+        }
+      }
+      if (!keyInits) continue;
       var ok = true;
-      for (var i = 0; i < inits.length; i++) {
-        if (!kp[i] || kp[i].charAt(0).toUpperCase() !== inits[i]) {
+      for (var j = 0; j < inits.length; j++) {
+        if (keyInits[j] !== inits[j]) {
           ok = false;
           break;
         }
       }
       if (!ok) continue;
-      return ruAbbrevFromEtalon(latin, k, map[k]);
+      if (/\b[a-z]\./i.test(k) || (kp[0] && /^[a-z]{2,4}$/i.test(kp[0]) && kp[0].length === inits.length)) {
+        return map[k];
+      }
+      var built = ruAbbrevFromEtalon(latin, k, map[k]);
+      if (built) return built;
     }
     return null;
   }

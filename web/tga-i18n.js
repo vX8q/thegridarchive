@@ -859,20 +859,91 @@
     return (name || seriesId || '').trim();
   }
 
+  function hoursWordRu(n) {
+    var x = parseInt(n, 10);
+    if (!isFinite(x)) return String(n) + ' часов';
+    var mod100 = x % 100;
+    var mod10 = x % 10;
+    if (mod100 >= 11 && mod100 <= 14) return x + ' часов';
+    if (mod10 === 1) return x + ' час';
+    if (mod10 >= 2 && mod10 <= 4) return x + ' часа';
+    return x + ' часов';
+  }
+
+  function localizeEventPlacePart(place) {
+    var p = String(place || '').trim();
+    if (!p) return p;
+    var liveMap = (typeof window !== 'undefined' && window.TGA_RU && window.TGA_RU.eventNameRu) || eventNameRu;
+    var maps = [liveMap, locationRu, placeNameRu, cityNameRu];
+    var candidates = [foldPlaceKey(p)];
+    if (/^the\s+/i.test(p)) candidates.push(foldPlaceKey(p.replace(/^the\s+/i, '')));
+    for (var c = 0; c < candidates.length; c++) {
+      var folded = candidates[c];
+      for (var i = 0; i < maps.length; i++) {
+        if (maps[i] && maps[i][folded]) return maps[i][folded];
+      }
+    }
+    return p;
+  }
+
   function localizeEventName(name) {
     if (name == null) return '';
     var s = String(name).trim();
     if (!s || lang !== 'ru') return s;
+    var liveMap = (typeof window !== 'undefined' && window.TGA_RU && window.TGA_RU.eventNameRu) || eventNameRu;
     var exactKey = s.toLowerCase();
-    if (eventNameRu[exactKey]) return eventNameRu[exactKey];
+    if (liveMap[exactKey]) return liveMap[exactKey];
+    var foldedExact = foldPlaceKey(s);
+    if (liveMap[foldedExact]) return liveMap[foldedExact];
     var gpSuffix = s.match(/^(.+?)\s+Grand\s+Prix$/i);
     if (gpSuffix) {
-      var locKey = gpSuffix[1].toLowerCase().trim();
+      var locKey = foldPlaceKey(gpSuffix[1]);
       var loc = grandPrixLocationRu[locKey] || gpSuffix[1];
       return 'Гран-при ' + loc;
     }
     var gpOf = s.match(/^Grand\s+Prix\s+of\s+(.+)$/i);
-    if (gpOf) return 'Гран-при ' + gpOf[1].trim();
+    if (gpOf) return 'Гран-при ' + localizeEventPlacePart(gpOf[1]);
+    var hoursPref = s.match(/^(.+?)\s+(\d+)\s+Hours?\s+of\s+(.+)$/i);
+    if (hoursPref) {
+      return hoursPref[1].trim() + ' ' + hoursWordRu(hoursPref[2]) + ' ' + localizeEventPlacePart(hoursPref[3]);
+    }
+    var hoursPlain = s.match(/^(\d+)\s+Hours?\s+of\s+(.+)$/i);
+    if (hoursPlain) {
+      return hoursWordRu(hoursPlain[1]) + ' ' + localizeEventPlacePart(hoursPlain[2]);
+    }
+    var sixHours = s.match(/^(.+?)\s+Six\s+Hours\s+of\s+(.+)$/i);
+    if (sixHours) {
+      return sixHours[1].trim() + ' ' + hoursWordRu(6) + ' ' + localizeEventPlacePart(sixHours[2]);
+    }
+    var twelveHours = s.match(/^(.+?)\s+Twelve\s+Hours\s+of\s+(.+)$/i);
+    if (twelveHours) {
+      return twelveHours[1].trim() + ' ' + hoursWordRu(12) + ' ' + localizeEventPlacePart(twelveHours[2]);
+    }
+    var italianF4 = s.match(/^Italian\s+F4\s+[—–-]\s+(.+)$/i);
+    if (italianF4) return 'Итальянская F4 — ' + localizeEventPlacePart(italianF4[1]);
+    var gtwceSprint = s.match(/^GT\s+World\s+Challenge\s+Europe\s+Sprint\s+[—–-]\s+(.+)$/i);
+    if (gtwceSprint) return 'GT World Challenge Europe Sprint — ' + localizeEventPlacePart(gtwceSprint[1]);
+    var superGtHours = s.match(/^(.+?)\s+GT\s+(\d+)\s+Hours?\s+Race$/i);
+    if (superGtHours) {
+      return localizeEventPlacePart(superGtHours[1]) + ' GT — гонка ' + hoursWordRu(superGtHours[2]);
+    }
+    var superGtKm = s.match(/^(.+?)\s+GT\s+(\d+)\s*km\s+Race$/i);
+    if (superGtKm) {
+      return localizeEventPlacePart(superGtKm[1]) + ' GT — гонка ' + superGtKm[2] + ' км';
+    }
+    var rolex24 = s.match(/^Rolex\s+24\s+at\s+(.+)$/i);
+    if (rolex24) return 'Rolex 24 в ' + localizeEventPlacePart(rolex24[1]);
+    var raceParen = s.match(/^(.+?)\s*\((Race\s+\d+)\)\s*$/i);
+    if (raceParen) {
+      var raceLbl = raceParen[2].replace(/^Race\s+/i, 'Гонка ');
+      return localizeEventPlacePart(raceParen[1]) + ' (' + raceLbl + ')';
+    }
+    var raceTrail = s.match(/^(.+?)\s+Race\s+(\d+)\s*$/i);
+    if (raceTrail) {
+      return localizeEventPlacePart(raceTrail[1]) + '. Гонка ' + raceTrail[2];
+    }
+    var placeHit = localizeEventPlacePart(s);
+    if (placeHit !== s) return placeHit;
     return s;
   }
 
@@ -1183,21 +1254,30 @@
 
   function localizeCircuitName(name) {
     if (name == null) return '';
-    return String(name).trim();
+    var s = String(name).trim();
+    if (!s || lang !== 'ru') return s;
+    var circuitNameRu = (typeof window !== 'undefined' && window.TGA_RU && window.TGA_RU.circuitNameRu) || {};
+    var key = foldPlaceKey(s);
+    if (circuitNameRu[key]) return circuitNameRu[key];
+    var placeHit = localizePlaceSegment(s);
+    if (placeHit !== s) return placeHit;
+    return s;
   }
 
-  /** Circuit / venue line: track name stays EN; country and "City, State" tails are localized. */
+  /** Circuit / venue line: localize known circuit names; city/region tails stay localized. */
   function localizeVenueLine(s) {
     if (s == null) return '';
     var val = String(s).trim();
     if (!val || val === '—' || lang !== 'ru') return val;
+    var asCircuit = localizeCircuitName(val);
+    if (asCircuit !== val) return asCircuit;
     var emDash = val.match(/^(.+?)\s+[—–]\s+(.+)$/);
     if (emDash) {
-      return localizePlaceSegment(emDash[1].trim()) + ' — ' + localizeVenueLine(emDash[2].trim());
+      return localizeCircuitName(emDash[1].trim()) + ' — ' + localizeVenueLine(emDash[2].trim());
     }
     var comma = val.indexOf(', ');
     if (comma < 0) return val;
-    return val.slice(0, comma) + ', ' + localizeCompoundPlace(val.slice(comma + 2));
+    return localizeCircuitName(val.slice(0, comma)) + ', ' + localizeCompoundPlace(val.slice(comma + 2));
   }
 
   function localizeLocation(place) {

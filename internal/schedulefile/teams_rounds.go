@@ -713,6 +713,12 @@ func EnrichTeamsRoundsFromEvents(dataDir, seriesID, season string, data *TeamsWi
 		data.Teams = buildGtTeams(byNumber, numOrder)
 		return
 	}
+	if sid == "f1" {
+		// F1 entry_list: manufacturer = chassis code, constructor = constructor name,
+		// power_unit = PU. Teams UI expects manufacturer=constructor, chassis=code.
+		data.Teams = buildF1TeamsFromEntry(byKey, keyOrder)
+		return
+	}
 	data.Teams = buildFlatTeams(byKey, keyOrder)
 }
 
@@ -881,6 +887,75 @@ func buildGtTeams(byNumber map[string]*roundsAgg, numOrder []string) []TeamJSON 
 		}
 		if out[i].Class != out[j].Class {
 			return out[i].Class < out[j].Class
+		}
+		return numberLess(out[i].Number, out[j].Number)
+	})
+	return out
+}
+
+// f1EntrantOrder matches the conventional F1 teams-page / Wikipedia entrant order.
+var f1EntrantOrder = []string{
+	"BWT Alpine F1 Team",
+	"Aston Martin Aramco F1 Team",
+	"Scuderia Ferrari",
+	"Scuderia Ferrari HP",
+	"MoneyGram Haas F1 Team",
+	"Stake F1 Team Kick Sauber",
+	"McLaren Formula 1 Team",
+	"Mercedes-AMG Petronas F1 Team",
+	"Visa Cash App RB F1 Team",
+	"Visa Cash App Racing Bulls F1 Team",
+	"Oracle Red Bull Racing",
+	"Williams Racing",
+	"Atlassian Williams Racing",
+	"Atlassian Williams F1 Team",
+}
+
+func f1EntrantRank(team string) int {
+	t := strings.TrimSpace(team)
+	for i, name := range f1EntrantOrder {
+		if strings.EqualFold(name, t) {
+			return i
+		}
+	}
+	return len(f1EntrantOrder)
+}
+
+// buildF1TeamsFromEntry builds the F1 Teams table from entry_list aggregation.
+// F1 event JSON stores chassis code in manufacturer and the official constructor
+// name in constructor; the Teams UI column "Constructor" is TeamJSON.Manufacturer,
+// with chassis/power_unit in their own fields (same shape as data/teams/f1_*.json).
+func buildF1TeamsFromEntry(byKey map[string]*roundsAgg, keyOrder []string) []TeamJSON {
+	out := make([]TeamJSON, 0, len(keyOrder))
+	for _, key := range keyOrder {
+		a := byKey[key]
+		if a.number == "" && a.driver == "" {
+			continue
+		}
+		constructor := strings.TrimSpace(a.constructor)
+		chassis := strings.TrimSpace(a.manufacturer)
+		if constructor == "" {
+			// Fallback if an older entry only had constructor in manufacturer.
+			constructor = chassis
+			chassis = ""
+		}
+		out = append(out, TeamJSON{
+			Number:       a.number,
+			Driver:       a.driver,
+			Team:         driverutil.FormatDisplayTeamName(a.team),
+			Manufacturer: constructor,
+			Chassis:      chassis,
+			PowerUnit:    a.powerUnit,
+			Rounds:       compressRounds(a.rounds),
+		})
+	}
+	sort.SliceStable(out, func(i, j int) bool {
+		ri, rj := f1EntrantRank(out[i].Team), f1EntrantRank(out[j].Team)
+		if ri != rj {
+			return ri < rj
+		}
+		if out[i].Team != out[j].Team {
+			return out[i].Team < out[j].Team
 		}
 		return numberLess(out[i].Number, out[j].Number)
 	})

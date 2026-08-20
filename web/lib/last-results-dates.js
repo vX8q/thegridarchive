@@ -45,14 +45,34 @@
     if (sid === 'F2' || sid === 'F3') return true;
     if (sid === 'FREC' || sid === 'F4_IT') return true;
     if (sid === 'GTWCE_SPRINT' || sid === 'DTM') return true;
-    if (sid === 'SUPER_FORMULA') return true;
+    // Super Formula: only real double/triple headers (multi sessions or merged winners).
+    // Single-race weekends (e.g. SUGO) keep schedule start≠end for practice/qual — not a date range.
+    if (sid === 'SUPER_FORMULA') {
+      var wSf = card.winners;
+      if (Array.isArray(wSf) && wSf.length > 1) return true;
+      var evSf = card.event || {};
+      var sfIds = evSf._sfEventIds;
+      if (Array.isArray(sfIds) && sfIds.length > 1) return true;
+      var getSessions = window.TGA && window.TGA.getEventRaceSessions;
+      if (getSessions) {
+        var sess = getSessions(evSf);
+        if (Array.isArray(sess) && sess.length > 1) return true;
+      }
+      return false;
+    }
     // PSC is race_day_only: schedule start≠end is practice/qual weekend, not multi-race.
     // Real double-headers (e.g. Zandvoort) show as multi-race only after weekend merge (winners>1).
     if (sid === 'PSC') {
       var wPsc = card.winners;
       return Array.isArray(wPsc) && wPsc.length > 1;
     }
-    if (sid === 'SUPERCARS' || sid === 'INDYCAR') {
+    // IndyCar: single race day on cards; only Milwaukee-style merges (2+ winners) span dates.
+    // Do not treat schedule practice weekend (start_date < end_date) as multi-race.
+    if (sid === 'INDYCAR') {
+      var wIndy = card.winners;
+      return Array.isArray(wIndy) && wIndy.length > 1;
+    }
+    if (sid === 'SUPERCARS') {
       var w = card.winners;
       if (Array.isArray(w) && w.length > 1) return true;
       var rs = pickIsoDate(card.rangeStart);

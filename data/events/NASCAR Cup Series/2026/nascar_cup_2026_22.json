@@ -7,6 +7,16 @@
   "end_date": "2026-07-26",
   "track": "Indianapolis Motor Speedway",
   "location": "Speedway, Indiana, USA",
+  "youtube_id": "HYqZQd-WJX0",
+  "event_preview": "Indianapolis Motor Speedway is a 2.5-mile (4.023 km) rectangular oval in Speedway, Indiana, with 9.2 degrees of banking in the turns and flat straightaways — the historic Brickyard. The Brickyard 400 presented by PPG was the 22nd points-paying race of the 2026 NASCAR Cup Series season and Indianapolis' only date on the schedule, marking the third straight year of Cup racing on the oval configuration. The race also served as the Champions Round of the NASCAR In-Season Challenge, with No. 3 seed Ryan Blaney facing No. 25 seed Todd Gilliland for the $1 million grand prize. There were 36 guaranteed charter entries, with Austin Hill driving the No. 33 Richard Childress Racing car in place of the late Kyle Busch, plus three open entries — Casey Mears, Corey Heim and Daniel Dye — for a 39-driver field.\n\nBubba Wallace was the defending winner of the event. Because Indianapolis is not classified as a superspeedway or drafting track despite its 2.5-mile length, qualifying used a single-car, one-lap format rather than the two-round shootout seen at Daytona, Talladega or EchoPark Speedway.\n\nThe all-time NASCAR Cup Series qualifying record at Indianapolis belongs to Kyle Larson, who set a 47.827-second lap (188.184 mph) in 2019. The race lap record was set by Kevin Harvick, a 47.353-second lap (190.076 mph) during his 2003 victory.",
+  "event_preview_ru": "Indianapolis Motor Speedway — прямоугольный овал длиной 2,5 мили (4,023 км) в Speedway, Indiana, с уклоном 9,2 градуса в поворотах и плоскими прямыми — исторический Brickyard. Brickyard 400 presented by PPG стал 22-й гонкой сезона NASCAR Cup Series 2026 за очки и единственным этапом в Indianapolis в календаре, ознаменовав третий год подряд гонок Cup на овальной конфигурации. Гонка также стала финалом Champions Round турнира NASCAR In-Season Challenge: 3-й сеяный Ryan Blaney против 25-го сеяного Todd Gilliland за главный приз в $1 млн. В стартовом списке 36 гарантированных чартерных машин, Austin Hill заменил покойного Kyle Busch в No. 33 Richard Childress Racing, плюс три open-заявки — Casey Mears, Corey Heim и Daniel Dye — итого 39 пилотов.\n\nBubba Wallace защищал титул победителя этапа. Хотя длина трассы 2,5 мили, Indianapolis не считается суперспидвеем или драфтинговой трассой, поэтому квалификация прошла в формате одного круга на машину, а не в двухкруговом shootout, как на Daytona, Talladega или EchoPark Speedway.\n\nАбсолютный рекорд квалификации NASCAR Cup Series на Indianapolis принадлежит Kyle Larson — 47,827 секунды (188,184 mph) в 2019 году. Рекорд гоночного круга установил Kevin Harvick — 47,353 секунды (190,076 mph) во время победы в 2003 году.",
+  "race_statistics": {
+    "Average speed": "127.422 mph (205.065 km/h)",
+    "Cautions / Laps": "5 for 27",
+    "Lead changes": "15",
+    "Time of race": "3 hours, 8 minutes and 21 seconds",
+    "Margin of victory": "0.287 sec"
+  },
   "entry_list": [
     {
       "number": "1",
@@ -197,7 +207,7 @@
       "number": "41",
       "driver": "Cole Custer",
       "team": "Haas Factory Team",
-      "manufacturer": "Chevrolet",
+      "manufacturer": "Ford",
       "crew_chief": "Aaron Kramer",
       "driver_slug": "cole-custer"
     },
@@ -245,7 +255,7 @@
       "number": "51",
       "driver": "Cody Ware",
       "team": "Rick Ware Racing",
-      "manufacturer": "Chevrolet",
+      "manufacturer": "Ford",
       "crew_chief": "Billy Plourde",
       "driver_slug": "cody-ware"
     },
@@ -266,6 +276,23 @@
       "driver_slug": "ryan-preece"
     },
     {
+      "number": "62",
+      "driver": "Casey Mears",
+      "team": "Beard Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "Darren Shaw",
+      "driver_slug": "casey-mears"
+    },
+    {
+      "number": "67",
+      "driver": "Corey Heim (i)",
+      "team": "23XI Racing",
+      "manufacturer": "Toyota",
+      "crew_chief": "Robert Barker",
+      "points_eligible": false,
+      "driver_slug": "corey-heim"
+    },
+    {
       "number": "71",
       "driver": "Michael McDowell",
       "team": "Spire Motorsports",
@@ -282,12 +309,20 @@
       "driver_slug": "carson-hocevar"
     },
     {
+      "number": "78",
+      "driver": "Daniel Dye (i)",
+      "team": "Live Fast Motorsports",
+      "manufacturer": "Chevrolet",
+      "crew_chief": "George Ingram",
+      "points_eligible": false,
+      "driver_slug": "daniel-dye"
+    },
+    {
       "number": "88",
       "driver": "Connor Zilisch (R)",
       "team": "Trackhouse Racing",
       "manufacturer": "Chevrolet",
       "crew_chief": "Randall Burnett",
-      "points_eligible": false,
       "driver_slug": "connor-zilisch"
     },
     {
@@ -314,19 +349,879 @@
         "-Fastest",
         "-Next"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "20",
+          "Christopher Bell",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "49.043",
+          "183.512",
+          "19",
+          "27",
+          "---.---",
+          "---.---"
+        ],
+        [
+          "2",
+          "42",
+          "John Hunter Nemechek",
+          "Legacy Motor Club",
+          "Toyota",
+          "49.132",
+          "183.180",
+          "28",
+          "28",
+          "-0.089",
+          "-0.089"
+        ],
+        [
+          "3",
+          "54",
+          "Ty Gibbs",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "49.153",
+          "183.102",
+          "14",
+          "30",
+          "-0.110",
+          "-0.021"
+        ],
+        [
+          "4",
+          "43",
+          "Erik Jones",
+          "Legacy Motor Club",
+          "Toyota",
+          "49.226",
+          "182.830",
+          "27",
+          "27",
+          "-0.183",
+          "-0.073"
+        ],
+        [
+          "5",
+          "11",
+          "Denny Hamlin",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "49.262",
+          "182.697",
+          "26",
+          "26",
+          "-0.219",
+          "-0.036"
+        ],
+        [
+          "6",
+          "5",
+          "Kyle Larson",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "49.279",
+          "182.634",
+          "12",
+          "36",
+          "-0.236",
+          "-0.017"
+        ],
+        [
+          "7",
+          "77",
+          "Carson Hocevar",
+          "Spire Motorsports",
+          "Chevrolet",
+          "49.281",
+          "182.626",
+          "25",
+          "30",
+          "-0.238",
+          "-0.002"
+        ],
+        [
+          "8",
+          "45",
+          "Tyler Reddick",
+          "23XI Racing",
+          "Toyota",
+          "49.285",
+          "182.611",
+          "12",
+          "26",
+          "-0.242",
+          "-0.004"
+        ],
+        [
+          "9",
+          "12",
+          "Ryan Blaney",
+          "Team Penske",
+          "Ford",
+          "49.308",
+          "182.526",
+          "22",
+          "24",
+          "-0.265",
+          "-0.023"
+        ],
+        [
+          "10",
+          "7",
+          "Daniel Suarez",
+          "Spire Motorsports",
+          "Chevrolet",
+          "49.384",
+          "182.245",
+          "17",
+          "32",
+          "-0.341",
+          "-0.076"
+        ],
+        [
+          "11",
+          "24",
+          "William Byron",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "49.425",
+          "182.094",
+          "11",
+          "35",
+          "-0.382",
+          "-0.041"
+        ],
+        [
+          "12",
+          "67",
+          "Corey Heim (i)",
+          "23XI Racing",
+          "Toyota",
+          "49.428",
+          "182.083",
+          "23",
+          "27",
+          "-0.385",
+          "-0.003"
+        ],
+        [
+          "13",
+          "1",
+          "Ross Chastain",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "49.513",
+          "181.770",
+          "24",
+          "32",
+          "-0.470",
+          "-0.085"
+        ],
+        [
+          "14",
+          "17",
+          "Chris Buescher",
+          "RFK Racing",
+          "Ford",
+          "49.525",
+          "181.726",
+          "17",
+          "38",
+          "-0.482",
+          "-0.012"
+        ],
+        [
+          "15",
+          "21",
+          "Josh Berry",
+          "Wood Brothers Racing",
+          "Ford",
+          "49.547",
+          "181.646",
+          "17",
+          "17",
+          "-0.504",
+          "-0.022"
+        ],
+        [
+          "16",
+          "16",
+          "A. J. Allmendinger",
+          "Kaulig Racing",
+          "Chevrolet",
+          "49.578",
+          "181.532",
+          "29",
+          "35",
+          "-0.535",
+          "-0.031"
+        ],
+        [
+          "17",
+          "35",
+          "Riley Herbst",
+          "23XI Racing",
+          "Toyota",
+          "49.606",
+          "181.430",
+          "29",
+          "31",
+          "-0.563",
+          "-0.028"
+        ],
+        [
+          "18",
+          "2",
+          "Austin Cindric",
+          "Team Penske",
+          "Ford",
+          "49.614",
+          "181.400",
+          "12",
+          "21",
+          "-0.571",
+          "-0.008"
+        ],
+        [
+          "19",
+          "47",
+          "Ricky Stenhouse Jr.",
+          "Hyak Motorsports",
+          "Chevrolet",
+          "49.618",
+          "181.386",
+          "14",
+          "28",
+          "-0.575",
+          "-0.004"
+        ],
+        [
+          "20",
+          "23",
+          "Bubba Wallace",
+          "23XI Racing",
+          "Toyota",
+          "49.619",
+          "181.382",
+          "16",
+          "18",
+          "-0.576",
+          "-0.001"
+        ],
+        [
+          "21",
+          "9",
+          "Chase Elliott",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "49.652",
+          "181.262",
+          "16",
+          "36",
+          "-0.609",
+          "-0.033"
+        ],
+        [
+          "22",
+          "22",
+          "Joey Logano",
+          "Team Penske",
+          "Ford",
+          "49.681",
+          "181.156",
+          "31",
+          "40",
+          "-0.638",
+          "-0.029"
+        ],
+        [
+          "23",
+          "6",
+          "Brad Keselowski",
+          "RFK Racing",
+          "Ford",
+          "49.703",
+          "181.076",
+          "12",
+          "27",
+          "-0.660",
+          "-0.022"
+        ],
+        [
+          "24",
+          "71",
+          "Michael McDowell",
+          "Spire Motorsports",
+          "Chevrolet",
+          "49.710",
+          "181.050",
+          "21",
+          "31",
+          "-0.667",
+          "-0.007"
+        ],
+        [
+          "25",
+          "97",
+          "Shane van Gisbergen",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "49.717",
+          "181.025",
+          "21",
+          "25",
+          "-0.674",
+          "-0.007"
+        ],
+        [
+          "26",
+          "38",
+          "Zane Smith",
+          "Front Row Motorsports",
+          "Ford",
+          "49.727",
+          "180.988",
+          "19",
+          "22",
+          "-0.684",
+          "-0.010"
+        ],
+        [
+          "27",
+          "60",
+          "Ryan Preece",
+          "RFK Racing",
+          "Ford",
+          "49.795",
+          "180.741",
+          "15",
+          "21",
+          "-0.752",
+          "-0.068"
+        ],
+        [
+          "28",
+          "34",
+          "Todd Gilliland",
+          "Front Row Motorsports",
+          "Ford",
+          "49.803",
+          "180.712",
+          "17",
+          "17",
+          "-0.760",
+          "-0.008"
+        ],
+        [
+          "29",
+          "19",
+          "Chase Briscoe",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "49.832",
+          "180.607",
+          "17",
+          "30",
+          "-0.789",
+          "-0.029"
+        ],
+        [
+          "30",
+          "41",
+          "Cole Custer",
+          "Haas Factory Team",
+          "Chevrolet",
+          "49.893",
+          "180.386",
+          "21",
+          "26",
+          "-0.850",
+          "-0.061"
+        ],
+        [
+          "31",
+          "48",
+          "Alex Bowman",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "49.903",
+          "180.350",
+          "21",
+          "30",
+          "-0.860",
+          "-0.010"
+        ],
+        [
+          "32",
+          "4",
+          "Noah Gragson",
+          "Front Row Motorsports",
+          "Ford",
+          "49.974",
+          "180.094",
+          "28",
+          "29",
+          "-0.931",
+          "-0.071"
+        ],
+        [
+          "33",
+          "88",
+          "Connor Zilisch (R)",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "50.009",
+          "179.968",
+          "20",
+          "30",
+          "-0.966",
+          "-0.035"
+        ],
+        [
+          "34",
+          "51",
+          "Cody Ware",
+          "Rick Ware Racing",
+          "Chevrolet",
+          "50.162",
+          "179.419",
+          "13",
+          "28",
+          "-1.119",
+          "-0.153"
+        ],
+        [
+          "35",
+          "3",
+          "Austin Dillon",
+          "Richard Childress Racing",
+          "Chevrolet",
+          "50.166",
+          "179.404",
+          "14",
+          "26",
+          "-1.123",
+          "-0.004"
+        ],
+        [
+          "36",
+          "33",
+          "Austin Hill (i)",
+          "Richard Childress Racing",
+          "Chevrolet",
+          "50.194",
+          "179.304",
+          "21",
+          "24",
+          "-1.151",
+          "-0.028"
+        ],
+        [
+          "37",
+          "10",
+          "Ty Dillon",
+          "Kaulig Racing",
+          "Chevrolet",
+          "50.269",
+          "179.037",
+          "12",
+          "30",
+          "-1.226",
+          "-0.075"
+        ],
+        [
+          "38",
+          "62",
+          "Casey Mears",
+          "Beard Motorsports",
+          "Chevrolet",
+          "51.201",
+          "175.778",
+          "15",
+          "20",
+          "-2.158",
+          "-0.932"
+        ],
+        [
+          "39",
+          "78",
+          "Daniel Dye (i)",
+          "Live Fast Motorsports",
+          "Chevrolet",
+          "51.849",
+          "173.581",
+          "4",
+          "5",
+          "-2.806",
+          "-0.648"
+        ]
+      ]
     },
     "qualifying": {
       "headers": [
         "Pos",
-        "#",
+        "No.",
         "Driver",
         "Team",
-        "Make",
+        "Manufacturer",
         "Time",
         "Speed"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "77",
+          "Carson Hocevar",
+          "Spire Motorsports",
+          "Chevrolet",
+          "48.232",
+          "186.598"
+        ],
+        [
+          "2",
+          "7",
+          "Daniel Suarez",
+          "Spire Motorsports",
+          "Chevrolet",
+          "48.288",
+          "186.382"
+        ],
+        [
+          "3",
+          "45",
+          "Tyler Reddick",
+          "23XI Racing",
+          "Toyota",
+          "48.367",
+          "186.077"
+        ],
+        [
+          "4",
+          "54",
+          "Ty Gibbs",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "48.396",
+          "185.966"
+        ],
+        [
+          "5",
+          "11",
+          "Denny Hamlin",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "48.430",
+          "185.835"
+        ],
+        [
+          "6",
+          "71",
+          "Michael McDowell",
+          "Spire Motorsports",
+          "Chevrolet",
+          "48.449",
+          "185.762"
+        ],
+        [
+          "7",
+          "67",
+          "Corey Heim (i)",
+          "23XI Racing",
+          "Toyota",
+          "48.529",
+          "185.456"
+        ],
+        [
+          "8",
+          "48",
+          "Alex Bowman",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "48.552",
+          "185.368"
+        ],
+        [
+          "9",
+          "16",
+          "A. J. Allmendinger",
+          "Kaulig Racing",
+          "Chevrolet",
+          "48.558",
+          "185.345"
+        ],
+        [
+          "10",
+          "5",
+          "Kyle Larson",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "48.566",
+          "185.315"
+        ],
+        [
+          "11",
+          "19",
+          "Chase Briscoe",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "48.578",
+          "185.269"
+        ],
+        [
+          "12",
+          "41",
+          "Cole Custer",
+          "Haas Factory Team",
+          "Chevrolet",
+          "48.579",
+          "185.265"
+        ],
+        [
+          "13",
+          "12",
+          "Ryan Blaney",
+          "Team Penske",
+          "Ford",
+          "48.597",
+          "185.197"
+        ],
+        [
+          "14",
+          "43",
+          "Erik Jones",
+          "Legacy Motor Club",
+          "Toyota",
+          "48.633",
+          "185.060"
+        ],
+        [
+          "15",
+          "17",
+          "Chris Buescher",
+          "RFK Racing",
+          "Ford",
+          "48.651",
+          "184.991"
+        ],
+        [
+          "16",
+          "6",
+          "Brad Keselowski",
+          "RFK Racing",
+          "Ford",
+          "48.676",
+          "184.896"
+        ],
+        [
+          "17",
+          "42",
+          "John Hunter Nemechek",
+          "Legacy Motor Club",
+          "Toyota",
+          "48.681",
+          "184.877"
+        ],
+        [
+          "18",
+          "35",
+          "Riley Herbst",
+          "23XI Racing",
+          "Toyota",
+          "48.706",
+          "184.782"
+        ],
+        [
+          "19",
+          "22",
+          "Joey Logano",
+          "Team Penske",
+          "Ford",
+          "48.728",
+          "184.699"
+        ],
+        [
+          "20",
+          "3",
+          "Austin Dillon",
+          "Richard Childress Racing",
+          "Chevrolet",
+          "48.728",
+          "184.699"
+        ],
+        [
+          "21",
+          "24",
+          "William Byron",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "48.761",
+          "184.574"
+        ],
+        [
+          "22",
+          "1",
+          "Ross Chastain",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "48.770",
+          "184.540"
+        ],
+        [
+          "23",
+          "20",
+          "Christopher Bell",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "48.837",
+          "184.287"
+        ],
+        [
+          "24",
+          "47",
+          "Ricky Stenhouse Jr.",
+          "Hyak Motorsports",
+          "Chevrolet",
+          "48.848",
+          "184.245"
+        ],
+        [
+          "25",
+          "97",
+          "Shane van Gisbergen",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "48.850",
+          "184.237"
+        ],
+        [
+          "26",
+          "21",
+          "Josh Berry",
+          "Wood Brothers Racing",
+          "Ford",
+          "48.879",
+          "184.128"
+        ],
+        [
+          "27",
+          "9",
+          "Chase Elliott",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "48.943",
+          "183.887"
+        ],
+        [
+          "28",
+          "10",
+          "Ty Dillon",
+          "Kaulig Racing",
+          "Chevrolet",
+          "48.948",
+          "183.869"
+        ],
+        [
+          "29",
+          "23",
+          "Bubba Wallace",
+          "23XI Racing",
+          "Toyota",
+          "48.950",
+          "183.861"
+        ],
+        [
+          "30",
+          "38",
+          "Zane Smith",
+          "Front Row Motorsports",
+          "Ford",
+          "49.048",
+          "183.494"
+        ],
+        [
+          "31",
+          "88",
+          "Connor Zilisch (R)",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "49.145",
+          "183.132"
+        ],
+        [
+          "32",
+          "33",
+          "Austin Hill (i)",
+          "Richard Childress Racing",
+          "Chevrolet",
+          "49.158",
+          "183.083"
+        ],
+        [
+          "33",
+          "4",
+          "Noah Gragson",
+          "Front Row Motorsports",
+          "Ford",
+          "49.183",
+          "182.990"
+        ],
+        [
+          "34",
+          "60",
+          "Ryan Preece",
+          "RFK Racing",
+          "Ford",
+          "49.238",
+          "182.786"
+        ],
+        [
+          "35",
+          "2",
+          "Austin Cindric",
+          "Team Penske",
+          "Ford",
+          "49.254",
+          "182.726"
+        ],
+        [
+          "36",
+          "34",
+          "Todd Gilliland",
+          "Front Row Motorsports",
+          "Ford",
+          "49.326",
+          "182.460"
+        ],
+        [
+          "37",
+          "51",
+          "Cody Ware",
+          "Rick Ware Racing",
+          "Chevrolet",
+          "49.431",
+          "182.072"
+        ],
+        [
+          "38",
+          "62",
+          "Casey Mears",
+          "Beard Motorsports",
+          "Chevrolet",
+          "50.133",
+          "179.522"
+        ],
+        [
+          "39",
+          "78",
+          "Daniel Dye (i)",
+          "Live Fast Motorsports",
+          "Chevrolet",
+          "50.290",
+          "178.962"
+        ]
+      ]
     },
     "race_results": {
       "headers": [
@@ -341,7 +1236,476 @@
         "Status",
         "Pts"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "7",
+          "67",
+          "Corey Heim (i)",
+          "23XI Racing",
+          "Toyota",
+          "160",
+          "58",
+          "running",
+          "0"
+        ],
+        [
+          "2",
+          "23",
+          "20",
+          "Christopher Bell",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "160",
+          "0",
+          "running",
+          "35"
+        ],
+        [
+          "3",
+          "19",
+          "22",
+          "Joey Logano",
+          "Team Penske",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "34"
+        ],
+        [
+          "4",
+          "11",
+          "19",
+          "Chase Briscoe",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "160",
+          "1",
+          "running",
+          "36"
+        ],
+        [
+          "5",
+          "5",
+          "11",
+          "Denny Hamlin",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "160",
+          "14",
+          "running",
+          "44"
+        ],
+        [
+          "6",
+          "16",
+          "6",
+          "Brad Keselowski",
+          "RFK Racing",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "31"
+        ],
+        [
+          "7",
+          "26",
+          "21",
+          "Josh Berry",
+          "Wood Brothers Racing",
+          "Ford",
+          "160",
+          "1",
+          "running",
+          "30"
+        ],
+        [
+          "8",
+          "34",
+          "60",
+          "Ryan Preece",
+          "RFK Racing",
+          "Ford",
+          "160",
+          "1",
+          "running",
+          "33"
+        ],
+        [
+          "9",
+          "1",
+          "77",
+          "Carson Hocevar",
+          "Spire Motorsports",
+          "Chevrolet",
+          "160",
+          "31",
+          "running",
+          "40"
+        ],
+        [
+          "10",
+          "3",
+          "45",
+          "Tyler Reddick",
+          "23XI Racing",
+          "Toyota",
+          "160",
+          "1",
+          "running",
+          "28"
+        ],
+        [
+          "11",
+          "15",
+          "17",
+          "Chris Buescher",
+          "RFK Racing",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "28"
+        ],
+        [
+          "12",
+          "4",
+          "54",
+          "Ty Gibbs",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "160",
+          "46",
+          "running",
+          "43"
+        ],
+        [
+          "13",
+          "12",
+          "41",
+          "Cole Custer",
+          "Haas Factory Team",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "24"
+        ],
+        [
+          "14",
+          "35",
+          "2",
+          "Austin Cindric",
+          "Team Penske",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "23"
+        ],
+        [
+          "15",
+          "30",
+          "38",
+          "Zane Smith",
+          "Front Row Motorsports",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "22"
+        ],
+        [
+          "16",
+          "25",
+          "97",
+          "Shane van Gisbergen",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "21"
+        ],
+        [
+          "17",
+          "2",
+          "7",
+          "Daniel Suarez",
+          "Spire Motorsports",
+          "Chevrolet",
+          "160",
+          "1",
+          "running",
+          "25"
+        ],
+        [
+          "18",
+          "6",
+          "71",
+          "Michael McDowell",
+          "Spire Motorsports",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "30"
+        ],
+        [
+          "19",
+          "8",
+          "48",
+          "Alex Bowman",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "18"
+        ],
+        [
+          "20",
+          "24",
+          "47",
+          "Ricky Stenhouse Jr.",
+          "Hyak Motorsports",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "17"
+        ],
+        [
+          "21",
+          "21",
+          "24",
+          "William Byron",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "22"
+        ],
+        [
+          "22",
+          "33",
+          "4",
+          "Noah Gragson",
+          "Front Row Motorsports",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "15"
+        ],
+        [
+          "23",
+          "22",
+          "1",
+          "Ross Chastain",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "160",
+          "5",
+          "running",
+          "24"
+        ],
+        [
+          "24",
+          "36",
+          "34",
+          "Todd Gilliland",
+          "Front Row Motorsports",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "22"
+        ],
+        [
+          "25",
+          "9",
+          "16",
+          "A. J. Allmendinger",
+          "Kaulig Racing",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "12"
+        ],
+        [
+          "26",
+          "13",
+          "12",
+          "Ryan Blaney",
+          "Team Penske",
+          "Ford",
+          "160",
+          "0",
+          "running",
+          "11"
+        ],
+        [
+          "27",
+          "14",
+          "43",
+          "Erik Jones",
+          "Legacy Motor Club",
+          "Toyota",
+          "160",
+          "0",
+          "running",
+          "12"
+        ],
+        [
+          "28",
+          "29",
+          "23",
+          "Bubba Wallace",
+          "23XI Racing",
+          "Toyota",
+          "160",
+          "0",
+          "running",
+          "9"
+        ],
+        [
+          "29",
+          "20",
+          "3",
+          "Austin Dillon",
+          "Richard Childress Racing",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "8"
+        ],
+        [
+          "30",
+          "28",
+          "10",
+          "Ty Dillon",
+          "Kaulig Racing",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "7"
+        ],
+        [
+          "31",
+          "37",
+          "51",
+          "Cody Ware",
+          "Rick Ware Racing",
+          "Chevrolet",
+          "160",
+          "0",
+          "running",
+          "6"
+        ],
+        [
+          "32",
+          "17",
+          "42",
+          "John Hunter Nemechek",
+          "Legacy Motor Club",
+          "Toyota",
+          "158",
+          "1",
+          "running",
+          "5"
+        ],
+        [
+          "33",
+          "32",
+          "33",
+          "Austin Hill (i)",
+          "Richard Childress Racing",
+          "Chevrolet",
+          "125",
+          "0",
+          "crash",
+          "0"
+        ],
+        [
+          "34",
+          "31",
+          "88",
+          "Connor Zilisch (R)",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "122",
+          "0",
+          "crash",
+          "3"
+        ],
+        [
+          "35",
+          "38",
+          "62",
+          "Casey Mears",
+          "Beard Motorsports",
+          "Chevrolet",
+          "121",
+          "0",
+          "crash",
+          "2"
+        ],
+        [
+          "36",
+          "18",
+          "35",
+          "Riley Herbst",
+          "23XI Racing",
+          "Toyota",
+          "120",
+          "0",
+          "crash",
+          "1"
+        ],
+        [
+          "37",
+          "27",
+          "9",
+          "Chase Elliott",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "119",
+          "0",
+          "running",
+          "1"
+        ],
+        [
+          "38",
+          "39",
+          "78",
+          "Daniel Dye (i)",
+          "Live Fast Motorsports",
+          "Chevrolet",
+          "93",
+          "0",
+          "crash",
+          "0"
+        ],
+        [
+          "39",
+          "10",
+          "5",
+          "Kyle Larson",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "43",
+          "0",
+          "crash",
+          "1"
+        ]
+      ]
     },
     "stage_1": {
       "title": "Stage 1",
@@ -353,7 +1717,88 @@
         "Make",
         "Pts"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "54",
+          "Ty Gibbs",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "10"
+        ],
+        [
+          "2",
+          "67",
+          "Corey Heim (i)",
+          "23XI Racing",
+          "Toyota",
+          "0"
+        ],
+        [
+          "3",
+          "71",
+          "Michael McDowell",
+          "Spire Motorsports",
+          "Chevrolet",
+          "8"
+        ],
+        [
+          "4",
+          "77",
+          "Carson Hocevar",
+          "Spire Motorsports",
+          "Chevrolet",
+          "7"
+        ],
+        [
+          "5",
+          "24",
+          "William Byron",
+          "Hendrick Motorsports",
+          "Chevrolet",
+          "6"
+        ],
+        [
+          "6",
+          "11",
+          "Denny Hamlin",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "5"
+        ],
+        [
+          "7",
+          "7",
+          "Daniel Suarez",
+          "Spire Motorsports",
+          "Chevrolet",
+          "4"
+        ],
+        [
+          "8",
+          "19",
+          "Chase Briscoe",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "3"
+        ],
+        [
+          "9",
+          "17",
+          "Chris Buescher",
+          "RFK Racing",
+          "Ford",
+          "2"
+        ],
+        [
+          "10",
+          "45",
+          "Tyler Reddick",
+          "23XI Racing",
+          "Toyota",
+          "1"
+        ]
+      ]
     },
     "stage_2": {
       "title": "Stage 2",
@@ -365,9 +1810,193 @@
         "Make",
         "Pts"
       ],
-      "rows": []
+      "rows": [
+        [
+          "1",
+          "1",
+          "Ross Chastain",
+          "Trackhouse Racing",
+          "Chevrolet",
+          "10"
+        ],
+        [
+          "2",
+          "34",
+          "Todd Gilliland",
+          "Front Row Motorsports",
+          "Ford",
+          "9"
+        ],
+        [
+          "3",
+          "54",
+          "Ty Gibbs",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "8"
+        ],
+        [
+          "4",
+          "11",
+          "Denny Hamlin",
+          "Joe Gibbs Racing",
+          "Toyota",
+          "7"
+        ],
+        [
+          "5",
+          "67",
+          "Corey Heim (i)",
+          "23XI Racing",
+          "Toyota",
+          "0"
+        ],
+        [
+          "6",
+          "77",
+          "Carson Hocevar",
+          "Spire Motorsports",
+          "Chevrolet",
+          "5"
+        ],
+        [
+          "7",
+          "60",
+          "Ryan Preece",
+          "RFK Racing",
+          "Ford",
+          "4"
+        ],
+        [
+          "8",
+          "71",
+          "Michael McDowell",
+          "Spire Motorsports",
+          "Chevrolet",
+          "3"
+        ],
+        [
+          "9",
+          "43",
+          "Erik Jones",
+          "Legacy Motor Club",
+          "Toyota",
+          "2"
+        ],
+        [
+          "10",
+          "7",
+          "Daniel Suarez",
+          "Spire Motorsports",
+          "Chevrolet",
+          "1"
+        ]
+      ]
+    },
+    "caution_breakdown": {
+      "headers": [
+        "Condition",
+        "From Lap",
+        "To Lap",
+        "# Of Laps",
+        "Reason",
+        "Free Pass"
+      ],
+      "rows": [
+        [
+          "",
+          "1",
+          "45",
+          "45",
+          "",
+          ""
+        ],
+        [
+          "",
+          "46",
+          "49",
+          "4",
+          "#5 accident turn 3",
+          "#3"
+        ],
+        [
+          "",
+          "50",
+          "51",
+          "2",
+          "",
+          ""
+        ],
+        [
+          "",
+          "52",
+          "55",
+          "4",
+          "end of stage 1",
+          "#10"
+        ],
+        [
+          "",
+          "56",
+          "96",
+          "41",
+          "",
+          ""
+        ],
+        [
+          "",
+          "97",
+          "104",
+          "8",
+          "accident 3 / stage 2 conclusion",
+          "#4"
+        ],
+        [
+          "",
+          "105",
+          "114",
+          "10",
+          "",
+          ""
+        ],
+        [
+          "",
+          "115",
+          "119",
+          "5",
+          "debris",
+          "#62"
+        ],
+        [
+          "",
+          "120",
+          "120",
+          "1",
+          "",
+          ""
+        ],
+        [
+          "",
+          "121",
+          "126",
+          "6",
+          "#1,12,16,33,35,38,42,62,88 accident turn 3",
+          "#51"
+        ],
+        [
+          "",
+          "127",
+          "160",
+          "34",
+          "",
+          ""
+        ]
+      ]
     }
   },
-  "event_preview": "The all-time Cup Series qualifying record at Indianapolis belongs to Kevin Harvick, who turned a 47.647-second lap (188.889 mph) in 2014. The Brickyard 400 race record average speed is 155.912 mph, set by Bobby Labonte in 2000 (2:33:56).",
-  "event_preview_ru": "Абсолютный рекорд квалификации Cup Series на Indianapolis принадлежит Kevin Harvick — 47,647 секунды (188,889 mph) в 2014 году. Рекорд средней скорости Brickyard 400 — 155,912 mph, установлен Bobby Labonte в 2000 году (2:33:56)."
+  "laps": "160",
+  "distance": "400 mi (643.7 km)",
+  "stage1_laps": "50",
+  "stage2_laps": "100",
+  "stage3_laps": "160"
 }

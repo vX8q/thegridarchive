@@ -13,6 +13,14 @@
   var nrcLiveSet = {};
   /** Events that were live at least once this session — drop from Next when sync clears them. */
   var nrcEverLiveSet = {};
+  /** Signature of current Next Race event ids — skip Last Results remount when unchanged. */
+  var nrcLastNextSignature = '';
+
+  function nextRaceEntriesSignature(entries) {
+    return (entries || []).map(function (ent) {
+      return String((ent.event && ent.event.id) || '').toUpperCase();
+    }).join('|');
+  }
 
   function eventUsesLiveSync(eventId) {
     return !!(window.TGA && window.TGA.eventUsesLiveSync && window.TGA.eventUsesLiveSync(eventId));
@@ -178,9 +186,14 @@
       var endTs = endTsForEvent(e, startTs);
       if (!endTs) endTs = startTs + 3 * 60 * 60 * 1000;
       var liveEndTs = liveEndTsForEvent ? liveEndTsForEvent(e, startTs, endTs) : endTs;
-      // Show only events not yet finished (schedule end or livesync still live).
-      if (endTs >= nowTs) {
-        var entryId = String(e.id || '').toUpperCase();
+      // Next Race: upcoming countdown OR currently LIVE only.
+      // Do not keep "started but not live" sessions until endTs — tick() expires them and
+      // re-including them here caused an infinite remount + /api/events/summaries storm.
+      var entryId = String(e.id || '').toUpperCase();
+      var upcoming = startTs > nowTs;
+      var inLiveWindow = !!(startTs && nowTs >= startTs && liveEndTs && nowTs <= liveEndTs);
+      var liveFromApi = !!(entryId && nrcLiveSet[entryId]);
+      if (endTs >= nowTs && (upcoming || inLiveWindow || liveFromApi)) {
         if (shouldShowLiveSyncInNextRace(entryId, startTs, liveEndTs, nowTs)) {
           weekEntries.push({ event: e, date: dt, endTs: endTs, liveEndTs: liveEndTs });
         }
@@ -195,6 +208,7 @@
 
     // Next Race: one card per upcoming session (no weekend merge — that stays on Last Results).
     if (weekEntries.length === 0) {
+      nrcLastNextSignature = '';
       container.innerHTML =
         '<div class="nrc-label">' + t('home.next_race') + '</div>' +
         '<div class="nrc-empty">' + t('home.no_upcoming') + '</div>';
@@ -331,6 +345,54 @@
           }
           if (trackKey.indexOf('wanneroo') >= 0 || trackKey.indexOf('barbagallo') >= 0) {
             extraClass += ' nrc-card--wanneroo-raceway';
+          }
+          if (trackKey.indexOf('iowa speedway') >= 0) {
+            extraClass += ' nrc-card--iowa-speedway';
+          }
+          if (trackKey.indexOf('sugo') >= 0 || trackKey.indexOf('sportsland') >= 0) {
+            extraClass += ' nrc-card--sportsland-sugo';
+          }
+          if (trackKey.indexOf('portland international') >= 0 || trackKey.indexOf('portland, oregon') >= 0) {
+            extraClass += ' nrc-card--portland-international-raceway';
+          }
+          if (trackKey.indexOf('richmond raceway') >= 0 || (trackKey.indexOf('richmond') >= 0 && trackKey.indexOf('virginia') >= 0)) {
+            extraClass += ' nrc-card--richmond-raceway';
+          }
+          if (trackKey.indexOf('nurburgring') >= 0 || trackKey.indexOf('nürburgring') >= 0 || trackKey.indexOf('nurburg') >= 0) {
+            extraClass += ' nrc-card--nurburgring';
+          }
+          if (trackKey.indexOf('streets of markham') >= 0 || trackKey.indexOf('markham') >= 0) {
+            extraClass += ' nrc-card--streets-of-markham';
+          }
+          if (trackKey.indexOf('queensland raceway') >= 0) {
+            extraClass += ' nrc-card--queensland-raceway';
+          }
+          if (trackKey.indexOf('illinois state fairgrounds') >= 0) {
+            extraClass += ' nrc-card--illinois-state-fairgrounds-racetrack';
+          }
+          if (trackKey.indexOf('new hampshire motor speedway') >= 0 || trackKey.indexOf('loudon') >= 0) {
+            extraClass += ' nrc-card--new-hampshire-motor-speedway';
+          }
+          if (trackKey.indexOf('virginia international raceway') >= 0) {
+            extraClass += ' nrc-card--virginia-international-raceway';
+          }
+          if (trackKey.indexOf('streets of washington') >= 0) {
+            extraClass += ' nrc-card--streets-of-washington';
+          }
+          if (trackKey.indexOf('daytona international') >= 0 || trackKey === 'daytona') {
+            extraClass += ' nrc-card--daytona-international-speedway';
+          }
+          if (trackKey.indexOf('milwaukee mile') >= 0 || trackKey === 'milwaukee') {
+            extraClass += ' nrc-card--milwaukee-mile';
+          }
+          if (trackKey.indexOf('circuit of the americas') >= 0 || trackKey === 'cota') {
+            extraClass += ' nrc-card--circuit-of-the-americas';
+          }
+          if (trackKey.indexOf('oswego') >= 0) {
+            extraClass += ' nrc-card--oswego-speedway';
+          }
+          if (trackKey.indexOf('duquoin') >= 0 || trackKey.indexOf('du quoin') >= 0) {
+            extraClass += ' nrc-card--duquoin-state-fairgrounds-racetrack';
           }
           if (trackKey.indexOf('norisring') >= 0) {
             extraClass += ' nrc-card--norisring';
@@ -542,6 +604,54 @@
           }
           if (eventNameLc.indexOf('wanneroo') >= 0 || eventNameLc.indexOf('perth super') >= 0) {
             extraClass += ' nrc-card--wanneroo-raceway';
+          }
+          if (eventNameLc.indexOf('iowa corn') >= 0 || eventNameLc.indexOf('iowa speedway') >= 0 || eventNameLc.indexOf('hy-vee perks') >= 0 || eventNameLc.indexOf('jr & co') >= 0) {
+            extraClass += ' nrc-card--iowa-speedway';
+          }
+          if (eventNameLc.indexOf('sugo') >= 0 || eventNameLc.indexOf('sportsland') >= 0) {
+            extraClass += ' nrc-card--sportsland-sugo';
+          }
+          if (eventNameLc.indexOf('portland') >= 0) {
+            extraClass += ' nrc-card--portland-international-raceway';
+          }
+          if (eventNameLc.indexOf('richmond') >= 0 || eventNameLc.indexOf("black's tire 250") >= 0 || eventNameLc.indexOf('cook out 400') >= 0) {
+            extraClass += ' nrc-card--richmond-raceway';
+          }
+          if (eventNameLc.indexOf('nurburgring') >= 0 || eventNameLc.indexOf('nürburgring') >= 0) {
+            extraClass += ' nrc-card--nurburgring';
+          }
+          if (eventNameLc.indexOf('markham') >= 0) {
+            extraClass += ' nrc-card--streets-of-markham';
+          }
+          if (eventNameLc.indexOf('queensland') >= 0 || eventNameLc.indexOf('ipswich') >= 0) {
+            extraClass += ' nrc-card--queensland-raceway';
+          }
+          if (eventNameLc.indexOf('illinois state fairgrounds') >= 0 || eventNameLc.indexOf('allen crowe') >= 0) {
+            extraClass += ' nrc-card--illinois-state-fairgrounds-racetrack';
+          }
+          if (eventNameLc.indexOf('new hampshire') >= 0 || eventNameLc.indexOf('loudon') >= 0) {
+            extraClass += ' nrc-card--new-hampshire-motor-speedway';
+          }
+          if (eventNameLc.indexOf('virginia international') >= 0 || eventNameLc.indexOf('challenge at vir') >= 0) {
+            extraClass += ' nrc-card--virginia-international-raceway';
+          }
+          if (eventNameLc.indexOf('streets of washington') >= 0 || eventNameLc.indexOf('washington, d.c') >= 0 || eventNameLc.indexOf('freedom 250') >= 0) {
+            extraClass += ' nrc-card--streets-of-washington';
+          }
+          if (eventNameLc.indexOf('daytona') >= 0 || eventNameLc.indexOf('coke zero') >= 0) {
+            extraClass += ' nrc-card--daytona-international-speedway';
+          }
+          if (eventNameLc.indexOf('milwaukee') >= 0) {
+            extraClass += ' nrc-card--milwaukee-mile';
+          }
+          if (eventNameLc.indexOf('lone star') >= 0 || eventNameLc.indexOf('circuit of the americas') >= 0) {
+            extraClass += ' nrc-card--circuit-of-the-americas';
+          }
+          if (eventNameLc.indexOf('oswego') >= 0 || eventNameLc.indexOf('mod classic') >= 0) {
+            extraClass += ' nrc-card--oswego-speedway';
+          }
+          if (eventNameLc.indexOf('duquoin') >= 0 || eventNameLc.indexOf('du quoin') >= 0 || eventNameLc.indexOf('southern illinois') >= 0) {
+            extraClass += ' nrc-card--duquoin-state-fairgrounds-racetrack';
           }
           if (eventNameLc.indexOf('norisring') >= 0) {
             extraClass += ' nrc-card--norisring';
@@ -759,6 +869,38 @@
               extraClass += ' nrc-card--magny-cours';
             } else if (eventSlug.indexOf('wanneroo') >= 0 || eventSlug.indexOf('perth') >= 0) {
               extraClass += ' nrc-card--wanneroo-raceway';
+            } else if (eventSlug.indexOf('iowa') >= 0) {
+              extraClass += ' nrc-card--iowa-speedway';
+            } else if (eventSlug.indexOf('sugo') >= 0) {
+              extraClass += ' nrc-card--sportsland-sugo';
+            } else if (eventSlug.indexOf('portland') >= 0) {
+              extraClass += ' nrc-card--portland-international-raceway';
+            } else if (eventSlug.indexOf('richmond') >= 0) {
+              extraClass += ' nrc-card--richmond-raceway';
+            } else if (eventSlug.indexOf('nurburg') >= 0) {
+              extraClass += ' nrc-card--nurburgring';
+            } else if (eventSlug.indexOf('markham') >= 0) {
+              extraClass += ' nrc-card--streets-of-markham';
+            } else if (eventSlug.indexOf('queensland') >= 0 || eventSlug.indexOf('ipswich') >= 0) {
+              extraClass += ' nrc-card--queensland-raceway';
+            } else if (eventSlug.indexOf('illinois-state-fairgrounds') >= 0 || eventSlug.indexOf('allen-crowe') >= 0 || eventSlug.indexOf('allen_crowe') >= 0) {
+              extraClass += ' nrc-card--illinois-state-fairgrounds-racetrack';
+            } else if (eventSlug.indexOf('new-hampshire') >= 0 || eventSlug.indexOf('new_hampshire') >= 0 || eventSlug.indexOf('loudon') >= 0) {
+              extraClass += ' nrc-card--new-hampshire-motor-speedway';
+            } else if (eventSlug.indexOf('virginia-international') >= 0 || eventSlug.indexOf('virginia_international') >= 0 || eventSlug.indexOf('at-vir') >= 0 || eventSlug.indexOf('at_vir') >= 0) {
+              extraClass += ' nrc-card--virginia-international-raceway';
+            } else if (eventSlug.indexOf('streets-of-washington') >= 0 || eventSlug.indexOf('streets_of_washington') >= 0 || eventSlug.indexOf('freedom-250') >= 0 || eventSlug.indexOf('freedom_250') >= 0) {
+              extraClass += ' nrc-card--streets-of-washington';
+            } else if (eventSlug.indexOf('daytona') >= 0 || eventSlug.indexOf('coke-zero') >= 0 || eventSlug.indexOf('coke_zero') >= 0) {
+              extraClass += ' nrc-card--daytona-international-speedway';
+            } else if (eventSlug.indexOf('milwaukee') >= 0) {
+              extraClass += ' nrc-card--milwaukee-mile';
+            } else if (eventSlug.indexOf('lone-star') >= 0 || eventSlug.indexOf('lone_star') >= 0 || eventSlug.indexOf('circuit-of-the-americas') >= 0 || (eventSlug.indexOf('cota') >= 0 && eventSlug.indexOf('le-mans') < 0)) {
+              extraClass += ' nrc-card--circuit-of-the-americas';
+            } else if (eventSlug.indexOf('oswego') >= 0) {
+              extraClass += ' nrc-card--oswego-speedway';
+            } else if (eventSlug.indexOf('duquoin') >= 0 || eventSlug.indexOf('du-quoin') >= 0 || eventSlug.indexOf('southern-illinois') >= 0) {
+              extraClass += ' nrc-card--duquoin-state-fairgrounds-racetrack';
             } else if (eventSlug.indexOf('norisring') >= 0) {
               extraClass += ' nrc-card--norisring';
             } else if (eventSlug.indexOf('reid-park') >= 0 || eventSlug.indexOf('reid_park') >= 0) {
@@ -954,13 +1096,15 @@
           nrcRefreshPending = false;
           var cache = window.TGA && window.TGA.getGlobalEventsCache && window.TGA.getGlobalEventsCache();
           if (!cache) return;
+          var prevSig = nrcLastNextSignature;
           renderNextRaceCards(cache);
-          if (window.TGA && typeof window.TGA.renderLastResultsCards === 'function') {
+          if (nrcLastNextSignature !== prevSig && window.TGA && typeof window.TGA.renderLastResultsCards === 'function') {
             window.TGA.renderLastResultsCards(cache);
           }
         }, 200);
       }
       nrcScheduleRefreshFn = scheduleNextRaceRefresh;
+      nrcLastNextSignature = nextRaceEntriesSignature(weekEntries);
 
       function tick() {
         var now2 = Date.now();

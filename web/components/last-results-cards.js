@@ -18,6 +18,12 @@
     return (window.TGA && window.TGA.teamLabel) ? window.TGA.teamLabel(name) : String(name);
   }
 
+  /** LRC winner lines are nowrap+ellipsis; drop Mercedes-AMG prefix so long official names fit. */
+  function compactGtwceSprintWinnerTeam(name) {
+    var team = winnerTeamLabel(name);
+    return String(team || '').replace(/^Mercedes-AMG\s+/i, '');
+  }
+
   function isGtwceSpa24HoursEvent(meta) {
     if (!meta || typeof meta !== 'object') return false;
     var race = String(meta.race || meta.name || '').trim();
@@ -458,6 +464,54 @@
           if (trackKey.indexOf('wanneroo') >= 0 || trackKey.indexOf('barbagallo') >= 0) {
             extraClass += ' lrc-card--wanneroo-raceway';
           }
+          if (trackKey.indexOf('iowa speedway') >= 0) {
+            extraClass += ' lrc-card--iowa-speedway';
+          }
+          if (trackKey.indexOf('sugo') >= 0 || trackKey.indexOf('sportsland') >= 0) {
+            extraClass += ' lrc-card--sportsland-sugo';
+          }
+          if (trackKey.indexOf('portland international') >= 0 || trackKey.indexOf('portland, oregon') >= 0) {
+            extraClass += ' lrc-card--portland-international-raceway';
+          }
+          if (trackKey.indexOf('richmond raceway') >= 0 || (trackKey.indexOf('richmond') >= 0 && trackKey.indexOf('virginia') >= 0)) {
+            extraClass += ' lrc-card--richmond-raceway';
+          }
+          if (trackKey.indexOf('nurburgring') >= 0 || trackKey.indexOf('nürburgring') >= 0 || trackKey.indexOf('nurburg') >= 0) {
+            extraClass += ' lrc-card--nurburgring';
+          }
+          if (trackKey.indexOf('streets of markham') >= 0 || trackKey.indexOf('markham') >= 0) {
+            extraClass += ' lrc-card--streets-of-markham';
+          }
+          if (trackKey.indexOf('queensland raceway') >= 0) {
+            extraClass += ' lrc-card--queensland-raceway';
+          }
+          if (trackKey.indexOf('illinois state fairgrounds') >= 0) {
+            extraClass += ' lrc-card--illinois-state-fairgrounds-racetrack';
+          }
+          if (trackKey.indexOf('new hampshire motor speedway') >= 0 || trackKey.indexOf('loudon') >= 0) {
+            extraClass += ' lrc-card--new-hampshire-motor-speedway';
+          }
+          if (trackKey.indexOf('virginia international raceway') >= 0) {
+            extraClass += ' lrc-card--virginia-international-raceway';
+          }
+          if (trackKey.indexOf('streets of washington') >= 0) {
+            extraClass += ' lrc-card--streets-of-washington';
+          }
+          if (trackKey.indexOf('daytona international') >= 0 || trackKey === 'daytona') {
+            extraClass += ' lrc-card--daytona-international-speedway';
+          }
+          if (trackKey.indexOf('milwaukee mile') >= 0 || trackKey === 'milwaukee') {
+            extraClass += ' lrc-card--milwaukee-mile';
+          }
+          if (trackKey.indexOf('circuit of the americas') >= 0 || trackKey === 'cota') {
+            extraClass += ' lrc-card--circuit-of-the-americas';
+          }
+          if (trackKey.indexOf('oswego') >= 0) {
+            extraClass += ' lrc-card--oswego-speedway';
+          }
+          if (trackKey.indexOf('duquoin') >= 0 || trackKey.indexOf('du quoin') >= 0) {
+            extraClass += ' lrc-card--duquoin-state-fairgrounds-racetrack';
+          }
           if (trackKey.indexOf('norisring') >= 0) {
             extraClass += ' lrc-card--norisring';
           }
@@ -681,6 +735,54 @@
           if (eventNameLc.indexOf('wanneroo') >= 0 || eventNameLc.indexOf('perth super') >= 0) {
             extraClass += ' lrc-card--wanneroo-raceway';
           }
+          if (eventNameLc.indexOf('iowa corn') >= 0 || eventNameLc.indexOf('iowa speedway') >= 0 || eventNameLc.indexOf('hy-vee perks') >= 0 || eventNameLc.indexOf('jr & co') >= 0) {
+            extraClass += ' lrc-card--iowa-speedway';
+          }
+          if (eventNameLc.indexOf('sugo') >= 0 || eventNameLc.indexOf('sportsland') >= 0) {
+            extraClass += ' lrc-card--sportsland-sugo';
+          }
+          if (eventNameLc.indexOf('portland') >= 0) {
+            extraClass += ' lrc-card--portland-international-raceway';
+          }
+          if (eventNameLc.indexOf('richmond') >= 0 || eventNameLc.indexOf("black's tire 250") >= 0 || eventNameLc.indexOf('cook out 400') >= 0) {
+            extraClass += ' lrc-card--richmond-raceway';
+          }
+          if (eventNameLc.indexOf('nurburgring') >= 0 || eventNameLc.indexOf('nürburgring') >= 0) {
+            extraClass += ' lrc-card--nurburgring';
+          }
+          if (eventNameLc.indexOf('markham') >= 0) {
+            extraClass += ' lrc-card--streets-of-markham';
+          }
+          if (eventNameLc.indexOf('queensland') >= 0 || eventNameLc.indexOf('ipswich') >= 0) {
+            extraClass += ' lrc-card--queensland-raceway';
+          }
+          if (eventNameLc.indexOf('illinois state fairgrounds') >= 0 || eventNameLc.indexOf('allen crowe') >= 0) {
+            extraClass += ' lrc-card--illinois-state-fairgrounds-racetrack';
+          }
+          if (eventNameLc.indexOf('new hampshire') >= 0 || eventNameLc.indexOf('loudon') >= 0) {
+            extraClass += ' lrc-card--new-hampshire-motor-speedway';
+          }
+          if (eventNameLc.indexOf('virginia international') >= 0 || eventNameLc.indexOf('challenge at vir') >= 0) {
+            extraClass += ' lrc-card--virginia-international-raceway';
+          }
+          if (eventNameLc.indexOf('streets of washington') >= 0 || eventNameLc.indexOf('washington, d.c') >= 0 || eventNameLc.indexOf('freedom 250') >= 0) {
+            extraClass += ' lrc-card--streets-of-washington';
+          }
+          if (eventNameLc.indexOf('daytona') >= 0 || eventNameLc.indexOf('coke zero') >= 0) {
+            extraClass += ' lrc-card--daytona-international-speedway';
+          }
+          if (eventNameLc.indexOf('milwaukee') >= 0) {
+            extraClass += ' lrc-card--milwaukee-mile';
+          }
+          if (eventNameLc.indexOf('lone star') >= 0 || eventNameLc.indexOf('circuit of the americas') >= 0) {
+            extraClass += ' lrc-card--circuit-of-the-americas';
+          }
+          if (eventNameLc.indexOf('oswego') >= 0 || eventNameLc.indexOf('mod classic') >= 0) {
+            extraClass += ' lrc-card--oswego-speedway';
+          }
+          if (eventNameLc.indexOf('duquoin') >= 0 || eventNameLc.indexOf('du quoin') >= 0 || eventNameLc.indexOf('southern illinois') >= 0) {
+            extraClass += ' lrc-card--duquoin-state-fairgrounds-racetrack';
+          }
           if (eventNameLc.indexOf('norisring') >= 0) {
             extraClass += ' lrc-card--norisring';
           }
@@ -896,6 +998,38 @@
               extraClass += ' lrc-card--magny-cours';
             } else if (eventSlug.indexOf('wanneroo') >= 0 || eventSlug.indexOf('perth') >= 0) {
               extraClass += ' lrc-card--wanneroo-raceway';
+            } else if (eventSlug.indexOf('iowa') >= 0) {
+              extraClass += ' lrc-card--iowa-speedway';
+            } else if (eventSlug.indexOf('sugo') >= 0) {
+              extraClass += ' lrc-card--sportsland-sugo';
+            } else if (eventSlug.indexOf('portland') >= 0) {
+              extraClass += ' lrc-card--portland-international-raceway';
+            } else if (eventSlug.indexOf('richmond') >= 0) {
+              extraClass += ' lrc-card--richmond-raceway';
+            } else if (eventSlug.indexOf('nurburg') >= 0) {
+              extraClass += ' lrc-card--nurburgring';
+            } else if (eventSlug.indexOf('markham') >= 0) {
+              extraClass += ' lrc-card--streets-of-markham';
+            } else if (eventSlug.indexOf('queensland') >= 0 || eventSlug.indexOf('ipswich') >= 0) {
+              extraClass += ' lrc-card--queensland-raceway';
+            } else if (eventSlug.indexOf('illinois-state-fairgrounds') >= 0 || eventSlug.indexOf('allen-crowe') >= 0 || eventSlug.indexOf('allen_crowe') >= 0) {
+              extraClass += ' lrc-card--illinois-state-fairgrounds-racetrack';
+            } else if (eventSlug.indexOf('new-hampshire') >= 0 || eventSlug.indexOf('new_hampshire') >= 0 || eventSlug.indexOf('loudon') >= 0) {
+              extraClass += ' lrc-card--new-hampshire-motor-speedway';
+            } else if (eventSlug.indexOf('virginia-international') >= 0 || eventSlug.indexOf('virginia_international') >= 0 || eventSlug.indexOf('at-vir') >= 0 || eventSlug.indexOf('at_vir') >= 0) {
+              extraClass += ' lrc-card--virginia-international-raceway';
+            } else if (eventSlug.indexOf('streets-of-washington') >= 0 || eventSlug.indexOf('streets_of_washington') >= 0 || eventSlug.indexOf('freedom-250') >= 0 || eventSlug.indexOf('freedom_250') >= 0) {
+              extraClass += ' lrc-card--streets-of-washington';
+            } else if (eventSlug.indexOf('daytona') >= 0 || eventSlug.indexOf('coke-zero') >= 0 || eventSlug.indexOf('coke_zero') >= 0) {
+              extraClass += ' lrc-card--daytona-international-speedway';
+            } else if (eventSlug.indexOf('milwaukee') >= 0) {
+              extraClass += ' lrc-card--milwaukee-mile';
+            } else if (eventSlug.indexOf('lone-star') >= 0 || eventSlug.indexOf('lone_star') >= 0 || eventSlug.indexOf('circuit-of-the-americas') >= 0 || (eventSlug.indexOf('cota') >= 0 && eventSlug.indexOf('le-mans') < 0)) {
+              extraClass += ' lrc-card--circuit-of-the-americas';
+            } else if (eventSlug.indexOf('oswego') >= 0) {
+              extraClass += ' lrc-card--oswego-speedway';
+            } else if (eventSlug.indexOf('duquoin') >= 0 || eventSlug.indexOf('du-quoin') >= 0 || eventSlug.indexOf('southern-illinois') >= 0) {
+              extraClass += ' lrc-card--duquoin-state-fairgrounds-racetrack';
             } else if (eventSlug.indexOf('norisring') >= 0) {
               extraClass += ' lrc-card--norisring';
             } else if (eventSlug.indexOf('reid-park') >= 0 || eventSlug.indexOf('reid_park') >= 0) {
@@ -1086,10 +1220,11 @@
                 return '<span class="lrc-winner-line">' + esc(line) + '</span>';
               }).join('');
             } else if (seriesIdUpper === 'GTWCE_SPRINT') {
-              // GTWCE Sprint: absolute Race 1 / Race 2 winners only — team and # (no driver names).
+              // GTWCE Sprint: absolute Race 1 / Race 2 winners — # then team (no drivers).
+              // Strip leading Mercedes-AMG so names like Team Verstappen Racing fit the card.
               winnerHtml = list.slice(0, 2).map(function (w) {
-                var line = winnerTeamLabel(w.name || '');
-                if (w.car) line = line + ' #' + w.car;
+                var crew = compactGtwceSprintWinnerTeam(w.name || '');
+                var line = w.car ? '#' + w.car + ' ' + crew : crew;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
                 if (label) line = label + ' - ' + line;
                 return '<span class="lrc-winner-line">' + esc(line) + '</span>';
@@ -1125,6 +1260,10 @@
                 var line = winnerDriverLabel(w.name || '');
                 if (w.car) {
                   line = '#' + w.car + ' ' + line;
+                }
+                // Super Formula: "Round N —" only on multi-race weekend cards.
+                if (seriesIdUpper === 'SUPER_FORMULA' && list.length === 1) {
+                  label = '';
                 }
                 if (label) {
                   line = label + ' — ' + line;

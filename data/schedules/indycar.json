@@ -150,7 +150,7 @@
     "name": "OnlyBulls Grand Prix of Portland",
     "location": "Portland, Oregon, USA",
     "circuit_name": "Portland International Raceway",
-    "start_date": "2026-08-09",
+    "start_date": "2026-08-07",
     "end_date": "2026-08-09",
     "time_est": "4:00 p.m.",
     "time_msk": "8/10/26 02:00"
@@ -176,8 +176,8 @@
     "circuit_name": "Streets of Washington",
     "start_date": "2026-08-23",
     "end_date": "2026-08-23",
-    "time_est": "TBD",
-    "time_msk": "TBD"
+    "time_est": "11:30 a.m.",
+    "time_msk": "18:30"
   },
   {
     "id": "INDYCAR_2026_16",
@@ -188,8 +188,8 @@
     "circuit_name": "Milwaukee Mile",
     "start_date": "2026-08-29",
     "end_date": "2026-08-29",
-    "time_est": "2:30 p.m.",
-    "time_msk": "22:30"
+    "time_est": "1:30 p.m.",
+    "time_msk": "21:30"
   },
   {
     "id": "INDYCAR_2026_17",
@@ -200,8 +200,8 @@
     "circuit_name": "Milwaukee Mile",
     "start_date": "2026-08-30",
     "end_date": "2026-08-30",
-    "time_est": "1:00 p.m.",
-    "time_msk": "21:00"
+    "time_est": "12:00 p.m.",
+    "time_msk": "20:00"
   },
   {
     "id": "INDYCAR_2026_18",

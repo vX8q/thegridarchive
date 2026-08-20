@@ -201,7 +201,7 @@
   ],
   "tables": {
     "practice": {
-      "title": "2026 Repco Supercars Championship - Practice 1",
+      "title": "Practice 1",
       "subtitle": "Thu 05 Mar 2026 Melbourne, VIC",
       "meta": {
         "Championship": "2026 Repco Supercars Championship",
@@ -439,7 +439,7 @@
       ]
     },
     "practice2": {
-      "title": "2026 Repco Supercars Championship - Practice 2",
+      "title": "Practice 2",
       "subtitle": "Thu 05 Mar 2026 Melbourne, VIC",
       "meta": {
         "Championship": "2026 Repco Supercars Championship",
@@ -679,7 +679,7 @@
     "qualifying": {
       "sessions": [
         {
-          "title": "2026 Repco Supercars Championship - Qualifying - Race 4",
+          "title": "Qualifying - Race 4",
           "subtitle": "Thu 05 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -922,7 +922,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Qualifying - Race 5",
+          "title": "Qualifying - Race 5",
           "subtitle": "Thu 05 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -1175,7 +1175,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Qualifying - Race 6",
+          "title": "Qualifying - Race 6",
           "subtitle": "Sat 07 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -1438,7 +1438,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Qualifying - Race 7",
+          "title": "Qualifying - Race 7",
           "subtitle": "Sat 07 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -1695,7 +1695,7 @@
     "race": {
       "sessions": [
         {
-          "title": "2026 Repco Supercars Championship - Race 4",
+          "title": "Race 4",
           "subtitle": "Thu 05 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -1958,7 +1958,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Race 5",
+          "title": "Race 5",
           "subtitle": "Fri 06 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -2221,7 +2221,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Race 6",
+          "title": "Race 6",
           "subtitle": "Sat 07 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",
@@ -2484,7 +2484,7 @@
           ]
         },
         {
-          "title": "2026 Repco Supercars Championship - Race 7",
+          "title": "Race 7",
           "subtitle": "Sun 08 Mar 2026 Melbourne, VIC",
           "meta": {
             "Championship": "2026 Repco Supercars Championship",

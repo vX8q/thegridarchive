@@ -162,7 +162,7 @@
       return trLabel('schedule.test', 'Test');
     }
     var sk = String(seriesKey || '').toLowerCase();
-    if (sk === 'f1' || sk === 'f1-2026' || sk === 'f1-2025') {
+    if (sk === 'f1' || sk === 'f1-2026' || sk === 'f1-2025' || sk === 'f1-2024') {
       return trLabel('standings.feature_race', 'Feature Race');
     }
     return e._sessionLabel ? String(e._sessionLabel) : '';

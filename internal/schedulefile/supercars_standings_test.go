@@ -21,10 +21,11 @@ func TestBuildSupercarsStandingsFromEvents_SessionPerRace(t *testing.T) {
 	if len(data.RaceOrder) != len(data.CompletedRaces) {
 		t.Fatalf("race_order=%d completed=%d, want same length (no future columns)", len(data.RaceOrder), len(data.CompletedRaces))
 	}
-	if len(data.RaceOrder) > 25 {
-		t.Fatalf("race_order=%d, unexpected future columns", len(data.RaceOrder))
+	// Season grows as weekends are filled; guard against leftover global codes (ADL37 etc.).
+	if len(data.RaceOrder) < 20 || len(data.RaceOrder) > 50 {
+		t.Fatalf("race_order=%d, unexpected length", len(data.RaceOrder))
 	}
-	for _, code := range []string{"SMP1", "SMP2", "SMP3", "MLB1", "MLB4", "TPO1", "DAR3"} {
+	for _, code := range []string{"SMP1", "SMP2", "SMP3", "MLB1", "MLB4", "TPO1", "DAR3", "PER1", "IPS1"} {
 		if _, ok := findRaceCode(data.RaceOrder, code); !ok {
 			t.Fatalf("missing race code %q in %v", code, data.RaceOrder)
 		}

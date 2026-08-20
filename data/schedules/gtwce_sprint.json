@@ -42,11 +42,10 @@
     "name": "GT World Challenge Europe Sprint — Zandvoort",
     "location": "Zandvoort, North Holland, Netherlands",
     "circuit_name": "Circuit Zandvoort",
-    "start_date": "2026-08-21",
-    "end_date": "2026-08-21",
-    "time_est": "15:30",
-    "time_msk": "16:30",
-    "date": "2026-08-21"
+    "start_date": "2026-09-19",
+    "end_date": "2026-09-20",
+    "time_est": "14:45",
+    "time_msk": "15:45"
   },
   {
     "id": "GTWCE_SPRINT_2026_5",
@@ -56,9 +55,9 @@
     "location": "Montmelo, Catalonia, Spain",
     "circuit_name": "Circuit de Barcelona-Catalunya",
     "start_date": "2026-10-02",
-    "end_date": "2026-10-02",
-    "time_est": "15:30",
-    "time_msk": "16:30",
-    "date": "2026-10-02"
+    "end_date": "2026-10-04",
+    "time_est": "14:00",
+    "time_msk": "15:00",
+    "date": "2026-10-03"
   }
 ]

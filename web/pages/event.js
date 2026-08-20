@@ -642,21 +642,20 @@
       }
       var videoWrapCls = 'video-embed-wrap' + ((highlightsList.length === 1 && hasSingleRaceSession) ? ' video-embed-wrap--single' : '');
       html += '<div class="' + videoWrapCls + '">';
-      if (highlightsList.length === 1) {
-        html += '<h4 class="table-section-title">' + esc(localizeSectionTitle(highlightsList[0].title || t('section.highlights'))) + '</h4>';
-      } else {
-        html += '<h4 class="table-section-title">' + t('section.highlights') + '</h4>';
-      }
+      html += '<h4 class="table-section-title">' + t('section.highlights') + '</h4>';
       highlightsList.forEach(function (item, idx) {
         var rawId = (item.id || item.youtube_id || '').toString().trim();
         var hasYoutubeId = rawId.length > 0;
         if (hasYoutubeId) {
           var yid = rawId.replace(/[^a-zA-Z0-9_\-]/g, '');
           if (!yid) return;
-          // Remove caption under preview if it is the only video (heading already above).
-          var showLabel = (highlightsList.length > 1);
-          var label = (showLabel && item.title)
-            ? '<p class="video-facade-label">' + esc(localizeSectionTitle(item.title)) + '</p>'
+          // Section heading is always "Highlights". Per-video captions (Sprint / Race)
+          // only when there are multiple clips — typically a sprint weekend.
+          var sectionTitle = t('section.highlights');
+          var itemTitle = item.title ? localizeSectionTitle(item.title) : '';
+          var showLabel = highlightsList.length > 1 && !!(itemTitle && itemTitle !== sectionTitle);
+          var label = showLabel
+            ? '<p class="video-facade-label">' + esc(itemTitle) + '</p>'
             : '';
           var thumbBase = 'https://img.youtube.com/vi/' + yid + '/';
           var thumbFallback = 'onerror="var s=this.src;if(s.indexOf(\'maxresdefault\')!==-1){this.src=s.replace(\'maxresdefault\',\'sddefault\');this.onerror=function(){this.src=s.replace(\'maxresdefault\',\'hqdefault\');this.onerror=null;};}else if(s.indexOf(\'sddefault\')!==-1){this.src=s.replace(\'sddefault\',\'hqdefault\');this.onerror=null;}"';

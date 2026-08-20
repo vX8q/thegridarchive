@@ -2,6 +2,32 @@ package schedulefile
 
 import "strings"
 
+// canonicalizeF1Constructor maps short / legacy Constructor labels onto the
+// FIA constructors' championship names used in later 2025 protocols.
+func canonicalizeF1Constructor(name string) string {
+	s := strings.TrimSpace(name)
+	switch s {
+	case "McLaren":
+		return "McLaren-Mercedes"
+	case "Red Bull Racing":
+		return "Red Bull Racing-Honda RBPT"
+	case "Racing Bulls", "RB", "Visa Cash App RB":
+		return "Racing Bulls-Honda RBPT"
+	case "Williams":
+		return "Williams-Mercedes"
+	case "Aston Martin":
+		return "Aston Martin Aramco-Mercedes"
+	case "Alpine":
+		return "Alpine-Renault"
+	case "Haas F1 Team", "Haas":
+		return "Haas-Ferrari"
+	case "Kick Sauber", "Sauber", "Stake F1 Team Kick Sauber":
+		return "Kick Sauber-Ferrari"
+	default:
+		return s
+	}
+}
+
 // splitDriversCell splits a multi-driver cell value
 // (endurance/Super GT format: "Driver A; Driver B" or "A / B / C") into
 // a list of names. Empty elements and whitespace are dropped.

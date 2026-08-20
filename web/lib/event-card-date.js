@@ -53,7 +53,7 @@
   function buildF1SprintWeekendSet() {
     var staticSched = (typeof window !== 'undefined' && window.TGA_STATIC_SCHEDULES) || {};
     var set = {};
-    ['f1Sprint2025', 'f1Sprint2026'].forEach(function (key) {
+    ['f1Sprint2024', 'f1Sprint2025', 'f1Sprint2026'].forEach(function (key) {
       var block = staticSched[key] || {};
       Object.keys(block).forEach(function (id) { set[String(id).toUpperCase()] = true; });
     });
@@ -141,6 +141,7 @@
   function f1SprintMetaForEvent(idU) {
     var staticSched = (typeof window !== 'undefined' && window.TGA_STATIC_SCHEDULES) || {};
     var byYear = {
+      '2024': staticSched.f1Sprint2024 || {},
       '2025': staticSched.f1Sprint2025 || {},
       '2026': staticSched.f1Sprint2026 || {}
     };
@@ -226,7 +227,7 @@
   function isMultiRaceSeriesSchedule(seriesId) {
     var raw = String(seriesId || '').toLowerCase();
     var k = seriesKeyNorm(seriesId);
-    if (k === 'f1') return raw === 'f1' || raw === 'f1-2026' || raw === 'f1-2025';
+    if (k === 'f1') return raw === 'f1' || raw === 'f1-2026' || raw === 'f1-2025' || raw === 'f1-2024';
     return !!MULTI_RACE_SERIES[k];
   }
 

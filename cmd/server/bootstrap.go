@@ -543,10 +543,9 @@ func importOpenwheelSeries(ctx context.Context, st store.Store, dataDir, seriesI
 	const dateLayout = "2006-01-02"
 	for _, e := range events {
 		// By default import only the current season (config.CurrentSeason),
-		// but for F1 also pull 2025 so the /season/f1-2025 history page
-		// is built from DB data.
+		// but for F1 also pull 2024/2025 so /season/f1-20xx pages get DB race rows.
 		if e.Season != config.CurrentSeason {
-			if !(strings.EqualFold(seriesID, "F1") && e.Season == "2025") {
+			if !(strings.EqualFold(seriesID, "F1") && (e.Season == "2025" || e.Season == "2024")) {
 				continue
 			}
 		}
@@ -567,10 +566,11 @@ func importOpenwheelSeries(ctx context.Context, st store.Store, dataDir, seriesI
 		}
 		for _, sess := range sessions {
 			raceSuffix := ":FEATURE"
-			if strings.EqualFold(seriesID, "F1") {
-				raceSuffix = ":RACE"
-			} else if strings.Contains(strings.ToUpper(sess.Title), "SPRINT") {
+			upperTitle := strings.ToUpper(sess.Title)
+			if strings.Contains(upperTitle, "SPRINT") {
 				raceSuffix = ":SPRINT"
+			} else if strings.EqualFold(seriesID, "F1") {
+				raceSuffix = ":RACE"
 			}
 			raceID := e.ID + raceSuffix
 			raceName := sess.Title

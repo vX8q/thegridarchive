@@ -278,7 +278,10 @@ func loadEventRaceSessionsFromRaceTable(dataDir, eventID string) ([]RaceSession,
 	return out, nil
 }
 
-// LoadEventRaceSessions reads event JSON and returns sessions from tables.race.sessions (or one tables.race table).
+// LoadEventRaceSessions reads race session tables from event JSON.
+// Sources (combined when both present — F1 sprint weekends):
+//   - tables.race.sessions[] or flat tables.race (Sprint, Race 1/2, Feature, …)
+//   - tables.race_results (F1 Grand Prix; appended after sprint sessions when both exist)
 // Used for DB import and standings build; one format for F1/F2/F3/Supercars.
 func LoadEventRaceSessions(dataDir, eventID string) ([]RaceSession, error) {
 	raw, err := readEventDetailFile(dataDir, eventID)
@@ -293,85 +296,106 @@ func LoadEventRaceSessions(dataDir, eventID string) ([]RaceSession, error) {
 	if !ok {
 		return nil, nil
 	}
-	// F1 etc.: results table in tables.race or tables.race_results
-	raceAny, ok := tables["race"]
-	if !ok {
-		raceAny, ok = tables["race_results"]
-		if !ok {
-			return nil, nil
-		}
+
+	var out []RaceSession
+	if raceAny, ok := tables["race"]; ok {
+		out = append(out, parseRaceTableAny(raceAny)...)
 	}
-	raceMap, ok := raceAny.(map[string]interface{})
-	if !ok {
-		return nil, nil
-	}
-	// Variant 1: tables.race.sessions[] (F2, F3, Supercars)
-	sessionsAny, hasSessions := raceMap["sessions"].([]interface{})
-	if !hasSessions {
-		// Variant 2: single tables.race table with headers/rows (F1, etc.)
-		if h, ok1 := raceMap["headers"].([]interface{}); ok1 {
-			if r, ok2 := raceMap["rows"].([]interface{}); ok2 {
-				var headers []string
-				for _, v := range h {
-					headers = append(headers, strings.TrimSpace(fmt.Sprint(v)))
+	if rrAny, ok := tables["race_results"]; ok {
+		rr := parseRaceTableAny(rrAny)
+		if len(out) == 0 {
+			out = rr
+		} else if len(rr) > 0 {
+			// Sprint weekend: keep sprint session(s) from tables.race, append GP.
+			for i := range rr {
+				if strings.TrimSpace(rr[i].Title) == "" || strings.EqualFold(rr[i].Title, "Race") {
+					rr[i].Title = "Race"
 				}
-				var rows [][]string
-				for _, rAny := range r {
-					rSlice, ok := rAny.([]interface{})
-					if !ok {
-						continue
-					}
-					row := make([]string, len(rSlice))
-					for i := range rSlice {
-						row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
-					}
-					rows = append(rows, row)
-				}
-				if len(headers) > 0 && len(rows) > 0 {
-					title := strings.TrimSpace(fmt.Sprint(raceMap["title"]))
-					if title == "" {
-						title = "Race"
-					}
-					return []RaceSession{{Title: title, Headers: headers, Rows: rows}}, nil
-				}
+				out = append(out, rr[i])
 			}
 		}
+	}
+	if len(out) == 0 {
 		return nil, nil
 	}
-	var out []RaceSession
-	for _, sessAny := range sessionsAny {
-		sessMap, ok := sessAny.(map[string]interface{})
-		if !ok {
-			continue
-		}
-		title := strings.TrimSpace(fmt.Sprint(sessMap["title"]))
-		headersAny, ok := sessMap["headers"].([]interface{})
-		if !ok {
-			continue
-		}
-		var headers []string
-		for _, h := range headersAny {
-			headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
-		}
-		rowsAny, ok := sessMap["rows"].([]interface{})
-		if !ok {
-			continue
-		}
-		var rows [][]string
-		for _, rAny := range rowsAny {
-			rSlice, ok := rAny.([]interface{})
+	return out, nil
+}
+
+// parseRaceTableAny converts tables.race / tables.race_results JSON into RaceSession slices.
+func parseRaceTableAny(raceAny interface{}) []RaceSession {
+	raceMap, ok := raceAny.(map[string]interface{})
+	if !ok {
+		return nil
+	}
+	if sessionsAny, hasSessions := raceMap["sessions"].([]interface{}); hasSessions {
+		var out []RaceSession
+		for _, sessAny := range sessionsAny {
+			sessMap, ok := sessAny.(map[string]interface{})
 			if !ok {
 				continue
 			}
-			row := make([]string, len(rSlice))
-			for i := range rSlice {
-				row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
+			title := strings.TrimSpace(fmt.Sprint(sessMap["title"]))
+			headersAny, ok := sessMap["headers"].([]interface{})
+			if !ok {
+				continue
 			}
-			rows = append(rows, row)
+			var headers []string
+			for _, h := range headersAny {
+				headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
+			}
+			rowsAny, ok := sessMap["rows"].([]interface{})
+			if !ok {
+				continue
+			}
+			var rows [][]string
+			for _, rAny := range rowsAny {
+				rSlice, ok := rAny.([]interface{})
+				if !ok {
+					continue
+				}
+				row := make([]string, len(rSlice))
+				for i := range rSlice {
+					row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
+				}
+				rows = append(rows, row)
+			}
+			if len(headers) == 0 || len(rows) == 0 {
+				continue
+			}
+			out = append(out, RaceSession{Title: title, Headers: headers, Rows: rows})
 		}
-		out = append(out, RaceSession{Title: title, Headers: headers, Rows: rows})
+		return out
 	}
-	return out, nil
+	// Flat table with headers/rows.
+	h, ok1 := raceMap["headers"].([]interface{})
+	r, ok2 := raceMap["rows"].([]interface{})
+	if !ok1 || !ok2 {
+		return nil
+	}
+	var headers []string
+	for _, v := range h {
+		headers = append(headers, strings.TrimSpace(fmt.Sprint(v)))
+	}
+	var rows [][]string
+	for _, rAny := range r {
+		rSlice, ok := rAny.([]interface{})
+		if !ok {
+			continue
+		}
+		row := make([]string, len(rSlice))
+		for i := range rSlice {
+			row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
+		}
+		rows = append(rows, row)
+	}
+	if len(headers) == 0 || len(rows) == 0 {
+		return nil
+	}
+	title := strings.TrimSpace(fmt.Sprint(raceMap["title"]))
+	if title == "" {
+		title = "Race"
+	}
+	return []RaceSession{{Title: title, Headers: headers, Rows: rows}}
 }
 
 // LoadEventQualifyingSessions reads tables.qualifying.sessions from event JSON.

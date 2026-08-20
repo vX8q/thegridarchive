@@ -84,6 +84,90 @@ test('PSC Hungaroring Last Results shows race day, not weekend span', () => {
   assert.strictEqual(TGA.formatLastResultsCardDate(pending), '2026-07-26');
 });
 
+test('IndyCar Portland pending card shows race day, not practice weekend', () => {
+  const portland = loadScheduleEntry('indycar.json', 'INDYCAR_2026_13');
+  assert.ok(portland);
+  assert.strictEqual(portland.start_date, '2026-08-07');
+  assert.strictEqual(portland.end_date, '2026-08-09');
+  const range = TGA.getEventRaceDateRangeIso(portland);
+  assert.strictEqual(range.start, '2026-08-09');
+  assert.strictEqual(range.end, '2026-08-09');
+
+  const pending = {
+    event: portland,
+    rangeStart: portland.start_date,
+    rangeEnd: portland.end_date,
+    winners: [],
+  };
+  assert.strictEqual(TGA.lastResultsCardHasMultipleRaces(pending), false);
+  const cardRange = TGA.lastResultsCardRaceDateRange(pending);
+  assert.strictEqual(cardRange.start, '2026-08-09');
+  assert.strictEqual(cardRange.end, '2026-08-09');
+  assert.strictEqual(TGA.formatLastResultsCardDate(pending), '2026-08-09');
+});
+
+test('Super Formula SUGO pending card shows race day, not Aug 8–9 practice weekend', () => {
+  const sugo = loadScheduleEntry('super_formula.json', 'SUPER_FORMULA_2026_8');
+  assert.ok(sugo);
+  assert.strictEqual(sugo.start_date, '2026-08-08');
+  assert.strictEqual(sugo.end_date, '2026-08-09');
+  const range = TGA.getEventRaceDateRangeIso(sugo);
+  assert.strictEqual(range.start, '2026-08-09');
+  assert.strictEqual(range.end, '2026-08-09');
+
+  const pending = {
+    event: sugo,
+    rangeStart: sugo.start_date,
+    rangeEnd: sugo.end_date,
+    winners: [],
+  };
+  assert.strictEqual(TGA.lastResultsCardHasMultipleRaces(pending), false);
+  const cardRange = TGA.lastResultsCardRaceDateRange(pending);
+  assert.strictEqual(cardRange.start, '2026-08-09');
+  assert.strictEqual(cardRange.end, '2026-08-09');
+  assert.strictEqual(TGA.formatLastResultsCardDate(pending), '2026-08-09');
+});
+
+test('Super Formula Motegi multi-session weekend still shows date range', () => {
+  const motegi = loadScheduleEntry('super_formula.json', 'SUPER_FORMULA_2026_1');
+  assert.ok(motegi);
+  const range = TGA.getEventRaceDateRangeIso(motegi);
+  assert.strictEqual(range.start, '2026-04-04');
+  assert.strictEqual(range.end, '2026-04-05');
+  const pending = {
+    event: motegi,
+    rangeStart: motegi.start_date,
+    rangeEnd: motegi.end_date,
+    winners: [],
+  };
+  assert.strictEqual(TGA.lastResultsCardHasMultipleRaces(pending), true);
+  const display = TGA.formatLastResultsCardDate(pending);
+  assert.ok(display.indexOf('2026-04-04') >= 0);
+  assert.ok(display.indexOf('2026-04-05') >= 0);
+});
+
+test('IndyCar merged double-header Last Results still shows date range', () => {
+  const card = {
+    event: {
+      id: 'INDYCAR_2026_16',
+      series_id: 'INDYCAR',
+      name: 'Milwaukee',
+      start_date: '2026-08-29',
+      end_date: '2026-08-30',
+    },
+    rangeStart: '2026-08-29',
+    rangeEnd: '2026-08-30',
+    winners: [
+      { name: 'Driver A', car: '1', label: 'Race 1' },
+      { name: 'Driver B', car: '2', label: 'Race 2' },
+    ],
+  };
+  assert.strictEqual(TGA.lastResultsCardHasMultipleRaces(card), true);
+  const display = TGA.formatLastResultsCardDate(card);
+  assert.ok(display.indexOf('2026-08-29') >= 0);
+  assert.ok(display.indexOf('2026-08-30') >= 0);
+});
+
 test('PSC merged double-header Last Results still shows date range', () => {
   const card = {
     event: {

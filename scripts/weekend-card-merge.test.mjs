@@ -50,7 +50,7 @@ test('mergeLastResultsWeekendCards merges PSC Zandvoort double-header', () => {
         series_id: 'PSC',
         circuit_name: 'Circuit Zandvoort',
         location: 'Zandvoort, North Holland, Netherlands',
-        name: 'Zandvoort',
+        name: 'Zandvoort (Race 1)',
       },
       rangeStart: '2026-08-22',
       rangeEnd: '2026-08-22',
@@ -63,7 +63,7 @@ test('mergeLastResultsWeekendCards merges PSC Zandvoort double-header', () => {
         series_id: 'PSC',
         circuit_name: 'Circuit Zandvoort',
         location: 'Zandvoort, North Holland, Netherlands',
-        name: 'Zandvoort',
+        name: 'Zandvoort (Race 2)',
       },
       rangeStart: '2026-08-23',
       rangeEnd: '2026-08-23',
@@ -189,6 +189,30 @@ test('buildGroupedWeekendLastEventById maps PSC and IndyCar double-headers', () 
   const map = TGA.buildGroupedWeekendLastEventById(events);
   assert.strictEqual(map.PSC_2026_6.id, 'PSC_2026_7');
   assert.strictEqual(map.INDYCAR_2026_16.id, 'INDYCAR_2026_17');
+});
+
+test('buildGroupedWeekendLastEventById maps Super Formula Fuji October double-header', () => {
+  const events = [
+    {
+      id: 'SUPER_FORMULA_2026_9',
+      series_id: 'SUPER_FORMULA',
+      circuit_name: 'Fuji Speedway',
+      location: 'Oyama, Shizuoka, Japan',
+      start_date: '2026-10-10',
+      end_date: '2026-10-10',
+    },
+    {
+      id: 'SUPER_FORMULA_2026_10',
+      series_id: 'SUPER_FORMULA',
+      circuit_name: 'Fuji Speedway',
+      location: 'Oyama, Shizuoka, Japan',
+      start_date: '2026-10-11',
+      end_date: '2026-10-11',
+    },
+  ];
+  const map = TGA.buildGroupedWeekendLastEventById(events);
+  assert.strictEqual(map.SUPER_FORMULA_2026_9.id, 'SUPER_FORMULA_2026_10');
+  assert.strictEqual(map.SUPER_FORMULA_2026_10.id, 'SUPER_FORMULA_2026_10');
 });
 
 test('mergeLastResultsWeekendCards leaves non-Supercars cards untouched', () => {

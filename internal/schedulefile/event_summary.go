@@ -130,6 +130,10 @@ func BuildLastResultsSummaryFromBytes(body []byte, eventID, seriesID string) Las
 			out.Winners[1].Label = "Feature"
 		}
 	}
+	// Super Formula single-race weekends: omit "Round N" on the card (only useful on double/triple headers).
+	if sid == "SUPER_FORMULA" && len(out.Winners) == 1 {
+		out.Winners[0].Label = ""
+	}
 	return out
 }
 

@@ -251,6 +251,8 @@ function enrichToCanonicalRaceResults(tbl, tables, eventId, isSprint) {
   const noIdx = colIndex(oldHeaders, 'no.', 'no', '#', 'car');
   const lapsIdx = colIndex(oldHeaders, 'laps');
   const posIdx = colIndex(oldHeaders, 'pos', 'pos.');
+  const srcLapsLedIdx = colIndex(oldHeaders, 'laps led');
+  const srcBestLapIdx = colIndex(oldHeaders, 'best lap');
 
   const rows = working.rows.map((row) => {
     const r = row.slice();
@@ -259,17 +261,32 @@ function enrichToCanonicalRaceResults(tbl, tables, eventId, isSprint) {
       const canon = headers[hi];
       const lc = canon.toLowerCase();
       if (lc === 'laps led') {
-        const drv = driverIdx >= 0 && driverIdx < r.length ? String(r[driverIdx]).trim() : '';
-        const v = lapsLedByDriver[drv];
-        out[hi] = v != null && String(v).trim() !== '' ? String(v) : '0';
+        // Prefer values already in race_results; fall back to laps_led table / overrides.
+        let v = '';
+        if (srcLapsLedIdx >= 0 && srcLapsLedIdx < r.length) {
+          v = r[srcLapsLedIdx] != null ? String(r[srcLapsLedIdx]).trim() : '';
+        }
+        if (!v) {
+          const drv = driverIdx >= 0 && driverIdx < r.length ? String(r[driverIdx]).trim() : '';
+          const fromTable = lapsLedByDriver[drv];
+          if (fromTable != null && String(fromTable).trim() !== '') v = String(fromTable).trim();
+        }
+        out[hi] = v !== '' ? v : '0';
         continue;
       }
       if (lc === 'best lap') {
-        const no = noIdx >= 0 && noIdx < r.length ? String(r[noIdx]).trim() : '';
+        // Prefer values already in race_results; fall back to best_laps table.
+        let bestVal = '';
+        if (srcBestLapIdx >= 0 && srcBestLapIdx < r.length) {
+          bestVal = r[srcBestLapIdx] != null ? String(r[srcBestLapIdx]).trim() : '';
+        }
+        if (!bestVal) {
+          const no = noIdx >= 0 && noIdx < r.length ? String(r[noIdx]).trim() : '';
+          bestVal = bestLapByNo[no] || '';
+        }
         const posRaw = posIdx >= 0 && posIdx < r.length ? String(r[posIdx]).trim() : '';
         const lapsRaw = lapsIdx >= 0 && lapsIdx < r.length ? String(r[lapsIdx]).trim() : '';
         const lapsNum = parseInt(lapsRaw, 10);
-        let bestVal = bestLapByNo[no] || '';
         if (/^dns/i.test(posRaw) || lapsNum === 0) bestVal = '';
         out[hi] = bestVal;
         continue;

@@ -172,6 +172,7 @@ type StandingsData struct {
 	EventIDs       []string             `json:"event_ids,omitempty"`   // event holding each race (len = len(RaceOrder))
 	CompletedRaces []string             `json:"completed_races,omitempty"`
 	Rows           []StandingRow        `json:"rows"`
+	Teams          []StandingRow        `json:"teams,omitempty"` // F1 constructors (Driver = constructor name)
 	Ineligible     []StandingRow        `json:"ineligible,omitempty"`
 	Classes        []StandingsClass     `json:"classes,omitempty"`
 	PointsInfo     *StandingsPointsInfo `json:"points_info,omitempty"`

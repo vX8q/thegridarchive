@@ -1115,50 +1115,41 @@ body.series-indycar .series-nav {
   margin-bottom: 1.5rem;
 }
 
-/* Super GT 2026 R1/R2 race tables:
+/* Super GT race tables:
    - no line wraps in cells
-   - no horizontal scrollbar
+   - no horizontal scrollbar / clipping of DP·TP
    - wider table area for readability */
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .table-wrap,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .table-wrap {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .table-wrap {
   width: 100%;
   max-width: none;
   overflow-x: visible;
 }
 /* Keep Session info compact (do not stretch to full width). */
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .table-wrap.event-pre-season-meta-wrap,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .table-wrap.event-pre-season-meta-wrap {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .table-wrap.event-pre-season-meta-wrap {
   width: fit-content;
   max-width: 100%;
 }
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .table-wrap.event-pre-season-meta-wrap .data-table,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .table-wrap.event-pre-season-meta-wrap .data-table {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .table-wrap.event-pre-season-meta-wrap .data-table {
   width: max-content;
   max-width: 100%;
 }
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .table-wrap::-webkit-scrollbar,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .table-wrap::-webkit-scrollbar {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .table-wrap::-webkit-scrollbar {
   display: none;
 }
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table {
   width: 100%;
   max-width: none;
   table-layout: auto;
 }
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table th,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table td,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table th,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table td {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table th,
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table td {
   white-space: nowrap;
   word-break: normal;
   overflow-wrap: normal;
 }
 /* In split Super GT race tables (# column is the 3rd one after Pos and Car). */
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table th:nth-child(3),
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table td:nth-child(3),
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table th:nth-child(3),
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table td:nth-child(3) {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table th:nth-child(3),
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table td:nth-child(3) {
   width: 1%;
   min-width: 2.2rem;
   max-width: 2.8rem;
@@ -1166,18 +1157,14 @@ body.series-indycar .series-nav {
   padding-right: 0.45rem;
   white-space: nowrap;
 }
-/* Fix visual tint artifact in rightmost points columns (DP/TP): force solid row backgrounds
-   and disable per-cell hover tint only for Super GT 2026 R1/R2 race tables. */
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table.race-session-results-table tbody tr:nth-child(odd) td,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table.race-session-results-table tbody tr:nth-child(odd) td {
+/* Fix visual tint artifact in rightmost points columns (DP/TP). */
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table tbody tr:nth-child(odd) td {
   background: var(--card);
 }
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table.race-session-results-table tbody tr:nth-child(even) td,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table.race-session-results-table tbody tr:nth-child(even) td {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table tbody tr:nth-child(even) td {
   background: var(--row-alt);
 }
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_1"] .data-table.race-session-results-table td:hover,
-#event-content[data-event-section="race"][data-event-id="SUPER_GT_2026_2"] .data-table.race-session-results-table td:hover {
+body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:hover {
   background: inherit !important;
 }
 /* IndyCar Car Specs: убираем рамку вокруг единственной таблицы,
@@ -5596,7 +5583,23 @@ tr.table-separator-row td {
 .lrc-card--norisring,
 .lrc-card--reid-park-street-circuit,
 .lrc-card--magny-cours,
-.lrc-card--wanneroo-raceway {
+.lrc-card--wanneroo-raceway,
+.lrc-card--iowa-speedway,
+.lrc-card--sportsland-sugo,
+.lrc-card--portland-international-raceway,
+.lrc-card--richmond-raceway,
+.lrc-card--nurburgring,
+.lrc-card--streets-of-markham,
+.lrc-card--queensland-raceway,
+.lrc-card--illinois-state-fairgrounds-racetrack,
+.lrc-card--new-hampshire-motor-speedway,
+.lrc-card--virginia-international-raceway,
+.lrc-card--streets-of-washington,
+.lrc-card--daytona-international-speedway,
+.lrc-card--milwaukee-mile,
+.lrc-card--circuit-of-the-americas,
+.lrc-card--oswego-speedway,
+.lrc-card--duquoin-state-fairgrounds-racetrack {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -5636,6 +5639,54 @@ tr.table-separator-row td {
 .lrc-card--wanneroo-raceway {
   background-image: url('/api/card-bg/Wanneroo-Raceway.jpg');
 }
+.lrc-card--iowa-speedway {
+  background-image: url('/api/card-bg/iowa-speedway.jpg');
+}
+.lrc-card--sportsland-sugo {
+  background-image: url('/api/card-bg/sportsland-sugo.jpg');
+}
+.lrc-card--portland-international-raceway {
+  background-image: url('/api/card-bg/Portland-International-Raceway.jpeg');
+}
+.lrc-card--richmond-raceway {
+  background-image: url('/api/card-bg/Richmond-Raceway.jpg');
+}
+.lrc-card--nurburgring {
+  background-image: url('/api/card-bg/nurburgring.jpg');
+}
+.lrc-card--streets-of-markham {
+  background-image: url('/api/card-bg/Streets-of-Markham.jpg');
+}
+.lrc-card--queensland-raceway {
+  background-image: url('/api/card-bg/Queensland-Raceway.webp');
+}
+.lrc-card--illinois-state-fairgrounds-racetrack {
+  background-image: url('/api/card-bg/Illinois-State-Fairgrounds-Racetrack.jpg');
+}
+.lrc-card--new-hampshire-motor-speedway {
+  background-image: url('/api/card-bg/New-Hampshire-Motor-Speedway.jpg');
+}
+.lrc-card--virginia-international-raceway {
+  background-image: url('/api/card-bg/Virginia-International-Raceway.jpg');
+}
+.lrc-card--streets-of-washington {
+  background-image: url('/api/card-bg/streets-of-washington.png');
+}
+.lrc-card--daytona-international-speedway {
+  background-image: url('/api/card-bg/Daytona-International-Speedway.jpg');
+}
+.lrc-card--milwaukee-mile {
+  background-image: url('/api/card-bg/milwaukee-mile.png');
+}
+.lrc-card--circuit-of-the-americas {
+  background-image: url('/api/card-bg/Circuit-of-the-Americas.webp');
+}
+.lrc-card--oswego-speedway {
+  background-image: url('/api/card-bg/Oswego-Speedway.jpg');
+}
+.lrc-card--duquoin-state-fairgrounds-racetrack {
+  background-image: url('/api/card-bg/DuQuoin-State-Fairgrounds-Racetrack.jpg');
+}
 .lrc-card--echopark-speedway::after,
 .lrc-card--interlagos::after,
 .lrc-card--hungaroring::after,
@@ -5646,7 +5697,23 @@ tr.table-separator-row td {
 .lrc-card--norisring::after,
 .lrc-card--reid-park-street-circuit::after,
 .lrc-card--magny-cours::after,
-.lrc-card--wanneroo-raceway::after {
+.lrc-card--wanneroo-raceway::after,
+.lrc-card--iowa-speedway::after,
+.lrc-card--sportsland-sugo::after,
+.lrc-card--portland-international-raceway::after,
+.lrc-card--richmond-raceway::after,
+.lrc-card--nurburgring::after,
+.lrc-card--streets-of-markham::after,
+.lrc-card--queensland-raceway::after,
+.lrc-card--illinois-state-fairgrounds-racetrack::after,
+.lrc-card--new-hampshire-motor-speedway::after,
+.lrc-card--virginia-international-raceway::after,
+.lrc-card--streets-of-washington::after,
+.lrc-card--daytona-international-speedway::after,
+.lrc-card--milwaukee-mile::after,
+.lrc-card--circuit-of-the-americas::after,
+.lrc-card--oswego-speedway::after,
+.lrc-card--duquoin-state-fairgrounds-racetrack::after {
   content: '';
   position: absolute;
   left: 0;
@@ -5671,7 +5738,23 @@ tr.table-separator-row td {
 .lrc-card--norisring > *,
 .lrc-card--reid-park-street-circuit > *,
 .lrc-card--magny-cours > *,
-.lrc-card--wanneroo-raceway > * {
+.lrc-card--wanneroo-raceway > *,
+.lrc-card--iowa-speedway > *,
+.lrc-card--sportsland-sugo > *,
+.lrc-card--portland-international-raceway > *,
+.lrc-card--richmond-raceway > *,
+.lrc-card--nurburgring > *,
+.lrc-card--streets-of-markham > *,
+.lrc-card--queensland-raceway > *,
+.lrc-card--illinois-state-fairgrounds-racetrack > *,
+.lrc-card--new-hampshire-motor-speedway > *,
+.lrc-card--virginia-international-raceway > *,
+.lrc-card--streets-of-washington > *,
+.lrc-card--daytona-international-speedway > *,
+.lrc-card--milwaukee-mile > *,
+.lrc-card--circuit-of-the-americas > *,
+.lrc-card--oswego-speedway > *,
+.lrc-card--duquoin-state-fairgrounds-racetrack > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -8133,7 +8216,23 @@ tr.table-separator-row td {
 .nrc-card--norisring,
 .nrc-card--reid-park-street-circuit,
 .nrc-card--magny-cours,
-.nrc-card--wanneroo-raceway {
+.nrc-card--wanneroo-raceway,
+.nrc-card--iowa-speedway,
+.nrc-card--sportsland-sugo,
+.nrc-card--portland-international-raceway,
+.nrc-card--richmond-raceway,
+.nrc-card--nurburgring,
+.nrc-card--streets-of-markham,
+.nrc-card--queensland-raceway,
+.nrc-card--illinois-state-fairgrounds-racetrack,
+.nrc-card--new-hampshire-motor-speedway,
+.nrc-card--virginia-international-raceway,
+.nrc-card--streets-of-washington,
+.nrc-card--daytona-international-speedway,
+.nrc-card--milwaukee-mile,
+.nrc-card--circuit-of-the-americas,
+.nrc-card--oswego-speedway,
+.nrc-card--duquoin-state-fairgrounds-racetrack {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -8171,6 +8270,54 @@ tr.table-separator-row td {
 .nrc-card--wanneroo-raceway::before {
   background-image: url('/api/card-bg/Wanneroo-Raceway.jpg');
 }
+.nrc-card--iowa-speedway::before {
+  background-image: url('/api/card-bg/iowa-speedway.jpg');
+}
+.nrc-card--sportsland-sugo::before {
+  background-image: url('/api/card-bg/sportsland-sugo.jpg');
+}
+.nrc-card--portland-international-raceway::before {
+  background-image: url('/api/card-bg/Portland-International-Raceway.jpeg');
+}
+.nrc-card--richmond-raceway::before {
+  background-image: url('/api/card-bg/Richmond-Raceway.jpg');
+}
+.nrc-card--nurburgring::before {
+  background-image: url('/api/card-bg/nurburgring.jpg');
+}
+.nrc-card--streets-of-markham::before {
+  background-image: url('/api/card-bg/Streets-of-Markham.jpg');
+}
+.nrc-card--queensland-raceway::before {
+  background-image: url('/api/card-bg/Queensland-Raceway.webp');
+}
+.nrc-card--illinois-state-fairgrounds-racetrack::before {
+  background-image: url('/api/card-bg/Illinois-State-Fairgrounds-Racetrack.jpg');
+}
+.nrc-card--new-hampshire-motor-speedway::before {
+  background-image: url('/api/card-bg/New-Hampshire-Motor-Speedway.jpg');
+}
+.nrc-card--virginia-international-raceway::before {
+  background-image: url('/api/card-bg/Virginia-International-Raceway.jpg');
+}
+.nrc-card--streets-of-washington::before {
+  background-image: url('/api/card-bg/streets-of-washington.png');
+}
+.nrc-card--daytona-international-speedway::before {
+  background-image: url('/api/card-bg/Daytona-International-Speedway.jpg');
+}
+.nrc-card--milwaukee-mile::before {
+  background-image: url('/api/card-bg/milwaukee-mile.png');
+}
+.nrc-card--circuit-of-the-americas::before {
+  background-image: url('/api/card-bg/Circuit-of-the-Americas.webp');
+}
+.nrc-card--oswego-speedway::before {
+  background-image: url('/api/card-bg/Oswego-Speedway.jpg');
+}
+.nrc-card--duquoin-state-fairgrounds-racetrack::before {
+  background-image: url('/api/card-bg/DuQuoin-State-Fairgrounds-Racetrack.jpg');
+}
 .nrc-card--echopark-speedway::before,
 .nrc-card--interlagos::before,
 .nrc-card--hungaroring::before,
@@ -8181,7 +8328,23 @@ tr.table-separator-row td {
 .nrc-card--norisring::before,
 .nrc-card--reid-park-street-circuit::before,
 .nrc-card--magny-cours::before,
-.nrc-card--wanneroo-raceway::before {
+.nrc-card--wanneroo-raceway::before,
+.nrc-card--iowa-speedway::before,
+.nrc-card--sportsland-sugo::before,
+.nrc-card--portland-international-raceway::before,
+.nrc-card--richmond-raceway::before,
+.nrc-card--nurburgring::before,
+.nrc-card--streets-of-markham::before,
+.nrc-card--queensland-raceway::before,
+.nrc-card--illinois-state-fairgrounds-racetrack::before,
+.nrc-card--new-hampshire-motor-speedway::before,
+.nrc-card--virginia-international-raceway::before,
+.nrc-card--streets-of-washington::before,
+.nrc-card--daytona-international-speedway::before,
+.nrc-card--milwaukee-mile::before,
+.nrc-card--circuit-of-the-americas::before,
+.nrc-card--oswego-speedway::before,
+.nrc-card--duquoin-state-fairgrounds-racetrack::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -8202,7 +8365,23 @@ tr.table-separator-row td {
 .nrc-card--norisring::after,
 .nrc-card--reid-park-street-circuit::after,
 .nrc-card--magny-cours::after,
-.nrc-card--wanneroo-raceway::after {
+.nrc-card--wanneroo-raceway::after,
+.nrc-card--iowa-speedway::after,
+.nrc-card--sportsland-sugo::after,
+.nrc-card--portland-international-raceway::after,
+.nrc-card--richmond-raceway::after,
+.nrc-card--nurburgring::after,
+.nrc-card--streets-of-markham::after,
+.nrc-card--queensland-raceway::after,
+.nrc-card--illinois-state-fairgrounds-racetrack::after,
+.nrc-card--new-hampshire-motor-speedway::after,
+.nrc-card--virginia-international-raceway::after,
+.nrc-card--streets-of-washington::after,
+.nrc-card--daytona-international-speedway::after,
+.nrc-card--milwaukee-mile::after,
+.nrc-card--circuit-of-the-americas::after,
+.nrc-card--oswego-speedway::after,
+.nrc-card--duquoin-state-fairgrounds-racetrack::after {
   content: '';
   position: absolute;
   left: 0;
@@ -8227,7 +8406,23 @@ tr.table-separator-row td {
 .nrc-card--norisring > *,
 .nrc-card--reid-park-street-circuit > *,
 .nrc-card--magny-cours > *,
-.nrc-card--wanneroo-raceway > * {
+.nrc-card--wanneroo-raceway > *,
+.nrc-card--iowa-speedway > *,
+.nrc-card--sportsland-sugo > *,
+.nrc-card--portland-international-raceway > *,
+.nrc-card--richmond-raceway > *,
+.nrc-card--nurburgring > *,
+.nrc-card--streets-of-markham > *,
+.nrc-card--queensland-raceway > *,
+.nrc-card--illinois-state-fairgrounds-racetrack > *,
+.nrc-card--new-hampshire-motor-speedway > *,
+.nrc-card--virginia-international-raceway > *,
+.nrc-card--streets-of-washington > *,
+.nrc-card--daytona-international-speedway > *,
+.nrc-card--milwaukee-mile > *,
+.nrc-card--circuit-of-the-americas > *,
+.nrc-card--oswego-speedway > *,
+.nrc-card--duquoin-state-fairgrounds-racetrack > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -8242,7 +8437,23 @@ tr.table-separator-row td {
 .nrc-card--norisring:hover::before,
 .nrc-card--reid-park-street-circuit:hover::before,
 .nrc-card--magny-cours:hover::before,
-.nrc-card--wanneroo-raceway:hover::before {
+.nrc-card--wanneroo-raceway:hover::before,
+.nrc-card--iowa-speedway:hover::before,
+.nrc-card--sportsland-sugo:hover::before,
+.nrc-card--portland-international-raceway:hover::before,
+.nrc-card--richmond-raceway:hover::before,
+.nrc-card--nurburgring:hover::before,
+.nrc-card--streets-of-markham:hover::before,
+.nrc-card--queensland-raceway:hover::before,
+.nrc-card--illinois-state-fairgrounds-racetrack:hover::before,
+.nrc-card--new-hampshire-motor-speedway:hover::before,
+.nrc-card--virginia-international-raceway:hover::before,
+.nrc-card--streets-of-washington:hover::before,
+.nrc-card--daytona-international-speedway:hover::before,
+.nrc-card--milwaukee-mile:hover::before,
+.nrc-card--circuit-of-the-americas:hover::before,
+.nrc-card--oswego-speedway:hover::before,
+.nrc-card--duquoin-state-fairgrounds-racetrack:hover::before {
   transform: none;
 }
 

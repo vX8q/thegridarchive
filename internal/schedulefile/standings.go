@@ -496,6 +496,11 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		stages       int
 		guest        bool // PSC: guest entry (separate standings table)
 	}
+	type accTeam struct {
+		name   string
+		races  map[string]float64 // race code -> points scored that column
+		points float64
+	}
 	parsePointsValue := func(raw string) float64 {
 		s := strings.TrimSpace(raw)
 		if s == "" {
@@ -548,6 +553,23 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		return s
 	}
 	byDriver := make(map[string]*accRow)
+	byConstructor := make(map[string]*accTeam)
+	addConstructorPoints := func(constructor, raceCode string, pts float64) {
+		if !strings.EqualFold(seriesID, "F1") {
+			return
+		}
+		constructor = canonicalizeF1Constructor(constructor)
+		if constructor == "" || raceCode == "" {
+			return
+		}
+		t := byConstructor[constructor]
+		if t == nil {
+			t = &accTeam{name: constructor, races: make(map[string]float64)}
+			byConstructor[constructor] = t
+		}
+		t.races[raceCode] += pts
+		t.points += pts
+	}
 	applyDTMQualifyingAwards := func(awards []dtmQualAward) {
 		for _, aw := range awards {
 			key := standingsAggregateKey(seriesID, aw.driver, aw.carNum)
@@ -630,7 +652,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 		}
 		carCol := firstColIndex(rr.Headers, "No", "No.", "#", "Car")
-		teamCol := colIndex(rr.Headers, "Team")
+		teamCol := firstColIndex(rr.Headers, "Team", "Constructor", "Entrant")
 		manuCol := colIndex(rr.Headers, "Manufacturer")
 		if manuCol < 0 {
 			manuCol = colIndex(rr.Headers, "Chassis")
@@ -670,6 +692,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if teamCol >= 0 && teamCol < len(row) {
 				team = strings.TrimSpace(row[teamCol])
 			}
+			if strings.EqualFold(seriesID, "F1") {
+				team = canonicalizeF1Constructor(team)
+			}
 			manu := ""
 			if manuCol >= 0 && manuCol < len(row) {
 				manu = strings.TrimSpace(row[manuCol])
@@ -683,6 +708,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if ptsCol >= 0 && ptsCol < len(row) {
 				racePts = parsePointsValue(row[ptsCol])
 			}
+			addConstructorPoints(team, raceCode, racePts)
 			for _, driver := range drivers {
 				if isStockCarSeries {
 					driver = stockCarIneligibleDriver(driver, carNum, eligibleByCarForEvent)
@@ -1005,7 +1031,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 		}
 		carCol := firstColIndex(rr.Headers, "No", "No.", "#", "Car")
-		teamCol := colIndex(rr.Headers, "Team")
+		teamCol := firstColIndex(rr.Headers, "Team", "Constructor", "Entrant")
 		manuCol := colIndex(rr.Headers, "Manufacturer")
 		if manuCol < 0 {
 			manuCol = colIndex(rr.Headers, "Chassis")
@@ -1053,6 +1079,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if teamCol >= 0 && teamCol < len(row) {
 				team = strings.TrimSpace(row[teamCol])
 			}
+			if strings.EqualFold(seriesID, "F1") {
+				team = canonicalizeF1Constructor(team)
+			}
 			manu := ""
 			if manuCol >= 0 && manuCol < len(row) {
 				manu = strings.TrimSpace(row[manuCol])
@@ -1066,6 +1095,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if ptsCol >= 0 && ptsCol < len(row) {
 				racePts = parsePointsValue(row[ptsCol])
 			}
+			addConstructorPoints(team, raceCode, racePts)
 			// Normalize displayed position value:
 			// - empty Pos + Did Not Qualify status → DNQ
 			// - NC → row index (1-based) to distinguish multiple NC
@@ -1250,6 +1280,32 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	for i := range ineligible {
 		ineligible[i].Pos = i + 1
 	}
+	var teams []StandingRow
+	if strings.EqualFold(seriesID, "F1") && len(byConstructor) > 0 {
+		teams = make([]StandingRow, 0, len(byConstructor))
+		for _, t := range byConstructor {
+			raceStr := make(map[string]string, len(t.races))
+			for code, pts := range t.races {
+				raceStr[code] = formatPointsValue(pts)
+			}
+			teams = append(teams, StandingRow{
+				Driver: t.name,
+				Races:  raceStr,
+				Points: formatPointsValue(t.points),
+			})
+		}
+		sort.Slice(teams, func(i, j int) bool {
+			pi := parsePointsValue(teams[i].Points)
+			pj := parsePointsValue(teams[j].Points)
+			if pi != pj {
+				return pi > pj
+			}
+			return teams[i].Driver < teams[j].Driver
+		})
+		for i := range teams {
+			teams[i].Pos = i + 1
+		}
+	}
 	// Keep EventNames from base standings (if any) so the frontend can
 	// show round labels (AUS, CHI, JAP, ...) in the table header.
 	return &StandingsData{
@@ -1258,6 +1314,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		EventIDs:       base.EventIDs,
 		CompletedRaces: completedRaces,
 		Rows:           eligible,
+		Teams:          teams,
 		Ineligible:     ineligible,
 	}, nil
 }

@@ -820,6 +820,11 @@
     if (sid === 'F1') return Math.min(hours, 2.5);
     if (sid === 'F2' || sid === 'F3') return Math.min(hours, 2.25);
     if (sid === 'INDYCAR') return Math.min(hours, 2.75);
+    // Stock-car default (4.5h) is for card retention; LIVE badge uses a tighter window so
+    // short races (e.g. Truck 250 at Richmond ~2h) do not stay LIVE for hours after the flag.
+    if (sid === 'NASCAR_TRUCK' || sid === 'ARCA' || sid === 'NASCAR_MODIFIED') return Math.min(hours, 2.5);
+    if (sid === 'NOAPS') return Math.min(hours, 3);
+    if (sid === 'NASCAR_CUP') return Math.min(hours, 3.5);
     return hours;
   }
 
@@ -1065,10 +1070,19 @@
     return CREW_STANDINGS_SERIES.indexOf(sk) >= 0;
   }
 
+  function isConstructorStandingsSeries(seriesKey) {
+    var sk = String(seriesKey || '').toLowerCase().replace(/-/g, '_');
+    return sk === 'f1' || sk.indexOf('f1_') === 0;
+  }
+
   function getStandingsMode(seriesKey) {
     var sk = String(seriesKey || '').toLowerCase().replace(/-/g, '_');
     try {
       var stored = sessionStorage.getItem('standings-mode:' + sk);
+      if (isConstructorStandingsSeries(sk)) {
+        if (stored === 'constructors' || stored === 'driver') return stored;
+        return 'driver';
+      }
       if (stored === 'crew' || stored === 'driver') return stored;
     } catch (e) { /* ignore */ }
     return 'driver';
@@ -1238,7 +1252,7 @@
   function updateStandingsModeNavActive(mode) {
     var nav = document.getElementById('standings-mode-nav');
     if (!nav) return;
-    var active = mode === 'crew' ? 'crew' : 'driver';
+    var active = mode === 'crew' ? 'crew' : (mode === 'constructors' ? 'constructors' : 'driver');
     nav.querySelectorAll('[data-mode]').forEach(function (btn) {
       btn.classList.toggle('active', btn.getAttribute('data-mode') === active);
     });
@@ -1247,24 +1261,33 @@
   function ensureStandingsModeNav(seriesKey, onChange) {
     var nav = document.getElementById('standings-mode-nav');
     if (!nav) return false;
-    if (!isCrewStandingsSeries(seriesKey)) {
+    var isCrew = isCrewStandingsSeries(seriesKey);
+    var isCtor = isConstructorStandingsSeries(seriesKey);
+    if (!isCrew && !isCtor) {
       hideStandingsModeNav();
       return false;
     }
     standingsModeNavCallback = onChange;
     standingsModeNavSeriesKey = seriesKey;
     nav.classList.remove('hidden');
-    if (nav.getAttribute('data-series-key') === seriesKey && nav.querySelector('[data-mode="driver"]')) {
+    var expectedSecond = isCtor ? 'constructors' : 'crew';
+    if (nav.getAttribute('data-series-key') === seriesKey && nav.querySelector('[data-mode="' + expectedSecond + '"]')) {
       return true;
     }
     var tFn = function (k) { return window.TGA.t(k); };
     nav.setAttribute('data-series-key', seriesKey);
+    var secondLabel = isCtor
+      ? (tFn('standings.team_points') || 'Constructors')
+      : (tFn('nav.standings.crew') || 'Crew');
+    var firstLabel = isCtor
+      ? (tFn('standings.driver_points') || 'Drivers')
+      : (tFn('nav.standings.driver') || 'Driver');
     nav.innerHTML =
       '<button type="button" class="nav-link" data-mode="driver">' +
-        esc(tFn('nav.standings.driver') || 'Driver') +
+        esc(firstLabel) +
       '</button>' +
-      '<button type="button" class="nav-link" data-mode="crew">' +
-        esc(tFn('nav.standings.crew') || 'Crew') +
+      '<button type="button" class="nav-link" data-mode="' + expectedSecond + '">' +
+        esc(secondLabel) +
       '</button>';
     nav.querySelectorAll('[data-mode]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -1282,7 +1305,7 @@
   }
 
   function renderStandingsModeNav(seriesKey, activeMode, onChange) {
-    if (!seriesKey || !isCrewStandingsSeries(seriesKey)) {
+    if (!seriesKey || (!isCrewStandingsSeries(seriesKey) && !isConstructorStandingsSeries(seriesKey))) {
       hideStandingsModeNav();
       return;
     }
@@ -1643,6 +1666,7 @@
   window.TGA.buildImsaGtwceClassStandingsHtml = buildImsaGtwceClassStandingsHtml;
   window.TGA.buildDriverClassesFromCrew = buildDriverClassesFromCrew;
   window.TGA.isCrewStandingsSeries = isCrewStandingsSeries;
+  window.TGA.isConstructorStandingsSeries = isConstructorStandingsSeries;
   window.TGA.getStandingsMode = getStandingsMode;
   window.TGA.setStandingsMode = setStandingsMode;
   window.TGA.renderStandingsModeNav = renderStandingsModeNav;

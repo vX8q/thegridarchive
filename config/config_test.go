@@ -9,6 +9,7 @@ func TestSeasonFromSlug(t *testing.T) {
 		slug string
 		want string
 	}{
+		{"f1-2024", "2024"},
 		{"f1-2025", "2025"},
 		{"indycar_2026", "2026"},
 		{"noaps-2026", "2026"},
@@ -32,6 +33,7 @@ func TestDataSeriesID(t *testing.T) {
 		{"NASCAR_XFinity", "noaps"},
 		{"nascar_xfinity", "noaps"},
 		{"F1", "f1"},
+		{"f1-2024", "f1"},
 		{"f1-2025", "f1"},
 		{"f2_2026", "f2"},
 		{"indycar-2026", "indycar"},

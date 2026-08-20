@@ -89,10 +89,37 @@ const CURATED_OVERRIDES = {
     { label: 'Round 3', date: '2026-07-19', time_est: '10:05', time_msk: '04:05', kind: '' },
     { label: 'Round 7', date: '2026-07-19', time_est: '15:35', time_msk: '09:35', kind: '' },
   ],
+  // SUGO is a single-race weekend (qual Sat / race Sun) — do not invent Race 1/Race 2 from start≠end.
+  SUPER_FORMULA_2026_8: [
+    { label: 'Round 8', date: '2026-08-09', time_est: '14:20', time_msk: '08:20', kind: '' },
+  ],
+  // Fuji / Suzuka finales: one championship round per schedule id (merge on consecutive days).
+  SUPER_FORMULA_2026_9: [
+    { label: 'Round 9', date: '2026-10-10', time_est: '14:45', time_msk: '08:45', kind: '' },
+  ],
+  SUPER_FORMULA_2026_10: [
+    { label: 'Round 10', date: '2026-10-11', time_est: '14:45', time_msk: '08:45', kind: '' },
+  ],
+  SUPER_FORMULA_2026_11: [
+    { label: 'Round 11', date: '2026-11-21', time_est: '14:45', time_msk: '08:45', kind: '' },
+  ],
+  SUPER_FORMULA_2026_12: [
+    { label: 'Round 12', date: '2026-11-22', time_est: '14:45', time_msk: '08:45', kind: '' },
+  ],
   /** Misano: Fri FP, Sat Race 1 20:30 local, Sun Race 2 14:30 local (SRO timetable). */
   GTWCE_SPRINT_2026_2: [
     { label: 'Race 1', date: '2026-07-18', time_est: '20:30', time_msk: '21:30', kind: '' },
     { label: 'Race 2', date: '2026-07-19', time_est: '14:30', time_msk: '15:30', kind: '' },
+  ],
+  /** Zandvoort Sprint Cup: Sat Race 1 14:45, Sun Race 2 14:15 (SRO draft 3). */
+  GTWCE_SPRINT_2026_4: [
+    { label: 'Race 1', date: '2026-09-19', time_est: '14:45', time_msk: '15:45', kind: '' },
+    { label: 'Race 2', date: '2026-09-20', time_est: '14:15', time_msk: '15:15', kind: '' },
+  ],
+  /** Barcelona Sprint Cup finale: Sat Race 1 14:00, Sun Race 2 16:00 (SRO draft 3). */
+  GTWCE_SPRINT_2026_5: [
+    { label: 'Race 1', date: '2026-10-03', time_est: '14:00', time_msk: '15:00', kind: '' },
+    { label: 'Race 2', date: '2026-10-04', time_est: '16:00', time_msk: '17:00', kind: '' },
   ],
 };
 
@@ -323,6 +350,9 @@ for (const { schedule, eventsDir } of EVENT_SCAN) {
   for (const ev of readJson(schedule)) {
     const id = ev.id;
     if (!id || map[id] || CURATED_OVERRIDES[id]) continue;
+    // Super Formula weekends often span Fri–Sun with a single championship race;
+    // Race 1/Race 2 must come from curated overrides or tables.race.sessions — not start≠end.
+    if (id.startsWith('SUPER_FORMULA_')) continue;
     const labels = id.startsWith('F2_') || id.startsWith('F3_') ? ['Sprint', 'Feature'] : ['Race 1', 'Race 2'];
     const sessions = twoRaceSessions(ev, labels);
     if (sessions && sessions.length > 1) map[id] = sessions;

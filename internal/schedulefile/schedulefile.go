@@ -22,10 +22,23 @@ func LoadEvents(dataDir string, seriesID string) ([]EventJSON, error) {
 
 // LoadTeamsForSeason loads teams; when season is set, tries seriesID_season.json (e.g. f1_2025).
 // For F1 2026, if f1_2026 is missing, falls back to base f1.json (2026 data).
+// An existing season file with an empty teams list is intentional: EnrichTeamsRoundsFromEvents
+// builds the table from entry_list (do not fall back to another season's curated file).
 func LoadTeamsForSeason(dataDir string, seriesID string, season string) (*TeamsWithSpec, error) {
 	if season != "" {
 		seasonID := strings.ToLower(seriesID) + "_" + season
-		if data, err := LoadTeams(dataDir, seasonID); err == nil && data != nil && len(data.Teams) > 0 {
+		b, err := readFileIfExists(teamsPath(dataDir, seasonID))
+		if err != nil {
+			return nil, err
+		}
+		if len(b) > 0 {
+			data, lerr := LoadTeams(dataDir, seasonID)
+			if lerr != nil {
+				return nil, lerr
+			}
+			if data == nil {
+				data = &TeamsWithSpec{}
+			}
 			return data, nil
 		}
 		// F1 2026: no f1_2026.json — use base f1.json (current 2026 teams).
@@ -33,6 +46,10 @@ func LoadTeamsForSeason(dataDir string, seriesID string, season string) (*TeamsW
 			if data, err := LoadTeams(dataDir, "f1"); err == nil && data != nil && len(data.Teams) > 0 {
 				return data, nil
 			}
+		}
+		// Historical F1 season without a season teams file: empty → build from events.
+		if strings.EqualFold(seriesID, "f1") {
+			return &TeamsWithSpec{}, nil
 		}
 	}
 	return LoadTeams(dataDir, seriesID)
@@ -47,10 +64,14 @@ func LoadTeams(dataDir string, seriesID string) (*TeamsWithSpec, error) {
 	if len(b) == 0 {
 		return &TeamsWithSpec{}, nil
 	}
-	// Try as object { teams, car_models, technical_spec }
+	// Try as object { teams, car_models, technical_spec }.
+	// Empty teams[] is valid (season built from entry_list).
 	var withSpec TeamsWithSpec
-	if err := json.Unmarshal(b, &withSpec); err == nil && (len(withSpec.Teams) > 0 || len(withSpec.CarModels) > 0 || len(withSpec.TechnicalSpec) > 0) {
-		return &withSpec, nil
+	var probe map[string]json.RawMessage
+	if err := json.Unmarshal(b, &withSpec); err == nil && json.Unmarshal(b, &probe) == nil {
+		if _, hasTeams := probe["teams"]; hasTeams || len(withSpec.Teams) > 0 || len(withSpec.CarModels) > 0 || len(withSpec.TechnicalSpec) > 0 {
+			return &withSpec, nil
+		}
 	}
 	// Otherwise as team array (legacy format)
 	var arr []TeamJSON

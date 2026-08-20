@@ -1,0 +1,514 @@
+{
+  "event_id": "SUPER_GT_2026_5",
+  "series": "Super GT",
+  "race": "Suzuka GT 300 km Race",
+  "date": "22–23 August 2026",
+  "start_date": "2026-08-22",
+  "end_date": "2026-08-23",
+  "track": "Suzuka Circuit",
+  "location": "Suzuka, Mie, Japan",
+  "entry_list": [
+    {
+      "number": "8",
+      "driver": "",
+      "team": "Team HRC ARTA Mugen",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Honda HRC Prelude-GT",
+      "make": "Honda",
+      "driver1": "Kakunoshin Ohta",
+      "driver2": "Hiroki Otsu"
+    },
+    {
+      "number": "16",
+      "driver": "",
+      "team": "ARTA Mugen",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Honda HRC Prelude-GT",
+      "make": "Honda",
+      "driver1": "Tomoki Nojiri",
+      "driver2": "Ren Sato"
+    },
+    {
+      "number": "12",
+      "driver": "",
+      "team": "Team Impul",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Nissan Z NISMO GT500",
+      "make": "Nissan",
+      "driver1": "Kazuki Hiramine",
+      "driver2": "Bertrand Baguette"
+    },
+    {
+      "number": "14",
+      "driver": "",
+      "team": "TGR Team ENEOS ROOKIE",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Toyota GR Supra GT500",
+      "make": "Toyota GR",
+      "driver1": "Nirei Fukuzumi",
+      "driver2": "Kazuya Oshima"
+    },
+    {
+      "number": "17",
+      "driver": "",
+      "team": "Astemo Real Racing",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Honda HRC Prelude-GT",
+      "make": "Honda",
+      "driver1": "Koudai Tsukakoshi",
+      "driver2": "Yuto Nomura"
+    },
+    {
+      "number": "19",
+      "driver": "",
+      "team": "TGR Team WedsSport Bandoh",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Toyota GR Supra GT500",
+      "make": "Toyota GR",
+      "driver1": "Yuji Kunimoto",
+      "driver2": "Sena Sakaguchi"
+    },
+    {
+      "number": "23",
+      "driver": "",
+      "team": "NISMO",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Nissan Z NISMO GT500",
+      "make": "Nissan",
+      "driver1": "Katsumasa Chiyo",
+      "driver2": "Mitsunori Takaboshi"
+    },
+    {
+      "number": "24",
+      "driver": "",
+      "team": "Kondo Racing",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Nissan Z NISMO GT500",
+      "make": "Nissan",
+      "driver1": "Teppei Natori",
+      "driver2": "Atsushi Miyake"
+    },
+    {
+      "number": "36",
+      "driver": "",
+      "team": "TGR Team au TOM'S",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Toyota GR Supra GT500",
+      "make": "Toyota GR",
+      "driver1": "Sho Tsuboi",
+      "driver2": "Kenta Yamashita"
+    },
+    {
+      "number": "37",
+      "driver": "",
+      "team": "TGR Team Deloitte TOM'S",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Toyota GR Supra GT500",
+      "make": "Toyota GR",
+      "driver1": "Ukyo Sasahara",
+      "driver2": "Giuliano Alesi"
+    },
+    {
+      "number": "38",
+      "driver": "",
+      "team": "TGR Team KeePer Cerumo",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Toyota GR Supra GT500",
+      "make": "Toyota GR",
+      "driver1": "Toshiki Oyu",
+      "driver2": "Rikuto Kobayashi"
+    },
+    {
+      "number": "39",
+      "driver": "",
+      "team": "TGR Team SARD",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Toyota GR Supra GT500",
+      "make": "Toyota GR",
+      "driver1": "Yuhi Sekiguchi",
+      "driver2": "Sacha Fenestraz"
+    },
+    {
+      "number": "64",
+      "driver": "",
+      "team": "Modulo Nakajima Racing",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Honda HRC Prelude-GT",
+      "make": "Honda",
+      "driver1": "Riki Okusa",
+      "driver2": "Igor Omura Fraga"
+    },
+    {
+      "number": "100",
+      "driver": "",
+      "team": "Stanley Team Kunimitsu",
+      "manufacturer": "",
+      "class": "GT500",
+      "car": "Honda HRC Prelude-GT",
+      "make": "Honda",
+      "driver1": "Naoki Yamamoto",
+      "driver2": "Tadasuke Makino"
+    },
+    {
+      "number": "2",
+      "driver": "",
+      "team": "Hyper Water Racing Inging",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Toyota GR86 GT300",
+      "make": "Toyota GR",
+      "driver1": "Yuui Tsutsumi",
+      "driver2": "Kazuhisa Urabe"
+    },
+    {
+      "number": "4",
+      "driver": "",
+      "team": "Goodsmile Racing \u0026 TeamUKYO",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Mercedes-AMG GT3 Evo",
+      "make": "Mercedes-AMG",
+      "driver1": "Nobuteru Taniguchi",
+      "driver2": "Tatsuya Kataoka"
+    },
+    {
+      "number": "5",
+      "driver": "",
+      "team": "Team Mach",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Toyota 86 MC GT300",
+      "make": "Toyota",
+      "driver1": "Yusuke Shiotsu",
+      "driver2": "Souta Arao"
+    },
+    {
+      "number": "6",
+      "driver": "",
+      "team": "Velorex",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Ferrari 296 GT3 Evo",
+      "make": "Ferrari",
+      "driver1": "Yoshiaki Katayama",
+      "driver2": "Niklas Krutten"
+    },
+    {
+      "number": "7",
+      "driver": "",
+      "team": "CarGuy MKS Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Ferrari 296 GT3 Evo",
+      "make": "Ferrari",
+      "driver1": "Zak O'Sullivan",
+      "driver2": "Kiyoshi Umegaki"
+    },
+    {
+      "number": "9",
+      "driver": "",
+      "team": "Pacific Racing Team",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "BMW M4 GT3 Evo",
+      "make": "BMW",
+      "driver1": "Yusuke Tomibayashi",
+      "driver2": "Yuta Fujiwara"
+    },
+    {
+      "number": "11",
+      "driver": "",
+      "team": "GAINER",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Nissan Fairlady Z GT300 (RZ34)",
+      "make": "Nissan",
+      "driver1": "Ryuichiro Tomita",
+      "driver2": "Kazuki Oki"
+    },
+    {
+      "number": "26",
+      "driver": "",
+      "team": "Anest Iwata Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Nissan Fairlady Z GT300 (RZ34)",
+      "make": "Nissan",
+      "driver1": "Hironobu Yasuda",
+      "driver2": "Lee Jungwoo"
+    },
+    {
+      "number": "18",
+      "driver": "",
+      "team": "Team UpGarage",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Mercedes-AMG GT3 Evo",
+      "make": "Mercedes-AMG",
+      "driver1": "Takashi Kobayashi",
+      "driver2": "Kotaro Shimbara"
+    },
+    {
+      "number": "20",
+      "driver": "",
+      "team": "SHADE Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Lexus RC F GT3",
+      "make": "Lexus",
+      "driver1": "Katsuyuki Hiranaka",
+      "driver2": "Eijiro Shimizu"
+    },
+    {
+      "number": "22",
+      "driver": "",
+      "team": "R'Qs Motor Sports",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Mercedes-AMG GT3 Evo",
+      "make": "Mercedes-AMG",
+      "driver1": "Masaki Kano",
+      "driver2": "Hisashi Wada"
+    },
+    {
+      "number": "25",
+      "driver": "",
+      "team": "Hoppy Team Tsuchiya",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Toyota GR Supra GT300",
+      "make": "Toyota GR",
+      "driver1": "Takamitsu Matsui",
+      "driver2": "Ryota Horachi"
+    },
+    {
+      "number": "30",
+      "driver": "",
+      "team": "apr",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Toyota GR86 GT300",
+      "make": "Toyota GR",
+      "driver1": "Hibiki Taira",
+      "driver2": "Hiroaki Nagai"
+    },
+    {
+      "number": "31",
+      "driver": "",
+      "team": "apr",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Lexus LC 500h GT300",
+      "make": "Lexus",
+      "driver1": "Kazuto Kotaka",
+      "driver2": "Miki Koyama"
+    },
+    {
+      "number": "32",
+      "driver": "",
+      "team": "Team ENEOS Rookie",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Mercedes-AMG GT3 Evo",
+      "make": "Mercedes-AMG",
+      "driver1": "Hiroaki Ishiura",
+      "driver2": "Tokiya Suzuki"
+    },
+    {
+      "number": "45",
+      "driver": "",
+      "team": "Ponos Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Ferrari 296 GT3 Evo",
+      "make": "Ferrari",
+      "driver1": "Takuro Shinohara",
+      "driver2": "Shintaro Kawabata"
+    },
+    {
+      "number": "48",
+      "driver": "",
+      "team": "Nilzz Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Nissan GT-R Nismo GT3",
+      "make": "Nissan",
+      "driver1": "Taiyo Ida",
+      "driver2": "James Pull"
+    },
+    {
+      "number": "52",
+      "driver": "",
+      "team": "Saitama Green Brave",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Toyota GR Supra GT300",
+      "make": "Toyota GR",
+      "driver1": "Hiroki Yoshida",
+      "driver2": "Seita Nonaka"
+    },
+    {
+      "number": "56",
+      "driver": "",
+      "team": "Kondo Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Nissan GT-R Nismo GT3",
+      "make": "Nissan",
+      "driver1": "Joao Paulo de Oliveira",
+      "driver2": "Iori Kimura"
+    },
+    {
+      "number": "60",
+      "driver": "",
+      "team": "LM corsa",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Lexus LC 500 GT300",
+      "make": "Lexus",
+      "driver1": "Hiroki Yoshimoto",
+      "driver2": "Shunsuke Kohno"
+    },
+    {
+      "number": "61",
+      "driver": "",
+      "team": "R\u0026D Sport",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Subaru BRZ GT300 (ZD8)",
+      "make": "Subaru",
+      "driver1": "Takuto Iguchi",
+      "driver2": "Hideki Yamauchi"
+    },
+    {
+      "number": "62",
+      "driver": "",
+      "team": "HELM Motorsports",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Nissan GT-R Nismo GT3",
+      "make": "Nissan",
+      "driver1": "Yuya Hiraki",
+      "driver2": "Reiji Hiraki"
+    },
+    {
+      "number": "65",
+      "driver": "",
+      "team": "K2 R\u0026D LEON Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Mercedes-AMG GT3 Evo",
+      "make": "Mercedes-AMG",
+      "driver1": "Naoya Gamou",
+      "driver2": "Togo Suganami"
+    },
+    {
+      "number": "87",
+      "driver": "",
+      "team": "JLOC",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Lamborghini Huracan GT3 Evo 2",
+      "make": "Lamborghini",
+      "driver1": "Yuya Motojima",
+      "driver2": "Kosuke Matsuura"
+    },
+    {
+      "number": "88",
+      "driver": "",
+      "team": "JLOC",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Lamborghini Huracan GT3 Evo 2",
+      "make": "Lamborghini",
+      "driver1": "Takashi Kogure",
+      "driver2": "Daniil Kvyat"
+    },
+    {
+      "number": "96",
+      "driver": "",
+      "team": "K-tunes Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Lexus RC F GT3",
+      "make": "Lexus",
+      "driver1": "Morio Nitta",
+      "driver2": "Shinichi Takagi"
+    },
+    {
+      "number": "360",
+      "driver": "",
+      "team": "Tomei Sports",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Nissan GT-R Nismo GT3",
+      "make": "Nissan",
+      "driver1": "Rin Arakawa",
+      "driver2": "Hironobu Shimizu"
+    },
+    {
+      "number": "666",
+      "driver": "",
+      "team": "Seven x Seven Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Porsche 911 GT3 R (992.2)",
+      "make": "Porsche",
+      "driver1": "Sven Muller",
+      "driver2": "Kiyoto Fujinami"
+    },
+    {
+      "number": "777",
+      "driver": "",
+      "team": "D'station Racing",
+      "manufacturer": "",
+      "class": "GT300",
+      "car": "Aston Martin Vantage AMR GT3 Evo",
+      "make": "Aston Martin",
+      "driver1": "Tomonobu Fujii",
+      "driver2": "Charlie Fagg"
+    }
+  ],
+  "tables": {
+    "practice": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "Driver",
+        "Team",
+        "Time/Retired"
+      ],
+      "rows": []
+    }
+  }
+}

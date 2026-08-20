@@ -90,11 +90,11 @@
 
 | Режим | Колонки | Серии |
 |-------|---------|--------|
-| Multi-race | Round · **Race** · Event · Circuit · Location · Date · Time | F2, F3, FREC, F4_IT, DTM, GTWCE Sprint, Supercars, F1 2025/2026 |
+| Multi-race | Round · **Race** · Event · Circuit · Location · Date · Time | F2, F3, FREC, F4_IT, DTM, GTWCE Sprint, Supercars, F1 2024/2025/2026 |
 | Multi-race SF | **Race** · Event · Circuit · Location · Date · Time | Super Formula |
 | Single-race | Round · Event · Circuit · Location · Date · Time | PSC, ELMS, WEC, GTWCE End, Super GT, stock-car, IndyCar |
 | IMSA | Round · Event · Length · Classes · Circuit · Location · Date | IMSA |
-| Historical F1 | Round · Grand Prix · Circuit · Location · Date | `/season/f1-20xx` кроме 2025/2026 |
+| Historical F1 | Round · Grand Prix · Circuit · Location · Date | `/season/f1-20xx` кроме live 2024/2025/2026 |
 
 ### Имена в таблицах vs entry_list
 
@@ -273,7 +273,18 @@ Race
 
 **Caution Breakdown** — есть колонка "Free Pass" (показывается для NASCAR, скрыта для IndyCar).
 
-**race_statistics** — key-value объект на верхнем уровне JSON (не внутри `tables`).
+**race_statistics** — key-value объект на верхнем уровне JSON (не внутри `tables`). Эталон заполненного этапа: `nascar_cup_2026_19.json` / `nascar_cup_2026_20.json`.
+
+| Ключ | Обязательность | Формат / пример |
+|------|----------------|-----------------|
+| `Average speed` | да (если есть в протоколе) | `"127.422 mph (205.065 km/h)"` |
+| `Cautions / Laps` | да | `"5 for 27"` |
+| `Lead changes` | да | `"15"` или `"28 among 13 different drivers"` |
+| `Time of race` | да | `"3 hours, 8 minutes and 21 seconds"` |
+| `Margin of victory` | **да, если есть в протоколе** | `"0.287 sec"` (не отбрасывать как «лишнее») |
+| `Red flags` | если известно | `"0"` или `"1 for 3 hours, 9 minutes and 18 seconds"` |
+
+Не класть в `race_statistics`: Pole speed, Attendance / n/a и прочий шум протокола, которого нет в эталонах. **MOV (`Margin of victory`) — не шум**, его нужно сохранять вместе с остальными stats.
 
 **starting_lineup** — **не используется** (удалён из всех файлов).
 
@@ -298,11 +309,12 @@ Race
   "event_preview_ru": "...",
   "youtube_id": "...",
   "race_statistics": {
-    "Lead changes": "...",
-    "Cautions / Laps": "...",
-    "Red flags": "...",
-    "Time of race": "...",
-    "Average speed": "..."
+    "Average speed": "… mph (… km/h)",
+    "Cautions / Laps": "… for …",
+    "Lead changes": "…",
+    "Red flags": "…",
+    "Time of race": "… hours, … minutes and … seconds",
+    "Margin of victory": "0.287 sec"
   },
   "entry_list": [
     {"number": "1", "driver": "...", "team": "...", "manufacturer": "...", "crew_chief": "..."}
@@ -331,8 +343,9 @@ Race
 |---|--------|-------------|---------|
 
 - Rowspan на Constructor + Chassis (гонщики одной команды объединяются)
-- `manufacturer` в `entry_list` — код шасси (напр. `MCL39`, `RB21`)
-- `entry_list` содержит поля: `number`, `driver`, `team`, `constructor`, `manufacturer`
+- `manufacturer` в `entry_list` — код шасси (напр. `MCL39`, `RB21`, `RB20`)
+- `entry_list` содержит поля: `number`, `driver`, `team`, `constructor`, `manufacturer` (chassis), `power_unit`, `driver_slug`
+- Страница Teams для сезона (`/season/f1-20xx/teams`) при пустом `data/teams/f1_20xx.json` **собирается из `entry_list`** всех этапов: Constructor ← `constructor`, Chassis ← `manufacturer`, Power unit ← `power_unit`, Rounds — по участию
 
 ### Practice (1, 2, 3)
 
@@ -400,6 +413,29 @@ Race
 - **race_statistics** — не используется для F1
 - Формат названия гонки: `"YYYY Grand Prix Name"` (напр. `"2026 Japanese Grand Prix"`)
 
+### Очки в колонке `Pts` (F1 2024; та же шкала для 2025)
+
+Очки пишутся в колонку **`Pts` / `Points`** таблицы GP (`race_results`) и спринта (`tables.race.sessions[]`). Standings API **суммирует эти значения** (спринт + GP) — неверная цифра в JSON ломает чемпионат.
+
+**Grand Prix** — топ-10 классифицированных + бонус за fastest lap:
+
+| Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | FL |
+|-----|---|---|---|---|---|---|---|---|---|----|----|
+| Очки | 25 | 18 | 15 | 12 | 10 | 8 | 6 | 4 | 2 | 1 | **+1** |
+
+- **+1 FL** только если автор лучшего круга **финишировал в топ-10** (классифицирован в очковой зоне). Иначе FL = 0 бонуса.
+- Пример: P1 + FL → `26`; P10 + FL → `2`; P11 + FL → `0`.
+
+**Sprint** — топ-8 классифицированных (без бонуса за FL):
+
+| Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|-----|---|---|---|---|---|---|---|---|
+| Очки | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+
+**Тай-брейк чемпионата** (при равных очках): больше побед в GP → больше 2-х мест → 3-х → … (countback). На сайте порядок при равенстве очков следует этой логике, если она реализована в standings; иначе сверять с официальным протоколом.
+
+**Спринт-уикенды 2024:** China, Miami, Austria, United States, São Paulo, Qatar (`f1Sprint2024` в `static-schedules.js`).
+
 ### JSON-шаблон события (F1)
 
 ```json
@@ -422,7 +458,7 @@ Race
     {"id": "...", "title": "Race highlights"}
   ],
   "entry_list": [
-    {"number": "1", "driver": "...", "constructor": "Red Bull Racing", "manufacturer": "Red Bull Racing-Honda RBPT", "team": "Red Bull"}
+    {"number": "1", "driver": "Max Verstappen", "team": "Oracle Red Bull Racing", "constructor": "Red Bull Racing-Honda RBPT", "manufacturer": "RB20", "power_unit": "Honda RBPTH002", "driver_slug": "max-verstappen"}
   ],
   "tables": {
     "practice": {
@@ -1156,6 +1192,7 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 
 - Entry: **`driver1`**, **`driver2` only** (без `driver3`) — `gtwce-sprint-entry-list.mdc`.
 - Standings: per-class через `BuildGtwceStandingsFromEvents`.
+- **Очки Sprint Cup** (Race 1 и Race 2 одинаково): top 10 = `16.5 / 12 / 9.5 / 7.5 / 6 / 4 / 3 / 2 / 1 / 0.5` + **+1 за поул**. `Overall pts` — абсолют; `Cup pts` — класс; поул из Qualifying Combined (Q1→R1, Q2→R2). Подробнее: `gtwce-sprint-event-json.mdc`.
 - Подробности: `gtwce-sprint-event-json.mdc`.
 
 Минимум для строки standings: `Pos` + `Driver`/`Drivers` + `Pts`/`Points` (или `Cup pts` / `Overall pts` у GTWCE).
@@ -1256,7 +1293,7 @@ Exhibition / pre-season / prologue файлы могут отображатьс�
 
 | Серия | Особенности авто-сборки |
 |-------|-------------------------|
-| F1 (2025+) | Для спринт-уикенда race_order расширяется на `RnS` / `RnF`; сессия `Sprint Race` и основная гонка раскладываются в отдельные колонки. `Carlos Sainz` нормализуется в `Carlos Sainz Jr.` |
+| F1 (2024+) | Для спринт-уикенда race_order расширяется на `RnS` / `RnF`; сессия `Sprint` и основная гонка раскладываются в отдельные колонки. `Carlos Sainz` нормализуется в `Carlos Sainz Jr.` |
 | Super Formula | `race.sessions[]` разворачивается в отдельные колонки race_order по порядку (`R1`, `R2`, …). Поддержка дробных очков; бонус за квалификацию (3/2/1). |
 | Super GT | Колонка `Drivers` разбивается по `;` / `/`; очки из `DP`. Flat-таблица через `BuildStandingsFromEvents`. |
 | WEC / ELMS / GTWCE | Per-class через отдельные сборщики (см. выше); multi-driver entries; WEC — только Hypercar и LMGT3 в зачёте. |
@@ -1435,6 +1472,10 @@ race_order реально появились непустые значения. 
 |------------|----------------|----------|
 | `SUPERCARS_2026_1` | Q McLaughlin 1:27.7428 (2020); R Whincup 1:29.8424 | [Auto Action Sydney Event Guide PDF](https://autoaction.com.au/wp-content/uploads/2023/07/Supercars_2023-EventGuide_RD7-SydneyTM.pdf); [supercars.com Sydney](https://www.supercars.com/events/2023-beaurepaires-sydney-supernight) |
 | `SUPERCARS_2026_7` | Q McLaughlin 1:11.9908 (2017); R Percat 1:12.9311 (2017) | [Auto Action Townsville Event Guide PDF](https://autoaction.com.au/wp-content/uploads/2023/07/Supercars_2023-EventGuide_RD6-Townsville-TM.pdf); [supercars.com Townsville](https://www.supercars.com/events/2023-nti-townsville-500) |
+| `SUPERCARS_2026_8` | Lap McLaughlin 52.8141 (2019); R Courtney 53.7293 (2019) | [supercars.com Perth](https://www.supercars.com/events/2026-perth); [Wikipedia Wanneroo Raceway](https://en.wikipedia.org/wiki/Wanneroo_Raceway) |
+| `GTWCE_SPRINT_2026_3` | Q Marciello 1:35.444 (2022); R Marciello 1:36.500 (2022) | [SRO Magny-Cours Q2 2022](https://www.gt-world-challenge-europe.com/news/2305/marciello-leads-goetz-as-akkodis-asp-mercedes-amg-secures-front-row-lockout-at-magny-cours); [Racing Sports Cars Magny-Cours 2022](https://www.racingsportscars.com/results/laps/Magny-Cours-2022-05-15.html); [SRO top-five Magny-Cours](https://www.gt-world-challenge-europe.com/news/3279/the-top-five-gt-world-challenge-races-at-magny-cours) |
+| `SUPER_GT_2026_4` | Q GT500 Yamashita 1:25.764 (2021); Q GT300 Yamauchi 1:34.395 (2021) | [supergt.net Fuji track records](https://supergt.net/en/news_race_report/%E3%80%90%E7%AC%AC4%E6%88%A6%E3%83%97%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%80%91%E5%AF%8C%E5%A3%AB%E3%81%A7%E3%81%AE%E6%96%B0%E3%81%9F%E3%81%AA%E3%82%B9%E3%83%97%E3%83%AA%E3%83%B3%E3%83%88%E3%83%AC); [Racing Sports Cars Fuji 2021 Q](https://www.racingsportscars.com/results/qualifying/Fuji-2021-11-28.html) |
+| `IMSA_2026_8` | Q GTP Derani 1:47.730 (2023); LMP2 Hanley 1:51.846 (2023); GTD Pro Catsburg 2:02.198 (2024); GTD Snow 2:03.291 (2023) | [IMSA Derani Road America pole / track record](https://www.imsa.com/news/2023/08/05/derani-puts-no-31-cadillac-on-pole-at-road-america-with-track-record-lap/); [Al Kamel Road America 2025 Qualifying PDF](https://imsa.results.alkamelcloud.com/Results/25_2025/16_Road%20America/01_IMSA%20WeatherTech%20SportsCar%20Championship/202508021640_Qualifying/03_Results_Qualifying.PDF) (footer still lists those marks) |
 | `SUPERCARS_2026_4` | Inaugural modern-era Christchurch — records first set this weekend | Preview / calendar (нет исторических Q/R серии) |
 | `PSC_2026_2` | Q Schuring 1:43.784 (2025, Barcelona) | [Porsche Newsroom](https://newsroom.porsche.com/en/ppdb/2025/05/rookie-flynt-schuring-wins-the-qualifying-in-barcelona.html) |
 | `PSC_2026_3` | Fastest documented Q Andlauer 1:30.457 (2019, RBR) — не помечен как официальный all-time | Исторический протокол PSC 2019 / race reports (формулировка *documented*) |
@@ -1448,6 +1489,7 @@ race_order реально появились непустые значения. 
 | `F4_IT_2026_3` | Race Pradel 1:51.179 (2024, Monza) | [Monza circuit lap records / F4](https://en.wikipedia.org/wiki/Monza_Circuit) (сверять с Euro 4 / Italian F4 protocol) |
 | `INDYCAR_2026_12` | Q Dixon 22.6952 / 206.211 mph (18 Jul 2003) | [Nashville Superspeedway Fast Facts](https://www.nashvillesuperspeedway.com/media/news/borchetta-bourbon-music-city-grand-prix-presented-willscot-fast-facts.html) |
 | `SUPER_FORMULA_2026_6` | Course record Nojiri 1:19.972 (20 Dec 2020 Q) | [motorsport.com Fuji Q](https://www.motorsport.com/super-formula/news/fuji-qualifying-nojiri-yamamoto-cassidy/4929836/) |
+| `SUPER_FORMULA_2026_8` | Course record Sette Camara 1:04.235 (18 Oct 2020 Q) | [motorsport.com SUGO Q](https://www.motorsport.com/super-formula/news/sugo-qualifying-sette-camara-pole/4893563/); [superformula.net 2020 Q](https://superformula.net/sf2/race2020/round3/qf) |
 | `ELMS_2026_3` | LMP2 Q Milesi 1:30.829; race Leclerc 1:31.757 (Jul 2024) | [ELMS Imola Facts and Figures](https://www.europeanlemansseries.com/en/news/imola-elms-facts-and-figures/13648) |
 | `ELMS_2026_PROLOGUE` | Barcelona LMP2 best / race (de Gerus / Ugran) | ELMS Barcelona facts / Al Kamel timing |
 | `WEC_2026_PROLOGUE` | Hypercar race Fuoco 1:31.794 (21 Apr 2024, Imola) | FIA WEC Imola timing / race reports |
@@ -1460,6 +1502,7 @@ race_order реально появились непустые значения. 
 | `NASCAR_MODIFIED_2026_8` | Documented Q Jake Johnson 13.57 (Jul 2022, Claremont) | NWMT reports |
 | `NASCAR_MODIFIED_2026_9` | Documented Q Jake Johnson 11.537 / 78.01 mph (Jun 2025, White Mountain) | NWMT reports |
 | `NASCAR_MODIFIED_2026_10` | Documented Q Hirschman 11.637 / 77.34 mph (May 4, 2024 Granite State Derby, repave); race lap not published | [myracenews Q](https://myracenews.com/2024/05/qualifying-results-granite-state-derby-at-monadnock-speedway/); The Third Turn 2024 GSD |
+| `NASCAR_MODIFIED_2026_11` | Q Bobby Santos 18.237 / 123.376 mph (10 Apr 2011); Tour wins at track Bonsignore 14 | [OnPitRoad Thompson notes](https://onpitroad.com/2016/06/14/whelen-mod-tour-news-notes-thompson-2/); Hartford Courant / NWMT historical |
 | `NASCAR_TRUCK_2026_2` | Q Crawford 30.339 / 182.735 mph (18 Mar 2005) — **pre-2022 Atlanta layout** | Racing-Reference / Jayski historical Atlanta Truck |
 | `NASCAR_TRUCK_2026_15` | **Previous** Q Heim 20.072 / 112.096 mph (2023); Riggs 18.502 — рекорд **этого** уик-энда на новом покрытии | [tobychristie.com 2023 pole](https://tobychristie.com/nascar/truck-series/corey-heim-scores-second-consecutive-nascar-truck-pole-with-quick-lap-at-north-wilkesboro/); [SPEED SPORT 2026 pole](https://speedsport.com/nascar/nascar-craftsman-truck-series/riggs-claims-north-wilkesboro-pole/) |
 

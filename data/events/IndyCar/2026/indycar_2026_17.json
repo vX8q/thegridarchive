@@ -1,0 +1,274 @@
+{
+  "event_id": "INDYCAR_2026_17",
+  "series": "IndyCar Series",
+  "race": "Snap-on Milwaukee Mile 250",
+  "date": "Sunday, August 30, 2026",
+  "start_date": "2026-08-30",
+  "end_date": "2026-08-30",
+  "track": "Milwaukee Mile",
+  "location": "West Allis, Wisconsin, USA",
+  "entry_list": [
+    {
+      "number": "4",
+      "driver": "Caio Collet",
+      "team": "A. J. Foyt Enterprises",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "caio-collet"
+    },
+    {
+      "number": "14",
+      "driver": "Santino Ferrucci",
+      "team": "A. J. Foyt Enterprises",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "santino-ferrucci"
+    },
+    {
+      "number": "26",
+      "driver": "Will Power",
+      "team": "Andretti Global",
+      "manufacturer": "Honda",
+      "driver_slug": "will-power"
+    },
+    {
+      "number": "27",
+      "driver": "Kyle Kirkwood",
+      "team": "Andretti Global",
+      "manufacturer": "Honda",
+      "driver_slug": "kyle-kirkwood"
+    },
+    {
+      "number": "28",
+      "driver": "Marcus Ericsson",
+      "team": "Andretti Global",
+      "manufacturer": "Honda",
+      "driver_slug": "marcus-ericsson"
+    },
+    {
+      "number": "5",
+      "driver": "Pato O'Ward",
+      "team": "Arrow McLaren",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "pato-o-ward"
+    },
+    {
+      "number": "6",
+      "driver": "Nolan Siegel",
+      "team": "Arrow McLaren",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "nolan-siegel"
+    },
+    {
+      "number": "7",
+      "driver": "Christian Lundgaard",
+      "team": "Arrow McLaren",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "christian-lundgaard"
+    },
+    {
+      "number": "8",
+      "driver": "Kyffin Simpson",
+      "team": "Chip Ganassi Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "kyffin-simpson"
+    },
+    {
+      "number": "9",
+      "driver": "Scott Dixon",
+      "team": "Chip Ganassi Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "scott-dixon"
+    },
+    {
+      "number": "10",
+      "driver": "Alex Palou",
+      "team": "Chip Ganassi Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "alex-palou"
+    },
+    {
+      "number": "18",
+      "driver": "Romain Grosjean",
+      "team": "Dale Coyne Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "romain-grosjean"
+    },
+    {
+      "number": "19",
+      "driver": "Dennis Hauger",
+      "team": "Dale Coyne Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "dennis-hauger"
+    },
+    {
+      "number": "20",
+      "driver": "Alexander Rossi",
+      "team": "Ed Carpenter Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "alexander-rossi"
+    },
+    {
+      "number": "21",
+      "driver": "Christian Rasmussen",
+      "team": "Ed Carpenter Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "christian-rasmussen"
+    },
+    {
+      "number": "76",
+      "driver": "Rinus VeeKay",
+      "team": "Juncos Hollinger Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "rinus-veekay"
+    },
+    {
+      "number": "77",
+      "driver": "Sting Ray Robb",
+      "team": "Juncos Hollinger Racing",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "sting-ray-robb"
+    },
+    {
+      "number": "60",
+      "driver": "Felix Rosenqvist",
+      "team": "Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Honda",
+      "driver_slug": "felix-rosenqvist"
+    },
+    {
+      "number": "66",
+      "driver": "Marcus Armstrong",
+      "team": "Meyer Shank Racing with Curb-Agajanian",
+      "manufacturer": "Honda",
+      "driver_slug": "marcus-armstrong"
+    },
+    {
+      "number": "15",
+      "driver": "Graham Rahal",
+      "team": "Rahal Letterman Lanigan Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "graham-rahal"
+    },
+    {
+      "number": "45",
+      "driver": "Louis Foster",
+      "team": "Rahal Letterman Lanigan Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "louis-foster"
+    },
+    {
+      "number": "47",
+      "driver": "Mick Schumacher",
+      "team": "Rahal Letterman Lanigan Racing",
+      "manufacturer": "Honda",
+      "driver_slug": "mick-schumacher"
+    },
+    {
+      "number": "2",
+      "driver": "Josef Newgarden",
+      "team": "Team Penske",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "josef-newgarden"
+    },
+    {
+      "number": "3",
+      "driver": "Scott McLaughlin",
+      "team": "Team Penske",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "scott-mclaughlin"
+    },
+    {
+      "number": "12",
+      "driver": "David Malukas",
+      "team": "Team Penske",
+      "manufacturer": "Chevrolet",
+      "driver_slug": "david-malukas"
+    }
+  ],
+  "tables": {
+    "caution_breakdown": {
+      "headers": [
+        "Condition",
+        "From Lap",
+        "To Lap",
+        "# Of Laps",
+        "Reason"
+      ],
+      "rows": []
+    },
+    "final_practice": {
+      "title": "Final Practice",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Laps"
+      ],
+      "rows": []
+    },
+    "practice": {
+      "title": "Practice 1",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Laps"
+      ],
+      "rows": []
+    },
+    "practice2": {
+      "title": "Practice 2",
+      "headers": [
+        "Rank",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed",
+        "Diff",
+        "Gap",
+        "Best Lap",
+        "Laps"
+      ],
+      "rows": []
+    },
+    "qualifying": {
+      "title": "Qualifying",
+      "headers": [
+        "Pos",
+        "Car",
+        "Driver Name",
+        "C/E/T",
+        "Time",
+        "Speed"
+      ],
+      "rows": []
+    },
+    "race_results": {
+      "headers": [
+        "Pos",
+        "St",
+        "No",
+        "Driver",
+        "Team",
+        "Engine",
+        "Laps",
+        "Time/Retired",
+        "Led",
+        "Pts"
+      ],
+      "rows": []
+    }
+  }
+}

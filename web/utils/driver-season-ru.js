@@ -9,7 +9,30 @@
     'f2': 'Формула 2',
     'formula 2': 'Формула 2',
     'f3': 'Формула 3',
-    'formula 3': 'Формула 3'
+    'formula 3': 'Формула 3',
+    'f4_it': 'Итальянская F4',
+    'italian f4': 'Итальянская F4',
+    'frec': 'Formula Regional European Championship',
+    'indycar': 'IndyCar',
+    'imsa': 'IMSA',
+    'wec': 'WEC',
+    'elms': 'ELMS',
+    'dtm': 'DTM',
+    'psc': 'Porsche Supercup',
+    'porsche supercup': 'Porsche Supercup',
+    'gtwce_end': 'GT World Challenge Europe Endurance',
+    'gtwce_sprint': 'GT World Challenge Europe Sprint',
+    'super_formula': 'Super Formula',
+    'super formula': 'Super Formula',
+    'super_gt': 'Super GT',
+    'super gt': 'Super GT',
+    'supercars': 'Supercars',
+    'nascar_cup': 'NASCAR Cup Series',
+    'nascar cup': 'NASCAR Cup Series',
+    'nascar_truck': 'NASCAR Craftsman Truck Series',
+    'nascar_modified': 'NASCAR Whelen Modified Tour',
+    'noaps': 'NASCAR Xfinity Series',
+    'arca': 'ARCA Menards Series'
   };
 
   window.TGA_RU.grandPrixLocationRu = {
@@ -57,10 +80,10 @@
     'sakhir': 'Сахира'
   };
 
-  window.TGA_RU.eventNameRu = {
+  window.TGA_RU.eventNameRu = Object.assign({}, window.TGA_RU.eventNameRu, {
     'pre-season testing 1': 'Предсезонные тесты 1',
     'pre-season testing 2': 'Предсезонные тесты 2'
-  };
+  });
 
   window.TGA_RU.driverStatusRu = {
     'engine': 'Двигатель',

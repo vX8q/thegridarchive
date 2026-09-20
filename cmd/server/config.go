@@ -10,17 +10,19 @@ import (
 
 // Config holds server settings from env vars and defaults.
 type Config struct {
-	DataDir      string
-	WebDir       string
-	Port         string
-	ResetDB      bool
-	EnableAdmin  bool
-	AdminToken   string  // secret for /api/admin/* (X-Admin-Token or Authorization: Bearer <token>)
-	RateLimitRPS float64 // requests per second per IP (0 = no limit)
-	TrustedProxy bool    // TGA_TRUSTED_PROXY=1: trust X-Forwarded-For / X-Real-IP from reverse proxy
-	EnablePprof  bool    // enable /debug/pprof* (dev/staging only)
-	FeedbackSMTP FeedbackSMTPConfig
-	Turnstile    TurnstileConfig
+	DataDir       string
+	WebDir        string
+	Port          string
+	ResetDB       bool
+	SkipBootstrap bool   // TGA_BOOTSTRAP=skip
+	BootstrapMode string // full | skip | incremental (from TGA_BOOTSTRAP)
+	EnableAdmin   bool
+	AdminToken    string  // secret for /api/admin/* (X-Admin-Token or Authorization: Bearer <token>)
+	RateLimitRPS  float64 // requests per second per IP (0 = no limit)
+	TrustedProxy  bool    // TGA_TRUSTED_PROXY=1: trust X-Forwarded-For / X-Real-IP from reverse proxy
+	EnablePprof   bool    // enable /debug/pprof* (dev/staging only)
+	FeedbackSMTP  FeedbackSMTPConfig
+	Turnstile     TurnstileConfig
 }
 
 // FeedbackSMTPConfig controls optional email notifications for feedback submissions.
@@ -62,6 +64,8 @@ func LoadConfig() Config {
 		}
 	}
 	cfg.ResetDB = os.Getenv("TGA_RESET_DB_ON_START") == "1"
+	cfg.BootstrapMode = bootstrapModeFromEnv()
+	cfg.SkipBootstrap = cfg.BootstrapMode == "skip"
 	cfg.EnableAdmin = os.Getenv("TGA_ENABLE_ADMIN") == "1"
 	cfg.EnablePprof = os.Getenv("TGA_ENABLE_PPROF") == "1"
 	if v := os.Getenv("TGA_ADMIN_TOKEN"); v != "" {

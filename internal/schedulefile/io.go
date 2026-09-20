@@ -169,4 +169,3 @@ func EventDetailExists(dataDir, eventID string) bool {
 	resolvedID := ResolveEventDetailID(dataDir, eventID)
 	return EventDetailFileExists(dataDir, resolvedID)
 }
-

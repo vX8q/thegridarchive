@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/vX8q/tga/actions/workflows/ci.yml/badge.svg)
 
-Автоспортивный веб-сервис и API на Go: расписания, результаты, турнирные таблицы, статистика пилотов и live-данные по **21 чемпионату**. Данные актуальны для сезона **2026** (`config.CurrentSeason`).
+Автоспортивный веб-сервис и API на Go: расписания, результаты, турнирные таблицы, статистика пилотов и live-данные по **21 чемпионату**. Текущий сезон по умолчанию — **2026** (`config.CurrentSeason`); для Formula 1 также доступны live-сезоны **2024** и **2025** (`/season/f1-2024`, `/season/f1-2025`).
 
 ## Возможности
 
@@ -12,6 +12,7 @@
 - Статистика пилотов, команд, трасс и Head-to-Head сравнения
 - Live-данные: NASCAR Feed, OpenF1 API, WEC и Super Formula (синхронизация каждые 2 минуты)
 - История F1 (чемпионы 1950–2026, очки, шасси, моторы)
+- Поиск в шапке (`/` или Ctrl/Cmd+K)
 - Форма обратной связи (`/feedback`) с опциональной почтой и Cloudflare Turnstile
 - Prometheus-метрики и admin-эндпоинты для мониторинга
 - Интернационализация **EN / RU** (переключатель в шапке), тёмная и светлая тема
@@ -30,12 +31,12 @@
 
 | Компонент | Стек |
 |-----------|------|
-| Бэкенд | Go 1.26, `net/http`, `slog` |
+| Бэкенд | Go 1.26 (`go.mod` / toolchain **1.26.7**), `net/http`, `slog` |
 | БД | SQLite через `modernc.org/sqlite` (pure Go, без CGO) |
 | Фронтенд | Vanilla JS SPA, CSS, клиентская маршрутизация |
 | Метрики | Prometheus (`prometheus/client_golang`) |
 | Rate Limiting | `golang.org/x/time/rate` |
-| CI | GitHub Actions (тесты + golangci-lint) |
+| CI | GitHub Actions (Go tests/vet, JS tests, data audits, golangci-lint) |
 | Деплой | Docker + Cloudflare Tunnel |
 
 ## Структура проекта
@@ -62,10 +63,11 @@ TGA/
 │   └── appenv/                  # Поиск data-директории (TGA_DATA, CWD, рядом с бинарником)
 ├── web/                         # Фронтенд: index.html, style.css, app.js, компоненты
 │   ├── utils/                   # Словари RU (пилоты, места, этапы), translit, spec-маппинги
-│   ├── data/                    # Статические справочники (translations, IMSA classes и т.д.)
+│   ├── data/                    # Статические справочники (translations, F1 tech-spec 2024/2025, IMSA classes, …)
+│   ├── images/                  # Фото трасс для `/track/*` и `/api/card-bg/*`
 │   ├── components/              # Переиспользуемые UI-блоки (карточки, расписание)
 │   ├── pages/                   # Страницы SPA (series, event, schedule, list)
-│   └── lib/                     # api.js, router.js, state.js, deps.js
+│   └── lib/                     # api.js, router.js, state.js, event-card-date.js, weekend-card-merge.js, …
 ├── data/                        # JSON-данные проекта
 │   ├── schedules/               # Расписания серий (JSON)
 │   ├── events/                  # Детали этапов: SeriesName/year/eventID.json
@@ -73,8 +75,13 @@ TGA/
 │   ├── standings/               # База race_order для stock-car / IndyCar (очки всегда из events)
 │   ├── live.json                # Live-данные (обновляются livesync)
 │   ├── driver_profiles.json     # Профили пилотов
+│   ├── crown_jewels.json        # Знаковые гонки для вкладки Achievements
+│   ├── f1_seasons_history.json  # История F1 (чемпионы, конструкторы)
 │   ├── driver_slug_aliases.json # Nickname → канонический slug (Matt→Matthew, …)
-│   └── driver_profile_redirects.json  # Редиректы slug → канонический профиль
+│   ├── driver_profile_redirects.json  # Редиректы slug → канонический профиль
+│   ├── LIVE_README.md           # Live-синхронизация (NASCAR / OpenF1 / WEC / SF)
+│   ├── TIMEZONES.md             # time_est / time_msk и IANA-таймзоны
+│   └── SERIES_TEMPLATES.md      # Полный handbook форматов event JSON по сериям
 ├── scripts/                     # Node.js-скрипты для подготовки/нормализации данных (см. ниже)
 ├── docs/                        # Заметки по архитектуре, метрикам и эксплуатации
 │   ├── DATA_ISSUES.md           # Известные проблемы и расхождения в данных
@@ -82,12 +89,13 @@ TGA/
 │   ├── METRICS.md               # Продуктовые и технические метрики Prometheus
 │   ├── RUNBOOK.md               # Действия при инцидентах
 │   ├── RELEASE_CHECKLIST.md     # Чеклист перед и после релиза
+│   ├── SMOKE_EVENTS.md          # Ручной smoke-чеклист event pages
 │   └── WEB_TGA_API.md           # Публичный API фронтенда (`window.TGA`)
 ├── cloudflared/                 # Пример конфигурации туннеля (config.example.yml)
-├── .github/workflows/           # CI: тесты + линтер
+├── .github/workflows/           # CI: Go + JS + data audits + lint
 ├── Dockerfile                   # Multi-stage build (alpine)
 ├── docker-compose.yml           # app + Cloudflare Tunnel
-├── Makefile                     # build, dev, test, lint, ci, docker
+├── Makefile                     # build, dev, test, lint, js-test, check-data, format-data, ci, docker
 └── go.mod
 ```
 
@@ -95,7 +103,8 @@ TGA/
 
 ### Требования
 
-- **Go 1.26+**
+- **Go 1.26+** (в `go.mod` зафиксирован toolchain **1.26.7**)
+- **Node.js** — для `make ci` / data-скриптов (не нужен только для `go run ./cmd/server`)
 - (Опционально) **Docker** и **Docker Compose** для контейнерного запуска
 - (Опционально) **Make** для удобных команд
 
@@ -152,8 +161,14 @@ $env:PORT="3000"; go run ./cmd/server
 | `build-multi-race-schedule-sessions.mjs` | Генерация `web/data/multi-race-schedule-sessions.js` |
 | `sync-stockcar-table-teams.mjs` | Колонка Team в stock-car tables ↔ `entry_list` |
 | `sync-driver-profiles-from-events.mjs` | Пересборка `driver_profiles.json` из events |
-| `fix-driver-slug-aliases.mjs` | Канонизация nickname-дублей (+ `--check` в CI) |
+| `fix-driver-slug-aliases.mjs` | Канонизация nickname-дублей (+ `--check` в `make ci`) |
 | `sync-sf-table-teams.mjs` | Team-колонки в Super Formula events |
+| `strip-latin-diacritics.mjs` | ASCII-only для латинских имён/мест в event JSON |
+| `check-data.mjs` | Pipeline data-гейтов (в т.ч. `audit-card-dates`) |
+| `format-compact-json.mjs` | Compact-формат JSON (`data/` или пути к файлам) |
+| `audit-compact-json.mjs` | Аудит compact vs legacy table layout по репозиторию |
+| `js-test.mjs` | JS unit-тесты (даты, weekend merge, …) |
+| `audit-*.mjs` | Аудиты event render / stock-car / caution / innerHTML |
 | `stats-columns-sanity.mjs` | Ручной аудит колонок stats по `data/events` |
 
 ### Отдельные live-sync CLI (опционально)
@@ -198,6 +213,7 @@ Compose запускает два сервиса:
 | `TGA_DATA` | авто → `data/` | Путь к данным; если не задан — ищется через `internal/appenv` |
 | `TGA_WEB` | авто → `web/` | Путь к статике; если не задан — ищется рядом с CWD/бинарником |
 | `TGA_RESET_DB_ON_START` | — | `1` = пересоздать SQLite при старте |
+| `TGA_BOOTSTRAP` | — | `skip` = не реимпортировать JSON в SQLite; `incremental` = полный bootstrap только если изменились `data/schedules` / `data/events` (штамп `data/.bootstrap_stamp`); иначе полный bootstrap (и обновление штампа) |
 | `TGA_ENABLE_ADMIN` | — | `1` = включить admin-эндпоинты |
 | `TGA_ADMIN_TOKEN` | — | Токен для admin, pprof и `/metrics` (обязателен при `TGA_ENABLE_ADMIN=1`) |
 | `TGA_RATE_LIMIT_RPS` | `0` | Лимит запросов/сек на IP (`0` = выключен) |
@@ -236,13 +252,15 @@ Compose запускает два сервиса:
 
 | Метод | Путь | Описание |
 |-------|------|----------|
+| `GET` | `/sitemap.xml` | Sitemap публичных SPA-страниц (главная, серии, этапы текущего сезона, профили пилотов) |
+| `GET` | `/robots.txt` | `Allow: /` и ссылка на `/sitemap.xml` (без запрета всего `/api/`) |
 | `GET` | `/health` | Статус сервера (503 при деградации) |
 | `GET` | `/metrics` | Prometheus-метрики (`X-Admin-Token` / `Bearer`, если задан `TGA_ADMIN_TOKEN`; иначе только localhost) |
 | `GET` | `/api/series` | Список всех серий |
 | `GET` | `/api/series/{id}` | Метаданные серии (`?season=` опционально) |
 | `GET` | `/api/series/{id}/events` | Этапы серии |
 | `GET` | `/api/series/{id}/teams` | Команды и составы |
-| `GET` | `/api/series/{id}/standings` | Турнирная таблица |
+| `GET` | `/api/series/{id}/standings` | Турнирная таблица (Cup/NOAPS/Truck: ещё объект `chase`) |
 | `GET` | `/api/series/{id}/stats` | Статистика серии |
 | `GET` | `/api/series/{id}/headtohead` | H2H-сравнения пилотов |
 | `GET` | `/api/series/f1/history` | История F1 (1950–2026) |
@@ -256,7 +274,7 @@ Compose запускает два сервиса:
 | `GET` | `/api/drivers` | Список пилотов для поиска (имя, slug) |
 | `GET` | `/api/driver-profile-redirects` | Редиректы slug → канонический профиль |
 | `GET` | `/api/drivers/primary-context` | Основной контекст пилота по сезону (`?season=`, по умолчанию 2026) |
-| `GET` | `/api/driver/{slug}` | Профиль пилота + результаты сезона |
+| `GET` | `/api/driver/{slug}` | Профиль пилота: `season_results` / `career_results`, `team_history`, `achievements`, `titles`; UI-вкладки Results / Teams / Achievements / Titles (`#teams` и т.д.) |
 | `GET` | `/api/driver-thumb/{slug}` | Миниатюра фото пилота (PNG) |
 | `GET` | `/api/flag/{iso2}` | Флаг страны (PNG, ISO 3166-1 alpha-2, напр. `gb`) |
 | `GET` | `/api/team-logo/{slug}` | Логотип команды (PNG или SVG-fallback) |
@@ -280,9 +298,9 @@ Compose запускает два сервиса:
 
 `/`, `/schedule`, `/live`, `/feedback`, `/search`, `/series/*`, `/season/*`, `/track/*`, `/driver/*`, `/team/*`, `/crew-chief/*`
 
-Отдельно: `GET /event/*` — тоже `index.html` (legacy-URL этапов).
+Отдельно: `GET /event/*` — тоже `index.html` (legacy-URL этапов). Поиск в шапке открывается по `/` или Ctrl/Cmd+K.
 
-Редирект: `/series/f1` → `/season/f1-2026` (текущий сезон, `config.CurrentSeason`). История чемпионатов — `/series/f1/history`, API — `/api/series/f1/history`.
+Редирект: `/series/f1` → `/season/f1-2026` (текущий сезон, `config.CurrentSeason`). Live F1-сезоны: `/season/f1-2024`, `/season/f1-2025`, `/season/f1-2026`. История чемпионов — `/series/f1/history`, API — `/api/series/f1/history`. При пустом `data/teams/f1_20xx.json` страница Teams собирается из `entry_list` этапов.
 
 ## Архитектура
 
@@ -366,9 +384,11 @@ Live-данные обновляются из внешних API фоновым 
 | ELMS | `BuildElmsStandingsFromEvents` | `classes[]` |
 | WEC | `BuildWecStandingsFromEvents` | `classes[]` (Hypercar, LMGT3) |
 | GTWCE Endurance & Sprint | `BuildGtwceStandingsFromEvents` | `classes[]` |
-| Остальные 17 серий | `BuildStandingsFromEvents` | `rows[]` (+ `ineligible[]` у stock-car) |
+| Остальные 17 серий | `BuildStandingsFromEvents` | `rows[]` (+ `ineligible[]` у stock-car). **Super GT:** API flat; UI серии режет на GT500 / GT300. Поул в Stats = Q2 P1 класса. |
 
 **Что править в данных:** результаты и очки в `data/events/.../tables.*` (гонка, стейджи, квалификация). Для stock-car / IndyCar при добавлении раунда в календарь — обновить коды в `data/standings/{series}.json` (`race_order`, при необходимости `event_names`).
+
+**The Chase** (NASCAR Cup, NOAPS, Truck): после заполнения финала регулярки (Cup/NOAPS — Daytona, Truck — Loudon) `BuildStandingsFromEvents` сидит топ поля по очкам (2100 / 2075 / 2065 …). Вылетов и playoff points нет. Не править очки Chase в `data/standings/`. Ответ API: объект `chase`, на строках `chase_status`. Подробности — `data/SERIES_TEMPLATES.md` § «The Chase».
 
 **Файлы `data/standings/` в репозитории:**
 
@@ -420,7 +440,10 @@ Live-данные обновляются из внешних API фоновым 
 | `make dev` | Запуск в dev-режиме (`go run ./cmd/server`) |
 | `make test` | Тесты с `-race` (с fallback) |
 | `make lint` | golangci-lint (с fallback на `go vet`) |
-| `make ci` | `test` + `lint` |
+| `make js-test` | `node scripts/js-test.mjs` |
+| `make check-data` | `node scripts/check-data.mjs` |
+| `make format-data` | `node scripts/format-compact-json.mjs data` (compact JSON) |
+| `make ci` | `test` + `lint` + `js-test` + `check-data` + data audits (как локальный аналог CI) |
 | `make docker` | Сборка образа + запуск контейнера |
 
 ## Hot Reload (Air)
@@ -437,17 +460,42 @@ air
 
 Air отслеживает `.go`-файлы, пересобирает бинарник во `./tmp/server.exe` и перезапускает при изменениях.
 
+Для быстрых рестартов без полного SQLite-reimport:
+
+```bash
+# .env / shell
+TGA_BOOTSTRAP=incremental   # skip, если JSON не менялся с прошлого старта
+# или
+TGA_BOOTSTRAP=skip          # всегда без bootstrap (нужна уже заполненная БД)
+```
+
+### Multi-race weekends (карточки главной)
+
+После double-header / multi-race уик-энда:
+
+1. Данные: либо `tables.race.sessions[]` в одном файле (Supercars, F4, F2…), либо отдельные `event_id` + merge (`IndyCar` Milwaukee, Super Formula Fuji Oct) через `web/lib/weekend-card-merge.js`.
+2. Last Results ждёт **последнюю** гонку блока, потом одна карточка с Race 1 / Race 2 / … и диапазоном дат.
+3. Окно «7 дней» считается от **финала** уик-энда (суббота не выпадает раньше воскресенья).
+4. Пока этап в LIVE (Next Race) — **не** дублировать в Last Results.
+5. После правок `tables.race.sessions[]`: `node scripts/build-multi-race-schedule-sessions.mjs`.
+6. Перед коммитом event JSON: `make format-data` (после крупных вставок), затем `make check-data` (лучше `make ci`).
+
+Подробности: `data/SERIES_TEMPLATES.md` § «Даты на карточках».
+
 ## CI/CD
 
 GitHub Actions (`.github/workflows/ci.yml`) запускаются на push/PR в `main`/`master`:
 
-- **test** — `go test ./... -count=1 -v` и `go vet ./...`
-- **lint** — `golangci-lint` (govet, staticcheck, gosimple, ineffassign, gosec, misspell, errcheck, revive; см. `.golangci.yml`)
+- **test** — `go test ./...`, `node scripts/js-test.mjs`, data audits (`audit-event-render`, stock-car, caution, innerHTML), `node scripts/check-data.mjs`, `go vet`
+- **lint** — `golangci-lint` (см. `.golangci.yml`)
+- **bench** — standings benchmarks (`continue-on-error`)
 
-Локальная сборка и Docker используют **Go 1.26** (`go.mod`, `Dockerfile`).
+Локально перед коммитом: **`make ci`** (включает также `fix-driver-slug-aliases.mjs --check`).
 
-Интеграционные API-тесты (happy-path/404/500) находятся в `cmd/server/integration_api_test.go` и запускаются вместе с `go test ./...`.
-Базовые результаты нагрузочных тестов зафиксированы в `docs/PERFORMANCE.md`.
+Сборка и Docker: **Go 1.26** (`go.mod` / toolchain **1.26.7**, `Dockerfile`).
+
+Интеграционные API-тесты — в `cmd/server/integration_api_test.go` (часть `go test ./...`).
+Нагрузка — `docs/PERFORMANCE.md`. Чеклист релиза — `docs/RELEASE_CHECKLIST.md`.
 
 ## Лицензия
 

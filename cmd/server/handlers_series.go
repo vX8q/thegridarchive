@@ -132,6 +132,15 @@ func handleSeries(w http.ResponseWriter, r *http.Request, dataDir string, st sto
 }
 
 func handleSeriesTeams(w http.ResponseWriter, _ *http.Request, dataDir, dataSeriesID, season string) {
+	if season == "" {
+		season = config.CurrentSeason
+	}
+	cacheKey := "teams/" + strings.ToLower(dataSeriesID) + "/" + season
+	sourceMtime := schedulefile.TeamsDataMaxMtime(dataDir, dataSeriesID, season)
+	if tryWriteSeriesJSONCache(w, cacheKey, sourceMtime) {
+		return
+	}
+
 	data, err := schedulefile.LoadTeamsForSeason(dataDir, dataSeriesID, season)
 	if err != nil {
 		slog.Error("load teams failed",
@@ -150,7 +159,7 @@ func handleSeriesTeams(w http.ResponseWriter, _ *http.Request, dataDir, dataSeri
 		teamsPath := filepath.Join(dataDir, "teams", strings.ToLower(dataSeriesID)+".json")
 		slog.Info("IMSA teams empty", "path", teamsPath, "data_dir", dataDir)
 	}
-	_ = json.NewEncoder(w).Encode(data)
+	writeSeriesJSONCached(w, cacheKey, sourceMtime, data)
 }
 
 func handleSeriesStandings(w http.ResponseWriter, _ *http.Request, dataDir, dataSeriesID string, season string) {
@@ -433,4 +442,3 @@ func handleSeriesMeta(w http.ResponseWriter, r *http.Request, seriesID, dataSeri
 	}
 	_ = json.NewEncoder(w).Encode(out)
 }
-

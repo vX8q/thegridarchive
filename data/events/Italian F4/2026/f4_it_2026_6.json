@@ -1,0 +1,96 @@
+{
+  "event_id": "F4_IT_2026_6",
+  "series": "Italian F4 Championship",
+  "race": "Misano",
+  "date": "18–20 September 2026",
+  "start_date": "2026-09-18",
+  "end_date": "2026-09-20",
+  "track": "Misano World Circuit Marco Simoncelli",
+  "location": "Misano Adriatico, Emilia-Romagna, Italy",
+  "entry_list": [
+    {"number":"1","driver":"Christian Costoya","team":"Prema Racing","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"christian-costoya"},
+    {"number":"3","driver":"Aleksander Ruta","team":"Van Amersfoort Racing","manufacturer":"","rounds":"1–4","driver_slug":"aleksander-ruta"},
+    {"number":"4","driver":"Roman Kamyab","team":"Prema Racing","manufacturer":"","status":"R","rounds":"2–4","driver_slug":"roman-kamyab"},
+    {"number":"6","driver":"Oscar Repetto","team":"PHM Racing","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"oscar-repetto"},
+    {"number":"7","driver":"Luka Sammalisto","team":"US Racing","manufacturer":"","rounds":"1–4","driver_slug":"luka-sammalisto"},
+    {"number":"9","driver":"Edu Robinson","team":"US Racing","manufacturer":"","rounds":"1–4","driver_slug":"edu-robinson"},
+    {"number":"10","driver":"Alp Aksoy","team":"Prema Racing","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"alp-aksoy"},
+    {"number":"13","driver":"Noah Killion","team":"US Racing","manufacturer":"","rounds":"1–4","driver_slug":"noah-killion"},
+    {"number":"16","driver":"Bernardo Bernoldi","team":"Trident Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"bernardo-bernoldi"},
+    {"number":"17","driver":"Oleksandr Savinkov","team":"US Racing","manufacturer":"","rounds":"1–4","driver_slug":"oleksandr-savinkov"},
+    {"number":"19","driver":"Niccolo Maccagnani","team":"Prema Racing","manufacturer":"","rounds":"1–4","driver_slug":"niccolo-maccagnani"},
+    {"number":"20","driver":"Teo Borenstein","team":"Jenzer Motorsport","manufacturer":"","rounds":"4","driver_slug":"teo-borenstein"},
+    {"number":"21","driver":"Levi Arn","team":"Jenzer Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"levi-arn"},
+    {"number":"22","driver":"Elia Weiss","team":"Jenzer Motorsport","manufacturer":"","rounds":"1–4","driver_slug":"elia-weiss"},
+    {"number":"24","driver":"Nicolas Cortes","team":"Jenzer Motorsport","manufacturer":"","rounds":"1–4","driver_slug":"nicolas-cortes"},
+    {"number":"26","driver":"Bader Al Sulaiti","team":"Jenzer Motorsport","manufacturer":"","rounds":"1–4","driver_slug":"bader-al-sulaiti"},
+    {"number":"27","driver":"Oleksandr Bondarev","team":"Prema Racing","manufacturer":"","rounds":"1–4","driver_slug":"oleksandr-bondarev"},
+    {"number":"28","driver":"Iacopo Martinese","team":"PHM Racing","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"iacopo-martinese"},
+    {"number":"29","driver":"Ludovico Busso","team":"US Racing","manufacturer":"","rounds":"1–4","driver_slug":"ludovico-busso"},
+    {"number":"30","driver":"Andy Consani","team":"R-ace GP","manufacturer":"","rounds":"1–4","driver_slug":"andy-consani"},
+    {"number":"33","driver":"Tamas Gender","team":"R-ace GP","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"tamas-gender"},
+    {"number":"34","driver":"Kenzo Craigie","team":"R-ace GP","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"kenzo-craigie"},
+    {"number":"35","driver":"Payton Westcott","team":"R-ace GP","manufacturer":"","status":"W","rounds":"1, 3–4","driver_slug":"payton-westcott"},
+    {"number":"36","driver":"Simon Rechenmacher","team":"Cram Motorsport","manufacturer":"","status":"R","rounds":"3–4","driver_slug":"simon-rechenmacher"},
+    {"number":"38","driver":"Rafaela Ferreira","team":"Cram Motorsport","manufacturer":"","status":"W","rounds":"1, 3–4","driver_slug":"rafaela-ferreira"},
+    {"number":"41","driver":"Knud Nielsen","team":"Real Racing","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"knud-nielsen"},
+    {"number":"42","driver":"Emily Cotty","team":"R-ace GP","manufacturer":"","status":"W","rounds":"1–4","driver_slug":"emily-cotty"},
+    {"number":"43","driver":"Zoe Florescu","team":"Real Racing","manufacturer":"","status":"W","rounds":"4","driver_slug":"zoe-florescu"},
+    {"number":"46","driver":"Ary Bansal","team":"US Racing","manufacturer":"","rounds":"1–4","driver_slug":"ary-bansal"},
+    {"number":"47","driver":"Roland Kuklane","team":"PHM Racing","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"roland-kuklane"},
+    {"number":"50","driver":"Florentin Hattemer","team":"Trident Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"florentin-hattemer"},
+    {"number":"51","driver":"Augustus Toniolo","team":"Trident Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"augustus-toniolo"},
+    {"number":"52","driver":"Joaquin Rubino","team":"Scuderia Buell","manufacturer":"","rounds":"4","driver_slug":"joaquin-rubino"},
+    {"number":"53","driver":"Pedro Lima","team":"Van Amersfoort Racing","manufacturer":"","rounds":"1–4","driver_slug":"pedro-lima"},
+    {"number":"54","driver":"Federico Diaz","team":"Alpha 54 Racing","manufacturer":"","rounds":"1–4","driver_slug":"federico-diaz"},
+    {"number":"56","driver":"Kirill Kutskov","team":"Alpha 54 Racing","manufacturer":"","rounds":"4","driver_slug":"kirill-kutskov"},
+    {"number":"60","driver":"Emma Felbermayr","team":"PHM Racing","manufacturer":"","status":"W","rounds":"1, 3–4","driver_slug":"emma-felbermayr"},
+    {"number":"62","driver":"Arjen Kraling","team":"US Racing","manufacturer":"","rounds":"1–4","driver_slug":"arjen-kraling"},
+    {"number":"64","driver":"Ginevra Panzeri","team":"PA Racing","manufacturer":"","status":"W","rounds":"1–2, 4","driver_slug":"ginevra-panzeri"},
+    {"number":"67","driver":"Dominik Simek","team":"Trident Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"dominik-simek"},
+    {"number":"69","driver":"Kingsley Zheng","team":"Prema Racing","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"kingsley-zheng"},
+    {"number":"73","driver":"Lyuboslav Ruykov","team":"Trident Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"lyuboslav-ruykov"},
+    {"number":"81","driver":"Alexander Chartier","team":"PHM Racing","manufacturer":"","status":"R","rounds":"1, 3–4","driver_slug":"alexander-chartier"},
+    {"number":"83","driver":"David Walther","team":"Maffi Racing","manufacturer":"","rounds":"1–4","driver_slug":"david-walther"},
+    {"number":"84","driver":"Andreas Lo Bue","team":"Maffi Racing","manufacturer":"","rounds":"4","driver_slug":"andreas-lo-bue"},
+    {"number":"86","driver":"Igor Polak","team":"Maffi Racing","manufacturer":"","status":"R","rounds":"1–2, 4","driver_slug":"igor-polak"},
+    {"number":"87","driver":"Thomas Bearman","team":"Van Amersfoort Racing","manufacturer":"","rounds":"1–4","driver_slug":"thomas-bearman"},
+    {"number":"88","driver":"Vittorio Orsini","team":"AKM Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"vittorio-orsini"},
+    {"number":"98","driver":"David Cosma Cristofor","team":"Prema Racing","manufacturer":"","rounds":"1–4","driver_slug":"david-cosma-cristofor"},
+    {"number":"99","driver":"Fabricio Fogaca","team":"AKM Motorsport","manufacturer":"","status":"R","rounds":"1–4","driver_slug":"fabricio-fogaca"}
+  ],
+  "tables": {
+    "practice": {"headers":["Pos","No.","Driver","Team","Laps","Time","Gap","Int","KPH"],"rows":[]},
+    "qualifying": {"headers":["Pos","No.","Driver","Team","Time","Gap","Int","KPH"],"rows":[]},
+    "race": {
+      "sessions": [
+        {
+          "title": "Race 1 (Gr.B–Gr.C)",
+          "headers": ["Fin","ST","No.","Driver","Team","Laps","Gap","Best lap","Pts"],
+          "meta": {"Date":"19 Sep 2026","Start":"11:15 AM","Session":"Race 1","time_msk":"12:15"},
+          "rows": []
+        },
+        {
+          "title": "Race 2 (Gr.A–Gr.B)",
+          "headers": ["Fin","ST","No.","Driver","Team","Laps","Gap","Best lap","Pts"],
+          "meta": {"Date":"19 Sep 2026","Start":"5:05 PM","Session":"Race 2","time_msk":"18:05"},
+          "rows": []
+        },
+        {
+          "title": "Race 3 (Gr.A–Gr.C)",
+          "headers": ["Fin","ST","No.","Driver","Team","Laps","Gap","Best lap","Pts"],
+          "meta": {"Date":"20 Sep 2026","Start":"10:10 AM","Session":"Race 3","time_msk":"11:10"},
+          "rows": []
+        },
+        {
+          "title": "Final Race",
+          "headers": ["Fin","ST","No.","Driver","Team","Laps","Gap","Best lap","Pts"],
+          "meta": {"Date":"20 Sep 2026","Start":"4:20 PM","Session":"Final","time_msk":"17:20"},
+          "rows": []
+        }
+      ]
+    }
+  },
+  "event_preview": "Misano World Circuit Marco Simoncelli is a 4.226 km (2.626 mi) clockwise 16-corner road course on the Adriatic Riviera in Misano Adriatico, rebuilt and reversed in direction during a 2005-2007 reconstruction. Round 6 of the 2026 Italian Formula 4 Championship, held 18-20 September, is the series' second visit to Misano this season and uses the four-race format of three qualifying heats plus a Final restricted to the top 36. Fifty cars are entered.\n\nLuka Sammalisto arrives as championship leader after Imola, where he won Race 2 and the Final. Edu Robinson took Race 1 for US Racing and Kenzo Craigie won Race 3 for R-ace GP, underlining how quickly a four-race weekend can reshuffle the order even when one driver owns the title fight. Prema Racing's Alp Aksoy and David Cosma Cristofor remain the main threats on a circuit that opened the season in May and rewards clean exits onto the short straights.\n\nConfirmed official all-time Italian F4 single-lap records at Misano were not listed in pre-event materials ahead of this round.",
+  "event_preview_ru": "Misano World Circuit Marco Simoncelli — 16-поворотная трасса длиной 4,226 км (2,626 мили) по часовой стрелке на Адриатической ривьере в Misano Adriatico; во время реконструкции 2005–2007 годов трасса была перестроена и развёрнута в обратном направлении. Шестой этап Italian Formula 4 Championship 2026, 18–20 сентября, — второй визит серии в Misano в этом сезоне в формате четырёх гонок: три квалификационных хита и Final для лучших 36. Заявлено 50 машин.\n\nLuka Sammalisto приезжает лидером чемпионата после Imola, где выиграл Race 2 и Final. Edu Robinson взял Race 1 за US Racing, Kenzo Craigie выиграл Race 3 за R-ace GP — это показывает, как быстро уик-энд из четырёх гонок может переписать порядок, даже когда один пилот держит борьбу за титул. Alp Aksoy и David Cosma Cristofor из Prema Racing остаются главными угрозами на трассе, открывавшей сезон в мае, где решают чистые выходы на короткие прямые.\n\nПодтверждённые официальные однокруговые рекорды Italian F4 в Misano не были указаны в материалах перед этим этапом."
+}

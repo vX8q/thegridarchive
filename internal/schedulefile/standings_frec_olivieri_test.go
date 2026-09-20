@@ -1,16 +1,12 @@
 package schedulefile
 
 import (
-	"path/filepath"
 	"strings"
 	"testing"
 )
 
 func TestBuildStandingsFromEvents_FREC_OlivieriAfterHungaroring(t *testing.T) {
-	dataDir, err := filepath.Abs(filepath.Join("..", "..", "data"))
-	if err != nil {
-		t.Fatalf("abs data dir: %v", err)
-	}
+	dataDir := standingsDataDirUpToRound(t, "FREC", "2026", 6)
 	data, err := BuildStandingsFromEvents(dataDir, "FREC", "2026")
 	if err != nil {
 		t.Fatalf("BuildStandingsFromEvents: %v", err)
@@ -36,6 +32,7 @@ func TestBuildStandingsFromEvents_FREC_OlivieriAfterHungaroring(t *testing.T) {
 	if olivieri.Races["R5-2"] != "2" {
 		t.Errorf("HUN R2 position: got %q want 2", olivieri.Races["R5-2"])
 	}
+	// Official total after Paul Ricard (round 6).
 	if olivieri.Points != "152" {
 		t.Errorf("total points: got %q want 152", olivieri.Points)
 	}

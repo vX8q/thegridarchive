@@ -19,9 +19,7 @@ function shouldSkip(raw) {
   const l = t.toLowerCase();
   if (l === "tba" || l === "tbc" || l === "tbd") return true;
   // Single-token surnames / artifacts — do not create profiles from table scraps.
-  if (!/\s/.test(t) && t.length < 18) {
-    if (l === "jr" || l === "jr." || l === "sr" || l === "sr.") return true;
-  }
+  if (!/\s/.test(t)) return true;
   return (
     l === "driver" ||
     l === "drivers" ||

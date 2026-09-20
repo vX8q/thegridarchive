@@ -89,7 +89,7 @@ test('mergeLastResultsWeekendCards merges IndyCar Milwaukee double-header', () =
         series_id: 'INDYCAR',
         circuit_name: 'Milwaukee Mile',
         location: 'West Allis, Wisconsin, USA',
-        name: 'Snap-on Makers and Fixers 250',
+        name: 'Snap-on IndyCar Weekend',
       },
       rangeStart: '2026-08-29',
       rangeEnd: '2026-08-29',
@@ -102,7 +102,7 @@ test('mergeLastResultsWeekendCards merges IndyCar Milwaukee double-header', () =
         series_id: 'INDYCAR',
         circuit_name: 'Milwaukee Mile',
         location: 'West Allis, Wisconsin, USA',
-        name: 'Snap-on Milwaukee Mile 250',
+        name: 'Snap-on IndyCar Weekend',
       },
       rangeStart: '2026-08-30',
       rangeEnd: '2026-08-30',
@@ -115,7 +115,8 @@ test('mergeLastResultsWeekendCards merges IndyCar Milwaukee double-header', () =
   assert.strictEqual(out[0].rangeStart, '2026-08-29');
   assert.strictEqual(out[0].rangeEnd, '2026-08-30');
   assert.strictEqual(out[0].winners.length, 2);
-  assert.strictEqual(out[0].event.name, 'Milwaukee Mile');
+  assert.strictEqual(out[0].event.name, 'Snap-on IndyCar Weekend');
+  assert.strictEqual((out[0].event._weekendEventIds || []).join(','), 'INDYCAR_2026_16,INDYCAR_2026_17');
 });
 
 test('buildGroupedWeekendLastEventById points early Supercars races at weekend finale', () => {
@@ -279,6 +280,81 @@ test('mergeNextRaceWeekendEntries merges consecutive Supercars days', () => {
   assert.strictEqual(out.length, 1);
   assert.strictEqual(out[0].event.start_date, '2026-03-06');
   assert.strictEqual(out[0].event.end_date, '2026-03-07');
+});
+
+test('mergeLastResultsWeekendCards keeps IndyCar same-driver Race 1 and Race 2', () => {
+  const cards = [
+    {
+      event: {
+        id: 'INDYCAR_2026_16',
+        series_id: 'INDYCAR',
+        circuit_name: 'Milwaukee Mile',
+        location: 'West Allis, Wisconsin, USA',
+        name: 'Snap-on IndyCar Weekend',
+      },
+      rangeStart: '2026-08-29',
+      rangeEnd: '2026-08-29',
+      dateStr: '2026-08-29',
+      winners: [{ name: "Pato O'Ward", car: '5', label: '' }],
+    },
+    {
+      event: {
+        id: 'INDYCAR_2026_17',
+        series_id: 'INDYCAR',
+        circuit_name: 'Milwaukee Mile',
+        location: 'West Allis, Wisconsin, USA',
+        name: 'Snap-on IndyCar Weekend',
+      },
+      rangeStart: '2026-08-30',
+      rangeEnd: '2026-08-30',
+      dateStr: '2026-08-30',
+      winners: [{ name: "Pato O'Ward", car: '5', label: '' }],
+    },
+  ];
+  const out = TGA.mergeLastResultsWeekendCards(cards, 'INDYCAR');
+  assert.strictEqual(out.length, 1);
+  assert.strictEqual(out[0].winners.length, 2);
+  assert.strictEqual(out[0].winners[0].label, 'Race 1');
+  assert.strictEqual(out[0].winners[1].label, 'Race 2');
+  assert.strictEqual(out[0].rangeStart, '2026-08-29');
+  assert.strictEqual(out[0].rangeEnd, '2026-08-30');
+});
+
+test('collapseNextRaceWeekends merges IndyCar Milwaukee into one card', () => {
+  const entries = [
+    {
+      event: {
+        id: 'INDYCAR_2026_16',
+        series_id: 'INDYCAR',
+        circuit_name: 'Milwaukee Mile',
+        location: 'West Allis, Wisconsin, USA',
+        name: 'Snap-on IndyCar Weekend',
+        start_date: '2026-08-29',
+        end_date: '2026-08-29',
+      },
+      date: new Date('2026-08-29T12:00:00'),
+      endTs: 1,
+    },
+    {
+      event: {
+        id: 'INDYCAR_2026_17',
+        series_id: 'INDYCAR',
+        circuit_name: 'Milwaukee Mile',
+        location: 'West Allis, Wisconsin, USA',
+        name: 'Snap-on IndyCar Weekend',
+        start_date: '2026-08-30',
+        end_date: '2026-08-30',
+      },
+      date: new Date('2026-08-30T12:00:00'),
+      endTs: 2,
+    },
+  ];
+  const out = TGA.collapseNextRaceWeekends(entries, ['INDYCAR']);
+  assert.strictEqual(out.length, 1);
+  assert.strictEqual(out[0].event.name, 'Snap-on IndyCar Weekend');
+  assert.strictEqual(out[0].event.start_date, '2026-08-29');
+  assert.strictEqual(out[0].event.end_date, '2026-08-30');
+  assert.strictEqual((out[0].event._weekendEventIds || []).join(','), 'INDYCAR_2026_16,INDYCAR_2026_17');
 });
 
 test('collapseLastResultsByEventId collapses F2 sprint+feature to one row', () => {

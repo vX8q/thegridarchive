@@ -241,5 +241,4 @@
 
   window.TGA.renderNASCARLive = startNASCARLiveRefresh;
   window.TGA.stopNASCARLiveRefresh = stopNASCARLiveRefresh;
-  window.TGA.fetchNASCARLiveBoards = fetchBoards;
 })();

@@ -1,25 +1,4 @@
 {
-  "race_order": [
-    "DAY",
-    "PHO",
-    "KAN",
-    "TAL",
-    "GLN",
-    "TOL",
-    "MCH",
-    "POC",
-    "BER",
-    "ELK",
-    "CHI",
-    "LRP",
-    "IRP",
-    "IOW",
-    "ISF",
-    "MAD",
-    "DSF",
-    "SLM",
-    "BRI",
-    "KAN2"
-  ],
+  "race_order": ["DAY","PHO","KAN","TAL","GLN","TOL","MCH","POC","BER","ELK","CHI","LRP","IRP","IOW","ISF","MAD","DSF","SLM","BRI","KAN2"],
   "rows": []
 }

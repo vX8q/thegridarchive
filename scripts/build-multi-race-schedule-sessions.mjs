@@ -111,6 +111,11 @@ const CURATED_OVERRIDES = {
     { label: 'Race 1', date: '2026-07-18', time_est: '20:30', time_msk: '21:30', kind: '' },
     { label: 'Race 2', date: '2026-07-19', time_est: '14:30', time_msk: '15:30', kind: '' },
   ],
+  /** Magny-Cours: Sat Race 1 21:05, Sun Race 2 15:30 (SRO official timetable). */
+  GTWCE_SPRINT_2026_3: [
+    { label: 'Race 1', date: '2026-08-01', time_est: '21:05', time_msk: '22:05', kind: '' },
+    { label: 'Race 2', date: '2026-08-02', time_est: '15:30', time_msk: '16:30', kind: '' },
+  ],
   /** Zandvoort Sprint Cup: Sat Race 1 14:45, Sun Race 2 14:15 (SRO draft 3). */
   GTWCE_SPRINT_2026_4: [
     { label: 'Race 1', date: '2026-09-19', time_est: '14:45', time_msk: '15:45', kind: '' },
@@ -121,6 +126,86 @@ const CURATED_OVERRIDES = {
     { label: 'Race 1', date: '2026-10-03', time_est: '14:00', time_msk: '15:00', kind: '' },
     { label: 'Race 2', date: '2026-10-04', time_est: '16:00', time_msk: '17:00', kind: '' },
   ],
+  PSC_2026_1: [
+    { label: 'Round 1', date: '2026-06-07', time_est: '11:45', time_msk: '12:45', kind: '' },
+  ],
+  PSC_2026_2: [
+    { label: 'Round 2', date: '2026-06-14', time_est: '10:10', time_msk: '11:10', kind: '' },
+  ],
+  PSC_2026_3: [
+    { label: 'Round 3', date: '2026-06-28', time_est: '11:55', time_msk: '12:55', kind: '' },
+  ],
+  PSC_2026_4: [
+    { label: 'Round 4', date: '2026-07-19', time_est: '11:45', time_msk: '12:45', kind: '' },
+  ],
+  PSC_2026_5: [
+    { label: 'Round 5', date: '2026-07-26', time_est: '10:10', time_msk: '11:10', kind: '' },
+  ],
+  PSC_2026_6: [
+    { label: 'Round 6', date: '2026-08-22', time_est: '18:00', time_msk: '19:00', kind: '' },
+    { label: 'Round 7', date: '2026-08-23', time_est: '11:45', time_msk: '12:45', kind: '' },
+  ],
+  PSC_2026_8: [
+    { label: 'Round 8', date: '2026-09-06', time_est: '11:45', time_msk: '12:45', kind: '' },
+  ],
+  /** Red Bull Ring (fiafrec.com): Sat R1 10:25 / R2 16:40; Sun R3 16:40. */
+  FREC_2026_1: [
+    { label: 'Race 1', date: '2026-04-25', time_est: '10:25', time_msk: '11:25', kind: '' },
+    { label: 'Race 2', date: '2026-04-25', time_est: '16:40', time_msk: '17:40', kind: '' },
+    { label: 'Race 3', date: '2026-04-26', time_est: '16:40', time_msk: '17:40', kind: '' },
+  ],
+  /** Zandvoort 2-race weekend (FIA): Sat R1 16:45; Sun R2 16:45. */
+  FREC_2026_2: [
+    { label: 'Race 1', date: '2026-05-23', time_est: '16:45', time_msk: '17:45', kind: '' },
+    { label: 'Race 2', date: '2026-05-24', time_est: '16:45', time_msk: '17:45', kind: '' },
+  ],
+  /** Spa (FIA / supplementary regs): Sat R1 10:05 / R2 14:16; Sun R3 14:20. */
+  FREC_2026_3: [
+    { label: 'Race 1', date: '2026-05-30', time_est: '10:05', time_msk: '11:05', kind: '' },
+    { label: 'Race 2', date: '2026-05-30', time_est: '14:16', time_msk: '15:16', kind: '' },
+    { label: 'Race 3', date: '2026-05-31', time_est: '14:20', time_msk: '15:20', kind: '' },
+  ],
+  /** Monza (FIA): Sat R1 10:30 / R2 16:30; Sun R3 13:00. */
+  FREC_2026_4: [
+    { label: 'Race 1', date: '2026-06-20', time_est: '10:30', time_msk: '11:30', kind: '' },
+    { label: 'Race 2', date: '2026-06-20', time_est: '16:30', time_msk: '17:30', kind: '' },
+    { label: 'Race 3', date: '2026-06-21', time_est: '13:00', time_msk: '14:00', kind: '' },
+  ],
+  /** Hungaroring 2-race weekend (FIA): Sat R1 18:20; Sun R2 15:55. */
+  FREC_2026_5: [
+    { label: 'Race 1', date: '2026-07-04', time_est: '18:20', time_msk: '19:20', kind: '' },
+    { label: 'Race 2', date: '2026-07-05', time_est: '15:55', time_msk: '16:55', kind: '' },
+  ],
+  /** Paul Ricard 2-race weekend (FIA): Sat R1 13:00; Sun R2 16:25. */
+  FREC_2026_6: [
+    { label: 'Race 1', date: '2026-07-18', time_est: '13:00', time_msk: '14:00', kind: '' },
+    { label: 'Race 2', date: '2026-07-19', time_est: '16:25', time_msk: '17:25', kind: '' },
+  ],
+  /** Imola ACI timetable v3 (25/7/2026): Sat Race 1 10:10, Race 2 16:30; Sun Race 3 16:30. */
+  FREC_2026_7: [
+    { label: 'Race 1', date: '2026-09-05', time_est: '10:10', time_msk: '11:10', kind: '' },
+    { label: 'Race 2', date: '2026-09-05', time_est: '16:30', time_msk: '17:30', kind: '' },
+    { label: 'Race 3', date: '2026-09-06', time_est: '16:30', time_msk: '17:30', kind: '' },
+  ],
+  /** Hockenheim draft 1 (hockenheimring.de): Sat Race 1 13:05; Sun Race 2 16:15 (2-race finale). */
+  FREC_2026_8: [
+    { label: 'Race 1', date: '2026-09-12', time_est: '13:05', time_msk: '14:05', kind: '' },
+    { label: 'Race 2', date: '2026-09-13', time_est: '16:15', time_msk: '17:15', kind: '' },
+  ],
+  /** Imola ACI timetable v3: Sat R1 11:10 / R2 17:30; Sun R3 09:45 / Final 17:30. */
+  F4_IT_2026_5: [
+    { label: 'Race 1', date: '2026-09-05', time_est: '11:10', time_msk: '12:10', kind: '' },
+    { label: 'Race 2', date: '2026-09-05', time_est: '17:30', time_msk: '18:30', kind: '' },
+    { label: 'Race 3', date: '2026-09-06', time_est: '09:45', time_msk: '10:45', kind: '' },
+    { label: 'Final Race', date: '2026-09-06', time_est: '17:30', time_msk: '18:30', kind: '' },
+  ],
+  /** Misano ACI / Feeder Series timetable: Sat R1 11:15 / R2 17:05; Sun R3 10:10 / Final 16:20. */
+  F4_IT_2026_6: [
+    { label: 'Race 1', date: '2026-09-19', time_est: '11:15', time_msk: '12:15', kind: '' },
+    { label: 'Race 2', date: '2026-09-19', time_est: '17:05', time_msk: '18:05', kind: '' },
+    { label: 'Race 3', date: '2026-09-20', time_est: '10:10', time_msk: '11:10', kind: '' },
+    { label: 'Final Race', date: '2026-09-20', time_est: '16:20', time_msk: '17:20', kind: '' },
+  ],
 };
 
 const EVENT_SCAN = [
@@ -129,6 +214,7 @@ const EVENT_SCAN = [
   { prefix: 'FREC_', schedule: 'data/schedules/frec.json', eventsDir: 'data/events/FREC' },
   { prefix: 'F4_IT_', schedule: 'data/schedules/f4_it.json', eventsDir: 'data/events/Italian F4' },
   { prefix: 'SUPER_FORMULA_', schedule: 'data/schedules/super_formula.json', eventsDir: 'data/events/Super Formula' },
+  { prefix: 'PSC_', schedule: 'data/schedules/psc.json', eventsDir: 'data/events/Porsche Supercup' },
 ];
 
 function readJson(rel) {
@@ -352,7 +438,7 @@ for (const { schedule, eventsDir } of EVENT_SCAN) {
     if (!id || map[id] || CURATED_OVERRIDES[id]) continue;
     // Super Formula weekends often span Fri–Sun with a single championship race;
     // Race 1/Race 2 must come from curated overrides or tables.race.sessions — not start≠end.
-    if (id.startsWith('SUPER_FORMULA_')) continue;
+    if (id.startsWith('SUPER_FORMULA_') || id.startsWith('PSC_')) continue;
     const labels = id.startsWith('F2_') || id.startsWith('F3_') ? ['Sprint', 'Feature'] : ['Race 1', 'Race 2'];
     const sessions = twoRaceSessions(ev, labels);
     if (sessions && sessions.length > 1) map[id] = sessions;

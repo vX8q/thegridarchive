@@ -7,381 +7,259 @@
   "end_date": "2026-08-22",
   "track": "New Hampshire Motor Speedway",
   "location": "Loudon, New Hampshire, USA",
+  "laps": "175",
+  "distance": "185.150 mi (297.970 km)",
+  "stage1_laps": "55",
+  "stage2_laps": "55",
+  "stage3_laps": "79",
+  "youtube_id": "dvB2PA4r9zo",
+  "event_preview": "New Hampshire Motor Speedway is a 1.058-mile (1.703 km) D-shaped asphalt oval in Loudon, New Hampshire, opened in 1990 and nicknamed the Magic Mile, with 12 degrees of banking in the turns and 2 degrees on the straights. The EJP 175 is the 18th race of the 2026 NASCAR Craftsman Truck Series season, scheduled for 175 laps (185.15 miles) on Saturday, August 22, as the Truck Series support race on the same weekend as the Cup Series Dollar Tree 301, with stages of 55, 55 and 79 laps. Forty-one trucks are entered for 36 available starting spots.\n\nThe Loudon field mixes series regulars with Cup-level visitors, including John Hunter Nemechek, Christopher Bell and Connor Zilisch in ineligible entries, plus Justin Haley and Colin Braun in Kaulig Racing Rams, while rookies Brenden Queen, Cole Butcher and Mini Tyrrell continue their first full Truck seasons. The flat Magic Mile rewards a balanced truck that can both pass and defend through long green-flag runs late in the regular season.\n\nThe NASCAR Craftsman Truck Series qualifying record at New Hampshire Motor Speedway belongs to Austin Dillon, who set a 28.574-second lap (133.296 mph) on 26 September 2015. The series race record is held by Kyle Busch at 118.707 mph on 24 September 2011.",
+  "event_preview_ru": "New Hampshire Motor Speedway — D-образный асфальтовый овал длиной 1,058 мили (1,703 км) в Loudon, New Hampshire, открытый в 1990 году и прозванный Magic Mile: 12 градусов профиля в поворотах и 2 градуса на прямых. EJP 175 — 18-й этап сезона NASCAR Craftsman Truck Series 2026, планируется на 175 кругов (185,15 мили) в субботу, 22 августа, как гонка поддержки в тот же уик-энд, что и Dollar Tree 301 Кубка, со стейджами 55, 55 и 79 кругов. На 36 мест в поле заявлено 41 грузовик.\n\nПоле в Loudon смешало регулярных пилотов серии с гостями уровня Cup: John Hunter Nemechek, Christopher Bell и Connor Zilisch вне зачёта очков, Justin Haley и Colin Braun на Ram команды Kaulig Racing, а новички Brenden Queen, Cole Butcher и Mini Tyrrell продолжают первый полный сезон в грузовиках. Плоский Magic Mile награждает сбалансированный грузовик, который умеет и обгонять, и защищаться на длинных зелёных отрезках поздно в регулярке.\n\nКвалификационный рекорд NASCAR Craftsman Truck Series на New Hampshire Motor Speedway принадлежит Austin Dillon — 28,574 секунды (133,296 mph) 26 сентября 2015 года. Рекорд гонки серии держит Kyle Busch — 118,707 mph 24 сентября 2011 года.",
+  "race_statistics": {"Average speed":"86.325 mph (138.927 km/h)","Cautions / Laps":"9 for 56","Lead changes":"6","Red flags":"0","Time of race":"2 hours, 18 minutes and 59 seconds","Margin of victory":"0.293 sec"},
   "entry_list": [
-    {
-      "number": "1",
-      "driver": "Gavan Boschele",
-      "team": "Tricon Garage",
-      "manufacturer": "Toyota",
-      "crew_chief": "Jerame Donley",
-      "driver_slug": "gavan-boschele"
-    },
-    {
-      "number": "2",
-      "driver": "Jackson Macenko",
-      "team": "Team Reaume",
-      "manufacturer": "Ford",
-      "crew_chief": "Todd Myers",
-      "driver_slug": "jackson-macenko"
-    },
-    {
-      "number": "5",
-      "driver": "Harrison Burton (i)",
-      "team": "Tricon Garage",
-      "manufacturer": "Toyota",
-      "crew_chief": "Seth Smith",
-      "points_eligible": false,
-      "driver_slug": "harrison-burton"
-    },
-    {
-      "number": "7",
-      "driver": "Connor Mosack",
-      "team": "Spire Motorsports",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Brian Pattie",
-      "driver_slug": "connor-mosack"
-    },
-    {
-      "number": "9",
-      "driver": "Grant Enfinger",
-      "team": "CR7 Motorsports",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Derek Smith",
-      "driver_slug": "grant-enfinger"
-    },
-    {
-      "number": "10",
-      "driver": "Corey LaJoie",
-      "team": "Kaulig Racing",
-      "manufacturer": "Ram",
-      "crew_chief": "Alex Yontz",
-      "driver_slug": "corey-lajoie"
-    },
-    {
-      "number": "11",
-      "driver": "Kaden Honeycutt",
-      "team": "Tricon Garage",
-      "manufacturer": "Toyota",
-      "crew_chief": "Scott Zipadelli",
-      "driver_slug": "kaden-honeycutt"
-    },
-    {
-      "number": "12",
-      "driver": "Brenden Queen (R)",
-      "team": "Kaulig Racing",
-      "manufacturer": "Ram",
-      "crew_chief": "Eddie Pardue",
-      "driver_slug": "brenden-queen"
-    },
-    {
-      "number": "13",
-      "driver": "Cole Butcher (R)",
-      "team": "ThorSport Racing",
-      "manufacturer": "Ford",
-      "crew_chief": "Richard Lushes",
-      "driver_slug": "cole-butcher"
-    },
-    {
-      "number": "14",
-      "driver": "Mini Tyrrell (R)",
-      "team": "Kaulig Racing",
-      "manufacturer": "Ram",
-      "crew_chief": "Bruce Cook",
-      "driver_slug": "mini-tyrrell"
-    },
-    {
-      "number": "15",
-      "driver": "Tanner Gray",
-      "team": "Tricon Garage",
-      "manufacturer": "Toyota",
-      "crew_chief": "Jeff Hensley",
-      "driver_slug": "tanner-gray"
-    },
-    {
-      "number": "16",
-      "driver": "Justin Haley",
-      "team": "Kaulig Racing",
-      "manufacturer": "Ram",
-      "crew_chief": "Mike Hillman, Jr.",
-      "driver_slug": "justin-haley"
-    },
-    {
-      "number": "17",
-      "driver": "Gio Ruggiero",
-      "team": "Tricon Garage",
-      "manufacturer": "Toyota",
-      "crew_chief": "Jeff Stankiewicz",
-      "driver_slug": "gio-ruggiero"
-    },
-    {
-      "number": "18",
-      "driver": "Tyler Ankrum",
-      "team": "McAnally–Hilgemann Racing",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Mark Hillman",
-      "driver_slug": "tyler-ankrum"
-    },
-    {
-      "number": "19",
-      "driver": "Daniel Hemric",
-      "team": "McAnally–Hilgemann Racing",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Kevin Bellicourt",
-      "driver_slug": "daniel-hemric"
-    },
-    {
-      "number": "22",
-      "driver": "Monty Tipton",
-      "team": "Team Reaume",
-      "manufacturer": "Ford",
-      "crew_chief": "Kevin Johnson",
-      "driver_slug": "monty-tipton"
-    },
-    {
-      "number": "25",
-      "driver": "Conor Daly",
-      "team": "Kaulig Racing",
-      "manufacturer": "Ram",
-      "crew_chief": "Dan Stillman",
-      "driver_slug": "conor-daly"
-    },
-    {
-      "number": "26",
-      "driver": "Dawson Sutton",
-      "team": "Rackley W.A.R.",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Chad Kendrick",
-      "driver_slug": "dawson-sutton"
-    },
-    {
-      "number": "27",
-      "driver": "Toni Breidinger",
-      "team": "Rackley W.A.R.",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Jack Johnston, II",
-      "driver_slug": "toni-breidinger"
-    },
-    {
-      "number": "33",
-      "driver": "Frankie Muniz",
-      "team": "Team Reaume",
-      "manufacturer": "Ford",
-      "crew_chief": "Pedro Lopez",
-      "driver_slug": "frankie-muniz"
-    },
-    {
-      "number": "34",
-      "driver": "Layne Riggs",
-      "team": "Front Row Motorsports",
-      "manufacturer": "Ford",
-      "crew_chief": "Dylan Cappello",
-      "driver_slug": "layne-riggs"
-    },
-    {
-      "number": "38",
-      "driver": "Chandler Smith",
-      "team": "Front Row Motorsports",
-      "manufacturer": "Ford",
-      "crew_chief": "Jon Leonard",
-      "driver_slug": "chandler-smith"
-    },
-    {
-      "number": "42",
-      "driver": "Parker Eatmon",
-      "team": "Niece Motorsports",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Landon Polinski",
-      "driver_slug": "parker-eatmon"
-    },
-    {
-      "number": "44",
-      "driver": "Andres Perez de Lara",
-      "team": "Niece Motorsports",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Wally Rogers",
-      "driver_slug": "andres-perez-de-lara"
-    },
-    {
-      "number": "45",
-      "driver": "Landen Lewis",
-      "team": "Niece Motorsports",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Phil Gould",
-      "driver_slug": "landen-lewis"
-    },
-    {
-      "number": "52",
-      "driver": "Stewart Friesen",
-      "team": "Halmar Friesen Racing",
-      "manufacturer": "Toyota",
-      "crew_chief": "Dustin Dunn",
-      "driver_slug": "stewart-friesen"
-    },
-    {
-      "number": "56",
-      "driver": "Timmy Hill",
-      "team": "Hill Motorsports",
-      "manufacturer": "Toyota",
-      "crew_chief": "Terry Elmore",
-      "driver_slug": "timmy-hill"
-    },
-    {
-      "number": "62",
-      "driver": "Mike Christopher Jr.",
-      "team": "Halmar Friesen Racing",
-      "manufacturer": "Toyota",
-      "crew_chief": "James Villeneuve",
-      "driver_slug": "michael-christopher-jr"
-    },
-    {
-      "number": "69",
-      "driver": "Jonathan Shafer",
-      "team": "MBM Motorsports",
-      "manufacturer": "Ram",
-      "crew_chief": "Jason Miller",
-      "driver_slug": "jonathan-shafer"
-    },
-    {
-      "number": "76",
-      "driver": "Spencer Boyd",
-      "team": "Freedom Racing Enterprises",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Mike Hillman, Sr.",
-      "driver_slug": "spencer-boyd"
-    },
-    {
-      "number": "77",
-      "driver": "Nick Sanchez (i)",
-      "team": "Spire Motorsports",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Chad Walter",
-      "points_eligible": false,
-      "driver_slug": "nick-sanchez"
-    },
-    {
-      "number": "81",
-      "driver": "Kris Wright",
-      "team": "McAnally–Hilgemann Racing",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Darren Fraley",
-      "driver_slug": "kris-wright"
-    },
-    {
-      "number": "88",
-      "driver": "Ty Majeski",
-      "team": "ThorSport Racing",
-      "manufacturer": "Ford",
-      "crew_chief": "Joe Shear Jr.",
-      "driver_slug": "ty-majeski"
-    },
-    {
-      "number": "90",
-      "driver": "Justin Carroll",
-      "team": "TC Motorsports",
-      "manufacturer": "Toyota",
-      "crew_chief": "Terry Carroll",
-      "driver_slug": "justin-carroll"
-    },
-    {
-      "number": "91",
-      "driver": "Christian Eckes",
-      "team": "McAnally–Hilgemann Racing",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "David Elenz",
-      "driver_slug": "christian-eckes"
-    },
-    {
-      "number": "93",
-      "driver": "Cassten Everidge",
-      "team": "Costner Motorsports",
-      "manufacturer": "Chevrolet",
-      "crew_chief": "Derek Kearns",
-      "driver_slug": "cassten-everidge"
-    },
-    {
-      "number": "98",
-      "driver": "Jake Garcia",
-      "team": "ThorSport Racing",
-      "manufacturer": "Ford",
-      "crew_chief": "Joshua Hankish",
-      "driver_slug": "jake-garcia"
-    },
-    {
-      "number": "99",
-      "driver": "Ben Rhodes",
-      "team": "ThorSport Racing",
-      "manufacturer": "Ford",
-      "crew_chief": "Cale Gale",
-      "driver_slug": "ben-rhodes"
-    }
+    {"number":"1","driver":"Gavan Boschele","team":"Tricon Garage","manufacturer":"Toyota","crew_chief":"Jerame Donley","driver_slug":"gavan-boschele"},
+    {"number":"2","driver":"Luke Baldwin","team":"Team Reaume","manufacturer":"Ford","crew_chief":"Todd Myers","driver_slug":"luke-baldwin"},
+    {"number":"4","driver":"Connor Hall","team":"Niece Motorsports","manufacturer":"Chevrolet","crew_chief":"Mike Shiplett","driver_slug":"connor-hall"},
+    {"number":"5","driver":"John Hunter Nemechek (i)","team":"Tricon Garage","manufacturer":"Toyota","crew_chief":"Seth Smith","points_eligible":false,"driver_slug":"john-hunter-nemechek"},
+    {"number":"7","driver":"Connor Mosack","team":"Spire Motorsports","manufacturer":"Chevrolet","crew_chief":"Brian Pattie","driver_slug":"connor-mosack"},
+    {"number":"9","driver":"Grant Enfinger","team":"CR7 Motorsports","manufacturer":"Chevrolet","crew_chief":"Derek Smith","driver_slug":"grant-enfinger"},
+    {"number":"10","driver":"Corey LaJoie","team":"Kaulig Racing","manufacturer":"Ram","crew_chief":"Alex Yontz","driver_slug":"corey-lajoie"},
+    {"number":"11","driver":"Kaden Honeycutt","team":"Tricon Garage","manufacturer":"Toyota","crew_chief":"Scott Zipadelli","driver_slug":"kaden-honeycutt"},
+    {"number":"12","driver":"Brenden Queen (R)","team":"Kaulig Racing","manufacturer":"Ram","crew_chief":"Eddie Pardue Jr.","driver_slug":"brenden-queen"},
+    {"number":"13","driver":"Cole Butcher (R)","team":"ThorSport Racing","manufacturer":"Ford","crew_chief":"Richard Lushes","driver_slug":"cole-butcher"},
+    {"number":"14","driver":"Mini Tyrrell (R)","team":"Kaulig Racing","manufacturer":"Ram","crew_chief":"Lennie Chandler","driver_slug":"mini-tyrrell"},
+    {"number":"15","driver":"Tanner Gray","team":"Tricon Garage","manufacturer":"Toyota","crew_chief":"Jeff Hensley","driver_slug":"tanner-gray"},
+    {"number":"16","driver":"Justin Haley","team":"Kaulig Racing","manufacturer":"Ram","crew_chief":"Mike Hillman, Jr.","driver_slug":"justin-haley"},
+    {"number":"17","driver":"Gio Ruggiero","team":"Tricon Garage","manufacturer":"Toyota","crew_chief":"Jeff Stankiewicz","driver_slug":"gio-ruggiero"},
+    {"number":"18","driver":"Tyler Ankrum","team":"McAnally–Hilgemann Racing","manufacturer":"Chevrolet","crew_chief":"Mark Hillman","driver_slug":"tyler-ankrum"},
+    {"number":"19","driver":"Daniel Hemric","team":"McAnally–Hilgemann Racing","manufacturer":"Chevrolet","crew_chief":"Kevin Bellicourt","driver_slug":"daniel-hemric"},
+    {"number":"20","driver":"Mason Massey","team":"McAnally–Hilgemann Racing","manufacturer":"Chevrolet","crew_chief":"Dewey Townsend, IV","driver_slug":"mason-massey"},
+    {"number":"22","driver":"Patrick Emerling","team":"Team Reaume","manufacturer":"Ford","crew_chief":"Kevin Johnson","driver_slug":"patrick-emerling"},
+    {"number":"25","driver":"Colin Braun","team":"Kaulig Racing","manufacturer":"Ram","crew_chief":"Dan Stillman","driver_slug":"colin-braun"},
+    {"number":"26","driver":"Toni Breidinger","team":"Rackley W.A.R.","manufacturer":"Chevrolet","crew_chief":"Jack Johnston, II","driver_slug":"toni-breidinger"},
+    {"number":"27","driver":"Dawson Sutton","team":"Rackley W.A.R.","manufacturer":"Chevrolet","crew_chief":"Chad Kendrick","driver_slug":"dawson-sutton"},
+    {"number":"33","driver":"Frankie Muniz","team":"Team Reaume","manufacturer":"Ford","crew_chief":"Pedro Lopez","driver_slug":"frankie-muniz"},
+    {"number":"34","driver":"Layne Riggs","team":"Front Row Motorsports","manufacturer":"Ford","crew_chief":"Dylan Cappello","driver_slug":"layne-riggs"},
+    {"number":"38","driver":"Chandler Smith","team":"Front Row Motorsports","manufacturer":"Ford","crew_chief":"Jon Leonard","driver_slug":"chandler-smith"},
+    {"number":"42","driver":"Parker Eatmon","team":"Niece Motorsports","manufacturer":"Chevrolet","crew_chief":"Landon Polinski","driver_slug":"parker-eatmon"},
+    {"number":"44","driver":"Andres Perez de Lara","team":"Niece Motorsports","manufacturer":"Chevrolet","crew_chief":"Wally Rogers","driver_slug":"andres-perez-de-lara"},
+    {"number":"45","driver":"Landen Lewis","team":"Niece Motorsports","manufacturer":"Chevrolet","crew_chief":"Phil Gould","driver_slug":"landen-lewis"},
+    {"number":"52","driver":"Stewart Friesen","team":"Halmar Friesen Racing","manufacturer":"Toyota","crew_chief":"Dustin Dunn","driver_slug":"stewart-friesen"},
+    {"number":"56","driver":"Timmy Hill","team":"Hill Motorsports","manufacturer":"Toyota","crew_chief":"Terry Elmore","driver_slug":"timmy-hill"},
+    {"number":"62","driver":"Christopher Bell (i)","team":"Halmar Friesen Racing","manufacturer":"Toyota","crew_chief":"William Hartman","points_eligible":false,"driver_slug":"christopher-bell"},
+    {"number":"69","driver":"Derek White (i)","team":"MBM Motorsports","manufacturer":"Ram","crew_chief":"Jason Miller","points_eligible":false,"driver_slug":"derek-white"},
+    {"number":"71","driver":"Connor Zilisch (i)","team":"Spire Motorsports","manufacturer":"Chevrolet","crew_chief":"Kevin Manion","points_eligible":false,"driver_slug":"connor-zilisch"},
+    {"number":"72","driver":"Mike Christopher Jr.","team":"Halmar Friesen Racing","manufacturer":"Toyota","crew_chief":"James Villeneuve","driver_slug":"michael-christopher-jr"},
+    {"number":"76","driver":"Spencer Boyd","team":"Freedom Racing Enterprises","manufacturer":"Chevrolet","crew_chief":"Mike Hillman, Sr.","driver_slug":"spencer-boyd"},
+    {"number":"77","driver":"Tristan McKee","team":"Spire Motorsports","manufacturer":"Chevrolet","crew_chief":"Chad Walter","driver_slug":"tristan-mckee"},
+    {"number":"81","driver":"Kris Wright","team":"McAnally–Hilgemann Racing","manufacturer":"Chevrolet","crew_chief":"Darren Fraley","driver_slug":"kris-wright"},
+    {"number":"88","driver":"Ty Majeski","team":"ThorSport Racing","manufacturer":"Ford","crew_chief":"Joe Shear Jr.","driver_slug":"ty-majeski"},
+    {"number":"91","driver":"Christian Eckes","team":"McAnally–Hilgemann Racing","manufacturer":"Chevrolet","crew_chief":"David Elenz","driver_slug":"christian-eckes"},
+    {"number":"93","driver":"D. L. Wilson","team":"Costner Motorsports","manufacturer":"Chevrolet","crew_chief":"Derek Kearns","driver_slug":"d-l-wilson"},
+    {"number":"98","driver":"Jake Garcia","team":"ThorSport Racing","manufacturer":"Ford","crew_chief":"Joshua Hankish","driver_slug":"jake-garcia"},
+    {"number":"99","driver":"Ben Rhodes","team":"ThorSport Racing","manufacturer":"Ford","crew_chief":"Cale Gale","driver_slug":"ben-rhodes"}
   ],
   "tables": {
     "practice": {
-      "headers": [
-        "Pos",
-        "Trk",
-        "Driver",
-        "Team",
-        "Make",
-        "Time",
-        "Speed",
-        "Lap #",
-        "# Laps",
-        "-Fastest",
-        "-Next"
-      ],
-      "rows": []
+      "headers": ["Pos","Trk","Driver","Team","Make","Time","Speed","Lap #","# Laps","-Fastest","-Next"],
+      "rows": [
+        ["1","17","Gio Ruggiero","Tricon Garage","Toyota","29.799","127.816","49","49","---.---","---.---"],
+        ["2","71","Connor Zilisch (i)","Spire Motorsports","Chevrolet","29.806","127.786","48","48","-0.007","-0.007"],
+        ["3","77","Tristan McKee","Spire Motorsports","Chevrolet","29.996","126.977","52","52","-0.197","-0.190"],
+        ["4","72","Mike Christopher Jr.","Halmar Friesen Racing","Toyota","30.018","126.884","50","50","-0.219","-0.022"],
+        ["5","98","Jake Garcia","ThorSport Racing","Ford","30.043","126.778","38","38","-0.244","-0.025"],
+        ["6","19","Daniel Hemric","McAnally–Hilgemann Racing","Chevrolet","30.060","126.707","36","36","-0.261","-0.017"],
+        ["7","52","Stewart Friesen","Halmar Friesen Racing","Toyota","30.086","126.597","49","49","-0.287","-0.026"],
+        ["8","45","Landen Lewis","Niece Motorsports","Chevrolet","30.097","126.551","50","50","-0.298","-0.011"],
+        ["9","1","Gavan Boschele","Tricon Garage","Toyota","30.098","126.547","40","40","-0.299","-0.001"],
+        ["10","38","Chandler Smith","Front Row Motorsports","Ford","30.155","126.307","2","45","-0.356","-0.057"],
+        ["11","9","Grant Enfinger","CR7 Motorsports","Chevrolet","30.178","126.211","36","36","-0.379","-0.023"],
+        ["12","99","Ben Rhodes","ThorSport Racing","Ford","30.188","126.169","27","27","-0.389","-0.010"],
+        ["13","5","John Hunter Nemechek (i)","Tricon Garage","Toyota","30.211","126.073","54","54","-0.412","-0.023"],
+        ["14","91","Christian Eckes","McAnally–Hilgemann Racing","Chevrolet","30.255","125.890","3","42","-0.456","-0.044"],
+        ["15","44","Andres Perez de Lara","Niece Motorsports","Chevrolet","30.278","125.794","40","40","-0.479","-0.023"],
+        ["16","7","Connor Mosack","Spire Motorsports","Chevrolet","30.288","125.753","56","56","-0.489","-0.010"],
+        ["17","11","Kaden Honeycutt","Tricon Garage","Toyota","30.331","125.574","2","56","-0.532","-0.043"],
+        ["18","34","Layne Riggs","Front Row Motorsports","Ford","30.334","125.562","12","41","-0.535","-0.003"],
+        ["19","42","Parker Eatmon","Niece Motorsports","Chevrolet","30.336","125.554","41","41","-0.537","-0.002"],
+        ["20","56","Timmy Hill","Hill Motorsports","Toyota","30.370","125.413","29","29","-0.571","-0.034"],
+        ["21","10","Corey LaJoie","Kaulig Racing","Ram","30.382","125.364","38","38","-0.583","-0.012"],
+        ["22","4","Connor Hall","Niece Motorsports","Chevrolet","30.392","125.322","42","42","-0.593","-0.010"],
+        ["23","2","Luke Baldwin","Team Reaume","Ford","30.404","125.273","30","30","-0.605","-0.012"],
+        ["24","15","Tanner Gray","Tricon Garage","Toyota","30.404","125.273","46","46","-0.605","-0.000"],
+        ["25","88","Ty Majeski","ThorSport Racing","Ford","30.418","125.215","9","27","-0.619","-0.014"],
+        ["26","13","Cole Butcher (R)","ThorSport Racing","Ford","30.455","125.063","30","30","-0.656","-0.037"],
+        ["27","25","Colin Braun","Kaulig Racing","Ram","30.467","125.014","40","40","-0.668","-0.012"],
+        ["28","12","Brenden Queen (R)","Kaulig Racing","Ram","30.484","124.944","37","37","-0.685","-0.017"],
+        ["29","62","Christopher Bell (i)","Halmar Friesen Racing","Toyota","30.523","124.785","7","54","-0.724","-0.039"],
+        ["30","18","Tyler Ankrum","McAnally–Hilgemann Racing","Chevrolet","30.539","124.719","8","39","-0.740","-0.016"],
+        ["31","14","Mini Tyrrell (R)","Kaulig Racing","Ram","30.660","124.227","2","46","-0.861","-0.121"],
+        ["32","22","Patrick Emerling","Team Reaume","Ford","30.717","123.996","37","37","-0.918","-0.057"],
+        ["33","81","Kris Wright","McAnally–Hilgemann Racing","Chevrolet","30.722","123.976","5","33","-0.923","-0.005"],
+        ["34","16","Justin Haley","Kaulig Racing","Ram","30.726","123.960","9","47","-0.927","-0.004"],
+        ["35","27","Dawson Sutton","Rackley W.A.R.","Chevrolet","30.811","123.618","3","4","-1.012","-0.085"],
+        ["36","20","Mason Massey","McAnally–Hilgemann Racing","Chevrolet","30.832","123.534","16","16","-1.033","-0.021"],
+        ["37","76","Spencer Boyd","Freedom Racing Enterprises","Chevrolet","30.832","123.534","22","24","-1.033","-0.000"],
+        ["38","33","Frankie Muniz","Team Reaume","Ford","31.030","122.746","37","37","-1.231","-0.198"],
+        ["39","26","Toni Breidinger","Rackley W.A.R.","Chevrolet","31.091","122.505","36","36","-1.292","-0.061"],
+        ["40","93","D. L. Wilson","Costner Motorsports","Chevrolet","31.786","119.826","31","31","-1.987","-0.695"],
+        ["41","69","Derek White (i)","MBM Motorsports","Ram","32.255","118.084","21","36","-2.456","-0.469"]
+      ]
     },
     "qualifying": {
-      "headers": [
-        "Pos",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Time",
-        "Speed"
-      ],
-      "rows": []
+      "headers": ["Pos","#","Driver","Team","Make","Time","Speed"],
+      "rows": [
+        ["1","34","Layne Riggs","Front Row Motorsports","Ford","29.346","129.789"],
+        ["2","11","Kaden Honeycutt","Tricon Garage","Toyota","29.569","128.811"],
+        ["3","17","Gio Ruggiero","Tricon Garage","Toyota","29.581","128.758"],
+        ["4","71","Connor Zilisch (i)","Spire Motorsports","Chevrolet","29.606","128.650"],
+        ["5","77","Tristan McKee","Spire Motorsports","Chevrolet","29.631","128.541"],
+        ["6","19","Daniel Hemric","McAnally–Hilgemann Racing","Chevrolet","29.727","128.126"],
+        ["7","1","Gavan Boschele","Tricon Garage","Toyota","29.732","128.104"],
+        ["8","9","Grant Enfinger","CR7 Motorsports","Chevrolet","29.746","128.044"],
+        ["9","98","Jake Garcia","ThorSport Racing","Ford","29.760","127.984"],
+        ["10","99","Ben Rhodes","ThorSport Racing","Ford","29.762","127.975"],
+        ["11","7","Connor Mosack","Spire Motorsports","Chevrolet","29.791","127.851"],
+        ["12","38","Chandler Smith","Front Row Motorsports","Ford","29.815","127.748"],
+        ["13","52","Stewart Friesen","Halmar Friesen Racing","Toyota","29.865","127.534"],
+        ["14","13","Cole Butcher (R)","ThorSport Racing","Ford","29.873","127.500"],
+        ["15","18","Tyler Ankrum","McAnally–Hilgemann Racing","Chevrolet","29.915","127.321"],
+        ["16","88","Ty Majeski","ThorSport Racing","Ford","29.920","127.299"],
+        ["17","62","Christopher Bell (i)","Halmar Friesen Racing","Toyota","29.934","127.240"],
+        ["18","42","Parker Eatmon","Niece Motorsports","Chevrolet","29.949","127.176"],
+        ["19","91","Christian Eckes","McAnally–Hilgemann Racing","Chevrolet","29.962","127.121"],
+        ["20","15","Tanner Gray","Tricon Garage","Toyota","29.972","127.079"],
+        ["21","72","Mike Christopher Jr.","Halmar Friesen Racing","Toyota","30.032","126.825"],
+        ["22","45","Landen Lewis","Niece Motorsports","Chevrolet","30.035","126.812"],
+        ["23","5","John Hunter Nemechek (i)","Tricon Garage","Toyota","30.077","126.635"],
+        ["24","10","Corey LaJoie","Kaulig Racing","Ram","30.132","126.404"],
+        ["25","16","Justin Haley","Kaulig Racing","Ram","30.153","126.316"],
+        ["26","12","Brenden Queen (R)","Kaulig Racing","Ram","30.169","126.249"],
+        ["27","4","Connor Hall","Niece Motorsports","Chevrolet","30.192","126.153"],
+        ["28","81","Kris Wright","McAnally–Hilgemann Racing","Chevrolet","30.213","126.065"],
+        ["29","44","Andres Perez de Lara","Niece Motorsports","Chevrolet","30.227","126.007"],
+        ["30","25","Colin Braun","Kaulig Racing","Ram","30.271","125.823"],
+        ["31","56","Timmy Hill","Hill Motorsports","Toyota","30.284","125.769"],
+        ["Qualified by owner's points","","","","","",""],
+        ["32","22","Patrick Emerling","Team Reaume","Ford","30.363","125.442"],
+        ["33","14","Mini Tyrrell (R)","Kaulig Racing","Ram","30.376","125.388"],
+        ["34","26","Toni Breidinger","Rackley W.A.R.","Chevrolet","30.499","124.883"],
+        ["35","76","Spencer Boyd","Freedom Racing Enterprises","Chevrolet","30.943","123.091"],
+        ["36","33","Frankie Muniz","Team Reaume","Ford","31.068","122.596"],
+        ["Failed to qualify","","","","","",""],
+        ["37","2","Luke Baldwin","Team Reaume","Ford","30.398","125.298"],
+        ["38","20","Mason Massey","McAnally–Hilgemann Racing","Chevrolet","30.444","125.108"],
+        ["39","69","Derek White (i)","MBM Motorsports","Ram","31.505","120.895"],
+        ["40","93","D. L. Wilson","Costner Motorsports","Chevrolet","—","—"],
+        ["41","27","Dawson Sutton","Rackley W.A.R.","Chevrolet","—","—"]
+      ]
+    },
+    "did_not_qualify": {
+      "headers": ["Pos","No.","Driver","Team","Manufacturer","Time","Speed","Pts","Notes"],
+      "rows": [
+        ["37","2","Luke Baldwin","Team Reaume","Ford","30.398","125.298","0",""],
+        ["38","20","Mason Massey","McAnally–Hilgemann Racing","Chevrolet","30.444","125.108","0",""],
+        ["39","69","Derek White (i)","MBM Motorsports","Ram","31.505","120.895","0",""],
+        ["40","93","D. L. Wilson","Costner Motorsports","Chevrolet","—","—","0",""],
+        ["41","27","Dawson Sutton","Rackley W.A.R.","Chevrolet","—","—","0",""]
+      ]
     },
     "race_results": {
-      "headers": [
-        "Fin",
-        "St",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Laps",
-        "Led",
-        "Status",
-        "Pts"
-      ],
-      "rows": []
+      "headers": ["Fin","St","#","Driver","Team","Make","Laps","Led","Status","Pts"],
+      "rows": [
+        ["1","1","34","Layne Riggs","Front Row Motorsports","Ford","189","106","Running","72"],
+        ["2","12","38","Chandler Smith","Front Row Motorsports","Ford","189","10","Running","51"],
+        ["3","2","11","Kaden Honeycutt","Tricon Garage","Toyota","189","0","Running","34"],
+        ["4","13","52","Stewart Friesen","Halmar Friesen Racing","Toyota","189","4","Running","34"],
+        ["5","4","71","Connor Zilisch (i)","Spire Motorsports","Chevrolet","189","55","Running","0"],
+        ["6","5","77","Tristan McKee","Spire Motorsports","Chevrolet","189","0","Running","35"],
+        ["7","17","62","Christopher Bell (i)","Halmar Friesen Racing","Toyota","189","0","Running","0"],
+        ["8","6","19","Daniel Hemric","McAnally–Hilgemann Racing","Chevrolet","189","0","Running","41"],
+        ["9","25","16","Justin Haley","Kaulig Racing","Ram","189","0","Running","28"],
+        ["10","18","42","Parker Eatmon","Niece Motorsports","Chevrolet","189","0","Running","27"],
+        ["11","16","88","Ty Majeski","ThorSport Racing","Ford","189","0","Running","26"],
+        ["12","21","72","Mike Christopher Jr.","Halmar Friesen Racing","Toyota","189","0","Running","25"],
+        ["13","8","9","Grant Enfinger","CR7 Motorsports","Chevrolet","189","0","Running","27"],
+        ["14","9","98","Jake Garcia","ThorSport Racing","Ford","189","14","Running","31"],
+        ["15","24","10","Corey LaJoie","Kaulig Racing","Ram","189","0","Running","22"],
+        ["16","15","18","Tyler Ankrum","McAnally–Hilgemann Racing","Chevrolet","189","0","Running","21"],
+        ["17","14","13","Cole Butcher (R)","ThorSport Racing","Ford","189","0","Running","20"],
+        ["18","10","99","Ben Rhodes","ThorSport Racing","Ford","189","0","Running","19"],
+        ["19","23","5","John Hunter Nemechek (i)","Tricon Garage","Toyota","189","0","Running","0"],
+        ["20","26","12","Brenden Queen (R)","Kaulig Racing","Ram","189","0","Running","17"],
+        ["21","20","15","Tanner Gray","Tricon Garage","Toyota","189","0","Running","16"],
+        ["22","27","4","Connor Hall","Niece Motorsports","Chevrolet","189","0","Running","15"],
+        ["23","33","14","Mini Tyrrell (R)","Kaulig Racing","Ram","189","0","Running","14"],
+        ["24","30","25","Colin Braun","Kaulig Racing","Ram","189","0","Running","13"],
+        ["25","34","26","Dawson Sutton","Rackley W.A.R.","Chevrolet","189","0","Running","12"],
+        ["26","3","17","Gio Ruggiero","Tricon Garage","Toyota","189","0","Running","21"],
+        ["27","29","44","Andres Perez de Lara","Niece Motorsports","Chevrolet","189","0","Running","10"],
+        ["28","19","91","Christian Eckes","McAnally–Hilgemann Racing","Chevrolet","189","0","Running","9"],
+        ["29","31","56","Timmy Hill","Hill Motorsports","Toyota","187","0","Running","8"],
+        ["30","11","7","Connor Mosack","Spire Motorsports","Chevrolet","179","0","Accident","9"],
+        ["31","36","33","Luke Baldwin","Team Reaume","Ford","177","0","Running","6"],
+        ["32","22","45","Landen Lewis","Niece Motorsports","Chevrolet","177","0","Running","5"],
+        ["33","7","1","Gavan Boschele","Tricon Garage","Toyota","169","0","Accident","8"],
+        ["34","28","81","Kris Wright","McAnally–Hilgemann Racing","Chevrolet","146","0","Vibration","3"],
+        ["35","32","22","Patrick Emerling","Team Reaume","Ford","131","0","Suspension","2"],
+        ["36","35","76","Spencer Boyd","Freedom Racing Enterprises","Chevrolet","75","0","Accident","1"]
+      ]
     },
     "stage_1": {
       "title": "Stage 1",
-      "headers": [
-        "Pos",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Pts"
-      ],
-      "rows": []
+      "headers": ["Pos","#","Driver","Team","Make","Pts"],
+      "rows": [
+        ["1","71","Connor Zilisch (i)","Spire Motorsports","Chevrolet","0"],
+        ["2","34","Layne Riggs","Front Row Motorsports","Ford","9"],
+        ["3","19","Daniel Hemric","McAnally–Hilgemann Racing","Chevrolet","8"],
+        ["4","38","Chandler Smith","Front Row Motorsports","Ford","7"],
+        ["5","62","Christopher Bell (i)","Halmar Friesen Racing","Toyota","0"],
+        ["6","17","Gio Ruggiero","Tricon Garage","Toyota","5"],
+        ["7","77","Tristan McKee","Spire Motorsports","Chevrolet","4"],
+        ["8","9","Grant Enfinger","CR7 Motorsports","Chevrolet","3"],
+        ["9","98","Jake Garcia","ThorSport Racing","Ford","2"],
+        ["10","1","Gavan Boschele","Tricon Garage","Toyota","1"]
+      ]
     },
     "stage_2": {
       "title": "Stage 2",
-      "headers": [
-        "Pos",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Pts"
-      ],
-      "rows": []
+      "headers": ["Pos","#","Driver","Team","Make","Pts"],
+      "rows": [
+        ["1","71","Connor Zilisch (i)","Spire Motorsports","Chevrolet","0"],
+        ["2","38","Chandler Smith","Front Row Motorsports","Ford","9"],
+        ["3","34","Layne Riggs","Front Row Motorsports","Ford","8"],
+        ["4","62","Christopher Bell (i)","Halmar Friesen Racing","Toyota","0"],
+        ["5","98","Jake Garcia","ThorSport Racing","Ford","6"],
+        ["6","17","Gio Ruggiero","Tricon Garage","Toyota","5"],
+        ["7","19","Daniel Hemric","McAnally–Hilgemann Racing","Chevrolet","4"],
+        ["8","1","Gavan Boschele","Tricon Garage","Toyota","3"],
+        ["9","7","Connor Mosack","Spire Motorsports","Chevrolet","2"],
+        ["10","52","Stewart Friesen","Halmar Friesen Racing","Toyota","1"]
+      ]
+    },
+    "caution_breakdown": {
+      "headers": ["Condition","From Lap","To Lap","# Of Laps","Reason","Free Pass"],
+      "rows": [
+        ["","1","1","1","",""],
+        ["","2","5","4","#33,98 accident frontstretch","none"],
+        ["","6","13","8","",""],
+        ["","14","18","5","#5,45 accident turn 2","#33"],
+        ["","19","56","38","",""],
+        ["","57","63","7","end of stage 1","#26"],
+        ["","64","77","14","",""],
+        ["","78","82","5","#76 accident turn 4","#11"],
+        ["","83","111","29","",""],
+        ["","112","118","7","end of stage 2","#12"],
+        ["","119","120","2","",""],
+        ["","121","128","8","#56,5,81 accident turn 3","#25"],
+        ["","129","131","3","",""],
+        ["","132","135","4","#38,62 accident turn 1","#56"],
+        ["","136","170","35","",""],
+        ["","171","179","9","#1 accident turn 1","#14"],
+        ["","180","180","1","",""],
+        ["","181","187","7","#17,26,91,7,44 accident turn 2","#5"],
+        ["","188","189","2","",""]
+      ]
     }
   }
 }

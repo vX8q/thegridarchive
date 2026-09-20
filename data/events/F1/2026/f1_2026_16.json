@@ -7,280 +7,52 @@
   "end_date": "2026-10-04",
   "track": "Sepang International Circuit",
   "location": "Sepang, Selangor, Malaysia",
+  "event_preview": "Sepang International Circuit measures 5.543 km (3.444 mi) with 15 turns in Sepang, Selangor, Malaysia, a Hermann Tilke permanent venue famous for long straights, wide runoff and tropical storms that can rewrite a race in minutes. Built for the Malaysian Grand Prix era and long absent from the Formula 1 calendar, the track returns in 2026 as the host of the Bahrain Grand Prix — round 16 of the championship — after the original Sakhir date was displaced earlier in the season. Heat, humidity and heavy braking into Turns 1 and 15 define the physical challenge for drivers and cooling systems alike.\n\nBy early October the 2026 title fight is deep into its second half: Mercedes, Ferrari and McLaren arrive with championship positions on the line, while Cadillac and the midfield still chase every opportunity the new regulations leave open. Sepang's combination of high-speed direction changes and long throttle applications is a different stress test from the European street and park circuits that preceded it, rewarding power-unit reliability and consistent tyre temperatures. Teams treat the weekend as both a points haul and a dress rehearsal for the remaining flyaway stretch toward the season's end.\n\nThe long-standing Formula 1 race lap record at Sepang belongs to Juan Pablo Montoya, who set 1:34.223 for McLaren during the 2004 Malaysian Grand Prix.",
+  "event_preview_ru": "Sepang International Circuit имеет протяжённость 5.543 km (3.444 mi) и 15 поворотов в Sepang, Selangor, Малайзия — постоянная трасса Hermann Tilke, известная длинными прямыми, широкими зонами безопасности и тропическими ливнями, способными за минуты переписать гонку. Построенная для эры Гран-при Малайзии и долго отсутствовавшая в календаре Формулы-1, трасса возвращается в 2026 году как хозяин Гран-при Бахрейна — шестнадцатого этапа чемпионата — после того как исходная дата в Sakhir была смещена ранее в сезоне. Жара, влажность и тяжёлое торможение в Turn 1 и Turn 15 определяют физическую нагрузку на пилотов и системы охлаждения.\n\nК началу октября титульная борьба 2026 уже глубоко во второй половине: Mercedes, Ferrari и McLaren приезжают с позициями в чемпионате на кону, а Cadillac и середняк продолжают ловить каждую возможность, которую оставляют новые правила. Сочетание быстрых смен направления и длинных участков полного газа на Sepang — иной стресс-тест, чем европейские уличные и парковые трассы до него, вознаграждая надёжность силовой установки и стабильную температуру шин. Команды рассматривают уик-энд и как набор очков, и как репетицию оставшейся выездной серии к финишу сезона.\n\nДавно стоящий рекорд гоночного круга Formula 1 на Sepang принадлежит Juan Pablo Montoya — 1:34.223 за McLaren на Гран-при Малайзии 2004 года.",
   "entry_list": [
-    {
-      "number": "10",
-      "driver": "Pierre Gasly",
-      "team": "BWT Alpine F1 Team",
-      "manufacturer": "A526",
-      "constructor": "Alpine-Mercedes",
-      "driver_slug": "pierre-gasly"
-    },
-    {
-      "number": "43",
-      "driver": "Franco Colapinto",
-      "team": "BWT Alpine F1 Team",
-      "manufacturer": "A526",
-      "constructor": "Alpine-Mercedes",
-      "driver_slug": "franco-colapinto"
-    },
-    {
-      "number": "14",
-      "driver": "Fernando Alonso",
-      "team": "Aston Martin Aramco F1 Team",
-      "manufacturer": "AMR26",
-      "constructor": "Aston Martin Aramco-Honda",
-      "driver_slug": "fernando-alonso"
-    },
-    {
-      "number": "18",
-      "driver": "Lance Stroll",
-      "team": "Aston Martin Aramco F1 Team",
-      "manufacturer": "AMR26",
-      "constructor": "Aston Martin Aramco-Honda",
-      "driver_slug": "lance-stroll"
-    },
-    {
-      "number": "23",
-      "driver": "Alexander Albon",
-      "team": "Atlassian Williams F1 Team",
-      "manufacturer": "FW48",
-      "constructor": "Atlassian Williams-Mercedes",
-      "driver_slug": "alexander-albon"
-    },
-    {
-      "number": "55",
-      "driver": "Carlos Sainz Jr.",
-      "team": "Atlassian Williams F1 Team",
-      "manufacturer": "FW48",
-      "constructor": "Atlassian Williams-Mercedes",
-      "driver_slug": "carlos-sainz-jr"
-    },
-    {
-      "number": "5",
-      "driver": "Gabriel Bortoleto",
-      "team": "Audi Revolut F1 Team",
-      "manufacturer": "R26",
-      "constructor": "Audi",
-      "driver_slug": "gabriel-bortoleto"
-    },
-    {
-      "number": "27",
-      "driver": "Nico Hulkenberg",
-      "team": "Audi Revolut F1 Team",
-      "manufacturer": "R26",
-      "constructor": "Audi",
-      "driver_slug": "nico-hulkenberg"
-    },
-    {
-      "number": "11",
-      "driver": "Sergio Perez",
-      "team": "Cadillac Formula 1 Team",
-      "manufacturer": "MAC-26",
-      "constructor": "Cadillac-Ferrari",
-      "driver_slug": "sergio-perez"
-    },
-    {
-      "number": "77",
-      "driver": "Valtteri Bottas",
-      "team": "Cadillac Formula 1 Team",
-      "manufacturer": "MAC-26",
-      "constructor": "Cadillac-Ferrari",
-      "driver_slug": "valtteri-bottas"
-    },
-    {
-      "number": "16",
-      "driver": "Charles Leclerc",
-      "team": "Scuderia Ferrari HP",
-      "manufacturer": "SF-26",
-      "constructor": "Ferrari",
-      "driver_slug": "charles-leclerc"
-    },
-    {
-      "number": "44",
-      "driver": "Lewis Hamilton",
-      "team": "Scuderia Ferrari HP",
-      "manufacturer": "SF-26",
-      "constructor": "Ferrari",
-      "driver_slug": "lewis-hamilton"
-    },
-    {
-      "number": "31",
-      "driver": "Esteban Ocon",
-      "team": "TGR Haas F1 Team",
-      "manufacturer": "VF-26",
-      "constructor": "Haas-Ferrari",
-      "driver_slug": "esteban-ocon"
-    },
-    {
-      "number": "87",
-      "driver": "Oliver Bearman",
-      "team": "TGR Haas F1 Team",
-      "manufacturer": "VF-26",
-      "constructor": "Haas-Ferrari",
-      "driver_slug": "oliver-bearman"
-    },
-    {
-      "number": "1",
-      "driver": "Lando Norris",
-      "team": "McLaren Mastercard F1 Team",
-      "manufacturer": "MCL40",
-      "constructor": "McLaren-Mercedes",
-      "driver_slug": "lando-norris"
-    },
-    {
-      "number": "81",
-      "driver": "Oscar Piastri",
-      "team": "McLaren Mastercard F1 Team",
-      "manufacturer": "MCL40",
-      "constructor": "McLaren-Mercedes",
-      "driver_slug": "oscar-piastri"
-    },
-    {
-      "number": "12",
-      "driver": "Kimi Antonelli",
-      "team": "Mercedes-AMG Petronas F1 Team",
-      "manufacturer": "F1 W17",
-      "constructor": "Mercedes",
-      "driver_slug": "kimi-antonelli"
-    },
-    {
-      "number": "63",
-      "driver": "George Russell",
-      "team": "Mercedes-AMG Petronas F1 Team",
-      "manufacturer": "F1 W17",
-      "constructor": "Mercedes",
-      "driver_slug": "george-russell"
-    },
-    {
-      "number": "30",
-      "driver": "Liam Lawson",
-      "team": "Visa Cash App Racing Bulls F1 Team",
-      "manufacturer": "VCARB 03",
-      "constructor": "Racing Bulls-Red Bull Ford",
-      "driver_slug": "liam-lawson"
-    },
-    {
-      "number": "41",
-      "driver": "Arvid Lindblad",
-      "team": "Visa Cash App Racing Bulls F1 Team",
-      "manufacturer": "VCARB 03",
-      "constructor": "Racing Bulls-Red Bull Ford",
-      "driver_slug": "arvid-lindblad"
-    },
-    {
-      "number": "3",
-      "driver": "Max Verstappen",
-      "team": "Oracle Red Bull Racing",
-      "manufacturer": "RB22",
-      "constructor": "Red Bull Racing-Red Bull Ford",
-      "driver_slug": "max-verstappen"
-    },
-    {
-      "number": "6",
-      "driver": "Isack Hadjar",
-      "team": "Oracle Red Bull Racing",
-      "manufacturer": "RB22",
-      "constructor": "Red Bull Racing-Red Bull Ford",
-      "driver_slug": "isack-hadjar"
-    }
+    {"number":"10","driver":"Pierre Gasly","team":"BWT Alpine F1 Team","manufacturer":"A526","constructor":"Alpine-Mercedes","driver_slug":"pierre-gasly"},
+    {"number":"43","driver":"Franco Colapinto","team":"BWT Alpine F1 Team","manufacturer":"A526","constructor":"Alpine-Mercedes","driver_slug":"franco-colapinto"},
+    {"number":"14","driver":"Fernando Alonso","team":"Aston Martin Aramco F1 Team","manufacturer":"AMR26","constructor":"Aston Martin Aramco-Honda","driver_slug":"fernando-alonso"},
+    {"number":"18","driver":"Lance Stroll","team":"Aston Martin Aramco F1 Team","manufacturer":"AMR26","constructor":"Aston Martin Aramco-Honda","driver_slug":"lance-stroll"},
+    {"number":"23","driver":"Alexander Albon","team":"Atlassian Williams F1 Team","manufacturer":"FW48","constructor":"Atlassian Williams-Mercedes","driver_slug":"alexander-albon"},
+    {"number":"55","driver":"Carlos Sainz Jr.","team":"Atlassian Williams F1 Team","manufacturer":"FW48","constructor":"Atlassian Williams-Mercedes","driver_slug":"carlos-sainz-jr"},
+    {"number":"5","driver":"Gabriel Bortoleto","team":"Audi Revolut F1 Team","manufacturer":"R26","constructor":"Audi","driver_slug":"gabriel-bortoleto"},
+    {"number":"27","driver":"Nico Hulkenberg","team":"Audi Revolut F1 Team","manufacturer":"R26","constructor":"Audi","driver_slug":"nico-hulkenberg"},
+    {"number":"11","driver":"Sergio Perez","team":"Cadillac Formula 1 Team","manufacturer":"MAC-26","constructor":"Cadillac-Ferrari","driver_slug":"sergio-perez"},
+    {"number":"77","driver":"Valtteri Bottas","team":"Cadillac Formula 1 Team","manufacturer":"MAC-26","constructor":"Cadillac-Ferrari","driver_slug":"valtteri-bottas"},
+    {"number":"16","driver":"Charles Leclerc","team":"Scuderia Ferrari HP","manufacturer":"SF-26","constructor":"Ferrari","driver_slug":"charles-leclerc"},
+    {"number":"44","driver":"Lewis Hamilton","team":"Scuderia Ferrari HP","manufacturer":"SF-26","constructor":"Ferrari","driver_slug":"lewis-hamilton"},
+    {"number":"31","driver":"Esteban Ocon","team":"TGR Haas F1 Team","manufacturer":"VF-26","constructor":"Haas-Ferrari","driver_slug":"esteban-ocon"},
+    {"number":"87","driver":"Oliver Bearman","team":"TGR Haas F1 Team","manufacturer":"VF-26","constructor":"Haas-Ferrari","driver_slug":"oliver-bearman"},
+    {"number":"1","driver":"Lando Norris","team":"McLaren Mastercard F1 Team","manufacturer":"MCL40","constructor":"McLaren-Mercedes","driver_slug":"lando-norris"},
+    {"number":"81","driver":"Oscar Piastri","team":"McLaren Mastercard F1 Team","manufacturer":"MCL40","constructor":"McLaren-Mercedes","driver_slug":"oscar-piastri"},
+    {"number":"12","driver":"Kimi Antonelli","team":"Mercedes-AMG Petronas F1 Team","manufacturer":"F1 W17","constructor":"Mercedes","driver_slug":"kimi-antonelli"},
+    {"number":"63","driver":"George Russell","team":"Mercedes-AMG Petronas F1 Team","manufacturer":"F1 W17","constructor":"Mercedes","driver_slug":"george-russell"},
+    {"number":"30","driver":"Liam Lawson","team":"Visa Cash App Racing Bulls F1 Team","manufacturer":"VCARB 03","constructor":"Racing Bulls-Red Bull Ford","driver_slug":"liam-lawson"},
+    {"number":"41","driver":"Arvid Lindblad","team":"Visa Cash App Racing Bulls F1 Team","manufacturer":"VCARB 03","constructor":"Racing Bulls-Red Bull Ford","driver_slug":"arvid-lindblad"},
+    {"number":"3","driver":"Max Verstappen","team":"Oracle Red Bull Racing","manufacturer":"RB22","constructor":"Red Bull Racing-Red Bull Ford","driver_slug":"max-verstappen"},
+    {"number":"6","driver":"Isack Hadjar","team":"Oracle Red Bull Racing","manufacturer":"RB22","constructor":"Red Bull Racing-Red Bull Ford","driver_slug":"isack-hadjar"}
   ],
   "tables": {
     "practice": {
       "headers": null,
       "rows": null,
       "sessions": [
-        {
-          "title": "Practice 1",
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team",
-            "Laps",
-            "Time",
-            "Gap",
-            "Int",
-            "KPH"
-          ],
-          "rows": []
-        },
-        {
-          "title": "Practice 2",
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team",
-            "Laps",
-            "Time",
-            "Gap",
-            "Int",
-            "KPH"
-          ],
-          "rows": []
-        },
-        {
-          "title": "Practice 3",
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team",
-            "Laps",
-            "Time",
-            "Gap",
-            "Int",
-            "KPH"
-          ],
-          "rows": []
-        }
+        {"title":"Practice 1","headers":["Pos","No.","Driver","Team","Laps","Time","Gap","Int","KPH"],"rows":[]},
+        {"title":"Practice 2","headers":["Pos","No.","Driver","Team","Laps","Time","Gap","Int","KPH"],"rows":[]},
+        {"title":"Practice 3","headers":["Pos","No.","Driver","Team","Laps","Time","Gap","Int","KPH"],"rows":[]}
       ]
     },
     "qualifying": {
       "headers": null,
       "rows": null,
       "sessions": [
-        {
-          "title": "Qualifying",
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team",
-            "Time",
-            "Gap",
-            "Int",
-            "KPH"
-          ],
-          "rows": []
-        }
+        {"title":"Qualifying","headers":["Pos","No.","Driver","Team","Time","Gap","Int","KPH"],"rows":[]}
       ]
     },
-    "race_results": {
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Laps",
-        "Time/Retired",
-        "Grid",
-        "Pts"
-      ],
-      "rows": []
-    },
-    "pit_stops": {
-      "headers": [],
-      "rows": []
-    },
-    "penalties": {
-      "headers": [],
-      "rows": []
-    },
-    "vsc": {
-      "headers": [],
-      "rows": []
-    }
+    "race_results": {"headers":["Pos","No.","Driver","Team","Laps","Time/Retired","Grid","Pts"],"rows":[]},
+    "pit_stops": {"headers":[],"rows":[]},
+    "penalties": {"headers":[],"rows":[]},
+    "vsc": {"headers":[],"rows":[]}
   }
 }

@@ -46,6 +46,20 @@ export function createEventCardDateApi(opts = {}) {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return months[d.getMonth()] + ' ' + d.getDate();
     },
+    formatDateRange(start, end) {
+      if (!start) return '—';
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const d1 = new Date(start + 'T12:00:00');
+      if (!end || start === end) {
+        return months[d1.getMonth()] + ' ' + d1.getDate();
+      }
+      const d2 = new Date(end + 'T12:00:00');
+      if (d1.getMonth() === d2.getMonth()) {
+        return months[d1.getMonth()] + '\u00a0' + d1.getDate() + '-' + d2.getDate();
+      }
+      return months[d1.getMonth()] + '\u00a0' + d1.getDate() + '-' +
+        months[d2.getMonth()] + '\u00a0' + d2.getDate();
+    },
     normalizeScheduleEvent: (e) => e,
     getEventRaceStartDateIso(e) {
       const start = isoPrefix(e.start_date || e.date);

@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script src="/web/spa-boot.js"></script>
+  <style>
+    /* Hide the home view before deferred router.js runs. Class is set by
+       spa-boot.js (inline script is blocked by CSP script-src 'self'). */
+    html.spa-boot-inner #view-list { display: none !important; }
+    html.spa-boot-driver #view-driver.hidden { display: flex !important; }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="The Grid Archive — schedules, race results, standings, and driver stats for 21 motorsport championships. Formula 1, NASCAR, IMSA, WEC, Supercars, and more. EN / RU.">
   <meta property="og:type" content="website">
@@ -13,9 +20,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/web/style.css">
+  <link rel="stylesheet" href="/web/style.css?v=staff-ui1">
 </head>
 <body>
+  <a href="#main-content" class="skip-link" data-i18n="a11y.skip_to_content">Skip to content</a>
   <header class="header">
     <div class="container header-inner">
       <a href="/" class="logo"><span class="logo-the">The</span> <span class="logo-grid">Grid</span> <span class="logo-archive">Archive</span></a>
@@ -38,7 +46,7 @@
       </div>
     </div>
   </header>
-  <main class="container main">
+  <main id="main-content" class="container main" tabindex="-1">
     <div id="view-list" class="view">
 
       <div class="home-feed-top">
@@ -129,7 +137,6 @@
       <div id="detail-panels-wrap" class="detail-panels-wrap">
       <div id="schedule-panel" class="series-panel">
         <section class="schedule-section">
-          <h3 data-i18n="section.h3.schedule">Schedule</h3>
           <div class="table-wrap">
             <table class="data-table" id="schedule-table">
               <thead><tr><th data-i18n="th.round">Round</th><th data-i18n="th.event">Event</th><th data-i18n="th.circuit">Circuit</th><th data-i18n="th.location">Location</th><th data-i18n="th.date">Date</th><th data-i18n="th.time">Time</th></tr></thead>
@@ -142,9 +149,9 @@
       <div id="standings-panel" class="series-panel hidden">
         <section class="standings-section">
           <div class="standings-section-toolbar">
-            <h3 data-i18n="section.h3.standings">Standings</h3>
             <nav id="standings-mode-nav" class="standings-mode-nav hidden" aria-label="Standings view"></nav>
           </div>
+          <p id="standings-chase-note" class="schedule-note hidden"></p>
           <div class="standings-scroll-container">
             <div class="table-wrap standings-scroll-bottom" id="standings-wrap">
               <table class="data-table" id="standings-table">
@@ -168,7 +175,6 @@
       </div>
       <div id="teams-panel" class="series-panel hidden">
         <section class="teams-section">
-          <h3 data-i18n="section.h3.teams">Teams</h3>
           <h4 id="teams-fulltime-title" class="table-section-title hidden">Full-time teams</h4>
           <div id="teams-fulltime-wrap" class="table-wrap hidden">
             <table class="data-table" id="teams-fulltime-table">
@@ -232,7 +238,7 @@
       </div>
       <div id="specs-panel" class="series-panel hidden">
         <section class="specs-section">
-          <h3 data-i18n="section.h3.specs">Car Specs</h3>
+          <h3 id="specs-panel-title" class="hidden"></h3>
           <div id="car-spec-wrap" class="car-spec hidden">
             <h4 class="table-section-title" data-i18n="specs.car_models">Car models</h4>
             <div class="table-wrap" id="car-models-table-wrap"></div>
@@ -415,10 +421,22 @@
       <div id="driver-content" class="track-content"></div>
     </div>
     <div id="view-team" class="view hidden">
-      <nav class="breadcrumb" id="team-breadcrumb"></nav>
-      <header class="event-header">
-        <h1 id="team-title">—</h1>
-        <p id="team-meta" class="detail-meta"></p>
+      <nav class="breadcrumb team-breadcrumb" id="team-breadcrumb"></nav>
+      <header class="event-header driver-header team-header">
+        <div class="team-header-card">
+          <div class="driver-header-row">
+            <div class="team-logo-block">
+              <div class="driver-photo-wrap team-logo-wrap team-logo-wrap--placeholder" id="team-logo-wrap" aria-hidden="true">
+                <img id="team-logo" class="driver-photo team-logo" width="520" height="390" alt="" loading="eager" decoding="async" />
+              </div>
+              <span class="team-logo-fallback-hint" id="team-logo-hint" hidden></span>
+            </div>
+            <div class="driver-header-text">
+              <h1 id="team-title">—</h1>
+              <div id="team-meta" class="detail-meta team-meta"></div>
+            </div>
+          </div>
+        </div>
       </header>
       <div id="team-content" class="track-content"></div>
     </div>
@@ -485,42 +503,24 @@
       <a href="/feedback" class="footer-link" data-i18n="feedback.footer_link">Feedback</a>
     </div>
   </footer>
-  <script src="/web/data/translations.js" defer></script>
+  <script src="/web/data/translations.js?v=team-staff1" defer></script>
   <script src="/web/data/series-colors.js" defer></script>
   <script src="/web/data/search-priority.js" defer></script>
-  <script src="/web/data/f1-tech-spec-2024.js" defer></script>
-  <script src="/web/data/f1-tech-spec-2025.js" defer></script>
-  <script src="/web/data/f1-tech-spec-2026.js" defer></script>
-  <script src="/web/data/imsa-classes-spec.js" defer></script>
-  <script src="/web/data/series-classes-spec.js" defer></script>
   <script src="/web/data/static-schedules.js" defer></script>
-  <script src="/web/utils/localize-ru-data.js" defer></script>
-  <script src="/web/utils/driver-season-ru.js" defer></script>
-  <script src="/web/utils/spec-value-ru.js" defer></script>
-  <script src="/web/utils/spec-key-ru-extended.js" defer></script>
-  <script src="/web/utils/spec-key-ru-f1-2025.js" defer></script>
-  <script src="/web/utils/spec-value-f2-f3.js" defer></script>
-  <script src="/web/utils/spec-value-indycar-nascar.js" defer></script>
-  <script src="/web/utils/spec-value-stockcar-extended.js" defer></script>
-  <script src="/web/utils/name-translit-ru.js" defer></script>
-  <script src="/web/utils/place-names-ru.js" defer></script>
-  <script src="/web/utils/driver-names-ru.js" defer></script>
-  <script src="/web/utils/driver-name-ru-resolve.js" defer></script>
-  <script src="/web/utils/team-names-ru.js" defer></script>
-  <script src="/web/utils/event-names-ru.js" defer></script>
   <script src="/web/utils/fetch-json.js" defer></script>
-  <script src="/web/lib/api.js" defer></script>
+  <script src="/web/lib/api.js?v=team3" defer></script>
   <script src="/web/lib/state.js" defer></script>
   <script src="/web/data/timezones.js" defer></script>
   <script src="/web/lib/tga-dates-core.js" defer></script>
   <script src="/web/lib/tga-dates-format.js" defer></script>
   <script src="/web/lib/tga-dates-event.js" defer></script>
+  <script src="/web/lib/lazy-assets.js?v=staff-season1" defer></script>
   <script src="/web/tga-i18n.js" defer></script>
   <script src="/web/data/multi-race-schedule-sessions.js" defer></script>
   <script src="/web/lib/event-card-date.js" defer></script>
   <script src="/web/lib/weekend-card-merge.js" defer></script>
   <script src="/web/lib/last-results-dates.js" defer></script>
-  <script src="/web/tga-utils.js" defer></script>
+  <script src="/web/tga-utils.js?v=stats-series1" defer></script>
   <script src="/web/lib/deps.js" defer></script>
   <script src="/web/components/table-sort.js" defer></script>
   <script src="/web/components/next-race-cards.js" defer></script>
@@ -532,22 +532,7 @@
   <script src="/web/pages/schedule.js" defer></script>
   <script src="/web/pages/list.js" defer></script>
   <script src="/web/pages/home-feed.js" defer></script>
-  <script src="/web/tga-series.js" defer></script>
-  <script src="/web/lib/series-stockcar.js" defer></script>
-  <script src="/web/pages/series.js" defer></script>
-  <script src="/web/lib/event-tables.js" defer></script>
-  <script src="/web/lib/event-page-helpers.js" defer></script>
-  <script src="/web/lib/endurance-race.js" defer></script>
-  <script src="/web/lib/stockcar-race.js" defer></script>
-  <script src="/web/lib/openwheel-race.js" defer></script>
-  <script src="/web/lib/f1-event-normalize.js" defer></script>
-  <script src="/web/lib/touring-race.js" defer></script>
-  <script src="/web/lib/event-pit-stops.js" defer></script>
-  <script src="/web/lib/event-bop.js" defer></script>
-  <script src="/web/lib/event-race-content.js" defer></script>
-  <script src="/web/lib/event-entry-list.js" defer></script>
-  <script src="/web/pages/event.js" defer></script>
-  <script src="/web/lib/router.js" defer></script>
-  <script src="/web/app.js" defer></script>
+  <script src="/web/lib/router.js?v=team2" defer></script>
+  <script src="/web/app.js?v=team3" defer></script>
 </body>
 </html>

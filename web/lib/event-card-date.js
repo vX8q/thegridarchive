@@ -20,15 +20,15 @@
     wec: { card: 'race_day_only' },
     elms: { card: 'race_day_only' },
     gtwce_end: { card: 'race_day_only' },
-    psc: { card: 'race_day_only', notes: 'Zandvoort double-header merges to one Last Results card after Race 2' },
+    psc: { card: 'race_day_only', notes: 'Zandvoort double-header is one weekend file (psc_2026_6) with Race 1+2 sessions; Last Results shows race-day range from sessions' },
     supercars: { card: 'weekend_merge', next_race: 'session_day', notes: 'Last Results: one card per venue weekend after last race; Next Race: one card per schedule race' },
-    indycar: { card: 'single_day', notes: 'Milwaukee double-header merges to one Last Results card after Race 2' },
+    indycar: { card: 'single_day', notes: 'Milwaukee double-header: one merged home card (Snap-on IndyCar Weekend) with race-day range' },
     default: { card: 'single_day', notes: '24h races show two calendar days from name' }
   };
 
   var MULTI_RACE_SERIES = {
     f2: true, f3: true, frec: true, f4_it: true,
-    gtwce_sprint: true, dtm: true, f1: true, super_formula: true
+    gtwce_sprint: true, dtm: true, f1: true, super_formula: true, psc: true
   };
 
   var WEEKEND_SPAN_SERIES = {
@@ -302,11 +302,29 @@
       var str = String(s || '').trim();
       return /^\d{4}-\d{2}-\d{2}/.test(str) ? str.slice(0, 10) : '';
     };
+    var weekendIds = e._weekendEventIds;
+    if (Array.isArray(weekendIds) && weekendIds.length > 1) {
+      var wkStart = iso(e.start_date || e.date);
+      var wkEnd = iso(e.end_date);
+      if (wkStart && wkEnd && wkEnd > wkStart) return { start: wkStart, end: wkEnd };
+    }
     if (hasScheduleSessionMetadata(e)) {
       var getIso = window.TGA && window.TGA.getEventRaceStartDateIso;
       var one = getIso ? getIso(e) : '';
       if (!one) one = iso(e.start_date || e.date) || iso(e.end_date);
       return { start: one, end: one };
+    }
+    var sidEarly = seriesKeyNorm(e._seriesId || e.series_id || '');
+    var sessionDates = [];
+    var earlySessions = buildSessionsForEvent(sidEarly, e);
+    if (earlySessions && earlySessions.length > 1) {
+      earlySessions.forEach(function (s) {
+        pushLocalRaceDateIso(sessionDates, sessionRaceStartDateIso(e, s));
+      });
+      sessionDates.sort();
+      if (sessionDates.length) {
+        return { start: sessionDates[0], end: sessionDates[sessionDates.length - 1] };
+      }
     }
     var raceOnly = singleRaceCardDateIso(e);
     if (raceOnly) {
@@ -357,10 +375,6 @@
     return buildSessionsForEvent(sid, ev) || [];
   }
 
-  function refreshF1SprintWeekends() {
-    F1_SPRINT_WEEKENDS = buildF1SprintWeekendSet();
-  }
-
   /**
    * Calendar date (ISO) for Next Race cards — always the upcoming race day, never a weekend span.
    */
@@ -402,12 +416,24 @@
     return (getIsoDefault ? getIsoDefault(e) : '') || iso(e.start_date || e.date) || iso(e.end_date);
   }
 
-  /** Display date for Next Race home cards (single race day). */
+  /** Display date for Next Race home cards (single race day, or merged weekend range). */
   function formatNextRaceCardDate(e) {
     var formatShortDate = window.TGA && window.TGA.formatShortDate;
-    if (!formatShortDate) return '—';
+    if (!formatShortDate) return '-';
+    var ids = e && e._weekendEventIds;
+    var formatDateRange = window.TGA && window.TGA.formatDateRange;
+    if (Array.isArray(ids) && ids.length > 1 && formatDateRange) {
+      var parseIso = window.TGA && window.TGA.parseIsoDatePrefix;
+      var iso = parseIso || function (s) {
+        var str = String(s || '').trim();
+        return /^\d{4}-\d{2}-\d{2}/.test(str) ? str.slice(0, 10) : '';
+      };
+      var start = iso(e.start_date || e.date);
+      var end = iso(e.end_date);
+      if (start && end && end > start) return formatDateRange(start, end);
+    }
     var raceIso = nextRaceCardDateIso(e);
-    if (!raceIso) return '—';
+    if (!raceIso) return '-';
     return formatShortDate(raceIso) || raceIso;
   }
 
@@ -425,5 +451,4 @@
   window.TGA.nextRaceCardDateIso = nextRaceCardDateIso;
   window.TGA.formatNextRaceCardDate = formatNextRaceCardDate;
   window.TGA.raceSessionDisplayLabel = raceSessionDisplayLabel;
-  window.TGA.refreshF1SprintWeekends = refreshF1SprintWeekends;
 })();

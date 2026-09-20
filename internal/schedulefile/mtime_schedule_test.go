@@ -48,6 +48,7 @@ func TestAggregatedScheduleMaxMtime_UpdatesOnScheduleAndEventChange(t *testing.T
 	if err := os.Chtimes(eventPath, eventTime, eventTime); err != nil {
 		t.Fatal(err)
 	}
+	ClearEventsTreeMtimeMemoForTest()
 
 	m2 := AggregatedScheduleMaxMtime(dir)
 	if !m2.After(m1) {
@@ -58,6 +59,7 @@ func TestAggregatedScheduleMaxMtime_UpdatesOnScheduleAndEventChange(t *testing.T
 	if err := os.Chtimes(schedPath, schedTime, schedTime); err != nil {
 		t.Fatal(err)
 	}
+	ClearEventsTreeMtimeMemoForTest()
 	m3 := AggregatedScheduleMaxMtime(dir)
 	if !m3.After(m2) {
 		t.Fatalf("schedule touch mtime = %v, want after %v", m3, m2)

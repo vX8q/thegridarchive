@@ -560,23 +560,24 @@ func handleDriverBySlug(w http.ResponseWriter, r *http.Request, dataDir string, 
 	}
 
 	season := config.CurrentSeason
-	seasonResults, errSeason := schedulefile.BuildDriverSeasonResultsFromEvents(
+	resultSlug := driverutil.Slug(slug)
+	allResults, errSeason := schedulefile.BuildDriverSeasonResultsFromEvents(
 		dataDir,
-		driverutil.Slug(slug),
-		season,
+		resultSlug,
+		"",
 	)
 	if errSeason != nil {
 		slog.Warn("build driver season results from events failed",
 			"slug", slug,
-			"season", season,
 			"err", errSeason,
 		)
-		seasonResults = nil
+		allResults = nil
 	}
+	seasonResults := schedulefile.FilterDriverSeasonResults(allResults, season)
 
 	if st == nil {
 		if hasProfile {
-			writeDriverProfileOnly(w, slug, profile, profiles, redirects, seasonResults)
+			writeDriverProfileOnly(w, slug, profile, profiles, redirects, dataDir, allResults)
 			return
 		}
 		writeError(w, http.StatusNotFound, "not found")
@@ -595,7 +596,7 @@ func handleDriverBySlug(w http.ResponseWriter, r *http.Request, dataDir string, 
 	}
 	if len(drivers) == 0 {
 		if hasProfile {
-			writeDriverProfileOnly(w, slug, profile, profiles, redirects, seasonResults)
+			writeDriverProfileOnly(w, slug, profile, profiles, redirects, dataDir, allResults)
 			return
 		}
 		writeError(w, http.StatusNotFound, "not found")
@@ -669,6 +670,7 @@ func handleDriverBySlug(w http.ResponseWriter, r *http.Request, dataDir string, 
 		"season":         season,
 		"season_results": seasonResults,
 	}
+	attachDriverCareer(resp, dataDir, canonicalSlug, season, allResults)
 	if p, ok := profiles[slugKey]; ok {
 		attachProfileMetadata(resp, slugKey, p, displayName)
 	}
@@ -678,11 +680,13 @@ func handleDriverBySlug(w http.ResponseWriter, r *http.Request, dataDir string, 
 	}
 }
 
-func writeDriverProfileOnly(w http.ResponseWriter, requestSlug string, p driverProfile, profiles map[string]driverProfile, redirects map[string]string, seasonResults []models.DriverSeasonResult) {
+func writeDriverProfileOnly(w http.ResponseWriter, requestSlug string, p driverProfile, profiles map[string]driverProfile, redirects map[string]string, dataDir string, allResults []models.DriverSeasonResult) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "no-store")
 	profileSlug := resolveDriverProfileSlug(driverutil.Slug(requestSlug), profiles, redirects)
 	displayName := profileDisplayName(profileSlug, p)
+	season := config.CurrentSeason
+	seasonResults := schedulefile.FilterDriverSeasonResults(allResults, season)
 	resp := map[string]interface{}{
 		"name":           displayName,
 		"nationality":    strings.TrimSpace(p.Citizenship),
@@ -692,12 +696,49 @@ func writeDriverProfileOnly(w http.ResponseWriter, requestSlug string, p driverP
 		"death_date":     strings.TrimSpace(p.DeathDate),
 		"photo_url":      strings.TrimSpace(p.PhotoURL),
 		"canonical_slug": profileSlug,
-		"season":         config.CurrentSeason,
+		"season":         season,
 		"season_results": seasonResults,
 	}
 	attachProfileMetadata(resp, profileSlug, p, displayName)
+	attachDriverCareer(resp, dataDir, profileSlug, season, allResults)
 	attachDriverPrimaryContext(resp, seasonResults)
 	_ = jsonMarshalTo(w, resp)
+}
+
+func attachDriverCareer(resp map[string]interface{}, dataDir, slug, season string, allResults []models.DriverSeasonResult) {
+	if resp == nil {
+		return
+	}
+	if allResults == nil {
+		allResults = []models.DriverSeasonResult{}
+	}
+	current := schedulefile.FilterDriverSeasonResults(allResults, season)
+	if current == nil {
+		current = []models.DriverSeasonResult{}
+	}
+	achievements := schedulefile.BuildDriverAchievements(dataDir, allResults)
+	if achievements == nil {
+		achievements = []models.DriverAchievement{}
+	}
+	titles := schedulefile.BuildDriverTitles(dataDir, slug)
+	if titles == nil {
+		titles = []models.DriverTitle{}
+	}
+	teamHistory := schedulefile.BuildDriverTeamHistory(allResults)
+	if teamHistory == nil {
+		teamHistory = []models.DriverTeamStint{}
+	}
+	seasons := schedulefile.DriverAvailableSeasons(allResults)
+	if seasons == nil {
+		seasons = []string{}
+	}
+	resp["season"] = season
+	resp["season_results"] = current
+	resp["career_results"] = allResults
+	resp["available_seasons"] = seasons
+	resp["achievements"] = achievements
+	resp["titles"] = titles
+	resp["team_history"] = teamHistory
 }
 
 func attachDriverPrimaryContext(resp map[string]interface{}, seasonResults []models.DriverSeasonResult) {
@@ -889,7 +930,7 @@ func loadDriverSourceImage(photoURL, dataDir string) (image.Image, error) {
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		return nil, os.ErrNotExist
 	}
-	body, err := io.ReadAll(io.LimitReader(resp.Body, 20<<20))
+	body, err := io.ReadAll(io.LimitReader(resp.Body, remoteImageMaxBytes))
 	if err != nil {
 		return nil, err
 	}

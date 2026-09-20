@@ -15,6 +15,7 @@
     var isImsa2026Round5 = evKey === 'IMSA_2026_5';
     var isImsa2026Round6 = evKey === 'IMSA_2026_6';
     var isImsa2026Round8 = evKey === 'IMSA_2026_8';
+    var isImsa2026Round9 = evKey === 'IMSA_2026_9';
     function bopH(key) { return t('event.bop.h.' + key); }
     function bopHeaders(keys) { return keys.map(bopH); }
     function localizeBopCell(val) {
@@ -133,6 +134,18 @@
       ['McLaren', '720S GT3 EVO', '1325', '8100', '94.8', '95.3', '190', '200', '3.1', '11.3', '893', '22.325'],
       ['Mercedes-AMG', 'GT3', '1356', '7900', '94.8', '91.7', '190', '200', '0.0', '9.0', '929', '23.225'],
       ['Porsche', '911 GT3 R (992)', '1384', '8950', '100.0', '100.0', '190', '200', '7.3', '9.3', '867', '21.675']
+    ] : isImsa2026Round9 ? [
+      ['Aston Martin', 'Vantage GT3 EVO', '1291', '7000', '89.9', '85.8', '190', '200', '5.0', '11.1', '836', '20.900'],
+      ['BMW', 'M4 GT3 EVO', '1346', '7500', '92.0', '93.3', '190', '200', '-2.0', '5.0', '865', '21.625'],
+      ['Corvette', 'Z06 GT3.R', '1365', '8000', '95.5', '97.2', '190', '200', '-1.8', '6.4', '868', '21.700'],
+      ['Ferrari', '296 GT3 EVO', '1334', '7750', '84.0', '86.3', '190', '200', '-1.7', '4.1', '835', '20.875'],
+      ['Ford', 'Mustang GT3', '1335', '8250', '99.9', '95.5', '190', '200', '-0.4', '7.1', '888', '22.200'],
+      ['Lamborghini', 'Huracan GT3 EVO2', '1325', '8300', '89.9', '86.8', '190', '200', '2.0', '8.4', '890', '22.250'],
+      ['Lamborghini', 'Temerario GT3', '1337', '8000', '94.3', '89.7', '190', '200', '1.0', '6.8', '929', '23.225'],
+      ['Lexus', 'RC F GT3', '1356', '7200', '93.4', '93.7', '190', '200', '4.0', '11.0', '917', '22.925'],
+      ['McLaren', '720S GT3 EVO', '1329', '8100', '95.9', '93.9', '190', '200', '3.1', '11.3', '896', '22.400'],
+      ['Mercedes-AMG', 'GT3', '1356', '7900', '94.9', '90.5', '190', '200', '0.0', '9.0', '923', '23.075'],
+      ['Porsche', '911 GT3 R (992)', '1384', '8950', '95.2', '100.0', '190', '200', '7.3', '9.3', '848', '21.200']
     ] : isImsa2026Round4 ? [
       ['Aston Martin', 'Vantage GT3 EVO', '1287', '7000', '85.9', '83.4', '170', '180', '5.0', '11.1', '833', '20.825'],
       ['BMW', 'M4 GT3 EVO', '1334', '7500', '90.8', '94.9', '170', '180', '-2.0', '5.0', '864', '21.600'],
@@ -190,6 +203,9 @@
     } else if (isImsa2026Round8) {
       bopTitleKey = 'event.bop.title.road_america';
       bopRound = '8';
+    } else if (isImsa2026Round9) {
+      bopTitleKey = 'event.bop.title.vir';
+      bopRound = '9';
     } else if (isImsa2026Round1) {
       bopTitleKey = 'event.bop.title.daytona';
       bopRound = '1';
@@ -198,19 +214,21 @@
     var bopSubtitle = t('event.bop.subtitle').replace('{round}', bopRound);
     out += '<h2 class="bop-main-title">' + e(bopTitle) + '</h2>';
     out += '<p class="bop-subtitle">' + e(bopSubtitle) + '</p>';
-    out += '<hr class="bop-divider">';
-    out += '<h3 class="bop-class-title">' + e(t('event.bop.gtp_class')) + '</h3>';
-    out += '<div class="table-wrap"><table class="data-table bop-table">';
-    out += '<thead>' + theadRow(gtpHead) + '</thead><tbody>';
-    gtpCars.forEach(function (r) { out += row(r); });
-    out += '</tbody></table></div>';
-    out += bopNotes(['gtp_1', 'gtp_2', 'gtp_3']);
-    if (!isImsa2026Round3) {
-      out += '<h4 class="table-section-title">' + e(t('event.bop.gtp_reg_title')) + '</h4>';
+    if (!isImsa2026Round9) {
+      out += '<hr class="bop-divider">';
+      out += '<h3 class="bop-class-title">' + e(t('event.bop.gtp_class')) + '</h3>';
       out += '<div class="table-wrap"><table class="data-table bop-table">';
-      out += '<thead>' + theadRow(gtpRegHead) + '</thead><tbody>';
-      gtpRegForRender.forEach(function (r) { out += row(r); });
+      out += '<thead>' + theadRow(gtpHead) + '</thead><tbody>';
+      gtpCars.forEach(function (r) { out += row(r); });
       out += '</tbody></table></div>';
+      out += bopNotes(['gtp_1', 'gtp_2', 'gtp_3']);
+      if (!isImsa2026Round3) {
+        out += '<h4 class="table-section-title">' + e(t('event.bop.gtp_reg_title')) + '</h4>';
+        out += '<div class="table-wrap"><table class="data-table bop-table">';
+        out += '<thead>' + theadRow(gtpRegHead) + '</thead><tbody>';
+        gtpRegForRender.forEach(function (r) { out += row(r); });
+        out += '</tbody></table></div>';
+      }
     }
     out += '<hr class="bop-divider">';
     out += '<h3 class="bop-class-title">' + e(t(isImsa2026Round3 ? 'event.bop.gtd_class' : 'event.bop.gtd_pro_class')) + '</h3>';

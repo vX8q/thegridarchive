@@ -12,7 +12,7 @@ import (
 
 func loadEnrichedEventBody(dataDir, eventID string) ([]byte, error) {
 	cacheKey := strings.ToLower(eventID)
-	fileID := schedulefile.ResolveSupercarsHTTPFileID(dataDir, cacheKey)
+	fileID := schedulefile.ResolveHTTPEventFileID(dataDir, cacheKey)
 	body, err := schedulefile.ReadEventDetailFileAtID(dataDir, fileID)
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func loadEnrichedEventBody(dataDir, eventID string) ([]byte, error) {
 	if enriched, err := schedulefile.EnrichStockCarEventTeamNames(body, dataDir, seriesID); err == nil {
 		body = enriched
 	}
-	body = schedulefile.PatchSupercarsEventIDFromRequest(body, eventID, fileID)
+	body = schedulefile.PatchCanonicalEventIDFromRequest(body, eventID, fileID)
 	return body, nil
 }
 

@@ -34,11 +34,11 @@
     var m1 = getLang() === 'ru' ? months_ru[d1.getMonth()] : months_en[d1.getMonth()];
     var m2 = getLang() === 'ru' ? months_ru[d2.getMonth()] : months_en[d2.getMonth()];
     if (d1.getMonth() === d2.getMonth()) {
-      return getLang() === 'ru' ? d1day + '\u2013' + d2day + '\u00a0' + m1 : m1 + '\u00a0' + d1day + '\u2013' + d2day;
+      return getLang() === 'ru' ? d1day + '-' + d2day + '\u00a0' + m1 : m1 + '\u00a0' + d1day + '-' + d2day;
     }
     return getLang() === 'ru'
-      ? d1day + '\u00a0' + m1 + '\u2013' + d2day + '\u00a0' + m2
-      : m1 + '\u00a0' + d1day + '\u2013' + m2 + '\u00a0' + d2day;
+      ? d1day + '\u00a0' + m1 + '-' + d2day + '\u00a0' + m2
+      : m1 + '\u00a0' + d1day + '-' + m2 + '\u00a0' + d2day;
   }
 
   /** Date range with full month name for event page: "March 5–8, 2026" */

@@ -266,6 +266,22 @@ func finalizeStandingsFromEvents(dataDir, seriesID, season string, data *Standin
 			continue
 		}
 
+		if strings.EqualFold(seriesID, "PSC") {
+			sessions, errSess := cache.loadRaceSessions(ev.ID)
+			if errSess == nil && len(sessions) > 1 {
+				for _, rs := range sessions {
+					if raceIdx >= len(data.RaceOrder) {
+						break
+					}
+					if len(rs.Headers) > 0 && len(rs.Rows) > 0 {
+						completed = append(completed, data.RaceOrder[raceIdx])
+					}
+					raceIdx++
+				}
+				continue
+			}
+		}
+
 		if isDTMSeries || isMultiRacePerEvent {
 			sessions, errSess := cache.loadRaceSessions(ev.ID)
 			if errSess == nil && len(sessions) > 0 {

@@ -5,189 +5,31 @@
   "date": "1 December 2024",
   "track": "Lusail International Circuit",
   "location": "Lusail, Qatar",
+  "event_preview": "Lusail International Circuit measures 5.419 km (3.367 mi) with 16 turns on the outskirts of Lusail, Qatar - a fast permanent layout under floodlights with long lateral loads and abrasive asphalt. Sweeping medium- and high-speed corners put tyre life and cooling at the centre of every desert night strategy. The 2024 Qatar Grand Prix is round 23 and a Sprint weekend, scheduled for 57 laps and 308.611 km (191.762 miles).\n\nThe penultimate round compresses Sprint and Grand Prix points while the constructors' fight between McLaren and Ferrari may still be alive heading into Abu Dhabi. Cooling night air and abrasive surface put tyre windows ahead of chasing a settled all-time mark, and whoever arrives with the better desert package can swing the finale maths in a single Sprint hour. Twenty drivers treat Lusail as the last high-load dress rehearsal before Yas Marina. Floodlights and abrasive asphalt make night tyre temperature the decisive setup variable before the season finale.\n\nSeries lap records at Lusail in the Formula 1 era remained relatively fresh entering 2024; teams prioritise tyre and cooling windows over chasing a settled all-time mark.",
+  "event_preview_ru": "Lusail International Circuit имеет протяжённость 5.419 km (3.367 mi) и 16 поворотов на окраине Lusail, Катар — быстрая стационарная трасса под прожекторами с длинными боковыми нагрузками и абразивным асфальтом. Протяжённые средне- и высокоскоростные повороты ставят жизнь шин и охлаждение в центр каждой пустынной ночной стратегии. Гран-при Катара 2024 — двадцать третий этап и спринт-уик-энд: 57 кругов и 308.611 km (191.762 miles).\n\nПредпоследний этап сжимает очки спринта и гран-при, пока борьба конструкторов между McLaren и Ferrari ещё может быть жива перед Абу-Даби. Остывающий ночной воздух и абразивное покрытие ставят окна шин выше охоты за устоявшейся абсолютной отметкой, а кто приедет с лучшим пустынным пакетом, может качнуть арифметику финала за один спринт-час. Двадцать пилотов рассматривают Lusail как последнюю высоконагрузочную репетицию перед Yas Marina. Прожекторы и абразивный асфальт делают ночную температуру шин решающей переменной настройки перед финалом сезона.\n\nРекорды круга серии на Lusail в эре Формулы-1 к 2024 году ещё выглядели относительно свежими; команды ставят окна шин и охлаждения выше охоты за устоявшейся абсолютной отметкой.",
   "laps": "",
   "distance": "",
   "entry_list": [
-    {
-      "number": "1",
-      "driver": "Max Verstappen",
-      "team": "Oracle Red Bull Racing",
-      "manufacturer": "RB20",
-      "constructor": "Red Bull Racing-Honda RBPT",
-      "driver_slug": "max-verstappen",
-      "power_unit": "Honda RBPTH002"
-    },
-    {
-      "number": "11",
-      "driver": "Sergio Perez",
-      "team": "Oracle Red Bull Racing",
-      "manufacturer": "RB20",
-      "constructor": "Red Bull Racing-Honda RBPT",
-      "driver_slug": "sergio-perez",
-      "power_unit": "Honda RBPTH002"
-    },
-    {
-      "number": "4",
-      "driver": "Lando Norris",
-      "team": "McLaren Formula 1 Team",
-      "manufacturer": "MCL38",
-      "constructor": "McLaren-Mercedes",
-      "driver_slug": "lando-norris",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "81",
-      "driver": "Oscar Piastri",
-      "team": "McLaren Formula 1 Team",
-      "manufacturer": "MCL38",
-      "constructor": "McLaren-Mercedes",
-      "driver_slug": "oscar-piastri",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "16",
-      "driver": "Charles Leclerc",
-      "team": "Scuderia Ferrari",
-      "manufacturer": "SF-24",
-      "constructor": "Ferrari",
-      "driver_slug": "charles-leclerc",
-      "power_unit": "Ferrari 066/12"
-    },
-    {
-      "number": "55",
-      "driver": "Carlos Sainz Jr.",
-      "team": "Scuderia Ferrari",
-      "manufacturer": "SF-24",
-      "constructor": "Ferrari",
-      "driver_slug": "carlos-sainz-jr",
-      "power_unit": "Ferrari 066/12"
-    },
-    {
-      "number": "44",
-      "driver": "Lewis Hamilton",
-      "team": "Mercedes-AMG Petronas F1 Team",
-      "manufacturer": "F1 W15",
-      "constructor": "Mercedes",
-      "driver_slug": "lewis-hamilton",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "63",
-      "driver": "George Russell",
-      "team": "Mercedes-AMG Petronas F1 Team",
-      "manufacturer": "F1 W15",
-      "constructor": "Mercedes",
-      "driver_slug": "george-russell",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "14",
-      "driver": "Fernando Alonso",
-      "team": "Aston Martin Aramco F1 Team",
-      "manufacturer": "AMR24",
-      "constructor": "Aston Martin Aramco-Mercedes",
-      "driver_slug": "fernando-alonso",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "18",
-      "driver": "Lance Stroll",
-      "team": "Aston Martin Aramco F1 Team",
-      "manufacturer": "AMR24",
-      "constructor": "Aston Martin Aramco-Mercedes",
-      "driver_slug": "lance-stroll",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "10",
-      "driver": "Pierre Gasly",
-      "team": "BWT Alpine F1 Team",
-      "manufacturer": "A524",
-      "constructor": "Alpine-Renault",
-      "driver_slug": "pierre-gasly",
-      "power_unit": "Renault E-Tech RE24"
-    },
-    {
-      "number": "31",
-      "driver": "Esteban Ocon",
-      "team": "BWT Alpine F1 Team",
-      "manufacturer": "A524",
-      "constructor": "Alpine-Renault",
-      "driver_slug": "esteban-ocon",
-      "power_unit": "Renault E-Tech RE24"
-    },
-    {
-      "number": "23",
-      "driver": "Alexander Albon",
-      "team": "Williams Racing",
-      "manufacturer": "FW46",
-      "constructor": "Williams-Mercedes",
-      "driver_slug": "alexander-albon",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "43",
-      "driver": "Franco Colapinto",
-      "team": "Williams Racing",
-      "manufacturer": "FW46",
-      "constructor": "Williams-Mercedes",
-      "driver_slug": "franco-colapinto",
-      "power_unit": "Mercedes-AMG F1 M15"
-    },
-    {
-      "number": "22",
-      "driver": "Yuki Tsunoda",
-      "team": "Visa Cash App RB F1 Team",
-      "manufacturer": "VCARB 01",
-      "constructor": "RB-Honda RBPT",
-      "driver_slug": "yuki-tsunoda",
-      "power_unit": "Honda RBPTH002"
-    },
-    {
-      "number": "30",
-      "driver": "Liam Lawson",
-      "team": "Visa Cash App RB F1 Team",
-      "manufacturer": "VCARB 01",
-      "constructor": "RB-Honda RBPT",
-      "driver_slug": "liam-lawson",
-      "power_unit": "Honda RBPTH002"
-    },
-    {
-      "number": "27",
-      "driver": "Nico Hulkenberg",
-      "team": "MoneyGram Haas F1 Team",
-      "manufacturer": "VF-24",
-      "constructor": "Haas-Ferrari",
-      "driver_slug": "nico-hulkenberg",
-      "power_unit": "Ferrari 066/10"
-    },
-    {
-      "number": "20",
-      "driver": "Kevin Magnussen",
-      "team": "MoneyGram Haas F1 Team",
-      "manufacturer": "VF-24",
-      "constructor": "Haas-Ferrari",
-      "driver_slug": "kevin-magnussen",
-      "power_unit": "Ferrari 066/10"
-    },
-    {
-      "number": "77",
-      "driver": "Valtteri Bottas",
-      "team": "Stake F1 Team Kick Sauber",
-      "manufacturer": "C44",
-      "constructor": "Kick Sauber-Ferrari",
-      "driver_slug": "valtteri-bottas",
-      "power_unit": "Ferrari 066/12"
-    },
-    {
-      "number": "24",
-      "driver": "Zhou Guanyu",
-      "team": "Stake F1 Team Kick Sauber",
-      "manufacturer": "C44",
-      "constructor": "Kick Sauber-Ferrari",
-      "driver_slug": "zhou-guanyu",
-      "power_unit": "Ferrari 066/12"
-    }
+    {"number":"1","driver":"Max Verstappen","team":"Oracle Red Bull Racing","manufacturer":"RB20","constructor":"Red Bull Racing-Honda RBPT","driver_slug":"max-verstappen","power_unit":"Honda RBPTH002"},
+    {"number":"11","driver":"Sergio Perez","team":"Oracle Red Bull Racing","manufacturer":"RB20","constructor":"Red Bull Racing-Honda RBPT","driver_slug":"sergio-perez","power_unit":"Honda RBPTH002"},
+    {"number":"4","driver":"Lando Norris","team":"McLaren Formula 1 Team","manufacturer":"MCL38","constructor":"McLaren-Mercedes","driver_slug":"lando-norris","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"81","driver":"Oscar Piastri","team":"McLaren Formula 1 Team","manufacturer":"MCL38","constructor":"McLaren-Mercedes","driver_slug":"oscar-piastri","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"16","driver":"Charles Leclerc","team":"Scuderia Ferrari","manufacturer":"SF-24","constructor":"Ferrari","driver_slug":"charles-leclerc","power_unit":"Ferrari 066/12"},
+    {"number":"55","driver":"Carlos Sainz Jr.","team":"Scuderia Ferrari","manufacturer":"SF-24","constructor":"Ferrari","driver_slug":"carlos-sainz-jr","power_unit":"Ferrari 066/12"},
+    {"number":"44","driver":"Lewis Hamilton","team":"Mercedes-AMG Petronas F1 Team","manufacturer":"F1 W15","constructor":"Mercedes","driver_slug":"lewis-hamilton","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"63","driver":"George Russell","team":"Mercedes-AMG Petronas F1 Team","manufacturer":"F1 W15","constructor":"Mercedes","driver_slug":"george-russell","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"14","driver":"Fernando Alonso","team":"Aston Martin Aramco F1 Team","manufacturer":"AMR24","constructor":"Aston Martin Aramco-Mercedes","driver_slug":"fernando-alonso","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"18","driver":"Lance Stroll","team":"Aston Martin Aramco F1 Team","manufacturer":"AMR24","constructor":"Aston Martin Aramco-Mercedes","driver_slug":"lance-stroll","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"10","driver":"Pierre Gasly","team":"BWT Alpine F1 Team","manufacturer":"A524","constructor":"Alpine-Renault","driver_slug":"pierre-gasly","power_unit":"Renault E-Tech RE24"},
+    {"number":"31","driver":"Esteban Ocon","team":"BWT Alpine F1 Team","manufacturer":"A524","constructor":"Alpine-Renault","driver_slug":"esteban-ocon","power_unit":"Renault E-Tech RE24"},
+    {"number":"23","driver":"Alexander Albon","team":"Williams Racing","manufacturer":"FW46","constructor":"Williams-Mercedes","driver_slug":"alexander-albon","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"43","driver":"Franco Colapinto","team":"Williams Racing","manufacturer":"FW46","constructor":"Williams-Mercedes","driver_slug":"franco-colapinto","power_unit":"Mercedes-AMG F1 M15"},
+    {"number":"22","driver":"Yuki Tsunoda","team":"Visa Cash App RB F1 Team","manufacturer":"VCARB 01","constructor":"RB-Honda RBPT","driver_slug":"yuki-tsunoda","power_unit":"Honda RBPTH002"},
+    {"number":"30","driver":"Liam Lawson","team":"Visa Cash App RB F1 Team","manufacturer":"VCARB 01","constructor":"RB-Honda RBPT","driver_slug":"liam-lawson","power_unit":"Honda RBPTH002"},
+    {"number":"27","driver":"Nico Hulkenberg","team":"MoneyGram Haas F1 Team","manufacturer":"VF-24","constructor":"Haas-Ferrari","driver_slug":"nico-hulkenberg","power_unit":"Ferrari 066/10"},
+    {"number":"20","driver":"Kevin Magnussen","team":"MoneyGram Haas F1 Team","manufacturer":"VF-24","constructor":"Haas-Ferrari","driver_slug":"kevin-magnussen","power_unit":"Ferrari 066/10"},
+    {"number":"77","driver":"Valtteri Bottas","team":"Stake F1 Team Kick Sauber","manufacturer":"C44","constructor":"Kick Sauber-Ferrari","driver_slug":"valtteri-bottas","power_unit":"Ferrari 066/12"},
+    {"number":"24","driver":"Zhou Guanyu","team":"Stake F1 Team Kick Sauber","manufacturer":"C44","constructor":"Kick Sauber-Ferrari","driver_slug":"zhou-guanyu","power_unit":"Ferrari 066/12"}
   ],
   "tables": {}
 }

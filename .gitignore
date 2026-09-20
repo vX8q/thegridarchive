@@ -72,8 +72,13 @@ backups/
 # CLI compare scratch output
 *-compare-out.txt
 
-# Script scratch screenshots
+# Script scratch screenshots / local dumps
 scripts/_*.png
+scripts/_tmp/
+scripts/_*.json
+
+# Bootstrap stamp (TGA_BOOTSTRAP=incremental)
+data/.bootstrap_stamp
 
 # Optional: Node if you add tooling under the repo
 node_modules/
@@ -91,4 +96,6 @@ data/event_previews_ru/
 # Python bytecode from local scratch scripts
 __pycache__/
 _tmp_*
+
+
 

@@ -29,3 +29,16 @@ func TestFirstColIndex_IgnoresTrailingPeriod(t *testing.T) {
 		t.Fatalf("FirstColIndex = %d, want 0", got)
 	}
 }
+
+func TestRacePosColIndex_FinST(t *testing.T) {
+	headers := []string{"Fin / ST", "No.", "Driver", "Team", "Laps", "Pts"}
+	if got := RacePosColIndex(headers); got != 0 {
+		t.Fatalf("RacePosColIndex = %d, want 0", got)
+	}
+	if got := NormalizeRacePos("1 / ST 2 ▲1"); got != "1" {
+		t.Fatalf("NormalizeRacePos = %q, want 1", got)
+	}
+	if got := NormalizeRacePos("NC / ST 28"); got != "NC" {
+		t.Fatalf("NormalizeRacePos = %q, want NC", got)
+	}
+}

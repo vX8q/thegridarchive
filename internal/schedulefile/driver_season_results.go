@@ -10,6 +10,7 @@ import (
 
 	"github.com/vX8q/tga/config"
 	"github.com/vX8q/tga/internal/driverutil"
+	"github.com/vX8q/tga/internal/tableutil"
 	"github.com/vX8q/tga/models"
 )
 
@@ -54,6 +55,11 @@ func BuildDriverSeasonResultsFromEvents(dataDir string, driverSlug string, seaso
 				eventName = strings.TrimSpace(ev.Name)
 			}
 
+			circuitName := strings.TrimSpace(ev.CircuitName)
+			if circuitName == "" {
+				circuitName = strings.TrimSpace(detail.Track)
+			}
+
 			var mainResults []models.DriverSeasonResult
 			var sprintResults []models.DriverSeasonResult
 
@@ -68,7 +74,7 @@ func BuildDriverSeasonResultsFromEvents(dataDir string, driverSlug string, seaso
 					seriesID, seriesName,
 					ev.ID, eventName,
 					mainRaceName,
-					mainHeaders, mainRows, driverSlug)...)
+					mainHeaders, mainRows, driverSlug, ev.Season, circuitName)...)
 			} else {
 				// Sometimes full results live in tables.race.
 				if h, rws, ok := tableHeadersRows(detail.Tables, "race"); ok {
@@ -77,7 +83,7 @@ func BuildDriverSeasonResultsFromEvents(dataDir string, driverSlug string, seaso
 						seriesID, seriesName,
 						ev.ID, eventName,
 						mainRaceName,
-						h, rws, driverSlug)...)
+						h, rws, driverSlug, ev.Season, circuitName)...)
 				}
 			}
 
@@ -105,13 +111,18 @@ func BuildDriverSeasonResultsFromEvents(dataDir string, driverSlug string, seaso
 						seriesID, seriesName,
 						ev.ID, eventName,
 						sess.Title,
-						sess.Headers, sess.Rows, driverSlug)...)
+						sess.Headers, sess.Rows, driverSlug, ev.Season, circuitName)...)
 				}
 			}
 
 			if strings.EqualFold(seriesID, "IMSA") {
 				applyIMSAPointsFallback(detail, mainResults)
 				applyIMSAPointsFallback(detail, sprintResults)
+			}
+
+			if len(mainResults) > 0 || len(sprintResults) > 0 {
+				fillEmptyDriverTeamNames(mainResults, detail.EntryList, driverSlug)
+				fillEmptyDriverTeamNames(sprintResults, detail.EntryList, driverSlug)
 			}
 
 			// Row order on driver page:
@@ -132,9 +143,9 @@ func BuildDriverSeasonResultsFromEvents(dataDir string, driverSlug string, seaso
 			// but present in entry_list (often endurance/entry-only),
 			// add participation so driver page shows all series for the season.
 			if len(mainResults) == 0 && len(sprintResults) == 0 {
-				if er := parseDriverFromEntryList(seriesID, seriesName, ev.ID, eventName, detail.EntryList, driverSlug); len(er) > 0 {
+				if er := parseDriverFromEntryList(seriesID, seriesName, ev.ID, eventName, detail.EntryList, driverSlug, ev.Season, circuitName); len(er) > 0 {
 					out = append(out, er...)
-				} else if er := parseDriverFromRawEntryList(dataDir, seriesID, seriesName, ev.ID, eventName, driverSlug); len(er) > 0 {
+				} else if er := parseDriverFromRawEntryList(dataDir, seriesID, seriesName, ev.ID, eventName, driverSlug, ev.Season, circuitName); len(er) > 0 {
 					out = append(out, er...)
 				}
 			}
@@ -168,7 +179,7 @@ func BuildDriverSeasonResultsFromEvents(dataDir string, driverSlug string, seaso
 }
 
 func parseDriverFromRawEntryList(
-	dataDir, seriesID, seriesName, eventID, eventName, driverSlug string,
+	dataDir, seriesID, seriesName, eventID, eventName, driverSlug, season, circuitName string,
 ) []models.DriverSeasonResult {
 	raw, err := ReadEventDetailFile(dataDir, eventID)
 	if err != nil || len(raw) == 0 {
@@ -192,6 +203,9 @@ func parseDriverFromRawEntryList(
 			continue
 		}
 		team := strings.TrimSpace(asString(row["team"]))
+		if team == "" || team == "—" {
+			team = strings.TrimSpace(asString(row["constructor"]))
+		}
 		number := strings.TrimSpace(asString(row["number"]))
 		if number == "" {
 			number = strings.TrimSpace(asString(row["car_number"]))
@@ -223,17 +237,19 @@ func parseDriverFromRawEntryList(
 			}
 			return []models.DriverSeasonResult{
 				{
-					SeriesID:   seriesID,
-					SeriesName: seriesName,
-					TeamName:   team,
-					EventID:    eventID,
-					EventName:  eventName,
-					RaceName:   "Entry list",
-					Position:   0,
-					Points:     0,
-					Laps:       0,
-					Status:     "Entry list",
-					CarNumber:  number,
+					SeriesID:    seriesID,
+					SeriesName:  seriesName,
+					TeamName:    team,
+					EventID:     eventID,
+					EventName:   eventName,
+					RaceName:    "Entry list",
+					Season:      season,
+					CircuitName: circuitName,
+					Position:    0,
+					Points:      0,
+					Laps:        0,
+					Status:      "Entry list",
+					CarNumber:   number,
 				},
 			}
 		}
@@ -313,21 +329,16 @@ func tableHeadersRows(tables map[string]EventTable, key string) (headers []strin
 func parseDriverFromRaceTable(
 	seriesID, seriesName, eventID, eventName, raceName string,
 	headers []string, rows [][]string,
-	driverSlug string,
+	driverSlug, season, circuitName string,
 ) []models.DriverSeasonResult {
 	if len(headers) == 0 || len(rows) == 0 {
 		return nil
 	}
 
-	colPos := firstColIndex(headers, "Pos", "Fin")
-	if colPos < 0 {
-		// Tables sometimes have "Fin" without "Pos".
-		colPos = firstColIndex(headers, "Fin.")
-	}
+	colPos := tableutil.RacePosColIndex(headers)
 
 	colDriver := firstColIndex(headers, "Driver", "Drivers", "Driver Name")
 	colNo := firstColIndex(headers, "No", "No.", "#", "Car", "Car No", "CAR NO")
-	colTeam := firstColIndex(headers, "Team", "Entrant", "Constructor", "TEAM/CAR/SPONSOR")
 
 	colLaps := firstColIndex(headers, "Laps", "No Laps", "NO LAPS", "Laps Completed")
 
@@ -370,12 +381,11 @@ func parseDriverFromRaceTable(
 			continue
 		}
 
-		posStr := valueAt(row, colPos)
+		posStr := tableutil.NormalizeRacePos(valueAt(row, colPos))
 		pos := atoiSafe(posStr)
-		if strings.EqualFold(seriesID, "IMSA") {
-			if cp := imsaClassPosition(headers, rows, row); cp > 0 {
-				pos = cp
-			}
+		classPos := imsaClassPosition(headers, rows, row)
+		if strings.EqualFold(seriesID, "IMSA") && classPos > 0 {
+			pos = classPos
 		}
 
 		laps := atoiSafe(valueAt(row, colLaps))
@@ -424,26 +434,97 @@ func parseDriverFromRaceTable(
 		}
 
 		carNumber := valueAt(row, colNo)
-		teamName := valueAt(row, colTeam)
+		teamName := firstNonEmptyTeamCell(headers, row)
 		if strings.EqualFold(seriesID, "IMSA") {
 			teamName = imsaTeamFromCell(teamName)
 		}
 		out = append(out, models.DriverSeasonResult{
-			SeriesID:   seriesID,
-			SeriesName: seriesName,
-			TeamName:   teamName,
-			EventID:    eventID,
-			EventName:  eventName,
-			RaceName:   raceName,
-			Position:   pos,
-			Points:     pts,
-			Laps:       laps,
-			Status:     status,
-			CarNumber:  carNumber,
+			SeriesID:      seriesID,
+			SeriesName:    seriesName,
+			TeamName:      teamName,
+			EventID:       eventID,
+			EventName:     eventName,
+			RaceName:      raceName,
+			Season:        season,
+			CircuitName:   circuitName,
+			Position:      pos,
+			ClassPosition: classPos,
+			Points:        pts,
+			Laps:          laps,
+			Status:        status,
+			CarNumber:     carNumber,
 		})
 	}
 
 	return out
+}
+
+func firstNonEmptyTeamCell(headers []string, row []string) string {
+	for _, name := range []string{"Team", "Entrant", "Constructor", "TEAM/CAR/SPONSOR"} {
+		v := valueAt(row, firstColIndex(headers, name))
+		if v != "" && v != "—" {
+			return v
+		}
+	}
+	return ""
+}
+
+func fillEmptyDriverTeamNames(rows []models.DriverSeasonResult, entry []EntryListRow, driverSlug string) {
+	if len(rows) == 0 {
+		return
+	}
+	for i := range rows {
+		team := strings.TrimSpace(rows[i].TeamName)
+		if team != "" && team != "—" {
+			continue
+		}
+		if got := entryTeamForDriver(entry, driverSlug, rows[i].CarNumber); got != "" {
+			rows[i].TeamName = got
+		}
+	}
+}
+
+func entryTeamForDriver(entry []EntryListRow, driverSlug, carNumber string) string {
+	if len(entry) == 0 {
+		return ""
+	}
+	wantCar := strings.TrimSpace(carNumber)
+	fallback := ""
+	for _, r := range entry {
+		if !entryRowMatchesDriver(r, driverSlug) {
+			continue
+		}
+		team := strings.TrimSpace(r.Team)
+		if team == "" || team == "—" {
+			team = strings.TrimSpace(r.Constructor)
+		}
+		if team == "" || team == "—" {
+			continue
+		}
+		if wantCar != "" && strings.TrimSpace(r.Number) == wantCar {
+			return team
+		}
+		if fallback == "" {
+			fallback = team
+		}
+	}
+	return fallback
+}
+
+func entryRowMatchesDriver(r EntryListRow, driverSlug string) bool {
+	target := driverutil.NormalizeSlug(strings.TrimSpace(driverSlug))
+	if target == "" {
+		return false
+	}
+	if ds := driverutil.NormalizeSlug(strings.TrimSpace(r.DriverSlug)); ds != "" && ds == target {
+		return true
+	}
+	for _, name := range entryDrivers(r) {
+		if driverCellMatchesSlug(name, target) {
+			return true
+		}
+	}
+	return false
 }
 
 // imsaClassPosition returns class finishing position for IMSA results.
@@ -516,7 +597,7 @@ func imsaTeamFromCell(cell string) string {
 func parseDriverFromEntryList(
 	seriesID, seriesName, eventID, eventName string,
 	entry []EntryListRow,
-	driverSlug string,
+	driverSlug, season, circuitName string,
 ) []models.DriverSeasonResult {
 	if len(entry) == 0 {
 		return nil
@@ -525,19 +606,25 @@ func parseDriverFromEntryList(
 		if !driverCellMatchesSlug(r.Driver, driverSlug) {
 			continue
 		}
+		team := strings.TrimSpace(r.Team)
+		if team == "" || team == "—" {
+			team = strings.TrimSpace(r.Constructor)
+		}
 		return []models.DriverSeasonResult{
 			{
-				SeriesID:   seriesID,
-				SeriesName: seriesName,
-				TeamName:   strings.TrimSpace(r.Team),
-				EventID:    eventID,
-				EventName:  eventName,
-				RaceName:   "Entry list",
-				Position:   0,
-				Points:     0,
-				Laps:       0,
-				Status:     "Entry list",
-				CarNumber:  strings.TrimSpace(r.Number),
+				SeriesID:    seriesID,
+				SeriesName:  seriesName,
+				TeamName:    team,
+				EventID:     eventID,
+				EventName:   eventName,
+				RaceName:    "Entry list",
+				Season:      season,
+				CircuitName: circuitName,
+				Position:    0,
+				Points:      0,
+				Laps:        0,
+				Status:      "Entry list",
+				CarNumber:   strings.TrimSpace(r.Number),
 			},
 		}
 	}

@@ -97,16 +97,16 @@ func TestF1_2024_ScheduleAndEventFiles(t *testing.T) {
 func TestF1_2024_EntryListSchema(t *testing.T) {
 	dataDir := f1_2024DataDir(t)
 	wantMeta := map[string][3]string{
-		"BWT Alpine F1 Team":                {"Alpine-Renault", "A524", "Renault E-Tech RE24"},
-		"Aston Martin Aramco F1 Team":       {"Aston Martin Aramco-Mercedes", "AMR24", "Mercedes-AMG F1 M15"},
-		"Scuderia Ferrari":                  {"Ferrari", "SF-24", "Ferrari 066/12"},
-		"MoneyGram Haas F1 Team":            {"Haas-Ferrari", "VF-24", "Ferrari 066/10"},
-		"Stake F1 Team Kick Sauber":         {"Kick Sauber-Ferrari", "C44", "Ferrari 066/12"},
-		"McLaren Formula 1 Team":            {"McLaren-Mercedes", "MCL38", "Mercedes-AMG F1 M15"},
-		"Mercedes-AMG Petronas F1 Team":     {"Mercedes", "F1 W15", "Mercedes-AMG F1 M15"},
-		"Visa Cash App RB F1 Team":          {"RB-Honda RBPT", "VCARB 01", "Honda RBPTH002"},
-		"Oracle Red Bull Racing":            {"Red Bull Racing-Honda RBPT", "RB20", "Honda RBPTH002"},
-		"Williams Racing":                   {"Williams-Mercedes", "FW46", "Mercedes-AMG F1 M15"},
+		"BWT Alpine F1 Team":            {"Alpine-Renault", "A524", "Renault E-Tech RE24"},
+		"Aston Martin Aramco F1 Team":   {"Aston Martin Aramco-Mercedes", "AMR24", "Mercedes-AMG F1 M15"},
+		"Scuderia Ferrari":              {"Ferrari", "SF-24", "Ferrari 066/12"},
+		"MoneyGram Haas F1 Team":        {"Haas-Ferrari", "VF-24", "Ferrari 066/10"},
+		"Stake F1 Team Kick Sauber":     {"Kick Sauber-Ferrari", "C44", "Ferrari 066/12"},
+		"McLaren Formula 1 Team":        {"McLaren-Mercedes", "MCL38", "Mercedes-AMG F1 M15"},
+		"Mercedes-AMG Petronas F1 Team": {"Mercedes", "F1 W15", "Mercedes-AMG F1 M15"},
+		"Visa Cash App RB F1 Team":      {"RB-Honda RBPT", "VCARB 01", "Honda RBPTH002"},
+		"Oracle Red Bull Racing":        {"Red Bull Racing-Honda RBPT", "RB20", "Honda RBPTH002"},
+		"Williams Racing":               {"Williams-Mercedes", "FW46", "Mercedes-AMG F1 M15"},
 	}
 
 	for rd := 1; rd <= 24; rd++ {

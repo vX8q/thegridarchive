@@ -9,12 +9,12 @@
   function teamLink(name) {
     var TGA = window.TGA;
     var esc = TGA.esc;
-    var slugify = TGA.slugify;
     var teamLabel = TGA.teamLabel;
     var raw = name != null ? String(name).trim() : '';
     if (!raw) return '—';
     var label = teamLabel ? teamLabel(raw) : raw;
-    return '<a href="/team/' + encodeURIComponent(slugify(raw)) + '" class="track-link">' + esc(label) + '</a>';
+    var href = (TGA.teamHref && TGA.teamHref(raw)) || ('/team/' + encodeURIComponent((TGA.slugify || function (s) { return s; })(raw)));
+    return '<a href="' + href + '" class="track-link">' + esc(label) + '</a>';
   }
 
   function renderDriverCell(name, joiner) {

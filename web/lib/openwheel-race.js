@@ -80,6 +80,7 @@
     // Session title already names Sprint/Feature/Race N — meta Session row is redundant.
     if (s === 'gtwce_end' || s === 'gtwce_sprint') return false;
     if (s === 'f4_it' || s === 'super_formula' || s === 'dtm' || s === 'psc' || s === 'supercars') return false;
+    if (s === 'elms' || /^ELMS_/.test(ev)) return false;
     return true;
   }
 

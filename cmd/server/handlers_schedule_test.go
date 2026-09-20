@@ -42,10 +42,10 @@ func TestHandleAggregatedSchedule_ReturnsEvents(t *testing.T) {
 	}
 
 	type eventRow struct {
-		ID       string `json:"id"`
-		SeriesID string `json:"series_id"`
-		Season   string `json:"season"`
-		HasDetail bool  `json:"has_detail"`
+		ID        string `json:"id"`
+		SeriesID  string `json:"series_id"`
+		Season    string `json:"season"`
+		HasDetail bool   `json:"has_detail"`
 	}
 	var events []eventRow
 	if err := json.Unmarshal(payload["events"], &events); err != nil {

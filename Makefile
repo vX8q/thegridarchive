@@ -1,4 +1,4 @@
-.PHONY: build test lint run dev ci docker js-test check-data
+.PHONY: build test lint run dev ci docker js-test check-data format-data
 
 build:
 	go build -trimpath -o server.exe ./cmd/server/
@@ -26,6 +26,8 @@ ci-data-audits:
 	node scripts/audit-stockcar-data.mjs
 	node scripts/audit-stockcar-data.test.mjs
 	node scripts/audit-caution-breakdown.mjs
+	node scripts/audit-car-makes.mjs --check
+	node scripts/audit-p1-gap.mjs --check
 	node scripts/audit-innerhtml.mjs
 	node scripts/fix-driver-slug-aliases.mjs --check
 
@@ -34,6 +36,9 @@ js-test:
 
 check-data:
 	node scripts/check-data.mjs
+
+format-data:
+	node scripts/format-compact-json.mjs data
 
 docker:
 	docker build -t tga:latest .

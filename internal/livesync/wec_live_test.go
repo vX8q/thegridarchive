@@ -49,6 +49,83 @@ func TestWECSessionLooksLive_ActiveRace(t *testing.T) {
 	}
 }
 
+func TestWECSessionLooksLive_PracticeNotLive(t *testing.T) {
+	snap := loadWECSample(t)
+	snap.Params.SessionName = "Free Practice 3"
+	snap.Params.RaceState = "Grn"
+	snap.Params.PercentProgressLive = 42
+	snap.Params.Remaining = 1800
+	snap.Params.StartTime = float64(time.Now().Add(-30 * time.Minute).UnixMilli())
+	snap.Params.Duration = 3600
+	if wecSessionLooksLive(snap, time.Now().UTC()) {
+		t.Fatal("practice session must not look live")
+	}
+	if wecSessionIsRace("Free Practice 3") || wecSessionIsRace("Qualifying") || wecSessionIsRace("Hyperpole") {
+		t.Fatal("non-race session names must not count as Race")
+	}
+	if !wecSessionIsRace("Race") || !wecSessionIsRace("race") {
+		t.Fatal("Race must count as race session")
+	}
+}
+
+func TestSyncWEC_PracticeDoesNotMarkLive(t *testing.T) {
+	orig := fetchWECLiveSnapshotFunc
+	origNow := wecNowFunc
+	defer func() {
+		fetchWECLiveSnapshotFunc = orig
+		wecNowFunc = origNow
+	}()
+
+	weekend := time.Date(2026, 9, 5, 16, 0, 0, 0, time.UTC)
+	wecNowFunc = func() time.Time { return weekend }
+
+	snap := loadWECSample(t)
+	snap.Params.SessionName = "Free Practice 3"
+	snap.Params.RaceState = "Grn"
+	snap.Params.PercentProgressLive = 40
+	snap.Params.Remaining = 1800
+	snap.Params.StartTime = float64(weekend.UnixMilli())
+	snap.Params.Duration = 3600
+	fetchWECLiveSnapshotFunc = func() (*wecLiveSnapshot, error) { return snap, nil }
+
+	dir := t.TempDir()
+	schedDir := filepath.Join(dir, "schedules")
+	if err := os.MkdirAll(schedDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	sched := `[{"id":"WEC_2026_5","start_date":"2026-09-04","end_date":"2026-09-06"}]`
+	if err := os.WriteFile(filepath.Join(schedDir, "wec.json"), []byte(sched), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	livePath := filepath.Join(dir, "live.json")
+	if err := os.WriteFile(livePath, []byte(`["F1_2026_1","WEC_2026_5"]`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := SyncWEC(dir); err != nil {
+		t.Fatalf("SyncWEC: %v", err)
+	}
+	got := readLiveIDs(livePath)
+	if len(got) != 1 || got[0] != "F1_2026_1" {
+		t.Fatalf("live ids = %#v, want only F1 (practice must clear WEC)", got)
+	}
+}
+
+func TestWECGapDisplay(t *testing.T) {
+	if got := wecGapDisplay(wecLiveEntry{Gap: "-", GapTime: 0}, 1); got != "—" {
+		t.Fatalf("leader = %q", got)
+	}
+	if got := wecGapDisplay(wecLiveEntry{Gap: "-", GapTime: 24575}, 4); got != "+24.575s" {
+		t.Fatalf("gapTime ms = %q, want +24.575s", got)
+	}
+	if got := wecGapDisplay(wecLiveEntry{Gap: "1 Lap", GapTime: 0}, 20); got != "+1 Lap" {
+		t.Fatalf("lap gap = %q", got)
+	}
+	if got := wecGapDisplay(wecLiveEntry{Gap: "2.5", GapTime: 0}, 3); got != "+2.5s" {
+		t.Fatalf("numeric gap = %q", got)
+	}
+}
+
 func TestWECLeaderboardFrom(t *testing.T) {
 	snap := loadWECSample(t)
 	leaders := wecLeaderboardFrom(snap.Entries, 3)
@@ -60,6 +137,9 @@ func TestWECLeaderboardFrom(t *testing.T) {
 	}
 	if leaders[0].GapDisplay != "—" {
 		t.Fatalf("leader gap = %q", leaders[0].GapDisplay)
+	}
+	if leaders[1].GapDisplay != "+10.913s" {
+		t.Fatalf("P2 gap = %q, want +10.913s (gapTime ms)", leaders[1].GapDisplay)
 	}
 }
 

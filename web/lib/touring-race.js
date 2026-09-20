@@ -36,7 +36,7 @@
 
   function shouldHideStartingLineupOnRaceTab(seriesId) {
     var s = String(seriesId || '').toLowerCase();
-    return s === 'f4_it' || s === 'supercars';
+    return s === 'f4_it';
   }
 
   function normalizeFinStTable(tbl) {
@@ -179,6 +179,9 @@
       dropTargets = { 'best lap': true, 'time of the day': true };
     } else if (sid === 'super_gt') {
       dropTargets = { 'interval': true, 'avg. (km/h)': true, 'time of the day': true };
+    } else if (sid === 'f2' || sid === 'f3' || /^F2_|^F3_/.test(ev)) {
+      // KPH crowds the race grid; hide on race pages (practice/qual keep it in JSON).
+      dropTargets = { kph: true };
     }
     if (!dropTargets) return tableData;
     var dropIdx = [];

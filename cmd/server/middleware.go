@@ -41,7 +41,7 @@ func wrapWithTraceID(h http.HandlerFunc) http.HandlerFunc {
 // responseWriter records response status and size for logs and metrics.
 type responseWriter struct {
 	http.ResponseWriter
-	status int
+	status  int
 	written int64
 }
 
@@ -90,15 +90,21 @@ func wrapWithRecovery(h http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+// writeCORSPreflight answers an OPTIONS preflight without invoking the wrapped handler.
+func writeCORSPreflight(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Token, X-Trace-ID")
+	w.Header().Set("Access-Control-Max-Age", "86400")
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // wrapWithCORS adds CORS headers and handles preflight (OPTIONS).
 func wrapWithCORS(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		if r.Method == http.MethodOptions {
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Token, X-Trace-ID")
-			w.Header().Set("Access-Control-Max-Age", "86400")
-			w.WriteHeader(http.StatusNoContent)
+			writeCORSPreflight(w)
 			return
 		}
 		h(w, r)
@@ -119,11 +125,12 @@ func wrapWithRateLimit(limiter *rateLimiter) func(http.HandlerFunc) http.Handler
 }
 
 // wrapWithAdminToken requires X-Admin-Token or Authorization: Bearer <token> for access.
-// OPTIONS (preflight) skips token check so CORS works from the browser.
+// OPTIONS (preflight) is answered here and never reaches the protected handler: routes without
+// a CORS wrapper (/metrics) would otherwise serve their body to an unauthenticated OPTIONS request.
 func wrapWithAdminToken(token string, h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodOptions {
-			h(w, r)
+			writeCORSPreflight(w)
 			return
 		}
 		if token == "" {

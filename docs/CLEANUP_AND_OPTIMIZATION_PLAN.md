@@ -1,10 +1,12 @@
 # План очистки и оптимизации TGA
 
+> **Статус:** рабочий backlog оптимизации; много пунктов фаз 0–3 уже сделаны. Перед новым шагом сверять с кодом и CI. Эксплуатация: [`README.md`](../README.md), [`RUNBOOK.md`](RUNBOOK.md).
+
 Приоритет: **срочное → несрочное**. Каждый пункт: цель, действия, риск, ожидаемый эффект, критерий готовности.
 
 Связанные документы: [`PERFORMANCE.md`](PERFORMANCE.md), [`RUNBOOK.md`](RUNBOOK.md), [`data/SERIES_TEMPLATES.md`](../data/SERIES_TEMPLATES.md).
 
-**Актуализация (2026-07):** фазы 0–1 закрыты; 2.1–2.3, 3.2–3.4 и sandbox локальных driver photos — сделаны. Открыты: 2.4 (optional event cache), 3.1 bootstrap, 3.5 codegen, фаза 4+.
+**Актуализация (2026-08-28):** фазы 0–1 и большая часть 2–3 закрыты (даты вынесены в `tga-dates-*`, event render modules, weekend merge). `pages/event.js` отдаётся с `no-store` (как `app.js` / `style.css`). Открытые идеи смотреть по разделам ниже — не считать весь документ TODO.
 
 ---
 
@@ -172,26 +174,15 @@ API **не читает** `rows` из standings для пересчёта очк
 
 ### 2.4 Event response cache (optional)
 
-**Где:** `cmd/server/handlers_events.go` — сейчас `Cache-Control: no-store` для полных event JSON (намеренно, чтобы правки JSON сразу видны). Summary endpoint использует `private, max-age=30`.
+**Где:** `cmd/server/handlers_events.go` — полный event JSON: `no-store`. Summary: `private, max-age=30`.
 
-**Статус:** полный event cache не подключали; Last Results больше не зависит от N× полного event fetch (см. §3.3).
+**Статус:** summary cache закрывает Last Results; полный event cache не нужен.
 
 ---
 
-## Фаза 3 — Средний приоритет (dev UX и структура API)
-
 ### 3.1 Инкрементальный / пропускаемый bootstrap
 
-**Где:** `cmd/server/bootstrap.go`, `main.go`.
-
-**Действия:**
-- Env `TGA_BOOTSTRAP=full|skip|incremental` (default `full` в prod, `skip` или `incremental` в dev)
-- Incremental: импорт только event, у которых mtime &gt; last_bootstrap_time в SQLite meta table
-- Документировать в README § Hot Reload / Air
-
-**Эффект:** перезапуск с Air **5–30 с → &lt;2 с** в типичном dev.  
-**Риск:** средний — рассинхрон DB/JSON если skip без понимания.  
-**Готово когда:** `air` + правка одного event JSON не требует полного bootstrap для stats из DB (если DB path используется).
+**Статус: сделано** — `TGA_BOOTSTRAP=skip|incremental|full` (`bootstrap_mode.go`, штамп `data/.bootstrap_stamp`). Incremental пропускает reimport, если JSON в `schedules`/`events` не новее штампа. См. README § Hot Reload.
 
 ---
 
@@ -324,9 +315,9 @@ API **не читает** `rows` из standings для пересчёта очк
 ```
 Фаза 0  [x] 0.1 PNG          [x] 0.2 standings rows  [x] 0.3 archive scripts  [x] 0.4 frontend quick wins
 Фаза 1  [x] 1.1 dead Go      [x] 1.2 handler fallback [x] 1.3 schedule cache dedup
-Фаза 2  [x] 2.1 mtime cache  [x] 2.2 single pass     [x] 2.3 has_detail       [ ] 2.4 event cache (optional)
-Фаза 3  [ ] 3.1 bootstrap    [x] 3.2 /api/schedule   [x] 3.3 last results   [x] 3.4 event double-fetch  [ ] 3.5 codegen
-Фаза 4  [x] 4.1 DB stats     [ ] 4.2 bundling        [ ] 4.3 search           [ ] 4.4 split series.js   [ ] 4.5 perf docs  [x] 4.6 script docs (partial: sanity restored)
+Фаза 2  [x] 2.1 mtime cache  [x] 2.2 single pass     [x] 2.3 has_detail       [x] 2.4 event cache (summary max-age=30)
+Фаза 3  [x] 3.1 bootstrap    [x] 3.2 /api/schedule   [x] 3.3 last results   [x] 3.4 event double-fetch  [ ] 3.5 codegen
+Фаза 4  [x] 4.1 DB stats     [ ] 4.2 bundling        [x] 4.3 search           [ ] 4.4 split series.js   [ ] 4.5 perf docs  [x] 4.6 script docs (partial: sanity restored)
 Фаза 5  [ ] по необходимости
 ```
 

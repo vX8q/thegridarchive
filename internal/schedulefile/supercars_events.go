@@ -12,7 +12,20 @@ import (
 // to the same weekend bundle file (e.g. SUPERCARS_2026_5 -> supercars_2026_2 for Melbourne).
 // Site URLs use weekend numbers via ResolveSupercarsHTTPFileID instead.
 func ResolveEventDetailID(dataDir, eventID string) string {
+	id := strings.ToUpper(strings.ReplaceAll(strings.TrimSpace(eventID), "-", "_"))
+	if id == "PSC_2026_7" {
+		return "psc_2026_6"
+	}
 	return resolveSupercarsScheduleRaceToWeekendFile(dataDir, eventID)
+}
+
+// ResolveHTTPEventFileID maps a request slug to the on-disk event JSON id.
+func ResolveHTTPEventFileID(dataDir, eventID string) string {
+	id := strings.ToUpper(strings.ReplaceAll(strings.TrimSpace(eventID), "-", "_"))
+	if strings.HasPrefix(id, "SUPERCARS_") {
+		return ResolveSupercarsHTTPFileID(dataDir, eventID)
+	}
+	return ResolveEventDetailID(dataDir, eventID)
 }
 
 func resolveSupercarsScheduleRaceToWeekendFile(dataDir, eventID string) string {
@@ -98,13 +111,10 @@ func SupercarsWeekendNumber(dataDir, eventID string) int {
 	return rounds[0]
 }
 
-// PatchSupercarsEventIDFromRequest sets canonical_event_id when the request slug
-// differs from the loaded weekend bundle (legacy race-number URLs).
-func PatchSupercarsEventIDFromRequest(body []byte, requestedEventID, fileID string) []byte {
+// PatchCanonicalEventIDFromRequest sets canonical_event_id when the request slug
+// differs from the loaded event file (legacy race-number URLs, merged weekends).
+func PatchCanonicalEventIDFromRequest(body []byte, requestedEventID, fileID string) []byte {
 	req := strings.ToUpper(strings.ReplaceAll(strings.TrimSpace(requestedEventID), "-", "_"))
-	if !strings.HasPrefix(req, "SUPERCARS_") {
-		return body
-	}
 	fileSlug := strings.ToUpper(strings.ReplaceAll(strings.TrimSpace(fileID), "-", "_"))
 	if fileSlug == "" || strings.EqualFold(req, fileSlug) {
 		return body

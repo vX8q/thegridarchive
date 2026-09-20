@@ -162,26 +162,61 @@ body {
 }
 
 .container { max-width: 1600px; margin: 0 auto; padding: 0 1.25rem; }
-/* Event pages: give wide race tables extra room */
-body:has(#view-event:not(.hidden)) main.container.main {
-  max-width: 2200px;
-}
-/* Только для страницы события с pre-season блоком
-   прижимаем к левому краю ТОЛЬКО основной контентный контейнер (<main class="container main">) */
-body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) main.container.main {
-  margin-left: 0;
-  margin-right: 0;
-}
-/* GTWCE Endurance / Sprint: широкие таблицы остаются на 1600px, но main снова по центру — как у остальных вью, не «впритык» к левому краю вьюпорта */
-:is(body.series-gtwce_end, body.series-gtwce_sprint):has(#view-event:not(.hidden) #event-content .event-pre-season-block) main.container.main {
+/* body is a column flex. Auto side margins on .container disable stretch, so
+   main shrink-wraps to the widest child (driver Results vs Teams → header jump).
+   width:100% + max-width keeps a stable column; align-self:center puts that
+   column in the middle (stretch + max-width would pin it to the left). */
+main.container.main {
+  width: 100%;
+  max-width: 1600px;
+  box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
+  align-self: center;
+}
+/* Event pages: the column is capped by --event-column (see the event page
+   layout contract below), so main must not add a cap of its own. main and the
+   fixed .event-sticky-header both center on the viewport with the same gutter —
+   that is what keeps the header from jumping between tabs. width:100% stops
+   main from shrink-wrapping to the table (flex parent + auto margins). */
+body:has(#view-event:not(.hidden)) main.container.main {
+  max-width: none;
+  width: 100%;
+  align-self: stretch;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  /* .main resets the .container gutter to 0; the event column needs it back
+     here (not on #event-content) so main and the fixed header clamp a wide
+     --event-column against the same available width. */
+  padding-left: var(--event-gutter, 1.25rem);
+  padding-right: var(--event-gutter, 1.25rem);
 }
 
 .hidden { display: none !important; }
 
 
 /* Header — всегда закреплён, не смещается. Фон: едва заметная сетка (grid = стартовая решётка). */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 1100;
+  padding: 0.5rem 0.85rem;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border-2);
+  border-radius: 0.4rem;
+  text-decoration: none;
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .header {
   position: fixed;
   top: 0;
@@ -482,7 +517,11 @@ body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) main.c
 .logo:hover .logo-archive { color: var(--text); }
 .tagline { margin: 0; color: var(--muted); font-size: 0.95rem; }
 
-.main { flex: 1; padding: 2rem 0; }
+.main {
+  flex: 1;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 
 /* Theme toggle */
 .theme-toggle {
@@ -785,6 +824,728 @@ body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) main.c
   transform: none;
 }
 
+/* Driver profile: center photo / tabs / cards in the viewport. The 1600px
+   main column stays stable (no tab jump); without this, a Titles card sits
+   at the left edge of that column on a wide window. */
+#view-driver {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#view-driver .breadcrumb,
+#view-driver .driver-header {
+  width: max-content;
+  max-width: 100%;
+}
+#view-driver #driver-content,
+#view-driver .driver-career {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#view-driver .driver-career-tabs {
+  justify-content: center;
+  width: max-content;
+  max-width: 100%;
+}
+#view-driver .driver-career-panel {
+  width: max-content;
+  max-width: 100%;
+}
+#view-driver .driver-honor-grid {
+  width: max-content;
+  max-width: 100%;
+}
+#view-driver .driver-season-chips {
+  justify-content: center;
+}
+#view-driver .table-wrap {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Team profile header — card shell, 2-col meta, drivers, logo trust */
+#team-meta,
+.team-meta {
+  color: var(--text);
+  line-height: 1.4;
+  min-height: 0;
+}
+.team-header-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.team-header-card .driver-header-row {
+  min-width: 0;
+}
+.team-header-card .driver-header-text {
+  min-width: 0;
+  flex: 1 1 12rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+#view-team .team-header h1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+#view-team .team-meta-row--aka .team-meta-value {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+#view-team .team-meta-value:not(.team-meta-series) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+#view-team .team-meta-row--lineage .team-meta-value {
+  -webkit-line-clamp: 2;
+}
+#view-team .team-meta-series {
+  max-height: 2.4rem;
+  overflow: hidden;
+}
+.team-logo-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+.team-logo-wrap {
+  background: transparent;
+  border-color: var(--border);
+}
+.team-logo-wrap--placeholder {
+  border-style: dashed;
+  border-color: var(--border-2);
+  background: rgba(125, 125, 125, 0.08);
+  box-shadow: none;
+}
+.team-logo-wrap--placeholder .team-logo {
+  opacity: 0.55;
+}
+.team-logo-fallback-hint {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.85;
+}
+.team-meta-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 1.1rem;
+  margin-top: 0.35rem;
+}
+.team-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+.team-meta-row--aka,
+.team-meta-row--lineage,
+.team-meta-row--series,
+.team-meta-row--drivers {
+  grid-column: 1 / -1;
+}
+.team-meta-row--aka {
+  opacity: 0.85;
+  font-size: 0.9rem;
+}
+.team-meta-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 1;
+  padding-top: 0;
+}
+.team-meta-value {
+  color: var(--text);
+  font-size: 0.98rem;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+.team-meta-season {
+  opacity: 0.72;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.team-meta-series {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.team-meta-chip {
+  display: inline-block;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(125, 125, 125, 0.12);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--text);
+  opacity: 0.78;
+}
+.team-meta-chip.is-active {
+  opacity: 1;
+  border-color: var(--border-3);
+  background: rgba(125, 125, 125, 0.22);
+  color: var(--text);
+  font-weight: 600;
+}
+.team-meta-row--drivers {
+  margin-top: 0.15rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border);
+}
+.team-driver-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+.team-driver-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.55rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.team-driver-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  height: 1.45rem;
+  padding: 0 0.4rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-2);
+  background: var(--card-2);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+.team-driver-name,
+.team-driver-name a.team-driver-link {
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: none;
+}
+.team-driver-name a.team-driver-link:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+.team-driver-series,
+.team-driver-class {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.team-driver-ft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.7rem;
+  padding: 0.08rem 0.42rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+  opacity: 1;
+}
+.team-driver-ft--ft {
+  color: #b7f0cb;
+  background: rgba(61, 154, 106, 0.22);
+  border: 1px solid rgba(61, 154, 106, 0.45);
+}
+.team-driver-ft--pt {
+  color: #f0e0a0;
+  background: rgba(201, 162, 39, 0.18);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+}
+:root[data-theme="light"] .team-driver-ft--ft {
+  color: #1f6b3f;
+  background: rgba(61, 154, 106, 0.14);
+}
+:root[data-theme="light"] .team-driver-ft--pt {
+  color: #7a5d10;
+  background: rgba(201, 162, 39, 0.16);
+}
+
+.team-results-table .col-num,
+.team-roster-table .col-num {
+  text-align: right;
+}
+.team-results-table tbody tr.team-row--alt td {
+  background: rgba(125, 125, 125, 0.06);
+}
+.team-results-table .team-pos--top {
+  color: #8fd4a8;
+  font-weight: 700;
+}
+:root[data-theme="light"] .team-results-table .team-pos--top {
+  color: #1f6b3f;
+}
+
+
+/* Team Staff overview (by department) */
+.team-staff-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+.team-staff-section {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-2);
+  overflow: hidden;
+}
+.team-staff-section-title {
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0;
+}
+.team-staff-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.team-staff-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12rem;
+  padding: 0.7rem 0.9rem 0.7rem 0.95rem;
+  border-top: 1px solid var(--border);
+}
+.team-staff-row:first-child {
+  border-top: 0;
+}
+.team-staff-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+}
+.team-staff-role {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  line-height: 1.3;
+}
+#view-team .driver-career-panel:has(.team-staff-overview) {
+  width: 100%;
+  max-width: 100%;
+}
+:root[data-theme="light"] .team-staff-section-title {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Team Results pagination — project tokens (accent red, card surfaces) */
+.team-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 1.15rem 0 0.35rem;
+}
+.team-pager-btn {
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--border-2);
+  border-radius: 0.4rem;
+  background: var(--card-2);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+.team-pager-btn:hover:not(:disabled) {
+  background: var(--card-3);
+  border-color: var(--border-3);
+  color: var(--text);
+}
+.team-pager-btn.is-current {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  cursor: default;
+}
+.team-pager-btn--nav:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.team-pager-btn--nav:not(:disabled):hover {
+  filter: brightness(1.08);
+}
+.team-pager-btn--nav.is-disabled,
+.team-pager-btn--nav:disabled {
+  background: var(--card-2);
+  border-color: var(--border);
+  color: var(--muted);
+  opacity: 0.55;
+  cursor: default;
+  filter: none;
+}
+.team-pager-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#view-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#view-team .team-breadcrumb {
+  width: max-content;
+  max-width: 100%;
+  margin-bottom: 1.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+#view-team .team-breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--link);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+#view-team .team-breadcrumb-link:hover {
+  color: var(--link-hover);
+  text-decoration: none;
+  border-color: var(--border-2);
+}
+#view-team .team-breadcrumb-current {
+  color: var(--text);
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+#view-team .team-header {
+  width: 54rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+#view-team .team-header-card {
+  width: 100%;
+  height: 20rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+#view-team .team-header-card .driver-header-row {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  height: 100%;
+  min-width: 0;
+}
+#view-team #team-content,
+#view-team .driver-career {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#view-team .driver-career-tabs {
+  justify-content: center;
+  width: max-content;
+  max-width: 100%;
+}
+#view-team .driver-career-panel {
+  width: max-content;
+  max-width: 100%;
+}
+#view-team .driver-season-chips {
+  justify-content: center;
+}
+#view-team .table-wrap {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 720px) {
+  .team-meta-list {
+    grid-template-columns: 1fr;
+  }
+  #view-team .team-header {
+    width: 100%;
+  }
+  #view-team .team-header-card {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+  #view-team .team-header-card .driver-header-row {
+    flex-wrap: wrap;
+    height: auto;
+  }
+  #view-team .team-meta-value:not(.team-meta-series),
+  #view-team .team-meta-row--aka .team-meta-value,
+  #view-team .team-meta-row--lineage .team-meta-value {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+  #view-team .team-meta-series {
+    max-height: none;
+  }
+}
+
+/* Driver profile career tabs (Results / Teams / Achievements / Titles) */
+.driver-career {
+  margin-top: 0.25rem;
+}
+.driver-career-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.15rem;
+  margin: 0 0 1.15rem;
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+}
+.driver-career-tab {
+  position: relative;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0.55rem 0.95rem 0.7rem;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  line-height: 1.2;
+}
+.driver-career-tab:hover {
+  color: var(--text);
+}
+.driver-career-tab.is-active {
+  color: var(--text);
+}
+.driver-career-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px 2px 0 0;
+}
+.driver-season-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.9rem;
+}
+.season-stats-by-series {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0 0 0.9rem;
+}
+.season-stats-block .season-stats-strip {
+  margin-bottom: 0;
+}
+.season-stats-series {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.season-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0 0 0.9rem;
+}
+.season-stats-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.65rem 0.4rem;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  min-width: 0;
+}
+.season-stats-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.season-stats-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.2;
+}
+@media (max-width: 640px) {
+  .season-stats-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.driver-season-chip {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  padding: 0.28rem 0.75rem;
+}
+.driver-season-chip:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.driver-season-chip.is-active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+:root[data-theme="light"] .driver-season-chip.is-active {
+  color: #fff;
+}
+:root[data-theme="light"] .driver-season-chip:hover {
+  border-color: var(--border-3);
+}
+.driver-honor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+  gap: 0.85rem;
+}
+.driver-honor-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.95rem 1rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  border-left: 3px solid var(--accent);
+}
+.driver-honor-card--crown {
+  grid-column: 1 / -1;
+  border-left-color: #c4a35a;
+  background: linear-gradient(180deg, rgba(196, 163, 90, 0.12), var(--card) 58%);
+}
+.driver-honor-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.driver-honor-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+h4.driver-honor-title {
+  margin: 0;
+  font-size: var(--heading-4-size);
+  font-weight: var(--heading-4-weight);
+  color: var(--text);
+  line-height: 1.3;
+}
+.driver-honor-count {
+  flex: 0 0 auto;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.driver-honor-years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.driver-honor-year {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-2);
+  color: var(--text-2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+a.driver-honor-year:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.driver-team-history .driver-team-years {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
 .series-live-banner {
   display: flex;
   align-items: center;
@@ -827,16 +1588,15 @@ body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) main.c
 
 .standings-section-toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   flex-wrap: nowrap;
   gap: 1rem;
   margin-bottom: 0.75rem;
   min-height: 2.75rem;
 }
-.standings-section-toolbar h3 {
-  margin: 0;
-  flex: 0 1 auto;
+.standings-section-toolbar:not(:has(#standings-mode-nav:not(.hidden))) {
+  display: none;
 }
 .standings-mode-nav {
   display: inline-flex;
@@ -1167,6 +1927,28 @@ body.series-super_gt #view-event #event-content[data-event-section="race"] .data
 body.series-super_gt #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:hover {
   background: inherit !important;
 }
+
+/* Super GT knockout qualifying: one table per class, Q1/Q2 columns (pole = Q2 P1). */
+body.series-super_gt #view-event #event-content[data-event-section="qualifying"] .event-pre-season-block {
+  max-width: min(100%, 1100px);
+  margin-left: auto;
+  margin-right: auto;
+}
+body.series-super_gt #view-event #event-content[data-event-section="qualifying"] .data-table.super-gt-qual-table th:nth-last-child(-n+2),
+body.series-super_gt #view-event #event-content[data-event-section="qualifying"] .data-table.super-gt-qual-table td:nth-last-child(-n+2) {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+body.series-super_gt #view-event #event-content[data-event-section="qualifying"] .data-table.super-gt-qual-table th:nth-last-child(2),
+body.series-super_gt #view-event #event-content[data-event-section="qualifying"] .data-table.super-gt-qual-table td:nth-last-child(2) {
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+body.series-super_gt #view-event #event-content[data-event-section="qualifying"] .data-table.super-gt-qual-table tbody tr.qual-row-q1-out td:last-child {
+  color: var(--text-muted, #888);
+  opacity: 0.55;
+}
+
 /* IndyCar Car Specs: убираем рамку вокруг единственной таблицы,
    чтобы не было лишней полосы под заголовком. */
 body.series-indycar #technical-spec-table-wrap,
@@ -1271,7 +2053,6 @@ body.series-indycar #car-models-table-wrap {
 .data-table.stockcar-teams-table tbody.group-even tr td,
 .data-table.stockcar-teams-table tr.group-even td { background: var(--row-alt); }
 .data-table.stockcar-teams-table .stockcar-manufacturer-cell {
-  font-weight: 700;
   text-align: center;
   vertical-align: middle;
 }
@@ -1463,10 +2244,8 @@ body.cat-openwheel #stats-panel .stats-controls-left {
   border-left: 2px solid var(--border-3);
 }
 .supercars-table .manufacturer-cell {
-  font-weight: 700;
   text-align: center;
   vertical-align: middle;
-  color: var(--link);
 }
 .supercars-table .table-separator-row td {
   background: var(--bg);
@@ -2120,74 +2899,47 @@ body.series-super_gt #view-event #event-content[data-event-section="race"] .data
 .data-table.pre-season-results-table th:hover,
 .data-table.pre-season-results-table td:hover { background: var(--table-col-hover) !important; }
 
-/* Merged qualifying table (Qualifying + Top Ten Shoot Out, Wikipedia F1 style) */
+/* Merged qualifying table (Qualifying + Top Ten Shoot Out).
+   Colors match practice: header --border, zebra --row-alt. */
 .qual-merged-table .qual-group-header-row th {
   border-bottom: none;
   padding-bottom: 2px;
 }
 .col-group-header {
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--surface2, rgba(255,255,255,0.05));
+  letter-spacing: 0.06em;
+  background: var(--border);
+  color: var(--text);
   padding-top: 6px;
   padding-bottom: 6px;
-  font-size: 0.75rem;
-  border-bottom: 2px solid var(--accent);
+  font-size: 0.72rem;
+  border-bottom: 1px solid var(--border-2);
 }
 .qual-so-empty {
-  color: var(--text-muted, #666);
-  opacity: 0.4;
+  color: var(--muted);
 }
 .qual-so-pos {
-  font-weight: 800;
-  color: #fff;
+  font-weight: 600;
+  color: var(--text);
   border-left: none;
 }
-/* Чёткая граница между Qualifying и Shoot Out */
-.qual-merged-table th:nth-child(9) {
-  border-left: 2px solid #000;
+.qual-merged-table th:nth-child(7) {
+  border-left: 1px solid var(--border-2);
 }
-/* Вертикальная граница только для топ-10 (Shoot Out) */
-.qual-merged-table tbody tr.qual-row-in-shootout td:nth-child(9) {
-  border-left: 2px solid #000;
+.qual-merged-table tbody tr.qual-row-in-shootout td:nth-child(7) {
+  border-left: 1px solid var(--border-2);
 }
-.qual-merged-table tbody tr:not(.qual-row-in-shootout) td:nth-child(9) {
+.qual-merged-table tbody tr:not(.qual-row-in-shootout) td:nth-child(7) {
   border-left: none;
 }
-/* Нижняя граница под блоком Shoot Out (под 10-й позицией, по всей строке) */
 .qual-merged-table tbody tr.qual-row-in-shootout:last-of-type td {
-  border-bottom: 2px solid #000;
+  border-bottom: 1px solid var(--border-2);
 }
-/* Убрать дублирующий border на 6-й колонке если был */
 .qual-merged-table td:nth-child(6),
 .qual-merged-table th:nth-child(6) {
   border-left: none;
-}
-/* Топ-10 строки (участвовали в шутауте) — лёгкий фон */
-.qual-merged-table tr.qual-row-in-shootout td {
-  background: rgba(255, 255, 255, 0.04);
-}
-/* Строки не попавших в шутаут — приглушить */
-.qual-merged-table tr:not(.qual-row-in-shootout) td.qual-so-empty {
-  opacity: 0.25;
-}
-/* Чередование строк */
-.qual-merged-table tbody tr:nth-child(even) td {
-  background: rgba(255,255,255,0.02);
-}
-.qual-merged-table tbody tr.qual-row-in-shootout:nth-child(even) td {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-/* Цвет шрифта в объединённой таблице */
-.qual-merged-table th,
-.qual-merged-table td {
-  color: var(--text);
-}
-.qual-merged-table .qual-so-empty {
-  color: #fff;
 }
 
 /* Modifiers — spacing only; size comes from .table-section-title (heading-4) */
@@ -2478,7 +3230,8 @@ body.series-super_formula #view-event #event-content[data-event-section="race"] 
   white-space: nowrap;
 }
 
-/* F2 / F3 race: larger type; Laps (5) and Pts (last) stay compact. */
+/* F2 / F3 race: Pos · ST · No. · Driver · Team · Laps · … · Pts (KPH dropped in JS).
+   Global race-session nth-child rules assume a different column order — override here. */
 body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th,
 body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td,
 body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th,
@@ -2487,10 +3240,51 @@ body.series-f3 #view-event #event-content[data-event-section="race"] .data-table
   padding: 0.4rem 0.5rem;
   line-height: 1.4;
 }
+/* No. */
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(3),
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(3),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(3),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(3) {
+  min-width: 2.25rem;
+  width: 1%;
+  max-width: 2.75rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  text-align: center;
+  white-space: nowrap;
+  word-break: normal;
+}
+/* Driver */
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(4),
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(4),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(4),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(4) {
+  min-width: 8rem;
+  max-width: none;
+  width: auto;
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+}
+/* Team — needs room so Laps does not overlay */
 body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(5),
 body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(5),
 body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(5),
 body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(5) {
+  min-width: 10rem;
+  max-width: none;
+  width: auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+}
+/* Laps */
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(6),
+body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(6),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:nth-child(6),
+body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:nth-child(6) {
   min-width: 2.25rem;
   width: 1%;
   max-width: 3rem;
@@ -2499,6 +3293,7 @@ body.series-f3 #view-event #event-content[data-event-section="race"] .data-table
   text-align: center;
   white-space: nowrap;
 }
+/* Pts */
 body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:last-child,
 body.series-f2 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table td:last-child,
 body.series-f3 #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table th:last-child,
@@ -2940,10 +3735,6 @@ body.series-f3 #view-event #event-content[data-event-section="race"] .data-table
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 1.5rem;
 }
-/* Крупнее превью только на выбранных этапах (см. body.ev-… в app.js) */
-body.ev-supercars-2026-8 .video-embed-wrap:has(.video-facade-wrap) {
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-}
 .video-embed-wrap--single {
   display: block;
 }
@@ -3232,6 +4023,9 @@ body.ev-supercars-2026-8 .video-embed-wrap:has(.video-facade-wrap) {
 #standings-table tr.standings-playoff-cutline td {
   border-top: 2px dashed rgba(255, 255, 255, 0.35);
 }
+#standings-table tr.standings-chase-eliminated td {
+  opacity: 0.55;
+}
 
 /* Race tab: таблицы гонок и pre-season блоки прижаты к левому краю внутри контента. */
 #view-event #event-content .event-pre-season-block {
@@ -3358,14 +4152,25 @@ body #view-event #event-content .event-pre-season-block .table-wrap.table-wrap--
   line-height: 0;
 }
 
-/* Event sticky header — full-bleed, контент по центру */
+/* ── Event page layout contract ─────────────────────────────────────────────
+   The sticky header is position:fixed (its box is the viewport) while
+   #event-content flows inside <main>, so the two only stay aligned while both
+   read the same --event-column and the same --event-gutter, and both center on
+   the viewport. A series widens its column by overriding --event-column here
+   and nothing else; setting max-width on only one of the two boxes is what
+   used to make the header jump between tabs (ELMS qualifying vs race).
+   Per-tab widths are not allowed — a tab switch must never move the column. */
+body {
+  --event-column: 1200px;
+  --event-gutter: 1.25rem;
+}
 .event-sticky-header {
   position: fixed;
   top: var(--header-height);
   left: 0;
   right: 0;
   z-index: 99;
-  padding: 1rem max(1.25rem, calc((100vw - 1600px) / 2)) 0;
+  padding: 1rem var(--event-gutter) 0;
   background: var(--bg);
   box-sizing: border-box;
   display: flex;
@@ -3376,18 +4181,7 @@ body #view-event #event-content .event-pre-season-block .table-wrap.table-wrap--
 .event-sticky-header > .event-header,
 .event-sticky-header > .event-section-nav {
   width: 100%;
-  max-width: 1200px;
-  box-sizing: border-box;
-}
-/* Для страницы события с pre-season блоком — шапка по тем же левым отступам, что и таблица */
-body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) .event-sticky-header {
-  padding: 1rem 1.25rem 0;
-}
-.event-sticky-header > .breadcrumb,
-.event-sticky-header > .event-header,
-.event-sticky-header > .event-section-nav {
-  width: 100%;
-  max-width: 1200px;
+  max-width: var(--event-column);
   box-sizing: border-box;
 }
 .event-panels-wrap {
@@ -3395,30 +4189,15 @@ body:has(#view-event:not(.hidden) #event-content .event-pre-season-block) .event
   min-height: 60vh;
   padding-top: var(--event-header-height);
 }
+/* No inner padding: main.container already supplies --event-gutter, and the
+   sticky header pads by the same amount, so header text and table share one
+   left edge at every viewport width. */
 #view-event #event-content {
-  max-width: 1200px;
+  max-width: var(--event-column);
   margin-left: auto;
   margin-right: auto;
-  padding: 0 1.25rem;
+  padding: 0;
   box-sizing: border-box;
-}
-#view-event #event-content[data-event-section="bop"] {
-  max-width: 1600px;
-}
-/* GTWCE Endurance: широкие таблицы — иначе #event-content (1200px) уже самой таблицы, «панель» обрезается */
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="practice"],
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="test"],
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="qualifying"],
-:is(body.series-gtwce_end, body.series-gtwce_sprint) #view-event #event-content[data-event-section="race"] {
-  max-width: min(100%, 2200px);
-}
-/* IMSA: та же логика — таблицы практик/квалификации/гонки широкие, не должны
-   упираться в 1200px у #event-content. */
-body.series-imsa #view-event #event-content[data-event-section="practice"],
-body.series-imsa #view-event #event-content[data-event-section="qualifying"],
-body.series-imsa #view-event #event-content[data-event-section="race"],
-body.series-imsa #view-event #event-content[data-event-section="pre_season_tests"] {
-  max-width: 1600px;
 }
 /* ── IMSA / Race + Pre-season tests (таблицы с .race-session-results-table): эталон — `/event/imsa-2026-1/race`. ── */
 body.series-imsa #view-event #event-content:is([data-event-section="race"], [data-event-section="pre_season_tests"]) .event-pre-season-block {
@@ -3456,6 +4235,124 @@ body.series-imsa #view-event #event-content[data-event-section="practice"] .data
   white-space: nowrap;
   font-size: 0.85rem;
   padding: 0.42rem 0.55rem;
+}
+
+/* ELMS practice/qual stay in the same 1200px column as Race / Entry List. */
+
+/* ELMS race: left-pinned content-width table under Race / Results, like F2/IMSA.
+   Specificity must beat #view-event .race-session-results-table (width/min-width)
+   and the EOF unified event-table block (padding/text-align/font-size !important). */
+body.series-elms #view-event #event-content[data-event-section="race"] .event-pre-season-block {
+  max-width: none;
+  margin-left: 0;
+  margin-right: auto;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .table-wrap:has(.elms-race-results-table),
+body.series-elms #view-event #event-content[data-event-section="race"] .table-wrap:has(.race-session-results-table.elms-race-results-table) {
+  overflow-x: auto;
+  width: max-content;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table,
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.race-session-results-table.elms-race-results-table {
+  width: max-content !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  table-layout: auto !important;
+  border-collapse: collapse;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table thead th {
+  font-size: 0.68rem !important;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 0.75rem 0.85rem !important;
+  background: var(--card-2);
+  border-bottom: 1px solid var(--border-2);
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th,
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td {
+  min-width: 0 !important;
+  width: auto !important;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  padding: 0.7rem 0.85rem !important;
+  font-size: 0.88rem !important;
+  line-height: 1.4 !important;
+  vertical-align: middle;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table tbody tr:nth-child(odd) td {
+  background: var(--card);
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table tbody tr:nth-child(even) td {
+  background: var(--row-alt);
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table tbody tr:hover td {
+  background: var(--card-3);
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th:nth-child(1),
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(1) {
+  width: 3.25rem !important;
+  text-align: center !important;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(1) {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th:nth-child(2),
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(2) {
+  width: 7.5rem !important;
+  text-align: left !important;
+}
+/* Car — shrink-wrap to the longest make (Aston Martin / Mercedes-AMG); leftover goes to Team */
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th:nth-child(3),
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(3) {
+  width: 1px !important;
+  padding-left: 0.55rem !important;
+  padding-right: 0.55rem !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th:nth-child(5),
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(5) {
+  width: 0 !important;
+  max-width: max-content !important;
+  padding-left: 0.4rem !important;
+  padding-right: 0.45rem !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+}
+/* NO. — same weight as other data cells, not Pos */
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th:nth-child(4),
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(4) {
+  width: 3.5rem !important;
+  text-align: center !important;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(4) {
+  font-weight: 400 !important;
+  font-variant-numeric: tabular-nums;
+}
+/* Laps / times / avg / on / points */
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th:nth-child(n+6),
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:nth-child(n+6) {
+  width: 1% !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table th:last-child,
+body.series-elms #view-event #event-content[data-event-section="race"] .data-table.elms-race-results-table td:last-child {
+  width: 4.5rem !important;
+  min-width: 3.5rem !important;
+  padding-right: 1.1rem !important;
+  text-align: right !important;
+}
+body.series-elms #view-event #event-content:is([data-event-section="practice"], [data-event-section="qualifying"]) .data-table th,
+body.series-elms #view-event #event-content:is([data-event-section="practice"], [data-event-section="qualifying"]) .data-table td {
+  padding: 0.5rem 0.6rem !important;
 }
 
 .event-section-nav {
@@ -3932,6 +4829,14 @@ tr.table-separator-row td {
 .lrc-card--f3 .lrc-winner,
 .lrc-card--supercars .lrc-winner {
   font-size: 0.78rem;
+}
+
+/* F3 double-header (Sprint + 2 Feature races): 3 строки победителей — компактнее обычного */
+.lrc-card--f3-triple .lrc-winner {
+  font-size: 0.74rem;
+  line-height: 1.12;
+  margin-top: 0.2rem;
+  max-height: 3.6em;
 }
 
 /* FREC: 3 winners (R1/R2/R3) in compact form */
@@ -5599,7 +6504,14 @@ tr.table-separator-row td {
 .lrc-card--milwaukee-mile,
 .lrc-card--circuit-of-the-americas,
 .lrc-card--oswego-speedway,
-.lrc-card--duquoin-state-fairgrounds-racetrack {
+.lrc-card--duquoin-state-fairgrounds-racetrack,
+.lrc-card--madison-international-speedway,
+.lrc-card--stafford-motor-speedway,
+.lrc-card--hockenheimring,
+.lrc-card--sachsenring,
+.lrc-card--madrid-circuit,
+.lrc-card--salem-speedway,
+.lrc-card--the-bend-motorsport-park {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -5687,6 +6599,27 @@ tr.table-separator-row td {
 .lrc-card--duquoin-state-fairgrounds-racetrack {
   background-image: url('/api/card-bg/DuQuoin-State-Fairgrounds-Racetrack.jpg');
 }
+.lrc-card--madison-international-speedway {
+  background-image: url('/api/card-bg/Madison-International-Speedway.webp');
+}
+.lrc-card--stafford-motor-speedway {
+  background-image: url('/api/card-bg/Stafford-Motor-Speedway.jpg');
+}
+.lrc-card--hockenheimring {
+  background-image: url('/api/card-bg/Hockenheimring.jpg');
+}
+.lrc-card--sachsenring {
+  background-image: url('/api/card-bg/Sachsenring.jpg');
+}
+.lrc-card--madrid-circuit {
+  background-image: url('/api/card-bg/madrid-circuit.jpg');
+}
+.lrc-card--salem-speedway {
+  background-image: url('/api/card-bg/Salem-Speedway.jpg');
+}
+.lrc-card--the-bend-motorsport-park {
+  background-image: url('/api/card-bg/The-Bend-Motorsport-Park.jpg');
+}
 .lrc-card--echopark-speedway::after,
 .lrc-card--interlagos::after,
 .lrc-card--hungaroring::after,
@@ -5713,7 +6646,14 @@ tr.table-separator-row td {
 .lrc-card--milwaukee-mile::after,
 .lrc-card--circuit-of-the-americas::after,
 .lrc-card--oswego-speedway::after,
-.lrc-card--duquoin-state-fairgrounds-racetrack::after {
+.lrc-card--duquoin-state-fairgrounds-racetrack::after,
+.lrc-card--madison-international-speedway::after,
+.lrc-card--stafford-motor-speedway::after,
+.lrc-card--hockenheimring::after,
+.lrc-card--sachsenring::after,
+.lrc-card--madrid-circuit::after,
+.lrc-card--salem-speedway::after,
+.lrc-card--the-bend-motorsport-park::after {
   content: '';
   position: absolute;
   left: 0;
@@ -5754,7 +6694,14 @@ tr.table-separator-row td {
 .lrc-card--milwaukee-mile > *,
 .lrc-card--circuit-of-the-americas > *,
 .lrc-card--oswego-speedway > *,
-.lrc-card--duquoin-state-fairgrounds-racetrack > * {
+.lrc-card--duquoin-state-fairgrounds-racetrack > *,
+.lrc-card--madison-international-speedway > *,
+.lrc-card--stafford-motor-speedway > *,
+.lrc-card--hockenheimring > *,
+.lrc-card--sachsenring > *,
+.lrc-card--madrid-circuit > *,
+.lrc-card--salem-speedway > *,
+.lrc-card--the-bend-motorsport-park > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -8232,7 +9179,14 @@ tr.table-separator-row td {
 .nrc-card--milwaukee-mile,
 .nrc-card--circuit-of-the-americas,
 .nrc-card--oswego-speedway,
-.nrc-card--duquoin-state-fairgrounds-racetrack {
+.nrc-card--duquoin-state-fairgrounds-racetrack,
+.nrc-card--madison-international-speedway,
+.nrc-card--stafford-motor-speedway,
+.nrc-card--hockenheimring,
+.nrc-card--sachsenring,
+.nrc-card--madrid-circuit,
+.nrc-card--salem-speedway,
+.nrc-card--the-bend-motorsport-park {
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -8318,6 +9272,27 @@ tr.table-separator-row td {
 .nrc-card--duquoin-state-fairgrounds-racetrack::before {
   background-image: url('/api/card-bg/DuQuoin-State-Fairgrounds-Racetrack.jpg');
 }
+.nrc-card--madison-international-speedway::before {
+  background-image: url('/api/card-bg/Madison-International-Speedway.webp');
+}
+.nrc-card--stafford-motor-speedway::before {
+  background-image: url('/api/card-bg/Stafford-Motor-Speedway.jpg');
+}
+.nrc-card--hockenheimring::before {
+  background-image: url('/api/card-bg/Hockenheimring.jpg');
+}
+.nrc-card--sachsenring::before {
+  background-image: url('/api/card-bg/Sachsenring.jpg');
+}
+.nrc-card--madrid-circuit::before {
+  background-image: url('/api/card-bg/madrid-circuit.jpg');
+}
+.nrc-card--salem-speedway::before {
+  background-image: url('/api/card-bg/Salem-Speedway.jpg');
+}
+.nrc-card--the-bend-motorsport-park::before {
+  background-image: url('/api/card-bg/The-Bend-Motorsport-Park.jpg');
+}
 .nrc-card--echopark-speedway::before,
 .nrc-card--interlagos::before,
 .nrc-card--hungaroring::before,
@@ -8344,7 +9319,14 @@ tr.table-separator-row td {
 .nrc-card--milwaukee-mile::before,
 .nrc-card--circuit-of-the-americas::before,
 .nrc-card--oswego-speedway::before,
-.nrc-card--duquoin-state-fairgrounds-racetrack::before {
+.nrc-card--duquoin-state-fairgrounds-racetrack::before,
+.nrc-card--madison-international-speedway::before,
+.nrc-card--stafford-motor-speedway::before,
+.nrc-card--hockenheimring::before,
+.nrc-card--sachsenring::before,
+.nrc-card--madrid-circuit::before,
+.nrc-card--salem-speedway::before,
+.nrc-card--the-bend-motorsport-park::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -8381,7 +9363,14 @@ tr.table-separator-row td {
 .nrc-card--milwaukee-mile::after,
 .nrc-card--circuit-of-the-americas::after,
 .nrc-card--oswego-speedway::after,
-.nrc-card--duquoin-state-fairgrounds-racetrack::after {
+.nrc-card--duquoin-state-fairgrounds-racetrack::after,
+.nrc-card--madison-international-speedway::after,
+.nrc-card--stafford-motor-speedway::after,
+.nrc-card--hockenheimring::after,
+.nrc-card--sachsenring::after,
+.nrc-card--madrid-circuit::after,
+.nrc-card--salem-speedway::after,
+.nrc-card--the-bend-motorsport-park::after {
   content: '';
   position: absolute;
   left: 0;
@@ -8422,7 +9411,14 @@ tr.table-separator-row td {
 .nrc-card--milwaukee-mile > *,
 .nrc-card--circuit-of-the-americas > *,
 .nrc-card--oswego-speedway > *,
-.nrc-card--duquoin-state-fairgrounds-racetrack > * {
+.nrc-card--duquoin-state-fairgrounds-racetrack > *,
+.nrc-card--madison-international-speedway > *,
+.nrc-card--stafford-motor-speedway > *,
+.nrc-card--hockenheimring > *,
+.nrc-card--sachsenring > *,
+.nrc-card--madrid-circuit > *,
+.nrc-card--salem-speedway > *,
+.nrc-card--the-bend-motorsport-park > * {
   position: relative;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -8453,7 +9449,14 @@ tr.table-separator-row td {
 .nrc-card--milwaukee-mile:hover::before,
 .nrc-card--circuit-of-the-americas:hover::before,
 .nrc-card--oswego-speedway:hover::before,
-.nrc-card--duquoin-state-fairgrounds-racetrack:hover::before {
+.nrc-card--duquoin-state-fairgrounds-racetrack:hover::before,
+.nrc-card--madison-international-speedway:hover::before,
+.nrc-card--stafford-motor-speedway:hover::before,
+.nrc-card--hockenheimring:hover::before,
+.nrc-card--sachsenring:hover::before,
+.nrc-card--madrid-circuit:hover::before,
+.nrc-card--salem-speedway:hover::before,
+.nrc-card--the-bend-motorsport-park:hover::before {
   transform: none;
 }
 
@@ -8524,6 +9527,16 @@ tr.table-separator-row td {
 .full-sched-btn:hover svg { opacity: 1; }
 
 /* ── Schedule page / compact table ───────────────────────────────────────── */
+/* Full schedule (?full_schedule=1): .table-wrap is fit-content, so without
+   this the page sits at the left of the 1600px main column. Center the whole
+   view as one column so title/controls stay left-aligned with the table. */
+#view-schedule {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Компактная таблица */
 .sched-compact.data-table th,
 .sched-compact.data-table td {
@@ -8661,4 +9674,12 @@ tr.table-separator-row td {
   font-size: inherit !important;
   line-height: inherit !important;
   font-weight: inherit !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .series-live-dot,
+  .nlb-live-dot,
+  .nrc-live.nrc-live-visible {
+    animation: none;
+  }
 }

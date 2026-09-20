@@ -28,6 +28,38 @@ func TestSetSecurityHeaders(t *testing.T) {
 	}
 }
 
+func TestWrapWithAdminToken_OptionsDoesNotReachHandler(t *testing.T) {
+	called := false
+	h := wrapWithAdminToken("secret", func(w http.ResponseWriter, _ *http.Request) {
+		called = true
+		_, _ = w.Write([]byte("protected body"))
+	})
+	rec := httptest.NewRecorder()
+	h(rec, httptest.NewRequest(http.MethodOptions, "/metrics", nil))
+
+	if called {
+		t.Fatal("OPTIONS reached the protected handler — admin token bypass")
+	}
+	if rec.Code != http.StatusNoContent {
+		t.Fatalf("status = %d, want 204", rec.Code)
+	}
+	if rec.Header().Get("Access-Control-Allow-Origin") != "*" {
+		t.Fatal("preflight response is missing CORS origin header")
+	}
+}
+
+func TestWrapWithMetricsAccess_OptionsWithoutTokenIsNotServed(t *testing.T) {
+	h := wrapWithMetricsAccess("secret", func(w http.ResponseWriter, _ *http.Request) {
+		_, _ = w.Write([]byte("tga_requests_total 1"))
+	})
+	rec := httptest.NewRecorder()
+	h(rec, httptest.NewRequest(http.MethodOptions, "/metrics", nil))
+
+	if strings.Contains(rec.Body.String(), "tga_requests_total") {
+		t.Fatalf("metrics leaked to an unauthenticated OPTIONS request: %q", rec.Body.String())
+	}
+}
+
 func TestWrapWithLogging_SetsSecurityHeaders(t *testing.T) {
 	h := wrapWithLogging(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusOK)

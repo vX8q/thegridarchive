@@ -35,28 +35,3 @@ func FillImsaClassPosInRows(headers []string, rows [][]string) bool {
 	}
 	return changed
 }
-
-// FillImsaClassPosInEventDetail updates all IMSA tables/sessions that have CLASS + CLASS POS.
-func FillImsaClassPosInEventDetail(detail *EventDetailJSON) bool {
-	if detail == nil || detail.Tables == nil {
-		return false
-	}
-	changed := false
-	for _, tbl := range detail.Tables {
-		if len(tbl.Headers) > 0 {
-			if FillImsaClassPosInRows(tbl.Headers, tbl.Rows) {
-				changed = true
-			}
-		}
-		for i := range tbl.Sessions {
-			s := &tbl.Sessions[i]
-			if len(s.Headers) == 0 {
-				continue
-			}
-			if FillImsaClassPosInRows(s.Headers, s.Rows) {
-				changed = true
-			}
-		}
-	}
-	return changed
-}

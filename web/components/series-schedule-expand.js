@@ -171,6 +171,5 @@
   window.TGA.expandSeriesScheduleEvents = expandSeriesScheduleEvents;
   window.TGA.expandFullScheduleEvents = expandFullScheduleEvents;
   window.TGA.normalizeSeriesScheduleBaseName = normalizeEventBaseName;
-  window.TGA.trLabel = trLabel;
   window.TGA.resolveRaceSessionLabel = resolveRaceSessionLabel;
 })();

@@ -7,203 +7,170 @@
   "end_date": "2026-08-28",
   "track": "Stafford Motor Speedway",
   "location": "Stafford, Connecticut, USA",
+  "laps": "150",
+  "distance": "75 mi (120.701 km)",
+  "youtube_id": "bNJaUmjEHrw",
+  "event_preview": "Stafford Motor Speedway is a 0.500-mile (0.805 km) slightly banked asphalt oval in Stafford, Connecticut, one of New England's historic short tracks. The GAF 150 is the 13th of 16 races on the 2026 NASCAR Whelen Modified Tour schedule and the Tour's first visit to Stafford since the 2021 NAPA Fall Final, scheduled for 150 laps (75 miles) on Friday, 28 August. It is the Stafford round of the FloRacing Connecticut Challenge, a four-race miniseries at Thompson and Stafford. Twenty-five cars are entered.\n\nAustin Beers and Patrick Emerling are tied for the championship lead on 465 points after New Hampshire. Jon McKennedy is third on 441 after winning the previous round, the Mohegan Sun 100, then Stephen Kopcik (434) and Matt Hirschman (428). Mike Stefanik leads all drivers with 20 Tour wins at Stafford. Doug Coby is a 12-time winner there; Justin Bonsignore won the most recent Tour race at the track in 2021, and Emerling also won at Stafford that season.\n\nThe NASCAR Whelen Modified Tour qualifying record at Stafford Motor Speedway belongs to Doug Coby, who turned a 17.896-second lap (100.581 mph) on 29 April 2017.",
+  "event_preview_ru": "Stafford Motor Speedway — слегка банкованный асфальтовый овал длиной 0,500 мили (0,805 км) в Stafford, Connecticut, одна из исторических коротких трасс Новой Англии. GAF 150 — 13-й из 16 этапов календаря NASCAR Whelen Modified Tour 2026 и первый визит Tour на Stafford с NAPA Fall Final 2021 года, планируется на 150 кругов (75 миль) в пятницу, 28 августа. Это этап на Stafford в рамках FloRacing Connecticut Challenge — мини-серии из четырёх гонок на Thompson и Stafford. Заявлено 25 машин.\n\nAustin Beers и Patrick Emerling делят лидерство в чемпионате с 465 очками после New Hampshire. Jon McKennedy третий с 441 после победы на предыдущем этапе, Mohegan Sun 100, далее Stephen Kopcik (434) и Matt Hirschman (428). Mike Stefanik лидирует по победам Tour на Stafford — 20. Doug Coby — 12-кратный победитель здесь; Justin Bonsignore выиграл последнюю гонку Tour на этой трассе в 2021 году, Emerling тоже побеждал на Stafford в том сезоне.\n\nКвалификационный рекорд NASCAR Whelen Modified Tour на Stafford Motor Speedway принадлежит Doug Coby — 17,896 секунды (100,581 mph) 29 апреля 2017 года.",
+  "race_statistics": {"Average speed":"75.567 mph (121.613 km/h)","Cautions / Laps":"3 for 20","Lead changes":"8","Red flags":"0","Time of race":"59 minutes and 33 seconds","Margin of victory":"0.906 sec"},
   "entry_list": [
-    {
-      "number": "1",
-      "driver": "Patrick Emerling",
-      "team": "USNE Motorsports",
-      "manufacturer": "LFR",
-      "crew_chief": "Dale Hedquist",
-      "driver_slug": "patrick-emerling"
-    },
-    {
-      "number": "3",
-      "driver": "Tyler Rypkema",
-      "team": "BRE Racing",
-      "manufacturer": "Boehler Racing",
-      "crew_chief": "Greg Fournier",
-      "driver_slug": "tyler-rypkema"
-    },
-    {
-      "number": "05",
-      "driver": "Teddy Hodgdon IV",
-      "team": "Teddy Hodgdon Racing",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "Ted Hodgdon",
-      "driver_slug": "teddy-hodgdon-iv"
-    },
-    {
-      "number": "8",
-      "driver": "John-Michael Shenette",
-      "team": "Eighty-Two Autosport",
-      "manufacturer": "LFR",
-      "crew_chief": "Scott Morin",
-      "driver_slug": "john-michael-shenette"
-    },
-    {
-      "number": "18",
-      "driver": "Ken Heagy",
-      "team": "Heagy Motorsports",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "Greg Gorman",
-      "driver_slug": "ken-heagy"
-    },
-    {
-      "number": "21",
-      "driver": "Stephen Kopcik",
-      "team": "Wanick Motorsports",
-      "manufacturer": "Troyer",
-      "crew_chief": "Nick Kopcik",
-      "driver_slug": "stephen-kopcik"
-    },
-    {
-      "number": "28",
-      "driver": "Doug Coby",
-      "team": "Jett Motorsports",
-      "manufacturer": "LFR",
-      "crew_chief": "John McKenna",
-      "driver_slug": "doug-coby"
-    },
-    {
-      "number": "31",
-      "driver": "Michael Christopher Jr.",
-      "team": "Elite Motorsports",
-      "manufacturer": "LFR",
-      "crew_chief": "Eugene Orlando",
-      "driver_slug": "michael-christopher-jr"
-    },
-    {
-      "number": "36",
-      "driver": "Dave Sapienza",
-      "team": "Sapienza Racing",
-      "manufacturer": "Troyer",
-      "crew_chief": "Greg Kleila",
-      "driver_slug": "dave-sapienza"
-    },
-    {
-      "number": "44",
-      "driver": "Chase Dowling",
-      "team": "Tinio Racing",
-      "manufacturer": "LFR",
-      "crew_chief": "Danny Gamache",
-      "driver_slug": "chase-dowling"
-    },
-    {
-      "number": "54",
-      "driver": "Tommy Catalano",
-      "team": "Catalano Motorsports",
-      "manufacturer": "Troyer",
-      "crew_chief": "Rick Kluth",
-      "driver_slug": "tommy-catalano"
-    },
-    {
-      "number": "56",
-      "driver": "Trevor Catalano",
-      "team": "Catalano Motorsports",
-      "manufacturer": "Troyer",
-      "crew_chief": "David Catalano",
-      "driver_slug": "trevor-catalano"
-    },
-    {
-      "number": "58",
-      "driver": "Eric Goodale",
-      "team": "Goodie Motorsports",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "Rob Hyer",
-      "driver_slug": "eric-goodale"
-    },
-    {
-      "number": "60",
-      "driver": "Matt Hirschman",
-      "team": "Pee Dee Motorsports",
-      "manufacturer": "Troyer",
-      "crew_chief": "Mike Stein",
-      "driver_slug": "matt-hirschman"
-    },
-    {
-      "number": "64",
-      "driver": "Austin Beers",
-      "team": "KLM Motorsports",
-      "manufacturer": "Troyer",
-      "crew_chief": "Ron Yuhas",
-      "driver_slug": "austin-beers"
-    },
-    {
-      "number": "73",
-      "driver": "Paulie Hartwig III",
-      "team": "Hartwig Racing",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "Bobby Geiger Jr.",
-      "driver_slug": "paulie-hartwig-iii"
-    },
-    {
-      "number": "79",
-      "driver": "Jon McKennedy",
-      "team": "Jon McKennedy Racing",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "Patrick Walsh",
-      "driver_slug": "jon-mckennedy"
-    },
-    {
-      "number": "82",
-      "driver": "Andrew Molleur",
-      "team": "DWR Racing",
-      "manufacturer": "LFR",
-      "crew_chief": "Michael Molleur",
-      "driver_slug": "andrew-molleur"
-    },
-    {
-      "number": "89",
-      "driver": "Matt Swanson",
-      "team": "Matt Swanson",
-      "manufacturer": "FURY Race Cars",
-      "crew_chief": "John Swanson",
-      "driver_slug": "matt-swanson"
-    }
+    {"number":"1","driver":"Patrick Emerling","team":"USNE Motorsports","manufacturer":"LFR","crew_chief":"Dale Hedquist","driver_slug":"patrick-emerling"},
+    {"number":"3","driver":"Tyler Rypkema","team":"BRE Racing","manufacturer":"Boehler Racing","crew_chief":"Greg Fournier","driver_slug":"tyler-rypkema"},
+    {"number":"05","driver":"Teddy Hodgdon IV","team":"Teddy Hodgdon Racing","manufacturer":"FURY Race Cars","crew_chief":"Ted Hodgdon","driver_slug":"teddy-hodgdon-iv"},
+    {"number":"8","driver":"John-Michael Shenette","team":"Eighty-Two Autosport","manufacturer":"LFR","crew_chief":"George Bessette Jr.","driver_slug":"john-michael-shenette"},
+    {"number":"15","driver":"Joey Cipriano III","team":"Fueled Up Motorsports","manufacturer":"FURY Race Cars","crew_chief":"Tyler Hines","driver_slug":"joey-cipriano-iii"},
+    {"number":"18","driver":"Ken Heagy","team":"Heagy Motorsports","manufacturer":"FURY Race Cars","crew_chief":"Greg Gorman","driver_slug":"ken-heagy"},
+    {"number":"20","driver":"Max Zachem","team":"Morgan Zachem Racing","manufacturer":"Troyer","crew_chief":"Ken Zachem","driver_slug":"max-zachem"},
+    {"number":"21","driver":"Stephen Kopcik","team":"Wanick Motorsports","manufacturer":"Troyer","crew_chief":"Nick Kopcik","driver_slug":"stephen-kopcik"},
+    {"number":"28","driver":"Doug Coby","team":"Jett Motorsports","manufacturer":"LFR","crew_chief":"John McKenna","driver_slug":"doug-coby"},
+    {"number":"31","driver":"Michael Christopher Jr.","team":"Elite Motorsports","manufacturer":"LFR","crew_chief":"Eugene Orlando","driver_slug":"michael-christopher-jr"},
+    {"number":"36","driver":"Dave Sapienza","team":"Sapienza Racing","manufacturer":"FURY Race Cars","crew_chief":"Greg Kleila","driver_slug":"dave-sapienza"},
+    {"number":"44","driver":"Chase Dowling","team":"Tinio Racing","manufacturer":"LFR","crew_chief":"Danny Gamache","driver_slug":"chase-dowling"},
+    {"number":"50","driver":"Ronnie Williams","team":"Ronnie Williams","manufacturer":"FURY Race Cars","crew_chief":"Adam Skowyra","driver_slug":"ronnie-williams"},
+    {"number":"51","driver":"Justin Bonsignore","team":"Kenneth Massa Motorsports","manufacturer":"FURY Race Cars","crew_chief":"Ryan Stone","driver_slug":"justin-bonsignore"},
+    {"number":"54","driver":"Tommy Catalano","team":"Catalano Motorsports","manufacturer":"Troyer","crew_chief":"Rick Kluth","driver_slug":"tommy-catalano"},
+    {"number":"56","driver":"Trevor Catalano","team":"Catalano Motorsports","manufacturer":"Troyer","crew_chief":"David Catalano","driver_slug":"trevor-catalano"},
+    {"number":"58","driver":"Eric Goodale","team":"Goodie Motorsports","manufacturer":"FURY Race Cars","crew_chief":"Rob Hyer","driver_slug":"eric-goodale"},
+    {"number":"60","driver":"Matt Hirschman","team":"Pee Dee Motorsports","manufacturer":"Troyer","crew_chief":"Mike Stein","driver_slug":"matt-hirschman"},
+    {"number":"64","driver":"Austin Beers","team":"KLM Motorsports","manufacturer":"Troyer","crew_chief":"Ron Yuhas","driver_slug":"austin-beers"},
+    {"number":"73","driver":"Paulie Hartwig III","team":"Hartwig Racing","manufacturer":"FURY Race Cars","crew_chief":"Bobby Geiger Jr.","driver_slug":"paulie-hartwig-iii"},
+    {"number":"79","driver":"Jon McKennedy","team":"Jonathan McKennedy Racing","manufacturer":"FURY Race Cars","crew_chief":"Patrick Walsh","driver_slug":"jon-mckennedy"},
+    {"number":"82","driver":"Andrew Molleur","team":"DWR Racing","manufacturer":"LFR","crew_chief":"Michael Molleur","driver_slug":"andrew-molleur"},
+    {"number":"89","driver":"Matt Swanson","team":"Matt Swanson","manufacturer":"FURY Race Cars","crew_chief":"John Swanson","driver_slug":"matt-swanson"},
+    {"number":"95","driver":"Matt Kimball","team":"Apex Racing","manufacturer":"Apex Race Cars","crew_chief":"Cory Plummer","driver_slug":"matt-kimball"},
+    {"number":"106","driver":"Cory DiMatteo","team":"TJS Holdings LLC","manufacturer":"Troyer","crew_chief":"John Lowinski","driver_slug":"cory-dimatteo"}
   ],
   "tables": {
     "practice": {
-      "headers": [
-        "Pos",
-        "Trk",
-        "Driver",
-        "Team",
-        "Make",
-        "Time",
-        "Speed",
-        "Lap #",
-        "# Laps",
-        "-Fastest",
-        "-Next"
-      ],
-      "rows": []
+      "headers": ["Rank","#","Driver","Team","Chassis","Time","Diff","Speed","# Laps","Best Lap"],
+      "rows": [
+        ["1","05","Teddy Hodgdon IV","Teddy Hodgdon Racing","FURY Race Cars","19.172","","93.887","21","10"],
+        ["2","1","Patrick Emerling","USNE Motorsports","LFR","19.178","0.006","93.858","27","6"],
+        ["3","44","Chase Dowling","Tinio Racing","LFR","19.188","0.016","93.809","24","24"],
+        ["4","60","Matt Hirschman","Pee Dee Motorsports","Troyer","19.211","0.039","93.696","17","15"],
+        ["5","28","Doug Coby","Jett Motorsports","LFR","19.286","0.114","93.332","21","5"],
+        ["6","31","Michael Christopher Jr.","Elite Motorsports","LFR","19.312","0.140","93.206","18","8"],
+        ["7","58","Eric Goodale","Goodie Motorsports","FURY Race Cars","19.320","0.148","93.168","29","11"],
+        ["8","89","Matt Swanson","Matt Swanson","FURY Race Cars","19.321","0.149","93.163","16","6"],
+        ["9","79","Jon McKennedy","Jonathan McKennedy Racing","FURY Race Cars","19.322","0.150","93.158","25","7"],
+        ["10","51","Justin Bonsignore","Kenneth Massa Motorsports","FURY Race Cars","19.322","0.150","93.158","23","5"],
+        ["11","3","Tyler Rypkema","BRE Racing","Boehler Racing","19.324","0.152","93.148","26","8"],
+        ["12","106","Cory DiMatteo","TJS Holdings LLC","Troyer","19.332","0.160","93.110","30","22"],
+        ["13","56","Trevor Catalano","Catalano Motorsports","Troyer","19.339","0.167","93.076","34","5"],
+        ["14","82","Andrew Molleur","DWR Racing","LFR","19.341","0.169","93.067","26","6"],
+        ["15","15","Joey Cipriano III","Fueled Up Motorsports","FURY Race Cars","19.359","0.187","92.980","27","21"],
+        ["16","73","Paulie Hartwig III","Hartwig Racing","FURY Race Cars","19.362","0.190","92.966","27","8"],
+        ["17","21","Stephen Kopcik","Wanick Motorsports","Troyer","19.410","0.238","92.736","24","15"],
+        ["18","64","Austin Beers","KLM Motorsports","Troyer","19.422","0.250","92.678","22","14"],
+        ["19","36","Dave Sapienza","Sapienza Racing","FURY Race Cars","19.424","0.252","92.669","34","6"],
+        ["20","20","Max Zachem","Morgan Zachem Racing","Troyer","19.425","0.253","92.664","15","4"],
+        ["21","50","Ronnie Williams","Ronnie Williams","FURY Race Cars","19.440","0.268","92.593","17","14"],
+        ["22","18","Ken Heagy","Heagy Motorsports","FURY Race Cars","19.542","0.370","92.109","16","6"],
+        ["23","8","John-Michael Shenette","Eighty-Two Autosport","LFR","19.543","0.371","92.105","27","8"],
+        ["24","95","Matt Kimball","Apex Racing","Apex Race Cars","19.579","0.407","91.935","26","7"],
+        ["25","54","Tommy Catalano","Catalano Motorsports","Troyer","19.640","0.468","91.650","22","5"]
+      ]
+    },
+    "practice2": {
+      "headers": ["Rank","#","Driver","Team","Chassis","Time","Diff","Speed","# Laps","Best Lap"],
+      "rows": [
+        ["1","79","Jon McKennedy","Jonathan McKennedy Racing","FURY Race Cars","19.183","","93.833","16","7"],
+        ["2","60","Matt Hirschman","Pee Dee Motorsports","Troyer","19.209","0.026","93.706","23","22"],
+        ["3","50","Ronnie Williams","Ronnie Williams","FURY Race Cars","19.249","0.066","93.511","18","5"],
+        ["4","05","Teddy Hodgdon IV","Teddy Hodgdon Racing","FURY Race Cars","19.274","0.091","93.390","14","14"],
+        ["5","31","Michael Christopher Jr.","Elite Motorsports","LFR","19.301","0.118","93.259","20","7"],
+        ["6","3","Tyler Rypkema","BRE Racing","Boehler Racing","19.306","0.123","93.235","20","6"],
+        ["7","106","Cory DiMatteo","TJS Holdings LLC","Troyer","19.314","0.131","93.197","21","20"],
+        ["8","1","Patrick Emerling","USNE Motorsports","LFR","19.318","0.135","93.177","12","4"],
+        ["9","51","Justin Bonsignore","Kenneth Massa Motorsports","FURY Race Cars","19.327","0.144","93.134","20","6"],
+        ["10","44","Chase Dowling","Tinio Racing","LFR","19.327","0.144","93.134","12","4"],
+        ["11","73","Paulie Hartwig III","Hartwig Racing","FURY Race Cars","19.335","0.152","93.095","13","5"],
+        ["12","28","Doug Coby","Jett Motorsports","LFR","19.368","0.185","92.937","18","18"],
+        ["13","58","Eric Goodale","Goodie Motorsports","FURY Race Cars","19.371","0.188","92.922","14","7"],
+        ["14","64","Austin Beers","KLM Motorsports","Troyer","19.383","0.200","92.865","21","4"],
+        ["15","82","Andrew Molleur","DWR Racing","LFR","19.394","0.211","92.812","13","12"],
+        ["16","21","Stephen Kopcik","Wanick Motorsports","Troyer","19.407","0.224","92.750","14","14"],
+        ["17","54","Tommy Catalano","Catalano Motorsports","Troyer","19.417","0.234","92.702","17","4"],
+        ["18","36","Dave Sapienza","Sapienza Racing","FURY Race Cars","19.427","0.244","92.655","17","5"],
+        ["19","89","Matt Swanson","Matt Swanson","FURY Race Cars","19.435","0.252","92.616","13","6"],
+        ["20","56","Trevor Catalano","Catalano Motorsports","Troyer","19.454","0.271","92.526","16","15"],
+        ["21","15","Joey Cipriano III","Fueled Up Motorsports","FURY Race Cars","19.481","0.298","92.398","11","9"],
+        ["22","18","Ken Heagy","Heagy Motorsports","FURY Race Cars","19.494","0.311","92.336","19","18"],
+        ["23","95","Matt Kimball","Apex Racing","Apex Race Cars","19.524","0.341","92.194","15","7"],
+        ["24","20","Max Zachem","Morgan Zachem Racing","Troyer","19.550","0.367","92.072","19","17"],
+        ["25","8","John-Michael Shenette","Eighty-Two Autosport","LFR","19.583","0.400","91.916","16","16"]
+      ]
     },
     "qualifying": {
-      "headers": [
-        "Pos",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Time",
-        "Speed"
-      ],
-      "rows": []
+      "headers": ["Pos","#","Driver","Team","Chassis","Time","Speed"],
+      "rows": [
+        ["1","51","Justin Bonsignore","Kenneth Massa Motorsports","FURY Race Cars","19.237","93.570"],
+        ["2","64","Austin Beers","KLM Motorsports","Troyer","19.250","93.506"],
+        ["3","73","Paulie Hartwig III","Hartwig Racing","FURY Race Cars","19.293","93.298"],
+        ["4","82","Andrew Molleur","DWR Racing","LFR","19.310","93.216"],
+        ["5","21","Stephen Kopcik","Wanick Motorsports","Troyer","19.311","93.211"],
+        ["6","79","Jon McKennedy","Jonathan McKennedy Racing","FURY Race Cars","19.328","93.129"],
+        ["7","28","Doug Coby","Jett Motorsports","LFR","19.348","93.033"],
+        ["8","1","Patrick Emerling","USNE Motorsports","LFR","19.349","93.028"],
+        ["9","106","Cory DiMatteo","TJS Holdings LLC","Troyer","19.363","92.961"],
+        ["10","31","Michael Christopher Jr.","Elite Motorsports","LFR","19.371","92.922"],
+        ["11","60","Matt Hirschman","Pee Dee Motorsports","Troyer","19.430","92.640"],
+        ["12","50","Ronnie Williams","Ronnie Williams","FURY Race Cars","19.439","92.597"],
+        ["13","89","Matt Swanson","Matt Swanson","FURY Race Cars","19.455","92.521"],
+        ["14","44","Chase Dowling","Tinio Racing","LFR","19.456","92.516"],
+        ["15","3","Tyler Rypkema","BRE Racing","Boehler Racing","19.480","92.402"],
+        ["16","15","Joey Cipriano III","Fueled Up Motorsports","FURY Race Cars","19.486","92.374"],
+        ["17","95","Matt Kimball","Apex Racing","Apex Race Cars","19.509","92.265"],
+        ["18","20","Max Zachem","Morgan Zachem Racing","Troyer","19.519","92.218"],
+        ["19","56","Trevor Catalano","Catalano Motorsports","Troyer","19.547","92.086"],
+        ["20","54","Tommy Catalano","Catalano Motorsports","Troyer","19.548","92.081"],
+        ["21","36","Dave Sapienza","Sapienza Racing","FURY Race Cars","19.549","92.076"],
+        ["22","58","Eric Goodale","Goodie Motorsports","FURY Race Cars","19.573","91.963"],
+        ["23","05","Teddy Hodgdon IV","Teddy Hodgdon Racing","FURY Race Cars","19.612","91.781"],
+        ["24","18","Ken Heagy","Heagy Motorsports","FURY Race Cars","19.678","91.473"],
+        ["25","8","John-Michael Shenette","Eighty-Two Autosport","LFR","19.809","90.868"]
+      ]
     },
     "race_results": {
-      "headers": [
-        "Fin",
-        "St",
-        "#",
-        "Driver",
-        "Team",
-        "Make",
-        "Laps",
-        "Led",
-        "Status",
-        "Pts"
-      ],
-      "rows": []
+      "headers": ["Fin","St","#","Driver","Team","Chassis","Laps","Led","Status","Pts"],
+      "rows": [
+        ["1","23","05","Teddy Hodgdon IV","Teddy Hodgdon Racing","FURY Race Cars","150","57","running","47"],
+        ["2","11","60","Matt Hirschman","Pee Dee Motorsports","Troyer","150","3","running","43"],
+        ["3","14","44","Chase Dowling","Tinio Racing","LFR","150","5","running","42"],
+        ["4","1","51","Justin Bonsignore","Kenneth Massa Motorsports","FURY Race Cars","150","10","running","42"],
+        ["5","8","1","Patrick Emerling","USNE Motorsports","LFR","150","0","running","39"],
+        ["6","6","79","Jon McKennedy","Jonathan McKennedy Racing","FURY Race Cars","150","0","running","38"],
+        ["7","5","21","Stephen Kopcik","Wanick Motorsports","Troyer","150","68","running","39"],
+        ["8","10","31","Michael Christopher Jr.","Elite Motorsports","LFR","150","0","running","36"],
+        ["9","22","58","Eric Goodale","Goodie Motorsports","FURY Race Cars","150","0","running","35"],
+        ["10","3","73","Paulie Hartwig III","Hartwig Racing","FURY Race Cars","150","0","running","34"],
+        ["11","4","82","Andrew Molleur","DWR Racing","LFR","150","7","running","34"],
+        ["12","15","3","Tyler Rypkema","BRE Racing","Boehler Racing","150","0","running","32"],
+        ["13","7","28","Doug Coby","Jett Motorsports","LFR","150","0","running","31"],
+        ["14","16","15","Joey Cipriano III","Fueled Up Motorsports","FURY Race Cars","150","0","running","30"],
+        ["15","2","64","Austin Beers","KLM Motorsports","Troyer","150","0","running","29"],
+        ["16","18","20","Max Zachem","Morgan Zachem Racing","Troyer","150","0","running","28"],
+        ["17","13","89","Matt Swanson","Matt Swanson","FURY Race Cars","150","0","running","27"],
+        ["18","20","54","Tommy Catalano","Catalano Motorsports","Troyer","150","0","running","26"],
+        ["19","12","50","Ronnie Williams","Ronnie Williams","FURY Race Cars","149","0","running","25"],
+        ["20","9","106","Cory DiMatteo","TJS Holdings LLC","Troyer","149","0","running","24"],
+        ["21","17","95","Matt Kimball","Apex Racing","Apex Race Cars","148","0","running","23"],
+        ["22","24","18","Ken Heagy","Heagy Motorsports","FURY Race Cars","145","0","running","22"],
+        ["23","25","8","John-Michael Shenette","Eighty-Two Autosport","LFR","77","0","ignition","21"],
+        ["24","19","56","Trevor Catalano","Catalano Motorsports","Troyer","55","0","crash","20"],
+        ["25","21","36","Dave Sapienza","Sapienza Racing","FURY Race Cars","44","0","ignition","19"]
+      ]
+    },
+    "caution_breakdown": {
+      "headers": ["Condition","From Lap","To Lap","# Of Laps","Reason","Free Pass"],
+      "rows": [
+        ["","1","6","6","#51,28,79,73,64 accident turn 1","none"],
+        ["","7","55","49","",""],
+        ["","56","62","7","#20,56 accident turn 2","#18"],
+        ["","63","127","65","",""],
+        ["","128","134","7","#21 spun turn 4","#54"],
+        ["","135","150","16","",""]
+      ]
     }
   }
 }

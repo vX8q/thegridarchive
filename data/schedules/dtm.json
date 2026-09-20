@@ -1,98 +1,10 @@
 [
-  {
-    "id": "DTM_2026_1",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Red Bull Ring",
-    "location": "Spielberg, Styria, Austria",
-    "circuit_name": "Red Bull Ring",
-    "start_date": "2026-04-25",
-    "end_date": "2026-04-26",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  },
-  {
-    "id": "DTM_2026_2",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Zandvoort",
-    "location": "Zandvoort, North Holland, Netherlands",
-    "circuit_name": "Circuit Zandvoort",
-    "start_date": "2026-05-23",
-    "end_date": "2026-05-24",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  },
-  {
-    "id": "DTM_2026_3",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Lausitzring",
-    "location": "Klettwitz, Brandenburg, Germany",
-    "circuit_name": "Lausitzring",
-    "start_date": "2026-06-20",
-    "end_date": "2026-06-21",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  },
-  {
-    "id": "DTM_2026_4",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Norisring",
-    "location": "Nuremberg, Bavaria, Germany",
-    "circuit_name": "Norisring",
-    "start_date": "2026-07-04",
-    "end_date": "2026-07-05",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  },
-  {
-    "id": "DTM_2026_5",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Oschersleben",
-    "location": "Oschersleben, Saxony-Anhalt, Germany",
-    "circuit_name": "Motorsport Arena Oschersleben",
-    "start_date": "2026-07-25",
-    "end_date": "2026-07-26",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  },
-  {
-    "id": "DTM_2026_6",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Nurburgring",
-    "location": "Nurburg, Rhineland-Palatinate, Germany",
-    "circuit_name": "Nurburgring",
-    "start_date": "2026-08-15",
-    "end_date": "2026-08-16",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  },
-  {
-    "id": "DTM_2026_7",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Sachsenring",
-    "location": "Hohenstein-Ernstthal, Saxony, Germany",
-    "circuit_name": "Sachsenring",
-    "start_date": "2026-09-12",
-    "end_date": "2026-09-13",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  },
-  {
-    "id": "DTM_2026_8",
-    "series_id": "DTM",
-    "season": "2026",
-    "name": "Hockenheimring",
-    "location": "Hockenheim, Baden-Wurttemberg, Germany",
-    "circuit_name": "Hockenheimring",
-    "start_date": "2026-10-10",
-    "end_date": "2026-10-11",
-    "time_est": "13:30",
-    "time_msk": "14:30"
-  }
+  {"id":"DTM_2026_1","series_id":"DTM","season":"2026","name":"Red Bull Ring","location":"Spielberg, Styria, Austria","circuit_name":"Red Bull Ring","start_date":"2026-04-25","end_date":"2026-04-26","time_est":"13:30","time_msk":"14:30"},
+  {"id":"DTM_2026_2","series_id":"DTM","season":"2026","name":"Zandvoort","location":"Zandvoort, North Holland, Netherlands","circuit_name":"Circuit Zandvoort","start_date":"2026-05-23","end_date":"2026-05-24","time_est":"13:30","time_msk":"14:30"},
+  {"id":"DTM_2026_3","series_id":"DTM","season":"2026","name":"Lausitzring","location":"Klettwitz, Brandenburg, Germany","circuit_name":"Lausitzring","start_date":"2026-06-20","end_date":"2026-06-21","time_est":"13:30","time_msk":"14:30"},
+  {"id":"DTM_2026_4","series_id":"DTM","season":"2026","name":"Norisring","location":"Nuremberg, Bavaria, Germany","circuit_name":"Norisring","start_date":"2026-07-04","end_date":"2026-07-05","time_est":"13:30","time_msk":"14:30"},
+  {"id":"DTM_2026_5","series_id":"DTM","season":"2026","name":"Oschersleben","location":"Oschersleben, Saxony-Anhalt, Germany","circuit_name":"Motorsport Arena Oschersleben","start_date":"2026-07-25","end_date":"2026-07-26","time_est":"13:30","time_msk":"14:30"},
+  {"id":"DTM_2026_6","series_id":"DTM","season":"2026","name":"Nurburgring","location":"Nurburg, Rhineland-Palatinate, Germany","circuit_name":"Nurburgring","start_date":"2026-08-15","end_date":"2026-08-16","time_est":"13:30","time_msk":"14:30"},
+  {"id":"DTM_2026_7","series_id":"DTM","season":"2026","name":"Sachsenring","location":"Hohenstein-Ernstthal, Saxony, Germany","circuit_name":"Sachsenring","start_date":"2026-09-12","end_date":"2026-09-13","time_est":"13:30","time_msk":"14:30"},
+  {"id":"DTM_2026_8","series_id":"DTM","season":"2026","name":"Hockenheimring","location":"Hockenheim, Baden-Wurttemberg, Germany","circuit_name":"Hockenheimring","start_date":"2026-10-10","end_date":"2026-10-11","time_est":"13:30","time_msk":"14:30"}
 ]

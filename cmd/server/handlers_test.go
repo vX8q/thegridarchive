@@ -78,7 +78,7 @@ func TestHandleDriverBySlug_Found(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Errorf("got status %d, want 200", rec.Code)
 	}
-	var body map[string]string
+	var body map[string]interface{}
 	if err := json.NewDecoder(rec.Body).Decode(&body); err != nil {
 		t.Fatal(err)
 	}
@@ -118,6 +118,43 @@ func TestHandleDriverBySlug_KyleBuschDeathDate(t *testing.T) {
 	}
 	if body["death_date"] != "2026-05-21" {
 		t.Errorf("death_date = %v, want 2026-05-21", body["death_date"])
+	}
+}
+
+func TestHandleDriverBySlug_CareerFields(t *testing.T) {
+	req := httptest.NewRequest(http.MethodGet, "/api/driver/max-verstappen", nil)
+	rec := httptest.NewRecorder()
+	handleDriverBySlug(rec, req, testDataDir(t), nil)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("got status %d, want 200", rec.Code)
+	}
+	var body map[string]interface{}
+	if err := json.NewDecoder(rec.Body).Decode(&body); err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"team_history", "achievements", "titles", "career_results", "available_seasons"} {
+		if _, ok := body[key]; !ok {
+			t.Errorf("missing %s", key)
+		}
+	}
+	seasons, _ := body["available_seasons"].([]interface{})
+	if len(seasons) < 2 {
+		t.Fatalf("available_seasons = %v, want 2024–2026", seasons)
+	}
+	history, ok := body["team_history"].([]interface{})
+	if !ok || len(history) == 0 {
+		t.Fatalf("team_history = %v", body["team_history"])
+	}
+	first, _ := history[0].(map[string]interface{})
+	if first["team_name"] != "Red Bull Racing" {
+		t.Errorf("first team = %v", first["team_name"])
+	}
+	if first["years_label"] != "2024–2026" {
+		t.Errorf("years_label = %v, want 2024–2026", first["years_label"])
+	}
+	titles, _ := body["titles"].([]interface{})
+	if len(titles) == 0 {
+		t.Fatal("expected F1 titles for max-verstappen")
 	}
 }
 

@@ -50,12 +50,19 @@ function makeTableSortable(tableEl, rows, escapeFn, getRowClass) {
     if (val == null || val === '') return false;
     var s = String(val).trim();
     if (/^-?\d+\.?\d*$/.test(s)) return true;
+    // Lap: M:SS.mmm / MM:SS.mmmm; endurance Tot: H:MM:SS(.frac)
     if (/^\d{1,2}:\d{2}\.\d+$/.test(s)) return true;
+    if (/^\d{1,2}:\d{2}:\d{2}(\.\d+)?$/.test(s)) return true;
     return false;
   }
   function parseNum(val) {
     if (val == null || val === '') return 0;
     var s = String(val).trim().replace(',', '.');
+    var hms = s.match(/^(\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))?$/);
+    if (hms) {
+      var frac = hms[4] ? parseFloat('0.' + hms[4]) : 0;
+      return parseInt(hms[1], 10) * 3600 + parseInt(hms[2], 10) * 60 + parseInt(hms[3], 10) + frac;
+    }
     var m = s.match(/^(\d{1,2}):(\d{2})\.(\d+)$/);
     if (m) return parseInt(m[1], 10) * 60 + parseFloat(m[2] + '.' + m[3]);
     return parseFloat(s) || 0;

@@ -164,7 +164,24 @@
     }
 
     // Card hidden if more than 7 days since the last race finish.
+    // Multi-race weekends (IndyCar Milwaukee, Supercars, PSC DH, Super Formula): measure from
+    // the block's final race so Race 1 is not dropped before Race 2 can merge.
+    var weekendLastRaceIsoById = (window.TGA && typeof window.TGA.buildGroupedWeekendLastRaceByEventId === 'function')
+      ? window.TGA.buildGroupedWeekendLastRaceByEventId(recent)
+      : {};
     recent = recent.filter(function (p) {
+      var eid = String((p.event && p.event.id) || '').toUpperCase();
+      var weekendLastIso = weekendLastRaceIsoById[eid];
+      if (weekendLastIso && isIsoYMD(weekendLastIso)) {
+        // Calendar +7 from weekend finale — do not use this race's own finish estimate
+        // (Saturday IndyCar would otherwise fall out before Sunday can merge).
+        var parts = weekendLastIso.split('-');
+        var y = parseInt(parts[0], 10);
+        var mo = parseInt(parts[1], 10) - 1;
+        var da = parseInt(parts[2], 10);
+        var limit = new Date(y, mo, da + 7, 23, 59, 59, 999);
+        return Date.now() <= limit.getTime();
+      }
       return isWithinLastResultsWindowForItem(p);
     });
 
@@ -178,8 +195,9 @@
     }
 
     // Collapse F2/F3 per-race schedule rows → one card per event.id (weekend span from event-card-date).
+    // Also dedupe any accidental duplicate schedule rows (same id) for other series.
     var recentUnique = (window.TGA && window.TGA.collapseLastResultsByEventId)
-      ? window.TGA.collapseLastResultsByEventId(recent, ['F2', 'F3'])
+      ? window.TGA.collapseLastResultsByEventId(recent, ['F2', 'F3', 'FREC', 'F4_IT', 'PSC'])
       : recent;
 
     if (recentUnique.length === 0) {
@@ -200,12 +218,16 @@
       var eventId = String(e.id || '');
       if (!eventId) return;
       if (e.has_detail === false) {
+        var pendingSeedRange = (window.TGA && window.TGA.getEventRaceDateRangeIso)
+          ? window.TGA.getEventRaceDateRangeIso(e)
+          : { start: '', end: '' };
         var pendingCard = {
           event: e,
           dateStr: item.dateStr,
           winners: [],
-          rangeStart: (e.start_date || e.date || item.dateStr || '').slice(0, 10),
-          rangeEnd: eventLastRaceDateIso(e, item),
+          rangeStart: pickIsoDate(pendingSeedRange.start) ||
+            (e.start_date || e.date || item.dateStr || '').slice(0, 10),
+          rangeEnd: pickIsoDate(pendingSeedRange.end) || eventLastRaceDateIso(e, item),
           isF1SprintWeekend: !!(window.TGA && window.TGA.isF1SprintWeekendEvent && window.TGA.isF1SprintWeekendEvent(e))
         };
         var pendingRange = lastResultsCardRaceDateRange(pendingCard);
@@ -236,16 +258,23 @@
       var raceDayStart = pickIsoDate(schedSeed.start);
       var raceDayEnd = pickIsoDate(schedSeed.end);
       // Prefer race-day resolution (PSC/IMSA race_day_only) over raw schedule weekend span.
-      var evStart = pickIsoDate(sum.range_start) ||
-        (raceDayStart && raceDayEnd && raceDayStart === raceDayEnd ? raceDayStart : '') ||
-        pickIsoDate(e.start_date) || pickIsoDate(item.weekendStart) || pickIsoDate(item.dateStr);
-      var evEnd = pickIsoDate(sum.range_end) ||
-        (raceDayStart && raceDayEnd && raceDayStart === raceDayEnd ? raceDayEnd : '') ||
-        pickIsoDate(e.end_date) || evStart || pickIsoDate(item.weekendEnd) || pickIsoDate(item.dateStr);
-      if (!evStart && getRangeSeed) {
-        evStart = raceDayStart || evStart;
-        evEnd = raceDayEnd || evEnd;
+      // Ignore summary/practice spans (start≠end) for race_day_only series — e.g. PSC Monza
+      // summary falling back to start_date–end_date of the support weekend.
+      var rule = window.TGA && window.TGA.getSeriesCardDateRule
+        ? window.TGA.getSeriesCardDateRule(e._seriesId || e.series_id || '')
+        : null;
+      var raceDayOnly = !!(rule && rule.card === 'race_day_only');
+      var sumStart = pickIsoDate(sum.range_start);
+      var sumEnd = pickIsoDate(sum.range_end);
+      if (raceDayOnly && sumStart && sumEnd && sumStart !== sumEnd) {
+        sumStart = '';
+        sumEnd = '';
       }
+      // Prefer race-session range (may be multi-day) over schedule weekend span.
+      var evStart = sumStart || raceDayStart ||
+        pickIsoDate(e.start_date) || pickIsoDate(item.weekendStart) || pickIsoDate(item.dateStr);
+      var evEnd = sumEnd || raceDayEnd ||
+        pickIsoDate(e.end_date) || evStart || pickIsoDate(item.weekendEnd) || pickIsoDate(item.dateStr);
       if (evStart && !evEnd) evEnd = evStart;
       if (evEnd && !evStart) evStart = evEnd;
       var isF1SprintWeekend = !!(sum.is_f1_sprint_weekend) ||
@@ -317,6 +346,30 @@
         cards = window.TGA.mergeLastResultsWeekendCards(cards, 'INDYCAR');
       }
 
+      // One card per event.id (guards against duplicate schedule rows after merge).
+      (function dedupeLastResultsCardsByEventId() {
+        var byId = {};
+        var order = [];
+        cards.forEach(function (card) {
+          var eid = String((card.event && card.event.id) || '').toUpperCase();
+          var wk = card.event && card.event._weekendEventIds;
+          var key = (Array.isArray(wk) && wk.length > 1)
+            ? wk.map(function (x) { return String(x || '').toUpperCase(); }).sort().join('+')
+            : eid;
+          if (!key) return;
+          if (!byId[key]) {
+            byId[key] = card;
+            order.push(key);
+            return;
+          }
+          var prev = byId[key];
+          var prevW = (prev.winners && prev.winners.length) || 0;
+          var nextW = (card.winners && card.winners.length) || 0;
+          if (nextW > prevW) byId[key] = card;
+        });
+        cards = order.map(function (k) { return byId[k]; });
+      })();
+
       // Do not show calendar-future. Past/today — only if since the last race day
       // at most 7 days passed (otherwise card "sticks" in feed).
       // Show when finished (start + duration) or winners already loaded.
@@ -352,7 +405,7 @@
         cards.map(function (card, idx) {
           var e = card.event;
           var dateDisplay = formatLastResultsCardDate(card);
-          var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
+          var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '-'; })(e);
           var seriesIdUpper = String(e._seriesId || e.series_id || '').toUpperCase();
           var stripPrefix = window.TGA && window.TGA.stripSeriesPrefixFromEventName;
           if (stripPrefix) {
@@ -360,17 +413,33 @@
           }
           // For F2/F3 strip "(Sprint)/(Feature)" from event name — already in labels.
           if (seriesIdUpper === 'F2' || seriesIdUpper === 'F3') {
-            name = name.replace(/\s*\((Sprint|Feature)\)\s*$/i, '');
-          }
+  name = name.replace(/\s*\((Sprint|Feature)(\s*Race\s*\d+)?\)\s*$/i, '');
+}
           // For Supercars: "Melbourne SuperSprint Race 1" → "Melbourne SuperSprint".
           if (seriesIdUpper === 'SUPERCARS') {
             name = name.replace(/\s*Race\s*\d+\s*$/i, '');
           }
-          var eventSlug = (e.id || '').toLowerCase().replace(/_+/g, '-');
+          // Milwaukee double-header: weekend title + merged date range (no hardcoded fallback).
+          if (window.TGA && typeof window.TGA.isIndyMilwaukeeWeekendEvent === 'function' &&
+              window.TGA.isIndyMilwaukeeWeekendEvent(e)) {
+            name = (window.TGA.indyMilwaukeeWeekendCardTitle || function () {
+              return 'Snap-on IndyCar Weekend';
+            })();
+            var milwaukeeRange = (window.TGA.indyMilwaukeeWeekendDateRange || function () {
+              return { start: '', end: '' };
+            })(card);
+            if (milwaukeeRange.start && milwaukeeRange.end && milwaukeeRange.end > milwaukeeRange.start) {
+              dateDisplay = formatDateRange(milwaukeeRange.start, milwaukeeRange.end);
+            }
+          }
+          var primaryId = (window.TGA && window.TGA.weekendCardPrimaryEventId)
+            ? window.TGA.weekendCardPrimaryEventId(card)
+            : (e.id || '');
+          var eventSlug = String(primaryId || '').toLowerCase().replace(/_+/g, '-');
           var seriesSlug = (e._seriesId || e.series_id || '').toLowerCase().replace(/_+/g, '-');
           var eventNameLc = String(e.name || '').toLowerCase();
           // In "Last Results" we should always open the event page.
-          // Even when results are pending, the event overview is still valid.
+          // Merged weekends link to the first race of the block (Race 1).
           var href = eventSlug
             ? '/event/' + encodeURIComponent(eventSlug)
             : '/series/' + encodeURIComponent(seriesSlug);
@@ -511,6 +580,27 @@
           }
           if (trackKey.indexOf('duquoin') >= 0 || trackKey.indexOf('du quoin') >= 0) {
             extraClass += ' lrc-card--duquoin-state-fairgrounds-racetrack';
+          }
+          if (trackKey.indexOf('madison international') >= 0) {
+            extraClass += ' lrc-card--madison-international-speedway';
+          }
+          if (trackKey.indexOf('stafford') >= 0) {
+            extraClass += ' lrc-card--stafford-motor-speedway';
+          }
+          if (trackKey.indexOf('hockenheim') >= 0) {
+            extraClass += ' lrc-card--hockenheimring';
+          }
+          if (trackKey.indexOf('sachsenring') >= 0) {
+            extraClass += ' lrc-card--sachsenring';
+          }
+          if (trackKey.indexOf('madrid') >= 0 || trackKey.indexOf('madring') >= 0) {
+            extraClass += ' lrc-card--madrid-circuit';
+          }
+          if (trackKey.indexOf('salem speedway') >= 0 || (trackKey.indexOf('salem') >= 0 && trackKey.indexOf('indiana') >= 0 && trackKey.indexOf('winston') < 0)) {
+            extraClass += ' lrc-card--salem-speedway';
+          }
+          if (trackKey.indexOf('the bend') >= 0 || trackKey.indexOf('tailem bend') >= 0 || trackKey.indexOf('bend motorsport') >= 0) {
+            extraClass += ' lrc-card--the-bend-motorsport-park';
           }
           if (trackKey.indexOf('norisring') >= 0) {
             extraClass += ' lrc-card--norisring';
@@ -783,6 +873,27 @@
           if (eventNameLc.indexOf('duquoin') >= 0 || eventNameLc.indexOf('du quoin') >= 0 || eventNameLc.indexOf('southern illinois') >= 0) {
             extraClass += ' lrc-card--duquoin-state-fairgrounds-racetrack';
           }
+          if (eventNameLc.indexOf('madison international') >= 0 || eventNameLc.indexOf('badger 200') >= 0 || eventNameLc.indexOf('atlas 200') >= 0) {
+            extraClass += ' lrc-card--madison-international-speedway';
+          }
+          if (eventNameLc.indexOf('stafford') >= 0 || eventNameLc.indexOf('gaf 150') >= 0) {
+            extraClass += ' lrc-card--stafford-motor-speedway';
+          }
+          if (eventNameLc.indexOf('hockenheim') >= 0) {
+            extraClass += ' lrc-card--hockenheimring';
+          }
+          if (eventNameLc.indexOf('sachsenring') >= 0) {
+            extraClass += ' lrc-card--sachsenring';
+          }
+          if (eventNameLc.indexOf('madrid') >= 0 || eventNameLc.indexOf('madring') >= 0) {
+            extraClass += ' lrc-card--madrid-circuit';
+          }
+          if (eventNameLc.indexOf('salem speedway') >= 0 || (eventNameLc.indexOf('salem') >= 0 && eventNameLc.indexOf('winston') < 0)) {
+            extraClass += ' lrc-card--salem-speedway';
+          }
+          if (eventNameLc.indexOf('the bend') >= 0 || eventNameLc.indexOf('tailem bend') >= 0 || eventNameLc.indexOf('bend 500') >= 0) {
+            extraClass += ' lrc-card--the-bend-motorsport-park';
+          }
           if (eventNameLc.indexOf('norisring') >= 0) {
             extraClass += ' lrc-card--norisring';
           }
@@ -1030,6 +1141,20 @@
               extraClass += ' lrc-card--oswego-speedway';
             } else if (eventSlug.indexOf('duquoin') >= 0 || eventSlug.indexOf('du-quoin') >= 0 || eventSlug.indexOf('southern-illinois') >= 0) {
               extraClass += ' lrc-card--duquoin-state-fairgrounds-racetrack';
+            } else if (eventSlug.indexOf('madison-international') >= 0 || eventSlug.indexOf('badger-200') >= 0 || eventSlug.indexOf('badger_200') >= 0) {
+              extraClass += ' lrc-card--madison-international-speedway';
+            } else if (eventSlug.indexOf('stafford') >= 0 || eventSlug.indexOf('gaf-150') >= 0 || eventSlug.indexOf('gaf_150') >= 0) {
+              extraClass += ' lrc-card--stafford-motor-speedway';
+            } else if (eventSlug.indexOf('hockenheim') >= 0) {
+              extraClass += ' lrc-card--hockenheimring';
+            } else if (eventSlug.indexOf('sachsenring') >= 0) {
+              extraClass += ' lrc-card--sachsenring';
+            } else if (eventSlug.indexOf('madrid') >= 0 || eventSlug.indexOf('madring') >= 0) {
+              extraClass += ' lrc-card--madrid-circuit';
+            } else if ((eventSlug.indexOf('salem') >= 0 && eventSlug.indexOf('winston') < 0) || eventSlug.indexOf('salem-speedway') >= 0) {
+              extraClass += ' lrc-card--salem-speedway';
+            } else if (eventSlug.indexOf('the-bend') >= 0 || eventSlug.indexOf('the_bend') >= 0 || eventSlug.indexOf('bend-500') >= 0 || eventSlug.indexOf('bend_500') >= 0) {
+              extraClass += ' lrc-card--the-bend-motorsport-park';
             } else if (eventSlug.indexOf('norisring') >= 0) {
               extraClass += ' lrc-card--norisring';
             } else if (eventSlug.indexOf('reid-park') >= 0 || eventSlug.indexOf('reid_park') >= 0) {
@@ -1158,7 +1283,10 @@
           if (seriesIdUpper === 'F2') {
             extraClass += ' lrc-card--f2';
           } else if (seriesIdUpper === 'F3') {
-            extraClass += ' lrc-card--f3';
+  extraClass += ' lrc-card--f3';
+  if (Array.isArray(card.winners) && card.winners.length > 2) {
+    extraClass += ' lrc-card--f3-triple';
+  }
           } else if (seriesIdUpper === 'SUPERCARS') {
             extraClass += ' lrc-card--supercars';
           } else if (seriesIdUpper === 'FREC' || seriesIdUpper === 'F4_IT') {
@@ -1188,7 +1316,7 @@
                 var line = winnerTeamLabel(w.name || '');
                 if (w.car) line = '#' + w.car + ' ' + line;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
-                if (label) line = line + ' — ' + label;
+                if (label) line = line + ' - ' + label;
                 return esc(line);
               }).join('<br>');
             } else if (seriesIdUpper === 'WEC') {
@@ -1197,7 +1325,7 @@
                 var crew = winnerTeamLabel(w.name || '');
                 if (w.car) crew = '#' + w.car + ' ' + crew;
                 var label = localizeWinnerCardLabel((w.label || '').trim());
-                var line = label ? label + ' — ' + crew : crew;
+                var line = label ? label + ' - ' + crew : crew;
                 return '<span class="lrc-winner-line">' + esc(line) + '</span>';
               }).join('');
             } else if (seriesIdUpper === 'ELMS') {
@@ -1261,12 +1389,12 @@
                 if (w.car) {
                   line = '#' + w.car + ' ' + line;
                 }
-                // Super Formula: "Round N —" only on multi-race weekend cards.
+                // Super Formula: "Round N -" only on multi-race weekend cards.
                 if (seriesIdUpper === 'SUPER_FORMULA' && list.length === 1) {
                   label = '';
                 }
                 if (label) {
-                  line = label + ' — ' + line;
+                  line = label + ' - ' + line;
                 }
                 return esc(line);
               }).join('<br>');
@@ -1289,7 +1417,9 @@
           var pendingHtml = noDataYet
             ? (isPrologueOrPreSeason
               ? ''
-              : '<div class="lrc-winner lrc-winner--pending">' + esc(card.raceWasCancelled ? t('home.race_cancelled') : (t('home.awaiting_results') || 'Results pending')) + '</div>')
+              : '<div class="lrc-winner lrc-winner--pending">' + esc(card.raceWasCancelled
+                ? (t('home.race_cancelled') || 'Race was cancelled')
+                : (t('home.awaiting_results') || t('home.results_pending') || 'Results pending')) + '</div>')
             : '';
 
           return (

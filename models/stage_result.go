@@ -15,4 +15,3 @@ type StageResult struct {
 	Status    string
 	Points    int
 }
-

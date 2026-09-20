@@ -56,7 +56,7 @@ func BuildLastResultsSummaryFromBytes(body []byte, eventID, seriesID string) Las
 	}
 	entryList, _ := root["entry_list"].([]interface{})
 
-	out.RangeStart, out.RangeEnd = summaryRaceDateRange(tables, root)
+	out.RangeStart, out.RangeEnd = summaryRaceDateRange(tables, root, sid)
 	out.RaceWasCancelled = summaryRaceCancelled(tables)
 	out.IsF1SprintWeekend = sid == "F1" && f1RaceBlockIsSprintSessionsOnly(tables["race"])
 
@@ -446,7 +446,7 @@ func summaryParseMetaDate(metaDate string) string {
 	return ""
 }
 
-func summaryRaceDateRange(tables map[string]interface{}, root map[string]interface{}) (start, end string) {
+func summaryRaceDateRange(tables map[string]interface{}, root map[string]interface{}, seriesID string) (start, end string) {
 	bump := func(iso string) {
 		if iso == "" {
 			return
@@ -471,9 +471,18 @@ func summaryRaceDateRange(tables map[string]interface{}, root map[string]interfa
 		}
 	}
 	if start == "" {
-		bump(summaryParseMetaDate(summaryAsString(root["date"])))
-		bump(summaryParseMetaDate(summaryAsString(root["start_date"])))
-		bump(summaryParseMetaDate(summaryAsString(root["end_date"])))
+		// PSC support weekends: start_date < end_date is practice/qual, not a multi-race span.
+		// Race day is end_date (e.g. Monza 4–6 Sep → card shows 6 Sep only).
+		startDate := summaryParseMetaDate(summaryAsString(root["start_date"]))
+		endDate := summaryParseMetaDate(summaryAsString(root["end_date"]))
+		dateField := summaryParseMetaDate(summaryAsString(root["date"]))
+		if strings.EqualFold(seriesID, "PSC") && startDate != "" && endDate != "" && endDate > startDate {
+			bump(endDate)
+		} else {
+			bump(dateField)
+			bump(startDate)
+			bump(endDate)
+		}
 	}
 	if start != "" && end == "" {
 		end = start

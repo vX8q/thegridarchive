@@ -96,13 +96,10 @@ func handleDataHealth(w http.ResponseWriter, r *http.Request, dataDir string, st
 					continue
 				}
 				eventCount++
-				evPath := filepath.Join(dataDir, "events", strings.ToLower(e.ID)+".json")
-				if _, err := os.Stat(evPath); err != nil {
-					if os.IsNotExist(err) {
-						h.Missing = append(h.Missing, "events:"+e.ID)
-					} else {
-						slog.Warn("data health: events stat failed", "event_id", e.ID, "path", evPath, "err", err)
-					}
+				// Event JSON lives under data/events/{Series}/{Year} for most series and flat
+				// for the rest; EventDetailExists checks both plus weekend-bundle remapping.
+				if !schedulefile.EventDetailExists(dataDir, e.ID) {
+					h.Missing = append(h.Missing, "events:"+e.ID)
 				}
 			}
 			h.Events = eventCount
@@ -135,8 +132,6 @@ func handleDataHealth(w http.ResponseWriter, r *http.Request, dataDir string, st
 		}
 		out.Series = append(out.Series, h)
 	}
-
-	
 
 	// Live dashboard: simple live.json summary (event and series counts).
 	livePath := filepath.Join(dataDir, "live.json")
@@ -178,4 +173,3 @@ func readLiveIDsCompat(path string) []string {
 	}
 	return nil
 }
-

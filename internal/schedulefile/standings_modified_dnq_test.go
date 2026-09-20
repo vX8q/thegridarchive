@@ -13,11 +13,11 @@ func TestNascarModifiedDNQPoints_NSM2026(t *testing.T) {
 	}
 	pts := nascarModifiedDNQPoints(detail)
 	want := map[string]int{
-		"conner jones":   11,
-		"norman newman":  10,
-		"luke fleming":   9,
-		"cory plummer":   8,
-		"dave sapienza":  7,
+		"conner jones":  11,
+		"norman newman": 10,
+		"luke fleming":  9,
+		"cory plummer":  8,
+		"dave sapienza": 7,
 	}
 	for k, w := range want {
 		if pts[k] != w {

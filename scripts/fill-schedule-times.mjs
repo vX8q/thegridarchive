@@ -97,7 +97,7 @@ const nascarMod = [
   ['NASCAR_MODIFIED_2026_10', '2026-07-25', '7:30 PM'],
   ['NASCAR_MODIFIED_2026_11', '2026-08-05', '8:00 PM'],
   ['NASCAR_MODIFIED_2026_12', '2026-08-22', '4:30 PM'],
-  ['NASCAR_MODIFIED_2026_13', '2026-08-28', '8:00 PM'],
+  ['NASCAR_MODIFIED_2026_13', '2026-08-28', '8:45 PM'],
   ['NASCAR_MODIFIED_2026_14', '2026-09-05', '8:00 PM'],
   ['NASCAR_MODIFIED_2026_15', '2026-09-19', '8:00 PM'],
   ['NASCAR_MODIFIED_2026_16', '2026-10-11', '4:30 PM'],
@@ -174,7 +174,7 @@ const wec = [
   ['WEC_2026_2', '2026-05-09', '14:00', 'Europe/Brussels'],
   ['WEC_2026_3', '2026-06-13', '16:00', 'Europe/Paris'],
   ['WEC_2026_4', '2026-07-12', '11:30', 'America/Sao_Paulo'],
-  ['WEC_2026_5', '2026-09-06', '12:00', 'America/Chicago'],
+  ['WEC_2026_5', '2026-09-06', '13:00', 'America/Chicago'],
   ['WEC_2026_6', '2026-09-27', '11:00', 'Asia/Tokyo'],
   ['WEC_2026_7', '2026-10-24', '14:00', 'Asia/Qatar'],
   ['WEC_2026_8', '2026-11-07', '14:00', 'Asia/Bahrain'],
@@ -196,7 +196,10 @@ function patchNascarEtTimes(file, patches) {
   console.log('Updated', file);
 }
 
-patchNascarEtTimes('arca.json', [['ARCA_2026_12', '2026-07-10', '4:00 PM']]);
+patchNascarEtTimes('arca.json', [
+  ['ARCA_2026_12', '2026-07-10', '4:00 PM'],
+  ['ARCA_2026_17', '2026-09-06', '8:44 PM'],
+]);
 patchNascarEtTimes('noaps.json', [['NOAPS_2026_21', '2026-07-11', '7:00 PM']]);
 patchNascarEtTimes('nascar_cup.json', [['NASCAR_CUP_2026_20', '2026-07-12', '7:00 PM']]);
 
@@ -247,9 +250,9 @@ patchRaceTimes('psc.json', [
   ['PSC_2026_1', '2026-06-07', '11:45', 'Europe/Monaco'],
   ['PSC_2026_3', '2026-06-28', '11:55', 'Europe/Vienna'],
   ['PSC_2026_4', '2026-07-19', '11:45', 'Europe/Brussels'],
-  ['PSC_2026_5', '2026-07-26', '11:55', 'Europe/Budapest'],
+  ['PSC_2026_5', '2026-07-26', '10:10', 'Europe/Budapest'],
   ['PSC_2026_6', '2026-08-22', '18:00', 'Europe/Amsterdam'],
-  ['PSC_2026_8', '2026-09-06', '12:05', 'Europe/Rome'],
+  ['PSC_2026_8', '2026-09-06', '11:45', 'Europe/Rome'],
 ]);
 
 // Weekend-level times for multi-race series (expanded per-session in multi-race-schedule-sessions.js)
@@ -265,30 +268,30 @@ patchSchedule('dtm.json', [
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
 
 patchSchedule('frec.json', [
-  ['FREC_2026_1', '2026-04-24', '11:35', 'Europe/Vienna'],
-  ['FREC_2026_2', '2026-05-22', '11:35', 'Europe/Amsterdam'],
-  ['FREC_2026_3', '2026-05-29', '11:35', 'Europe/Brussels'],
-  ['FREC_2026_4', '2026-06-20', '11:35', 'Europe/Rome'],
-  ['FREC_2026_5', '2026-07-03', '11:35', 'Europe/Budapest'],
-  ['FREC_2026_6', '2026-07-18', '16:25', 'Europe/Paris'],
-  ['FREC_2026_7', '2026-09-04', '13:00', 'Europe/Rome'],
-  ['FREC_2026_8', '2026-09-11', '13:00', 'Europe/Berlin'],
+  ['FREC_2026_1', '2026-04-24', '10:25', 'Europe/Vienna'],
+  ['FREC_2026_2', '2026-05-22', '16:45', 'Europe/Amsterdam'],
+  ['FREC_2026_3', '2026-05-29', '10:05', 'Europe/Brussels'],
+  ['FREC_2026_4', '2026-06-20', '10:30', 'Europe/Rome'],
+  ['FREC_2026_5', '2026-07-03', '18:20', 'Europe/Budapest'],
+  ['FREC_2026_6', '2026-07-18', '13:00', 'Europe/Paris'],
+  ['FREC_2026_7', '2026-09-04', '10:10', 'Europe/Rome'],
+  ['FREC_2026_8', '2026-09-12', '13:05', 'Europe/Berlin'],
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
 
 patchSchedule('f4_it.json', [
-  ['F4_IT_2026_1', '2026-05-09', '12:30', 'Europe/Rome'],
-  ['F4_IT_2026_2', '2026-05-22', '12:30', 'Europe/Rome'],
-  ['F4_IT_2026_3', '2026-06-21', '12:30', 'Europe/Rome'],
-  ['F4_IT_2026_4', '2026-07-25', '12:30', 'Europe/Rome'],
-  ['F4_IT_2026_5', '2026-09-05', '12:30', 'Europe/Rome'],
+  ['F4_IT_2026_1', '2026-05-08', '11:30', 'Europe/Rome'],
+  ['F4_IT_2026_2', '2026-05-22', '11:40', 'Europe/Rome'],
+  ['F4_IT_2026_3', '2026-06-19', '11:30', 'Europe/Rome'],
+  ['F4_IT_2026_4', '2026-07-24', '11:10', 'Europe/Rome'],
+  ['F4_IT_2026_5', '2026-09-04', '11:10', 'Europe/Rome'],
   ['F4_IT_2026_6', '2026-09-19', '12:30', 'Europe/Rome'],
   ['F4_IT_2026_7', '2026-10-24', '12:30', 'Europe/Rome'],
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
 
 patchSchedule('gtwce_sprint.json', [
   ['GTWCE_SPRINT_2026_1', '2026-05-02', '15:30', 'Europe/London'],
-  ['GTWCE_SPRINT_2026_2', '2026-07-18', '21:30', 'Europe/Rome'],
-  ['GTWCE_SPRINT_2026_3', '2026-08-01', '15:30', 'Europe/Berlin'],
+  ['GTWCE_SPRINT_2026_2', '2026-07-17', '20:30', 'Europe/Rome'],
+  ['GTWCE_SPRINT_2026_3', '2026-08-01', '21:05', 'Europe/Paris'],
   ['GTWCE_SPRINT_2026_4', '2026-09-19', '14:45', 'Europe/Amsterdam'],
   ['GTWCE_SPRINT_2026_5', '2026-10-02', '15:30', 'Europe/Madrid'],
 ], (date, t, tz) => local24ToF1Style(date, t, tz));
@@ -322,13 +325,13 @@ const indycarLocal = [
   ['INDYCAR_2026_10', '2026-06-21', 'America/Chicago'],
   ['INDYCAR_2026_11', '2026-07-05', 'America/New_York'],
   ['INDYCAR_2026_12', '2026-07-20', 'America/New_York', '3:00 PM'],
-  ['INDYCAR_2026_13', '2026-08-09', 'America/Los_Angeles'],
+  ['INDYCAR_2026_13', '2026-08-09', 'America/Los_Angeles', '1:27 p.m.'],
   ['INDYCAR_2026_14', '2026-08-16', 'America/Toronto'],
   // Official IndyCar times are ET; store track-local wall clock for America/*.
   ['INDYCAR_2026_15', '2026-08-23', 'America/New_York', '11:30 AM'],
   ['INDYCAR_2026_16', '2026-08-29', 'America/Chicago', '1:30 PM'],
   ['INDYCAR_2026_17', '2026-08-30', 'America/Chicago', '12:00 PM'],
-  ['INDYCAR_2026_18', '2026-09-06', 'America/Los_Angeles'],
+  ['INDYCAR_2026_18', '2026-09-06', 'America/Los_Angeles', '12:05 p.m.'],
 ];
 patchLocal12Times('indycar.json', indycarLocal);
 

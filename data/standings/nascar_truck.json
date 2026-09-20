@@ -1,30 +1,4 @@
 {
-  "race_order": [
-    "DAY",
-    "ATL",
-    "STP",
-    "DAR",
-    "ROC",
-    "BRI",
-    "TEX",
-    "GLN",
-    "DOV",
-    "CLT",
-    "NSH",
-    "MCH",
-    "COR",
-    "LRP",
-    "NWS",
-    "IRP",
-    "RCH",
-    "NHA",
-    "BRI2",
-    "KAN",
-    "CLT2",
-    "PHO",
-    "TAL",
-    "MAR",
-    "HOM"
-  ],
+  "race_order": ["DAY","ATL","STP","DAR","ROC","BRI","TEX","GLN","DOV","CLT","NSH","MCH","COR","LRP","NWS","IRP","RCH","NHA","BRI2","KAN","CLT2","PHO","TAL","MAR","HOM"],
   "rows": []
 }

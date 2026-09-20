@@ -1,98 +1,10 @@
 [
-  {
-    "id": "FREC_2026_1",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Red Bull Ring",
-    "location": "Spielberg, Styria, Austria",
-    "circuit_name": "Red Bull Ring",
-    "start_date": "2026-04-24",
-    "end_date": "2026-04-26",
-    "time_est": "11:35",
-    "time_msk": "12:35"
-  },
-  {
-    "id": "FREC_2026_2",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Zandvoort",
-    "location": "Zandvoort, North Holland, Netherlands",
-    "circuit_name": "Circuit Zandvoort",
-    "start_date": "2026-05-22",
-    "end_date": "2026-05-24",
-    "time_est": "11:35",
-    "time_msk": "12:35"
-  },
-  {
-    "id": "FREC_2026_3",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Spa-Francorchamps",
-    "location": "Stavelot, Liege, Belgium",
-    "circuit_name": "Circuit de Spa-Francorchamps",
-    "start_date": "2026-05-29",
-    "end_date": "2026-05-31",
-    "time_est": "11:35",
-    "time_msk": "12:35"
-  },
-  {
-    "id": "FREC_2026_4",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Monza",
-    "location": "Monza, Lombardy, Italy",
-    "circuit_name": "Autodromo Nazionale di Monza",
-    "start_date": "2026-06-20",
-    "end_date": "2026-06-21",
-    "time_est": "11:35",
-    "time_msk": "12:35"
-  },
-  {
-    "id": "FREC_2026_5",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Hungaroring",
-    "location": "Mogyorod, Pest, Hungary",
-    "circuit_name": "Hungaroring",
-    "start_date": "2026-07-03",
-    "end_date": "2026-07-05",
-    "time_est": "11:35",
-    "time_msk": "12:35"
-  },
-  {
-    "id": "FREC_2026_6",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Paul Ricard",
-    "location": "Le Castellet, Var, France",
-    "circuit_name": "Circuit Paul Ricard",
-    "start_date": "2026-07-18",
-    "end_date": "2026-07-19",
-    "time_est": "16:25",
-    "time_msk": "17:25"
-  },
-  {
-    "id": "FREC_2026_7",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Imola",
-    "location": "Imola, Emilia-Romagna, Italy",
-    "circuit_name": "Imola Circuit",
-    "start_date": "2026-09-04",
-    "end_date": "2026-09-06",
-    "time_est": "11:35",
-    "time_msk": "12:35"
-  },
-  {
-    "id": "FREC_2026_8",
-    "series_id": "FREC",
-    "season": "2026",
-    "name": "Hockenheimring",
-    "location": "Hockenheim, Baden-Wurttemberg, Germany",
-    "circuit_name": "Hockenheimring",
-    "start_date": "2026-09-11",
-    "end_date": "2026-09-13",
-    "time_est": "13:00",
-    "time_msk": "14:00"
-  }
+  {"id":"FREC_2026_1","series_id":"FREC","season":"2026","name":"Red Bull Ring","location":"Spielberg, Styria, Austria","circuit_name":"Red Bull Ring","start_date":"2026-04-24","end_date":"2026-04-26","time_est":"10:25","time_msk":"11:25"},
+  {"id":"FREC_2026_2","series_id":"FREC","season":"2026","name":"Zandvoort","location":"Zandvoort, North Holland, Netherlands","circuit_name":"Circuit Zandvoort","start_date":"2026-05-22","end_date":"2026-05-24","time_est":"16:45","time_msk":"17:45"},
+  {"id":"FREC_2026_3","series_id":"FREC","season":"2026","name":"Spa-Francorchamps","location":"Stavelot, Liege, Belgium","circuit_name":"Circuit de Spa-Francorchamps","start_date":"2026-05-29","end_date":"2026-05-31","time_est":"10:05","time_msk":"11:05"},
+  {"id":"FREC_2026_4","series_id":"FREC","season":"2026","name":"Monza","location":"Monza, Lombardy, Italy","circuit_name":"Autodromo Nazionale di Monza","start_date":"2026-06-20","end_date":"2026-06-21","time_est":"10:30","time_msk":"11:30"},
+  {"id":"FREC_2026_5","series_id":"FREC","season":"2026","name":"Hungaroring","location":"Mogyorod, Pest, Hungary","circuit_name":"Hungaroring","start_date":"2026-07-03","end_date":"2026-07-05","time_est":"18:20","time_msk":"19:20"},
+  {"id":"FREC_2026_6","series_id":"FREC","season":"2026","name":"Paul Ricard","location":"Le Castellet, Var, France","circuit_name":"Circuit Paul Ricard","start_date":"2026-07-18","end_date":"2026-07-19","time_est":"13:00","time_msk":"14:00"},
+  {"id":"FREC_2026_7","series_id":"FREC","season":"2026","name":"Imola","location":"Imola, Emilia-Romagna, Italy","circuit_name":"Imola Circuit","start_date":"2026-09-04","end_date":"2026-09-06","time_est":"10:10","time_msk":"11:10"},
+  {"id":"FREC_2026_8","series_id":"FREC","season":"2026","name":"Hockenheimring","location":"Hockenheim, Baden-Wurttemberg, Germany","circuit_name":"Hockenheimring","start_date":"2026-09-12","end_date":"2026-09-13","time_est":"13:05","time_msk":"14:05"}
 ]

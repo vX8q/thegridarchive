@@ -245,7 +245,9 @@
     'rd.':                    'Эт.',
     'rd':                     'Эт.',
     'drivers':                'Пилоты',
-    'time of the day':        'Время суток'
+    'time of the day':        'Время суток',
+    'q1':                     'Q1',
+    'q2':                     'Q2'
   };
 
   // Cell notes (exact match, lowercase)

@@ -1,21 +1,4 @@
 {
-  "race_order": [
-    "NSM",
-    "MAR",
-    "THO",
-    "OXF",
-    "SEE",
-    "RIV",
-    "SEE2",
-    "CLM",
-    "WMM",
-    "MON",
-    "THO2",
-    "NHA",
-    "STA",
-    "OSW",
-    "RIV2",
-    "THO3"
-  ],
+  "race_order": ["NSM","MAR","THO","OXF","SEE","RIV","SEE2","CLM","WMM","MON","THO2","NHA","STA","OSW","RIV2","THO3"],
   "rows": []
 }

@@ -102,6 +102,51 @@ func TestStatsDTMCountsTwoRaceSessions(t *testing.T) {
 	}
 }
 
+func TestStatsSuperGTPolesFromQ2NotQ1(t *testing.T) {
+	dataDir := t.TempDir()
+	writeStatsTestEvent(t, dataDir, "SUPER_GT", "super_gt_2026_1", map[string]EventTable{
+		"qualifying": {
+			Sessions: []EventTableSession{
+				{Title: "Qualifying", Headers: []string{"Pos", "No.", "Team", "Drivers", "Tire", "Q1", "Q2"}, Rows: [][]string{
+					{"1", "17", "Team Pole", "GT500 Pole", "B", "1:45.900", "1:45.100"},
+					{"2", "64", "Team Q1", "GT500 Q1 Lead", "D", "1:45.200", "1:45.300"},
+				}},
+				{Title: "Qualifying", Headers: []string{"Pos", "No.", "Team", "Drivers", "Tire", "Q1", "Q2"}, Rows: [][]string{
+					{"1", "9", "Team 300 Pole", "GT300 Pole", "M", "1:57.800", "1:56.500"},
+					{"2", "777", "Team 300 Q1", "GT300 Q1 Lead", "D", "1:57.300", "1:56.600"},
+				}},
+			},
+		},
+		"race": {Headers: []string{"Pos", "No.", "Class", "Drivers", "Team", "Laps", "DP"}, Rows: [][]string{
+			{"1", "64", "GT500", "GT500 Q1 Lead", "Team Q1", "10", "15"},
+			{"2", "17", "GT500", "GT500 Pole", "Team Pole", "10", "16"},
+			{"1", "9", "GT300", "GT300 Pole", "Team 300 Pole", "10", "26"},
+			{"2", "777", "GT300", "GT300 Q1 Lead", "Team 300 Q1", "10", "20"},
+		}},
+	}, nil)
+
+	got, err := buildDriverStatsFromJSON(dataDir, "SUPER_GT", "2026")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pole500 := statsRowByDriver(t, got.Rows, "GT500 Pole")
+	q1Lead500 := statsRowByDriver(t, got.Rows, "GT500 Q1 Lead")
+	pole300 := statsRowByDriver(t, got.Rows, "GT300 Pole")
+	q1Lead300 := statsRowByDriver(t, got.Rows, "GT300 Q1 Lead")
+	if pole500.Poles != 1 {
+		t.Fatalf("GT500 Q2 P1 poles = %d, want 1", pole500.Poles)
+	}
+	if q1Lead500.Poles != 0 {
+		t.Fatalf("GT500 Q1 P1 must not get pole, got %d", q1Lead500.Poles)
+	}
+	if pole300.Poles != 1 {
+		t.Fatalf("GT300 Q2 P1 poles = %d, want 1", pole300.Poles)
+	}
+	if q1Lead300.Poles != 0 {
+		t.Fatalf("GT300 Q1 group leader must not get pole, got %d", q1Lead300.Poles)
+	}
+}
+
 func TestStatsSuperGTClassSplit(t *testing.T) {
 	dataDir := t.TempDir()
 	writeStatsTestEvent(t, dataDir, "SUPER_GT", "super_gt_2026_1", map[string]EventTable{

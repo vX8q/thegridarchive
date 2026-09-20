@@ -58,20 +58,20 @@
 
   /**
    * @param {object} [options]
-   * @param {boolean} [options.cacheBust=true] — append _=timestamp query param
+   * @param {boolean} [options.cacheBust=false] — append _=timestamp (opt-in; APIs already send max-age)
    */
   function seriesEventsQuery(season, options) {
     options = options || {};
     var params = {};
     if (season != null && season !== '') params.season = season;
-    if (options.cacheBust !== false) params._ = Date.now();
+    if (options.cacheBust === true) params._ = Date.now();
     return buildQuery(params);
   }
 
   function eventQuery(options) {
     options = options || {};
-    if (options.cacheBust === false) return '';
-    return buildQuery({ _: Date.now() });
+    if (options.cacheBust === true) return buildQuery({ _: Date.now() });
+    return '';
   }
 
   function driverQuery(options) {
@@ -91,15 +91,23 @@
       return get(BASE + '/series/' + seriesPath(seriesId) + '/teams');
     },
 
+    /** All series teams for the season, keyed by lowercase data series id. */
+    getAllSeriesTeams: function (season, options) {
+      var params = {};
+      if (season != null && season !== '') params.season = season;
+      if (options && options.cacheBust === true) params._ = Date.now();
+      return get(BASE + '/teams' + buildQuery(params));
+    },
+
     getSeriesStandings: function (seriesId, options) {
-      var q = buildQuery(options && options.cacheBust === false ? {} : { _: Date.now() });
+      var q = options && options.cacheBust === true ? buildQuery({ _: Date.now() }) : '';
       return get(BASE + '/series/' + seriesPath(seriesId) + '/standings' + q);
     },
 
     getSeriesStats: function (seriesId, options) {
       var params = {};
       if (options && options.season != null && options.season !== '') params.season = options.season;
-      if (!options || options.cacheBust !== false) params._ = Date.now();
+      if (options && options.cacheBust === true) params._ = Date.now();
       return get(BASE + '/series/' + seriesPath(seriesId) + '/stats' + buildQuery(params));
     },
 
@@ -110,7 +118,7 @@
     getSchedule: function (season, options) {
       var params = {};
       if (season != null && season !== '') params.season = season;
-      if (!options || options.cacheBust !== false) params._ = Date.now();
+      if (options && options.cacheBust === true) params._ = Date.now();
       return get(BASE + '/schedule' + buildQuery(params));
     },
 
@@ -131,7 +139,7 @@
         return Promise.resolve({});
       }
       var params = { ids: ids.join(',') };
-      if (!options || options.cacheBust !== false) params._ = Date.now();
+      if (options && options.cacheBust === true) params._ = Date.now();
       return get(BASE + '/events/summaries' + buildQuery(params));
     },
 
@@ -153,6 +161,21 @@
 
     getDriverProfileRedirects: function () {
       return get(BASE + '/driver-profile-redirects');
+    },
+
+    getTeam: function (slug, options) {
+      var q = '';
+      if (options && typeof options === 'object') {
+        var parts = [];
+        if (options.season) parts.push('season=' + encodeURIComponent(options.season));
+        if (options.series) parts.push('series=' + encodeURIComponent(options.series));
+        if (parts.length) q = '?' + parts.join('&');
+      }
+      return get(BASE + '/team/' + encodeURIComponent(String(slug || '').trim()) + q);
+    },
+
+    getTeamProfileRedirects: function () {
+      return get(BASE + '/team-profile-redirects');
     },
 
     getLiveEvents: function () {

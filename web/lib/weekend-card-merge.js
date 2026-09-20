@@ -28,10 +28,19 @@
     return String(seriesId || '').toUpperCase() === 'SUPERCARS';
   }
 
+  function weekendEventIdsFromRun(run) {
+    return (run || []).map(function (x) {
+      return String((x && x.event && x.event.id) || '').toUpperCase();
+    }).filter(function (id) { return id.length > 0; });
+  }
+
   function weekendMergedEventName(sid, fe) {
     if (sid === 'SUPERCARS') {
       return String(fe.name || fe.circuit_name || '').replace(/\s*Race\s*\d+\s*$/i, '').trim() ||
         String(fe.circuit_name || '').trim();
+    }
+    if (sid === 'INDYCAR') {
+      return String(fe.name || fe.circuit_name || '').trim();
     }
     return String(fe.circuit_name || fe.name || '').trim();
   }
@@ -177,6 +186,8 @@
           for (var wi = 0; wi < w.length; wi++) {
             var src = w[wi] || {};
             var label = String(src.label || '').trim();
+            // Multi-file weekends (IndyCar Milwaukee, etc.): label every race so the same
+            // driver winning twice still shows as Race 1 + Race 2 (dedupe key includes label).
             if (!label && run.length > 1) label = 'Race ' + (raceIdx + 1);
             allWinners.push({
               name: src.name || '',
@@ -185,7 +196,7 @@
             });
           }
         });
-        if (sid === 'SUPERCARS' || sid === 'PSC' || sid === 'INDYCAR') {
+        if (sid === 'SUPERCARS' || sid === 'PSC' || sid === 'INDYCAR' || sid === 'SUPER_FORMULA') {
           var seen = {};
           allWinners = allWinners.filter(function (w) {
             var key = String((w && w.label) || '') + '|' + String((w && w.car) || '') + '|' + String((w && w.name) || '');
@@ -199,7 +210,8 @@
             start_date: rs,
             end_date: re,
             name: weekendMergedEventName(sid, fe),
-            _seriesId: fe._seriesId || fe.series_id || sid
+            _seriesId: fe._seriesId || fe.series_id || sid,
+            _weekendEventIds: weekendEventIdsFromRun(run)
           }),
           dateStr: re,
           rangeStart: rs,
@@ -249,6 +261,7 @@
           name: weekendMergedEventName(sid, fe),
           id: fe.id,
           _seriesId: fe._seriesId || fe.series_id || sid,
+          _weekendEventIds: weekendEventIdsFromRun(run),
           has_detail: run.some(function (x) { return x.event && x.event.has_detail; })
         });
         return { event: mergedEvent, date: first.date, endTs: last.endTs, liveEndTs: last.liveEndTs };

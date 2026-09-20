@@ -5,7 +5,10 @@
   window.TGA.fetchJSON = function (url, options) {
     return fetch(url, options || {}).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status + (r.statusText ? ' ' + r.statusText : ''));
-      return r.json();
+      return r.json().catch(function (err) {
+        var msg = (err && err.message) ? err.message : 'invalid JSON';
+        throw new Error('HTTP ' + r.status + ' JSON parse failed: ' + msg);
+      });
     });
   };
 })();

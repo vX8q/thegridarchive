@@ -719,14 +719,27 @@
           if (isSupercarsEntry) {
             entryCopy = G.expandSupercarsSubstituteEntryRows(entryCopy);
           }
+          function entryCoDriverName(row) {
+            var raw = row && row.co_driver != null ? String(row.co_driver).trim() : '';
+            if (!raw || raw === '-' || /^tbc$/i.test(raw)) return '';
+            return raw;
+          }
+          var showSupercarsCoDriver = isSupercarsEntry && entryCopy.some(function (r) {
+            return !!entryCoDriverName(r);
+          });
+          function supercarsCoDriverCell(row) {
+            var name = entryCoDriverName(row);
+            return name ? G.renderDriverCell(name) : '—';
+          }
           var isF1Entry = seriesLower === 'f1' || (String(d.series || '').toLowerCase().indexOf('formula 1') >= 0);
           // IndyCar: No., Driver, Team, Engine. DTM/Supercars: No., Driver, Team, Car/Manufacturer. Stock car: No., Driver, Team, Manufacturer, Crew chief. Others (F1, etc.): No., Driver, Manufacturer, Chassis.
+          // Enduro Supercars (Bend 500 / Bathurst 1000 / …): extra Co-driver column when entry_list has co_driver.
           var head = (isIndyCar || isSuperFormulaEntry)
             ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.engine') + '</th>' + (isStockCar ? '<th>' + t('th.crew_chief') + '</th>' : '')
             : isDtmEntry
               ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.car') + '</th>'
             : isSupercarsEntry
-              ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.manufacturer') + '</th>' + (isStockCar ? '<th>' + t('th.crew_chief') + '</th>' : '')
+              ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th>' + (showSupercarsCoDriver ? '<th>' + t('th.co_driver') + '</th>' : '') + '<th>' + t('th.team') + '</th><th>' + t('th.manufacturer') + '</th>' + (isStockCar ? '<th>' + t('th.crew_chief') + '</th>' : '')
               : isStockCar
                 ? '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.team') + '</th><th>' + t('th.manufacturer') + '</th><th>' + t('th.crew_chief') + '</th>'
                 : '<th>' + t('th.no') + '</th><th>' + t('th.driver') + '</th><th>' + t('th.manufacturer') + '</th><th>' + t('th.chassis') + '</th>';
@@ -820,7 +833,7 @@
               var cells = '<td>' + esc(dash(row.number)) + '</td><td>' + driverCell + '</td><td>' + teamCell + '</td><td>' + esc(dash(carDisplay)) + '</td>';
             } else if (isSupercarsEntry) {
               var manufacturerDisplay = getManufacturerDisplay(row);
-              var cells = '<td>' + esc(dash(row.number)) + '</td><td>' + driverCell + '</td><td>' + teamCell + '</td><td>' + esc(dash(manufacturerDisplay)) + '</td>';
+              var cells = '<td>' + esc(dash(row.number)) + '</td><td>' + G.renderDriverCell(row && row.driver) + '</td>' + (showSupercarsCoDriver ? '<td>' + supercarsCoDriverCell(row) + '</td>' : '') + '<td>' + teamCell + '</td><td>' + esc(dash(manufacturerDisplay)) + '</td>';
             } else if (isStockCar) {
               var manufacturerDisplay = getManufacturerDisplay(row);
               var cells = '<td>' + esc(dash(row.number)) + '</td><td>' + driverCell + '</td><td>' + teamCell + '</td><td>' + esc(dash(manufacturerDisplay)) + '</td><td>' + (row.crew_chief ? '<a href="/crew-chief/' + encodeURIComponent(slugify(row.crew_chief)) + '" class="track-link">' + esc(row.crew_chief) + '</a>' : '—') + '</td>';
@@ -927,6 +940,7 @@
                 ? '<td rowspan="' + manuSpan + '" class="entry-list-team-cell">' + esc(dash(manufacturerDisplay)) + '</td>'
                 : '';
               var driverCell = G.renderDriverCell(row && row.driver);
+              var coDriverCell = showSupercarsCoDriver ? '<td>' + supercarsCoDriverCell(row) + '</td>' : '';
               var subSize = row && row._substituteGroupSize;
               var subIdx = row && row._substituteGroupIndex;
               var numberCell;
@@ -937,7 +951,7 @@
               } else {
                 numberCell = '<td class="col-num">' + esc(dash(row.number)) + '</td>';
               }
-              return '<tr>' + numberCell + '<td>' + driverCell + '</td>' + teamCell + manufacturerCell + '</tr>';
+              return '<tr>' + numberCell + '<td>' + driverCell + '</td>' + coDriverCell + teamCell + manufacturerCell + '</tr>';
             }
             var manufacturerDisplay = getManufacturerDisplay(row);
             var chassisDisplay = getChassisDisplay(row);
@@ -957,7 +971,15 @@
             ? entryCopy.map(entryRowFn).join('')
             : entryCopy.map(function (row, idx, arr) { return entryRowDisplayFn(row, idx, arr); }).join('');
           contentEl.innerHTML = '<div class="table-wrap"><table class="data-table entry-list-table"><thead><tr>' + head + '</tr></thead><tbody>' + bodyHtml + '</tbody></table></div>';
-          var entryKeys = isStockCar ? ['number', 'driver', 'team', 'manufacturer', 'crew_chief'] : ((isIndyCar || isSuperFormulaEntry || isSupercarsEntry || isDtmEntry) ? ['number', 'driver', 'team', 'car', 'manufacturer'] : ['number', 'driver', 'constructor', 'manufacturer']);
+          var entryKeys = isStockCar
+            ? ['number', 'driver', 'team', 'manufacturer', 'crew_chief']
+            : (isSupercarsEntry
+              ? (showSupercarsCoDriver
+                ? ['number', 'driver', 'co_driver', 'team', 'manufacturer']
+                : ['number', 'driver', 'team', 'manufacturer'])
+              : ((isIndyCar || isSuperFormulaEntry || isDtmEntry)
+                ? ['number', 'driver', 'team', 'car', 'manufacturer']
+                : ['number', 'driver', 'constructor', 'manufacturer']));
           if (!isSuperFormulaEntry) {
             addObjectTableSort(contentEl.querySelector('.data-table'), entryCopy, entryRowFn, entryKeys);
           }

@@ -5,7 +5,40 @@
   window.TGA = window.TGA || {};
   var state = window.TGA._state;
 
+  var routeGen = 0;
+
   function route() {
+    var T = window.TGA;
+    var path = window.location.pathname || '';
+    var needsRu = T.getLang && T.getLang() === 'ru';
+    var needsSeriesPage = path.indexOf('/series/') === 0 || path.indexOf('/season/') === 0;
+    var tasks = [];
+    if (needsRu && typeof T.ensureRuAssets === 'function') tasks.push(T.ensureRuAssets());
+    if (needsSeriesPage) {
+      var seriesChain = Promise.resolve();
+      if (typeof T.ensureSeriesDataAssets === 'function') {
+        seriesChain = seriesChain.then(function () { return T.ensureSeriesDataAssets(); });
+      }
+      if (typeof T.ensureSeriesPageAssets === 'function') {
+        seriesChain = seriesChain.then(function () { return T.ensureSeriesPageAssets(); });
+      }
+      tasks.push(seriesChain);
+    } else if (typeof T.ensureRoutePageAssets === 'function') {
+      tasks.push(T.ensureRoutePageAssets(path));
+    }
+    if (tasks.length) {
+      var gen = ++routeGen;
+      Promise.all(tasks).then(function () {
+        if (gen === routeGen) routeImpl();
+      }).catch(function () {
+        if (gen === routeGen) routeImpl();
+      });
+      return;
+    }
+    routeImpl();
+  }
+
+  function routeImpl() {
     var T = window.TGA;
     var showView = T.showView || function () {};
     var renderList = T.renderList || function () {};

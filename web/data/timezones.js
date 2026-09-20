@@ -214,7 +214,7 @@
     { re: /long beach|monterey|laguna|portland/i, tz: 'America/Los_Angeles' },
     { re: /phoenix|avondale/i, tz: 'America/Phoenix' },
     { re: /detroit/i, tz: 'America/Detroit' },
-    { re: /madison|elkhart|road america|milwaukee|chicago|arlington|birmingham, alabama/i, tz: 'America/Chicago' },
+    { re: /madison|elkhart|road america|milwaukee|chicago|\barlington\b|birmingham, alabama/i, tz: 'America/Chicago' },
     { re: /indianapolis|speedway, indiana/i, tz: 'America/Indiana/Indianapolis' },
     { re: /bowmanville|ontario|markham|montreal/i, tz: 'America/Toronto' },
     { re: /miami|daytona|st\. petersburg|nashville|watkins glen|virginia|north carolina|bowman gray|lexington|charlotte|martinsville|darlington|talladega|bristol|richmond|dover|pocono|new hampshire/i, tz: 'America/New_York' },

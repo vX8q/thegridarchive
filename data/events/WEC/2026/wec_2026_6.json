@@ -1,0 +1,16 @@
+{
+  "event_id": "WEC_2026_6",
+  "series": "FIA World Endurance Championship",
+  "race": "6 Hours of Fuji",
+  "date": "Sunday, September 27, 2026",
+  "start_date": "2026-09-27",
+  "end_date": "2026-09-27",
+  "track": "Fuji Speedway",
+  "location": "Oyama, Shizuoka, Japan",
+  "entry_list": null,
+  "tables": {
+    "practice": {"headers":["Pos","Driver","Team","Time"],"rows":[]},
+    "qualifying": {"headers":["Pos","Driver","Team","Time"],"rows":[]},
+    "race_results": {"headers":["Pos","Driver","Team","Time/Retired"],"rows":[]}
+  }
+}

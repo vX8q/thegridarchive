@@ -65,8 +65,12 @@ Result:
 Changes:
 
 - `GET /api/schedule?season=2026` — one request for Full Schedule / Home instead of ~22 `/api/series/*/events`.
-- Standings / stats: response cache checked **before** rebuild (`tryWriteSeriesJSONCache`).
-- `EventDetailFileSet` — single walk of `data/events/` for `has_detail` on series events.
+- Standings / stats / **teams**: response cache checked **before** rebuild (`tryWriteSeriesJSONCache`).
+- `EventDetailFileSet` — single walk of `data/events/` for `has_detail` on series events; `EventsTreeMaxMtime` memoized (~2s TTL).
+- Static `/web/*`: `Cache-Control` (`app.js` / `style.css` / SPA shell / **`pages/event.js`** / **`pages/driver.js`** / **`data/translations.js`** / **`spa-boot.js`** = `no-store`; other JS/CSS `max-age=3600`; images `max-age=604800`).
+- API client: no default `?_=` cache-bust (opt-in via `cacheBust: true`); live boards still bust.
+- Frontend: RU dictionaries + F1/classes tech-spec scripts load on demand (`web/lib/lazy-assets.js`).
+- `TGA_BOOTSTRAP=skip` — skip SQLite reimport on start (local/Air).
 
 Quick checks (server running, `TGA_BOOTSTRAP=skip` optional):
 
@@ -80,7 +84,7 @@ Measure-Command { curl.exe -s -o NUL http://localhost:8080/api/series/cup/standi
 Measure-Command { curl.exe -s -o NUL http://localhost:8080/api/series/cup/standings }
 ```
 
-In browser DevTools → Network on cold Home load: expect **one** `/api/schedule?...` (not many `/api/series/*/events`).
+In browser DevTools → Network on cold Home load (EN): expect **one** `/api/schedule?...`, no RU dictionaries until language switch, no F1 tech-spec until a series page.
 
 ## Load testing (k6)
 

@@ -292,7 +292,7 @@
 
     function renderWithData(d) {
       window.TGA.currentEventEntryList = Array.isArray(d && d.entry_list) ? d.entry_list : [];
-      if (d.canonical_event_id && (G.eventSeriesId(d.canonical_event_id) || '').toLowerCase() === 'supercars') {
+      if (d.canonical_event_id) {
         var canonSlug = String(d.canonical_event_id).toLowerCase().replace(/_/g, '-');
         var routeSlug = (eventId || '').toLowerCase();
         if (canonSlug && canonSlug !== routeSlug) {
@@ -536,7 +536,8 @@
     var infoItems = [];
     var seriesLc = (G.eventSeriesId(eventId) || '').toLowerCase();
     var isFujiSuperGt2026 = evKeyOverview === 'SUPER_GT_2026_2';
-    var isMultiRoundWeekend = G.eventIsMultiRoundWeekend(d);
+    var isMultiRoundWeekend = typeof G.eventIsMultiRoundWeekend === 'function' && G.eventIsMultiRoundWeekend(d);
+    if (evKeyOverview === 'INDYCAR_2026_16' || evKeyOverview === 'INDYCAR_2026_17') isMultiRoundWeekend = true;
     if (!isMultiRoundWeekend && seriesLc !== 'supercars' && seriesLc !== 'imsa' && seriesLc !== 'wec' && seriesLc !== 'f2' && seriesLc !== 'f3' && seriesLc !== 'dtm' && seriesLc !== 'frec' && seriesLc !== 'psc' && !isFujiSuperGt2026 && !G.isF4SeriesId(seriesLc)) {
       if (Object.prototype.hasOwnProperty.call(d, 'laps')) {
         var lapsTrim = d.laps != null ? String(d.laps).trim() : '';
@@ -1144,6 +1145,7 @@
         // ELMS championship rounds (not Prologue): hide Driver and Time of the day on practice page.
         if (/^ELMS_\d{4}_\d+$/.test(evKeyEvent || '')) {
           data = G.dropColumnsByHeader(data, ['Driver', 'Drivers', 'Time of the day']);
+          data = G.formatElmsCarColumn(data);
         }
         // GTWCE Endurance: same table shape as test (no Laps column).
         if (evKeyEvent.indexOf('GTWCE_END_') === 0) {
@@ -1211,7 +1213,7 @@
       if (q && dnqForQualFilter && Array.isArray(dnqForQualFilter.rows) && dnqForQualFilter.rows.length > 0 && !qualHasFtqBlock) {
         q = G.qualifyingExcludingDidNotQualify(q, dnqForQualFilter);
       }
-      if (evKeyEvent === 'SUPER_GT_2026_1' && q && Array.isArray(q.sessions) && q.sessions.length > 0) {
+      if (((seriesId || '').toLowerCase() === 'super_gt' || /^SUPER_GT_/i.test(evKeyEvent || '')) && q && Array.isArray(q.sessions) && q.sessions.length > 0) {
         var qClassOrder = ['GT500', 'GT300'];
         var qExtraClassSuperGt = 'pre-season-results-table qualifying-results-table';
         qClassOrder.forEach(function (cls) {
@@ -1219,14 +1221,32 @@
             return String((sess && sess.class) || '').trim().toUpperCase() === cls;
           });
           if (!classSessions.length) return;
+          html += '<div class="event-pre-season-block">';
           html += '<h3 class="event-pre-season-title">' + esc(cls) + '</h3>';
           classSessions.forEach(function (sess, idx) {
             if (!sess || !Array.isArray(sess.headers) || !Array.isArray(sess.rows)) return;
             var sessTitle = (sess.title && String(sess.title).trim())
               ? String(sess.title).trim()
               : ('Qualifying ' + String(idx + 1));
-            appendTable(sessTitle, { headers: sess.headers, rows: sess.rows }, qExtraClassSuperGt, null, false);
+            var q2Idx = -1;
+            for (var qi = 0; qi < sess.headers.length; qi++) {
+              if (String(sess.headers[qi] || '').trim().toUpperCase() === 'Q2') {
+                q2Idx = qi;
+                break;
+              }
+            }
+            var extraCls = qExtraClassSuperGt + (q2Idx >= 0 ? ' super-gt-qual-table' : '');
+            var tableTitle = (q2Idx >= 0 || (classSessions.length === 1 && /^qualifying$/i.test(sessTitle)))
+              ? null
+              : sessTitle;
+            appendTable(tableTitle, { headers: sess.headers, rows: sess.rows }, extraCls, function (row) {
+              if (q2Idx < 0 || !row) return '';
+              var q2 = String(row[q2Idx] == null ? '' : row[q2Idx]).trim();
+              if (!q2 || q2 === '—' || q2 === '-' || q2 === 'N/A') return 'qual-row-q1-out';
+              return '';
+            }, false);
           });
+          html += '</div>';
         });
       } else {
       function normalizeImsaQualTable(tableData) {
@@ -1247,6 +1267,9 @@
         if (sess.headers && Array.isArray(sess.rows)) {
           var qualData = normalizeImsaQualTable({ headers: sess.headers, rows: sess.rows });
           qualData = normalizeSuperFormulaEngineColumns(qualData);
+          if (/^ELMS_\d{4}_\d+$/.test(evKeyEvent || '')) {
+            qualData = G.formatElmsCarColumn(qualData);
+          }
           // GTWCE Endurance & Sprint qualifying: drop Laps column for display (data in JSON may still include it).
           if ((evKeyEvent.indexOf('GTWCE_END_') === 0 || evKeyEvent.indexOf('GTWCE_SPRINT_') === 0) && qualData && Array.isArray(qualData.headers)) {
             var lapsQualIdx = -1;
@@ -1318,11 +1341,13 @@
             });
 
             var commonIdx = [0, 1, 2, 3];
-            var dataIdx   = [4, 5, 6, 7];
-            var soDataIdx = [4, 5]; // Shoot Out: only Fastest Lap, Gap (no Lap, Laps)
+            var dataIdx   = [4, 5]; // Qualifying: Fastest Lap, Gap (no Lap, Laps)
+            var soDataIdx = [4, 5]; // Shoot Out: Fastest Lap, Gap
 
             var seg0Label = seg0.title || 'Qualifying';
+            if (/^shoot\s*out\b/i.test(seg0Label)) seg0Label = 'Qualifying';
             var seg1Label = seg1.title || 'Shoot Out';
+            if (/^shoot\s*out\b/i.test(seg1Label)) seg1Label = 'Shoot Out';
 
             out += '<div class="table-wrap"><table class="data-table pre-season-results-table qualifying-results-table qual-merged-table">';
             out += '<thead>';
@@ -1393,9 +1418,9 @@
               out += '<td>' + driversToLinks(rowCells[2]) + '</td>';
               out += '<td>' + teamToLink(rowCells[3]) + '</td>';
               dataIdx.forEach(function (_, j) { out += '<td>' + esc(String(rowCells[4 + j] != null ? rowCells[4 + j] : '')) + '</td>'; });
-              out += '<td class="' + (so ? 'qual-so-pos' : 'qual-so-empty') + '">' + esc(String(rowCells[8] != null ? rowCells[8] : '—')) + '</td>';
+              out += '<td class="' + (so ? 'qual-so-pos' : 'qual-so-empty') + '">' + esc(String(rowCells[6] != null ? rowCells[6] : '—')) + '</td>';
               for (var k = 0; k < soDataIdx.length; k++) {
-                var val = rowCells[9 + k];
+                var val = rowCells[7 + k];
                 out += '<td class="' + (so ? '' : 'qual-so-empty') + '">' + esc(val != null ? String(val) : '—') + '</td>';
               }
               out += '</tr>';
@@ -1405,7 +1430,7 @@
             sortQueue.push({
               rows: mergedRows,
               getRowClass: function (row) {
-                var soPos = row[8];
+                var soPos = row[6];
                 return (soPos != null && String(soPos).trim() !== '' && String(soPos).trim() !== '—') ? 'qual-row-in-shootout' : '';
               }
           });
@@ -1455,6 +1480,7 @@
           }
           var qElms = normalizeImsaQualTable(q);
           qElms = dropQualColumnsByHeader(qElms, ['Driver', 'Drivers', 'Time of the day']);
+          qElms = G.formatElmsCarColumn(qElms);
           var clsIdxElms = -1;
           for (var qei = 0; qei < qElms.headers.length; qei++) {
             if (String(qElms.headers[qei] || '').trim().toLowerCase() === 'class') { clsIdxElms = qei; break; }
@@ -1491,6 +1517,7 @@
         var qBase = normalizeImsaQualTable(q);
         if (/^ELMS_\d{4}_\d+$/.test(evKeyEvent || '')) {
           qBase = G.dropColumnsByHeader(qBase, ['Driver', 'Drivers', 'Time of the day']);
+          qBase = G.formatElmsCarColumn(qBase);
           var elmsClassOrder = ['LMGT3', 'LMP3', 'LMP2 Pro/Am', 'LMP2'];
           var qExtraClassElms = 'pre-season-results-table qualifying-results-table';
           var clsIdx = -1;

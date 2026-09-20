@@ -11,10 +11,13 @@ import (
 const (
 	rateLimitCleanInterval = 2 * time.Minute
 	rateLimitMaxAge        = 15 * time.Minute
+	// rateLimitMaxClients bounds memory when source addresses rotate faster than
+	// rateLimitMaxAge expires them (spoofed X-Forwarded-For behind a trusted proxy).
+	rateLimitMaxClients = 50000
 )
 
 type clientEntry struct {
-	lim     *rate.Limiter
+	lim      *rate.Limiter
 	lastSeen time.Time
 }
 
@@ -51,7 +54,7 @@ func (rl *rateLimiter) allow(r *http.Request) bool {
 	rl.mu.Lock()
 	defer rl.mu.Unlock()
 	now := time.Now()
-	if now.Sub(rl.lastClean) > rateLimitCleanInterval {
+	if now.Sub(rl.lastClean) > rateLimitCleanInterval || len(rl.clients) >= rateLimitMaxClients {
 		for k, e := range rl.clients {
 			if now.Sub(e.lastSeen) > rateLimitMaxAge {
 				delete(rl.clients, k)
@@ -61,6 +64,10 @@ func (rl *rateLimiter) allow(r *http.Request) bool {
 	}
 	e, ok := rl.clients[key]
 	if !ok {
+		if len(rl.clients) >= rateLimitMaxClients {
+			// Still full after pruning: start over rather than grow without bound.
+			rl.clients = make(map[string]*clientEntry)
+		}
 		e = &clientEntry{lim: rate.NewLimiter(rl.limit, rl.burst)}
 		rl.clients[key] = e
 	}

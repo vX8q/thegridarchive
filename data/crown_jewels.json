@@ -1,0 +1,25 @@
+{
+  "jewels": [
+    {"id":"daytona_500","label":"Daytona 500","label_ru":"Daytona 500","series_ids":["NASCAR_CUP"],"name_any":["daytona 500"]},
+    {"id":"coca_cola_600","label":"Coca-Cola 600","label_ru":"Coca-Cola 600","series_ids":["NASCAR_CUP"],"name_any":["coca-cola 600","coca cola 600"]},
+    {"id":"brickyard_400","label":"Brickyard 400","label_ru":"Brickyard 400","series_ids":["NASCAR_CUP"],"name_any":["brickyard 400"]},
+    {"id":"southern_500","label":"Southern 500","label_ru":"Southern 500","series_ids":["NASCAR_CUP"],"name_any":["southern 500"]},
+    {"id":"noaps_daytona","label":"Daytona 300","label_ru":"Daytona 300","series_ids":["NOAPS"],"name_any":["united rentals"],"track_any":["daytona"]},
+    {"id":"truck_daytona","label":"Daytona 250","label_ru":"Daytona 250","series_ids":["NASCAR_TRUCK"],"name_any":["fresh from florida"],"track_any":["daytona"]},
+    {"id":"arca_daytona","label":"ARCA at Daytona","label_ru":"ARCA на Daytona","series_ids":["ARCA"],"name_any":["general tire 200"],"track_any":["daytona"]},
+    {"id":"indy_500","label":"Indianapolis 500","label_ru":"Indianapolis 500","series_ids":["INDYCAR"],"name_any":["indianapolis 500","indy 500"]},
+    {"id":"long_beach_gp","label":"Grand Prix of Long Beach","label_ru":"Гран-при Лонг-Бич","series_ids":["INDYCAR"],"name_any":["long beach"]},
+    {"id":"f1_monaco","label":"Monaco Grand Prix","label_ru":"Гран-при Монако","series_ids":["F1"],"name_any":["monaco grand prix"]},
+    {"id":"f2_monaco","label":"Formula 2 at Monaco","label_ru":"Формула 2 в Монако","series_ids":["F2"],"name_any":["monaco"]},
+    {"id":"f3_monaco","label":"Formula 3 at Monaco","label_ru":"Формула 3 в Монако","series_ids":["F3"],"name_any":["monaco"]},
+    {"id":"psc_monaco","label":"Porsche Supercup at Monaco","label_ru":"Porsche Supercup в Монако","series_ids":["PSC"],"name_any":["monaco"]},
+    {"id":"wec_le_mans","label":"24 Hours of Le Mans","label_ru":"24 часа Ле-Мана","series_ids":["WEC"],"name_any":["24 hours of le mans"],"name_exclude":["lone star"]},
+    {"id":"rolex_24","label":"Rolex 24 at Daytona","label_ru":"Rolex 24 at Daytona","series_ids":["IMSA"],"name_any":["rolex 24"]},
+    {"id":"sebring_12","label":"12 Hours of Sebring","label_ru":"12 часов Сибринга","series_ids":["IMSA"],"name_any":["sebring"]},
+    {"id":"petit_le_mans","label":"Petit Le Mans","label_ru":"Petit Le Mans","series_ids":["IMSA"],"name_any":["petit le mans"]},
+    {"id":"spa_24","label":"24 Hours of Spa","label_ru":"24 часа Спа","series_ids":["GTWCE_END"],"name_any":["24 hours of spa"]},
+    {"id":"bathurst_1000","label":"Bathurst 1000","label_ru":"Bathurst 1000","series_ids":["SUPERCARS"],"name_any":["bathurst 1000","bathurst"]},
+    {"id":"dtm_norisring","label":"Norisring","label_ru":"Norisring","series_ids":["DTM"],"name_any":["norisring"]},
+    {"id":"super_gt_suzuka","label":"Suzuka GT","label_ru":"Сузука GT","series_ids":["SUPER_GT"],"name_any":["suzuka"]}
+  ]
+}

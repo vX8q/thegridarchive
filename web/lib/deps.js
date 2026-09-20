@@ -86,9 +86,9 @@
         var fn = (T.makeTableSortable) || (typeof window.makeTableSortable === 'function' ? window.makeTableSortable : null);
         if (typeof fn === 'function') return fn.apply(null, arguments);
       },
-      makeSimpleTableSortable: function (tableEl) {
+      makeSimpleTableSortable: function () {
         var fn = T.makeSimpleTableSortable;
-        if (typeof fn === 'function') fn(tableEl);
+        if (typeof fn === 'function') return fn.apply(null, arguments);
       },
       showView: function (activeId) {
         if (typeof T.showView === 'function') T.showView(activeId);

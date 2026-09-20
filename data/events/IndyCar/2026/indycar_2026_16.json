@@ -1,274 +1,146 @@
 {
   "event_id": "INDYCAR_2026_16",
   "series": "IndyCar Series",
-  "race": "Snap-on Makers and Fixers 250",
+  "race": "Snap-on IndyCar Weekend",
   "date": "Saturday, August 29, 2026",
   "start_date": "2026-08-29",
   "end_date": "2026-08-29",
   "track": "Milwaukee Mile",
   "location": "West Allis, Wisconsin, USA",
+  "laps": "250",
+  "distance": "253.750 miles (408.371 km)",
+  "youtube_id": "38oiZnT748E",
+  "event_preview": "The Milwaukee Mile is a 1.015-mile (1.633 km) paved oval at the Wisconsin State Fair Park in West Allis, Wisconsin, opened in 1903 and the oldest operating motor speedway in the world. The Snap-on Makers and Fixers 250 is the 16th race of the 2026 NTT IndyCar Series season and the first half of a Saturday-Sunday double-header, scheduled for 250 laps (253.750 miles) on Saturday, August 29. Twenty-five cars are entered, with no one-off additions. The weekend is the last oval pair of the year before the Mission Foods Grand Prix of Monterey finale at Laguna Seca.\n\nAlex Palou leads the championship on 553 points with three races remaining, 91 clear of Kyle Kirkwood after a 20th-place finish on the Streets of Washington. Kirkwood won that Freedom 250 for Andretti Global from second on the grid, leading 128 of 147 laps, with Christian Lundgaard second and Will Power third. Palou still has six wins on the season; Kirkwood now has two. Lundgaard sits third on 443, ahead of David Malukas, Pato O'Ward and Josef Newgarden. Pato O'Ward won the first Milwaukee race of the 2024 double-header and Scott McLaughlin the second; Christian Rasmussen took the single 2025 Snap-on Milwaukee Mile 250.\n\nThe IndyCar one-lap qualifying record at the Milwaukee Mile belongs to Patrick Carpentier, who turned a 20.028-second lap (185.500 mph) on 30 May 1998. The two-lap qualifying record is Dario Franchitti's 42.7768-second run (170.840 mph) on 18 June 2011.",
+  "event_preview_ru": "Milwaukee Mile — асфальтовый овал длиной 1,015 мили (1,633 км) в Wisconsin State Fair Park в West Allis, Wisconsin; открыт в 1903 году и является старейшим действующим автодромом в мире. Snap-on Makers and Fixers 250 — 16-й этап сезона NTT IndyCar Series 2026 и первая гонка субботне-воскресного double-header, планируется на 250 кругов (253,750 мили) в субботу, 29 августа. Заявлено 25 машин, без гостевых заявок. Это последняя овальная пара года перед финалом Mission Foods Grand Prix of Monterey на Laguna Seca.\n\nAlex Palou лидирует в чемпионате с 553 очками при трёх оставшихся гонках, на 91 очко впереди Kyle Kirkwood после 20-го места на Streets of Washington. Kirkwood выиграл тот Freedom 250 за Andretti Global со второго места на старте, лидировав 128 из 147 кругов; вторым финишировал Christian Lundgaard, третьим — Will Power. У Palou по-прежнему шесть побед в сезоне, у Kirkwood теперь две. Lundgaard третий с 443 очками, далее David Malukas, Pato O'Ward и Josef Newgarden. Pato O'Ward выиграл первую гонку Milwaukee double-header 2024 года, Scott McLaughlin — вторую; Christian Rasmussen взял единственную Snap-on Milwaukee Mile 250 в 2025 году.\n\nОднокруговой квалификационный рекорд IndyCar на Milwaukee Mile принадлежит Patrick Carpentier — 20.028 секунды (185,500 mph) 30 мая 1998 года. Двухкруговой квалификационный рекорд — Dario Franchitti, 42.7768 секунды (170,840 mph) 18 июня 2011 года.",
   "entry_list": [
-    {
-      "number": "4",
-      "driver": "Caio Collet",
-      "team": "A. J. Foyt Enterprises",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "caio-collet"
-    },
-    {
-      "number": "14",
-      "driver": "Santino Ferrucci",
-      "team": "A. J. Foyt Enterprises",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "santino-ferrucci"
-    },
-    {
-      "number": "26",
-      "driver": "Will Power",
-      "team": "Andretti Global",
-      "manufacturer": "Honda",
-      "driver_slug": "will-power"
-    },
-    {
-      "number": "27",
-      "driver": "Kyle Kirkwood",
-      "team": "Andretti Global",
-      "manufacturer": "Honda",
-      "driver_slug": "kyle-kirkwood"
-    },
-    {
-      "number": "28",
-      "driver": "Marcus Ericsson",
-      "team": "Andretti Global",
-      "manufacturer": "Honda",
-      "driver_slug": "marcus-ericsson"
-    },
-    {
-      "number": "5",
-      "driver": "Pato O'Ward",
-      "team": "Arrow McLaren",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "pato-o-ward"
-    },
-    {
-      "number": "6",
-      "driver": "Nolan Siegel",
-      "team": "Arrow McLaren",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "nolan-siegel"
-    },
-    {
-      "number": "7",
-      "driver": "Christian Lundgaard",
-      "team": "Arrow McLaren",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "christian-lundgaard"
-    },
-    {
-      "number": "8",
-      "driver": "Kyffin Simpson",
-      "team": "Chip Ganassi Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "kyffin-simpson"
-    },
-    {
-      "number": "9",
-      "driver": "Scott Dixon",
-      "team": "Chip Ganassi Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "scott-dixon"
-    },
-    {
-      "number": "10",
-      "driver": "Alex Palou",
-      "team": "Chip Ganassi Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "alex-palou"
-    },
-    {
-      "number": "18",
-      "driver": "Romain Grosjean",
-      "team": "Dale Coyne Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "romain-grosjean"
-    },
-    {
-      "number": "19",
-      "driver": "Dennis Hauger",
-      "team": "Dale Coyne Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "dennis-hauger"
-    },
-    {
-      "number": "20",
-      "driver": "Alexander Rossi",
-      "team": "Ed Carpenter Racing",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "alexander-rossi"
-    },
-    {
-      "number": "21",
-      "driver": "Christian Rasmussen",
-      "team": "Ed Carpenter Racing",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "christian-rasmussen"
-    },
-    {
-      "number": "76",
-      "driver": "Rinus VeeKay",
-      "team": "Juncos Hollinger Racing",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "rinus-veekay"
-    },
-    {
-      "number": "77",
-      "driver": "Sting Ray Robb",
-      "team": "Juncos Hollinger Racing",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "sting-ray-robb"
-    },
-    {
-      "number": "60",
-      "driver": "Felix Rosenqvist",
-      "team": "Meyer Shank Racing with Curb-Agajanian",
-      "manufacturer": "Honda",
-      "driver_slug": "felix-rosenqvist"
-    },
-    {
-      "number": "66",
-      "driver": "Marcus Armstrong",
-      "team": "Meyer Shank Racing with Curb-Agajanian",
-      "manufacturer": "Honda",
-      "driver_slug": "marcus-armstrong"
-    },
-    {
-      "number": "15",
-      "driver": "Graham Rahal",
-      "team": "Rahal Letterman Lanigan Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "graham-rahal"
-    },
-    {
-      "number": "45",
-      "driver": "Louis Foster",
-      "team": "Rahal Letterman Lanigan Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "louis-foster"
-    },
-    {
-      "number": "47",
-      "driver": "Mick Schumacher",
-      "team": "Rahal Letterman Lanigan Racing",
-      "manufacturer": "Honda",
-      "driver_slug": "mick-schumacher"
-    },
-    {
-      "number": "2",
-      "driver": "Josef Newgarden",
-      "team": "Team Penske",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "josef-newgarden"
-    },
-    {
-      "number": "3",
-      "driver": "Scott McLaughlin",
-      "team": "Team Penske",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "scott-mclaughlin"
-    },
-    {
-      "number": "12",
-      "driver": "David Malukas",
-      "team": "Team Penske",
-      "manufacturer": "Chevrolet",
-      "driver_slug": "david-malukas"
-    }
+    {"number":"4","driver":"Caio Collet","team":"A. J. Foyt Enterprises","manufacturer":"Chevrolet","driver_slug":"caio-collet"},
+    {"number":"14","driver":"Santino Ferrucci","team":"A. J. Foyt Enterprises","manufacturer":"Chevrolet","driver_slug":"santino-ferrucci"},
+    {"number":"26","driver":"Will Power","team":"Andretti Global","manufacturer":"Honda","driver_slug":"will-power"},
+    {"number":"27","driver":"Kyle Kirkwood","team":"Andretti Global","manufacturer":"Honda","driver_slug":"kyle-kirkwood"},
+    {"number":"28","driver":"Marcus Ericsson","team":"Andretti Global","manufacturer":"Honda","driver_slug":"marcus-ericsson"},
+    {"number":"5","driver":"Pato O'Ward","team":"Arrow McLaren","manufacturer":"Chevrolet","driver_slug":"pato-o-ward"},
+    {"number":"6","driver":"Nolan Siegel","team":"Arrow McLaren","manufacturer":"Chevrolet","driver_slug":"nolan-siegel"},
+    {"number":"7","driver":"Christian Lundgaard","team":"Arrow McLaren","manufacturer":"Chevrolet","driver_slug":"christian-lundgaard"},
+    {"number":"8","driver":"Kyffin Simpson","team":"Chip Ganassi Racing","manufacturer":"Honda","driver_slug":"kyffin-simpson"},
+    {"number":"9","driver":"Scott Dixon","team":"Chip Ganassi Racing","manufacturer":"Honda","driver_slug":"scott-dixon"},
+    {"number":"10","driver":"Alex Palou","team":"Chip Ganassi Racing","manufacturer":"Honda","driver_slug":"alex-palou"},
+    {"number":"18","driver":"Romain Grosjean","team":"Dale Coyne Racing","manufacturer":"Honda","driver_slug":"romain-grosjean"},
+    {"number":"19","driver":"Dennis Hauger","team":"Dale Coyne Racing","manufacturer":"Honda","driver_slug":"dennis-hauger"},
+    {"number":"20","driver":"Alexander Rossi","team":"Ed Carpenter Racing","manufacturer":"Chevrolet","driver_slug":"alexander-rossi"},
+    {"number":"21","driver":"Christian Rasmussen","team":"Ed Carpenter Racing","manufacturer":"Chevrolet","driver_slug":"christian-rasmussen"},
+    {"number":"76","driver":"Rinus VeeKay","team":"Juncos Hollinger Racing","manufacturer":"Chevrolet","driver_slug":"rinus-veekay"},
+    {"number":"77","driver":"Sting Ray Robb","team":"Juncos Hollinger Racing","manufacturer":"Chevrolet","driver_slug":"sting-ray-robb"},
+    {"number":"60","driver":"Felix Rosenqvist","team":"Meyer Shank Racing with Curb-Agajanian","manufacturer":"Honda","driver_slug":"felix-rosenqvist"},
+    {"number":"66","driver":"Marcus Armstrong","team":"Meyer Shank Racing with Curb-Agajanian","manufacturer":"Honda","driver_slug":"marcus-armstrong"},
+    {"number":"15","driver":"Graham Rahal","team":"Rahal Letterman Lanigan Racing","manufacturer":"Honda","driver_slug":"graham-rahal"},
+    {"number":"45","driver":"Louis Foster","team":"Rahal Letterman Lanigan Racing","manufacturer":"Honda","driver_slug":"louis-foster"},
+    {"number":"47","driver":"Mick Schumacher","team":"Rahal Letterman Lanigan Racing","manufacturer":"Honda","driver_slug":"mick-schumacher"},
+    {"number":"2","driver":"Josef Newgarden","team":"Team Penske","manufacturer":"Chevrolet","driver_slug":"josef-newgarden"},
+    {"number":"3","driver":"Scott McLaughlin","team":"Team Penske","manufacturer":"Chevrolet","driver_slug":"scott-mclaughlin"},
+    {"number":"12","driver":"David Malukas","team":"Team Penske","manufacturer":"Chevrolet","driver_slug":"david-malukas"}
   ],
   "tables": {
     "caution_breakdown": {
-      "headers": [
-        "Condition",
-        "From Lap",
-        "To Lap",
-        "# Of Laps",
-        "Reason"
-      ],
-      "rows": []
-    },
-    "final_practice": {
-      "title": "Final Practice",
-      "headers": [
-        "Rank",
-        "Car",
-        "Driver Name",
-        "C/E/T",
-        "Time",
-        "Speed",
-        "Diff",
-        "Gap",
-        "Best Lap",
-        "Laps"
-      ],
-      "rows": []
+      "headers": ["Condition","From Lap","To Lap","# Of Laps","Reason"],
+      "rows": [
+        ["","64","99","36","Conditions"],
+        ["","151","162","12","Contact: Car 18 and 47 in Turn 4"],
+        ["","200","209","10","Contact: Car 26 in Turn 4"],
+        ["","214","225","12","Contact: Car 4 on Front Stretch"]
+      ]
     },
     "practice": {
-      "title": "Practice 1",
-      "headers": [
-        "Rank",
-        "Car",
-        "Driver Name",
-        "C/E/T",
-        "Time",
-        "Speed",
-        "Diff",
-        "Gap",
-        "Best Lap",
-        "Laps"
-      ],
-      "rows": []
-    },
-    "practice2": {
-      "title": "Practice 2",
-      "headers": [
-        "Rank",
-        "Car",
-        "Driver Name",
-        "C/E/T",
-        "Time",
-        "Speed",
-        "Diff",
-        "Gap",
-        "Best Lap",
-        "Laps"
-      ],
-      "rows": []
+      "title": "Practice",
+      "headers": ["Rank","Car","Driver Name","C/E/T","Time","Speed","Diff","Gap","Best Lap","Laps"],
+      "rows": [
+        ["1","2","Josef Newgarden","D/C/F","00:22.9191","159.430","--.----","—","74","83"],
+        ["2","19","Dennis Hauger","D/H/F","00:22.9266","159.378","0.0075","0.0075","62","64"],
+        ["3","10","Alex Palou","D/H/F","00:22.9971","158.890","0.0780","0.0705","4","95"],
+        ["4","12","David Malukas","D/C/F","00:23.0297","158.665","0.1106","0.0326","78","87"],
+        ["5","76","Rinus VeeKay","D/C/F","00:23.0321","158.648","0.1130","0.0024","67","69"],
+        ["6","20","Alexander Rossi","D/C/F","00:23.0479","158.539","0.1288","0.0158","23","75"],
+        ["7","26","Will Power","D/H/F","00:23.1188","158.053","0.1997","0.0709","75","76"],
+        ["8","27","Kyle Kirkwood","D/H/F","00:23.1204","158.042","0.2013","0.0016","25","32"],
+        ["9","5","Pato O'Ward","D/C/F","00:23.1288","157.985","0.2097","0.0084","28","46"],
+        ["10","77","Sting Ray Robb","D/C/F","00:23.1401","157.908","0.2210","0.0113","35","60"],
+        ["11","8","Kyffin Simpson","D/H/F","00:23.2102","157.431","0.2911","0.0701","21","72"],
+        ["12","3","Scott McLaughlin","D/C/F","00:23.2103","157.430","0.2912","0.0001","84","87"],
+        ["13","21","Christian Rasmussen","D/C/F","00:23.2374","157.247","0.3183","0.0271","20","44"],
+        ["14","18","Romain Grosjean","D/H/F","00:23.2628","157.075","0.3437","0.0254","55","68"],
+        ["15","9","Scott Dixon","D/H/F","00:23.3675","156.371","0.4484","0.1047","56","87"],
+        ["16","14","Santino Ferrucci","D/C/F","00:23.4643","155.726","0.5452","0.0968","42","51"],
+        ["17","15","Graham Rahal","D/H/F","00:23.4724","155.672","0.5533","0.0081","45","74"],
+        ["18","60","Felix Rosenqvist","D/H/F","00:23.4852","155.587","0.5661","0.0128","4","88"],
+        ["19","66","Marcus Armstrong","D/H/F","00:23.5248","155.325","0.6057","0.0396","62","66"],
+        ["20","28","Marcus Ericsson","D/H/F","00:23.5785","154.972","0.6594","0.0537","20","70"],
+        ["21","47","Mick Schumacher","D/H/F","00:23.6658","154.400","0.7467","0.0873","37","76"],
+        ["22","7","Christian Lundgaard","D/C/F","00:23.7652","153.754","0.8461","0.0994","33","60"],
+        ["23","45","Louis Foster","D/H/F","00:23.7845","153.629","0.8654","0.0193","38","81"],
+        ["24","4","Caio Collet","D/C/F","00:24.1419","151.355","1.2228","0.3574","7","61"],
+        ["25","6","Nolan Siegel","D/C/F","00:41.7740","87.471","18.8549","17.6321","1","2"]
+      ]
     },
     "qualifying": {
       "title": "Qualifying",
-      "headers": [
-        "Pos",
-        "Car",
-        "Driver Name",
-        "C/E/T",
-        "Time",
-        "Speed"
-      ],
-      "rows": []
+      "headers": ["Rank","Car","Driver Name","C/E/T","Time","Speed","Diff","Gap"],
+      "rows": [
+        ["1","3","Scott McLaughlin","D/C/F","00:22.0738","165.536","—","—"],
+        ["2","10","Alex Palou","D/H/F","00:22.2605","164.147","0.1867","0.1867"],
+        ["3","12","David Malukas","D/C/F","00:22.2726","164.058","0.1988","0.0121"],
+        ["4","5","Pato O'Ward","D/C/F","00:22.2779","164.019","0.2041","0.0053"],
+        ["5","2","Josef Newgarden","D/C/F","00:22.3117","163.771","0.2379","0.0338"],
+        ["6","26","Will Power","D/H/F","00:22.3869","163.220","0.3131","0.0752"],
+        ["7","19","Dennis Hauger (R)","D/H/F","00:22.3908","163.192","0.3170","0.0039"],
+        ["8","60","Felix Rosenqvist","D/H/F","00:22.3920","163.183","0.3182","0.0012"],
+        ["9","45","Louis Foster","D/H/F","00:22.4157","163.011","0.3419","0.0237"],
+        ["10","7","Christian Lundgaard","D/C/F","00:22.4760","162.573","0.4022","0.0603"],
+        ["11","20","Alexander Rossi","D/C/F","00:22.4812","162.536","0.4074","0.0052"],
+        ["12","18","Romain Grosjean","D/H/F","00:22.5029","162.379","0.4291","0.0217"],
+        ["13","47","Mick Schumacher (R)","D/H/F","00:22.5078","162.344","0.4340","0.0049"],
+        ["14","28","Marcus Ericsson","D/H/F","00:22.5700","161.896","0.4962","0.0622"],
+        ["15","9","Scott Dixon","D/H/F","00:22.5806","161.820","0.5068","0.0106"],
+        ["16","66","Marcus Armstrong","D/H/F","00:22.6727","161.163","0.5989","0.0921"],
+        ["17","8","Kyffin Simpson","D/H/F","00:22.6865","161.065","0.6127","0.0138"],
+        ["18","21","Christian Rasmussen","D/C/F","00:22.6936","161.015","0.6198","0.0071"],
+        ["19","76","Rinus VeeKay","D/C/F","00:22.6988","160.978","0.6250","0.0052"],
+        ["20","15","Graham Rahal","D/H/F","00:22.7450","160.651","0.6712","0.0462"],
+        ["21","4","Caio Collet (R)","D/C/F","00:22.8328","160.033","0.7590","0.0878"],
+        ["22","27","Kyle Kirkwood","D/H/F","00:22.8491","159.919","0.7753","0.0163"],
+        ["23","77","Sting Ray Robb","D/C/F","00:22.8999","159.564","0.8261","0.0508"],
+        ["24","14","Santino Ferrucci","D/C/F","00:22.9754","159.040","0.9016","0.0755"],
+        ["25","6","Nolan Siegel","D/C/F","00:23.4292","155.959","1.3554","0.4538"]
+      ]
     },
     "race_results": {
-      "headers": [
-        "Pos",
-        "St",
-        "No",
-        "Driver",
-        "Team",
-        "Engine",
-        "Laps",
-        "Time/Retired",
-        "Led",
-        "Pts"
-      ],
-      "rows": []
+      "title": "Snap-on Makers and Fixers 250",
+      "headers": ["Pos","Start Pos","No.","Driver","Team","Laps","Laps Led","Pit Stops","Elapsed Time","Average Speed","Status","Points"],
+      "rows": [
+        ["1","1","5","Pato O'Ward","Arrow McLaren","250","119","4","02:11:42.1669","115.601","Running","53"],
+        ["2","12","12","David Malukas","Team Penske","250","93","4","02:11:43.9204","115.576","Running","41"],
+        ["3","24","76","Rinus VeeKay","Juncos Hollinger Racing","250","0","4","02:11:45.0310","115.559","Running","35"],
+        ["4","10","3","Scott McLaughlin","Team Penske","250","0","5","02:11:47.3894","115.525","Running","33"],
+        ["5","18","21","Christian Rasmussen","Ed Carpenter Racing","250","1","5","02:11:49.3777","115.496","Running","31"],
+        ["6","7","7","Christian Lundgaard","Arrow McLaren","250","1","4","02:11:49.8948","115.488","Running","29"],
+        ["7","2","2","Josef Newgarden","Team Penske","250","0","5","02:11:50.9940","115.472","Running","26"],
+        ["8","14","28","Marcus Ericsson","Andretti Global","250","0","4","02:11:52.0104","115.457","Running","24"],
+        ["9","16","66","Marcus Armstrong","Meyer Shank Racing with Curb-Agajanian","250","0","3","02:11:57.3818","115.379","Running","22"],
+        ["10","11","10","Alex Palou","Chip Ganassi Racing","250","0","5","02:11:58.0695","115.369","Running","20"],
+        ["11","6","45","Louis Foster","Rahal Letterman Lanigan Racing","250","0","4","02:11:58.2530","115.366","Running","19"],
+        ["12","13","47","Mick Schumacher","Rahal Letterman Lanigan Racing","250","0","5","02:11:59.2154","115.352","Running","18"],
+        ["13","23","6","Nolan Siegel","Arrow McLaren","250","0","3","02:11:59.7684","115.344","Running","17"],
+        ["14","8","20","Alexander Rossi","Ed Carpenter Racing","250","0","5","02:12:00.2916","115.337","Running","16"],
+        ["15","21","27","Kyle Kirkwood","Andretti Global","250","0","5","02:12:02.9886","115.297","Running","15"],
+        ["16","17","8","Kyffin Simpson","Chip Ganassi Racing","250","0","5","02:12:04.7175","115.272","Running","14"],
+        ["17","5","60","Felix Rosenqvist","Meyer Shank Racing with Curb-Agajanian","250","30","4","02:12:06.7667","115.242","Running","14"],
+        ["18","15","9","Scott Dixon","Chip Ganassi Racing","249","0","6","02:11:48.4201","115.048","Running","12"],
+        ["19","9","18","Romain Grosjean","Dale Coyne Racing","249","1","5","02:12:02.5034","114.843","Running","12"],
+        ["20","22","14","Santino Ferrucci","A. J. Foyt Enterprises","248","0","5","02:11:46.7480","114.610","Running","10"],
+        ["21","4","19","Dennis Hauger","Dale Coyne Racing","248","2","4","02:12:01.9211","114.390","Running","10"],
+        ["22","25","77","Sting Ray Robb","Juncos Hollinger Racing","248","0","3","02:12:04.7806","114.349","Running","8"],
+        ["23","19","15","Graham Rahal","Rahal Letterman Lanigan Racing","246","0","5","02:11:55.1341","113.565","Running","7"],
+        ["24","20","4","Caio Collet","A. J. Foyt Enterprises","211","0","4","01:53:10.1985","113.545","Contact","6"],
+        ["25","3","26","Will Power","Andretti Global","199","3","4","01:44:46.8677","115.661","Contact","6"]
+      ]
     }
   }
 }

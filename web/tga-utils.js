@@ -61,7 +61,8 @@
   // ─── Driver names ───────────────────────────────────────────────────────
   var driverDisplayNames = {
     'Woohyun Shin': 'Michael Shin',
-    'W. Shin': 'M. Shin'
+    'W. Shin': 'M. Shin',
+    'Giovanni Ruggiero': 'Gio Ruggiero'
   };
 
   /** Latin diacritics → ASCII (mirrors internal/driverutil/slug.go). */
@@ -318,6 +319,41 @@
     return resolveDriverSlug(foldDiacritics(String(str)).toLowerCase()
       .replace(/[^a-z0-9\u0400-\u04ff]+/g, '-')
       .replace(/^-+|-+$/g, ''));
+  }
+
+  function rawSlugify(str) {
+    return foldDiacritics(String(str)).toLowerCase()
+      .replace(/[^a-z0-9\u0400-\u04ff]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  /** Follow team_profile_redirects.json (optional map from bootstrap). */
+  function resolveTeamSlug(slug, redirects) {
+    slug = String(slug || '').trim().toLowerCase();
+    if (!slug) return '';
+    var seen = {};
+    var map = redirects && typeof redirects === 'object' ? redirects : null;
+    if (!map && typeof window !== 'undefined' && window.TGA && window.TGA.teamProfileRedirects) {
+      map = window.TGA.teamProfileRedirects;
+    }
+    while (slug && !seen[slug]) {
+      seen[slug] = true;
+      if (map && map[slug]) {
+        slug = String(map[slug] || '').trim().toLowerCase();
+        continue;
+      }
+      break;
+    }
+    return slug;
+  }
+
+  /** Team URL: slugify display name then resolve to canon org. */
+  function teamHref(name) {
+    var raw = name != null ? String(name).trim() : '';
+    if (!raw) return '';
+    var base = rawSlugify(raw);
+    var canon = resolveTeamSlug(base);
+    return '/team/' + encodeURIComponent(canon || base);
   }
 
   /** Follow driver_profile_redirects.json (optional map from search bootstrap). */
@@ -758,52 +794,58 @@
     return formatEventRaceStartDate(e);
   }
 
-  /** LIVE badge end: estimated chequered flag (+30 min) or named endurance duration (+2 h). */
+  /** LIVE badge end: estimated chequered flag (+20 min) or named endurance duration (+1 h). */
   function liveEndTsForEvent(ev, startTs, fallbackEndTs) {
     var parseNamed = window.TGA && window.TGA.parseNamedRaceDurationHours;
     var hours = parseNamed ? parseNamed(ev && ev.name) : null;
     if (hours != null && startTs) {
-      return startTs + (hours + 2) * 3600000;
+      return startTs + (hours + 1) * 3600000;
     }
     var finMs = estimateLiveFinishedUtcMs(ev);
     if (finMs != null) {
-      return finMs + 30 * 60000;
+      return finMs + 20 * 60000;
     }
-    return fallbackEndTs != null ? fallbackEndTs : (startTs ? startTs + 3 * 3600000 : null);
+    return fallbackEndTs != null ? fallbackEndTs : (startTs ? startTs + 2 * 3600000 : null);
   }
 
   function isIsoYmdDate(s) {
     return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
   }
 
-  /** Typical race length in hours when not encoded in the event title. */
+  /**
+   * Typical race length in hours when not encoded in the event title.
+   * Tuned near real race time (cautions/OT included), not the full TV window.
+   */
   function defaultRaceDurationHours(ev) {
     var sid = String((ev && (ev._seriesId || ev.series_id)) || '').toUpperCase();
-    if (sid === 'NASCAR_CUP' || sid === 'NOAPS' || sid === 'NASCAR_TRUCK' || sid === 'ARCA' || sid === 'NASCAR_MODIFIED') return 4.5;
-    if (sid === 'INDYCAR') return 3.5;
-    if (sid === 'F1') return 3.5;
-    if (sid === 'F2' || sid === 'F3') return 2.5;
-    if (sid === 'FREC') return 2;
-    // Super Formula races run ~1h (single sprint-length race per session) — the group's
-    // multi-race entries (e.g. a Fuji triple-header) rely on THIS per-session duration when
-    // computing the finish of each individual race (see getEventLastRaceFinishUtcMs), so a
-    // Supercars/DTM-style 3.5h estimate here made every already-finished race look ongoing
-    // for hours after the chequered flag.
-    if (sid === 'SUPER_FORMULA') return 1.5;
-    if (sid === 'SUPERCARS' || sid === 'SUPER_GT' || sid === 'DTM') return 3.5;
-    if (sid === 'WEC' || sid === 'ELMS') return 6;
+    if (sid === 'NASCAR_CUP') return 3.5;
+    if (sid === 'NOAPS') return 2.75;
+    if (sid === 'NASCAR_TRUCK' || sid === 'ARCA') return 2.25;
+    if (sid === 'NASCAR_MODIFIED') return 1.75;
+    if (sid === 'INDYCAR') return 2.5;
+    if (sid === 'F1') return 2.25;
+    if (sid === 'F2' || sid === 'F3') return 1.25;
+    if (sid === 'FREC' || sid === 'F4_IT') return 1;
+    // Per-session length for multi-race weekends (Fuji triple etc.).
+    if (sid === 'SUPER_FORMULA') return 1.25;
+    if (sid === 'PSC') return 1;
+    if (sid === 'DTM' || sid === 'GTWCE_SPRINT') return 1.25;
+    if (sid === 'SUPERCARS') return 1.75;
+    if (sid === 'SUPER_GT') return 2.75;
+    if (sid === 'GTWCE_END') return 3.25;
+    if (sid === 'ELMS') return 4;
+    if (sid === 'WEC') return 6;
     if (sid === 'IMSA') {
       var nm = String((ev && ev.name) || '').toLowerCase();
-      if (nm.indexOf('rolex') >= 0 || /\b24\b/.test(nm)) return 26;
-      if (nm.indexOf('12 hour') >= 0 || nm.indexOf('twelve') >= 0) return 13;
-      if (nm.indexOf('10 hour') >= 0 || nm.indexOf('ten') >= 0 || nm.indexOf('petit le mans') >= 0) return 11;
-      if (nm.indexOf('six hours') >= 0 || nm.indexOf('6 hour') >= 0) return 7;
-      if (nm.indexOf('long beach') >= 0) return 2.25;
-      if (nm.indexOf('detroit') >= 0) return 2.25;
-      if (nm.indexOf('monterey') >= 0 || nm.indexOf('laguna seca') >= 0) return 2.5;
-      return 3.5;
+      if (nm.indexOf('rolex') >= 0 || /\b24\b/.test(nm)) return 25;
+      if (nm.indexOf('12 hour') >= 0 || nm.indexOf('twelve') >= 0) return 12.5;
+      if (nm.indexOf('10 hour') >= 0 || nm.indexOf('ten') >= 0 || nm.indexOf('petit le mans') >= 0) return 10.5;
+      if (nm.indexOf('six hours') >= 0 || nm.indexOf('6 hour') >= 0) return 6.5;
+      if (nm.indexOf('long beach') >= 0 || nm.indexOf('detroit') >= 0) return 2;
+      if (nm.indexOf('monterey') >= 0 || nm.indexOf('laguna seca') >= 0) return 2.25;
+      return 2.75;
     }
-    return 4;
+    return 2.5;
   }
 
   function raceDurationHours(ev) {
@@ -813,18 +855,17 @@
     return defaultRaceDurationHours(ev);
   }
 
-  /** Shorter finish estimate for LIVE badge (real GP ~2 h, not schedule block). */
+  /** LIVE badge estimate — same ballpark as default, capped where card retention was looser. */
   function liveRaceDurationHours(ev) {
     var sid = String((ev && (ev._seriesId || ev.series_id)) || '').toUpperCase();
     var hours = raceDurationHours(ev);
-    if (sid === 'F1') return Math.min(hours, 2.5);
-    if (sid === 'F2' || sid === 'F3') return Math.min(hours, 2.25);
-    if (sid === 'INDYCAR') return Math.min(hours, 2.75);
-    // Stock-car default (4.5h) is for card retention; LIVE badge uses a tighter window so
-    // short races (e.g. Truck 250 at Richmond ~2h) do not stay LIVE for hours after the flag.
-    if (sid === 'NASCAR_TRUCK' || sid === 'ARCA' || sid === 'NASCAR_MODIFIED') return Math.min(hours, 2.5);
-    if (sid === 'NOAPS') return Math.min(hours, 3);
-    if (sid === 'NASCAR_CUP') return Math.min(hours, 3.5);
+    if (sid === 'F1') return Math.min(hours, 2);
+    if (sid === 'F2' || sid === 'F3') return Math.min(hours, 1.25);
+    if (sid === 'INDYCAR') return Math.min(hours, 2.25);
+    if (sid === 'NASCAR_MODIFIED') return Math.min(hours, 1.5);
+    if (sid === 'NASCAR_TRUCK' || sid === 'ARCA') return Math.min(hours, 2);
+    if (sid === 'NOAPS') return Math.min(hours, 2.5);
+    if (sid === 'NASCAR_CUP') return Math.min(hours, 3);
     return hours;
   }
 
@@ -974,6 +1015,13 @@
       if (now < firstStart) return false;
       var finishMs = getEventLastRaceFinishUtcMs(ev);
       if (finishMs && now < finishMs) return false;
+      // Schedule-LIVE series: short badge tail after the flag (~20 min) so Next Race
+      // and Last Results do not overlap. Live-sync series (WEC/F1/…) follow live.json only.
+      if (!eventUsesLiveSync(ev.id)) {
+        var liveFin = estimateLiveFinishedUtcMs(ev);
+        var liveBadgeEnd = liveFin != null ? liveFin + 20 * 60000 : null;
+        if (liveBadgeEnd && now < liveBadgeEnd) return false;
+      }
       if (eventUsesLiveSync(ev.id)) {
         var liveSet = window.TGA && window.TGA.liveEventIds;
         if (liveSet && liveSet[String(ev.id || '').toUpperCase()]) {
@@ -1008,19 +1056,28 @@
   function lastResultsWindowEndUtcMs(ev) {
     if (!ev) return null;
     var finishMs = getEventLastRaceFinishUtcMs(ev);
-    if (finishMs != null) return finishMs + 7 * 86400000;
     var endStr = (ev.end_date || ev.start_date || ev.date || '').slice(0, 10);
     var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
     if (getRange) {
       var range = getRange(ev);
       if (range.end) endStr = range.end;
     }
-    if (!isIsoYmdDate(endStr)) return null;
-    var parts = endStr.split('-');
-    var y = parseInt(parts[0], 10);
-    var mo = parseInt(parts[1], 10) - 1;
-    var da = parseInt(parts[2], 10);
-    return new Date(y, mo, da + 7, 23, 59, 59, 999).getTime();
+    var calendarLimit = null;
+    if (isIsoYmdDate(endStr)) {
+      var parts = endStr.split('-');
+      var y = parseInt(parts[0], 10);
+      var mo = parseInt(parts[1], 10) - 1;
+      var da = parseInt(parts[2], 10);
+      calendarLimit = new Date(y, mo, da + 7, 23, 59, 59, 999).getTime();
+    }
+    if (finishMs != null) {
+      var fromFinish = finishMs + 7 * 86400000;
+      // Multi-file weekends (IndyCar Milwaukee): early race keep end_date of the finale so
+      // Race 1 is not dropped before merge while Sunday is still inside the 7-day window.
+      if (calendarLimit != null && calendarLimit > fromFinish) return calendarLimit;
+      return fromFinish;
+    }
+    return calendarLimit;
   }
 
   function isWithinLastResultsWindow(ev) {
@@ -1034,9 +1091,9 @@
   function nextRaceEndTs(ev, startTs, fallbackEndTs) {
     var finMs = estimateRaceFinishedUtcMs(ev);
     if (finMs != null) {
-      return finMs + 3600000;
+      return finMs + 30 * 60000;
     }
-    return fallbackEndTs != null ? fallbackEndTs : (startTs ? startTs + 3 * 3600000 : null);
+    return fallbackEndTs != null ? fallbackEndTs : (startTs ? startTs + 2 * 3600000 : null);
   }
 
   /** Parse event start datetime. timeStr in HH:MM or 12h AM/PM/a.m./p.m. tzOffset: '+03:00' (MSK) or '-05:00' (EST). */
@@ -1111,7 +1168,7 @@
       var lineMap = {};
       var lineOrder = [];
 
-      function pushLine(lineKey, row, driverLabel, pointsNum, races, quals) {
+      function pushLine(lineKey, row, driverLabel, pointsNum, races, quals, mecPointsNum) {
         if (lineMap[lineKey]) return;
         lineMap[lineKey] = {
           driver: driverLabel,
@@ -1120,7 +1177,8 @@
           car: row.car || '',
           races: races || {},
           quals: quals || {},
-          pointsNum: pointsNum
+          pointsNum: pointsNum,
+          mecPointsNum: mecPointsNum || 0
         };
         lineOrder.push(lineKey);
       }
@@ -1136,6 +1194,7 @@
           var names = splitDriverNames(row.driver);
           if (names.length === 0) return;
           var rowPts = parseStandingsPoints(row.points);
+          var rowMec = parseStandingsPoints(row.mec_points);
           names.forEach(function (rawName) {
             var key = String(row.car || '') + '\0' + driverNameKey(rawName);
             if (lineMap[key]) return;
@@ -1149,7 +1208,7 @@
                 quals[code] = row.quals[code];
               }
             });
-            pushLine(key, row, driverDisplayName(rawName), rowPts, races, quals);
+            pushLine(key, row, driverDisplayName(rawName), rowPts, races, quals, rowMec);
           });
           return;
         }
@@ -1162,6 +1221,7 @@
           if (names.length === 0) return;
           var rPts = parseStandingsPoints(row.round_points && row.round_points[code]);
           var qPts = parseStandingsPoints(row.round_qual_points && row.round_qual_points[code]);
+          var mPts = parseStandingsPoints(row.round_mec_points && row.round_mec_points[code]);
           var totalRound = rPts + qPts;
           var raceCell = row.races && row.races[code] != null ? String(row.races[code]).trim() : '';
           var qualCell = row.quals && row.quals[code] != null ? String(row.quals[code]).trim() : '';
@@ -1173,12 +1233,14 @@
                 driver: rawName,
                 fingerprint: [],
                 pointsNum: 0,
+                mecPointsNum: 0,
                 races: {},
                 quals: {}
               };
             }
             var d = perDriver[dkey];
             d.pointsNum += totalRound;
+            d.mecPointsNum += mPts;
             if (raceCell !== '') d.races[code] = row.races[code];
             if (qualCell !== '') d.quals[code] = row.quals[code];
             d.fingerprint.push(code + ':' + raceCell + ':' + qualCell + ':' + String(totalRound));
@@ -1201,7 +1263,7 @@
           });
           var lineKey = String(row.car || '') + '\0' + fp;
           var combinedDriver = group.map(function (g) { return driverDisplayName(g.driver); }).join(' / ');
-          pushLine(lineKey, row, combinedDriver, group[0].pointsNum, group[0].races, group[0].quals);
+          pushLine(lineKey, row, combinedDriver, group[0].pointsNum, group[0].races, group[0].quals, group[0].mecPointsNum);
         });
       });
 
@@ -1215,6 +1277,7 @@
           races: d.races,
           quals: d.quals,
           points: formatStandingsPointsNum(d.pointsNum),
+          mec_points: formatStandingsPointsNum(d.mecPointsNum),
           _pointsNum: d.pointsNum
         };
       });
@@ -1555,6 +1618,7 @@
             tr1 += raceHeaderCell(im, esc(raceHeaderLabel(raceOrder[im], im)), ' colspan="2"');
           }
           tr1 += '<th class="col-pts" rowspan="2">' + tFn('th.pts') + '</th>';
+          tr1 += '<th class="col-pts col-mec" rowspan="2">' + esc(tFn('th.mec') || 'MEC') + '</th>';
           var tr2 = '';
           for (var im2 = 0; im2 < raceOrder.length; im2++) {
             tr2 += '<th class="col-race col-imsa-qr">' + standingsRaceHeaderHtml(esc(labelQ), eventIdsForStandings[im2]) + '</th>' +
@@ -1578,6 +1642,7 @@
               td += '<td class="col-race">' + qCell + '</td><td class="col-race">' + rCell + '</td>';
             }
             td += '<td class="col-pts">' + esc(dash(row.points)) + '</td>';
+            td += '<td class="col-pts col-mec">' + esc(dash(row.mec_points)) + '</td>';
             return '<tr>' + td + '</tr>';
           }).join('');
         } else {
@@ -1590,6 +1655,7 @@
             th += raceHeaderCell(i, esc(raceHeaderLabel(raceOrder[i], i)));
           }
           th += '<th class="col-pts">' + tFn('th.pts') + '</th>';
+          if (sk === 'imsa') th += '<th class="col-pts col-mec">' + esc(tFn('th.mec') || 'MEC') + '</th>';
           theadHtml = '<thead><tr>' + th + '</tr></thead>';
           body = classRows.map(function (row) {
             var posDisplay = (row.pos === 0 || row.pos === null || row.pos === undefined) ? '—' : row.pos;
@@ -1600,6 +1666,7 @@
             if (showModelCol) td += '<td>' + carCell(row) + '</td>';
             td += raceCells(row);
             td += '<td class="col-pts">' + esc(dash(row.points)) + '</td>';
+            if (sk === 'imsa') td += '<td class="col-pts col-mec">' + esc(dash(row.mec_points)) + '</td>';
             return '<tr>' + td + '</tr>';
           }).join('');
         }
@@ -1645,6 +1712,8 @@
   window.TGA.entryListDriverLabel     = entryListDriverLabel;
   window.TGA.slugify                  = slugify;
   window.TGA.resolveDriverSlug        = resolveDriverSlug;
+  window.TGA.resolveTeamSlug          = resolveTeamSlug;
+  window.TGA.teamHref                 = teamHref;
   window.TGA.driverLinkHtml           = driverLinkHtml;
   window.TGA.driverTableCell          = driverTableCell;
   window.TGA.driversCellHtml          = driversCellHtml;
@@ -1690,4 +1759,133 @@
   window.TGA.eventUsesLiveSync          = eventUsesLiveSync;
   window.TGA.liveEventIds               = window.TGA.liveEventIds || {};
   window.TGA.nextRaceEndTs              = nextRaceEndTs;
+
+  /** Season race stats from profile result rows (driver or team). */
+  function isEntryListResultRow(row) {
+    if (!row) return true;
+    var st = String(row.status || '').trim().toLowerCase();
+    var race = String(row.race_name || '').trim().toLowerCase();
+    return st === 'entry list' || race === 'entry list';
+  }
+
+  function computeSeasonRaceStats(rows) {
+    var starts = 0;
+    var wins = 0;
+    var podiums = 0;
+    var points = 0;
+    var best = null;
+    (Array.isArray(rows) ? rows : []).forEach(function (r) {
+      if (!r || isEntryListResultRow(r)) return;
+      starts += 1;
+      var pts = Number(r.points);
+      if (!isNaN(pts)) points += pts;
+      var pos = Number(r.position);
+      if (isNaN(pos) || pos <= 0) return;
+      if (best == null || pos < best) best = pos;
+      if (pos === 1) wins += 1;
+      if (pos <= 3) podiums += 1;
+    });
+    return {
+      starts: starts,
+      wins: wins,
+      podiums: podiums,
+      points: Math.round(points * 1000) / 1000,
+      best_finish: best
+    };
+  }
+
+  function renderSeasonStatsStrip(stats, opts) {
+    opts = opts || {};
+    var tFn = window.TGA.t || function (k) { return k; };
+    var escFn = window.TGA.esc || function (x) { return String(x == null ? '' : x); };
+    if (!stats || !stats.starts) return '';
+    var season = opts.season ? String(opts.season) : '';
+    var seriesLabel = opts.seriesLabel ? String(opts.seriesLabel) : '';
+    var items = [
+      { label: tFn('stats.starts') || 'Starts', value: stats.starts },
+      { label: tFn('standings.wins') || 'Wins', value: stats.wins },
+      { label: tFn('stats.podiums') || 'Podiums', value: stats.podiums },
+      { label: tFn('standings.points') || tFn('th.pts') || 'Points', value: stats.points },
+      {
+        label: tFn('stats.best_finish') || 'Best',
+        value: stats.best_finish != null ? 'P' + stats.best_finish : '—'
+      }
+    ];
+    var aria = escFn(tFn('stats.season_summary') || 'Season stats');
+    if (seriesLabel) aria += ' ' + escFn(seriesLabel);
+    if (season) aria += ' ' + escFn(season);
+    return '<div class="season-stats-strip" role="group" aria-label="' + aria + '">' +
+      items.map(function (it) {
+        return '<div class="season-stats-item">' +
+          '<span class="season-stats-value">' + escFn(String(it.value)) + '</span>' +
+          '<span class="season-stats-label">' + escFn(it.label) + '</span>' +
+          '</div>';
+      }).join('') +
+      '</div>';
+  }
+
+  /** Group result rows by series_id (stable first-seen order). */
+  function groupResultRowsBySeries(rows) {
+    var order = [];
+    var map = {};
+    (Array.isArray(rows) ? rows : []).forEach(function (r) {
+      if (!r) return;
+      var id = String(r.series_id || '').trim();
+      var key = id || '__unknown__';
+      if (!Object.prototype.hasOwnProperty.call(map, key)) {
+        map[key] = {
+          series_id: id,
+          series_name: String(r.series_name || '').trim(),
+          rows: []
+        };
+        order.push(key);
+      }
+      map[key].rows.push(r);
+      var sn = String(r.series_name || '').trim();
+      if (sn) map[key].series_name = sn;
+    });
+    return order.map(function (k) { return map[k]; });
+  }
+
+  /**
+   * Season stats strip(s). Multi-series seasons get one labeled block per championship.
+   */
+  function renderSeasonStatsBySeries(rows, opts) {
+    opts = opts || {};
+    var escFn = window.TGA.esc || function (x) { return String(x == null ? '' : x); };
+    var localize = window.TGA.localizeSeriesName || function (n, id) {
+      return (n && String(n).trim()) || id || '';
+    };
+    var groups = groupResultRowsBySeries(rows).filter(function (g) {
+      var st = computeSeasonRaceStats(g.rows);
+      return st && st.starts > 0;
+    });
+    if (!groups.length) return '';
+    if (groups.length === 1) {
+      return renderSeasonStatsStrip(computeSeasonRaceStats(groups[0].rows), {
+        season: opts.season,
+        seriesLabel: groups[0].series_name || groups[0].series_id
+      });
+    }
+    return '<div class="season-stats-by-series">' +
+      groups.map(function (g) {
+        var label = localize(g.series_name, g.series_id) || g.series_id || '—';
+        var strip = renderSeasonStatsStrip(computeSeasonRaceStats(g.rows), {
+          season: opts.season,
+          seriesLabel: label
+        });
+        if (!strip) return '';
+        return '<div class="season-stats-block">' +
+          '<div class="season-stats-series">' + escFn(label) + '</div>' +
+          strip +
+          '</div>';
+      }).join('') +
+      '</div>';
+  }
+
+  window.TGA.isEntryListResultRow = isEntryListResultRow;
+  window.TGA.computeSeasonRaceStats = computeSeasonRaceStats;
+  window.TGA.renderSeasonStatsStrip = renderSeasonStatsStrip;
+  window.TGA.groupResultRowsBySeries = groupResultRowsBySeries;
+  window.TGA.renderSeasonStatsBySeries = renderSeasonStatsBySeries;
 })();

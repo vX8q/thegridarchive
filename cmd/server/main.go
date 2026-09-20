@@ -88,9 +88,28 @@ func main() {
 		}
 	}
 
-	if err := bootstrapStoreFromFiles(st, dataDir); err != nil {
+	if cfg.SkipBootstrap {
+		slog.Info("bootstrap skipped", "reason", "TGA_BOOTSTRAP=skip")
+	} else if cfg.BootstrapMode == "incremental" {
+		stamp, ok := readBootstrapStamp(dataDir)
+		if ok && !cfg.ResetDB && !dataJSONNewerThan(dataDir, stamp) {
+			slog.Info("bootstrap skipped", "reason", "TGA_BOOTSTRAP=incremental", "stamp", stamp.UTC().Format(time.RFC3339))
+		} else {
+			if err := bootstrapStoreFromFiles(st, dataDir); err != nil {
+				slog.Error("bootstrap failed", "err", err)
+				os.Exit(1)
+			}
+			if err := writeBootstrapStamp(dataDir, time.Now()); err != nil {
+				slog.Warn("bootstrap stamp write failed", "err", err)
+			}
+		}
+	} else if err := bootstrapStoreFromFiles(st, dataDir); err != nil {
 		slog.Error("bootstrap failed", "err", err)
 		os.Exit(1)
+	} else if cfg.BootstrapMode == "full" {
+		if err := writeBootstrapStamp(dataDir, time.Now()); err != nil {
+			slog.Warn("bootstrap stamp write failed", "err", err)
+		}
 	}
 
 	eventscaffold.RunAtStartup(dataDir)
@@ -124,19 +143,25 @@ func main() {
 
 	fs := http.FileServer(http.Dir(webDir))
 	http.HandleFunc("/web/", staticWrap(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/web/app.js" || r.URL.Path == "/web/style.css" {
-			w.Header().Set("Cache-Control", "no-store, max-age=0")
-		}
+		setWebStaticCacheControl(w, r.URL.Path)
 		http.StripPrefix("/web/", fs).ServeHTTP(w, r)
 	}))
 	http.HandleFunc("/favicon.ico", staticWrap(func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/web/images/favicon.svg", http.StatusMovedPermanently)
 	}))
+	http.HandleFunc("/sitemap.xml", staticWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleSitemap(w, r, dataDir)
+	}))
+	http.HandleFunc("/robots.txt", staticWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleRobots(w, r)
+	}))
 
 	indexPath := filepath.Join(webDir, "index.html")
-	http.HandleFunc("/event/", staticWrap(func(w http.ResponseWriter, r *http.Request) {
+	serveSPA := func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store, max-age=0")
 		http.ServeFile(w, r, indexPath)
-	}))
+	}
+	http.HandleFunc("/event/", staticWrap(serveSPA))
 
 	http.HandleFunc("/", staticWrap(func(w http.ResponseWriter, r *http.Request) {
 		p := strings.TrimSpace(r.URL.Path)
@@ -150,7 +175,7 @@ func main() {
 			return
 		}
 		if p == "/" || p == "/schedule" || p == "/live" || p == "/feedback" || strings.HasPrefix(p, "/search") || strings.HasPrefix(p, "/series") || strings.HasPrefix(p, "/season") || strings.HasPrefix(p, "/track") || strings.HasPrefix(p, "/driver") || strings.HasPrefix(p, "/team") || strings.HasPrefix(p, "/crew-chief") {
-			http.ServeFile(w, r, indexPath)
+			serveSPA(w, r)
 			return
 		}
 		http.NotFound(w, r)
@@ -198,6 +223,15 @@ func main() {
 	}))
 	http.HandleFunc("/api/schedule", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleAggregatedSchedule(w, r, dataDir)
+	}))
+	http.HandleFunc("/api/teams", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleAllSeriesTeams(w, r, dataDir)
+	}))
+	http.HandleFunc("/api/team-profile-redirects", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleTeamProfileRedirects(w, r, dataDir)
+	}))
+	http.HandleFunc("/api/team/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
+		handleTeamBySlug(w, r, dataDir)
 	}))
 	http.HandleFunc("/api/events/", apiWrap(func(w http.ResponseWriter, r *http.Request) {
 		handleEvent(w, r, dataDir)

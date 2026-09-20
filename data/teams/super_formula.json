@@ -1,230 +1,43 @@
 {
   "teams": [
-    {
-      "team": "Team Mugen Autobacs",
-      "manufacturer": "Honda",
-      "number": "1",
-      "driver": "Ayumu Iwasa",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Team Mugen Autobacs",
-      "manufacturer": "Honda",
-      "number": "16",
-      "driver": "Tomoki Nojiri",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Realize Kondo Racing",
-      "manufacturer": "Toyota",
-      "number": "3",
-      "driver": "Luke Browning",
-      "driver_country": "United Kingdom"
-    },
-    {
-      "team": "Realize Kondo Racing",
-      "manufacturer": "Toyota",
-      "number": "4",
-      "driver": "Ukyo Sasahara",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Navikuru Buzz MK Racing",
-      "manufacturer": "Toyota",
-      "number": "97",
-      "driver": "Roman Stanek",
-      "driver_country": "Czech Republic"
-    },
-    {
-      "team": "Docomo Team Dandelion Racing",
-      "manufacturer": "Honda",
-      "number": "5",
-      "driver": "Tadasuke Makino",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Docomo Team Dandelion Racing",
-      "manufacturer": "Honda",
-      "number": "6",
-      "driver": "Kakunoshin Ohta",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "KDDI TGMGP TGR-DC",
-      "manufacturer": "Toyota",
-      "number": "7",
-      "driver": "Kamui Kobayashi",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "KDDI TGMGP TGR-DC",
-      "manufacturer": "Toyota",
-      "number": "28",
-      "driver": "Rikuto Kobayashi",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Team Goh",
-      "manufacturer": "Toyota",
-      "number": "53",
-      "driver": "Charlie Wurz",
-      "driver_country": "Austria"
-    },
-    {
-      "team": "KCMG",
-      "manufacturer": "Toyota",
-      "number": "8",
-      "driver": "Kenta Yamashita",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "KCMG",
-      "manufacturer": "Toyota",
-      "number": "9",
-      "driver": "Seita Nonaka",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "KCMG",
-      "manufacturer": "Toyota",
-      "number": "9",
-      "driver": "Giuliano Alesi",
-      "driver_country": "France",
-      "rounds": "6"
-    },
-    {
-      "team": "Hazama Ando Triple Tree Racing",
-      "manufacturer": "Honda",
-      "number": "10",
-      "driver": "Juju",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "ThreeBond Racing",
-      "manufacturer": "Honda",
-      "number": "12",
-      "driver": "Syun Koide",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "NTT Docomo Business Rookie",
-      "manufacturer": "Toyota",
-      "number": "14",
-      "driver": "Nirei Fukuzumi",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Team Impul",
-      "manufacturer": "Toyota",
-      "number": "19",
-      "driver": "Zak O'Sullivan",
-      "driver_country": "United Kingdom"
-    },
-    {
-      "team": "Delightworks Racing",
-      "manufacturer": "Honda",
-      "number": "22",
-      "driver": "Nobuharu Matsushita",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Vantelin Team TOM'S",
-      "manufacturer": "Toyota",
-      "number": "36",
-      "driver": "Sho Tsuboi",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Vantelin Team TOM'S",
-      "manufacturer": "Toyota",
-      "number": "37",
-      "driver": "Sacha Fenestraz",
-      "driver_country": "Argentina"
-    },
-    {
-      "team": "Sanki Vertex Partners Cerumo Inging",
-      "manufacturer": "Toyota",
-      "number": "38",
-      "driver": "Sena Sakaguchi",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Sanki Vertex Partners Cerumo Inging",
-      "manufacturer": "Toyota",
-      "number": "39",
-      "driver": "Toshiki Oyu",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "San-Ei Gen with B-Max",
-      "manufacturer": "Honda",
-      "number": "50",
-      "driver": "Yuto Nomura",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Ponos Nakajima Racing",
-      "manufacturer": "Honda",
-      "number": "64",
-      "driver": "Ren Sato",
-      "driver_country": "Japan"
-    },
-    {
-      "team": "Ponos Nakajima Racing",
-      "manufacturer": "Honda",
-      "number": "65",
-      "driver": "Igor Omura Fraga",
-      "driver_country": "Brazil"
-    }
+    {"team":"Team Mugen Autobacs","manufacturer":"Honda","number":"1","driver":"Ayumu Iwasa","driver_country":"Japan"},
+    {"team":"Team Mugen Autobacs","manufacturer":"Honda","number":"16","driver":"Tomoki Nojiri","driver_country":"Japan"},
+    {"team":"Realize Kondo Racing","manufacturer":"Toyota","number":"3","driver":"Luke Browning","driver_country":"United Kingdom"},
+    {"team":"Realize Kondo Racing","manufacturer":"Toyota","number":"4","driver":"Ukyo Sasahara","driver_country":"Japan"},
+    {"team":"Navikuru Buzz MK Racing","manufacturer":"Toyota","number":"97","driver":"Roman Stanek","driver_country":"Czech Republic"},
+    {"team":"Docomo Team Dandelion Racing","manufacturer":"Honda","number":"5","driver":"Tadasuke Makino","driver_country":"Japan"},
+    {"team":"Docomo Team Dandelion Racing","manufacturer":"Honda","number":"6","driver":"Kakunoshin Ohta","driver_country":"Japan"},
+    {"team":"KDDI TGMGP TGR-DC","manufacturer":"Toyota","number":"7","driver":"Kamui Kobayashi","driver_country":"Japan"},
+    {"team":"KDDI TGMGP TGR-DC","manufacturer":"Toyota","number":"28","driver":"Rikuto Kobayashi","driver_country":"Japan"},
+    {"team":"Team Goh","manufacturer":"Toyota","number":"53","driver":"Charlie Wurz","driver_country":"Austria"},
+    {"team":"KCMG","manufacturer":"Toyota","number":"8","driver":"Kenta Yamashita","driver_country":"Japan"},
+    {"team":"KCMG","manufacturer":"Toyota","number":"9","driver":"Seita Nonaka","driver_country":"Japan"},
+    {"team":"KCMG","manufacturer":"Toyota","number":"9","driver":"Giuliano Alesi","driver_country":"France","rounds":"6"},
+    {"team":"Hazama Ando Triple Tree Racing","manufacturer":"Honda","number":"10","driver":"Juju","driver_country":"Japan"},
+    {"team":"ThreeBond Racing","manufacturer":"Honda","number":"12","driver":"Syun Koide","driver_country":"Japan"},
+    {"team":"NTT Docomo Business Rookie","manufacturer":"Toyota","number":"14","driver":"Nirei Fukuzumi","driver_country":"Japan"},
+    {"team":"Team Impul","manufacturer":"Toyota","number":"19","driver":"Zak O'Sullivan","driver_country":"United Kingdom"},
+    {"team":"Delightworks Racing","manufacturer":"Honda","number":"22","driver":"Nobuharu Matsushita","driver_country":"Japan"},
+    {"team":"Vantelin Team TOM'S","manufacturer":"Toyota","number":"36","driver":"Sho Tsuboi","driver_country":"Japan"},
+    {"team":"Vantelin Team TOM'S","manufacturer":"Toyota","number":"37","driver":"Sacha Fenestraz","driver_country":"Argentina"},
+    {"team":"Sanki Vertex Partners Cerumo Inging","manufacturer":"Toyota","number":"38","driver":"Sena Sakaguchi","driver_country":"Japan"},
+    {"team":"Sanki Vertex Partners Cerumo Inging","manufacturer":"Toyota","number":"39","driver":"Toshiki Oyu","driver_country":"Japan"},
+    {"team":"San-Ei Gen with B-Max","manufacturer":"Honda","number":"50","driver":"Yuto Nomura","driver_country":"Japan"},
+    {"team":"Ponos Nakajima Racing","manufacturer":"Honda","number":"64","driver":"Ren Sato","driver_country":"Japan"},
+    {"team":"Ponos Nakajima Racing","manufacturer":"Honda","number":"65","driver":"Igor Omura Fraga","driver_country":"Brazil"}
   ],
   "technical_spec": [
-    {
-      "key": "Chassis / body",
-      "value": "Dallara SF23"
-    },
-    {
-      "key": "Minimum weight",
-      "value": "677 kg (including driver)"
-    },
-    {
-      "key": "Power output",
-      "value": "550 hp or higher (inline-4 2.0-liter turbo)"
-    },
-    {
-      "key": "Engine options",
-      "value": "Toyota TRD / TRD01F; Honda M-TEC / HR-417E"
-    },
-    {
-      "key": "Engine allocation",
-      "value": "Up to two engine units per year; any additional unit → 10-grid penalty at the start of the final race"
-    },
-    {
-      "key": "Bodywork materials",
-      "value": "Hemp used in part of the cowl; CO₂ emissions during manufacturing reduced by approx. 75%"
-    },
-    {
-      "key": "Damper",
-      "value": "Shared damper (standardized from 2024)"
-    },
-    {
-      "key": "Tyres",
-      "value": "Yokohama Rubber ADVAN; from 2023 carbon-neutral compounds with 33% sustainable materials"
-    },
-    {
-      "key": "Dry tyre allocation",
-      "value": "6 sets per race (3 new + 3 carryover). Two-race weekend: Race 1 — 3 new + 3 carryover; Race 2 — 2 new + 4 carryover"
-    },
-    {
-      "key": "Wet tyre allocation",
-      "value": "6 new wet sets available (per fact sheet tyre rules)"
-    },
-    {
-      "key": "Overall dimensions / fuel / OTS / Halo / gearbox",
-      "value": "Not listed on this fact sheet (no open JRP Technical Regulations PDF)"
-    },
-    {
-      "key": "Sources",
-      "value": "TOYOTA GAZOO Racing fact sheet «Super Formula (as of March 2025)» — fact-data_006_01_en.pdf (source cited: Japan Race Promotion).\nOnly open SF23 primary sheet used for Specs"
-    }
+    {"key":"Chassis / body","value":"Dallara SF23"},
+    {"key":"Minimum weight","value":"677 kg (including driver)"},
+    {"key":"Power output","value":"550 hp or higher (inline-4 2.0-liter turbo)"},
+    {"key":"Engine options","value":"Toyota TRD / TRD01F; Honda M-TEC / HR-417E"},
+    {"key":"Engine allocation","value":"Up to two engine units per year; any additional unit → 10-grid penalty at the start of the final race"},
+    {"key":"Bodywork materials","value":"Hemp used in part of the cowl; CO₂ emissions during manufacturing reduced by approx. 75%"},
+    {"key":"Damper","value":"Shared damper (standardized from 2024)"},
+    {"key":"Tyres","value":"Yokohama Rubber ADVAN; from 2023 carbon-neutral compounds with 33% sustainable materials"},
+    {"key":"Dry tyre allocation","value":"6 sets per race (3 new + 3 carryover). Two-race weekend: Race 1 — 3 new + 3 carryover; Race 2 — 2 new + 4 carryover"},
+    {"key":"Wet tyre allocation","value":"6 new wet sets available (per fact sheet tyre rules)"},
+    {"key":"Overall dimensions / fuel / OTS / Halo / gearbox","value":"Not listed on this fact sheet (no open JRP Technical Regulations PDF)"},
+    {"key":"Sources","value":"TOYOTA GAZOO Racing fact sheet «Super Formula (as of March 2025)» — fact-data_006_01_en.pdf (source cited: Japan Race Promotion).\nOnly open SF23 primary sheet used for Specs"}
   ]
 }

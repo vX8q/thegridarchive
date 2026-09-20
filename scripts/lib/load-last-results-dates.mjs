@@ -28,6 +28,8 @@ export function createLastResultsDatesApi() {
     return TGA.formatShortDate(r.start || r.end);
   };
   const window = { TGA, console };
+  const weekendSrc = fs.readFileSync(path.join(root, 'web', 'lib', 'weekend-card-merge.js'), 'utf8');
+  vm.runInNewContext(weekendSrc, { window, console });
   const src = fs.readFileSync(path.join(root, 'web', 'lib', 'last-results-dates.js'), 'utf8');
   vm.runInNewContext(src, { window, console });
   return window.TGA;

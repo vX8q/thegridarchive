@@ -61,23 +61,39 @@
       return false;
     }
     // PSC is race_day_only: schedule start≠end is practice/qual weekend, not multi-race.
-    // Real double-headers (e.g. Zandvoort) show as multi-race only after weekend merge (winners>1).
+    // Real double-headers (e.g. Zandvoort) show as multi-race when sessions>1 or winners>1.
     if (sid === 'PSC') {
       var wPsc = card.winners;
-      return Array.isArray(wPsc) && wPsc.length > 1;
+      if (Array.isArray(wPsc) && wPsc.length > 1) return true;
+      var getSessionsPsc = window.TGA && window.TGA.getEventRaceSessions;
+      if (getSessionsPsc) {
+        var sessPsc = getSessionsPsc(card.event || {});
+        if (Array.isArray(sessPsc) && sessPsc.length > 1) return true;
+      }
+      return false;
     }
-    // IndyCar: single race day on cards; only Milwaukee-style merges (2+ winners) span dates.
+    // IndyCar: single race day on cards; Milwaukee-style merges span dates.
     // Do not treat schedule practice weekend (start_date < end_date) as multi-race.
     if (sid === 'INDYCAR') {
       var wIndy = card.winners;
-      return Array.isArray(wIndy) && wIndy.length > 1;
+      if (Array.isArray(wIndy) && wIndy.length > 1) return true;
+      var evIndy = card.event || {};
+      var indyIds = evIndy._weekendEventIds;
+      if (Array.isArray(indyIds) && indyIds.length > 1) return true;
+      return false;
     }
     if (sid === 'SUPERCARS') {
       var w = card.winners;
       if (Array.isArray(w) && w.length > 1) return true;
-      var rs = pickIsoDate(card.rangeStart);
-      var re = pickIsoDate(card.rangeEnd);
-      return !!(rs && re && re > rs);
+      var evSc = card.event || {};
+      var scIds = evSc._weekendEventIds;
+      if (Array.isArray(scIds) && scIds.length > 1) return true;
+      var getSessionsSc = window.TGA && window.TGA.getEventRaceSessions;
+      if (getSessionsSc) {
+        var sessSc = getSessionsSc(evSc);
+        if (Array.isArray(sessSc) && sessSc.length > 1) return true;
+      }
+      return false;
     }
     return false;
   }
@@ -105,14 +121,20 @@
       }
     }
     if (lastResultsCardHasMultipleRaces(card)) {
+      // Prefer race-session dates when they resolve to a real multi-day race span
+      // (e.g. FREC/F4 Imola Fri–Sun practice weekend → Sat–Sun races).
+      // Keep seeded card span when getEventRaceDateRangeIso collapses to one day
+      // (IndyCar merged Milwaukee without _weekendEventIds still needs Aug 29–30).
       var getRangeMr = window.TGA && window.TGA.getEventRaceDateRangeIso;
       if (getRangeMr) {
         var schedMr = getRangeMr(evRange);
         var ss = pickIsoDate(schedMr.start);
         var se = pickIsoDate(schedMr.end);
-        if (ss && se && se > ss && (!rs || !re || rs === re)) {
-          rs = ss;
-          re = se;
+        if (ss && se && se > ss) {
+          return { start: ss, end: se };
+        }
+        if (ss && (!rs || !re || rs === re)) {
+          return { start: ss, end: se || ss };
         }
       }
     } else {
@@ -185,38 +207,30 @@
   }
 
   function formatLastResultsCardDate(card) {
-    if (!card) return '—';
+    if (!card) return '-';
     var e = card.event || {};
     var formatShortDate = window.TGA && window.TGA.formatShortDate;
     var formatDateRange = window.TGA && window.TGA.formatDateRange;
-    if (!formatShortDate || !formatDateRange) return '—';
+    if (!formatShortDate || !formatDateRange) return '-';
     var formatEventRaceStartDate = window.TGA && window.TGA.formatEventRaceStartDate;
     if (lastResultsCardHasMultipleRaces(card) || lastResultsCardIs24HourRace(card)) {
-      var evRange = eventForWeekendDateRange(e);
-      var getRange = window.TGA && window.TGA.getEventRaceDateRangeIso;
-      if (getRange) {
-        var schedRange = getRange(evRange);
-        var spanStart = pickIsoDate(schedRange.start);
-        var spanEnd = pickIsoDate(schedRange.end);
-        if (spanStart && spanEnd && spanEnd > spanStart) {
-          return formatDateRange(spanStart, spanEnd);
-        }
-      }
+      // Resolve via race sessions / 24h rules first — do not trust seeded
+      // start_date–end_date of the practice/qual weekend on the card.
       var range = lastResultsCardRaceDateRange(card);
-      var rs = range.start;
-      var re = range.end;
-      if (!rs || !re || rs === re) {
-        if (getRange) {
-          var schedRange2 = getRange(evRange);
-          rs = rs || pickIsoDate(schedRange2.start);
-          re = re || pickIsoDate(schedRange2.end);
-        }
+      var rs = pickIsoDate(range.start);
+      var re = pickIsoDate(range.end);
+      if (rs && re && re > rs) return formatDateRange(rs, re);
+      if (rs) return formatShortDate(rs) || rs;
+      var cardSpanStart = pickIsoDate(card.rangeStart);
+      var cardSpanEnd = pickIsoDate(card.rangeEnd);
+      if (cardSpanStart && cardSpanEnd && cardSpanEnd > cardSpanStart) {
+        return formatDateRange(cardSpanStart, cardSpanEnd);
       }
-      if (rs) return formatDateRange(rs, re || rs);
+      if (cardSpanStart) return formatShortDate(cardSpanStart) || cardSpanStart;
     }
     if (formatEventRaceStartDate) {
       var primary = formatEventRaceStartDate(e);
-      if (primary && primary !== '—') return primary;
+      if (primary && primary !== '—' && primary !== '-') return primary;
     }
     var getRangeFallback = window.TGA && window.TGA.getEventRaceDateRangeIso;
     if (getRangeFallback) {
@@ -236,7 +250,7 @@
       pickIsoDate(e.end_date) ||
       pickIsoDate(e.start_date) ||
       pickIsoDate(card.dateStr);
-    return formatShortDate(raceIso) || raceIso || '—';
+    return formatShortDate(raceIso) || raceIso || '-';
   }
 
   /** Last Results card: show only while within 7 days after last race finish. */

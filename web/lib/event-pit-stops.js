@@ -117,7 +117,10 @@
     if (usedCompounds.S) legendParts.push('C5 — Soft (red)');
     if (usedCompounds.I) legendParts.push('I — Intermediate (green)');
     if (usedCompounds.W) legendParts.push('W — Wet (blue)');
-    var legendText = legendParts.length ? localizeCompoundLegend(legendParts.join(', ') + '.') : '';
+    var subLegend = ps.subtitle && String(ps.subtitle).trim()
+      ? String(ps.subtitle).replace(/\s*Total:\s*\d+\s*pit stops\.?/i, '').trim()
+      : '';
+    var legendText = localizeCompoundLegend(subLegend || (legendParts.length ? legendParts.join(', ') + '.' : ''));
     html += '<span class="pit-stops-legend-text">' + esc(legendText) + '</span>';
     html += '<span class="pit-stops-chart-total">' + esc(t('event.total_pit_stops').replace('{n}', String(totalPitStops))) + '</span>';
     html += '</div></div>';

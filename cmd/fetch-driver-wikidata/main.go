@@ -30,8 +30,8 @@ import (
 )
 
 const (
-	wikidataAPI  = "https://www.wikidata.org/w/api.php"
-	delay        = 1200 * time.Millisecond
+	wikidataAPI   = "https://www.wikidata.org/w/api.php"
+	delay         = 1200 * time.Millisecond
 	wikiUserAgent = "TGA/1.0 (https://github.com/vX8q/tga; fetch driver info from Wikidata)"
 )
 
@@ -78,7 +78,7 @@ func main() {
 	log.Printf("unique driver names: %d", len(byName))
 
 	client := &http.Client{Timeout: 15 * time.Second}
-	labelCache := make(map[string]string) // Q-id -> label (country, place, region)
+	labelCache := make(map[string]string)  // Q-id -> label (country, place, region)
 	placeLabels := make(map[string]string) // place Q-id -> full "City, Region, Country"
 	updated := 0
 	skipped := 0
@@ -322,7 +322,7 @@ func getClaims(ctx context.Context, client *http.Client, qid string) (birth time
 					Snaktype  string `json:"snaktype"`
 					Datavalue *struct {
 						Value interface{} `json:"value"`
-						Type  string     `json:"type"`
+						Type  string      `json:"type"`
 					} `json:"datavalue"`
 				} `json:"mainsnak"`
 			} `json:"claims"`

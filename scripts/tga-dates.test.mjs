@@ -49,7 +49,7 @@ test('isoAddDays crosses month boundary', () => {
 });
 
 test('formatDateRange same month EN', () => {
-  assert.strictEqual(TGA.formatDateRange('2026-06-05', '2026-06-07'), 'Jun\u00a05\u20137');
+  assert.strictEqual(TGA.formatDateRange('2026-06-05', '2026-06-07'), 'Jun\u00a05-7');
 });
 
 test('formatDateRange cross month EN', () => {
@@ -71,7 +71,7 @@ test('buildEventMetaDate ISO span', () => {
     start_date: '2026-06-05',
     end_date: '2026-06-07',
   });
-  assert.strictEqual(s, 'Jun\u00a05\u20137');
+  assert.strictEqual(s, 'Jun\u00a05-7');
 });
 
 test('buildEventMetaDate prose date field', () => {

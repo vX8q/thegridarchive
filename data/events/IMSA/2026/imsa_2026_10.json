@@ -1,0 +1,43 @@
+{
+  "event_id": "IMSA_2026_10",
+  "series": "IMSA WeatherTech SportsCar Championship",
+  "race": "Tirerack.com Battle on the Bricks",
+  "date": "Sunday, September 20, 2026",
+  "start_date": "2026-09-20",
+  "end_date": "2026-09-20",
+  "track": "Indianapolis Motor Speedway",
+  "location": "Speedway, Indiana, USA",
+  "entry_list": [
+    {"number":"1","driver":"Connor De Phillippi / Neil Verhagen","team":"Paul Miller Racing","manufacturer":"BMW","class":"GTD Pro","car":"BMW M4 GT3 Evo","driver_slug":"connor-de-phillippi-neil-verhagen"},
+    {"number":"3","driver":"Antonio Garcia / Alexander Sims","team":"Corvette Racing by Pratt Miller Motorsports","manufacturer":"Chevrolet","class":"GTD Pro","car":"Chevrolet Corvette Z06 GT3.R","driver_slug":"antonio-garcia-alexander-sims"},
+    {"number":"4","driver":"Nicky Catsburg / Tommy Milner","team":"Corvette Racing by Pratt Miller Motorsports","manufacturer":"Chevrolet","class":"GTD Pro","car":"Chevrolet Corvette Z06 GT3.R","driver_slug":"nicky-catsburg-tommy-milner"},
+    {"number":"9","driver":"Andrea Caldarelli / Sandy Mitchell","team":"Pfaff Motorsports","manufacturer":"Lamborghini","class":"GTD Pro","car":"Lamborghini Temerario GT3","driver_slug":"andrea-caldarelli-sandy-mitchell"},
+    {"number":"14","driver":"Ben Barnicoat / Jack Hawksworth","team":"Vasser Sullivan Racing","manufacturer":"Lexus","class":"GTD Pro","car":"Lexus RC F GT3","driver_slug":"ben-barnicoat-jack-hawksworth"},
+    {"number":"59","driver":"Max Esterson / Nikita Johnson","team":"RLL Team McLaren","manufacturer":"McLaren","class":"GTD Pro","car":"McLaren 720S GT3 Evo","driver_slug":"max-esterson-nikita-johnson"},
+    {"number":"64","driver":"Ben Barker / Dennis Olsen","team":"Ford Racing","manufacturer":"Ford","class":"GTD Pro","car":"Ford Mustang GT3 Evo","driver_slug":"ben-barker-dennis-olsen"},
+    {"number":"65","driver":"Christopher Mies / Frederic Vervisch","team":"Ford Racing","manufacturer":"Ford","class":"GTD Pro","car":"Ford Mustang GT3 Evo","driver_slug":"christopher-mies-frederic-vervisch"},
+    {"number":"68","driver":"Valentin Hasse-Clot / Marco Sorensen","team":"Car Blanche","manufacturer":"Aston Martin","class":"GTD Pro","car":"Aston Martin Vantage AMR GT3 Evo","driver_slug":"valentin-hasse-clot-marco-sorensen"},
+    {"number":"77","driver":"Harry King / Nick Tandy","team":"AO Racing","manufacturer":"Porsche","class":"GTD Pro","car":"Porsche 911 GT3 R (992.2)","driver_slug":"harry-king-nick-tandy"},
+    {"number":"12","driver":"Benjamin Pedersen / Aaron Telitz","team":"Vasser Sullivan Racing","manufacturer":"Lexus","class":"GTD","car":"Lexus RC F GT3","driver_slug":"benjamin-pedersen-aaron-telitz"},
+    {"number":"13","driver":"Matt Bell / Orey Fidani","team":"13 Autosport","manufacturer":"Chevrolet","class":"GTD","car":"Chevrolet Corvette Z06 GT3.R","driver_slug":"matt-bell-orey-fidani"},
+    {"number":"16","driver":"Felipe Fraga / Sheena Monk","team":"Myers Riley Motorsports","manufacturer":"Ford","class":"GTD","car":"Ford Mustang GT3 Evo","driver_slug":"felipe-fraga-sheena-monk"},
+    {"number":"27","driver":"Eduardo Barrichello / Tom Gamble","team":"Heart of Racing Team","manufacturer":"Aston Martin","class":"GTD","car":"Aston Martin Vantage AMR GT3 Evo","driver_slug":"eduardo-barrichello-tom-gamble"},
+    {"number":"34","driver":"Albert Costa / Lorenzo Patrese","team":"Conquest Racing","manufacturer":"Ferrari","class":"GTD","car":"Ferrari 296 GT3 Evo","driver_slug":"albert-costa-lorenzo-patrese"},
+    {"number":"36","driver":"Mason Filippi / Robert Wickens","team":"DXDT Racing","manufacturer":"Chevrolet","class":"GTD","car":"Chevrolet Corvette Z06 GT3.R","driver_slug":"mason-filippi-robert-wickens"},
+    {"number":"45","driver":"Danny Formal / Trent Hindman","team":"Wayne Taylor Racing","manufacturer":"Lamborghini","class":"GTD","car":"Lamborghini Huracan GT3 Evo 2","driver_slug":"danny-formal-trent-hindman"},
+    {"number":"57","driver":"Philip Ellis / Russell Ward","team":"Winward Racing","manufacturer":"Mercedes-AMG","class":"GTD","car":"Mercedes-AMG GT3 Evo","driver_slug":"philip-ellis-russell-ward"},
+    {"number":"66","driver":"Jake Walker / Corey Lewis","team":"Gradient Racing","manufacturer":"Ford","class":"GTD","car":"Ford Mustang GT3 Evo","driver_slug":"jake-walker-corey-lewis"},
+    {"number":"70","driver":"Brendan Iribe / Frederik Schandorff","team":"Inception Racing","manufacturer":"Ferrari","class":"GTD","car":"Ferrari 296 GT3 Evo","driver_slug":"brendan-iribe-frederik-schandorff"},
+    {"number":"81","driver":"Giacomo Altoe / Casper Stevenson","team":"DragonSpeed","manufacturer":"Chevrolet","class":"GTD","car":"Chevrolet Corvette Z06 GT3.R","driver_slug":"giacomo-altoe-casper-stevenson"},
+    {"number":"96","driver":"Robby Foley / Patrick Gallagher","team":"Turner Motorsport","manufacturer":"BMW","class":"GTD","car":"BMW M4 GT3 Evo","driver_slug":"robby-foley-patrick-gallagher"},
+    {"number":"120","driver":"Adam Adelson / Callum Ilott","team":"Wright Motorsports","manufacturer":"Porsche","class":"GTD","car":"Porsche 911 GT3 R (992.2)","driver_slug":"adam-adelson-callum-ilott"}
+  ],
+  "tables": {
+    "practice": {"title":"Practice 1","headers":["POS","CAR NO","CLASS POS","DRIVERS","TEAM/CAR/SPONSOR","NO LAPS","FASTEST LAP","STATUS"],"rows":[]},
+    "qualifying": {"title":"Qualifying","headers":["POS","CAR NO","CLASS POS","DRIVERS","TEAM/CAR/SPONSOR","NO LAPS","FASTEST LAP","STATUS"],"rows":[]},
+    "race": {"title":"Race","headers":["POS","CAR NO","DRIVERS","TEAM/CAR/SPONSOR","CLASS","CLASS POS","NO LAPS","FASTEST LAP","PTS","STATUS"],"rows":[]}
+  },
+  "distance": "6 hours",
+  "event_preview": "Indianapolis Motor Speedway's road course is a 2.439-mile (3.925 km) 14-turn permanent layout that uses the oval's front straight and infield, with the famous yard of bricks at the start/finish line. The Tirerack.com Battle on the Bricks is the tenth round of the 2026 IMSA WeatherTech SportsCar Championship, scheduled for six hours on Sunday, September 20. The current entry list lists 23 GT cars: 10 in GTD Pro and 13 in GTD.\n\nIndianapolis rewards a car that can both overtake on the long oval straight and look after tyres through the infield. As a late-season endurance stop after VIR's all-GT weekend, the Battle on the Bricks asks GTD Pro and GTD crews to convert championship form into a six-hour result: pit strategy, traffic and staying out of trouble on a layout that mixes high-speed oval sections with tight infield braking zones.\n\nNo verified IMSA WeatherTech qualifying or race lap records for the Indianapolis Motor Speedway road course are stored in the current event files; no invented marks are listed here.",
+  "event_preview_ru": "Дорожная конфигурация Indianapolis Motor Speedway — постоянный 14-поворотный лейаут длиной 2,439 мили (3,925 км), использующий главную прямую овала и внутреннее поле, со знаменитой yard of bricks на линии старт/финиш. Tirerack.com Battle on the Bricks — десятый этап IMSA WeatherTech SportsCar Championship 2026, запланирован на шесть часов в воскресенье, 20 сентября. В текущей заявке 23 GT-машины: 10 в GTD Pro и 13 в GTD.\n\nIndianapolis награждает машину, которая умеет и обгонять на длинной овал-прямой, и беречь шины во внутреннем поле. Как поздний endurance-этап после полностью GT-уик-энда в VIR, Battle on the Bricks требует от экипажей GTD Pro и GTD превратить чемпионскую форму в шестичасовой результат: стратегия пит-стопов, трафик и умение не попасть в беду на конфигурации, где скоростные овальные участки чередуются с тесным торможением во внутреннем поле.\n\nВ текущих файлах событий нет проверенных рекордов квалификации или гоночного круга IMSA WeatherTech для дорожной трассы Indianapolis Motor Speedway — выдуманные ориентиры не приводятся."
+}

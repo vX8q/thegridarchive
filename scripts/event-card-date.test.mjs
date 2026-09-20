@@ -272,6 +272,23 @@ test('SERIES_CARD_DATE_RULES documents INDYCAR and WEC', () => {
   assert.strictEqual(TGA.getSeriesCardDateRule('WEC').card, 'race_day_only');
 });
 
+test('INDYCAR Milwaukee merged Next Race card shows date range', () => {
+  const e = {
+    id: 'INDYCAR_2026_16',
+    series_id: 'INDYCAR',
+    name: 'Snap-on IndyCar Weekend',
+    start_date: '2026-08-29',
+    end_date: '2026-08-30',
+    _weekendEventIds: ['INDYCAR_2026_16', 'INDYCAR_2026_17'],
+  };
+  const display = TGA.formatNextRaceCardDate(e);
+  assert.ok(display.indexOf('29') >= 0);
+  assert.ok(display.indexOf('30') >= 0);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-08-29');
+  assert.strictEqual(range.end, '2026-08-30');
+});
+
 test('INDYCAR single-race weekend shows one calendar day on cards', () => {
   const e = loadScheduleEntry('indycar.json', 'INDYCAR_2026_5');
   assert.ok(e);
@@ -293,13 +310,14 @@ test('WEC multi-day São Paulo weekend shows race day only on cards', () => {
   assert.strictEqual(TGA.nextRaceCardDateIso(e), '2026-07-12');
 });
 
-test('WEC single-day Lone Star Le Mans stays one day', () => {
+test('WEC multi-day Lone Star Le Mans weekend shows race day only on cards', () => {
   const e = loadScheduleEntry('wec.json', 'WEC_2026_5');
   assert.ok(e);
-  assert.strictEqual(TGA.enduranceWeekendRaceDayOnly(e), false);
+  assert.strictEqual(TGA.enduranceWeekendRaceDayOnly(e), true);
   const range = TGA.getEventRaceDateRangeIso(e);
   assert.strictEqual(range.start, '2026-09-06');
   assert.strictEqual(range.end, '2026-09-06');
+  assert.strictEqual(TGA.nextRaceCardDateIso(e), '2026-09-06');
 });
 
 test('F1 non-sprint multi-day weekend shows race day only (not Fri–Sun practice span)', () => {
@@ -329,6 +347,33 @@ test('F1 Las Vegas night race uses viewer-local race day (single day, no range w
   } finally {
     TGA.getEventRaceStartDateIso = prev;
   }
+});
+
+test('PSC is a multi-race schedule series', () => {
+  assert.strictEqual(TGA.isMultiRaceSeriesSchedule('PSC'), true);
+});
+
+test('PSC Zandvoort weekend spans two race days from sessions map', () => {
+  const e = loadScheduleEntry('psc.json', 'PSC_2026_6');
+  assert.ok(e);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-08-22');
+  assert.strictEqual(range.end, '2026-08-23');
+  const sessions = TGA.getEventRaceSessions(e);
+  assert.strictEqual(sessions.length, 2);
+  assert.strictEqual(sessions[0].start_date, '2026-08-22');
+  assert.strictEqual(sessions[1].start_date, '2026-08-23');
+});
+
+test('PSC Hungaroring still shows one race day', () => {
+  const e = loadScheduleEntry('psc.json', 'PSC_2026_5');
+  assert.ok(e);
+  assert.strictEqual(TGA.isMultiRaceSeriesSchedule('PSC'), true);
+  const range = TGA.getEventRaceDateRangeIso(e);
+  assert.strictEqual(range.start, '2026-07-26');
+  assert.strictEqual(range.end, '2026-07-26');
+  const sessions = TGA.getEventRaceSessions(e);
+  assert.strictEqual(sessions.length, 1);
 });
 
 console.log('All event-card-date tests passed.');

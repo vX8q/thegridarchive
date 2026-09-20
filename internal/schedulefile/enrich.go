@@ -9,7 +9,8 @@ import (
 	"github.com/vX8q/tga/config"
 )
 
-// EnrichPSCEvent recalculates race_results points using PSC guest scoring rules.
+// EnrichPSCEvent recalculates race_results / race.sessions points using PSC guest scoring.
+// Mutates the original JSON map so start_date, session meta, and other extra fields stay intact.
 func EnrichPSCEvent(body []byte, seriesID string) ([]byte, error) {
 	if strings.ToLower(seriesID) != "psc" {
 		return body, nil
@@ -18,14 +19,90 @@ func EnrichPSCEvent(body []byte, seriesID string) ([]byte, error) {
 	if err := json.Unmarshal(body, &detail); err != nil {
 		return body, err
 	}
-	if rr, ok := detail.Tables["race_results"]; ok {
-		ApplyPSCRacePoints(detail.EntryList, &rr)
-		if detail.Tables == nil {
-			detail.Tables = make(map[string]EventTable)
-		}
-		detail.Tables["race_results"] = rr
+	var root map[string]interface{}
+	if err := json.Unmarshal(body, &root); err != nil {
+		return body, err
 	}
-	return json.Marshal(detail)
+	tables, _ := root["tables"].(map[string]interface{})
+	if tables == nil {
+		return body, nil
+	}
+	apply := func(m map[string]interface{}) {
+		if m == nil {
+			return
+		}
+		tbl := eventTableFromJSONMap(m)
+		if len(tbl.Rows) == 0 {
+			// Session not published yet: leave the table exactly as stored so an absent
+			// "rows" key does not turn into JSON null for the client.
+			return
+		}
+		ApplyPSCRacePoints(detail.EntryList, &tbl)
+		if len(tbl.Headers) > 0 {
+			m["headers"] = tbl.Headers
+		}
+		m["rows"] = tbl.Rows
+	}
+	if rr, ok := tables["race_results"].(map[string]interface{}); ok {
+		apply(rr)
+	}
+	if race, ok := tables["race"].(map[string]interface{}); ok {
+		if sessions, ok := race["sessions"].([]interface{}); ok {
+			for _, s := range sessions {
+				if sm, ok := s.(map[string]interface{}); ok {
+					apply(sm)
+				}
+			}
+		}
+	}
+	return json.Marshal(root)
+}
+
+func eventTableFromJSONMap(m map[string]interface{}) EventTable {
+	t := EventTable{
+		Headers: jsonStringSlice(m["headers"]),
+		Meta:    jsonStringMap(m["meta"]),
+	}
+	rows, _ := m["rows"].([]interface{})
+	if len(rows) == 0 {
+		return t
+	}
+	t.Rows = make([][]string, 0, len(rows))
+	for _, row := range rows {
+		t.Rows = append(t.Rows, jsonStringSlice(row))
+	}
+	return t
+}
+
+func jsonStringMap(v interface{}) map[string]string {
+	obj, ok := v.(map[string]interface{})
+	if !ok || len(obj) == 0 {
+		return nil
+	}
+	out := make(map[string]string, len(obj))
+	for k, raw := range obj {
+		out[k] = strings.TrimSpace(fmt.Sprint(raw))
+	}
+	return out
+}
+
+func jsonStringSlice(v interface{}) []string {
+	arr, ok := v.([]interface{})
+	if !ok {
+		return nil
+	}
+	out := make([]string, len(arr))
+	for i, x := range arr {
+		if x == nil {
+			continue
+		}
+		if s, ok := x.(string); ok {
+			out[i] = s
+			continue
+		}
+		out[i] = fmt.Sprint(x)
+	}
+	return out
 }
 
 // EnrichSupercarsEvent enriches Supercars event JSON: entry_list from Teams and team_names_by_number.
@@ -96,10 +173,10 @@ func EnrichSupercarsEvent(body []byte, dataDir, seriesID string) ([]byte, error)
 }
 
 var stockCarSeriesIDs = map[string]bool{
-	"nascar_truck":   true,
-	"nascar_cup":     true,
-	"noaps":          true,
-	"arca":           true,
+	"nascar_truck":    true,
+	"nascar_cup":      true,
+	"noaps":           true,
+	"arca":            true,
 	"nascar_modified": true,
 }
 
@@ -197,4 +274,3 @@ func isFutureScheduleEvent(ev EventJSON, today string) bool {
 	}
 	return ev.StartDate > today
 }
-

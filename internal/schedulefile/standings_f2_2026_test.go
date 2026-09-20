@@ -1,16 +1,12 @@
 package schedulefile
 
 import (
-	"path/filepath"
 	"strings"
 	"testing"
 )
 
 func TestBuildStandingsFromEvents_F2_2026_OfficialTotals(t *testing.T) {
-	dataDir, err := filepath.Abs(filepath.Join("..", "..", "data"))
-	if err != nil {
-		t.Fatalf("abs data dir: %v", err)
-	}
+	dataDir := standingsDataDirUpToRound(t, "F2", "2026", 9)
 	data, err := BuildStandingsFromEvents(dataDir, "F2", "2026")
 	if err != nil {
 		t.Fatalf("BuildStandingsFromEvents: %v", err)

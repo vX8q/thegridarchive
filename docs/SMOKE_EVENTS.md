@@ -13,11 +13,13 @@
 | `IMSA_2026_6` | `imsa-2026-6` | overview, race, qualifying | endurance | 3.2 |
 | `WEC_2026_2` | `wec-2026-2` | race, entry_list | endurance | 3.2 |
 | `ELMS_2026_2` | `elms-2026-2` | race | endurance | 3.2 |
+| `ELMS_2026_4` | `elms-2026-4` | race (Spa, `elms-race-results-table`) | endurance | 3.2 |
 | `NASCAR_CUP_2026_19` | `nascar-cup-2026-19` | race, qualifying | stockcar | 3.3 |
 | `F2_2026_6` | `f2-2026-6` | race, qualifying, practice | openwheel | 3.4 |
 | `F1_2026_5` | `f1-2026-5` | race, qualifying | openwheel (sprint) | 3.4 |
 | `SUPERCARS_2026_5` | `supercars-2026-5` | race | touring | 3.5 |
 | `INDYCAR_2026_5` | `indycar-2026-5` | race | touring | 3.5 |
+| `SUPER_GT_2026_5` | `super-gt-2026-5` | qualifying (Q1/Q2 columns), race | touring | 3.5 |
 
 ### 3.1 event-tables (дополнительно к A4+A5)
 
@@ -34,6 +36,7 @@
 | ID | Slug | Edge case |
 |----|------|-----------|
 | `IMSA_2026_5` | `imsa-2026-5` | Detroit GTP qual/grid |
+| `IMSA_2026_9` | `imsa-2026-9` | VIR GTD + **BoP** tab |
 | `GTWCE_END_2026_3` | `gtwce-end-2026-3` | 24h Spa |
 | `WEC_2026_3` | `wec-2026-3` | Le Mans classes |
 | `FREC_2026_4` | `frec-2026-4` | 3 races |
@@ -41,7 +44,10 @@
 | `DTM_2026_4` | `dtm-2026-4` | Race 1+2 |
 | `GTWCE_SPRINT_2026_1` | `gtwce-sprint-2026-1` | dual race |
 | `PSC_2026_3` | `psc-2026-3` | support series |
+| `PSC_2026_6` | `psc-2026-6` (legacy `psc-2026-7` remaps) | Zandvoort Race 1+2 weekend |
+| `INDYCAR_2026_16` + `_17` | `indycar-2026-16` / `indycar-2026-17` | Milwaukee double-header merge |
 | `SUPER_FORMULA_2026_6` | `super-formula-2026-6` | Fuji triple |
+| `SUPER_GT_2026_5` | `super-gt-2026-5` | combined Q1/Q2 per class; no extra “Qualifying” h4 |
 | `NOAPS_2026_4` | `noaps-2026-4` | qual separator |
 | `NASCAR_CUP_2026_ALLSTAR_RACE` | `nascar-cup-2026-allstar-race` | All-Star |
 | `IMSA_2026_PRE_SEASON_TEST` | `imsa-2026-pre-season-test` | pre_season_tests |
@@ -80,4 +86,9 @@
 - [ ] A5 F2_2026_6 /race
 - [ ] A6 F1_2026_5 /race
 - [ ] A7 SUPERCARS_2026_5 /race
+- [ ] SUPER_GT_2026_5 /qualifying (Q1/Q2 columns, one table per class)
+- [ ] ELMS_2026_4 /race (wide table, no class color bars)
+- [ ] IMSA_2026_9 /bop
+- [ ] `/series/nascar_truck/standings` — The Chase already seeded (Round of 10, ~2000+)
+- [ ] After filling Daytona: `/series/nascar_cup/standings` and `/series/noaps/standings` (`chase.active`)
 ```

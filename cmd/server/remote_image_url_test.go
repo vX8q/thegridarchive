@@ -17,6 +17,10 @@ func TestAllowedRemoteImageURL_Wikimedia(t *testing.T) {
 	if !ok {
 		t.Fatal("expected wikimedia upload host to be allowed")
 	}
+	_, ok = allowedRemoteImageURL("https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Example.svg/200px-Example.svg.png")
+	if !ok {
+		t.Fatal("expected wikimedia thumb host to be allowed")
+	}
 }
 
 func TestAllowedRemoteImageURL_RejectsHTTP(t *testing.T) {

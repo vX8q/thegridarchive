@@ -7,274 +7,44 @@
   "end_date": "2026-10-11",
   "track": "Fuji Speedway",
   "location": "Oyama, Shizuoka, Japan",
+  "event_preview": "Fuji Speedway is a 4.563 km (2.835 mi) circuit at the base of Mount Fuji in Oyama, Shizuoka Prefecture, built around a 1.475 km start/finish straight that feeds heavy braking into Turn 1 before a sequence of fast rights and a technical closing sector. Round 10 of the 2026 Super Formula Championship is the Sunday half of Fuji's October double-header on October 11, again with 24 cars entered.\n\nThe second Fuji race of the weekend often swings on Saturday's tyre bank, Sunday weather windows and pit-window timing on a circuit where slipstreaming down the long straight can erase a gap built through the technical final corners. Late-season points remain critical as the field looks ahead to the November Suzuka finale, and a Sunday recovery - or a Sunday collapse - can reshape the title arithmetic overnight. Teams that conserved rubber or gained places in Saturday traffic arrive with options; those who spent tyres hard must manage a different strategic brief.\n\nThe Super Formula course record at Fuji Speedway belongs to Tomoki Nojiri, who set a 1:19.972 during qualifying on 20 December 2020.",
+  "event_preview_ru": "Fuji Speedway — трасса длиной 4,563 км (2,835 мили) у подножия Mount Fuji в Oyama, префектура Shizuoka, с стартовой прямой 1,475 км, ведущей к жёсткому торможению в первый поворот, затем быстрым правым и техничным финальным сектором. Десятый этап чемпионата Super Formula 2026 — воскресная половина октябрьского сдвоенного уик-энда Fuji 11 октября; снова заявлено 24 машины.\n\nВторая гонка уик-энда на Fuji часто решается банком шин после субботы, погодными окнами воскресенья и моментами пит-окна на трассе, где слипстрим по длинной прямой может стереть отрыв, набранный в техничных финальных поворотах. Позднесезонные очки критичны, пока пелотон смотрит на ноябрьский финал в Suzuka, а воскресный камбэк — или воскресный спад — может за ночь переписать арифметику титула. Команды, сохранившие резину или отыгравшие позиции в субботнем трафике, приезжают с вариантами; потратившие шины жёстко ведут другой стратегический бриф.\n\nРекорд круга Super Formula на Fuji Speedway принадлежит Tomoki Nojiri — 1:19.972 в квалификации 20 декабря 2020 года.",
   "entry_list": [
-    {
-      "number": "1",
-      "driver": "Ayumu Iwasa",
-      "team": "Team Mugen Autobacs",
-      "manufacturer": "Honda",
-      "constructor": "Team Mugen Autobacs",
-      "driver_country": "Japan",
-      "driver_slug": "ayumu-iwasa"
-    },
-    {
-      "number": "16",
-      "driver": "Tomoki Nojiri",
-      "team": "Team Mugen Autobacs",
-      "manufacturer": "Honda",
-      "constructor": "Team Mugen Autobacs",
-      "driver_country": "Japan",
-      "driver_slug": "tomoki-nojiri"
-    },
-    {
-      "number": "3",
-      "driver": "Luke Browning",
-      "team": "Realize Kondo Racing",
-      "manufacturer": "Toyota",
-      "constructor": "Realize Kondo Racing",
-      "driver_country": "United Kingdom",
-      "driver_slug": "luke-browning"
-    },
-    {
-      "number": "4",
-      "driver": "Ukyo Sasahara",
-      "team": "Realize Kondo Racing",
-      "manufacturer": "Toyota",
-      "constructor": "Realize Kondo Racing",
-      "driver_country": "Japan",
-      "driver_slug": "ukyo-sasahara"
-    },
-    {
-      "number": "97",
-      "driver": "Roman Stanek",
-      "team": "Navikuru Buzz MK Racing",
-      "manufacturer": "Toyota",
-      "constructor": "Navikuru Buzz MK Racing",
-      "driver_country": "Czech Republic",
-      "driver_slug": "roman-stanek"
-    },
-    {
-      "number": "5",
-      "driver": "Tadasuke Makino",
-      "team": "Docomo Team Dandelion Racing",
-      "manufacturer": "Honda",
-      "constructor": "Docomo Team Dandelion Racing",
-      "driver_country": "Japan",
-      "driver_slug": "tadasuke-makino"
-    },
-    {
-      "number": "6",
-      "driver": "Kakunoshin Ohta",
-      "team": "Docomo Team Dandelion Racing",
-      "manufacturer": "Honda",
-      "constructor": "Docomo Team Dandelion Racing",
-      "driver_country": "Japan",
-      "driver_slug": "kakunoshin-ohta"
-    },
-    {
-      "number": "7",
-      "driver": "Kamui Kobayashi",
-      "team": "KDDI TGMGP TGR-DC",
-      "manufacturer": "Toyota",
-      "constructor": "KDDI TGMGP TGR-DC",
-      "driver_country": "Japan",
-      "driver_slug": "kamui-kobayashi"
-    },
-    {
-      "number": "28",
-      "driver": "Rikuto Kobayashi",
-      "team": "KDDI TGMGP TGR-DC",
-      "manufacturer": "Toyota",
-      "constructor": "KDDI TGMGP TGR-DC",
-      "driver_country": "Japan",
-      "driver_slug": "rikuto-kobayashi"
-    },
-    {
-      "number": "53",
-      "driver": "Charlie Wurz",
-      "team": "Team Goh",
-      "manufacturer": "Toyota",
-      "constructor": "Team Goh",
-      "driver_country": "Austria",
-      "driver_slug": "charlie-wurz"
-    },
-    {
-      "number": "8",
-      "driver": "Kenta Yamashita",
-      "team": "KCMG",
-      "manufacturer": "Toyota",
-      "constructor": "KCMG",
-      "driver_country": "Japan",
-      "driver_slug": "kenta-yamashita"
-    },
-    {
-      "number": "9",
-      "driver": "Giuliano Alesi",
-      "team": "KCMG",
-      "manufacturer": "Toyota",
-      "constructor": "KCMG",
-      "driver_country": "France",
-      "driver_slug": "giuliano-alesi"
-    },
-    {
-      "number": "10",
-      "driver": "Juju",
-      "team": "Hazama Ando Triple Tree Racing",
-      "manufacturer": "Honda",
-      "constructor": "Hazama Ando Triple Tree Racing",
-      "driver_country": "Japan",
-      "driver_slug": "juju"
-    },
-    {
-      "number": "12",
-      "driver": "Syun Koide",
-      "team": "ThreeBond Racing",
-      "manufacturer": "Honda",
-      "constructor": "ThreeBond Racing",
-      "driver_country": "Japan",
-      "driver_slug": "syun-koide"
-    },
-    {
-      "number": "14",
-      "driver": "Nirei Fukuzumi",
-      "team": "NTT Docomo Business Rookie",
-      "manufacturer": "Toyota",
-      "constructor": "NTT Docomo Business Rookie",
-      "driver_country": "Japan",
-      "driver_slug": "nirei-fukuzumi"
-    },
-    {
-      "number": "19",
-      "driver": "Zak O'Sullivan",
-      "team": "Team Impul",
-      "manufacturer": "Toyota",
-      "constructor": "Team Impul",
-      "driver_country": "United Kingdom",
-      "driver_slug": "zak-o-sullivan"
-    },
-    {
-      "number": "22",
-      "driver": "Nobuharu Matsushita",
-      "team": "Delightworks Racing",
-      "manufacturer": "Honda",
-      "constructor": "Delightworks Racing",
-      "driver_country": "Japan",
-      "driver_slug": "nobuharu-matsushita"
-    },
-    {
-      "number": "36",
-      "driver": "Sho Tsuboi",
-      "team": "Vantelin Team TOM'S",
-      "manufacturer": "Toyota",
-      "constructor": "Vantelin Team TOM'S",
-      "driver_country": "Japan",
-      "driver_slug": "sho-tsuboi"
-    },
-    {
-      "number": "37",
-      "driver": "Sacha Fenestraz",
-      "team": "Vantelin Team TOM'S",
-      "manufacturer": "Toyota",
-      "constructor": "Vantelin Team TOM'S",
-      "driver_country": "Argentina",
-      "driver_slug": "sacha-fenestraz"
-    },
-    {
-      "number": "38",
-      "driver": "Sena Sakaguchi",
-      "team": "Sanki Vertex Partners Cerumo Inging",
-      "manufacturer": "Toyota",
-      "constructor": "Sanki Vertex Partners Cerumo Inging",
-      "driver_country": "Japan",
-      "driver_slug": "sena-sakaguchi"
-    },
-    {
-      "number": "39",
-      "driver": "Toshiki Oyu",
-      "team": "Sanki Vertex Partners Cerumo Inging",
-      "manufacturer": "Toyota",
-      "constructor": "Sanki Vertex Partners Cerumo Inging",
-      "driver_country": "Japan",
-      "driver_slug": "toshiki-oyu"
-    },
-    {
-      "number": "50",
-      "driver": "Yuto Nomura",
-      "team": "San-Ei Gen with B-Max",
-      "manufacturer": "Honda",
-      "constructor": "San-Ei Gen with B-Max",
-      "driver_country": "Japan",
-      "driver_slug": "yuto-nomura"
-    },
-    {
-      "number": "64",
-      "driver": "Ren Sato",
-      "team": "Ponos Nakajima Racing",
-      "manufacturer": "Honda",
-      "constructor": "Ponos Nakajima Racing",
-      "driver_country": "Japan",
-      "driver_slug": "ren-sato"
-    },
-    {
-      "number": "65",
-      "driver": "Igor Omura Fraga",
-      "team": "Ponos Nakajima Racing",
-      "manufacturer": "Honda",
-      "constructor": "Ponos Nakajima Racing",
-      "driver_country": "Brazil",
-      "driver_slug": "igor-omura-fraga"
-    }
+    {"number":"1","driver":"Ayumu Iwasa","team":"Team Mugen Autobacs","manufacturer":"Honda","constructor":"Team Mugen Autobacs","driver_country":"Japan","driver_slug":"ayumu-iwasa"},
+    {"number":"16","driver":"Tomoki Nojiri","team":"Team Mugen Autobacs","manufacturer":"Honda","constructor":"Team Mugen Autobacs","driver_country":"Japan","driver_slug":"tomoki-nojiri"},
+    {"number":"3","driver":"Luke Browning","team":"Realize Kondo Racing","manufacturer":"Toyota","constructor":"Realize Kondo Racing","driver_country":"United Kingdom","driver_slug":"luke-browning"},
+    {"number":"4","driver":"Ukyo Sasahara","team":"Realize Kondo Racing","manufacturer":"Toyota","constructor":"Realize Kondo Racing","driver_country":"Japan","driver_slug":"ukyo-sasahara"},
+    {"number":"97","driver":"Roman Stanek","team":"Navikuru Buzz MK Racing","manufacturer":"Toyota","constructor":"Navikuru Buzz MK Racing","driver_country":"Czech Republic","driver_slug":"roman-stanek"},
+    {"number":"5","driver":"Tadasuke Makino","team":"Docomo Team Dandelion Racing","manufacturer":"Honda","constructor":"Docomo Team Dandelion Racing","driver_country":"Japan","driver_slug":"tadasuke-makino"},
+    {"number":"6","driver":"Kakunoshin Ohta","team":"Docomo Team Dandelion Racing","manufacturer":"Honda","constructor":"Docomo Team Dandelion Racing","driver_country":"Japan","driver_slug":"kakunoshin-ohta"},
+    {"number":"7","driver":"Kamui Kobayashi","team":"KDDI TGMGP TGR-DC","manufacturer":"Toyota","constructor":"KDDI TGMGP TGR-DC","driver_country":"Japan","driver_slug":"kamui-kobayashi"},
+    {"number":"28","driver":"Rikuto Kobayashi","team":"KDDI TGMGP TGR-DC","manufacturer":"Toyota","constructor":"KDDI TGMGP TGR-DC","driver_country":"Japan","driver_slug":"rikuto-kobayashi"},
+    {"number":"53","driver":"Charlie Wurz","team":"Team Goh","manufacturer":"Toyota","constructor":"Team Goh","driver_country":"Austria","driver_slug":"charlie-wurz"},
+    {"number":"8","driver":"Kenta Yamashita","team":"KCMG","manufacturer":"Toyota","constructor":"KCMG","driver_country":"Japan","driver_slug":"kenta-yamashita"},
+    {"number":"9","driver":"Giuliano Alesi","team":"KCMG","manufacturer":"Toyota","constructor":"KCMG","driver_country":"France","driver_slug":"giuliano-alesi"},
+    {"number":"10","driver":"Juju","team":"Hazama Ando Triple Tree Racing","manufacturer":"Honda","constructor":"Hazama Ando Triple Tree Racing","driver_country":"Japan","driver_slug":"juju"},
+    {"number":"12","driver":"Syun Koide","team":"ThreeBond Racing","manufacturer":"Honda","constructor":"ThreeBond Racing","driver_country":"Japan","driver_slug":"syun-koide"},
+    {"number":"14","driver":"Nirei Fukuzumi","team":"NTT Docomo Business Rookie","manufacturer":"Toyota","constructor":"NTT Docomo Business Rookie","driver_country":"Japan","driver_slug":"nirei-fukuzumi"},
+    {"number":"19","driver":"Zak O'Sullivan","team":"Team Impul","manufacturer":"Toyota","constructor":"Team Impul","driver_country":"United Kingdom","driver_slug":"zak-o-sullivan"},
+    {"number":"22","driver":"Nobuharu Matsushita","team":"Delightworks Racing","manufacturer":"Honda","constructor":"Delightworks Racing","driver_country":"Japan","driver_slug":"nobuharu-matsushita"},
+    {"number":"36","driver":"Sho Tsuboi","team":"Vantelin Team TOM'S","manufacturer":"Toyota","constructor":"Vantelin Team TOM'S","driver_country":"Japan","driver_slug":"sho-tsuboi"},
+    {"number":"37","driver":"Sacha Fenestraz","team":"Vantelin Team TOM'S","manufacturer":"Toyota","constructor":"Vantelin Team TOM'S","driver_country":"Argentina","driver_slug":"sacha-fenestraz"},
+    {"number":"38","driver":"Sena Sakaguchi","team":"Sanki Vertex Partners Cerumo Inging","manufacturer":"Toyota","constructor":"Sanki Vertex Partners Cerumo Inging","driver_country":"Japan","driver_slug":"sena-sakaguchi"},
+    {"number":"39","driver":"Toshiki Oyu","team":"Sanki Vertex Partners Cerumo Inging","manufacturer":"Toyota","constructor":"Sanki Vertex Partners Cerumo Inging","driver_country":"Japan","driver_slug":"toshiki-oyu"},
+    {"number":"50","driver":"Yuto Nomura","team":"San-Ei Gen with B-Max","manufacturer":"Honda","constructor":"San-Ei Gen with B-Max","driver_country":"Japan","driver_slug":"yuto-nomura"},
+    {"number":"64","driver":"Ren Sato","team":"Ponos Nakajima Racing","manufacturer":"Honda","constructor":"Ponos Nakajima Racing","driver_country":"Japan","driver_slug":"ren-sato"},
+    {"number":"65","driver":"Igor Omura Fraga","team":"Ponos Nakajima Racing","manufacturer":"Honda","constructor":"Ponos Nakajima Racing","driver_country":"Brazil","driver_slug":"igor-omura-fraga"}
   ],
   "tables": {
-    "practice": {
-      "title": "Practice 1",
-      "headers": [
-        "Pos",
-        "No.",
-        "Driver",
-        "Team",
-        "Engine",
-        "Best Time",
-        "Lap",
-        "Gap",
-        "Delay"
-      ],
-      "rows": []
-    },
+    "practice": {"title":"Practice 1","headers":["Pos","No.","Driver","Team","Engine","Best Time","Lap","Gap","Delay"],"rows":[]},
     "qualifying": {
       "sessions": [
-        {
-          "title": "Qualifying Round 10",
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team",
-            "Engine",
-            "Best Time",
-            "Gap"
-          ],
-          "rows": []
-        }
+        {"title":"Qualifying Round 10","headers":["Pos","No.","Driver","Team","Engine","Best Time","Gap"],"rows":[]}
       ]
     },
     "race": {
       "sessions": [
-        {
-          "title": "Race Round 10",
-          "headers": [
-            "Pos",
-            "No.",
-            "Driver",
-            "Team",
-            "Engine",
-            "Laps",
-            "Time/Retired",
-            "Gap",
-            "Pts"
-          ],
-          "rows": []
-        }
+        {"title":"Race Round 10","headers":["Pos","No.","Driver","Team","Engine","Laps","Time/Retired","Gap","Pts"],"rows":[]}
       ]
     }
   }

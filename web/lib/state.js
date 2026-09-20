@@ -12,6 +12,7 @@
   if (s.eventPageLoadGeneration === undefined) s.eventPageLoadGeneration = 0;
   if (s.searchIndexReady === undefined) s.searchIndexReady = false;
   if (s.searchIndexLoading === undefined) s.searchIndexLoading = false;
+  if (s.searchTeamsReady === undefined) s.searchTeamsReady = false;
   if (s.searchInitDone === undefined) s.searchInitDone = false;
   if (!s.searchIndexItems) s.searchIndexItems = [];
 })();

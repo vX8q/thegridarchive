@@ -1,15 +1,9 @@
 package schedulefile
 
-import (
-	"path/filepath"
-	"testing"
-)
+import "testing"
 
 func TestBuildDTMStandings2026PointsAfterLausitzring(t *testing.T) {
-	dataDir, err := filepath.Abs(filepath.Join("..", "..", "data"))
-	if err != nil {
-		t.Fatal(err)
-	}
+	dataDir := standingsDataDirUpToRound(t, "DTM", "2026", 6)
 	st, err := BuildStandingsFromEvents(dataDir, "DTM", "2026")
 	if err != nil {
 		t.Fatalf("BuildStandingsFromEvents: %v", err)

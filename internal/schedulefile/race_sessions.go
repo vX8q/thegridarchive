@@ -11,6 +11,7 @@ import (
 // The same format is used for F1, F2, F3, Supercars, etc.
 type RaceSession struct {
 	Title   string // "Sprint Race Results", "Race 4", ...
+	Meta    map[string]string
 	Headers []string
 	Rows    [][]string
 }
@@ -47,16 +48,6 @@ func LoadEventEntryList(dataDir, eventID string) (map[string]string, error) {
 		}
 	}
 	return out, nil
-}
-
-// LoadEventPointsEligibleByCar returns car number -> points eligible from entry_list.
-// Missing entry or nil points_eligible defaults to true.
-func LoadEventPointsEligibleByCar(dataDir, eventID string) (map[string]bool, error) {
-	detail, err := LoadEventDetail(dataDir, eventID)
-	if err != nil || detail == nil {
-		return nil, err
-	}
-	return pointsEligibleByCarFromEntryList(detail.EntryList), nil
 }
 
 func pointsEligibleByCarFromEntryList(entries []EntryListRow) map[string]bool {
@@ -282,6 +273,7 @@ func loadEventRaceSessionsFromRaceTable(dataDir, eventID string) ([]RaceSession,
 // Sources (combined when both present — F1 sprint weekends):
 //   - tables.race.sessions[] or flat tables.race (Sprint, Race 1/2, Feature, …)
 //   - tables.race_results (F1 Grand Prix; appended after sprint sessions when both exist)
+//
 // Used for DB import and standings build; one format for F1/F2/F3/Supercars.
 func LoadEventRaceSessions(dataDir, eventID string) ([]RaceSession, error) {
 	raw, err := readEventDetailFile(dataDir, eventID)
@@ -398,74 +390,6 @@ func parseRaceTableAny(raceAny interface{}) []RaceSession {
 	return []RaceSession{{Title: title, Headers: headers, Rows: rows}}
 }
 
-// LoadEventQualifyingSessions reads tables.qualifying.sessions from event JSON.
-func LoadEventQualifyingSessions(dataDir, eventID string) ([]RaceSession, error) {
-	raw, err := readEventDetailFile(dataDir, eventID)
-	if err != nil {
-		return nil, err
-	}
-	var root map[string]interface{}
-	if err := json.Unmarshal(raw, &root); err != nil {
-		return nil, err
-	}
-	tables, ok := root["tables"].(map[string]interface{})
-	if !ok {
-		return nil, nil
-	}
-	qualAny, ok := tables["qualifying"]
-	if !ok {
-		return nil, nil
-	}
-	qualMap, ok := qualAny.(map[string]interface{})
-	if !ok {
-		return nil, nil
-	}
-	sessionsAny, ok := qualMap["sessions"].([]interface{})
-	if !ok || len(sessionsAny) == 0 {
-		return nil, nil
-	}
-	var out []RaceSession
-	for _, sessAny := range sessionsAny {
-		sessMap, ok := sessAny.(map[string]interface{})
-		if !ok {
-			continue
-		}
-		title := strings.TrimSpace(fmt.Sprint(sessMap["title"]))
-		headersAny, ok := sessMap["headers"].([]interface{})
-		if !ok {
-			continue
-		}
-		var headers []string
-		for _, h := range headersAny {
-			headers = append(headers, strings.TrimSpace(fmt.Sprint(h)))
-		}
-		rowsAny, ok := sessMap["rows"].([]interface{})
-		if !ok {
-			continue
-		}
-		var rows [][]string
-		for _, rAny := range rowsAny {
-			rSlice, ok := rAny.([]interface{})
-			if !ok {
-				continue
-			}
-			row := make([]string, len(rSlice))
-			for i := range rSlice {
-				row[i] = strings.TrimSpace(fmt.Sprint(rSlice[i]))
-			}
-			rows = append(rows, row)
-		}
-		if len(headers) > 0 && len(rows) > 0 {
-			out = append(out, RaceSession{Title: title, Headers: headers, Rows: rows})
-		}
-	}
-	return out, nil
-}
-
-// LoadSupercarsStartingGridByRace reads starting positions for each race session.
-// Primary source: ST column in tables.race.sessions; legacy fallback: tables.starting_lineup.sessions.
-// Returns per session index (1-based) a map: canonical car number -> starting position.
-// Used to fill results.grid_position on import and for Avg. Start in stats.
 func LoadSupercarsStartingGridByRace(dataDir, eventID string) (map[int]map[string]int, error) {
 	raw, err := readEventDetailFile(dataDir, eventID)
 	if err != nil {

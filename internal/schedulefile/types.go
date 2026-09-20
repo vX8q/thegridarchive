@@ -64,8 +64,8 @@ type TeamJSON struct {
 	Number       string `json:"number"`
 	Driver       string `json:"driver"` // single driver (legacy format)
 	CrewChief    string `json:"crew_chief,omitempty"`
-	FullTime     bool   `json:"full_time"`       // true = Full-time, false = Part-time (must be present for split tables)
-	Races        string `json:"races,omitempty"` // optional, e.g. for part-time "1"
+	FullTime     bool   `json:"full_time,omitempty"` // stock-car / Supercars only; omit so open-wheel/endurance APIs do not look part-time
+	Races        string `json:"races,omitempty"`     // optional, e.g. for part-time "1"
 
 	// IndyCar: driver country and rookie flag for "Country Name R" display
 	DriverCountry string `json:"driver_country,omitempty"`
@@ -92,8 +92,8 @@ type TeamJSON struct {
 	TeamsChampionship string `json:"teams_championship,omitempty"` // DTM: shared teams' championship entry
 
 	// PSC: guest entry — show (G) in teams/entry list only.
-	Guest bool `json:"guest,omitempty"`
-	Ref    string `json:"ref,omitempty"`
+	Guest bool   `json:"guest,omitempty"`
+	Ref   string `json:"ref,omitempty"`
 }
 
 // CarModel is a car model (Manufacturer + Model; Truck — TruckBrand).
@@ -111,12 +111,12 @@ type SpecRow struct {
 
 // TeamsWithSpec is teams + car models + technical specification.
 type TeamsWithSpec struct {
-	Teams             []TeamJSON         `json:"teams"`
-	TeamsNonChartered []TeamJSON         `json:"teams_non_chartered,omitempty"` // Cup: non-chartered teams
-	CarModels         []CarModel         `json:"car_models,omitempty"`
-	TechnicalSpec     []SpecRow          `json:"technical_spec,omitempty"`
-	Engines           []EngineSpecRow    `json:"engines,omitempty"`
-	Homologation      []HomologationRow  `json:"homologation,omitempty"`
+	Teams             []TeamJSON        `json:"teams"`
+	TeamsNonChartered []TeamJSON        `json:"teams_non_chartered,omitempty"` // Cup: non-chartered teams
+	CarModels         []CarModel        `json:"car_models,omitempty"`
+	TechnicalSpec     []SpecRow         `json:"technical_spec,omitempty"`
+	Engines           []EngineSpecRow   `json:"engines,omitempty"`
+	Homologation      []HomologationRow `json:"homologation,omitempty"`
 }
 
 // EngineSpecRow is a car-model → engine line for Car Specs (e.g. Supercars).
@@ -139,6 +139,7 @@ type StandingRow struct {
 	Team         string            `json:"team"`
 	Manufacturer string            `json:"manufacturer"`
 	Points       string            `json:"points"`
+	MecPoints    string            `json:"mec_points,omitempty"` // IMSA Michelin Endurance Cup total
 	Stages       string            `json:"stages,omitempty"`
 	Wth          string            `json:"wth,omitempty"`    // withdrawals/DNFs
 	Status       string            `json:"status,omitempty"` // e.g. DNQ, Wth
@@ -148,6 +149,9 @@ type StandingRow struct {
 	RoundDrivers    map[string]string `json:"round_drivers,omitempty"`     // race code -> drivers in that round only
 	RoundPoints     map[string]string `json:"round_points,omitempty"`      // race code -> race points that round
 	RoundQualPoints map[string]string `json:"round_qual_points,omitempty"` // race code -> qualifying points (IMSA)
+	RoundMecPoints  map[string]string `json:"round_mec_points,omitempty"`  // race code -> Michelin Endurance Cup points (IMSA)
+	PlayoffPoints   string            `json:"playoff_points,omitempty"`    // unused in 2026 Chase (kept for API compat)
+	ChaseStatus     string            `json:"chase_status,omitempty"`      // in — 2026 Chase has no lock/elim rounds
 }
 
 // StandingsClass is a separate standings table per class (e.g. GTP/LMP2/GTD Pro/GTD for IMSA).
@@ -176,6 +180,19 @@ type StandingsData struct {
 	Ineligible     []StandingRow        `json:"ineligible,omitempty"`
 	Classes        []StandingsClass     `json:"classes,omitempty"`
 	PointsInfo     *StandingsPointsInfo `json:"points_info,omitempty"`
+	Chase          *ChaseState          `json:"chase,omitempty"` // NASCAR Cup / NOAPS / Truck
+}
+
+// ChaseState describes The Chase for national NASCAR tours.
+// Cutline is the last position inside the Chase field (16 / 12 / 10)
+// so the UI can draw the dashed row below it.
+type ChaseState struct {
+	Active             bool   `json:"active"`
+	Round              string `json:"round"`
+	FieldSize          int    `json:"field_size"`
+	Cutline            int    `json:"cutline"`
+	RegularSeasonRaces int    `json:"regular_season_races"`
+	Championship       bool   `json:"championship,omitempty"` // unused in 2026 (no Championship 4)
 }
 
 // MarshalJSON keeps "rows" an array even for a season with no data, so clients
@@ -210,6 +227,7 @@ type EventDetailJSON struct {
 // EventTable is a table with headers and rows (universal format for Practice, Qualifying, etc.).
 type EventTable struct {
 	Title    string              `json:"title,omitempty"`
+	Meta     map[string]string   `json:"meta,omitempty"`
 	Headers  []string            `json:"headers"`
 	Rows     [][]string          `json:"rows"`
 	Sessions []EventTableSession `json:"sessions,omitempty"`
@@ -217,9 +235,10 @@ type EventTable struct {
 
 // EventTableSession is a session inside a table (common in event JSON: practice/qualifying/race.sessions).
 type EventTableSession struct {
-	Title   string     `json:"title,omitempty"`
-	Headers []string   `json:"headers"`
-	Rows    [][]string `json:"rows"`
+	Title   string            `json:"title,omitempty"`
+	Meta    map[string]string `json:"meta,omitempty"`
+	Headers []string          `json:"headers"`
+	Rows    [][]string        `json:"rows"`
 }
 
 // EntryListRow is an entry list row. Base fields (No, Driver, Team, Manufacturer, Crew Chief)
@@ -233,19 +252,19 @@ type EntryListRow struct {
 	CrewChief    string `json:"crew_chief,omitempty"`
 
 	// Extra fields for other series.
-	Constructor   string `json:"constructor,omitempty"` // F1, Super Formula
-	Class         string `json:"class,omitempty"`       // IMSA / ELMS / GTWCE / Super GT
-	Car           string `json:"car,omitempty"`         // car model
-	Make          string `json:"make,omitempty"`        // Super GT (manufacturer)
-	Driver1       string `json:"driver1,omitempty"`     // multi-driver GT/endurance
-	Driver2       string `json:"driver2,omitempty"`     // Supercars: weekend substitute / co-driver on same car
-	Driver3       string `json:"driver3,omitempty"`
-	DriverCountry string `json:"driver_country,omitempty"` // Super Formula
+	Constructor       string `json:"constructor,omitempty"` // F1, Super Formula
+	Class             string `json:"class,omitempty"`       // IMSA / ELMS / GTWCE / Super GT
+	Car               string `json:"car,omitempty"`         // car model
+	Make              string `json:"make,omitempty"`        // Super GT (manufacturer)
+	Driver1           string `json:"driver1,omitempty"`     // multi-driver GT/endurance
+	Driver2           string `json:"driver2,omitempty"`     // Supercars: weekend substitute / co-driver on same car
+	Driver3           string `json:"driver3,omitempty"`
+	DriverCountry     string `json:"driver_country,omitempty"`     // Super Formula
 	PowerUnit         string `json:"power_unit,omitempty"`         // DTM
 	Status            string `json:"status,omitempty"`             // DTM ("R", etc.)
 	Rounds            string `json:"rounds,omitempty"`             // DTM (may appear in entry_list)
 	TeamsChampionship string `json:"teams_championship,omitempty"` // DTM: shared teams' championship entry
-	PointsEligible  *bool  `json:"points_eligible,omitempty"` // false = ineligible (i) in stock-car
-	Guest           bool   `json:"guest,omitempty"`           // PSC guest entry — show (G) in entry list only
-	DriverSlug      string `json:"driver_slug,omitempty"`
+	PointsEligible    *bool  `json:"points_eligible,omitempty"`    // false = ineligible (i) in stock-car
+	Guest             bool   `json:"guest,omitempty"`              // PSC guest entry — show (G) in entry list only
+	DriverSlug        string `json:"driver_slug,omitempty"`
 }

@@ -158,8 +158,8 @@
     {
       "label": "Feature",
       "date": "2026-09-06",
-      "time_est": "11:25",
-      "time_msk": "12:25",
+      "time_est": "09:45",
+      "time_msk": "10:45",
       "kind": "feature"
     }
   ],
@@ -471,15 +471,15 @@
     {
       "label": "Sprint",
       "date": "2026-09-05",
-      "time_est": "10:05",
-      "time_msk": "11:05",
+      "time_est": "09:30",
+      "time_msk": "10:30",
       "kind": "sprint"
     },
     {
       "label": "Feature",
       "date": "2026-09-06",
-      "time_est": "08:40",
-      "time_msk": "09:40",
+      "time_est": "08:15",
+      "time_msk": "09:15",
       "kind": "feature"
     }
   ],
@@ -492,10 +492,17 @@
       "kind": "sprint"
     },
     {
-      "label": "Feature",
+      "label": "Feature Race 1",
+      "date": "2026-09-12",
+      "time_est": "18:00",
+      "time_msk": "19:00",
+      "kind": "feature"
+    },
+    {
+      "label": "Feature Race 2",
       "date": "2026-09-13",
-      "time_est": "09:55",
-      "time_msk": "10:55",
+      "time_est": "09:45",
+      "time_msk": "10:45",
       "kind": "feature"
     }
   ],
@@ -623,15 +630,29 @@
     {
       "label": "Race 1",
       "date": "2026-09-05",
-      "time_msk": "13:30",
-      "time_est": "12:30",
+      "time_est": "11:10",
+      "time_msk": "12:10",
       "kind": ""
     },
     {
       "label": "Race 2",
+      "date": "2026-09-05",
+      "time_est": "17:30",
+      "time_msk": "18:30",
+      "kind": ""
+    },
+    {
+      "label": "Race 3",
       "date": "2026-09-06",
-      "time_msk": "13:30",
-      "time_est": "12:30",
+      "time_est": "09:45",
+      "time_msk": "10:45",
+      "kind": ""
+    },
+    {
+      "label": "Final Race",
+      "date": "2026-09-06",
+      "time_est": "17:30",
+      "time_msk": "18:30",
       "kind": ""
     }
   ],
@@ -639,15 +660,29 @@
     {
       "label": "Race 1",
       "date": "2026-09-19",
-      "time_msk": "13:30",
-      "time_est": "12:30",
+      "time_est": "11:15",
+      "time_msk": "12:15",
       "kind": ""
     },
     {
       "label": "Race 2",
+      "date": "2026-09-19",
+      "time_est": "17:05",
+      "time_msk": "18:05",
+      "kind": ""
+    },
+    {
+      "label": "Race 3",
       "date": "2026-09-20",
-      "time_msk": "13:30",
-      "time_est": "12:30",
+      "time_est": "10:10",
+      "time_msk": "11:10",
+      "kind": ""
+    },
+    {
+      "label": "Final Race",
+      "date": "2026-09-20",
+      "time_est": "16:20",
+      "time_msk": "17:20",
       "kind": ""
     }
   ],
@@ -670,62 +705,62 @@
   "FREC_2026_1": [
     {
       "label": "Race 1",
-      "date": "2026-04-24",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "date": "2026-04-25",
+      "time_est": "10:25",
+      "time_msk": "11:25",
       "kind": ""
     },
     {
       "label": "Race 2",
-      "date": "2026-04-24",
-      "time_est": "11:35",
-      "time_msk": "15:50",
+      "date": "2026-04-25",
+      "time_est": "16:40",
+      "time_msk": "17:40",
       "kind": ""
     },
     {
       "label": "Race 3",
       "date": "2026-04-26",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "time_est": "16:40",
+      "time_msk": "17:40",
       "kind": ""
     }
   ],
   "FREC_2026_2": [
     {
       "label": "Race 1",
-      "date": "2026-05-22",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "date": "2026-05-23",
+      "time_est": "16:45",
+      "time_msk": "17:45",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-05-24",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "time_est": "16:45",
+      "time_msk": "17:45",
       "kind": ""
     }
   ],
   "FREC_2026_3": [
     {
       "label": "Race 1",
-      "date": "2026-05-29",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "date": "2026-05-30",
+      "time_est": "10:05",
+      "time_msk": "11:05",
       "kind": ""
     },
     {
       "label": "Race 2",
-      "date": "2026-05-29",
-      "time_est": "11:35",
-      "time_msk": "15:50",
+      "date": "2026-05-30",
+      "time_est": "14:16",
+      "time_msk": "15:16",
       "kind": ""
     },
     {
       "label": "Race 3",
       "date": "2026-05-31",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "time_est": "14:20",
+      "time_msk": "15:20",
       "kind": ""
     }
   ],
@@ -733,47 +768,47 @@
     {
       "label": "Race 1",
       "date": "2026-06-20",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "time_est": "10:30",
+      "time_msk": "11:30",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-06-20",
-      "time_est": "11:35",
-      "time_msk": "15:50",
+      "time_est": "16:30",
+      "time_msk": "17:30",
       "kind": ""
     },
     {
       "label": "Race 3",
       "date": "2026-06-21",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "time_est": "13:00",
+      "time_msk": "14:00",
       "kind": ""
     }
   ],
   "FREC_2026_5": [
     {
       "label": "Race 1",
-      "date": "2026-07-03",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "date": "2026-07-04",
+      "time_est": "18:20",
+      "time_msk": "19:20",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-07-05",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "time_est": "15:55",
+      "time_msk": "16:55",
       "kind": ""
     }
   ],
   "FREC_2026_6": [
     {
       "label": "Race 1",
-      "date": "2026-07-17",
-      "time_est": "16:25",
-      "time_msk": "17:25",
+      "date": "2026-07-18",
+      "time_est": "13:00",
+      "time_msk": "14:00",
       "kind": ""
     },
     {
@@ -787,39 +822,39 @@
   "FREC_2026_7": [
     {
       "label": "Race 1",
-      "date": "2026-09-04",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "date": "2026-09-05",
+      "time_est": "10:10",
+      "time_msk": "11:10",
       "kind": ""
     },
     {
       "label": "Race 2",
-      "date": "2026-09-04",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "date": "2026-09-05",
+      "time_est": "16:30",
+      "time_msk": "17:30",
       "kind": ""
     },
     {
       "label": "Race 3",
       "date": "2026-09-06",
-      "time_est": "11:35",
-      "time_msk": "12:35",
+      "time_est": "16:30",
+      "time_msk": "17:30",
       "kind": ""
     }
   ],
   "FREC_2026_8": [
     {
       "label": "Race 1",
-      "date": "2026-09-11",
-      "time_est": "13:00",
-      "time_msk": "14:00",
+      "date": "2026-09-12",
+      "time_est": "13:05",
+      "time_msk": "14:05",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-09-13",
-      "time_est": "13:00",
-      "time_msk": "14:00",
+      "time_est": "16:15",
+      "time_msk": "17:15",
       "kind": ""
     }
   ],
@@ -859,15 +894,15 @@
     {
       "label": "Race 1",
       "date": "2026-08-01",
-      "time_msk": "22:05",
       "time_est": "21:05",
+      "time_msk": "22:05",
       "kind": ""
     },
     {
       "label": "Race 2",
       "date": "2026-08-02",
-      "time_msk": "22:05",
-      "time_est": "21:05",
+      "time_est": "15:30",
+      "time_msk": "16:30",
       "kind": ""
     }
   ],
@@ -900,6 +935,76 @@
       "date": "2026-10-04",
       "time_est": "16:00",
       "time_msk": "17:00",
+      "kind": ""
+    }
+  ],
+  "PSC_2026_1": [
+    {
+      "label": "Round 1",
+      "date": "2026-06-07",
+      "time_est": "11:45",
+      "time_msk": "12:45",
+      "kind": ""
+    }
+  ],
+  "PSC_2026_2": [
+    {
+      "label": "Round 2",
+      "date": "2026-06-14",
+      "time_est": "10:10",
+      "time_msk": "11:10",
+      "kind": ""
+    }
+  ],
+  "PSC_2026_3": [
+    {
+      "label": "Round 3",
+      "date": "2026-06-28",
+      "time_est": "11:55",
+      "time_msk": "12:55",
+      "kind": ""
+    }
+  ],
+  "PSC_2026_4": [
+    {
+      "label": "Round 4",
+      "date": "2026-07-19",
+      "time_est": "11:45",
+      "time_msk": "12:45",
+      "kind": ""
+    }
+  ],
+  "PSC_2026_5": [
+    {
+      "label": "Round 5",
+      "date": "2026-07-26",
+      "time_est": "10:10",
+      "time_msk": "11:10",
+      "kind": ""
+    }
+  ],
+  "PSC_2026_6": [
+    {
+      "label": "Round 6",
+      "date": "2026-08-22",
+      "time_est": "18:00",
+      "time_msk": "19:00",
+      "kind": ""
+    },
+    {
+      "label": "Round 7",
+      "date": "2026-08-23",
+      "time_est": "11:45",
+      "time_msk": "12:45",
+      "kind": ""
+    }
+  ],
+  "PSC_2026_8": [
+    {
+      "label": "Round 8",
+      "date": "2026-09-06",
+      "time_est": "11:45",
+      "time_msk": "12:45",
       "kind": ""
     }
   ],

@@ -28,3 +28,29 @@ func FirstColIndex(headers []string, names ...string) int {
 	}
 	return -1
 }
+
+// RacePosColIndex finds finish-position columns, including FREC/F4 "Fin / ST".
+func RacePosColIndex(headers []string) int {
+	if i := FirstColIndex(headers, "Pos", "Fin", "Position", "POS"); i >= 0 {
+		return i
+	}
+	for i, h := range headers {
+		n := strings.ToLower(strings.TrimSpace(h))
+		if strings.Contains(n, "fin") && strings.Contains(n, "st") {
+			return i
+		}
+	}
+	return -1
+}
+
+// NormalizeRacePos maps "1 / ST 2 ▲1" → "1" and "NC / ST 28" → "NC".
+func NormalizeRacePos(raw string) string {
+	s := strings.TrimSpace(raw)
+	if s == "" {
+		return ""
+	}
+	if strings.Contains(s, "/") {
+		s = strings.TrimSpace(strings.SplitN(s, "/", 2)[0])
+	}
+	return s
+}

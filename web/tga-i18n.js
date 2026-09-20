@@ -22,10 +22,13 @@
   if (typeof document !== 'undefined' && document.documentElement) {
     document.documentElement.setAttribute('data-theme', theme);
   }
-  var translations = (typeof window !== 'undefined' && window.TGA_TRANSLATIONS) || {};
+  function translationsDict() {
+    return (typeof window !== 'undefined' && window.TGA_TRANSLATIONS) || {};
+  }
 
   function t(key) {
     if (!key) return '';
+    var translations = translationsDict();
     var tr = translations[lang] || translations.en || {};
     var val = tr[key];
     if (val !== undefined && val !== null) return val;
@@ -920,16 +923,16 @@
       return twelveHours[1].trim() + ' ' + hoursWordRu(12) + ' ' + localizeEventPlacePart(twelveHours[2]);
     }
     var italianF4 = s.match(/^Italian\s+F4\s+[—–-]\s+(.+)$/i);
-    if (italianF4) return 'Итальянская F4 — ' + localizeEventPlacePart(italianF4[1]);
+    if (italianF4) return 'Итальянская F4 - ' + localizeEventPlacePart(italianF4[1]);
     var gtwceSprint = s.match(/^GT\s+World\s+Challenge\s+Europe\s+Sprint\s+[—–-]\s+(.+)$/i);
-    if (gtwceSprint) return 'GT World Challenge Europe Sprint — ' + localizeEventPlacePart(gtwceSprint[1]);
+    if (gtwceSprint) return 'GT World Challenge Europe Sprint - ' + localizeEventPlacePart(gtwceSprint[1]);
     var superGtHours = s.match(/^(.+?)\s+GT\s+(\d+)\s+Hours?\s+Race$/i);
     if (superGtHours) {
-      return localizeEventPlacePart(superGtHours[1]) + ' GT — гонка ' + hoursWordRu(superGtHours[2]);
+      return localizeEventPlacePart(superGtHours[1]) + ' GT - гонка ' + hoursWordRu(superGtHours[2]);
     }
     var superGtKm = s.match(/^(.+?)\s+GT\s+(\d+)\s*km\s+Race$/i);
     if (superGtKm) {
-      return localizeEventPlacePart(superGtKm[1]) + ' GT — гонка ' + superGtKm[2] + ' км';
+      return localizeEventPlacePart(superGtKm[1]) + ' GT - гонка ' + superGtKm[2] + ' км';
     }
     var rolex24 = s.match(/^Rolex\s+24\s+at\s+(.+)$/i);
     if (rolex24) return 'Rolex 24 в ' + localizeEventPlacePart(rolex24[1]);
@@ -1348,11 +1351,20 @@
     }
     var sl = typeof document !== 'undefined' && document.getElementById('series-list');
     if (sl) sl._listLoaded = false;
-    updateLangUI();
-    translateStaticUI();
-    if (typeof window !== 'undefined' && window.TGA && typeof window.TGA.route === 'function') {
-      window.TGA.route();
+
+    function finishLangSwitch() {
+      updateLangUI();
+      translateStaticUI();
+      if (typeof window !== 'undefined' && window.TGA && typeof window.TGA.route === 'function') {
+        window.TGA.route();
+      }
     }
+
+    if (lang === 'ru' && window.TGA && typeof window.TGA.ensureRuAssets === 'function') {
+      window.TGA.ensureRuAssets().then(finishLangSwitch).catch(finishLangSwitch);
+      return;
+    }
+    finishLangSwitch();
   }
 
   function setTheme(newTheme) {
@@ -1371,7 +1383,6 @@
   window.TGA.setLang = setLang;
   window.TGA.setTheme = setTheme;
   window.TGA.updateLangUI = updateLangUI;
-  window.TGA.updateThemeUI = updateThemeUI;
   window.TGA.translateStaticUI = translateStaticUI;
   window.TGA.getTimeSettings = getTimeSettings;
   window.TGA.setTimeSettings = setTimeSettings;
@@ -1452,5 +1463,10 @@
     } else {
       initLangToggle();
     }
+  }
+
+  // Prefetch RU dictionaries when the stored language is Russian.
+  if (lang === 'ru' && typeof window !== 'undefined' && window.TGA && typeof window.TGA.ensureRuAssets === 'function') {
+    window.TGA.ensureRuAssets().catch(function () {});
   }
 })();

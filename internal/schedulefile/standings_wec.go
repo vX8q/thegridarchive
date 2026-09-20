@@ -284,15 +284,15 @@ func wecStandingRowsFromBucket(byCar map[string]*wecAcc, raceOrder []string) []S
 			}
 		}
 		out = append(out, StandingRow{
-			Pos:             i + 1,
-			Car:             e.car,
-			Driver:          a.drivers,
-			Team:            driverutil.FormatDisplayTeamName(a.team),
-			Manufacturer:    a.carModel,
-			Points:          formatGtwcePtsTotal(a.points),
-			Races:           raceStr,
-			RoundDrivers:    copyRoundDriversMap(a.roundDrivers),
-			RoundPoints:     formatRoundPointsMap(a.roundPoints),
+			Pos:          i + 1,
+			Car:          e.car,
+			Driver:       a.drivers,
+			Team:         driverutil.FormatDisplayTeamName(a.team),
+			Manufacturer: a.carModel,
+			Points:       formatGtwcePtsTotal(a.points),
+			Races:        raceStr,
+			RoundDrivers: copyRoundDriversMap(a.roundDrivers),
+			RoundPoints:  formatRoundPointsMap(a.roundPoints),
 		})
 	}
 	return out

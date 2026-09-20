@@ -9,8 +9,8 @@ type Driver struct {
 	Name        string
 	ShortName   string
 	Nationality string
-	Number      string    // permanent number in the series (if any)
+	Number      string // permanent number in the series (if any)
 	BirthDate   time.Time
-	BirthPlace  string    // birthplace as "City, Region/State, Country" (e.g. Corning, California, U.S.)
-	Slug        string    // URL-friendly slug computed from Name
+	BirthPlace  string // birthplace as "City, Region/State, Country" (e.g. Corning, California, U.S.)
+	Slug        string // URL-friendly slug computed from Name
 }

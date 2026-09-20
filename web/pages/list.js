@@ -21,7 +21,7 @@
 
     var API = window.TGA && window.TGA.API;
 
-    var maxAttempts = 10;
+    var maxAttempts = 2;
     var retryDelayMs = 1000;
 
     function loadSeries(attempt) {

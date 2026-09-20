@@ -15,7 +15,9 @@ type classCarAcc struct {
 	roundDrivers                    map[string]string
 	roundPoints                     map[string]float64
 	roundQualPoints                 map[string]float64
+	mecRoundPoints                  map[string]float64
 	points                          float64
+	mecPoints                       float64
 }
 
 func newClassCarAcc(car string) *classCarAcc {
@@ -26,6 +28,7 @@ func newClassCarAcc(car string) *classCarAcc {
 		roundDrivers:    make(map[string]string),
 		roundPoints:     make(map[string]float64),
 		roundQualPoints: make(map[string]float64),
+		mecRoundPoints:  make(map[string]float64),
 	}
 }
 
@@ -645,10 +648,12 @@ func accFromBuckets(buckets map[string]*classCarAcc, cls string, raceOrder []str
 			Team:            driverutil.FormatDisplayTeamName(a.team),
 			Manufacturer:    a.manufacturer,
 			Points:          formatGtwcePtsTotal(a.points),
+			MecPoints:       formatGtwcePtsTotal(a.mecPoints),
 			Races:           raceStr,
 			RoundDrivers:    copyRoundDriversMap(a.roundDrivers),
 			RoundPoints:     formatRoundPointsMap(a.roundPoints),
 			RoundQualPoints: formatRoundPointsMap(a.roundQualPoints),
+			RoundMecPoints:  formatRoundPointsMap(a.mecRoundPoints),
 		}
 		if len(qualStr) > 0 {
 			row.Quals = qualStr
@@ -710,6 +715,7 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 	}
 
 	completedSet := map[string]bool{}
+	mecOfficial := loadImsaMecOfficial(dataDir, season)
 
 	for _, ev := range champs {
 		code := imsaStandingsRaceCode(ev)
@@ -808,6 +814,13 @@ func buildImsaStandingsFromEvents(dataDir string, season string, maxRound int) (
 					}
 				}
 			}
+		}
+
+		if imsaMecOfficialHasRound(mecOfficial, code) {
+			imsaApplyOfficialMecRound(mecOfficial, code, buckets, getAcc)
+		} else {
+			entryClassByCar := elmsEntryClassByCar(detail)
+			imsaAccumulateMecFromEvent(detail, code, entryClassByCar, getAcc)
 		}
 	}
 

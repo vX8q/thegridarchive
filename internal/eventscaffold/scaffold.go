@@ -47,27 +47,27 @@ type seriesMeta struct {
 }
 
 var seriesMetaByDataID = map[string]seriesMeta{
-	"nascar_cup":     {series: "NASCAR Cup Series", template: "stockcar"},
-	"noaps":          {series: "NASCAR O'Reilly Auto Parts Series", template: "stockcar"},
-	"nascar_truck":   {series: "NASCAR Craftsman Truck Series", template: "stockcar"},
+	"nascar_cup":      {series: "NASCAR Cup Series", template: "stockcar"},
+	"noaps":           {series: "NASCAR O'Reilly Auto Parts Series", template: "stockcar"},
+	"nascar_truck":    {series: "NASCAR Craftsman Truck Series", template: "stockcar"},
 	"nascar_modified": {series: "NASCAR Whelen Modified Tour", template: "stockcar_arca"},
-	"arca":           {series: "ARCA Menards Series", template: "stockcar_arca"},
-	"f1":             {series: "Formula 1", template: "f1"},
-	"f2":             {series: "FIA Formula 2 Championship", template: "f2f3"},
-	"f3":             {series: "FIA Formula 3 Championship", template: "f2f3"},
-	"frec":           {series: "FIA Formula Regional European Championship", template: "frec"},
-	"f4_it":          {series: "Italian F4 Championship", template: "frec"},
-	"indycar":        {series: "IndyCar Series", template: "indycar"},
-	"wec":            {series: "FIA World Endurance Championship", template: "endurance"},
-	"elms":           {series: "European Le Mans Series", template: "endurance"},
-	"imsa":           {series: "IMSA WeatherTech SportsCar Championship", template: "endurance"},
-	"gtwce_end":      {series: "GT World Challenge Europe Endurance", template: "endurance"},
-	"gtwce_sprint":   {series: "GT World Challenge Europe Sprint", template: "gt_sprint"},
-	"supercars":      {series: "Supercars Championship", template: "supercars"},
-	"dtm":            {series: "DTM", template: "generic"},
-	"super_gt":       {series: "Super GT", template: "generic"},
-	"super_formula":  {series: "Super Formula", template: "generic"},
-	"psc":            {series: "Porsche Supercup", template: "generic"},
+	"arca":            {series: "ARCA Menards Series", template: "stockcar_arca"},
+	"f1":              {series: "Formula 1", template: "f1"},
+	"f2":              {series: "FIA Formula 2 Championship", template: "f2f3"},
+	"f3":              {series: "FIA Formula 3 Championship", template: "f2f3"},
+	"frec":            {series: "FIA Formula Regional European Championship", template: "frec"},
+	"f4_it":           {series: "Italian F4 Championship", template: "frec"},
+	"indycar":         {series: "IndyCar Series", template: "indycar"},
+	"wec":             {series: "FIA World Endurance Championship", template: "endurance"},
+	"elms":            {series: "European Le Mans Series", template: "endurance"},
+	"imsa":            {series: "IMSA WeatherTech SportsCar Championship", template: "endurance"},
+	"gtwce_end":       {series: "GT World Challenge Europe Endurance", template: "endurance"},
+	"gtwce_sprint":    {series: "GT World Challenge Europe Sprint", template: "gt_sprint"},
+	"supercars":       {series: "Supercars Championship", template: "supercars"},
+	"dtm":             {series: "DTM", template: "generic"},
+	"super_gt":        {series: "Super GT", template: "generic"},
+	"super_formula":   {series: "Super Formula", template: "generic"},
+	"psc":             {series: "Porsche Supercup", template: "generic"},
 }
 
 var (
@@ -83,20 +83,20 @@ type scheduledEvent struct {
 }
 
 type skeletonBody struct {
-	EventID    string                           `json:"event_id"`
-	Series     string                           `json:"series,omitempty"`
-	Race       string                           `json:"race,omitempty"`
-	Date       string                           `json:"date,omitempty"`
-	StartDate  string                           `json:"start_date,omitempty"`
-	EndDate    string                           `json:"end_date,omitempty"`
-	Track      string                           `json:"track,omitempty"`
-	Location   string                           `json:"location,omitempty"`
-	Laps       string                           `json:"laps,omitempty"`
-	Distance   string                           `json:"distance,omitempty"`
-	Stage1Laps string                           `json:"stage1_laps,omitempty"`
-	Stage2Laps string                           `json:"stage2_laps,omitempty"`
-	Stage3Laps string                           `json:"stage3_laps,omitempty"`
-	EntryList  []schedulefile.EntryListRow      `json:"entry_list"`
+	EventID    string                             `json:"event_id"`
+	Series     string                             `json:"series,omitempty"`
+	Race       string                             `json:"race,omitempty"`
+	Date       string                             `json:"date,omitempty"`
+	StartDate  string                             `json:"start_date,omitempty"`
+	EndDate    string                             `json:"end_date,omitempty"`
+	Track      string                             `json:"track,omitempty"`
+	Location   string                             `json:"location,omitempty"`
+	Laps       string                             `json:"laps,omitempty"`
+	Distance   string                             `json:"distance,omitempty"`
+	Stage1Laps string                             `json:"stage1_laps,omitempty"`
+	Stage2Laps string                             `json:"stage2_laps,omitempty"`
+	Stage3Laps string                             `json:"stage3_laps,omitempty"`
+	EntryList  []schedulefile.EntryListRow        `json:"entry_list"`
 	Tables     map[string]schedulefile.EventTable `json:"tables"`
 }
 
@@ -594,12 +594,12 @@ func buildTables(template string) map[string]schedulefile.EventTable {
 		}
 	case "indycar":
 		return map[string]schedulefile.EventTable{
-			"practice":            emptyTable(indycarPracticeHeaders, "Practice 1"),
-			"practice2":           emptyTable(indycarPracticeHeaders, "Practice 2"),
-			"final_practice":      emptyTable(indycarPracticeHeaders, "Final Practice"),
-			"qualifying":          emptyTable(indycarQualHeaders, "Qualifying"),
-			"race_results":        emptyTable(indycarRaceHeaders, ""),
-			"caution_breakdown":   emptyTable([]string{"Condition", "From Lap", "To Lap", "# Of Laps", "Reason"}, ""),
+			"practice":          emptyTable(indycarPracticeHeaders, "Practice 1"),
+			"practice2":         emptyTable(indycarPracticeHeaders, "Practice 2"),
+			"final_practice":    emptyTable(indycarPracticeHeaders, "Final Practice"),
+			"qualifying":        emptyTable(indycarQualHeaders, "Qualifying"),
+			"race_results":      emptyTable(indycarRaceHeaders, ""),
+			"caution_breakdown": emptyTable([]string{"Condition", "From Lap", "To Lap", "# Of Laps", "Reason"}, ""),
 		}
 	case "supercars":
 		return map[string]schedulefile.EventTable{
@@ -631,19 +631,19 @@ func buildTables(template string) map[string]schedulefile.EventTable {
 }
 
 var (
-	stockcarPracticeHeaders = []string{"Pos", "Trk", "Driver", "Team", "Make", "Time", "Speed", "Lap #", "# Laps", "-Fastest", "-Next"}
-	stockcarQualHeaders     = []string{"Pos", "#", "Driver", "Team", "Make", "Time", "Speed"}
-	stockcarStageHeaders    = []string{"Pos", "#", "Driver", "Team", "Make", "Pts"}
-	stockcarRaceHeaders     = []string{"Fin", "St", "#", "Driver", "Team", "Make", "Laps", "Led", "Status", "Pts"}
-	f2f3PracticeHeaders     = []string{"Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH"}
-	f2f3QualHeaders         = []string{"Pos", "No.", "Driver", "Team", "Time", "Gap", "Int", "KPH"}
-	f2f3RaceHeaders         = []string{"Pos", "No.", "Driver", "Team", "Laps", "Time/Retired", "Grid", "Pts"}
-	frecPracticeHeaders     = []string{"Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH"}
-	frecQualHeaders         = []string{"Pos", "No.", "Driver", "Team", "Time", "Gap", "Int", "KPH"}
-	frecRaceHeaders         = []string{"Fin / ST", "No.", "Driver", "Team", "Laps", "Time/Retired", "Pts"}
-	indycarPracticeHeaders  = []string{"Rank", "Car", "Driver Name", "C/E/T", "Time", "Speed", "Diff", "Gap", "Best Lap", "Laps"}
-	indycarQualHeaders      = []string{"Pos", "Car", "Driver Name", "C/E/T", "Time", "Speed"}
-	indycarRaceHeaders      = []string{"Pos", "St", "No", "Driver", "Team", "Engine", "Laps", "Time/Retired", "Led", "Pts"}
+	stockcarPracticeHeaders  = []string{"Pos", "Trk", "Driver", "Team", "Make", "Time", "Speed", "Lap #", "# Laps", "-Fastest", "-Next"}
+	stockcarQualHeaders      = []string{"Pos", "#", "Driver", "Team", "Make", "Time", "Speed"}
+	stockcarStageHeaders     = []string{"Pos", "#", "Driver", "Team", "Make", "Pts"}
+	stockcarRaceHeaders      = []string{"Fin", "St", "#", "Driver", "Team", "Make", "Laps", "Led", "Status", "Pts"}
+	f2f3PracticeHeaders      = []string{"Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH"}
+	f2f3QualHeaders          = []string{"Pos", "No.", "Driver", "Team", "Time", "Gap", "Int", "KPH"}
+	f2f3RaceHeaders          = []string{"Pos", "No.", "Driver", "Team", "Laps", "Time/Retired", "Grid", "Pts"}
+	frecPracticeHeaders      = []string{"Pos", "No.", "Driver", "Team", "Laps", "Time", "Gap", "Int", "KPH"}
+	frecQualHeaders          = []string{"Pos", "No.", "Driver", "Team", "Time", "Gap", "Int", "KPH"}
+	frecRaceHeaders          = []string{"Fin / ST", "No.", "Driver", "Team", "Laps", "Time/Retired", "Pts"}
+	indycarPracticeHeaders   = []string{"Rank", "Car", "Driver Name", "C/E/T", "Time", "Speed", "Diff", "Gap", "Best Lap", "Laps"}
+	indycarQualHeaders       = []string{"Pos", "Car", "Driver Name", "C/E/T", "Time", "Speed"}
+	indycarRaceHeaders       = []string{"Pos", "St", "No", "Driver", "Team", "Engine", "Laps", "Time/Retired", "Led", "Pts"}
 	supercarsPracticeHeaders = []string{"Pos", "No.", "Driver", "Team", "Fastest Lap", "Lap", "Laps"}
 	supercarsQualHeaders     = []string{"Pos", "No.", "Driver", "Team", "Fastest Lap", "Gap", "Lap", "Laps"}
 	supercarsRaceHeaders     = []string{"Pos", "ST", "No.", "Driver", "Team", "Race time", "Laps", "Pts"}

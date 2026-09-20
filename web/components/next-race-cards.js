@@ -5,6 +5,7 @@
 
   var nrcCards = [];
   var nrcInterval = null;
+  var nrcRafId = null;
   var nrcLiveRefresh = null;
   var nrcTickFn = null;
   var nrcScheduleRefreshFn = null;
@@ -44,8 +45,64 @@
 
   function stopNextRaceTimers() {
     if (nrcInterval) { clearInterval(nrcInterval); nrcInterval = null; }
+    if (nrcRafId != null && typeof cancelAnimationFrame === 'function') {
+      cancelAnimationFrame(nrcRafId);
+      nrcRafId = null;
+    }
     if (nrcLiveRefresh) { clearInterval(nrcLiveRefresh); nrcLiveRefresh = null; }
     nrcCards = [];
+  }
+
+  /** Background tabs throttle timers; catch up countdown as soon as the page is visible again. */
+  function catchUpNextRaceCountdown() {
+    if (typeof document !== 'undefined' && document.hidden) return;
+    if (typeof nrcTickFn === 'function') nrcTickFn();
+  }
+
+  function startNextRaceCountdownLoop() {
+    if (nrcInterval) { clearInterval(nrcInterval); nrcInterval = null; }
+    if (nrcRafId != null && typeof cancelAnimationFrame === 'function') {
+      cancelAnimationFrame(nrcRafId);
+      nrcRafId = null;
+    }
+    var lastSec = -1;
+    function frame() {
+      nrcRafId = null;
+      if (typeof document !== 'undefined' && document.hidden) return;
+      var sec = Math.floor(Date.now() / 1000);
+      if (sec !== lastSec) {
+        lastSec = sec;
+        if (typeof nrcTickFn === 'function') nrcTickFn();
+      }
+      if (typeof requestAnimationFrame === 'function') {
+        nrcRafId = requestAnimationFrame(frame);
+      }
+    }
+    if (typeof requestAnimationFrame === 'function') {
+      nrcRafId = requestAnimationFrame(frame);
+    } else {
+      nrcInterval = setInterval(function () {
+        if (typeof nrcTickFn === 'function') nrcTickFn();
+      }, 1000);
+    }
+  }
+
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        if (nrcRafId != null && typeof cancelAnimationFrame === 'function') {
+          cancelAnimationFrame(nrcRafId);
+          nrcRafId = null;
+        }
+        return;
+      }
+      catchUpNextRaceCountdown();
+      if (nrcTickFn && nrcRafId == null && !nrcInterval) startNextRaceCountdownLoop();
+    });
+  }
+  if (typeof window !== 'undefined' && window.addEventListener) {
+    window.addEventListener('focus', catchUpNextRaceCountdown);
+    window.addEventListener('pageshow', catchUpNextRaceCountdown);
   }
 
   function weekEntrySortKey(ent) {
@@ -206,7 +263,12 @@
 
     weekEntries.sort(compareWeekEntries);
 
-    // Next Race: one card per upcoming session (no weekend merge — that stays on Last Results).
+    // IndyCar Milwaukee: one Next Race card for the venue weekend (date range).
+    // Other series stay one card per upcoming session (Last Results still merges).
+    if (window.TGA && typeof window.TGA.collapseNextRaceWeekends === 'function') {
+      weekEntries = window.TGA.collapseNextRaceWeekends(weekEntries, ['INDYCAR']);
+      weekEntries.sort(compareWeekEntries);
+    }
     if (weekEntries.length === 0) {
       nrcLastNextSignature = '';
       container.innerHTML =
@@ -217,14 +279,14 @@
 
     function nextRaceEventDisplayName(e) {
       var seriesId = e._seriesId || e.series_id || '';
-      var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(e);
+      var name = (window.TGA.localizeEventFromData || function (d) { return d.name || '-'; })(e);
       var stripPrefix = window.TGA && window.TGA.stripSeriesPrefixFromEventName;
       if (stripPrefix) {
         name = stripPrefix(name, seriesId) || name;
       }
       if (name && name.indexOf('Java House') === 0) {
         name = name.replace(/^Java House\s+/i, '');
-        name = (window.TGA.localizeEventFromData || function (d) { return d.name || '—'; })(Object.assign({}, e, { name: name }));
+        name = (window.TGA.localizeEventFromData || function (d) { return d.name || '-'; })(Object.assign({}, e, { name: name }));
       }
       var label = String(e._scheduleSessionLabel || e._sessionLabel || '').trim();
       if (label && name.indexOf(label) < 0 && !/\((Sprint|Feature|Race\s+\d+)\)/i.test(name) &&
@@ -251,7 +313,24 @@
               ? formatEventRaceStartDate(e)
               : formatShortDate((e.start_date || e.date || '').slice(0, 10)));
           var name = nextRaceEventDisplayName(e);
-          var eventSlug = (e.id || '').toLowerCase().replace(/_+/g, '-');
+          if (window.TGA && typeof window.TGA.isIndyMilwaukeeWeekendEvent === 'function' &&
+              window.TGA.isIndyMilwaukeeWeekendEvent(e)) {
+            name = (window.TGA.indyMilwaukeeWeekendCardTitle || function () {
+              return 'Snap-on IndyCar Weekend';
+            })();
+            var formatDateRange = window.TGA.formatDateRange;
+            var milwaukeeRange = (window.TGA.indyMilwaukeeWeekendDateRange || function () {
+              return { start: '', end: '' };
+            })(e);
+            if (formatDateRange && milwaukeeRange.start && milwaukeeRange.end &&
+                milwaukeeRange.end > milwaukeeRange.start) {
+              dateDisplay = formatDateRange(milwaukeeRange.start, milwaukeeRange.end);
+            }
+          }
+          var primaryId = (window.TGA && window.TGA.weekendCardPrimaryEventId)
+            ? window.TGA.weekendCardPrimaryEventId(e)
+            : (e.id || '');
+          var eventSlug = String(primaryId || '').toLowerCase().replace(/_+/g, '-');
           var seriesSlug = (e._seriesId || e.series_id || '').toLowerCase().replace(/_+/g, '-');
           var eventNameLc = String(e.name || '').toLowerCase();
           var href = e.has_detail
@@ -393,6 +472,27 @@
           }
           if (trackKey.indexOf('duquoin') >= 0 || trackKey.indexOf('du quoin') >= 0) {
             extraClass += ' nrc-card--duquoin-state-fairgrounds-racetrack';
+          }
+          if (trackKey.indexOf('madison international') >= 0) {
+            extraClass += ' nrc-card--madison-international-speedway';
+          }
+          if (trackKey.indexOf('stafford') >= 0) {
+            extraClass += ' nrc-card--stafford-motor-speedway';
+          }
+          if (trackKey.indexOf('hockenheim') >= 0) {
+            extraClass += ' nrc-card--hockenheimring';
+          }
+          if (trackKey.indexOf('sachsenring') >= 0) {
+            extraClass += ' nrc-card--sachsenring';
+          }
+          if (trackKey.indexOf('madrid') >= 0 || trackKey.indexOf('madring') >= 0) {
+            extraClass += ' nrc-card--madrid-circuit';
+          }
+          if (trackKey.indexOf('salem speedway') >= 0 || (trackKey.indexOf('salem') >= 0 && trackKey.indexOf('indiana') >= 0 && trackKey.indexOf('winston') < 0)) {
+            extraClass += ' nrc-card--salem-speedway';
+          }
+          if (trackKey.indexOf('the bend') >= 0 || trackKey.indexOf('tailem bend') >= 0 || trackKey.indexOf('bend motorsport') >= 0) {
+            extraClass += ' nrc-card--the-bend-motorsport-park';
           }
           if (trackKey.indexOf('norisring') >= 0) {
             extraClass += ' nrc-card--norisring';
@@ -653,6 +753,27 @@
           if (eventNameLc.indexOf('duquoin') >= 0 || eventNameLc.indexOf('du quoin') >= 0 || eventNameLc.indexOf('southern illinois') >= 0) {
             extraClass += ' nrc-card--duquoin-state-fairgrounds-racetrack';
           }
+          if (eventNameLc.indexOf('madison international') >= 0 || eventNameLc.indexOf('badger 200') >= 0 || eventNameLc.indexOf('atlas 200') >= 0) {
+            extraClass += ' nrc-card--madison-international-speedway';
+          }
+          if (eventNameLc.indexOf('stafford') >= 0 || eventNameLc.indexOf('gaf 150') >= 0) {
+            extraClass += ' nrc-card--stafford-motor-speedway';
+          }
+          if (eventNameLc.indexOf('hockenheim') >= 0) {
+            extraClass += ' nrc-card--hockenheimring';
+          }
+          if (eventNameLc.indexOf('sachsenring') >= 0) {
+            extraClass += ' nrc-card--sachsenring';
+          }
+          if (eventNameLc.indexOf('madrid') >= 0 || eventNameLc.indexOf('madring') >= 0) {
+            extraClass += ' nrc-card--madrid-circuit';
+          }
+          if (eventNameLc.indexOf('salem speedway') >= 0 || (eventNameLc.indexOf('salem') >= 0 && eventNameLc.indexOf('winston') < 0)) {
+            extraClass += ' nrc-card--salem-speedway';
+          }
+          if (eventNameLc.indexOf('the bend') >= 0 || eventNameLc.indexOf('tailem bend') >= 0 || eventNameLc.indexOf('bend 500') >= 0) {
+            extraClass += ' nrc-card--the-bend-motorsport-park';
+          }
           if (eventNameLc.indexOf('norisring') >= 0) {
             extraClass += ' nrc-card--norisring';
           }
@@ -901,6 +1022,20 @@
               extraClass += ' nrc-card--oswego-speedway';
             } else if (eventSlug.indexOf('duquoin') >= 0 || eventSlug.indexOf('du-quoin') >= 0 || eventSlug.indexOf('southern-illinois') >= 0) {
               extraClass += ' nrc-card--duquoin-state-fairgrounds-racetrack';
+            } else if (eventSlug.indexOf('madison-international') >= 0 || eventSlug.indexOf('badger-200') >= 0 || eventSlug.indexOf('badger_200') >= 0) {
+              extraClass += ' nrc-card--madison-international-speedway';
+            } else if (eventSlug.indexOf('stafford') >= 0 || eventSlug.indexOf('gaf-150') >= 0 || eventSlug.indexOf('gaf_150') >= 0) {
+              extraClass += ' nrc-card--stafford-motor-speedway';
+            } else if (eventSlug.indexOf('hockenheim') >= 0) {
+              extraClass += ' nrc-card--hockenheimring';
+            } else if (eventSlug.indexOf('sachsenring') >= 0) {
+              extraClass += ' nrc-card--sachsenring';
+            } else if (eventSlug.indexOf('madrid') >= 0 || eventSlug.indexOf('madring') >= 0) {
+              extraClass += ' nrc-card--madrid-circuit';
+            } else if ((eventSlug.indexOf('salem') >= 0 && eventSlug.indexOf('winston') < 0) || eventSlug.indexOf('salem-speedway') >= 0) {
+              extraClass += ' nrc-card--salem-speedway';
+            } else if (eventSlug.indexOf('the-bend') >= 0 || eventSlug.indexOf('the_bend') >= 0 || eventSlug.indexOf('bend-500') >= 0 || eventSlug.indexOf('bend_500') >= 0) {
+              extraClass += ' nrc-card--the-bend-motorsport-park';
             } else if (eventSlug.indexOf('norisring') >= 0) {
               extraClass += ' nrc-card--norisring';
             } else if (eventSlug.indexOf('reid-park') >= 0 || eventSlug.indexOf('reid_park') >= 0) {
@@ -1030,7 +1165,7 @@
                 '<span class="nrc-live" data-nrc-live="' + idx + '" aria-hidden="true">' + esc((window.TGA.t && window.TGA.t('live.badge')) || 'LIVE') + '</span>' +
               '</div>' +
               '<div class="nrc-name">' + esc(name) + '</div>' +
-              '<div class="nrc-timer" data-nrc="' + idx + '">—</div>' +
+              '<div class="nrc-timer" data-nrc="' + idx + '">-</div>' +
             '</a>'
           );
         }).join('') +
@@ -1182,7 +1317,7 @@
 
       container.classList.remove('hidden');
       tick();
-      nrcInterval = setInterval(tick, 1000);
+      startNextRaceCountdownLoop();
     }
 
     syncLiveEventIdsToGlobal();

@@ -1,0 +1,40 @@
+{
+  "event_id": "NASCAR_MODIFIED_2026_15",
+  "series": "NASCAR Whelen Modified Tour",
+  "race": "Eddie Partridge 206",
+  "date": "Saturday, September 19, 2026",
+  "start_date": "2026-09-19",
+  "end_date": "2026-09-19",
+  "track": "Riverhead Raceway",
+  "location": "Riverhead, New York, USA",
+  "entry_list": [
+    {"number":"1","driver":"Patrick Emerling","team":"USNE Motorsports","manufacturer":"LFR","crew_chief":"Dale Hedquist","driver_slug":"patrick-emerling"},
+    {"number":"3","driver":"Tyler Rypkema","team":"BRE Racing","manufacturer":"Boehler Racing","crew_chief":"Greg Fournier","driver_slug":"tyler-rypkema"},
+    {"number":"05","driver":"Teddy Hodgdon IV","team":"Teddy Hodgdon Racing","manufacturer":"FURY Race Cars","crew_chief":"Ted Hodgdon","driver_slug":"teddy-hodgdon-iv"},
+    {"number":"8","driver":"John-Michael Shenette","team":"Eighty-Two Autosport","manufacturer":"LFR","crew_chief":"Scott Morin","driver_slug":"john-michael-shenette"},
+    {"number":"18","driver":"Ken Heagy","team":"Heagy Motorsports","manufacturer":"FURY Race Cars","crew_chief":"Greg Gorman","driver_slug":"ken-heagy"},
+    {"number":"21","driver":"Stephen Kopcik","team":"Wanick Motorsports","manufacturer":"Troyer","crew_chief":"Nick Kopcik","driver_slug":"stephen-kopcik"},
+    {"number":"28","driver":"Doug Coby","team":"Jett Motorsports","manufacturer":"LFR","crew_chief":"John McKenna","driver_slug":"doug-coby"},
+    {"number":"31","driver":"Michael Christopher Jr.","team":"Elite Motorsports","manufacturer":"LFR","crew_chief":"Eugene Orlando","driver_slug":"michael-christopher-jr"},
+    {"number":"36","driver":"Dave Sapienza","team":"Sapienza Racing","manufacturer":"Troyer","crew_chief":"Greg Kleila","driver_slug":"dave-sapienza"},
+    {"number":"44","driver":"Chase Dowling","team":"Tinio Racing","manufacturer":"LFR","crew_chief":"Danny Gamache","driver_slug":"chase-dowling"},
+    {"number":"54","driver":"Tommy Catalano","team":"Catalano Motorsports","manufacturer":"Troyer","crew_chief":"Rick Kluth","driver_slug":"tommy-catalano"},
+    {"number":"56","driver":"Trevor Catalano","team":"Catalano Motorsports","manufacturer":"Troyer","crew_chief":"David Catalano","driver_slug":"trevor-catalano"},
+    {"number":"58","driver":"Eric Goodale","team":"Goodie Motorsports","manufacturer":"FURY Race Cars","crew_chief":"Rob Hyer","driver_slug":"eric-goodale"},
+    {"number":"60","driver":"Matt Hirschman","team":"Pee Dee Motorsports","manufacturer":"Troyer","crew_chief":"Mike Stein","driver_slug":"matt-hirschman"},
+    {"number":"64","driver":"Austin Beers","team":"KLM Motorsports","manufacturer":"Troyer","crew_chief":"Ron Yuhas","driver_slug":"austin-beers"},
+    {"number":"73","driver":"Paulie Hartwig III","team":"Hartwig Racing","manufacturer":"FURY Race Cars","crew_chief":"Bobby Geiger Jr.","driver_slug":"paulie-hartwig-iii"},
+    {"number":"79","driver":"Jon McKennedy","team":"Jon McKennedy Racing","manufacturer":"FURY Race Cars","crew_chief":"Patrick Walsh","driver_slug":"jon-mckennedy"},
+    {"number":"82","driver":"Andrew Molleur","team":"DWR Racing","manufacturer":"LFR","crew_chief":"Michael Molleur","driver_slug":"andrew-molleur"},
+    {"number":"89","driver":"Matt Swanson","team":"Matt Swanson","manufacturer":"FURY Race Cars","crew_chief":"John Swanson","driver_slug":"matt-swanson"}
+  ],
+  "tables": {
+    "practice": {"headers":["Pos","Trk","Driver","Team","Make","Time","Speed","Lap #","# Laps","-Fastest","-Next"],"rows":[]},
+    "qualifying": {"headers":["Pos","#","Driver","Team","Make","Time","Speed"],"rows":[]},
+    "race_results": {"headers":["Fin","St","#","Driver","Team","Make","Laps","Led","Status","Pts"],"rows":[]}
+  },
+  "laps": "206",
+  "distance": "51.500 mi (82.881 km)",
+  "event_preview": "Riverhead Raceway is a 0.250-mile (0.402 km) asphalt oval in Riverhead, New York, opened in 1951 with 12 degrees of banking in the turns and 6 degrees on the straights. The tight, high-banked quarter-mile leaves almost no room to correct a slide, so track position, restarts and surviving the outside wall usually decide the night. The Eddie Partridge 206 is the 15th race of the 2026 NASCAR Whelen Modified Tour season, scheduled for 206 laps / 51.500 mi (82.881 km) on Saturday, September 19. Nineteen cars are entered.\n\nAustin Beers and Patrick Emerling were tied for the championship lead on 465 points after New Hampshire, with Jon McKennedy third on 441, then Stephen Kopcik (434) and Matt Hirschman (428). Justin Bonsignore remains the Tour's all-time winner at Riverhead. The Eddie Partridge 206 is the Tour's second 2026 visit to the Long Island bullring after the Miller Lite Salutes Don Howe 200 in May.\n\nThe all-time Whelen Modified Tour qualifying lap record at Riverhead belongs to Justin Bonsignore, who turned an 11.431-second lap (78.733 mph) on May 15, 2021.",
+  "event_preview_ru": "Riverhead Raceway — асфальтовый овал длиной 0,250 мили (0,402 км) в Riverhead, New York, открытый в 1951 году с уклоном 12° в поворотах и 6° на прямых. Тесный высокобанковый четверть мили почти не оставляет места на ошибку, поэтому ночь обычно решают позиция на трассе, рестарты и выживание у внешней стены. Eddie Partridge 206 — 15-я гонка сезона NASCAR Whelen Modified Tour 2026, планируется на 206 кругов / 51,500 mi (82,881 km) в субботу, 19 сентября. Заявлено 19 машин.\n\nAustin Beers и Patrick Emerling делили лидерство в чемпионате с 465 очками после New Hampshire, Jon McKennedy третий с 441, далее Stephen Kopcik (434) и Matt Hirschman (428). Justin Bonsignore остаётся рекордсменом Tour по победам на Riverhead. Eddie Partridge 206 — второй визит тура на long-island bullring в 2026 году после Miller Lite Salutes Don Howe 200 в мае.\n\nКвалификационный рекорд NASCAR Whelen Modified Tour на Riverhead Raceway принадлежит Justin Bonsignore — 11,431 секунды (78,733 mph) 15 мая 2021 года."
+}

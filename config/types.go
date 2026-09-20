@@ -7,17 +7,17 @@ type SeriesType string
 
 const (
 	// OpenWheel is an open-wheel series category.
-	OpenWheel      SeriesType = "openwheel"
+	OpenWheel SeriesType = "openwheel"
 	// GTEndurance is a GT endurance series category.
-	GTEndurance    SeriesType = "gt_endurance"
+	GTEndurance SeriesType = "gt_endurance"
 	// GTSprint is a GT sprint series category.
-	GTSprint       SeriesType = "gt_sprint"
+	GTSprint SeriesType = "gt_sprint"
 	// Touring is a touring-car series category.
-	Touring        SeriesType = "touring"
+	Touring SeriesType = "touring"
 	// StockCarRacing is a stock-car series category.
 	StockCarRacing SeriesType = "stock_car_racing"
 	// SingleMake is a single-make series category.
-	SingleMake     SeriesType = "single_make"
+	SingleMake SeriesType = "single_make"
 )
 
 // Championship is a series/championship.

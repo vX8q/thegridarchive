@@ -7,8 +7,11 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Source
-COPY . .
+# Compile inputs only (web/ is runtime-only; keep builder layers small)
+COPY cmd ./cmd
+COPY config ./config
+COPY models ./models
+COPY internal ./internal
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build -trimpath -ldflags="-s -w" -o server ./cmd/server/
@@ -23,8 +26,8 @@ RUN addgroup -g 1000 tga && adduser -D -u 1000 -G tga tga
 
 WORKDIR /app
 
-COPY --from=builder /app/server   ./server
-COPY --from=builder /app/web      ./web
+COPY --from=builder /app/server ./server
+COPY web ./web
 
 RUN mkdir -p /app/data && chown -R tga:tga /app
 

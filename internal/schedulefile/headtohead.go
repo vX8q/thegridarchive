@@ -108,89 +108,89 @@ func BuildHeadToHeadFromEvents(dataDir, seriesID, season, driverA, driverB strin
 			}
 		}
 
-	type perDriver struct {
-		pos    int
-		grid   int
-		points int
-		found  bool
-	}
+		type perDriver struct {
+			pos    int
+			grid   int
+			points int
+			found  bool
+		}
 
-	var a perDriver
-	var b perDriver
+		var a perDriver
+		var b perDriver
 
-	for rowIdx, row := range rr.Rows {
-		if colDriver >= len(row) {
-			continue
-		}
-		name := strings.TrimSpace(row[colDriver])
-		if name == "" {
-			continue
-		}
-		k := canonicalDriverKey(name)
-		if k != keyA && k != keyB {
-			continue
-		}
-		// Finish.
-		pos := 0
-		if colPos >= 0 && colPos < len(row) {
-			rawPos := strings.TrimSpace(row[colPos])
-			if rawPos != "" {
-				pos = atoiSafe(rawPos)
-				if pos == 0 {
-					// Invalid position (NC/dash) — use row index.
-					pos = rowIdx + 1
+		for rowIdx, row := range rr.Rows {
+			if colDriver >= len(row) {
+				continue
+			}
+			name := strings.TrimSpace(row[colDriver])
+			if name == "" {
+				continue
+			}
+			k := canonicalDriverKey(name)
+			if k != keyA && k != keyB {
+				continue
+			}
+			// Finish.
+			pos := 0
+			if colPos >= 0 && colPos < len(row) {
+				rawPos := strings.TrimSpace(row[colPos])
+				if rawPos != "" {
+					pos = atoiSafe(rawPos)
+					if pos == 0 {
+						// Invalid position (NC/dash) — use row index.
+						pos = rowIdx + 1
+					}
 				}
 			}
-		}
-		// Starting position (as "qualifying" in the chart).
-		grid := 0
-		if colGrid >= 0 && colGrid < len(row) {
-			grid = atoiSafe(row[colGrid])
-		}
-		// Race points.
-		racePts := 0
-		if colPts >= 0 && colPts < len(row) {
-			for _, c := range strings.TrimSpace(row[colPts]) {
-				if c >= '0' && c <= '9' {
-					racePts = racePts*10 + int(c-'0')
+			// Starting position (as "qualifying" in the chart).
+			grid := 0
+			if colGrid >= 0 && colGrid < len(row) {
+				grid = atoiSafe(row[colGrid])
+			}
+			// Race points.
+			racePts := 0
+			if colPts >= 0 && colPts < len(row) {
+				for _, c := range strings.TrimSpace(row[colPts]) {
+					if c >= '0' && c <= '9' {
+						racePts = racePts*10 + int(c-'0')
+					}
 				}
 			}
+			totalPts := racePts + stagePointsByKey[k]
+
+			switch k {
+			case keyA:
+				a.pos = pos
+				a.grid = grid
+				a.points = totalPts
+				a.found = true
+			case keyB:
+				b.pos = pos
+				b.grid = grid
+				b.points = totalPts
+				b.found = true
+			}
 		}
-		totalPts := racePts + stagePointsByKey[k]
 
-		switch k {
-		case keyA:
-			a.pos = pos
-			a.grid = grid
-			a.points = totalPts
-			a.found = true
-		case keyB:
-			b.pos = pos
-			b.grid = grid
-			b.points = totalPts
-			b.found = true
+		// Head-to-head includes only races where both drivers actually participated/have a row.
+		if !a.found || !b.found {
+			continue
 		}
-	}
 
-	// Head-to-head includes only races where both drivers actually participated/have a row.
-	if !a.found || !b.found {
-		continue
-	}
-
-	label := strings.TrimSpace(ev.Name)
-	if label == "" {
-		label = ev.ID
-	}
-	out = append(out, HeadToHeadEvent{
-		EventID: ev.ID,
-		Label:   label,
-		PointsA: float64(a.points),
-		PointsB: float64(b.points),
-		QualiA:  float64(a.grid),
-		QualiB:  float64(b.grid),
-		FinishA: float64(a.pos),
-		FinishB: float64(b.pos),
-	})
+		label := strings.TrimSpace(ev.Name)
+		if label == "" {
+			label = ev.ID
+		}
+		out = append(out, HeadToHeadEvent{
+			EventID: ev.ID,
+			Label:   label,
+			PointsA: float64(a.points),
+			PointsB: float64(b.points),
+			QualiA:  float64(a.grid),
+			QualiB:  float64(b.grid),
+			FinishA: float64(a.pos),
+			FinishB: float64(b.pos),
+		})
 	}
 
 	if out == nil {
@@ -198,4 +198,3 @@ func BuildHeadToHeadFromEvents(dataDir, seriesID, season, driverA, driverB strin
 	}
 	return &HeadToHeadData{Events: out}, nil
 }
-

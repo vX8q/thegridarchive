@@ -6,6 +6,7 @@
 ## Содержание
 
 - [Чеклист](#правила-заполнения-event-json-чеклист) — общие правила заполнения
+- [Превью на входе в уик-энд](#event_preview--состояние-на-входе-в-уик-энд) — что можно и нельзя писать в `event_preview`
 - [§1](#1-nascar-cup--noaps-xfinity--trucks--modified--arca) — NASCAR Cup / NOAPS / Truck / Modified / ARCA (`stock_car_racing`)
 - [§2](#2-formula-1) — Formula 1 (`openwheel`)
 - [§3](#3-f2--f3) — F2 / F3 (`openwheel`)
@@ -18,9 +19,11 @@
 - [§10](#10-dtm) — DTM (`touring`)
 - [§11](#11-frec--f4-italian--porsche-supercup--gtwce-sprint) — FREC / F4 Italian / PSC / GTWCE Sprint
 - [События вне championship](#события-вне-championship) — exhibition, pre-season
-- [Автоматическая сборка standings](#автоматическая-сборка-standings) и [Stats API](#stats-api)
+- [Автоматическая сборка standings](#автоматическая-сборка-standings) ([The Chase](#the-chase-nascar-cup--noaps--truck)) и [Stats API](#stats-api)
 - [`data/teams/*.json`](#datateamsjson) — роли файлов команд
+- [Профиль пилота — вкладки](#профиль-пилота--вкладки-results--teams--achievements--titles)
 - [Служебные файлы и скрипты](#служебные-файлы-и-скрипты)
+- [Compact JSON (формат файла на диске)](#compact-json-формат-файла-на-диске)
 - [Рекорды круга в `event_preview`](#рекорды-круга-в-event_preview) — правила + проверенные источники
 - [Сводная таблица](#сводная-таблица-различий) различий
 
@@ -64,35 +67,55 @@
 2. **Сначала метаданные** — `event_preview` (+ `event_preview_ru`), YouTube (`youtube_id` и/или `youtube_highlights`), `entry_list`, даты `start_date` / `end_date`.
 3. **Сессии по порядку** — practice → qualifying → race (sprint → feature для F2/F3).
 4. **Эталон** — скопировать структуру headers / meta / ключей таблиц с **последнего полностью заполненного этапа** той же серии в том же сезоне.
-5. **Не ломать схему** — не добавлять ключи `tables.sprint` / `tables.feature`, если серия использует `tables.race.sessions[]` (F2, F3, Super Formula, F1 2026).
+5. **Не ломать схему** — не добавлять ключи `tables.sprint` / `tables.feature`, если серия использует `tables.race.sessions[]` (F2, F3, Super Formula, F1 sprint-уикенды 2024–2026). Super GT: не дробить квалификацию на `Qualifying 1`/`Qualifying 2` — одна таблица на класс с колонками `Q1`/`Q2`. WEC: гонка в `tables.race_results`, не `tables.race`.
 6. **Очки** — колонка `Pts` в таблице гонки должна совпадать с официальным протоколом, включая бонусы (см. раздел серии).
 
 ### Общие правила (все серии)
 
 | Поле | Правило |
 |------|---------|
-| `event_preview` | Только plain text, **без Markdown** (`**`, `#`, списков). Абзацы через `\n\n`. Рекорды круга серии на трассе — финальный абзац EN+RU; правила и источники: [Рекорды круга в `event_preview`](#рекорды-круга-в-event_preview). |
+| **Формат файла на диске** | **Compact JSON** — см. [§ Compact JSON](#compact-json-формат-файла-на-диске). Табличные строки и `entry_list` — по одной строке; цель ~сотни строк на типичный этап, не тысячи. После правок: `node scripts/format-compact-json.mjs data/events/<Series>/<season>/<file>.json`. |
+| `event_preview` | Только plain text, **без Markdown** (`**`, `#`, списков). Абзацы через `\n\n`. Текст = состояние **на входе в уик-энд** (не практика/квалификация/гонка этого этапа). Рекорды круга серии на трассе — финальный абзац EN+RU; правила: [Рекорды](#рекорды-круга-в-event_preview) и [превью](#event_preview--состояние-на-входе-в-уик-энд). |
 | `event_preview_ru` | Добавлять, если есть английский preview. |
-| `laps` | Только число кругов (напр. `"200"`), не текст «200 laps». |
-| `distance` | Только физическая дистанция гонки — **не** дублировать lap count. Формат зависит от серии: сток-кары `"X mi (Y km)"` (§1); IndyCar `"X.XXX miles (Y.YYY km)"` (§4). Не писать длину овала (`0.333 mile paved track …`). |
+| `laps` | **Запланированное** число кругов (напр. `"175"`), не текст «200 laps», не овертайм/укороченная дистанция и не суффикс `*`. Фактически пройденные круги — только в таблицах гонки. |
+| `distance` | **Запланированная** физическая дистанция — **не** дублировать lap count и **не** подставлять overtime miles. Формат зависит от серии: **F1 / F2 / F3 / openwheel (km)** — `"X.XXX km (Y.YYY miles)"` (§2); сток-кары — `"X mi (Y km)"` (§1); IndyCar — `"X.XXX miles (Y.YYY km)"` (§4). Не писать длину овала (`0.333 mile paved track …`). |
 | `youtube_id` / `youtube_highlights` | Сток-кары и многие 2026-файлы: достаточно строки `"youtube_id": "…"`. Массив `youtube_highlights: [{ "id", "title" }]` тоже поддерживается (F1 и др.). |
 | `entry_list` | Официальные полные имена **без латинской диакритики** (`Rafael Camara`, `Noel Leon`, `Niccolo Maccagnani`); то же для `event_preview` / мест (`Sao Paulo`, `Autodromo Jose Carlos Pace`). Кириллица в `event_preview_ru` сохраняется. `driver_slug` — ASCII-канон (`rafael-camara`). Nickname-дубли (Matt→Matthew, Cam→Cameron, …) — через `data/driver_slug_aliases.json`; после правок: `node scripts/fix-driver-slug-aliases.mjs` (или `--check` в CI). Массовая зачистка: `node scripts/strip-latin-diacritics.mjs`. Канон: всегда **Leland Honeyman** (без Jr.); slug `leland-honeyman` (алиас `leland-honeyman-jr`). |
 | `driver_profiles` / `citizenship` | Страна **гоночной лицензии ≠ гражданство**. В `citizenship` только реальное гражданство/национальность; dual — только при подтверждённом гражданстве, не по FIA licence. |
 | `track` / `circuit_name` vs `location` | `track` / `circuit_name` — название трассы (при необходимости суффикс лейаута, напр. `Charlotte Motor Speedway Roval`); `location` — только география (`City, State` / `City, Region`). Не дублировать город в имени трассы. Хелперы UI: `web/lib/schedule-location.js`. |
 | Full Schedule (серия) | Унифицированная схема **A** в `web/pages/series.js`: всегда **Circuit** + **Location** (не класть `circuit_name` в колонку Location). Колонка **Race** — только multi-race уик-энды (сессия: Sprint / Race 1 / GP). Single-race: `Round · Event · Circuit · Location · Date · Time`. |
 | Таблицы | У P1 в Gap и Int — `"—"`. DNF: `"Pos"` = `"DNF"`, `"Gap"` = `"DNF"`, `"Int"` = `"—"`. |
+| Круговое время | Двоеточие между минутами и секундами, **не** апостроф протокола: `"1:45.891"`, не `"1'45.891"`. Обычно три знака после точки (`M:SS.sss`). **IndyCar** — четыре: `"00:57.6076"` / `"01:01.1020"` (`MM:SS.ssss`). Овалы сток-кар — часто только секунды (`"27.090"`). То же в `event_preview` (рекорды). |
 | Колонки из протокола | Не переносить служебные колонки, которые сайт не рендерит (напр. **LAP SET ON** у F2). |
-| Формат JSON | **Новые** файлы — компактно (`event-json-format.mdc`). **Существующие** — не переформатировать целиком без запроса. |
-| Standings | Очки и позиции **не править** в `data/standings/*.json` — API пересобирает таблицу из `data/events/` при каждом запросе. Исключение: для stock-car и IndyCar в standings-файле поддерживать только `race_order` / `event_names` (коды колонок раундов). |
+| Марка машины (`Car`) | Каноническое написание, а не капс протокола: `Oreca`, `Ligier`, `Aston Martin`, `Mercedes-AMG`, `McLaren`, `Chevrolet` (не `CORVETTE`). Серии, где `Car` — марка: ELMS, WEC, IMSA, GTWCE End/Sprint, Super GT, DTM (у сток-каров `Car` — номер). Проверка `node scripts/audit-car-makes.mjs`, применить `--write`, гейт CI `--check`. Новую марку сначала добавить в `scripts/lib/car-makes.mjs`. |
+| P1 Gap / Int | У лидера строки в `Gap` / `Int` / `Interval` — всегда `"—"`, не `"-"` и не пустая ячейка. Проверка `node scripts/audit-p1-gap.mjs` (`--write` / `--check`). |
+| Формат JSON | **Compact** для всего каталога `data/` (см. [§ Compact JSON](#compact-json-формат-файла-на-диске)). Не разворачивать ячейки таблиц построчно. После крупных правок: `node scripts/format-compact-json.mjs …`; опционально `node scripts/audit-compact-json.mjs` (legacy-таблицы вне `data/` не блокируют сайт). |
+| Standings | Очки и позиции **не править** в `data/standings/*.json` — API пересобирает таблицу из `data/events/` при каждом запросе. Исключение: для stock-car и IndyCar в standings-файле поддерживать только `race_order` / `event_names` (коды колонок раундов). **The Chase** (Cup / NOAPS / Truck) тоже считается из events — не сидить поле вручную. |
 | Event summary API | `GET /api/events/summaries` и `/api/events/{id}/summary` читают **те же** `tables.*`, что и страница этапа. Не изобретать отдельные layout’ы под Last Results — заполнять эталонные ключи серии. |
+
+### `event_preview` — состояние на входе в уик-энд
+
+Блок Overview на странице этапа показывает `event_preview` рядом с **запланированными** `laps` / `distance`. Превью не рекап уик-энда: результаты практики, квалификации и гонки живут в таблицах.
+
+**Можно:** трасса и лейаут; **запланированные** круги и дистанция; чемпионат и форма *перед* этим этапом; победители прошлых лет / прошлых раундов; размер `entry_list` и гости (в т.ч. «N заявок на M мест»); рекорды серии на трассе **на входе** в уик-энд.
+
+**Нельзя** (это появляется по ходу уик-энда — писать в таблицы, не в preview):
+
+- поул, лучший круг практики, инциденты квалификации, отмена практики/квалификации, стартовая решётка «по rule book / owner's points»;
+- победитель, подиум, стейджи, cautions, MOV, овертайм («extended to N laps»);
+- фактически пройденные круги / мили вместо scheduled;
+- DNQ как свершившийся факт («пятеро не прошли квалификацию») — допустима только формулировка из заявки («N на M мест»);
+- рекорд, побитый **на этом же** этапе — оставлять предыдущий (см. [Рекорды](#рекорды-круга-в-event_preview)).
+
+Исключение: если сам этап *состоит* в отмене гонки с переносом (напр. Super Formula Autopolis 2026), превью может объяснить календарный статус файла, без рекапа сессий.
 
 **Full Schedule — колонки (схема A)**
 
 | Режим | Колонки | Серии |
 |-------|---------|--------|
 | Multi-race | Round · **Race** · Event · Circuit · Location · Date · Time | F2, F3, FREC, F4_IT, DTM, GTWCE Sprint, Supercars, F1 2024/2025/2026 |
-| Multi-race SF | **Race** · Event · Circuit · Location · Date · Time | Super Formula |
-| Single-race | Round · Event · Circuit · Location · Date · Time | PSC, ELMS, WEC, GTWCE End, Super GT, stock-car, IndyCar |
+| Multi-race SF / PSC | **Round** · Event · Circuit · Location · Date · Time | Super Formula, PSC (номера этапов; double-header — несколько строк) |
+| Single-race | Round · Event · Circuit · Location · Date · Time | ELMS, WEC, GTWCE End, Super GT, stock-car, IndyCar |
 | IMSA | Round · Event · Length · Classes · Circuit · Location · Date | IMSA |
 | Historical F1 | Round · Grand Prix · Circuit · Location · Date | `/season/f1-20xx` кроме live 2024/2025/2026 |
 
@@ -113,16 +136,18 @@
 
 | Серия | Дата на карточке | Сессии / merge | Примечание |
 |-------|------------------|----------------|------------|
-| **F2, F3, FREC, F4_IT** | Last Results: диапазон уик-энда (`Jul 4–5`). **Next Race: один день** ближайшей сессии | Sprint + Feature (или Race 1–3 у FREC) из event JSON / multi-race map | Развёрнутая строка Full Schedule — **один** день сессии |
-| **DTM, GTWCE Sprint** | Диапазон уик-энда | Race 1 / Race 2 по `start_date`–`end_date` | |
+| **F2, F3, FREC, F4_IT** | Last Results: диапазон **дней гонок** (`Jul 4–5`), не practice/qual уик-энда. **Next Race: один день** ближайшей сессии | Sprint + Feature (или Race 1–3 у FREC) из event JSON / multi-race map | `start_date`–`end_date` в schedule может включать пятницу; карточка берёт даты из multi-race sessions. Full Schedule — **один** день сессии |
+| **DTM, GTWCE Sprint** | Диапазон **дней гонок** | Race 1 / Race 2 из multi-race map / sessions | Не путать с Fri–Sun practice span в schedule |
 | **F1** | Диапазон в sprint-уикенды | Sprint (сб) + GP (вс) — `static-schedules.js` `f1Sprint20xx` | Обычный уикенд — один день (воскресенье) |
-| **Super Formula** | Диапазон уик-энда | Несколько гонок; **merge** карточек на главной | Исключение: `SUPER_FORMULA_2026_6` (Fuji triple-header) — вручную в build-скрипте |
+| **Super Formula** | Диапазон уик-энда | Несколько гонок; **merge** карточек на главной | `SUPER_FORMULA_2026_6` (Fuji triple) — `race.sessions[]` в одном файле; Fuji Oct / Suzuka late — **отдельные** `event_id` (`_9`+`_10`, `_11`+`_12`) как Milwaukee |
 | **Supercars** | Last Results: диапазон уик-энда, **merge** после **последней** гонки уик-энда | **Next Race: отдельная карточка на каждую гонку** (`Race 1`, `Race 2`, …) | В названии карточки — номер гонки из schedule; gate не показывает карточку после Race 1, пока не завершён финал уик-энда |
 | **IMSA, WEC, ELMS, GTWCE End** | **Один день** — день гонки | В JSON уикенд может быть `start_date`–`end_date` | Не путать с диапазоном расписания |
-| **PSC** | Обычный этап: **один день** гонки (`race_day_only`) | Double-header (отдельные `event_id`, напр. Zandvoort `_6`+`_7`): Last Results **merge** → диапазон дней гонок | Multi-day `start_date`–`end_date` у support-уикенда (Hungaroring 24–26) **не** значит интервал на карточке |
-| **IndyCar** | Обычно **один день** | Double-header (отдельные файлы, напр. Milwaukee): Last Results **merge** | `LAST_RESULTS_WEEKEND_MERGE_SERIES` в `web/lib/weekend-card-merge.js` |
+| **PSC** | Обычный этап: **один день** гонки (`race_day_only`) | Double-header (Zandvoort): **один** файл `psc_2026_6` + `tables.race.sessions[]` (Race 1+2); карточка и расписание как Super Formula; `/event/psc-2026-7` → тот же уикенд | Multi-day `start_date`–`end_date` у support-уикенда (Hungaroring 24–26, Monza 4–6) **не** значит интервал на карточке; summary API и Last Results берут **день гонки** (`end_date`). Пока LIVE — только Next Race, не Last Results. |
+| **IndyCar** | Обычно **один день** | Double-header (отдельные файлы Milwaukee `_16`+`_17`): **merge** Next Race и Last Results в одну карточку **Snap-on IndyCar Weekend**, даты **Aug 29–30**, победители **Race 1 + Race 2** (даже если один пилот) | `weekend-card-merge.js`; окно Last Results 7 дней считается от **последней** гонки блока (суббота не выпадает до merge); overview без Laps/Distance (`eventIsMultiRoundWeekend`) |
 | **24h гонки** (Spa, Le Mans, …) | Два календарных дня | Из названия (`24 Hours`, `24h`) | Исключение из «один день» endurance |
 | **Остальные** (Cup, Truck, …) | Один день | — | По `getEventRaceStartDateIso` |
+
+**Multi-race weekends (общее правило):** все гонки уик-энда должны сохраняться и показываться на главной — как у Supercars / F4 / F2 (через `tables.race.sessions[]` в одном файле) или как у IndyCar Milwaukee / Super Formula Fuji Oct (отдельные `event_id` + merge в `weekend-card-merge.js`). Нельзя оставлять только воскресную гонку: Last Results ждёт финал блока, мержит карточки и держит окно 7 дней от последней гонки. Пока этап в окне LIVE (Next Race), он **не** дублируется в Last Results.
 
 **Multi-race map** (`web/data/multi-race-schedule-sessions.js`): даты и метки — из `tables.race.sessions[]` в event JSON (`meta.Date`, `meta.Session`, `title`); время — `meta.Start` / `meta.time_msk` при наличии, иначе из `data/schedules/<series>.json`. Ручная правка только для исключений (см. `CURATED_OVERRIDES` в build-скрипте).
 
@@ -151,7 +176,7 @@ Championship ID в URL/API (`/api/series/f2-2026`, `/event/f2-2026-7`) норм�
 Страница события
 ├── Header: h1 — название гонки
 ├── Overview
-│   ├── Laps / Distance (скрыт у IMSA, WEC, ELMS, GTWCE End, Supercars)
+│   ├── Laps / Distance (скрыт у IMSA, WEC, ELMS, GTWCE End, Supercars, multi-round weekends, Milwaukee double-header)
 │   ├── Block navigation tiles (навигация по секциям)
 │   ├── Track info (h4)
 │   ├── Tyre compounds (только F1)
@@ -181,16 +206,19 @@ Championship ID в URL/API (`/api/series/f2-2026`, `/event/f2-2026-7`) норм�
 
 ### Laps / Distance
 
+Карточка Overview (FIELD / VALUE) читает верхнеуровневые `laps` и `distance`. Это **всегда запланированная** дистанция гонки, не overtime и не укороченный заезд.
+
 | Поле | Правило |
 |------|---------|
-| `laps` | Только число кругов (`"150"`, `"200"`). |
-| `distance` | Только физическая дистанция гонки: **`"X mi (Y km)"`**. |
+| `laps` | Только **scheduled** число кругов (`"175"`, `"200"`). Без суффикса `*` и без фактических кругов овертайма. |
+| `distance` | Только **scheduled** физическая дистанция: **`"X mi (Y km)"`**. |
+| `tables.race_results` / стейджи | Фактически пройденные круги, OT, shortened finish — **здесь**. Не копировать их в верхние `laps` / `distance`. |
 
 Примеры (актуальный формат):
 
 ```json
-"laps": "150",
-"distance": "49.950 mi (80.387 km)"
+"laps": "175",
+"distance": "185.150 mi (297.970 km)"
 ```
 
 ```json
@@ -198,9 +226,14 @@ Championship ID в URL/API (`/api/series/f2-2026`, `/event/f2-2026-7`) норм�
 "distance": "137.2 mi (220.802 km)"
 ```
 
-**Не использовать** (устаревший / неправильный формат — часто встречался у Modified и ранних файлов):
-
 ```json
+// ❌ BAD — овертайм вместо scheduled (EJP 175 → 189 кругов)
+"laps": "189",
+"distance": "199.962 mi (321.808 km)"
+
+// ❌ BAD — звёздочка «был OT»
+"laps": "260*"
+
 // ❌ BAD — длина овала + «paved track», без km
 "distance": "0.333 mile paved track (49.950 miles)"
 
@@ -208,7 +241,7 @@ Championship ID в URL/API (`/api/series/f2-2026`, `/event/f2-2026-7`) норм�
 "distance": "150 laps, 49.950 mi (80.387 km)"
 ```
 
-Длина овала (0.333 / 0.625 mi и т.п.) относится к описанию трассы в `event_preview`, не в поле `distance`. То же правило для **Cup / NOAPS / Truck / Modified / ARCA**.
+Длина овала (0.333 / 0.625 mi и т.п.) относится к описанию трассы в `event_preview`, не в поле `distance`. То же правило для **Cup / NOAPS / Truck / Modified / ARCA**. `stage1_laps` / `stage2_laps` / `stage3_laps` — как в протоколе стейджей (стейдж 3 может быть длиннее scheduled из‑за OT); на Overview это не влияет.
 
 ### YouTube
 
@@ -288,6 +321,21 @@ Race
 
 **starting_lineup** — **не используется** (удалён из всех файлов).
 
+### The Chase (Cup / NOAPS / Truck)
+
+ARCA и Modified — обычный сезон без плей-офф. Cup, NOAPS и Truck после финала регулярки переходят в **The Chase**; сборщик standings делает это сам, как только заполнен `tables.race_results` финала.
+
+| | Cup | NOAPS | Truck |
+|--|-----|-------|-------|
+| Финал регулярки | Daytona, гонка 26 (`NASCAR_CUP_2026_26`) | Daytona, гонка 24 (`NOAPS_2026_24`) | Loudon, гонка 18 (`NASCAR_TRUCK_2026_18`) |
+| Поле | 16 | 12 | 10 |
+| Гонки Chase | 10 | 9 | 7 |
+| Баннер Full Schedule | перед гонкой 27 | перед гонкой 25 (`i === 24`) | перед гонкой 19 (`i === 18`) |
+
+Формат 2026 ([NASCAR.com](https://www.nascar.com/news-media/2026/08/31/the-chase-101-how-nascars-new-championship-format-works/)): отбор **только по очкам** регулярки (win-and-you're-in нет). Один сброс: 1-е место **2100**, 2-е **2075**, 3-е **2065**, далее −5 до 16-го = **2000** (NOAPS обрезается на 12-м = 2020, Truck на 10-м = 2030). Вылетов и Championship 4 нет — все участники Chase остаются до Homestead. Playoff points нет. Победа в гонке = **55** очков (2-е и ниже без изменений: 35, 34, …); стейджи как раньше. `(i)` / `points_eligible: false` в Chase не входят.
+
+Полные правила, поля API и что **не** трогать — [The Chase](#the-chase-nascar-cup--noaps--truck) в разделе авто-сборки standings.
+
 ### JSON-шаблон события (NASCAR Cup)
 
 ```json
@@ -336,6 +384,7 @@ Race
 
 **Категория:** `openwheel`
 **Series ID:** `f1`
+**Live-сезоны на сайте:** `/season/f1-2024`, `/season/f1-2025`, `/season/f1-2026` (текущий по умолчанию — `config.CurrentSeason` = 2026). Исторические чемпионы — `/series/f1/history`.
 
 ### Entry List
 
@@ -413,20 +462,20 @@ Race
 - **race_statistics** — не используется для F1
 - Формат названия гонки: `"YYYY Grand Prix Name"` (напр. `"2026 Japanese Grand Prix"`)
 
-### Очки в колонке `Pts` (F1 2024; та же шкала для 2025)
+### Очки в колонке `Pts` (F1 2024–2026)
 
 Очки пишутся в колонку **`Pts` / `Points`** таблицы GP (`race_results`) и спринта (`tables.race.sessions[]`). Standings API **суммирует эти значения** (спринт + GP) — неверная цифра в JSON ломает чемпионат.
 
-**Grand Prix** — топ-10 классифицированных + бонус за fastest lap:
+**Grand Prix** — топ-10 классифицированных:
 
-| Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | FL |
-|-----|---|---|---|---|---|---|---|---|---|----|----|
-| Очки | 25 | 18 | 15 | 12 | 10 | 8 | 6 | 4 | 2 | 1 | **+1** |
+| Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|-----|---|---|---|---|---|---|---|---|---|----|
+| Очки | 25 | 18 | 15 | 12 | 10 | 8 | 6 | 4 | 2 | 1 |
 
-- **+1 FL** только если автор лучшего круга **финишировал в топ-10** (классифицирован в очковой зоне). Иначе FL = 0 бонуса.
-- Пример: P1 + FL → `26`; P10 + FL → `2`; P11 + FL → `0`.
+- **2024–2025:** дополнительно **+1 FL**, только если автор лучшего круга **финишировал в топ-10**. Пример: P1 + FL → `26`; P10 + FL → `2`; P11 + FL → `0`.
+- **2026:** бонуса за fastest lap **нет** — в `Pts` только очки за финиш (P1 = `25` даже с лучшим кругом).
 
-**Sprint** — топ-8 классифицированных (без бонуса за FL):
+**Sprint** — топ-8 классифицированных (без бонуса за FL во всех сезонах):
 
 | Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
 |-----|---|---|---|---|---|---|---|---|
@@ -434,7 +483,13 @@ Race
 
 **Тай-брейк чемпионата** (при равных очках): больше побед в GP → больше 2-х мест → 3-х → … (countback). На сайте порядок при равенстве очков следует этой логике, если она реализована в standings; иначе сверять с официальным протоколом.
 
-**Спринт-уикенды 2024:** China, Miami, Austria, United States, São Paulo, Qatar (`f1Sprint2024` в `static-schedules.js`).
+**Спринт-уикенды** (`f1Sprint20xx` в `static-schedules.js`):
+
+| Сезон | Этапы (sprint) |
+|-------|----------------|
+| 2024 | China, Miami, Austria, United States, Sao Paulo, Qatar |
+| 2025 | China, Miami, Belgium, United States, Sao Paulo, Qatar |
+| 2026 | China, Miami, Canada, Great Britain, Netherlands, Singapore |
 
 ### JSON-шаблон события (F1)
 
@@ -449,7 +504,7 @@ Race
   "track": "Suzuka Circuit",
   "location": "Suzuka",
   "laps": "53",
-  "distance": "307.471 km",
+  "distance": "307.471 km (190.908 miles)",
   "event_preview": "...",
   "event_preview_ru": "...",
   "tyre_compounds": "Hard: C2, Medium: C3, Soft: C4",
@@ -491,6 +546,17 @@ Race
 ```
 
 Спринт-уикенд: спринт в `tables.race.sessions[]`, GP — в `tables.race_results`; штрафы спринта — `penalties_sprint` / `penalties_sprint_after`. Обычный уикенд — только `race_results` (без `tables.race.sessions` для спринта) и без sprint-penalty ключей.
+
+### Overview: `laps` и `distance`
+
+Страница этапа (вкладка Overview) показывает **верхнеуровневые** `laps` и `distance` рядом с `event_preview` (`web/pages/event.js`). Это **всегда запланированная** дистанция гонки (FIA Event Notes / formula1.com → Circuit → Race Distance), **не** «сколько кругов проехал победитель», если протокол совпал случайно.
+
+| Поле | Правило |
+|------|---------|
+| `laps` | Scheduled число кругов гонки (напр. `"57"` для Madring 2026). |
+| `distance` | `"308.524 km (191.708 miles)"` — km первым, miles в скобках, три знака после точки как в заполненных `f1_2026_*.json`. |
+
+При внесении **только** practice / qualifying / race из PDF всё равно добавить `laps` + `distance` из календаря — иначе на Overview останется одна строка «Laps». Эталон: `f1_2026_13.json`, `f1_2026_14.json`.
 
 ---
 
@@ -717,6 +783,7 @@ Flat-таблица (не `sessions[]`):
 
 - **Driver Name** — формат `"Имя Фамилия"` (First Last)
 - **C/E/T** — `D/{C|H}/F` (Dallara / Chevrolet или Honda / Firestone)
+- **Time** — `MM:SS.ssss` (четыре знака после точки), двоеточие: `"01:01.1020"`, `"00:57.6076"`. Не апостроф `1'01.1020`.
 - Дополнительные сессии: `practice2`, `final_practice`
 
 ### Qualifying
@@ -743,7 +810,7 @@ Race
 - Нулевые laps_led: `"0"` (не `"--"` или `"–"`)
 - **Формат distance (важно)**: `"214.200 miles (344.700 km)"` — строго `miles (km)` как в IndyCar 2026 (`indycar_2026_2/3`), без `mi / km`
 - **Driver** (в `race_results`) — формат `"Имя Фамилия"` (First Last), например `"Alex Palou"` (в отличие от practice/qualifying)
-- **Double-header** (напр. Milwaukee): **два** event JSON / два `event_id` в schedule, у каждого свой `race_results` — не `tables.race.sessions[]`. Last Results на главной merge’ит карточку после второй гонки (см. чеклист «Даты на карточках»)
+- **Double-header** (напр. Milwaukee): **два** event JSON / два `event_id` в schedule, у каждого свой `race_results` — не `tables.race.sessions[]`. Weekend title (`race` / schedule `name`) — **Snap-on IndyCar Weekend**; официальные имена гонок — в `tables.race_results.title`. Карточки на главной merge’ят уик-энд с интервалом дат и **обоими** победителями Race 1 / Race 2 (см. чеклист «Даты на карточках» — multi-race weekends). Overview не показывает Laps/Distance.
 
 ### JSON-шаблон события (IndyCar)
 
@@ -783,7 +850,7 @@ Race
 **Категория:** `gt_endurance`  
 **Series ID:** `imsa`  
 **Путь:** `data/events/IMSA/<year>/imsa_<year>_<round>.json`  
-**Эталон 2026:** `imsa_2026_5.json` или последний заполненный раунд
+**Эталон 2026:** `imsa_2026_9.json` (VIR, включая BoP) или последний заполненный раунд
 
 ### Entry List
 
@@ -841,7 +908,7 @@ Race
 ### Overview
 
 - **Laps/Distance таблица скрыта**
-- BoP секция (Balance of Performance) — только этапы 1-2
+- **BoP** — вкладка `/event/{id}/bop`, когда в JSON есть верхнеуровневый объект `bop` (не только раунды 1–2). Рендер: `web/lib/event-bop.js`. Эталон структуры: `imsa_2026_9.json` (`vehicles[]`, `regulatory_params`, `notes`).
 - **race_statistics** — не используется
 
 ---
@@ -856,10 +923,20 @@ Race
 
 ### Entry List
 
+Sprint weekends:
+
 | # | Driver | Team | Manufacturer |
 |---|--------|------|-------------|
 
+Enduro Cup (`co_driver` in JSON — The Bend 500, Bathurst 1000, and later two-driver rounds):
+
+| # | Driver | Co-driver | Team | Manufacturer |
+|---|--------|-----------|------|-------------|
+
+- Поля: `driver` + `driver_slug`, `co_driver` + `co_driver_slug` (только на двухпилотных этапах).
+- Колонка Co-driver на сайте появляется **только если** хотя бы у одной машины заполнен `co_driver`.
 - Rowspan на Team + Manufacturer
+- Не класть сопилота в `driver1`/`driver2` — это разворачивается в substitute-строки, а не в колонку Co-driver.
 
 ### Practice
 
@@ -926,8 +1003,9 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 
 ### Race — многогоночный уикенд
 
-Один event-файл может содержать **несколько гонок** в формате `race.sessions[]`
-(Motegi double-header и аналогичные этапы):
+Два паттерна (не смешивать без нужды):
+
+1. **Один event-файл** с `race.sessions[]` (Motegi double-header, Fuji triple `SUPER_FORMULA_2026_6`):
 
 ```json
 "race": {
@@ -943,31 +1021,97 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 - Очки допускают дробные значения (например, половинные очки за укороченную
   гонку) — хранятся как `"2.5"` в исходных данных.
 
+2. **Отдельные `event_id` на гонку** (Fuji Oct `_9`/`_10`, Suzuka `_11`/`_12`) — как IndyCar Milwaukee: один день / один файл; на главной Last Results **merge** через `weekend-card-merge.js`.
+
 ---
 
 ## 8. Super GT
 
 **Категория:** `touring`  
-**Series ID:** `super_gt`
+**Series ID:** `super_gt`  
+**Эталон 2026:** `super_gt_2026_5.json` (Suzuka) — полный уик-энд: practice, combined Q1/Q2, race.
 
 ### Entry List
 
 | # | Class | Team | Make | Car | Drivers | Tire |
 |---|-------|------|------|-----|---------|------|
 
-- Два класса: `GT500` и `GT300` (обе группы в одной таблице, с пустой строкой-разделителем между ними в `entry_list`).
-- В колонке `Drivers` — несколько пилотов через `; ` (формат для endurance-разделения).
+JSON-поля: `number`, `class` (`GT500` / `GT300`), `team`, `make`, `car`, `driver1`, `driver2`, `tire`.
+
+- Оба класса в одном `entry_list`; сайт рисует разделитель между классами.
+- В таблицах практики / квалификации / гонки колонка `Drivers` — несколько пилотов через `; `.
+
+### Practice
+
+`tables.practice.sessions[]` — **одна сессия на класс** (`title`: `GT500` / `GT300`):
+
+| Pos | No. | Team | Drivers | Best lap | Gap | Laps | Tire |
+|-----|-----|------|---------|----------|-----|------|------|
+
+### Qualifying
+
+Q1 и Q2 — **сегменты одной нокаут-квалификации** (как Q1/Q2/Q3 у F1), не две отдельные сессии и не четыре таблицы. Поул и **+1 DP** — **P1 в Q2** (не лидер Q1).
+
+Одна таблица на класс (`qualifying.sessions[]` с `class`: `GT500` / `GT300`):
+
+| Pos | No. | Team | Drivers | Tire | Q1 | Q2 |
+|-----|-----|------|---------|------|----|----|
+
+```json
+"qualifying": {
+  "title": "Qualifying",
+  "sessions": [
+    { "class": "GT500", "title": "Qualifying", "headers": ["Pos","No.","Team","Drivers","Tire","Q1","Q2"], "rows": [] },
+    { "class": "GT300", "title": "Qualifying", "headers": ["Pos","No.","Team","Drivers","Tire","Q1","Q2"], "rows": [] }
+  ]
+}
+```
+
+- Порядок строк = стартовая решётка. Пустой `Q2` у машин, не прошедших из Q1 (`GT500` P11+, `GT300` P19+).
+- Времена Q1/Q2: `"1:45.129"` (двоеточие), не `"1'45.129"` из японского протокола.
+- **GT500:** все в Q1, топ-10 в Q2.
+- **GT300:** Q1 группами A/B, топ-9 из каждой группы в Q2 (18 машин). Группы A/B **не** хранить отдельными сессиями — лучший круг группы идёт в колонку `Q1`.
+- UI: одна таблица на класс (класс `super-gt-qual-table`); пустой Q2 — строка `qual-row-q1-out` (приглушённая ячейка). Заливку «дошедших до Q2» не ставить.
+- **Stats / поулы:** `BuildDriverStatsFromEvents` берёт поул как Q2 P1 в каждом классе (`statsSuperGTQualStartByCar`). Лидер Q1 поул **не** получает.
 
 ### Race
 
-Один проход, многоклассовый:
+Один проход, оба класса в одной flat-таблице `tables.race` (`headers` + `rows`, **не** `sessions[]`):
 
 | Pos. | Class | Car | No. | Team | Drivers | Laps | Gap | Interval | Avg. (km/h) | Time of the day | DP | TP |
 |------|-------|-----|-----|------|---------|------|-----|----------|-------------|-----------------|----|----|
 
-- **DP** — очки пилотам (используется для standings)
-- **TP** — очки команде
-- В колонке `Drivers` — несколько пилотов через `; ` (сборщик standings автоматически их разобьёт)
+- **DP** — очки пилотам (standings читает `DP`).
+- **TP** — очки команде (не источник drivers standings).
+- `Drivers` через `; ` — сборщик разбивает экипаж на отдельных пилотов.
+
+### Очки (2026)
+
+**GT500 DP** (P1–P10) + **+1** поул (только в `DP`, не в `TP`):
+
+| Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|-----|--:|--:|--:|--:|--:|--:|--:|--:|--:|---:|
+| DP  | 20 | 15 | 11 | 8 | 6 | 5 | 4 | 3 | 2 | 1 |
+
+**GT300 DP** (P1–P15) + **+1** поул в `DP`:
+
+| Pos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|-----|--:|--:|--:|--:|--:|--:|--:|--:|--:|---:|---:|---:|---:|---:|---:|
+| DP  | 25 | 20 | 16 | 13 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+
+**TP** = финишные очки класса **без** поула, плюс бонус за отставание от лидера класса:
+
+| Отставание | TP-бонус |
+|------------|----------|
+| Круг лидера (lead lap) | +3 |
+| −1 круг | +2 |
+| −2 круга и более | +1 |
+
+Пример Suzuka 2026: GT500 P1 → `DP` 20 / `TP` 23; GT500 поул + P2 → `DP` 16 (15+1) / `TP` 18 (15+3); GT300 поул + P1 → `DP` 26 / `TP` 28.
+
+### Standings (UI)
+
+API отдаёт **flat** `rows[]` (`BuildStandingsFromEvents`). Страница серии (`web/pages/series.js`) **режет** таблицу на GT500 / GT300 по классу машины из event JSON.
 
 ---
 
@@ -995,8 +1139,22 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 ### Race
 
 - В большинстве этапов единичная таблица `race` с колонками `Pos / Class / Drivers / Team / Points` (ELMS/GTWC также включают `Cup pts` + `Overall pts`).
+- **ELMS UI:** таблица гонки — класс `elms-race-results-table` (по ширине контента, слева под Race / Results, как у других серий). Колонка `Class` в JSON нужна для standings и Last Results; **не** красить строки / текст класса цветами LMP2/LMP3/LMGT3.
 - **24 Hours of Spa** (`GTWCE_END`, CrowdStrike 24 Hours of Spa): на карточке Last Results показываются **5** классовых победителей — Overall, Gold, Silver, Bronze и **Pro-Am** (класс в протоколе часто `Pro-AM Cup`). Остальные этапы GTWCE Endurance — 4 строки.
 - Сборщик standings автоматически разбивает `Drivers` по `;` / `/` и начисляет очки каждому пилоту из колонки `Points` (или `DP` для Super GT).
+- Эталон ELMS 2026: `elms_2026_4.json` (Spa 4 Hours).
+
+#### GTWCE Endurance — очки Main Race (Monza / Nürburgring / Portimão)
+
+3-часовые этапы: топ-10 = **25 / 18 / 15 / 12 / 10 / 8 / 6 / 4 / 2 / 1** + **+1 за поул**. Писать в колонки `Cup pts` / `Overall pts` (отдельную таблицу очков в event JSON не класть).
+
+| Колонка | Начисление | Поул (+1) |
+|---------|------------|-----------|
+| **Overall pts** | Абсолютный топ-10 | P1 Qualifying Combined |
+| **Cup pts** (Gold / Silver / Bronze) | Топ-10 **в классе** | Первый в классе в Qualifying Combined |
+| **Cup pts** (Pro) | Как overall finish points (не отдельная Pro-шкала); class-pole на Cup нет | Overall-поул только в **Overall pts** |
+
+Paul Ricard (6 Hours) и Spa 24H — другие шкалы / checkpoint-колонки; копировать с заполненного этапа того же формата. Подробнее: `gtwce-end-event-json.mdc`.
 
 ### Классовые standings (IMSA, ELMS, WEC, GTWCE)
 
@@ -1142,6 +1300,7 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 | Race | `race.sessions[]` | 2 или 3 гонки; колонка `Fin / ST`, **`Pts`** с бонусами |
 
 - Standings: колонки `R1-1`, `R1-2`, …; на 3-гоночных уикендах Race 2 = sprint (другая шкала очков).
+- Времена круга: `"1:21.456"`, не `"1'21.456"`.
 - Очки: `frec-2026-scoring.mdc`.
 - YouTube: **не заполнять** `youtube_highlights` / `youtube_id`.
 
@@ -1163,10 +1322,12 @@ Flat-формат или `qualifying.sessions[]` (`Qualifying Round N`).
 |--------|--------|------------|
 | Practice | `practice` (flat) | одна сессия |
 | Qualifying | `qualifying` (flat) | |
+| Qualifying (double-header) | **`qualifying.sessions[]`** | Zandvoort: одна сессия даёт две решётки — лучший круг → Race 1, второй по времени → Race 2. Две session-таблицы (`Qualifying — Race 1` / `Qualifying — Race 2`) мапятся 1:1 на `race.sessions[]` (поулы в stats). Гридовые штрафы — в `qualifying.note` |
 | Race | **`race_results`** | одна гонка за F1 support round |
+| Race (double-header) | **`tables.race.sessions[]`** | Zandvoort: Race 1 + Race 2 **в одном** `event_id` (`PSC_2026_6`); не создавать `PSC_2026_7` |
 
 - Entry: `number`, `driver`, `team`, `driver_slug`; **`guest": true`** → `ineligible[]` в standings.
-- Обычный этап = один `event_id` и **день гонки** на карточке (не `start_date`–`end_date` уик-энда F1). Double-header (два id подряд на одной трассе, напр. Zandvoort) — merge на Last Results.
+- Обычный этап = один `event_id` и **день гонки** на карточке (не `start_date`–`end_date` уик-энда F1). Double-header (Zandvoort) — один weekend-файл, как Super Formula Suzuka; Full Schedule группирует по трассе; `/event/psc-2026-7` ремапится на `psc_2026_6`.
 - Очки: `psc-event-json.mdc`.
 - YouTube: **не заполнять** `youtube_highlights` / `youtube_id`.
 
@@ -1278,7 +1439,8 @@ Exhibition / pre-season / prologue файлы могут отображатьс�
 | F2 / F3 | `tables.race.sessions[]` (Sprint + Feature) |
 | FREC / F4_IT / DTM / GTWCE Sprint | `tables.race.sessions[]` |
 | Super Formula / Supercars | `tables.race.sessions[]` |
-| IndyCar / WEC / PSC | `tables.race_results` |
+| IndyCar / WEC | `tables.race_results` |
+| PSC | `tables.race_results`; double-header (Zandvoort) — `tables.race.sessions[]` |
 | IMSA / ELMS / GTWCE Endurance | `tables.race` |
 | Super GT | `tables.race` (flat `headers` + `rows`, не sessions) |
 
@@ -1295,16 +1457,50 @@ Exhibition / pre-season / prologue файлы могут отображатьс�
 |-------|-------------------------|
 | F1 (2024+) | Для спринт-уикенда race_order расширяется на `RnS` / `RnF`; сессия `Sprint` и основная гонка раскладываются в отдельные колонки. `Carlos Sainz` нормализуется в `Carlos Sainz Jr.` |
 | Super Formula | `race.sessions[]` разворачивается в отдельные колонки race_order по порядку (`R1`, `R2`, …). Поддержка дробных очков; бонус за квалификацию (3/2/1). |
-| Super GT | Колонка `Drivers` разбивается по `;` / `/`; очки из `DP`. Flat-таблица через `BuildStandingsFromEvents`. |
+| Super GT | Колонка `Drivers` разбивается по `;` / `/`; очки из `DP`. API — flat `rows[]` (`BuildStandingsFromEvents`); UI серии режет на GT500 / GT300. Поул в stats = Q2 P1 класса, не лидер Q1. |
 | WEC / ELMS / GTWCE | Per-class через отдельные сборщики (см. выше); multi-driver entries; WEC — только Hypercar и LMGT3 в зачёте. |
 | IndyCar | Производитель берётся из `data/teams/indycar.json` по номеру машины (в результатах его нет). `race_order` — из `data/standings/indycar.json`. |
 | Supercars | `race_order` и очки только из events (коды `SMP1`, `MLB4`, …); snapshot `supercars.json` API не использует. |
 | DTM | Drivers standings из `tables.race.sessions[]`; `race_order` — `NOR1`/`NOR2`, `RBR1`/`RBR2`, … **Team Stats** (не drivers championship): Mann-Filter + Ravenol → `Winward Racing` через `teams_championship` в `data/teams/dtm.json`. |
 | FREC | `tables.race.sessions[]` → колонки `R1-1`, `R1-2`, … (по числу гонок в раунде). |
 | F4_IT | Как FREC; одна строка standings на номер машины (`#10`), даже если пилоты разные в heat-группах. |
-| PSC | Гостевые заезды (`guest` в entry list) попадают в отдельную таблицу `ineligible`. |
+| PSC | Гостевые заезды (`guest` в entry list) попадают в отдельную таблицу `ineligible`. Double-header (Zandvoort) даёт две колонки `R6`/`R7` из `tables.race.sessions[]` одного файла. |
 | NASCAR Cup / Xfinity / Truck / ARCA / Modified | Очки стейджей (`stage_1`, `stage_2`; для Cup также `stage_3` на 4-stage гонках вроде Coca-Cola 600 и очки Daytona Duels) попадают в колонку `Stages`. DNQ из таблицы `did_not_qualify` создают отдельные строки со статусом `DNQ`. Для NASCAR Cup события `..._0` (Clash) исключаются из зачёта. `NC` в колонке Pos отображается как индекс строки. `race_order` — из standings-файла серии. |
 | NOAPS / Modified / ARCA | Эксклюзивно поддерживается fallback на `tables.stage3` как источник финишной таблицы. |
+
+### The Chase (NASCAR Cup / NOAPS / Truck)
+
+Код: `internal/schedulefile/standings_chase.go` (вызывается из `BuildStandingsFromEvents`). Конфиг зашит в `stockCarChaseConfig`. **Stats API** (`/stats`) Chase **не** применяет: там сумма weekend `Pts` за сезон, без сброса.
+
+Chase **включается сам**, когда в `completed_races` есть все коды регулярки (`race_order[0 .. N-1]`). Пустой `race_results` у финала = регулярка ещё идёт (линия отсечения 16 / 12 / 10).
+
+| Серия | Регулярка | Поле Chase | Финал регулярки 2026 |
+|-------|-----------|------------|----------------------|
+| `NASCAR_CUP` | 26 гонок | 16, затем 10 гонок без вылетов | Coke Zero Sugar 400, Daytona (`DAY2`) |
+| `NOAPS` | 24 гонки | 12, затем 9 гонок без вылетов | Winn-Dixie 250, Daytona (`DAY2`) |
+| `NASCAR_TRUCK` | 18 гонок | 10, затем 7 гонок без вылетов | EJP 175, Loudon (`NHA`) |
+
+Отбор: топ поля по очкам регулярки (тай-брейк — победы, затем имя). Победы в регулярке **не** дают место в Chase.
+
+**Сиды** (один сброс, [NASCAR.com Chase 101](https://www.nascar.com/news-media/2026/08/31/the-chase-101-how-nascars-new-championship-format-works/)):
+
+1st 2100, 2nd 2075, 3rd 2065, далее −5: 2060 … 2000 (16th). NOAPS — первые 12, Truck — первые 10.
+
+Дальше к сиду прибавляются weekend `Pts` гонок Chase. Не попавшие в Chase остаются на сумме регулярки + последующие гонки (без 2100). Колонка `playoff_points` / «PO Pts» в 2026 не заполняется. Победа в гонке = **55** очков; остальные позиции и стейджи без изменений.
+
+Объект ответа `chase`:
+
+| Поле | Смысл |
+|------|--------|
+| `active` | `true`, когда регулярка закрыта |
+| `round` | `regular_season` или `the_chase` |
+| `field_size` | размер поля Chase (16 / 12 / 10) |
+| `cutline` | последняя позиция внутри поля (пунктир над `cutline+1`) |
+| `regular_season_races` | индекс первой колонки Chase в `race_order` |
+
+На строке: `chase_status: "in"` у участников поля. Не писать эти поля в `data/standings/*.json`.
+
+Тесты: `internal/schedulefile/standings_chase_test.go`. После заполнения Daytona NOAPS / Loudon Truck таблица должна показать 2100 / 2075 / 2065 у топ-3.
 
 ### Completed races
 
@@ -1330,13 +1526,15 @@ race_order реально появились непустые значения. 
 
 **Важно для DTM:** drivers championship = `rows` / standings; **Team Stats** (`teams[]`) может объединять операционные имена (Mann-Filter + Ravenol → Winward Racing) через `teams_championship` в `data/teams/dtm.json`. Это не меняет drivers standings.
 
-**Stock-car:** team names в stats канонизируются через `data/teams/{series}.json` (варианты написания → одно имя).
+**Stock-car:** team names в stats канонизируются через `data/teams/{series}.json` (варианты написания → одно имя). **The Chase не применяется** — `points` в stats = сумма weekend `Pts` за сезон, без сброса 2100. Чемпионат смотреть в standings.
 
 **IndyCar:** manufacturer в race tables отсутствует — подставляется из `data/teams/indycar.json` по номеру.
 
 **Supercars:** manufacturer в stats дополняется из `data/teams/supercars.json` по `#`.
 
 **F1:** chassis/manufacturer из `data/teams/f1.json`; Q2/Q3 passes из qualifying tables.
+
+**Super GT:** поул в driver stats — P1 колонки **Q2** каждой классовой таблицы (`qualifying.sessions[]` с заголовками `Q1`/`Q2`). Лидер Q1, не прошедший в Q2 первым, поул не получает.
 
 **Head-to-head:** `GET /api/series/{id}/headtohead?season=2026&driverA=<slug>&driverB=<slug>` — сравнение двух пилотов по раундам (только серии с flat standings).
 
@@ -1402,6 +1600,80 @@ race_order реально появились непустые значения. 
 
 ---
 
+## Профиль пилота — вкладки Results / Teams / Achievements / Titles
+
+На `/driver/{slug}` под шапкой профиля — четыре вкладки (`web/pages/driver.js`).
+
+| Вкладка | Данные | Источник |
+|---------|--------|----------|
+| **Results** | Таблица гонок, переключатель сезонов | `career_results` из event JSON (все сезоны в `data/events/`) |
+| **Teams** | История команд: годы, интервал при нескольких сезонах подряд в одной команде | `team_history` из тех же event JSON; разрыв года или смена команды — новый отрезок. Пустой Team в race-строке заполняется из `entry_list` того же события (`team`, иначе `constructor`). Старты считаются только по race/sprint, не по placeholder «Entry list». F1 commercial names (Scuderia Ferrari HP, Mercedes-AMG Petronas) сворачиваются к конструктору |
+| **Achievements** | Победы в знаковых гонках (Daytona 500, Monaco GP, Indy 500, Le Mans, Bathurst 1000, …) | P1 (для IMSA/WEC — класс P1) в событии, которое матчится по `data/crown_jewels.json` |
+| **Titles** | Чемпионские титулы | сейчас F1 1950–present из `data/f1_seasons_history.json` → `driver_champion` |
+
+Каталог знаковых гонок — `data/crown_jewels.json` (`name_any` / `track_any` / `name_exclude` + `series_ids`). Не записывать эти победы в `event_preview`. Если пилот выиграл Monaco GP + Indy 500 + 24 Hours of Le Mans, API добавляет карточку Triple Crown of Motorsport.
+
+API: `GET /api/driver/{slug}` поля `season_results`, `career_results`, `available_seasons`, `team_history`, `achievements`, `titles`. UI: `#results` / `#teams` / `#achievements` / `#titles`.
+
+---
+
+## Профиль команды — канон organization / entrant
+
+На `/team/{slug}` — один профиль на **гоночную организацию** (не марку и не юрлицо из реестра). Factory vs customer под одной маркой — **разные** каноны. Одна org в нескольких сериях или с несколькими машинами/классами — **один** канон; FT/PT — атрибут строки roster.
+
+| Файл | Роль |
+|------|------|
+| `data/team_profiles.json` | Канон: `kind`, `canonical_name`, `series_ids`, `display_name_by_season` (`series\|year`); опционально org-meta: `founded`, `headquarters`, `owner`, `president`, `team_principal`, `staff[]` (`name`/`role`/`group`) (ASCII; пропускать, если неизвестно). Staff: `node scripts/sync-team-staff.mjs` (baseline из leadership + curated overrides) → `apply-team-org-metadata.mjs` |
+| `data/team_slug_aliases.json` / `team_profile_redirects.json` | Resolve сырых имён → канон |
+
+**Важно:** aliases строятся из **всех** различных `entry_list.team` / `constructor` по events (скрипт `node scripts/build-team-canon.mjs`), а не только из `display_name_by_season`. Display-имя — только UI шапки/блока сезона (гранулярность = сезон). Rebuild **сохраняет** curated org-meta на существующих slug.
+
+API: `GET /api/team/{slug}`, `GET /api/team-profile-redirects`. UI шапки: Founded / Headquarters / Owner / President / Team principal (как Born у пилота). Cursor: `.cursor/rules/team-profile.mdc`.
+
+---
+
+## Compact JSON (формат файла на диске)
+
+Смысл данных для сайта **не меняется** — меняется только переносы строк в файле. Парсер JSON одинаково читает «развёрнутый» и compact вид.
+
+### Зачем
+
+- Типичный заполненный этап: **~300–800 строк**, а не 2000–4000 (длинные `event_preview` и endurance-сессии — норма).
+- Проще ревью в git и правки в Cursor: одна строка = одна строка таблицы или одна машина в `entry_list`.
+- Эталон после compact: `data/events/NASCAR Cup Series/2026/nascar_cup_2026_28.json`, `data/events/ELMS/2026/elms_2026_5.json`, `data/events/F1/2026/f1_2026_14.json`.
+- Каталог **`data/`** (все event JSON, profiles, schedules, …) хранится в compact-виде. JSON **вне** `data/` (fixtures, служебные отчёты) compact не обязателен.
+
+### Правила разметки
+
+| Блок | Как писать |
+|------|------------|
+| Метаданные (`event_id`, `date`, `laps`, …) | Обычный отступ 2 пробела, **один ключ на строку** |
+| `event_preview` / `event_preview_ru` | Одна JSON-строка на ключ (с `\n` внутри текста) |
+| `headers` | Одна строка: `["Pos", "#", "Driver", …]` |
+| `tables.*.rows` и любые табличные массивы массивов | **Одна строка результата = одна строка файла**: `["1", "22", "Joey Logano", …],` |
+| `entry_list`, `youtube_highlights`, массивы однотипных объектов | **Один объект = одна строка** (через `JSON.stringify` объекта) |
+| `tables.race.sessions[]` | Объект сессии с отступом; внутри — compact `rows` |
+| Вложенные «плоские» объекты (профиль пилота, мелкий meta) | Одна строка, если все значения — строки/числа/пустые массивы |
+
+### Не делать
+
+- Не разворачивать каждую ячейку таблицы на отдельную строку (старый pretty-print).
+- Не minify весь файл в одну строку — файл должен оставаться diff-friendly.
+
+### Команда
+
+```bash
+node scripts/format-compact-json.mjs data/events/F1/2026/f1_2026_14.json
+node scripts/format-compact-json.mjs data/events
+node scripts/format-compact-json.mjs data
+make format-data   # то же для всего data/
+node scripts/audit-compact-json.mjs   # parse + эвристика legacy table rows (stdout JSON)
+```
+
+Правило Cursor: `.cursor/rules/event-json-format.mdc`.
+
+---
+
 ## Служебные файлы и скрипты
 
 Не путать с event JSON — эти файлы обслуживают расписание, live-блок и проверки данных.
@@ -1430,6 +1702,8 @@ race_order реально появились непустые значения. 
 | `node scripts/validate-schedule-times.mjs` | Проверка согласованности времён в schedules |
 | `node scripts/sync-stockcar-table-teams.mjs` | Выровнять колонку `Team` в practice/qualifying/race/stage таблицах stock-car с `entry_list` |
 | `node scripts/check-data.mjs` | Общий gate: тесты данных и smoke-проверки перед коммитом |
+| `node scripts/format-compact-json.mjs [paths…]` | Привести JSON к **compact**-виду (табличные `rows`, `entry_list`, мелкие объекты — по строке). Без аргументов — весь каталог `data/`. |
+| `node scripts/audit-compact-json.mjs` | Аудит: все `.json` в репо, parse errors, legacy multi-line table rows, статистика по длине файлов. |
 | `node scripts/fix-driver-slug-aliases.mjs` | Канонизация nickname-slug (`--check` в `make ci-data-audits`); правит events / profiles / redirects |
 | `node scripts/sync-driver-profiles-from-events.mjs` | Синк профилей из entry_list (учитывает aliases) |
 | `node scripts/audit-card-dates.mjs` | Аудит дат на карточках Next Race / Last Results |
@@ -1445,10 +1719,11 @@ race_order реально появились непустые значения. 
 ### Правила заполнения
 
 1. Рекорд = **конкретный чемпионат + конкретная трасса** (и класс, если мультикласс).
-2. Если лучший круг / поул **побит на этом же ивенте** — в preview писать **предыдущий** рекорд (состояние «на входе в уик-энд»).
+2. Если лучший круг / поул **побит на этом же ивенте** — в preview писать **предыдущий** рекорд (состояние «на входе в уик-энд»). Не писать «set at this 2026 meeting».
 3. Нет надёжного источника → **не выдумывать**. Допустимы формулировки *fastest documented* / *qualifying benchmark* / *inaugural T-326 era*, если официального «all-time record» нет.
 4. Inaugural / смена шасси (FREC T-326) / первый визит серии — явная фраза, что рекорды будут установлены впервые.
 5. EN и RU зеркалят; имена пилотов латиницей в обоих языках.
+6. Время круга в preview — как в таблицах: `"1:43.143"`, не `"1'43.143"`.
 
 ### Приоритет источников (по типу серии)
 
@@ -1473,14 +1748,18 @@ race_order реально появились непустые значения. 
 | `SUPERCARS_2026_1` | Q McLaughlin 1:27.7428 (2020); R Whincup 1:29.8424 | [Auto Action Sydney Event Guide PDF](https://autoaction.com.au/wp-content/uploads/2023/07/Supercars_2023-EventGuide_RD7-SydneyTM.pdf); [supercars.com Sydney](https://www.supercars.com/events/2023-beaurepaires-sydney-supernight) |
 | `SUPERCARS_2026_7` | Q McLaughlin 1:11.9908 (2017); R Percat 1:12.9311 (2017) | [Auto Action Townsville Event Guide PDF](https://autoaction.com.au/wp-content/uploads/2023/07/Supercars_2023-EventGuide_RD6-Townsville-TM.pdf); [supercars.com Townsville](https://www.supercars.com/events/2023-nti-townsville-500) |
 | `SUPERCARS_2026_8` | Lap McLaughlin 52.8141 (2019); R Courtney 53.7293 (2019) | [supercars.com Perth](https://www.supercars.com/events/2026-perth); [Wikipedia Wanneroo Raceway](https://en.wikipedia.org/wiki/Wanneroo_Raceway) |
+| `SUPERCARS_2026_9` | **Previous** Q Feeney 1:08.1301 (2025); R Feeney 1:09.2638 (2025) — Payne 1:08.0105 Q и Feeney 1:09.2277 R сбиты на Ipswich 2026 | [Speedcafe 2025 Ipswich Q](https://speedcafe.com/supercars-news-saturday-race-1-qualifying-results-broc-feeney-pole-position/); [supercars.com QR Gen3 race record](https://www.supercars.com/circuit/queensland-raceway); [V8 Sleuth 2026 Q](https://www.v8sleuth.com.au/payne-nails-qr-gen3-record-as-brown-murray-shine/); [Wikipedia Queensland Raceway](https://en.wikipedia.org/wiki/Queensland_Raceway) |
 | `GTWCE_SPRINT_2026_3` | Q Marciello 1:35.444 (2022); R Marciello 1:36.500 (2022) | [SRO Magny-Cours Q2 2022](https://www.gt-world-challenge-europe.com/news/2305/marciello-leads-goetz-as-akkodis-asp-mercedes-amg-secures-front-row-lockout-at-magny-cours); [Racing Sports Cars Magny-Cours 2022](https://www.racingsportscars.com/results/laps/Magny-Cours-2022-05-15.html); [SRO top-five Magny-Cours](https://www.gt-world-challenge-europe.com/news/3279/the-top-five-gt-world-challenge-races-at-magny-cours) |
 | `SUPER_GT_2026_4` | Q GT500 Yamashita 1:25.764 (2021); Q GT300 Yamauchi 1:34.395 (2021) | [supergt.net Fuji track records](https://supergt.net/en/news_race_report/%E3%80%90%E7%AC%AC4%E6%88%A6%E3%83%97%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%80%91%E5%AF%8C%E5%A3%AB%E3%81%A7%E3%81%AE%E6%96%B0%E3%81%9F%E3%81%AA%E3%82%B9%E3%83%97%E3%83%AA%E3%83%B3%E3%83%88%E3%83%AC); [Racing Sports Cars Fuji 2021 Q](https://www.racingsportscars.com/results/qualifying/Fuji-2021-11-28.html) |
 | `IMSA_2026_8` | Q GTP Derani 1:47.730 (2023); LMP2 Hanley 1:51.846 (2023); GTD Pro Catsburg 2:02.198 (2024); GTD Snow 2:03.291 (2023) | [IMSA Derani Road America pole / track record](https://www.imsa.com/news/2023/08/05/derani-puts-no-31-cadillac-on-pole-at-road-america-with-track-record-lap/); [Al Kamel Road America 2025 Qualifying PDF](https://imsa.results.alkamelcloud.com/Results/25_2025/16_Road%20America/01_IMSA%20WeatherTech%20SportsCar%20Championship/202508021640_Qualifying/03_Results_Qualifying.PDF) (footer still lists those marks) |
+| `IMSA_2026_9` | Q GTD Pro Snow 1:43.206 (2024); GTD Gunn 1:43.356 (2021) | [SPEED SPORT Snow VIR pole](https://speedsport.com/sports-cars/imsa/paul-miller-racing-qualifies-p1-in-vir-michelin-gt-challenge/); [Al Kamel VIR 2024 Qualifying PDF](https://imsa.results.alkamelcloud.com/Results/24_2024/15_VIRginia%20International%20Raceway/01_IMSA%20WeatherTech%20SportsCar%20Championship/202408241650_Qualifying/03_Results_Qualifying.PDF) |
 | `SUPERCARS_2026_4` | Inaugural modern-era Christchurch — records first set this weekend | Preview / calendar (нет исторических Q/R серии) |
 | `PSC_2026_2` | Q Schuring 1:43.784 (2025, Barcelona) | [Porsche Newsroom](https://newsroom.porsche.com/en/ppdb/2025/05/rookie-flynt-schuring-wins-the-qualifying-in-barcelona.html) |
 | `PSC_2026_3` | Fastest documented Q Andlauer 1:30.457 (2019, RBR) — не помечен как официальный all-time | Исторический протокол PSC 2019 / race reports (формулировка *documented*) |
 | `PSC_2026_4` | Q Marvin Klein 2:20.058 (2024, Spa) | Porsche Newsroom / PSC 2024 Spa qualifying reports |
 | `PSC_2026_5` | Q Harry King 1:45.933 (2023, Hungaroring) | [Porsche Newsroom](https://newsroom.porsche.com/en/2023/motorsports/porsche-mobil-1-supercup-pmsc-saison-2023-round-4-budapest-33200.html) |
+| `PSC_2026_6` | Q Flynt Schuring 1:35.952 (2025, Zandvoort) — сбил рекорд Laurin Heinrich 2021 | [Porsche Newsroom](https://newsroom.porsche.com/en/ppdb/2025/08/flynt-schuring-wins-thrilling-qualifying-by-a-thousandth-of-a-second.html) |
+| `F1_2026_12` | Q Oscar Piastri 1:08.662 (2025); R Lewis Hamilton 1:11.097 (2021) | [Wikipedia Circuit Zandvoort](https://en.wikipedia.org/wiki/Circuit_Zandvoort); [F1 circuit guide](https://www.formula1.com/en/latest/article/circuit-guide-everything-you-need-to-know-about-circuit-zandvoort.3yxmn4LiWkbNTKpad7IRSo); [F1 2025 qualifying](https://www.formula1.com/en/results/2025/races/1267/netherlands/qualifying) |
 | `DTM_2026_3` | **Previous** Q Auer 1:19.827 (2025); Thiim 1:19.463 — рекорд **этого** уик-энда 2026 | [dtm.com Lausitzring](https://www.dtm.com/en/news/Second-DTM-pole-Viking-Thiim-takes-the-spoils-at-the-Dekra-Lausitzring); [motorsport.com 2025 Q](https://au.motorsport.com/dtm/results/2025/lausitzring-656532/?st=Q1) |
 | `DTM_2026_4` | **Previous** Q Pepper 48.467 (2025); Thiim 48.449 — сбит на Norisring 2026 | [motorsport.com Norisring](https://www.motorsport.com/dtm/news/dtm-qualifying-norisring-1-pole-for-thiim-debacle-for-porsche-and-bmw/10836095/) |
 | `F3_2026_6` | Race Voisin 2:05.770 (2024); documented Q Benavides 2:04.253 (2025) | Circuit / F3 Spa lap-record tables; FIA F3 timing |
@@ -1488,6 +1767,7 @@ race_order реально появились непустые значения. 
 | `F4_IT_2026_2` | Race Fittipaldi 1:32.995 (2018, Vallelunga) | Circuit F4 lap-record tables |
 | `F4_IT_2026_3` | Race Pradel 1:51.179 (2024, Monza) | [Monza circuit lap records / F4](https://en.wikipedia.org/wiki/Monza_Circuit) (сверять с Euro 4 / Italian F4 protocol) |
 | `INDYCAR_2026_12` | Q Dixon 22.6952 / 206.211 mph (18 Jul 2003) | [Nashville Superspeedway Fast Facts](https://www.nashvillesuperspeedway.com/media/news/borchetta-bourbon-music-city-grand-prix-presented-willscot-fast-facts.html) |
+| `INDYCAR_2026_15` | Inaugural Streets of Washington — no prior IndyCar Q/R records (scheduled 125 laps / 212.5 mi; not OT 147) | [Wikipedia Freedom 250](https://en.wikipedia.org/wiki/Freedom_250_Grand_Prix); dc.gov / IndyCar event notes |
 | `SUPER_FORMULA_2026_6` | Course record Nojiri 1:19.972 (20 Dec 2020 Q) | [motorsport.com Fuji Q](https://www.motorsport.com/super-formula/news/fuji-qualifying-nojiri-yamamoto-cassidy/4929836/) |
 | `SUPER_FORMULA_2026_8` | Course record Sette Camara 1:04.235 (18 Oct 2020 Q) | [motorsport.com SUGO Q](https://www.motorsport.com/super-formula/news/sugo-qualifying-sette-camara-pole/4893563/); [superformula.net 2020 Q](https://superformula.net/sf2/race2020/round3/qf) |
 | `ELMS_2026_3` | LMP2 Q Milesi 1:30.829; race Leclerc 1:31.757 (Jul 2024) | [ELMS Imola Facts and Figures](https://www.europeanlemansseries.com/en/news/imola-elms-facts-and-figures/13648) |
@@ -1503,8 +1783,30 @@ race_order реально появились непустые значения. 
 | `NASCAR_MODIFIED_2026_9` | Documented Q Jake Johnson 11.537 / 78.01 mph (Jun 2025, White Mountain) | NWMT reports |
 | `NASCAR_MODIFIED_2026_10` | Documented Q Hirschman 11.637 / 77.34 mph (May 4, 2024 Granite State Derby, repave); race lap not published | [myracenews Q](https://myracenews.com/2024/05/qualifying-results-granite-state-derby-at-monadnock-speedway/); The Third Turn 2024 GSD |
 | `NASCAR_MODIFIED_2026_11` | Q Bobby Santos 18.237 / 123.376 mph (10 Apr 2011); Tour wins at track Bonsignore 14 | [OnPitRoad Thompson notes](https://onpitroad.com/2016/06/14/whelen-mod-tour-news-notes-thompson-2/); Hartford Courant / NWMT historical |
+| `NASCAR_MODIFIED_2026_12` | Q Mike Ewanitsko 28.693 / 132.743 mph (19 Jul 2001); R Todd Szegedy 123.087 mph (16 Jul 2011) | [NHMS track records](https://www.nhms.com/media/track-info/track-history.html) |
+| `NASCAR_MODIFIED_2026_13` | Q Doug Coby 17.896 / 100.581 mph (29 Apr 2017, Stafford) | [Short Track Scene Stafford 150 notes](https://www.shorttrackscene.com/press-releases/whelen-modified-stat-advance-stafford-150/) |
+| `ARCA_2026_15` | Q Mason Mitchell 32.407 / 111.084 mph (2013); R Frank Kimmel 95.265 mph (2012) | [SPEED SPORT Springfield notes](https://speedsport.com/nascar/arca/arca-notes-springfield-for-the-44th-time/) |
+| `ARCA_2026_16` | Q Chandler Smith 17.982 / 100.095 mph (2019); R Kyle Benjamin 79.210 mph (2013) | [SPEED SPORT Madison notes](https://speedsport.com/nascar/arca/arca-notes-title-battle-heads-to-wisconsin/) |
 | `NASCAR_TRUCK_2026_2` | Q Crawford 30.339 / 182.735 mph (18 Mar 2005) — **pre-2022 Atlanta layout** | Racing-Reference / Jayski historical Atlanta Truck |
 | `NASCAR_TRUCK_2026_15` | **Previous** Q Heim 20.072 / 112.096 mph (2023); Riggs 18.502 — рекорд **этого** уик-энда на новом покрытии | [tobychristie.com 2023 pole](https://tobychristie.com/nascar/truck-series/corey-heim-scores-second-consecutive-nascar-truck-pole-with-quick-lap-at-north-wilkesboro/); [SPEED SPORT 2026 pole](https://speedsport.com/nascar/nascar-craftsman-truck-series/riggs-claims-north-wilkesboro-pole/) |
+| `NASCAR_TRUCK_2026_18` | Q Austin Dillon 28.574 / 133.296 mph (26 Sep 2015); R Kyle Busch 118.707 mph (24 Sep 2011) | [NHMS track records](https://www.nhms.com/media/track-info/track-history.html); [Jayski 2017 NH Truck](https://www.jayski.com/2017-truck-series-new-hampshire-race-info/) |
+| `NASCAR_CUP_2026_25` | Q Brad Keselowski 27.090 / 140.598 mph (19 Sep 2014); R Jeff Burton 117.134 mph (13 Jul 1997, 2:42:35) | [NHMS track records](https://www.nhms.com/media/track-info/track-history.html); [Jayski Statistical Advance Dollar Tree 301](https://www.jayski.com/2026/08/19/statistical-advance-analyzing-the-dollar-tree-301/) |
+| `NASCAR_CUP_2026_26` | All-time Q Bill Elliott 42.783 / 210.364 mph (9 Feb 1987); summer Q Cale Yarborough 44.222 / 203.519 mph (2 Jul 1986); summer R Bobby Allison 173.473 mph (4 Jul 1980, 2:18:21) | [Jayski Statistical Advance Coke Zero Sugar 400](https://www.jayski.com/2026/08/26/statistical-advance-analyzing-the-coke-zero-sugar-400-9/) |
+| `NOAPS_2026_24` | All-time Q Tommy Houston 46.298 / 194.389 mph (14 Feb 1987); R Geoff Bodine 157.137 mph (1985) | [Jayski 2023 Daytona Xfinity qualifying PDF](https://www.jayski.com/wp-content/uploads/sites/31/2023/8/25/24-nxs-2023-qual-results.pdf); same marks as `NOAPS_2026_1` |
+| `INDYCAR_2026_16`, `_17` | One-lap Q Patrick Carpentier 20.028 / 185.500 mph (30 May 1998); two-lap Q Dario Franchitti 42.7768 / 170.840 mph (18 Jun 2011) | [TrackSideOnline Milwaukee Fast Facts](https://www.tracksideonline.com/2025/08/21/fast-facts-snap-on-milwaukee-mile-250/) |
+| `GTWCE_END_2026_4` | Fastest documented Q Thomas Preining 1:53.612 (Q3 2025, Nurburgring GP) | [SRO Nurburgring 2025 results](https://www.gt-world-challenge-europe.com/results/2025/n%C3%BCrburgring) |
+| `F1_2026_13` | Q Max Verstappen 1:18.792 (2025); R Lando Norris 1:20.901 (2025) | [F1 2025 Italian GP qualifying](https://www.formula1.com/en/results/2025/races/1268/italy/qualifying); [FIA 2025 ITA race fastest laps PDF](https://api.fia.com/sites/default/files/2025_16_ita_f1_r0_timing_racefastestlaps_v01.pdf) |
+| `F2_2026_10` | Documented Q Luke Browning 1:32.390 (2025) | [Formula Scout Monza F2 2025 Q](https://formulascout.com/browning-on-monza-f2-pole-as-verschoor-and-fornaroli-trigger-red-flags/134337) |
+| `F3_2026_8` | Documented Q Brad Benavides 1:38.120 (2025) | [F1.com F3 Monza 2025 pole](https://www.formula1.com/en/latest/article/f3-benavides-beats-ugochukwu-to-pole-position-in-monza.3o9zS79N3jQf3pmOMk0IPI) |
+| `FREC_2026_7` | Inaugural T-326 at Imola — records first set this weekend | Серия / шасси T-326 |
+| `F4_IT_2026_5` | No confirmed official Italian F4 Imola all-time record in pre-event materials | Явный skip / disclaimer в preview |
+| `PSC_2026_8` | Documented Q Marvin Klein 1:47.697 (2025, Monza) | PSC / F1 support 2025 Monza qualifying reports |
+| `WEC_2026_5` | Documented Hyperpole Robert Kubica 1:57.655 (2025, damp COTA) | [Autosport COTA 2025 Hyperpole](https://www.autosport.com/wec/news/Kubica-claims-WEC-pole-position-Ferrari-1-2-COTA/10757324/) |
+| `INDYCAR_2026_18` | Q Christian Lundgaard 1:06.4610 / 121.226 mph (9 Sep 2023) | [TrackSideOnline Monterey Fast Facts](https://www.tracksideonline.com/2025/07/24/fast-facts-java-house-grand-prix-of-monterey/) |
+| `NASCAR_CUP_2026_27` | Q Aric Almirola 26.705 / 184.145 mph (11 Apr 2014); 500-mile R Matt Kenseth 141.383 mph (11 May 2013, 3:32:45) | [Jayski Statistical Advance Goodyear 400](https://www.jayski.com/2025/04/02/statistical-advance-analyzing-the-goodyear-400-6/) |
+| `NOAPS_2026_25` | Q Ryan Blaney 28.696 / 171.369 mph (2019); race lap Blaney 29.196 / 168.0 mph (2019) | Existing `noaps_2026_6` preview / 2019 Darlington Xfinity notes |
+| `NASCAR_MODIFIED_2026_14` | Q Matt Hirschman 17.460 (2 Sep 2017) | [Racers Guide Oswego NWMT](https://racersguide.com/whelen-modified-tour-returning-to-oswego-for-third-consecutive-season/) |
+| `ARCA_2026_17` | Q Sheldon Creed 31.805 / 113.190 mph (2018); R Christian Eckes 92.119 mph (2019) | [SPEED SPORT DuQuoin notes](https://speedsport.com/nascar/arca/arca-notes-dirt-double-goes-to-duquoin/) |
 
 При добавлении новых рекордов — **дописывать строку в эту таблицу** (или подсекцию по серии), чтобы следующий проход не начинал поиск с нуля.
 
@@ -1524,10 +1826,10 @@ race_order реально появились непустые значения. 
 | Laps/Distance | Показан | Показан | Показан | Показан | Скрыт | Скрыт | Показан | Показан | Скрыт |
 | POINTS колонка | Pts/Points | Points | Pts | Points | Points | Pts | Points | DP (driver) / TP (team) | Points / Cup pts / Overall pts |
 | CLASS колонка | Нет | Нет | Нет | Нет | Да | Нет | Нет | Да (GT500 / GT300) | Да |
-| Merged qual | Нет | Нет | Нет | Нет | Shoot Out | Shoot Out | Нет | Нет | Нет |
+| Merged qual | Нет | Нет | Нет | Нет | Shoot Out | Shoot Out | Нет | Q1/Q2 knockout | Нет |
 | Множество гонок/уик. | Нет | Sprint+Race | Sprint+Feature | Нет | Нет | Race 1-4 | Race 1-2 | Нет | Нет |
 | Practice формат | Flat | sessions[] | Flat | Flat | Flat | Flat | Flat | sessions[] (per-class) | sessions[] |
-| Auto-standings | ✅ flat (`race_order` из файла) | ✅ sprint-aware | ✅ flat | ✅ flat (`race_order` из файла) | ✅ per-class (events) | ✅ flat (events) | ✅ multi-race | ✅ flat (multi-driver) | ✅ per-class (events) |
+| Auto-standings | ✅ flat + **The Chase** (Cup/NOAPS/Truck) | ✅ sprint-aware | ✅ flat | ✅ flat (`race_order` из файла) | ✅ per-class (events) | ✅ flat (events) | ✅ multi-race | ✅ flat (multi-driver) | ✅ per-class (events) |
 | laps_led/best_laps | Нет | GP: в `race_results`; спринт: в `race.sessions[]` | Нет | Нет | Нет | Нет | Нет | Нет | Нет |
 
 ### Прочие серии (кратко)

@@ -3,9 +3,35 @@ package schedulefile
 import (
 	"fmt"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 	"testing"
 )
+
+var contiguousRoundsRe = regexp.MustCompile(`^(\d+)(?:[–-](\d+))?$`)
+
+// assertContiguousRoundsFrom checks that a live-season "rounds" cell is one unbroken range
+// starting at firstRound. The end is not pinned so adding a calendar round to data/events
+// does not break the test the regression actually guards (row merging / substitute split).
+func assertContiguousRoundsFrom(t *testing.T, label, got string, firstRound int) {
+	t.Helper()
+	m := contiguousRoundsRe.FindStringSubmatch(strings.TrimSpace(got))
+	if m == nil {
+		t.Fatalf("%s rounds = %q, want a single contiguous range starting at %d", label, got, firstRound)
+	}
+	start, err := strconv.Atoi(m[1])
+	if err != nil || start != firstRound {
+		t.Fatalf("%s rounds = %q, want range starting at %d", label, got, firstRound)
+	}
+	if m[2] == "" {
+		return
+	}
+	end, err := strconv.Atoi(m[2])
+	if err != nil || end < start {
+		t.Fatalf("%s rounds = %q has an invalid range end", label, got)
+	}
+}
 
 func TestCompressRounds(t *testing.T) {
 	cases := []struct {
@@ -623,9 +649,7 @@ func TestEnrichTeamsRoundsFromEvents_F3CamposNumber3Substitute(t *testing.T) {
 	if rivera == nil {
 		t.Fatal("missing Ernesto Rivera substitute on #3")
 	}
-	if rivera.Rounds != "2–7" {
-		t.Fatalf("Rivera rounds = %q, want 2–7", rivera.Rounds)
-	}
+	assertContiguousRoundsFrom(t, "Rivera", rivera.Rounds, 2)
 }
 
 func TestEnrichTeamsRoundsFromEvents_F3StromstedSingleRow(t *testing.T) {
@@ -652,9 +676,7 @@ func TestEnrichTeamsRoundsFromEvents_F3StromstedSingleRow(t *testing.T) {
 		}
 		t.Fatalf("expected one #4 Stromsted row, got %d: %v", len(stromsted), names)
 	}
-	if stromsted[0].Rounds != "1–7" {
-		t.Fatalf("Stromsted rounds = %q, want 1–7", stromsted[0].Rounds)
-	}
+	assertContiguousRoundsFrom(t, "Stromsted", stromsted[0].Rounds, 1)
 }
 
 func TestMergeDuplicateDriverCarRows(t *testing.T) {

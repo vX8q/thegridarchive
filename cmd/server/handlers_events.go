@@ -141,4 +141,3 @@ func extractSeriesIDFromEventID(eventID string) string {
 	}
 	return strings.ToLower(strings.Split(eventID, "_")[0])
 }
-

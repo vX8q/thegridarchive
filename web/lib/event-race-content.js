@@ -4,6 +4,59 @@
   if (typeof window === 'undefined') return;
   window.TGA = window.TGA || {};
 
+  // Fallback for freshly pasted event JSON; data/events is normalized by
+  // scripts/audit-car-makes.mjs and scripts/car-makes.test.mjs keeps the two
+  // maps in agreement.
+  function formatElmsCarMake(raw) {
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return s;
+    var key = s.toUpperCase().replace(/\s+/g, ' ');
+    var known = {
+      ORECA: 'Oreca',
+      LIGIER: 'Ligier',
+      DUQUEINE: 'Duqueine',
+      FERRARI: 'Ferrari',
+      PORSCHE: 'Porsche',
+      MERCEDES: 'Mercedes-AMG',
+      'MERCEDES-AMG': 'Mercedes-AMG',
+      'MERCEDES AMG': 'Mercedes-AMG',
+      MCLAREN: 'McLaren',
+      'ASTON MARTIN': 'Aston Martin',
+      CORVETTE: 'Chevrolet',
+      BMW: 'BMW',
+      LEXUS: 'Lexus',
+      LAMBORGHINI: 'Lamborghini',
+      FORD: 'Ford',
+      ALPINE: 'Alpine'
+    };
+    if (known[key]) return known[key];
+    if (/[a-z]/.test(s)) return s;
+    return s.toLowerCase().replace(/\b([a-z])/g, function (ch) { return ch.toUpperCase(); });
+  }
+
+  function formatElmsCarColumn(tableData) {
+    if (!tableData || !Array.isArray(tableData.headers) || !Array.isArray(tableData.rows)) return tableData;
+    var idx = -1;
+    for (var i = 0; i < tableData.headers.length; i++) {
+      if (String(tableData.headers[i] || '').trim().toLowerCase() === 'car') {
+        idx = i;
+        break;
+      }
+    }
+    if (idx < 0) return tableData;
+    return Object.assign({}, tableData, {
+      rows: tableData.rows.map(function (row) {
+        if (!Array.isArray(row) || idx >= row.length) return row;
+        var next = row.slice();
+        next[idx] = formatElmsCarMake(next[idx]);
+        return next;
+      })
+    });
+  }
+
+  window.TGA.formatElmsCarMake = formatElmsCarMake;
+  window.TGA.formatElmsCarColumn = formatElmsCarColumn;
+
   function buildTeamNamesByNumberFromEntryList(entryList) {
     var map = {};
     if (!entryList || !entryList.length) return map;
@@ -105,6 +158,9 @@
         function renderOneRaceSession(sess, eventData) {
           var out = '';
           var titleText = G.localizeF1RaceSessionTitle(sess && sess.title ? String(sess.title) : '', evKeyEvent);
+          if (seriesIdLower === 'elms' && /^race$/i.test(String(titleText).trim())) {
+            titleText = 'Race Results';
+          }
           var hasRaceResultRows = sess && Array.isArray(sess.rows) && sess.rows.length > 0;
           var skipVenueSubtitle = G.shouldSkipOpenwheelRaceVenueSubtitle(seriesIdLower);
           var isSuperGtClassTitle = G.isSuperGtRaceClassTitle(seriesIdLower, titleText);
@@ -184,6 +240,7 @@
               raceTbl = G.normalizeFinStTable(raceTbl);
               raceTbl = normalizeRaceEngineColumns(raceTbl);
               raceTbl = G.dropTouringRaceDisplayColumns(raceTbl, seriesIdLower, evKeyEvent);
+              if (seriesIdLower === 'elms') raceTbl = G.formatElmsCarColumn(raceTbl);
               // F1, 10 columns (like race_results on F1_2026_3): same look as "Race Results" —
               // .race-results-table + fixed colgroup, not .pre-season-results-table.
               // IMSA: reference race table layout — `/event/imsa-2026-1/race` (body.series-imsa … race-session-results-table in style.css).
@@ -196,6 +253,7 @@
                 raceSessColWidths = raceResultsWidths10;
               }
               if (evKeyEvent && (evKeyEvent.indexOf('GTWCE_END_') === 0 || evKeyEvent.indexOf('GTWCE_SPRINT_') === 0)) raceSessTableClass += ' gtwce-race-results-table';
+              if (seriesIdLower === 'elms') raceSessTableClass += ' elms-race-results-table';
               var raceResult = G.buildTableSection(null, raceTbl, raceSessTableClass, null, raceSessColWidths);
               if (raceResult) { out += raceResult.html; sortQueue.push({ rows: raceResult.rows, getRowClass: raceResult.getRowClass }); }
             }
@@ -298,7 +356,6 @@
         if (isNascarModified && tables.race_results && Array.isArray(tables.race_results.rows) && tables.race_results.rows.length > 0) {
           raceBlock = null;
         }
-        var penaltiesAndVscAddedAfterSprint = false;
         if (raceBlock && Array.isArray(raceBlock.sessions) && raceBlock.sessions.length > 0) {
           var raceSessionsDisplay = G.visibleRaceSessionsForDisplay(raceBlock, seriesIdLower);
           if (raceSessionsDisplay.length > 0) {
@@ -308,12 +365,16 @@
             // Starting Grid N before Race N
             var slSess = slSessions[idx];
             if (slSess && slSess.headers && Array.isArray(slSess.rows) && slSess.rows.length > 0) {
+              var raceHasResults = sess && Array.isArray(sess.rows) && sess.rows.length > 0;
+              // Supercars: hide the separate grid once ST lives in race results.
+              if (!(isSupercars && raceHasResults)) {
               var raceNo = slSess.meta && slSess.meta.race_no != null ? slSess.meta.race_no : idx + 1;
               var slTitle = (slSess.title && String(slSess.title).trim())
                 ? String(slSess.title).trim()
                 : (t('table.starting_lineup') + ' — Race ' + raceNo);
               var slRows = applyTeamNameByNumber(slSess.rows.slice(), 1, 3);
               add(slTitle, { headers: slSess.headers, rows: slRows }, 'race-starting-lineup-table', null, null, null, 'table-section-title--starting-grid-race', false);
+              }
             }
             html += renderOneRaceSession(sess, d);
             // Penalties and neutralization tables — directly under sprint result table.
@@ -323,7 +384,6 @@
               var sprintPenaltiesTable       = tables.penalties_sprint || null;
               var sprintPenaltiesAfterTable  = tables.penalties_sprint_after || null;
               var sprintVscTable             = tables.vsc_sprint || null;
-              var usedSprintSpecificTables   = sprintPenaltiesTable || sprintPenaltiesAfterTable || sprintVscTable;
     
               if (sprintPenaltiesTable && sprintPenaltiesTable.rows && sprintPenaltiesTable.rows.length > 0) {
                 add((typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race', sprintPenaltiesTable, 'penalties-table', null, null, null, null, false);
@@ -336,22 +396,6 @@
                   ? sprintVscTable.title
                   : ((typeof t === 'function' && t('table.vsc')) ? t('table.vsc') : 'Race neutralisation');
                 add(vscSprintTitle, { headers: sprintVscTable.headers || ['Type', 'Laps'], rows: sprintVscTable.rows }, 'vsc-table', null, null, null, null, false);
-              }
-    
-              // If no sprint tables, still use shared penalties / penalties_after / vsc
-              // and mark as rendered to avoid duplicating under Race Results.
-              if (!usedSprintSpecificTables) {
-                if (tables.penalties && tables.penalties.headers && tables.penalties.rows && tables.penalties.rows.length > 0) {
-                  add((typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race', tables.penalties, 'penalties-table', null, null, null, null, false);
-                }
-                if (tables.penalties_after && tables.penalties_after.rows && tables.penalties_after.rows.length > 0) {
-                  add(t('table.penalties_after'), tables.penalties_after, 'penalties-table penalties-table--after', null, null, null, null, false);
-                }
-                if (tables.vsc && tables.vsc.rows && tables.vsc.rows.length > 0) {
-                  var vscTitleSprint = (tables.vsc.title && String(tables.vsc.title).trim()) ? tables.vsc.title : ((typeof t === 'function' && t('table.vsc')) ? t('table.vsc') : 'Race neutralisation');
-                  add(vscTitleSprint, tables.vsc, 'vsc-table', null, null, null, null, false);
-                }
-                penaltiesAndVscAddedAfterSprint = true;
               }
             }
           });
@@ -541,7 +585,10 @@
             raceResultsTitle = stockTitles.title;
             raceResultsSubtitle = stockTitles.subtitle;
           } else {
-            raceResultsTitle = (typeof t === 'function' && t('table.race_results')) ? t('table.race_results') : 'Race Results';
+            var namedRaceTitle = (rr && rr.title && String(rr.title).trim()) ? String(rr.title).trim() : '';
+            raceResultsTitle = namedRaceTitle
+              ? localizeSectionTitle(namedRaceTitle)
+              : ((typeof t === 'function' && t('table.race_results')) ? t('table.race_results') : 'Race Results');
           }
           var raceResultsTitleClass = null;
           if (raceResultsSubtitle) {
@@ -636,19 +683,17 @@
             add((typeof t === 'function' && t('table.best_laps')) ? t('table.best_laps') : 'Best Laps', tables.best_laps, 'best-laps-table', null, null, null, null, false);
           }
         }
-        if (!penaltiesAndVscAddedAfterSprint) {
-          if (tables.penalties) {
-            var penaltiesTitle = (typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race';
-            add(penaltiesTitle, tables.penalties, 'penalties-table', null, null, null, null, false);
-          }
-          if (tables.penalties_after && tables.penalties_after.rows && tables.penalties_after.rows.length > 0) {
-            var penaltiesAfterTitle = t('table.penalties_after');
-            add(penaltiesAfterTitle, tables.penalties_after, 'penalties-table penalties-table--after', null, null, null, null, false);
-          }
-          if (tables.vsc) {
-            var vscTitle = (tables.vsc.title && String(tables.vsc.title).trim()) ? tables.vsc.title : ((typeof t === 'function' && t('table.vsc')) ? t('table.vsc') : 'Race neutralisation');
-            add(vscTitle, tables.vsc, 'vsc-table', null, null, null, null, false);
-          }
+        if (tables.penalties) {
+          var penaltiesTitle = (typeof t === 'function' && t('table.penalties')) ? t('table.penalties') : 'Penalties during the race';
+          add(penaltiesTitle, tables.penalties, 'penalties-table', null, null, null, null, false);
+        }
+        if (tables.penalties_after && tables.penalties_after.rows && tables.penalties_after.rows.length > 0) {
+          var penaltiesAfterTitle = t('table.penalties_after');
+          add(penaltiesAfterTitle, tables.penalties_after, 'penalties-table penalties-table--after', null, null, null, null, false);
+        }
+        if (tables.vsc) {
+          var vscTitle = (tables.vsc.title && String(tables.vsc.title).trim()) ? tables.vsc.title : ((typeof t === 'function' && t('table.vsc')) ? t('table.vsc') : 'Race neutralisation');
+          add(vscTitle, tables.vsc, 'vsc-table', null, null, null, null, false);
         }
         if (tables.pit_stops) {
           var pitEntryList = Array.isArray(d.entry_list) ? d.entry_list : [];

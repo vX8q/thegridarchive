@@ -41,10 +41,7 @@ func TestBuildGtwceStandingsFromEvents_Sprint2026(t *testing.T) {
 }
 
 func TestBuildGtwceStandingsFromEvents_Endurance2026(t *testing.T) {
-	dataDir, err := filepath.Abs(filepath.Join("..", "..", "data"))
-	if err != nil {
-		t.Fatal(err)
-	}
+	dataDir := standingsDataDirUpToRound(t, "GT World Challenge Europe Endurance", "2026", 3)
 	data, err := BuildGtwceStandingsFromEvents(dataDir, "GTWCE_END", "2026")
 	if err != nil {
 		t.Fatal(err)

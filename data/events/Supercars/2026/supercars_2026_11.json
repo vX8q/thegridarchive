@@ -1,0 +1,69 @@
+{
+  "event_id": "SUPERCARS_2026_11",
+  "series": "Supercars Championship",
+  "race": "Bathurst 1000",
+  "date": "Sunday, 11 October 2026",
+  "start_date": "2026-10-11",
+  "end_date": "2026-10-11",
+  "track": "Mount Panorama Circuit",
+  "location": "Bathurst, New South Wales, Australia",
+  "laps": "161",
+  "distance": "1000 km",
+  "event_preview": "Mount Panorama Circuit is a 6.213 km (3.861 mi) public-road circuit in Bathurst, New South Wales, a mountain lap that climbs through the Cutting, crosses Skyline and plunges down Conrod Straight. The Bathurst 1000 is the 11th round of the 2026 Repco Supercars Championship and the centrepiece of the Ryco Enduro Cup, scheduled for 161 laps / 1000 km on Sunday, October 11. The field uses the same two-driver crews as The Bend 500: 24 full-time entries plus wildcards, each pairing a primary driver with a co-driver.\n\nThe Great Race rewards a car that can both fly one lap over the mountain and survive 161 laps of traffic, fuel and brake wear. Co-driver stints, Safety Car timing and staying off the walls at Forrest's Elbow and The Chase usually decide the afternoon as much as qualifying pace. The Bend 500 a month earlier is the dress rehearsal; Bathurst is the race the Enduro Cup is built around.\n\nThe Gen3 qualifying lap record at Mount Panorama belongs to Shane van Gisbergen at 2:04.2677 (2023). The Gen3 race lap record is 2:07.0704, set by Andre Heimgartner in 2024.",
+  "event_preview_ru": "Mount Panorama Circuit — трасса общего пользования длиной 6,213 км (3,861 мили) в Bathurst, New South Wales: горный круг поднимается через Cutting, пересекает Skyline и срывается вниз по Conrod Straight. Bathurst 1000 — 11-й этап Repco Supercars Championship 2026 и главная гонка Ryco Enduro Cup, запланирована на 161 круг / 1000 км в воскресенье, 11 октября. Состав использует те же двухпилотные экипажи, что и The Bend 500: 24 постоянных участника плюс уайлд-кард, в каждом основной и второй пилот.\n\nThe Great Race награждает машину, которая умеет и лететь один круг по горе, и выжить 161 круг трафика, топлива и износа тормозов. Стинты второго пилота, моменты Safety Car и умение не задеть стены в Forrest's Elbow и The Chase обычно решают день не меньше квалификационного темпа. The Bend 500 месяцем ранее — генеральная репетиция; Bathurst — гонка, вокруг которой построен Enduro Cup.\n\nКвалификационный рекорд Gen3 на Mount Panorama принадлежит Shane van Gisbergen — 2:04.2677 (2023). Гоночный рекорд Gen3 — 2:07.0704, Andre Heimgartner в 2024 году.",
+  "entry_list": [
+    {"number":"4","driver":"Jack Le Brocq","team":"Matt Stone Racing","manufacturer":"Chevrolet","driver_slug":"jack-le-brocq","co_driver":"Harri Jones","co_driver_slug":"harri-jones"},
+    {"number":"10","driver":"Zach Bates","team":"Matt Stone Racing","manufacturer":"Chevrolet","driver_slug":"zach-bates","co_driver":"Aaron Seton","co_driver_slug":"aaron-seton"},
+    {"number":"9","driver":"Jobe Stewart","team":"Erebus Motorsport","manufacturer":"Chevrolet","driver_slug":"jobe-stewart","co_driver":"Jarrod Hughes","co_driver_slug":"jarrod-hughes"},
+    {"number":"99","driver":"Cooper Murray","team":"Erebus Motorsport","manufacturer":"Chevrolet","driver_slug":"cooper-murray","co_driver":"Lochie Dalton","co_driver_slug":"lochie-dalton"},
+    {"number":"18","driver":"Anton de Pasquale","team":"Team 18","manufacturer":"Chevrolet","driver_slug":"anton-de-pasquale","co_driver":"Lee Holdsworth","co_driver_slug":"lee-holdsworth"},
+    {"number":"20","driver":"David Reynolds","team":"Team 18","manufacturer":"Chevrolet","driver_slug":"david-reynolds","co_driver":"James Courtney","co_driver_slug":"james-courtney"},
+    {"number":"31","driver":"Jayden Ojeda","team":"PremiAir Racing","manufacturer":"Chevrolet","driver_slug":"jayden-ojeda","co_driver":"David Russell","co_driver_slug":"david-russell"},
+    {"number":"777","driver":"Declan Fraser","team":"PremiAir Racing","manufacturer":"Chevrolet","driver_slug":"declan-fraser","co_driver":"Nash Morris","co_driver_slug":"nash-morris"},
+    {"number":"3","driver":"Aaron Cameron","team":"Blanchard Racing Team","manufacturer":"Ford","driver_slug":"aaron-cameron","co_driver":"Zak Best","co_driver_slug":"zak-best"},
+    {"number":"7","driver":"James Golding","team":"Blanchard Racing Team","manufacturer":"Ford","driver_slug":"james-golding","co_driver":"Richie Stanaway","co_driver_slug":"richie-stanaway"},
+    {"number":"6","driver":"Cameron Waters","team":"Tickford Racing","manufacturer":"Ford","driver_slug":"cameron-waters","co_driver":"Mark Winterbottom","co_driver_slug":"mark-winterbottom"},
+    {"number":"55","driver":"Thomas Randle","team":"Tickford Racing","manufacturer":"Ford","driver_slug":"thomas-randle","co_driver":"Reuben Goodall","co_driver_slug":"reuben-goodall"},
+    {"number":"11","driver":"Jackson Walls","team":"Triple Eight Race Engineering","manufacturer":"Ford","driver_slug":"jackson-walls","co_driver":"Jack Perkins","co_driver_slug":"jack-perkins"},
+    {"number":"88","driver":"Broc Feeney","team":"Triple Eight Race Engineering","manufacturer":"Ford","driver_slug":"broc-feeney","co_driver":"Nick Percat","co_driver_slug":"nick-percat"},
+    {"number":"888","driver":"Will Brown","team":"Triple Eight Race Engineering","manufacturer":"Ford","driver_slug":"will-brown","co_driver":"Scott Pye","co_driver_slug":"scott-pye"},
+    {"number":"17","driver":"Brodie Kostecki","team":"Dick Johnson Racing","manufacturer":"Ford","driver_slug":"brodie-kostecki","co_driver":"Todd Hazelwood","co_driver_slug":"todd-hazelwood"},
+    {"number":"38","driver":"Rylan Gray","team":"Dick Johnson Racing","manufacturer":"Ford","driver_slug":"rylan-gray","co_driver":"Tony D'Alberto","co_driver_slug":"tony-dalberto"},
+    {"number":"19","driver":"Matt Payne","team":"Grove Racing","manufacturer":"Ford","driver_slug":"matthew-payne","co_driver":"Will Davison","co_driver_slug":"will-davison"},
+    {"number":"26","driver":"Kai Allen","team":"Grove Racing","manufacturer":"Ford","driver_slug":"kai-allen","co_driver":"Tim Slade","co_driver_slug":"tim-slade"},
+    {"number":"1","driver":"Chaz Mostert","team":"Walkinshaw TWG Racing","manufacturer":"Toyota","driver_slug":"chaz-mostert","co_driver":"Fabian Coulthard","co_driver_slug":"fabian-coulthard"},
+    {"number":"2","driver":"Ryan Wood","team":"Walkinshaw TWG Racing","manufacturer":"Toyota","driver_slug":"ryan-wood","co_driver":"Jaxon Evans","co_driver_slug":"jaxon-evans"},
+    {"number":"8","driver":"Andre Heimgartner","team":"Brad Jones Racing","manufacturer":"Toyota","driver_slug":"andre-heimgartner","co_driver":"Bryce Fullwood","co_driver_slug":"bryce-fullwood"},
+    {"number":"14","driver":"Cameron Hill","team":"Brad Jones Racing","manufacturer":"Toyota","driver_slug":"cameron-hill","co_driver":"Brad Vaughan","co_driver_slug":"brad-vaughan"},
+    {"number":"96","driver":"Macauley Jones","team":"Brad Jones Racing","manufacturer":"Toyota","driver_slug":"macauley-jones","co_driver":"Jordan Boys","co_driver_slug":"jordan-boys"},
+    {"number":"15","driver":"Bayley Hall","team":"Team 18","manufacturer":"Chevrolet","driver_slug":"bayley-hall","co_driver":"Craig Lowndes","co_driver_slug":"craig-lowndes"},
+    {"number":"5","driver":"Ben Gomersall","team":"Tickford Racing","manufacturer":"Ford","driver_slug":"ben-gomersall","co_driver":"Campbell Logan","co_driver_slug":"campbell-logan"}
+  ],
+  "tables": {
+    "practice": {
+      "sessions": [
+        {"title":"Practice 1 (All Drivers)","headers":["Pos","No.","Driver","Team","Fastest Lap","Lap","Laps"],"rows":[]},
+        {"title":"Practice 2 (Co-Drivers)","headers":["Pos","No.","Driver","Team","Fastest Lap","Lap","Laps"],"rows":[]},
+        {"title":"Practice 3 (All Drivers)","headers":["Pos","No.","Driver","Team","Fastest Lap","Lap","Laps"],"rows":[]},
+        {"title":"Practice 4 (Co-Drivers)","headers":["Pos","No.","Driver","Team","Fastest Lap","Lap","Laps"],"rows":[]},
+        {"title":"Practice 5 (All Drivers)","headers":["Pos","No.","Driver","Team","Fastest Lap","Lap","Laps"],"rows":[]},
+        {"title":"Warm Up","headers":["Pos","No.","Driver","Team","Fastest Lap","Lap","Laps"],"rows":[]}
+      ]
+    },
+    "qualifying": {
+      "sessions": [
+        {"title":"Qualifying","headers":["Pos","No.","Driver","Team","Fastest Lap","Gap","Lap","Laps"],"rows":[]}
+      ]
+    },
+    "race": {
+      "sessions": [
+        {
+          "title": "Race 30",
+          "meta": {"Championship":"2026 Repco Supercars Championship","Session":"Race","Date":"Sun 11 Oct 2026","Start":"11:45 AM","Length":"161 laps"},
+          "headers": ["Pos","ST","No.","Driver","Team","Race time","Laps","Pts"],
+          "rows": []
+        }
+      ]
+    }
+  }
+}

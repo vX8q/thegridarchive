@@ -70,6 +70,26 @@ func TestBuildLastResultsSummary_IndyCarDriver(t *testing.T) {
 	}
 }
 
+func TestBuildLastResultsSummary_PSCPracticeWeekendUsesRaceDay(t *testing.T) {
+	body := []byte(`{
+		"event_id": "PSC_2026_8",
+		"series": "Porsche Supercup",
+		"race": "Monza",
+		"start_date": "2026-09-04",
+		"end_date": "2026-09-06",
+		"tables": {
+			"race_results": {
+				"headers": ["Pos", "Driver", "Team", "Time/Retired"],
+				"rows": []
+			}
+		}
+	}`)
+	sum := BuildLastResultsSummaryFromBytes(body, "PSC_2026_8", "PSC")
+	if sum.RangeStart != "2026-09-06" || sum.RangeEnd != "2026-09-06" {
+		t.Fatalf("PSC practice weekend should resolve to race day, got %q–%q", sum.RangeStart, sum.RangeEnd)
+	}
+}
+
 func findRepoRoot(t *testing.T) string {
 	t.Helper()
 	wd, err := os.Getwd()

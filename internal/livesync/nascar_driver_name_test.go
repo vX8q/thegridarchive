@@ -4,9 +4,9 @@ import "testing"
 
 func TestNormalizeNASCARLiveDriverName(t *testing.T) {
 	tests := map[string]string{
-		"* Casey Mears":     "Casey Mears",
-		"** Christian Dye":  "Christian Dye",
-		" Tyler Reddick":    "Tyler Reddick",
+		"* Casey Mears":         "Casey Mears",
+		"** Christian Dye":      "Christian Dye",
+		" Tyler Reddick":        "Tyler Reddick",
 		"* Shane van Gisbergen": "Shane van Gisbergen",
 	}
 	for in, want := range tests {

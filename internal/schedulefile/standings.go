@@ -185,7 +185,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			if title == "" {
 				title = "Race"
 			}
-			out = []RaceSession{{Title: title, Headers: raceAny.Headers, Rows: raceAny.Rows}}
+			out = []RaceSession{{Title: title, Meta: raceAny.Meta, Headers: raceAny.Headers, Rows: raceAny.Rows}}
 		}
 		raceSessionsCache[key] = out
 		return out, nil
@@ -446,6 +446,36 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			raceOrder = ro
 		}
 	}
+	// PSC: most rounds are one race_results column; a double-header weekend
+	// (Zandvoort) stores Race 1+2 in tables.race.sessions and needs two columns
+	// (R6+R7) pointing at the same event file.
+	if strings.EqualFold(seriesID, "PSC") {
+		var ro []string
+		var names []string
+		for _, ev := range events {
+			if ev.Season != season {
+				continue
+			}
+			name := strings.TrimSpace(ev.Name)
+			n := 1
+			if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 1 {
+				n = len(sessions)
+			}
+			baseRound, ok := eventRoundNumber(ev.ID)
+			if !ok {
+				baseRound = len(ro) + 1
+			}
+			for si := 0; si < n; si++ {
+				ro = append(ro, "R"+strconv.Itoa(baseRound+si))
+				names = append(names, name)
+			}
+		}
+		if len(ro) > 0 {
+			base.RaceOrder = ro
+			base.EventNames = names
+			raceOrder = ro
+		}
+	}
 	// Every race column links to its event page, so each one needs the event that
 	// hosts it. Supercars fills this in below, while it discovers its columns.
 	if len(base.EventIDs) != len(raceOrder) && !strings.EqualFold(seriesID, "SUPERCARS") {
@@ -456,6 +486,10 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 					return 2
 				}
 			case isDTMSeries || isMultiRacePerEvent:
+				if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 1 {
+					return len(sessions)
+				}
+			case strings.EqualFold(seriesID, "PSC"):
 				if sessions, errSess := loadRaceSessions(ev.ID); errSess == nil && len(sessions) > 1 {
 					return len(sessions)
 				}
@@ -487,14 +521,18 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 	}
 
 	type accRow struct {
-		driver       string
-		car          string
-		team         string
-		manufacturer string
-		races        map[string]string
-		points       float64
-		stages       int
-		guest        bool // PSC: guest entry (separate standings table)
+		driver          string
+		car             string
+		team            string
+		manufacturer    string
+		races           map[string]string
+		points          float64
+		stages          int
+		guest           bool // PSC: guest entry (separate standings table)
+		racePts         map[string]float64
+		stageWinsByRace map[string]int
+		playoffPts      int
+		chaseStatus     string
 	}
 	type accTeam struct {
 		name   string
@@ -772,6 +810,9 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			}
 			rs := sessions[si]
 			supercarsWeekendSessIdx[bundleID] = si + 1
+			if len(rs.Headers) == 0 || len(rs.Rows) == 0 {
+				continue
+			}
 			raceCode := supercarsStandingsRaceCode(ev, si+1)
 			if !supercarsRaceOrderContains(raceOrder, raceCode) {
 				raceOrder = append(raceOrder, raceCode)
@@ -781,34 +822,6 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				base.EventIDs = append(base.EventIDs, strings.ToUpper(bundleID))
 			}
 			detail, _ := loadDetail(ev.ID)
-			if len(rs.Headers) == 0 || len(rs.Rows) == 0 {
-				if detail != nil {
-					for _, e := range detail.EntryList {
-						driver := strings.TrimSpace(e.Driver)
-						if driver == "" {
-							continue
-						}
-						carNum := SupercarsCarToCanonical(strings.TrimSpace(e.Number))
-						key := standingsAggregateKey(seriesID, driver, carNum)
-						if key == "" {
-							key = driver
-						}
-						if byDriver[key] == nil {
-							byDriver[key] = &accRow{
-								driver: driver, car: carNum,
-								team: strings.TrimSpace(e.Team), manufacturer: strings.TrimSpace(e.Manufacturer),
-								races: make(map[string]string),
-							}
-						}
-						if byDriver[key].races == nil {
-							byDriver[key].races = make(map[string]string)
-						}
-						byDriver[key].races[raceCode] = "—"
-					}
-				}
-				completedRaces = append(completedRaces, raceCode)
-				continue
-			}
 			applyEventTable(EventTable{Headers: rs.Headers, Rows: rs.Rows}, raceCode, detail, false)
 			completedRaces = append(completedRaces, raceCode)
 			continue
@@ -891,6 +904,47 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				completedRaces = appendUniqueRaceCode(completedRaces, raceCode)
 			}
 			continue
+		}
+
+		// PSC double-header: two race.sessions (e.g. Zandvoort R6+R7) in one file.
+		// Empty sessions advance the column index without marking completed,
+		// matching empty race_results on a single-race PSC round.
+		if strings.EqualFold(seriesID, "PSC") {
+			sessions, errSess := loadRaceSessions(ev.ID)
+			if errSess == nil && len(sessions) > 1 {
+				detail, errDet := loadDetail(ev.ID)
+				if errDet != nil || detail == nil {
+					raceIdx += len(sessions)
+					if raceIdx > len(raceOrder) {
+						raceIdx = len(raceOrder)
+					}
+					continue
+				}
+				guests := pscGuestCarsFromEntry(detail.EntryList)
+				for _, rs := range sessions {
+					if raceIdx >= len(raceOrder) {
+						break
+					}
+					raceCode := raceOrder[raceIdx]
+					if len(rs.Headers) == 0 || len(rs.Rows) == 0 {
+						raceIdx++
+						continue
+					}
+					rr := EventTable{Meta: rs.Meta, Headers: rs.Headers, Rows: rs.Rows}
+					ApplyPSCRacePoints(detail.EntryList, &rr)
+					applyEventTable(rr, raceCode, detail, false)
+					if len(guests) > 0 {
+						for _, r := range byDriver {
+							if r != nil && guests[r.car] {
+								r.guest = true
+							}
+						}
+					}
+					completedRaces = append(completedRaces, raceCode)
+					raceIdx++
+				}
+				continue
+			}
 		}
 
 		// DTM / FREC / F4: one event may contain multiple races (race.sessions).
@@ -1052,8 +1106,17 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			continue
 		}
 		stagePointsByDriver := make(map[string]int)
+		eventStageWins := make(map[string]int)
 		if stockCarSeriesUsesStagePoints(seriesID) {
 			accumulateStagePointsFromDetail(seriesID, detail, stagePointsByDriver)
+			wins, _ := accumulateStageStatsPerRace(seriesID, detail, eligibleByCarForEvent, true)
+			for k, n := range wins {
+				driverKey := k
+				if i := strings.Index(k, "\t"); i >= 0 {
+					driverKey = k[:i]
+				}
+				eventStageWins[driverKey] += n
+			}
 		}
 		for rowIdx, row := range rr.Rows {
 			drivers := driversFromRow(rr.Headers, row)
@@ -1134,6 +1197,16 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 				r.races[raceCode] = raceDisplay
 				r.points += racePts
 				r.stages += stagePointsByDriver[key]
+				if stockCarSeriesUsesStagePoints(seriesID) {
+					if r.racePts == nil {
+						r.racePts = make(map[string]float64)
+					}
+					r.racePts[raceCode] = racePts
+					if r.stageWinsByRace == nil {
+						r.stageWinsByRace = make(map[string]int)
+					}
+					r.stageWinsByRace[raceCode] = eventStageWins[key]
+				}
 				if pscGuestCars != nil && pscGuestCars[carNum] {
 					r.guest = true
 				}
@@ -1212,9 +1285,36 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		SplitBaseIneligible(base)
 		return base, nil
 	}
+	var chaseState *ChaseState
+	if cfg, ok := stockCarChaseConfig(seriesID); ok {
+		chaseDrivers := make([]*chaseDriver, 0, len(byDriver))
+		byChaseKey := make(map[string]*chaseDriver, len(byDriver))
+		for key, r := range byDriver {
+			d := &chaseDriver{
+				Key:       key,
+				Name:      r.driver,
+				Eligible:  !strings.Contains(r.driver, "(i)"),
+				RacePts:   r.racePts,
+				Pos:       r.races,
+				StageWins: r.stageWinsByRace,
+				Points:    r.points,
+			}
+			chaseDrivers = append(chaseDrivers, d)
+			byChaseKey[key] = d
+		}
+		chaseState = applyStockCarChase(cfg, raceOrder, completedRaces, chaseDrivers)
+		for key, d := range byChaseKey {
+			if byDriver[key] == nil {
+				continue
+			}
+			byDriver[key].points = d.Points
+			byDriver[key].playoffPts = d.PlayoffPts
+			byDriver[key].chaseStatus = d.Status
+		}
+	}
 	rows := make([]StandingRow, 0, len(byDriver))
 	for _, r := range byDriver {
-		rows = append(rows, StandingRow{
+		row := StandingRow{
 			Car:          r.car,
 			Driver:       preferredDriverName(r.driver),
 			Team:         r.team,
@@ -1222,7 +1322,14 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 			Races:        r.races,
 			Points:       formatPointsValue(r.points),
 			Stages:       itoa(r.stages),
-		})
+		}
+		if r.playoffPts > 0 {
+			row.PlayoffPoints = itoa(r.playoffPts)
+		}
+		if r.chaseStatus != "" {
+			row.ChaseStatus = r.chaseStatus
+		}
+		rows = append(rows, row)
 	}
 	if isStockCarSeries {
 		enrichStockCarStandingRowsCars(dataDir, seriesID, season, rows)
@@ -1316,6 +1423,7 @@ func BuildStandingsFromEvents(dataDir string, seriesID string, season string) (*
 		Rows:           eligible,
 		Teams:          teams,
 		Ineligible:     ineligible,
+		Chase:          chaseState,
 	}, nil
 }
 

@@ -3,12 +3,12 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"image"
-	"image/png"
 	_ "image/gif"
 	_ "image/jpeg"
+	"image/png"
 	_ "image/png"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -18,6 +18,7 @@ import (
 	"time"
 
 	"golang.org/x/image/draw"
+	_ "golang.org/x/image/webp"
 )
 
 var (
@@ -63,40 +64,9 @@ func teamSlug(s string) string {
 	return v
 }
 
-func initialsFromSlug(slug string) string {
-	parts := strings.Split(strings.TrimSpace(slug), "-")
-	out := ""
-	for _, p := range parts {
-		if p == "" {
-			continue
-		}
-		out += strings.ToUpper(string(p[0]))
-		if len(out) >= 3 {
-			break
-		}
-	}
-	if out == "" {
-		return "TM"
-	}
-	return out
-}
-
-func colorFromSlug(slug string) string {
-	h := 0
-	for i := 0; i < len(slug); i++ {
-		h = (h*31 + int(slug[i])) % 360
-	}
-	// Slightly muted, dark-friendly.
-	return fmt.Sprintf("hsl(%d 55%% 42%%)", h)
-}
-
-func writeFallbackTeamLogoSVG(w http.ResponseWriter, slug string) {
-	initials := initialsFromSlug(slug)
-	bg := colorFromSlug(slug)
-	svg := fmt.Sprintf(
-		`<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" rx="14" fill="%s"/><text x="48" y="56" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="700" fill="#ffffff">%s</text></svg>`,
-		bg, initials,
-	)
+func writeFallbackTeamLogoSVG(w http.ResponseWriter, _ string) {
+	// Plain grey plate — no colored initials avatar.
+	svg := `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" rx="14" fill="#3a3a3a"/></svg>`
 	w.Header().Set("Content-Type", "image/svg+xml; charset=utf-8")
 	w.Header().Set("Cache-Control", "public, max-age=86400")
 	_, _ = w.Write([]byte(svg))
@@ -141,18 +111,18 @@ func handleTeamLogo(w http.ResponseWriter, r *http.Request, dataDir string) {
 		writeFallbackTeamLogoSVG(w, slug)
 		return
 	}
-	resp, err := client.Get(safeURL)
-	if err != nil {
-		writeFallbackTeamLogoSVG(w, slug)
-		return
+	raw, status, err := fetchTeamLogoBytes(client, safeURL)
+	if err != nil || status < 200 || status >= 300 || looksLikeHTML(raw) {
+		// One retry — Commons often 429s under burst; second try usually succeeds.
+		time.Sleep(400 * time.Millisecond)
+		raw, status, err = fetchTeamLogoBytes(client, safeURL)
 	}
-	defer func() { _ = resp.Body.Close() }()
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+	if err != nil || status < 200 || status >= 300 || looksLikeHTML(raw) {
 		writeFallbackTeamLogoSVG(w, slug)
 		return
 	}
 
-	src, _, err := image.Decode(resp.Body)
+	src, _, err := image.Decode(bytes.NewReader(raw))
 	if err != nil {
 		writeFallbackTeamLogoSVG(w, slug)
 		return
@@ -200,3 +170,27 @@ func handleTeamLogo(w http.ResponseWriter, r *http.Request, dataDir string) {
 	_, _ = w.Write(out.Bytes())
 }
 
+func fetchTeamLogoBytes(client *http.Client, url string) ([]byte, int, error) {
+	resp, err := client.Get(url)
+	if err != nil {
+		return nil, 0, err
+	}
+	defer func() { _ = resp.Body.Close() }()
+	raw, err := io.ReadAll(io.LimitReader(resp.Body, remoteImageMaxBytes))
+	if err != nil {
+		return nil, resp.StatusCode, err
+	}
+	return raw, resp.StatusCode, nil
+}
+
+func looksLikeHTML(raw []byte) bool {
+	if len(raw) < 15 {
+		return false
+	}
+	n := len(raw)
+	if n > 64 {
+		n = 64
+	}
+	head := strings.ToLower(string(raw[:n]))
+	return strings.Contains(head, "<!doctype html") || strings.Contains(head, "<html")
+}

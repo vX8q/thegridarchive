@@ -66,9 +66,11 @@ test('openwheelSessionTableTitle returns short session name for F2', () => {
   );
 });
 
-test('shouldShowSessionMetaTable false for F2/F3/FREC', () => {
+test('shouldShowSessionMetaTable false for F2/F3/FREC/ELMS', () => {
   assert.strictEqual(TGA.shouldShowSessionMetaTable('F2_2026_6', 'f2'), false);
   assert.strictEqual(TGA.shouldShowSessionMetaTable('F3_2026_5', 'f3'), false);
+  assert.strictEqual(TGA.shouldShowSessionMetaTable('ELMS_2026_4', 'elms'), false);
+  assert.strictEqual(TGA.shouldShowSessionMetaTable('ELMS_2026_PROLOGUE', 'elms'), false);
   assert.strictEqual(TGA.shouldShowSessionMetaTable('INDYCAR_2026_5', 'indycar'), true);
 });
 

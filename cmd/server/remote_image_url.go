@@ -6,12 +6,17 @@ import (
 	"strings"
 )
 
+// remoteImageMaxBytes caps how much of a remote image response is buffered before decoding,
+// so an oversized or endless upstream body cannot exhaust server memory.
+const remoteImageMaxBytes = 20 << 20
+
 // allowedRemoteImageHosts is the explicit host allowlist for server-side image fetches
 // (driver_profiles.json photo_url, team_logos.json URLs).
 var allowedRemoteImageHosts = map[string]struct{}{
-	"a.espncdn.com":          {},
-	"upload.wikimedia.org":   {},
-	"commons.wikimedia.org":  {},
+	"a.espncdn.com":         {},
+	"upload.wikimedia.org":  {},
+	"commons.wikimedia.org": {},
+	"thumb.wikimedia.org":   {},
 }
 
 func allowedRemoteImageURL(raw string) (string, bool) {

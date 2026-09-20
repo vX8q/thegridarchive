@@ -71,6 +71,12 @@ func wecRaceStateFinished(state string) bool {
 	}
 }
 
+// wecSessionIsRace reports whether the ECM session is the race (not FP / Qualifying / Hyperpole).
+// LIVE badge and /live boards only follow Race.
+func wecSessionIsRace(sessionName string) bool {
+	return strings.EqualFold(strings.TrimSpace(sessionName), "Race")
+}
+
 func wecSessionStartTime(params wecLiveParams) time.Time {
 	if params.StartTime <= 0 {
 		return time.Time{}
@@ -81,6 +87,9 @@ func wecSessionStartTime(params wecLiveParams) time.Time {
 
 func wecSessionLooksLive(snap *wecLiveSnapshot, now time.Time) bool {
 	if snap == nil {
+		return false
+	}
+	if !wecSessionIsRace(snap.Params.SessionName) {
 		return false
 	}
 	if snap.Params.Replay {
@@ -123,7 +132,8 @@ func wecGapDisplay(entry wecLiveEntry, position int) string {
 	gap := strings.TrimSpace(entry.Gap)
 	if gap == "" || gap == "-" {
 		if entry.GapTime > 0 {
-			return "+" + formatOpenF1GapSeconds(entry.GapTime)
+			// ECM gapTime is milliseconds.
+			return formatOpenF1GapSeconds(entry.GapTime / 1000.0)
 		}
 		return ""
 	}
@@ -240,7 +250,7 @@ func wecBoardFromSnapshot(snap *wecLiveSnapshot, dataDir string, limit int) (NAS
 			board.EventID = findEventByDate(events, start.Format("2006-01-02"), true)
 		}
 	}
-	if board.EventID != "" && strings.EqualFold(snap.Params.SessionName, "Race") && wecEventHasRaceResults(dataDir, board.EventID) {
+	if board.EventID != "" && wecSessionIsRace(snap.Params.SessionName) && wecEventHasRaceResults(dataDir, board.EventID) {
 		return NASCARLiveBoard{Error: "race results published"}, fmt.Errorf("race results published")
 	}
 	return board, nil

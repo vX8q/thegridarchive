@@ -27,13 +27,13 @@ type nascarCFLiveFeedJSON struct {
 }
 
 type nascarCFVehicle struct {
-	VehicleNumber     string  `json:"vehicle_number"`
-	VehicleManufacturer string `json:"vehicle_manufacturer"`
-	RunningPosition   int     `json:"running_position"`
-	StartingPosition  int     `json:"starting_position"`
-	LapsCompleted     int     `json:"laps_completed"`
-	Delta             float64 `json:"delta"`
-	Driver            nascarCFDriver `json:"driver"`
+	VehicleNumber       string         `json:"vehicle_number"`
+	VehicleManufacturer string         `json:"vehicle_manufacturer"`
+	RunningPosition     int            `json:"running_position"`
+	StartingPosition    int            `json:"starting_position"`
+	LapsCompleted       int            `json:"laps_completed"`
+	Delta               float64        `json:"delta"`
+	Driver              nascarCFDriver `json:"driver"`
 }
 
 type nascarLiveRunningEntry struct {

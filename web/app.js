@@ -94,6 +94,10 @@
       .catch(function () { return {}; })
       .then(function (redirects) {
         window.TGA.driverProfileRedirects = (redirects && typeof redirects === 'object') ? redirects : {};
+        return API.getTeamProfileRedirects ? API.getTeamProfileRedirects().catch(function () { return {}; }) : {};
+      })
+      .then(function (teamRedirects) {
+        window.TGA.teamProfileRedirects = (teamRedirects && typeof teamRedirects === 'object') ? teamRedirects : {};
         return API.getDrivers().catch(function () { return []; });
       })
       .then(function (drivers) {
@@ -120,6 +124,7 @@
       var el = document.getElementById(id);
       if (el) el.classList[id === activeId ? 'remove' : 'add']('hidden');
     });
+    document.documentElement.classList.remove('spa-boot-inner', 'spa-boot-driver');
     if (activeId !== 'view-event') {
       var bodyEl = document.body;
       if (bodyEl) {
@@ -407,23 +412,110 @@
     return extras;
   }
 
-  function ensureSearchIndex() {
-    var SEARCH_INDEX_VERSION = 4;
+  function ensureSearchIndex(opts) {
+    opts = opts || {};
+    var includeTeams = opts.includeTeams !== false;
+    var SEARCH_INDEX_VERSION = 6;
     if (state.searchIndexVersion !== SEARCH_INDEX_VERSION) {
       state.searchIndexVersion = SEARCH_INDEX_VERSION;
       state.searchIndexReady = false;
+      state.searchTeamsReady = false;
       state.searchIndexItems = [];
+      state.searchIndexPromise = null;
     }
-    if (state.searchIndexReady) return Promise.resolve(state.searchIndexItems);
-    if (state.searchIndexLoading) return Promise.resolve(state.searchIndexItems);
+    if (state.searchIndexReady && (!includeTeams || state.searchTeamsReady)) {
+      return Promise.resolve(state.searchIndexItems);
+    }
+    if (state.searchIndexPromise && !includeTeams) return state.searchIndexPromise;
+    if (state.searchIndexPromise && includeTeams && state.searchTeamsPromise) {
+      return state.searchTeamsPromise;
+    }
     state.searchIndexLoading = true;
-    var items = [];
+    var items = state.searchIndexReady ? state.searchIndexItems.slice() : [];
     var dedupe = {};
+    if (state.searchIndexReady) {
+      items.forEach(function (it) {
+        if (it && it.href) dedupe[String(it.kind || '') + '|' + String(it.href || '')] = true;
+      });
+    }
     var driverAggBySlug = {};
     var legalNameBySlug = {};
     var canonicalNameBySlug = {};
     var redirectsMap = {};
-    return API.getDriverProfileRedirects()
+
+    function finishIndex(promise) {
+      return promise
+        .then(function () {
+          state.searchIndexItems = items;
+          state.searchIndexReady = true;
+          if (includeTeams) state.searchTeamsReady = true;
+        })
+        .catch(function () {
+          if (!state.searchIndexReady) state.searchIndexItems = [];
+        })
+        .finally(function () {
+          state.searchIndexLoading = false;
+          if (!state.searchIndexReady) state.searchIndexPromise = null;
+          if (includeTeams) state.searchTeamsPromise = null;
+        })
+        .then(function () { return state.searchIndexItems; });
+    }
+
+    // Teams-only follow-up after a core index is already ready.
+    if (state.searchIndexReady && includeTeams && !state.searchTeamsReady) {
+      state.searchTeamsPromise = finishIndex(
+        API.getSeries()
+          .then(function (seriesList) {
+            if (!Array.isArray(seriesList)) return null;
+            function teamsKey(id) {
+              var s = String(id || '').toLowerCase().trim().replace(/-/g, '_');
+              if (s === 'nascar_xfinity') s = 'noaps';
+              if (!/^f1_\d{4}$/.test(s)) {
+                s = s.replace(/_(\d{4})$/, function (_m, y) {
+                  return (y >= '2000' && y <= '2099') ? '' : '_' + y;
+                });
+              }
+              return s.replace(/_+$/, '');
+            }
+            return (API.getAllSeriesTeams ? API.getAllSeriesTeams() : Promise.resolve({ by_series: {} }))
+              .catch(function () { return { by_series: {} }; })
+              .then(function (allTeams) {
+                var bySeries = (allTeams && allTeams.by_series && typeof allTeams.by_series === 'object')
+                  ? allTeams.by_series
+                  : {};
+                var reqs = seriesList.map(function (series) {
+                  var id = String((series && series.id) || '').trim();
+                  if (!id) return Promise.resolve(null);
+                  var name = String((series && series.name) || id).trim();
+                  var cachedTeams = bySeries[teamsKey(id)];
+                  var teamsP = cachedTeams ? Promise.resolve(cachedTeams) : API.getSeriesTeams(id);
+                  return teamsP.then(function (teamsResp) {
+                    var teamList = (teamsResp && Array.isArray(teamsResp.teams)) ? teamsResp.teams : (Array.isArray(teamsResp) ? teamsResp : []);
+                    teamList.forEach(function (row) {
+                      if (!row || typeof row !== 'object') return;
+                      var teamName = String(row.team || '').trim();
+                      var manufacturer = String(row.manufacturer || '').trim();
+                      if (teamName) {
+                        var teamMeta = {
+                          base: row.base || row.hq || row.headquarters || row.location || '',
+                          licence: row.licence || row.license || row.nationality || '',
+                          age: teamAgeFromMeta(row)
+                        };
+                        pushSearchItem(items, dedupe, normalizeDisplayTeamName(teamName), 'team', (window.TGA.teamHref ? window.TGA.teamHref(teamName) : ('/team/' + encodeURIComponent(slugify(teamName)))), seriesSearchExtra(id, name + ' ' + manufacturer), name, id, teamName, name, teamMeta);
+                      }
+                    });
+                  }).catch(function () { return null; });
+                });
+                return Promise.all(reqs);
+              });
+          })
+          .catch(function () { return null; })
+      );
+      return state.searchTeamsPromise;
+    }
+
+    state.searchIndexPromise = finishIndex(
+      API.getDriverProfileRedirects()
       .catch(function () { return {}; })
       .then(function (redirects) {
         window.TGA = window.TGA || {};
@@ -458,7 +550,26 @@
         return API.getSeries()
           .then(function (seriesList) {
             if (!Array.isArray(seriesList)) return primaryBySlug;
-            var reqs = seriesList.map(function (series) {
+            function teamsKey(id) {
+              var s = String(id || '').toLowerCase().trim().replace(/-/g, '_');
+              if (s === 'nascar_xfinity') s = 'noaps';
+              if (!/^f1_\d{4}$/.test(s)) {
+                s = s.replace(/_(\d{4})$/, function (_m, y) {
+                  return (y >= '2000' && y <= '2099') ? '' : '_' + y;
+                });
+              }
+              return s.replace(/_+$/, '');
+            }
+            var teamsLoader = includeTeams
+              ? (API.getAllSeriesTeams ? API.getAllSeriesTeams() : Promise.resolve({ by_series: {} }))
+              : Promise.resolve({ by_series: {} });
+            return teamsLoader
+              .catch(function () { return { by_series: {} }; })
+              .then(function (allTeams) {
+                var bySeries = (allTeams && allTeams.by_series && typeof allTeams.by_series === 'object')
+                  ? allTeams.by_series
+                  : {};
+                var reqs = seriesList.map(function (series) {
               var id = String((series && series.id) || '').trim();
               if (!id) return Promise.resolve(null);
               var name = String((series && series.name) || id).trim();
@@ -468,7 +579,12 @@
               if (season && name) {
                 pushSearchItem(items, dedupe, name + ' ' + season, 'Season', '/series/' + encodeURIComponent(slug), seriesSearchExtra(id, id + ' ' + name), '', id, name, name, null);
               }
-              return API.getSeriesTeams(id)
+              if (!includeTeams) return Promise.resolve(null);
+              var cachedTeams = bySeries[teamsKey(id)];
+              var teamsP = cachedTeams
+                ? Promise.resolve(cachedTeams)
+                : API.getSeriesTeams(id);
+              return teamsP
                 .then(function (teamsResp) {
                   var teamList = (teamsResp && Array.isArray(teamsResp.teams)) ? teamsResp.teams : (Array.isArray(teamsResp) ? teamsResp : []);
                   teamList.forEach(function (row) {
@@ -481,7 +597,7 @@
                         licence: row.licence || row.license || row.nationality || '',
                         age: teamAgeFromMeta(row)
                       };
-                      pushSearchItem(items, dedupe, normalizeDisplayTeamName(teamName), 'team', '/team/' + encodeURIComponent(slugify(teamName)), seriesSearchExtra(id, name + ' ' + manufacturer), name, id, teamName, name, teamMeta);
+                      pushSearchItem(items, dedupe, normalizeDisplayTeamName(teamName), 'team', (window.TGA.teamHref ? window.TGA.teamHref(teamName) : ('/team/' + encodeURIComponent(slugify(teamName)))), seriesSearchExtra(id, name + ' ' + manufacturer), name, id, teamName, name, teamMeta);
                     }
                     var drivers = [];
                     if (Array.isArray(row.drivers)) {
@@ -503,7 +619,6 @@
                       if (!driverName || /^(?:tba|tbc|tbd)$/i.test(driverName)) return;
                       var dSlug = slugify(driverName);
                       if (!dSlug) return;
-                      // Prefer canonical profile display name over short/alias forms.
                       if (canonicalNameBySlug[dSlug]) {
                         driverName = canonicalNameBySlug[dSlug];
                       }
@@ -545,14 +660,18 @@
                     }
                     var teamPrincipalName = String(row.team_principal || row.teamPrincipal || row.principal || '').trim();
                     if (teamPrincipalName) {
-                      var principalHref = teamName ? '/team/' + encodeURIComponent(slugify(teamName)) : '/';
+                      var principalHref = teamName ? (window.TGA.teamHref ? window.TGA.teamHref(teamName) : ('/team/' + encodeURIComponent(slugify(teamName)))) : '/';
                       pushSearchItem(items, dedupe, teamPrincipalName, 'team_principal', principalHref, name + ' ' + teamName, teamName || name, id, teamName, name, null);
                     }
                   });
                 })
                 .catch(function () { return null; });
             });
-            return Promise.all(reqs).then(function () { return primaryBySlug; });
+            return Promise.all(reqs).then(function () {
+              if (includeTeams) state.searchTeamsReady = true;
+              return primaryBySlug;
+            });
+              });
           });
       })
       .then(function (primaryBySlug) {
@@ -597,7 +716,6 @@
               var driverTitleEn = driverName;
               var driverTitleRu = driverSearchTitleRu(driverName);
               if (driverAggBySlug[dSlug]) {
-                // Already indexed from teams — keep series/team, just ensure canonical title.
                 return;
               }
               var searchExtra = [String(d.search_extra || '').trim()]
@@ -622,17 +740,8 @@
           })
           .catch(function () { return null; });
       })
-      .then(function () {
-        state.searchIndexItems = items;
-        state.searchIndexReady = true;
-      })
-      .catch(function () {
-        state.searchIndexItems = [];
-      })
-      .finally(function () {
-        state.searchIndexLoading = false;
-      })
-      .then(function () { return state.searchIndexItems; });
+    );
+    return state.searchIndexPromise;
   }
 
   function initHeaderSearch() {
@@ -654,7 +763,8 @@
       popover.classList.remove('hidden');
       toggle.setAttribute('aria-expanded', 'true');
       input.focus();
-      ensureSearchIndex().then(function () {
+      // Core index first (championships + drivers); teams load when the user types.
+      ensureSearchIndex({ includeTeams: false }).then(function () {
         if (!input.value.trim()) results.innerHTML = '';
       });
     }
@@ -678,6 +788,9 @@
       else closeSearch();
     });
     input.addEventListener('input', function () {
+      if (String(input.value || '').trim()) {
+        ensureSearchIndex({ includeTeams: true });
+      }
       renderSearchResults(input.value);
     });
     input.addEventListener('keydown', function (e) {
@@ -698,6 +811,22 @@
       if (!a) return;
       closeSearch();
       input.value = '';
+    });
+
+    function isTypingTarget(el) {
+      if (!el) return false;
+      if (el.isContentEditable) return true;
+      var tag = (el.nodeName || '').toLowerCase();
+      return tag === 'input' || tag === 'textarea' || tag === 'select';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || isTypingTarget(e.target)) return;
+      var modK = (e.key === 'k' || e.key === 'K') && (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey;
+      var slash = e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey;
+      if (!modK && !slash) return;
+      e.preventDefault();
+      openSearch();
     });
   }
 
@@ -833,7 +962,7 @@
           list.forEach(function (item) {
             var meta = item.meta || {};
             var teamSlugFromHref = decodeURIComponent((item.href || '').replace(/^\/team\//, ''));
-            var teamLogoURL = '/api/team-logo/' + encodeURIComponent(teamSlugFromHref) + '?_=team-logo-v1';
+            var teamLogoURL = '/api/team-logo/' + encodeURIComponent(teamSlugFromHref) + '?_=team-logo-v2';
             html += '<tr>' +
               '<td><a class="search-page-link search-team-link" href="' + item.href + '"><img class="search-team-logo" src="' + esc(teamLogoURL) + '" alt="" loading="lazy" decoding="async"><span class="search-page-title">' + esc(searchItemTitle(item)) + '</span></a></td>' +
               '<td>' + esc(localizeSeriesName(item.seriesName, item.seriesID) || '—') + '</td>' +
@@ -896,7 +1025,7 @@
       translateStaticUI();
     }
 
-    ensureSearchIndex().then(function () {
+    ensureSearchIndex({ includeTeams: true }).then(function () {
       var qNorm = normalizeSearchText(q);
       var matches = state.searchIndexItems
         .filter(function (item) { return searchItemHaystack(item).indexOf(qNorm) !== -1; })
@@ -1078,7 +1207,32 @@
     'oswego-speedway-oswego-new-york-usa': '/web/images/Oswego-Speedway.jpg',
     'duquoin-state-fairgrounds-racetrack': '/web/images/DuQuoin-State-Fairgrounds-Racetrack.jpg',
     'duquoin-state-fairgrounds-racetrack-du-quoin-illinois': '/web/images/DuQuoin-State-Fairgrounds-Racetrack.jpg',
-    'duquoin-state-fairgrounds-racetrack-du-quoin-illinois-usa': '/web/images/DuQuoin-State-Fairgrounds-Racetrack.jpg'
+    'duquoin-state-fairgrounds-racetrack-du-quoin-illinois-usa': '/web/images/DuQuoin-State-Fairgrounds-Racetrack.jpg',
+    'madison-international-speedway': '/web/images/Madison-International-Speedway.webp',
+    'madison-international-speedway-rutland-wisconsin': '/web/images/Madison-International-Speedway.webp',
+    'madison-international-speedway-rutland-wisconsin-usa': '/web/images/Madison-International-Speedway.webp',
+    'stafford-motor-speedway': '/web/images/Stafford-Motor-Speedway.jpg',
+    'stafford-motor-speedway-stafford-connecticut': '/web/images/Stafford-Motor-Speedway.jpg',
+    'stafford-motor-speedway-stafford-connecticut-usa': '/web/images/Stafford-Motor-Speedway.jpg',
+    'hockenheimring': '/web/images/Hockenheimring.jpg',
+    'hockenheimring-hockenheim': '/web/images/Hockenheimring.jpg',
+    'hockenheimring-hockenheim-baden-wurttemberg': '/web/images/Hockenheimring.jpg',
+    'hockenheimring-hockenheim-baden-wurttemberg-germany': '/web/images/Hockenheimring.jpg',
+    'sachsenring': '/web/images/Sachsenring.jpg',
+    'sachsenring-hohenstein-ernstthal': '/web/images/Sachsenring.jpg',
+    'sachsenring-hohenstein-ernstthal-saxony': '/web/images/Sachsenring.jpg',
+    'sachsenring-hohenstein-ernstthal-saxony-germany': '/web/images/Sachsenring.jpg',
+    'sachsenring-hohenstein-ernstthal-germany': '/web/images/Sachsenring.jpg',
+    'madrid-circuit': '/web/images/madrid-circuit.jpg',
+    'madrid-circuit-madrid': '/web/images/madrid-circuit.jpg',
+    'madrid-circuit-madrid-spain': '/web/images/madrid-circuit.jpg',
+    'salem-speedway': '/web/images/Salem-Speedway.jpg',
+    'salem-speedway-salem-indiana': '/web/images/Salem-Speedway.jpg',
+    'salem-speedway-salem-indiana-usa': '/web/images/Salem-Speedway.jpg',
+    'the-bend-motorsport-park': '/web/images/The-Bend-Motorsport-Park.jpg',
+    'the-bend-motorsport-park-tailem-bend': '/web/images/The-Bend-Motorsport-Park.jpg',
+    'the-bend-motorsport-park-tailem-bend-south-australia': '/web/images/The-Bend-Motorsport-Park.jpg',
+    'the-bend-motorsport-park-tailem-bend-south-australia-australia': '/web/images/The-Bend-Motorsport-Park.jpg'
   };
 
   function renderTrackDetail(slug) {
@@ -1449,121 +1603,9 @@
 
         if (!driverDetailIsCurrent(reqToken)) return;
         var contentEl = document.getElementById('driver-content');
-        var results = data.season_results;
-        var season = data.season || '';
-        if (Array.isArray(results) && results.length > 0) {
-          var hasRaceName = results.some(function (r) {
-            return r && r.race_name && String(r.race_name).trim() !== '';
-          });
-          // For F1: if sprint exists within same event_id, Feature must
-          // be the second row. Otherwise do not show "Feature".
-          var hasSprintByEvent = {};
-          results.forEach(function (r) {
-            if (!r) return;
-            var seriesIdUpper = String(r.series_id || '').toUpperCase();
-            if (seriesIdUpper !== 'F1') return;
-            var raw = (r.race_name || '').toString();
-            if (/sprint/i.test(raw)) {
-              hasSprintByEvent[r.event_id] = true;
-            }
-          });
-          var localizeSeriesName = (window.TGA && window.TGA.localizeSeriesName) || function (n, id) { return (n || id || '—'); };
-          var localizeEventName = (window.TGA && window.TGA.localizeEventName) || function (n) { return n || '—'; };
-          var localizeDriverRaceLabel = (window.TGA && window.TGA.localizeDriverRaceLabel) || function (n) { return n || ''; };
-          var localizeDriverStatus = (window.TGA && window.TGA.localizeDriverStatus) || function (n) { return n || ''; };
-          var tableRows = results.map(function (row) {
-            var seriesLabel = esc(localizeSeriesName(row.series_name, row.series_id));
-            var eventDisplay = localizeEventName(row.event_name && row.event_name.trim() ? row.event_name : '');
-            var eventName = eventDisplay ? esc(eventDisplay) : (row.event_id || '—');
-            var eventHref = (row.event_id) ? '/event/' + encodeURIComponent((row.event_id + '').toLowerCase().replace(/_/g, '-')) : '#';
-            var eventCell = eventHref !== '#' ? '<a href="' + eventHref + '" class="event-link">' + eventName + '</a>' : eventName;
-            var raceCell = '';
-            if (hasRaceName) {
-              var raceLabel = '';
-              var rawRaceName = (row.race_name || '').trim();
-              if (rawRaceName) {
-                var seriesIdUpper = String(row.series_id || '').toUpperCase();
-                if (seriesIdUpper === 'F1') {
-                  // For F1 want short label: "Sprint" instead of "Sprint Results",
-                  // main race may stay unlabeled.
-                  if (/sprint/i.test(rawRaceName)) {
-                    raceLabel = localizeDriverRaceLabel('Sprint');
-                  } else {
-                    // Show Feature only if sprint exists in same event_id.
-                    raceLabel = hasSprintByEvent[row.event_id] ? localizeDriverRaceLabel('Feature') : '';
-                  }
-                } else {
-                  raceLabel = localizeDriverRaceLabel(rawRaceName);
-                }
-              }
-              raceCell = '<td>' + esc(raceLabel) + '</td>';
-            }
-            return '<tr data-series-id="' + esc(row.series_id || '') + '" data-event-id="' + esc(row.event_id || '') + '">' +
-              '<td>' + seriesLabel + '</td>' +
-              '<td>' + eventCell + '</td>' +
-              raceCell +
-              '<td class="col-num">' + (row.position != null ? row.position : '—') + '</td>' +
-              '<td class="col-num">' + (row.points != null ? row.points : '—') + '</td>' +
-              (row.car_number ? '<td class="col-num">' + esc(row.car_number) + '</td>' : '') +
-              '<td>' + (row.laps != null ? row.laps : '') + '</td>' +
-              (row.status ? '<td>' + esc(localizeDriverStatus(row.status)) + '</td>' : '') +
-              '</tr>';
-          });
-          var carHeader = results.some(function (r) { return r.car_number; }) ? '<th class="col-num">' + t('th.no') + '</th>' : '';
-          var statusHeader = results.some(function (r) { return r.status; }) ? '<th>' + t('th.status') + '</th>' : '';
-          contentEl.innerHTML =
-            '<h4 class="table-section-title">' + esc(t('driver.season_results')) + (season ? ' ' + esc(season) : '') + '</h4>' +
-            '<div class="table-wrap"><table class="data-table">' +
-            '<thead><tr>' +
-            '<th>' + (t('home.series_col') || 'Series') + '</th>' +
-            '<th>' + t('th.event') + '</th>' +
-            (hasRaceName ? '<th>' + t('th.race_col') + '</th>' : '') +
-            '<th class="col-num">' + t('th.pos') + '</th>' +
-            '<th class="col-num">' + t('th.pts') + '</th>' +
-            carHeader +
-            '<th>' + t('section.laps') + '</th>' +
-            statusHeader +
-            '</tr></thead><tbody>' + tableRows.join('') + '</tbody></table></div>';
-
-          // Merge repeated cells in Series/Event columns
-          // for consecutive rows with same event_id.
-          var tableEl = contentEl.querySelector('table.data-table');
-          if (tableEl && tableEl.tBodies && tableEl.tBodies.length) {
-            var tbody = tableEl.tBodies[0];
-            var rows = Array.prototype.slice.call(tbody.rows || []);
-            if (rows.length > 1) {
-              // Columns: 0 = Series, 1 = Event
-              function mergeByKey(colIndex, keyFn) {
-                var i = 0;
-                while (i < rows.length) {
-                  var key = keyFn(rows[i]);
-                  var start = i;
-                  var end = i + 1;
-                  while (end < rows.length && keyFn(rows[end]) === key) {
-                    end++;
-                  }
-                  var span = end - start;
-                  if (span > 1 && rows[start].cells[colIndex]) {
-                    rows[start].cells[colIndex].rowSpan = span;
-                    // hide duplicate cells on lower rows
-                    for (var k = start + 1; k < end; k++) {
-                      if (rows[k].cells[colIndex]) rows[k].cells[colIndex].style.display = 'none';
-                    }
-                  }
-                  i = end;
-                }
-              }
-
-              mergeByKey(0, function (tr) {
-                // Series must merge only within one event
-                return (tr.getAttribute('data-series-id') || '') + '|' + (tr.getAttribute('data-event-id') || '');
-              });
-              mergeByKey(1, function (tr) {
-                return tr.getAttribute('data-event-id') || '';
-              });
-            }
-          }
-        } else {
+        if (contentEl && typeof window.TGA.renderDriverCareer === 'function') {
+          window.TGA.renderDriverCareer(contentEl, data);
+        } else if (contentEl) {
           contentEl.innerHTML = '<p class="empty-msg">' + t('driver.no_season_results') + '</p>';
         }
       })
@@ -1575,9 +1617,237 @@
       });
     state.loadedSeriesId = null;
   }
-  function renderTeamDetail(slug) {
-    renderEntityPage('team', slug, t('coming_soon.team'));
+  function teamSeriesMetaParts(data) {
+    var localize = localizeSeriesName || function (n, id) { return (n || id || '').trim(); };
+    var byId = {};
+    function put(id, name) {
+      var key = String(id || '').toLowerCase().trim();
+      if (!key) return;
+      var label = String(name || '').trim();
+      if (label) byId[key] = label;
+    }
+    if (Array.isArray(data && data.series)) {
+      data.series.forEach(function (s) {
+        if (s) put(s.id, s.name);
+      });
+    }
+    [data && data.career_results, data && data.career_roster, data && data.season_results, data && data.season_roster]
+      .forEach(function (rows) {
+        if (!Array.isArray(rows)) return;
+        rows.forEach(function (r) {
+          if (r) put(r.series_id, r.series_name);
+        });
+      });
+    var ids = Array.isArray(data && data.series_ids) ? data.series_ids : [];
+    return ids.map(function (id) {
+      var key = String(id || '').toLowerCase().trim();
+      var name = byId[key] || id;
+      return { id: id, name: localize(name, id) };
+    }).filter(function (x) { return x && x.name; });
   }
+
+  function teamSeriesMetaLabel(data) {
+    return teamSeriesMetaParts(data).map(function (x) { return x.name; }).join(', ');
+  }
+
+  function teamDetailLogoPlaceholderSrc() {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" rx="14" fill="#2a2a2e"/></svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  function setTeamLogoPlaceholderState(isPlaceholder) {
+    var wrap = document.getElementById('team-logo-wrap');
+    var hint = document.getElementById('team-logo-hint');
+    if (wrap) {
+      if (isPlaceholder) wrap.classList.add('team-logo-wrap--placeholder');
+      else wrap.classList.remove('team-logo-wrap--placeholder');
+    }
+    if (hint) {
+      if (isPlaceholder) {
+        hint.hidden = false;
+        hint.textContent = t('team.no_logo') || 'No logo';
+      } else {
+        hint.hidden = true;
+        hint.textContent = '';
+      }
+    }
+  }
+
+  function teamDriverHref(name) {
+    var raw = name != null ? String(name).trim() : '';
+    if (!raw) return '';
+    var first = raw.split(',')[0].trim();
+    if (!first) return '';
+    if (!slugify) return '';
+    return '/driver/' + encodeURIComponent(slugify(first));
+  }
+
+  function buildTeamHeaderMetaHtml(data) {
+    var rows = [];
+    var canonName = data.canonical_name ? String(data.canonical_name).trim() : '';
+    var displayName = data.display_name ? String(data.display_name).trim() : '';
+    if (canonName && displayName && canonName !== displayName) {
+      rows.push(
+        '<div class="team-meta-row team-meta-row--aka">' +
+        '<span class="team-meta-value">' + esc(canonName) + '</span>' +
+        '</div>'
+      );
+    }
+    function pushRow(labelKey, value, fallbackLabel) {
+      var v = value != null ? String(value).trim() : '';
+      if (!v) return;
+      rows.push(
+        '<div class="team-meta-row">' +
+        '<span class="team-meta-label">' + esc(t(labelKey) || fallbackLabel) + '</span>' +
+        '<span class="team-meta-value">' + esc(v) + '</span>' +
+        '</div>'
+      );
+    }
+    pushRow('team.founded', data.founded, 'Founded');
+    pushRow('team.headquarters', data.headquarters, 'Headquarters');
+    var lineageVal = data.lineage != null ? String(data.lineage).trim() : '';
+    if (lineageVal) {
+      rows.push(
+        '<div class="team-meta-row team-meta-row--lineage">' +
+        '<span class="team-meta-label">' + esc(t('team.lineage') || 'Lineage') + '</span>' +
+        '<span class="team-meta-value">' + esc(lineageVal) + '</span>' +
+        '</div>'
+      );
+    }
+    // Trust signal: skip placeholder owner that just repeats the team name.
+    var ownerVal = data.owner != null ? String(data.owner).trim() : '';
+    if (ownerVal && ownerVal !== canonName && ownerVal !== displayName) {
+      pushRow('team.owner', ownerVal, 'Owner');
+    }
+    pushRow('team.president', data.president, 'President');
+    pushRow('team.team_principal', data.team_principal, 'Team principal');
+
+    var season = String((data && data.season) || '').trim();
+    var activeSeries = {};
+    var rosterForActive = Array.isArray(data && data.season_roster) ? data.season_roster : [];
+    if (!rosterForActive.length && Array.isArray(data && data.career_roster) && season) {
+      rosterForActive = data.career_roster.filter(function (r) {
+        return r && String(r.season || '').trim() === season;
+      });
+    }
+    rosterForActive.forEach(function (r) {
+      if (r && r.series_id) activeSeries[String(r.series_id).toLowerCase()] = true;
+    });
+    if (!Object.keys(activeSeries).length && Array.isArray(data && data.series_ids)) {
+      data.series_ids.forEach(function (id) {
+        activeSeries[String(id || '').toLowerCase()] = true;
+      });
+    }
+
+    var seriesParts = teamSeriesMetaParts(data);
+    if (seriesParts.length) {
+      rows.push(
+        '<div class="team-meta-row team-meta-row--series">' +
+        '<span class="team-meta-label">' + esc(t('team.championships') || 'Championships') + '</span>' +
+        '<span class="team-meta-value team-meta-series">' +
+        seriesParts.map(function (part) {
+          var active = activeSeries[String(part.id || '').toLowerCase()] ? ' is-active' : '';
+          return '<span class="team-meta-chip' + active + '">' + esc(part.name) + '</span>';
+        }).join('') +
+        '</span>' +
+        '</div>'
+      );
+    }
+
+    if (!rows.length) return '';
+    return '<div class="team-meta-list">' + rows.join('') + '</div>';
+  }
+
+  function renderTeamDetail(slug) {
+    showView('view-team');
+    var breadcrumb = document.getElementById('team-breadcrumb');
+    var titleEl = document.getElementById('team-title');
+    var metaEl = document.getElementById('team-meta');
+    var contentEl = document.getElementById('team-content');
+    var logoEl = document.getElementById('team-logo');
+    if (breadcrumb) {
+      breadcrumb.innerHTML =
+        '<a class="team-breadcrumb-link" href="/">' + esc(t('breadcrumb.all')) + '</a>' +
+        '<span class="breadcrumb-sep">/</span>' +
+        '<span class="team-breadcrumb-current">' + esc(t('nav.team') || 'Team') + '</span>';
+    }
+    if (titleEl) titleEl.textContent = '…';
+    if (metaEl) metaEl.innerHTML = '';
+    if (contentEl) contentEl.innerHTML = '<p class="empty-msg">' + esc(t('loading') || 'Loading…') + '</p>';
+    if (logoEl) {
+      logoEl.onerror = null;
+      logoEl.onload = null;
+      logoEl.src = teamDetailLogoPlaceholderSrc();
+      logoEl.alt = '';
+    }
+    setTeamLogoPlaceholderState(true);
+
+    var loadPage = (window.TGA.ensureTeamPageAssets || function () { return Promise.resolve(); });
+    loadPage()
+      .then(function () {
+        return API.getTeam(slug);
+      })
+      .then(function (data) {
+        if (!data || !data.canonical_slug) {
+          if (titleEl) titleEl.textContent = decodeURIComponent(slug || '');
+          if (contentEl) contentEl.innerHTML = '<p class="empty-msg">' + esc(t('coming_soon.team')) + '</p>';
+          return;
+        }
+        var canonicalSlug = String(data.canonical_slug || '').trim();
+        if (canonicalSlug && canonicalSlug !== slug) {
+          var canonPath = '/team/' + encodeURIComponent(canonicalSlug);
+          if (window.location.pathname !== canonPath) {
+            history.replaceState(null, '', canonPath);
+            renderTeamDetail(canonicalSlug);
+            return;
+          }
+        }
+        var display = data.display_name || data.canonical_name || data.canonical_slug;
+        if (titleEl) titleEl.textContent = display;
+        if (breadcrumb) {
+          breadcrumb.innerHTML =
+            '<a class="team-breadcrumb-link" href="/">' + esc(t('breadcrumb.all')) + '</a>' +
+            '<span class="breadcrumb-sep">/</span>' +
+            '<span class="team-breadcrumb-current">' + esc(display) + '</span>';
+        }
+        if (metaEl) metaEl.innerHTML = buildTeamHeaderMetaHtml(data);
+        document.title = (window.TGA.documentTitle || function (m) { return m + ' — The Grid Archive (TGA)'; })(display);
+        if (logoEl) {
+          var hasLogo = !!data.has_logo;
+          if (!hasLogo) {
+            logoEl.onerror = null;
+            logoEl.onload = null;
+            logoEl.src = teamDetailLogoPlaceholderSrc();
+            logoEl.alt = display;
+            setTeamLogoPlaceholderState(true);
+          } else {
+            var logoURL = (data.logo_url && String(data.logo_url).trim())
+              ? String(data.logo_url).trim()
+              : ('/api/team-logo/' + encodeURIComponent(canonicalSlug));
+            setTeamLogoPlaceholderState(false);
+            logoEl.onerror = function () {
+              logoEl.onerror = null;
+              logoEl.src = teamDetailLogoPlaceholderSrc();
+              setTeamLogoPlaceholderState(true);
+            };
+            logoEl.src = logoURL + (logoURL.indexOf('?') >= 0 ? '&' : '?') + '_=team-logo-v3';
+            logoEl.alt = display;
+          }
+        }
+        if (contentEl && typeof window.TGA.renderTeamCareer === 'function') {
+          window.TGA.renderTeamCareer(contentEl, data);
+        } else if (contentEl) {
+          contentEl.innerHTML = '';
+        }
+      })
+      .catch(function () {
+        if (titleEl) titleEl.textContent = decodeURIComponent(slug || '');
+        if (contentEl) {
+          contentEl.innerHTML = '<p class="empty-msg">' + esc(t('error.load_failed') || 'Failed to load.') + '</p>';
+        }
+      });
+  }
+
   function renderCrewChiefDetail(slug) {
     renderEntityPage('crew-chief', slug, t('coming_soon.crew_chief'));
   }
@@ -1724,6 +1994,7 @@
   window.TGA.renderTrackDetail = renderTrackDetail;
   window.TGA.renderDriverDetail = renderDriverDetail;
   window.TGA.renderTeamDetail = renderTeamDetail;
+  window.TGA.buildTeamHeaderMetaHtml = buildTeamHeaderMetaHtml;
   window.TGA.renderCrewChiefDetail = renderCrewChiefDetail;
   window.TGA.renderFeedbackPage = renderFeedbackPage;
 
@@ -1735,6 +2006,9 @@
 
   initHeaderSearch();
   if (window.TGA.initRouter) window.TGA.initRouter();
-
+  var bootPath = String(window.location.pathname || '/').replace(/\/+$/, '') || '/';
+  if ((bootPath === '/' || bootPath === '/live') && String(window.location.search || '').indexOf('full_schedule=1') === -1) {
+    if (typeof window.TGA.prefetchPageAssets === 'function') window.TGA.prefetchPageAssets();
+  }
 
 })();

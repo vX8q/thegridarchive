@@ -60,4 +60,3 @@ func BenchmarkBuildStandingsFromEvents(b *testing.B) {
 		})
 	}
 }
-

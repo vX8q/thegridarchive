@@ -38,7 +38,7 @@ func statsRaceResultTables(tables map[string]EventTable) []statsResultTable {
 		if len(session.Headers) == 0 || len(session.Rows) == 0 {
 			continue
 		}
-		out = append(out, statsResultTable(session))
+		out = append(out, statsResultTable{Title: session.Title, Headers: session.Headers, Rows: session.Rows})
 	}
 	return out
 }
@@ -361,6 +361,12 @@ func statsQualStartByCar(seriesID string, tables map[string]EventTable, resultTa
 			sessions = []RaceSession{{Title: q.Title, Headers: q.Headers, Rows: q.Rows}}
 		}
 	}
+	// Super GT: one race, two class knockout tables (or legacy Q1+Q2 sessions).
+	// Pole is Q2 P1 per class — union all class grids by car; Q2 overwrites Q1.
+	if strings.EqualFold(seriesID, "SUPER_GT") && len(sessions) > 0 && len(resultTables) > 0 {
+		out[0] = statsSuperGTQualStartByCar(sessions)
+		return out
+	}
 	for i := range resultTables {
 		srcIdx := statsQualSessionIndex(seriesID, sessions, resultTables, i)
 		if srcIdx < 0 || srcIdx >= len(sessions) {
@@ -394,6 +400,47 @@ func statsQualStartByCar(seriesID string, tables map[string]EventTable, resultTa
 		out[i] = m
 	}
 	return out
+}
+
+func statsQualSessionIsSuperGTQ2(s RaceSession) bool {
+	if firstColIndex(s.Headers, "Q2") >= 0 {
+		return true
+	}
+	t := strings.ToLower(strings.TrimSpace(s.Title))
+	return strings.Contains(t, "qualifying 2") || t == "q2"
+}
+
+func statsSuperGTQualStartByCar(sessions []RaceSession) map[string]int {
+	m := make(map[string]int)
+	for _, s := range sessions {
+		posCol := statsPosColIndex(s.Headers)
+		if posCol < 0 {
+			posCol = firstColIndex(s.Headers, "Pos", "Position")
+		}
+		noCol := firstColIndex(s.Headers, "No", "No.", "#", "Car No", "CAR NO", "Car")
+		if posCol < 0 || noCol < 0 {
+			continue
+		}
+		overwrite := statsQualSessionIsSuperGTQ2(s)
+		for _, row := range s.Rows {
+			pos := atoiSafe(normalizeStatsRacePos(valueAt(row, posCol)))
+			if pos <= 0 {
+				continue
+			}
+			car := valueAt(row, noCol)
+			if car == "" {
+				continue
+			}
+			if overwrite {
+				m[car] = pos
+				continue
+			}
+			if _, exists := m[car]; !exists {
+				m[car] = pos
+			}
+		}
+	}
+	return m
 }
 
 // statsClassifiedFinishPos returns a numeric finishing position only for classified results.
@@ -1235,17 +1282,17 @@ func buildSupercarsDriverStatsFromJSON(dataDir string, season string) (*DriverSt
 			avgStart = a.sumStart / float64(a.posDiffCount)
 		}
 		rows = append(rows, DriverStatsRow{
-			Driver:           a.driver,
-			Team:             a.team,
-			Manufacturer:     a.engine,
-			Car:              a.car,
-			Races:            a.races,
-			Wins:             a.wins,
-			Top5:             a.top5,
-			Top10:            a.top10,
-			AvgStart:         roundTo(avgStart, 2),
-			QualAppearances:  a.posDiffCount,
-			AvgFinish:        roundTo(avgFinish, 2),
+			Driver:          a.driver,
+			Team:            a.team,
+			Manufacturer:    a.engine,
+			Car:             a.car,
+			Races:           a.races,
+			Wins:            a.wins,
+			Top5:            a.top5,
+			Top10:           a.top10,
+			AvgStart:        roundTo(avgStart, 2),
+			QualAppearances: a.posDiffCount,
+			AvgFinish:       roundTo(avgFinish, 2),
 		})
 	}
 	// Merge duplicates: one driver may be spelled differently across events (Matthew Payne / Matt Payne).
@@ -1308,91 +1355,6 @@ func mergeSupercarsStatsRowsByCar(rows []DriverStatsRow) []DriverStatsRow {
 	return out
 }
 
-// MergeSupercarsDriverStatsRows normalizes 800→8 and merges one driver's rows (for DB data).
-// Group by (canonicalDriverKey(driver), car) to collapse duplicates with different name spellings.
-func MergeSupercarsDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
-	if len(rows) == 0 {
-		return rows
-	}
-	type key struct {
-		driver string
-		car    string
-	}
-	merged := make(map[key]*DriverStatsRow)
-	var order []key
-	for i := range rows {
-		r := &rows[i]
-		car := SupercarsCarToCanonical(strings.TrimSpace(r.Car))
-		canonDriver := canonicalDriverKey(strings.TrimSpace(r.Driver))
-		k := key{driver: canonDriver, car: car}
-		if existing, ok := merged[k]; ok {
-			prevRaces := existing.Races
-			totalRaces := prevRaces + r.Races
-			if totalRaces == 0 {
-				continue
-			}
-			existing.Races = totalRaces
-			existing.Wins += r.Wins
-			existing.Points += r.Points
-			existing.Poles += r.Poles
-			existing.Top2 += r.Top2
-			existing.Top3 += r.Top3
-			existing.Podiums += r.Podiums
-			existing.Top5 += r.Top5
-			existing.Top10 += r.Top10
-			existing.Top15 += r.Top15
-			existing.Top20 += r.Top20
-			existing.StageWins += r.StageWins
-			existing.StagePoints += r.StagePoints
-			existing.FastestLaps += r.FastestLaps
-			existing.DNFs += r.DNFs
-			existing.SprintWins += r.SprintWins
-			existing.SprintPodiums += r.SprintPodiums
-			existing.FeatureWins += r.FeatureWins
-			existing.FeaturePodiums += r.FeaturePodiums
-			existing.LapsLed += r.LapsLed
-			// Weighted averages by races
-			existing.AvgFinish = (existing.AvgFinish*float64(prevRaces) + r.AvgFinish*float64(r.Races)) / float64(totalRaces)
-			existing.AvgStart = (existing.AvgStart*float64(prevRaces) + r.AvgStart*float64(r.Races)) / float64(totalRaces)
-			existing.LapsCompletedPct = (existing.LapsCompletedPct*float64(prevRaces) + r.LapsCompletedPct*float64(r.Races)) / float64(totalRaces)
-			existing.PositionDiff = (existing.PositionDiff*float64(prevRaces) + r.PositionDiff*float64(r.Races)) / float64(totalRaces)
-			if totalRaces > 0 {
-				existing.AvgStagePoints = float64(existing.StagePoints) / float64(totalRaces)
-			}
-			if r.Team != "" {
-				existing.Team = r.Team
-			}
-			if r.Manufacturer != "" {
-				existing.Manufacturer = r.Manufacturer
-			}
-			if r.Class != "" {
-				existing.Class = r.Class
-			}
-			// Keep display name from row with more races
-			if r.Races > prevRaces {
-				existing.Driver = r.Driver
-			}
-			continue
-		}
-		r2 := *r
-		r2.Car = car
-		merged[k] = &r2
-		order = append(order, k)
-	}
-	var out []DriverStatsRow
-	for _, k := range order {
-		out = append(out, *merged[k])
-	}
-	sort.Slice(out, func(i, j int) bool {
-		return openWheelDriverStatsRowLess(out[i], out[j])
-	})
-	return out
-}
-
-// mergeStockCarDriverStatsRows merges stock-car stats duplicate rows
-// (NASCAR Cup/Truck/Modified, ARCA, NOAPS) when the same driver appears
-// with different spelling or car numbers across events.
-// Key is canonicalDriverKey(driver) — aggregate by person, not car number.
 func mergeStockCarDriverStatsRows(rows []DriverStatsRow) []DriverStatsRow {
 	if len(rows) == 0 {
 		return rows

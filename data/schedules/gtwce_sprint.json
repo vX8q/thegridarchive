@@ -1,63 +1,7 @@
 [
-  {
-    "id": "GTWCE_SPRINT_2026_1",
-    "series_id": "GTWCE_SPRINT",
-    "season": "2026",
-    "name": "GT World Challenge Europe Sprint — Brands Hatch",
-    "location": "West Kingsdown, Kent, UK",
-    "circuit_name": "Brands Hatch",
-    "start_date": "2026-05-02",
-    "end_date": "2026-05-03",
-    "time_est": "15:30",
-    "time_msk": "17:30"
-  },
-  {
-    "id": "GTWCE_SPRINT_2026_2",
-    "series_id": "GTWCE_SPRINT",
-    "season": "2026",
-    "name": "GT World Challenge Europe Sprint — Misano",
-    "location": "Misano Adriatico, Emilia-Romagna, Italy",
-    "circuit_name": "Misano World Circuit Marco Simoncelli",
-    "start_date": "2026-07-17",
-    "end_date": "2026-07-19",
-    "time_est": "2:30 PM",
-    "time_msk": "15:30"
-  },
-  {
-    "id": "GTWCE_SPRINT_2026_3",
-    "series_id": "GTWCE_SPRINT",
-    "season": "2026",
-    "name": "GT World Challenge Europe Sprint — Magny-Cours",
-    "location": "Magny-Cours, Nievre, France",
-    "circuit_name": "Circuit de Nevers Magny-Cours",
-    "start_date": "2026-08-01",
-    "end_date": "2026-08-02",
-    "time_est": "21:05",
-    "time_msk": "22:05"
-  },
-  {
-    "id": "GTWCE_SPRINT_2026_4",
-    "series_id": "GTWCE_SPRINT",
-    "season": "2026",
-    "name": "GT World Challenge Europe Sprint — Zandvoort",
-    "location": "Zandvoort, North Holland, Netherlands",
-    "circuit_name": "Circuit Zandvoort",
-    "start_date": "2026-09-19",
-    "end_date": "2026-09-20",
-    "time_est": "14:45",
-    "time_msk": "15:45"
-  },
-  {
-    "id": "GTWCE_SPRINT_2026_5",
-    "series_id": "GTWCE_SPRINT",
-    "season": "2026",
-    "name": "GT World Challenge Europe Sprint — Barcelona",
-    "location": "Montmelo, Catalonia, Spain",
-    "circuit_name": "Circuit de Barcelona-Catalunya",
-    "start_date": "2026-10-02",
-    "end_date": "2026-10-04",
-    "time_est": "14:00",
-    "time_msk": "15:00",
-    "date": "2026-10-03"
-  }
+  {"id":"GTWCE_SPRINT_2026_1","series_id":"GTWCE_SPRINT","season":"2026","name":"GT World Challenge Europe Sprint — Brands Hatch","location":"West Kingsdown, Kent, UK","circuit_name":"Brands Hatch","start_date":"2026-05-02","end_date":"2026-05-03","time_est":"15:30","time_msk":"17:30"},
+  {"id":"GTWCE_SPRINT_2026_2","series_id":"GTWCE_SPRINT","season":"2026","name":"GT World Challenge Europe Sprint — Misano","location":"Misano Adriatico, Emilia-Romagna, Italy","circuit_name":"Misano World Circuit Marco Simoncelli","start_date":"2026-07-17","end_date":"2026-07-19","time_est":"20:30","time_msk":"21:30"},
+  {"id":"GTWCE_SPRINT_2026_3","series_id":"GTWCE_SPRINT","season":"2026","name":"GT World Challenge Europe Sprint — Magny-Cours","location":"Magny-Cours, Nievre, France","circuit_name":"Circuit de Nevers Magny-Cours","start_date":"2026-08-01","end_date":"2026-08-02","time_est":"21:05","time_msk":"22:05"},
+  {"id":"GTWCE_SPRINT_2026_4","series_id":"GTWCE_SPRINT","season":"2026","name":"GT World Challenge Europe Sprint — Zandvoort","location":"Zandvoort, North Holland, Netherlands","circuit_name":"Circuit Zandvoort","start_date":"2026-09-19","end_date":"2026-09-20","time_est":"14:45","time_msk":"15:45"},
+  {"id":"GTWCE_SPRINT_2026_5","series_id":"GTWCE_SPRINT","season":"2026","name":"GT World Challenge Europe Sprint — Barcelona","location":"Montmelo, Catalonia, Spain","circuit_name":"Circuit de Barcelona-Catalunya","start_date":"2026-10-02","end_date":"2026-10-04","time_est":"14:00","time_msk":"15:00","date":"2026-10-03"}
 ]

@@ -8,7 +8,7 @@
       { rd: 2,  date: 'March 7',   race: 'Good Ranchers 250',                             track: 'Phoenix Raceway',                      location: 'Avondale, Arizona',                time_et: '3:00 p.m.',  time_msk: '11:00 p.m.' },
       { rd: 3,  date: 'March 15',  race: 'Java House Grand Prix of Arlington',            track: 'Streets of Arlington',                 location: 'Arlington, Texas',                 time_et: '12:30 p.m.', time_msk: '8:30 p.m.' },
       { rd: 4,  date: 'March 29',  race: 'Children\'s of Alabama Indy Grand Prix',         track: 'Barber Motorsports Park',              location: 'Birmingham, Alabama',              time_et: '1:00 p.m.',  time_msk: '8:00 p.m.' },
-      { rd: 5,  date: 'April 19',  race: 'Acura Grand Prix of Long Beach',                 track: 'Streets of Long Beach',                location: 'Long Beach, California',           time_et: '5:30 p.m.',  time_msk: '1:30 a.m.' },
+      { rd: 5,  date: 'April 19',  race: 'Acura Grand Prix of Long Beach',                 track: 'Streets of Long Beach',                location: 'Long Beach, California',           time_et: '5:30 p.m.',  time_msk: '3:30 a.m.' },
       { rd: 6,  date: 'May 9',     race: 'Sonsio Grand Prix',                              track: 'Indianapolis Motor Speedway Road Course', location: 'Speedway, Indiana',           time_et: '4:30 p.m.',  time_msk: '11:30 p.m.', event_id: 'indycar_2026_6' },
       { rd: 7,  date: 'May 24',    race: '110th Running of the Indianapolis 500',          track: 'Indianapolis Motor Speedway',          location: 'Speedway, Indiana',                time_et: '10:00 a.m.', time_msk: '5:00 p.m.' },
       { rd: 8,  date: 'May 31',    race: 'Chevrolet Detroit Grand Prix',                   track: 'Streets of Detroit',                   location: 'Detroit, Michigan',                time_et: '12:30 p.m.', time_msk: '7:30 p.m.' },
@@ -16,12 +16,12 @@
       { rd:10,  date: 'June 21',   race: 'XPEL Grand Prix at Road America',                track: 'Road America',                         location: 'Elkhart Lake, Wisconsin',          time_et: '2:00 p.m.',  time_msk: '9:00 p.m.' },
       { rd:11,  date: 'July 5',    race: 'Honda Indy 200 at Mid-Ohio',                     track: 'Mid-Ohio Sports Car Course',           location: 'Lexington, Ohio',                  time_et: '12:30 p.m.', time_msk: '7:30 p.m.' },
       { rd:12,  date: 'July 20',   race: 'Borchetta Bourbon Music City Grand Prix',        track: 'Nashville Superspeedway',              location: 'Lebanon, Tennessee',               time_et: '3:00 p.m.', time_msk: '10:00 p.m.' },
-      { rd:13,  date: 'August 9',  race: 'OnlyBulls Grand Prix of Portland',               track: 'Portland International Raceway',       location: 'Portland, Oregon',                 time_et: '4:00 p.m.',  time_msk: '11:00 p.m.' },
+      { rd:13,  date: 'August 9',  race: 'OnlyBulls Grand Prix of Portland',               track: 'Portland International Raceway',       location: 'Portland, Oregon',                 time_et: '1:27 p.m.',  time_msk: '11:27 p.m.' },
       { rd:14,  date: 'August 16', race: 'Ontario Honda Dealers Indy at Markham',          track: 'Streets of Markham',                   location: 'Markham, Ontario',                 time_et: '12:00 p.m.', time_msk: '7:00 p.m.' },
       { rd:15,  date: 'August 23', race: 'Freedom 250 Grand Prix of Washington, D.C.',     track: 'Streets of Washington',                location: 'Washington, D.C.',                 time_et: '11:30 a.m.', time_msk: '6:30 p.m.' },
-      { rd:16,  date: 'August 29', race: 'Snap-on Makers and Fixers 250',                  track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            time_et: '2:30 p.m.',  time_msk: '9:30 p.m.' },
-      { rd:17,  date: 'August 30', race: 'Snap-on Milwaukee Mile 250',                     track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            time_et: '1:00 p.m.',  time_msk: '8:00 p.m.' },
-      { rd:18,  date: 'September 6', race: 'IndyCar Grand Prix of Monterey',               track: 'WeatherTech Raceway Laguna Seca',      location: 'Monterey, California',             time_et: '2:30 p.m.',  time_msk: '9:30 p.m.' }
+      { rd:16,  date: 'August 29', race: 'Snap-on IndyCar Weekend',                        track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            time_et: '2:30 p.m.',  time_msk: '9:30 p.m.' },
+      { rd:17,  date: 'August 30', race: 'Snap-on IndyCar Weekend',                        track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            time_et: '1:00 p.m.',  time_msk: '8:00 p.m.' },
+      { rd:18,  date: 'September 6', race: 'Mission Foods Grand Prix of Monterey',         track: 'WeatherTech Raceway Laguna Seca',      location: 'Monterey, California',             time_et: '12:05 p.m.', time_msk: '10:05 p.m.' }
     ],
 
     indycarEvents: [
@@ -29,7 +29,7 @@
       { date: 'March 7',   name: 'Good Ranchers 250',                      track: 'Phoenix Raceway',                      location: 'Avondale, Arizona',                est: '3:00 p.m.',  msk: '11:00 p.m.' },
       { date: 'March 15',  name: 'Java House Grand Prix of Arlington',   track: 'Streets of Arlington',                 location: 'Arlington, Texas',                 est: '12:30 p.m.', msk: '8:30 p.m.' },
       { date: 'March 29',  name: 'Children\'s of Alabama Indy Grand Prix',track: 'Barber Motorsports Park',              location: 'Birmingham, Alabama',              est: '1:00 p.m.',  msk: '8:00 p.m.' },
-      { date: 'April 19',  name: 'Acura Grand Prix of Long Beach',        track: 'Streets of Long Beach',                location: 'Long Beach, California',           est: '5:30 p.m.',  msk: '1:30 a.m.' },
+      { date: 'April 19',  name: 'Acura Grand Prix of Long Beach',        track: 'Streets of Long Beach',                location: 'Long Beach, California',           est: '5:30 p.m.',  msk: '3:30 a.m.' },
       { date: 'May 9',     name: 'Sonsio Grand Prix',                     track: 'Indianapolis Motor Speedway Road Course', location: 'Speedway, Indiana',           est: '4:30 p.m.',  msk: '11:30 p.m.', event_id: 'indycar_2026_6' },
       { date: 'May 24',    name: '110th Running of the Indianapolis 500', track: 'Indianapolis Motor Speedway',          location: 'Speedway, Indiana',                est: '10:00 a.m.', msk: '5:00 p.m.' },
       { date: 'May 31',    name: 'Chevrolet Detroit Grand Prix',          track: 'Streets of Detroit',                   location: 'Detroit, Michigan',                est: '12:30 p.m.', msk: '7:30 p.m.' },
@@ -37,12 +37,12 @@
       { date: 'June 21',   name: 'XPEL Grand Prix at Road America',       track: 'Road America',                         location: 'Elkhart Lake, Wisconsin',          est: '2:00 p.m.',  msk: '9:00 p.m.' },
       { date: 'July 5',    name: 'Honda Indy 200 at Mid-Ohio',            track: 'Mid-Ohio Sports Car Course',           location: 'Lexington, Ohio',                  est: '12:30 p.m.', msk: '7:30 p.m.' },
       { date: 'July 20',   name: 'Borchetta Bourbon Music City Grand Prix', track: 'Nashville Superspeedway',           location: 'Lebanon, Tennessee',               est: '3:00 p.m.', msk: '10:00 p.m.' },
-      { date: 'August 9',  name: 'OnlyBulls Grand Prix of Portland',      track: 'Portland International Raceway',       location: 'Portland, Oregon',                 est: '4:00 p.m.',  msk: '11:00 p.m.' },
+      { date: 'August 9',  name: 'OnlyBulls Grand Prix of Portland',      track: 'Portland International Raceway',       location: 'Portland, Oregon',                 est: '1:27 p.m.',  msk: '11:27 p.m.' },
       { date: 'August 16', name: 'Ontario Honda Dealers Indy at Markham', track: 'Streets of Markham',                   location: 'Markham, Ontario',                 est: '12:00 p.m.', msk: '7:00 p.m.' },
       { date: 'August 23', name: 'Freedom 250 Grand Prix of Washington, D.C.', track: 'Streets of Washington',          location: 'Washington, D.C.',                 est: '11:30 a.m.', msk: '6:30 p.m.' },
-      { date: 'August 29', name: 'Snap-on Makers and Fixers 250',         track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            est: '2:30 p.m.',  msk: '9:30 p.m.' },
-      { date: 'August 30', name: 'Snap-on Milwaukee Mile 250',            track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            est: '1:00 p.m.',  msk: '8:00 p.m.' },
-      { date: 'September 6', name: 'IndyCar Grand Prix of Monterey',      track: 'WeatherTech Raceway Laguna Seca',      location: 'Monterey, California',             est: '2:30 p.m.',  msk: '9:30 p.m.' }
+      { date: 'August 29', name: 'Snap-on IndyCar Weekend',               track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            est: '2:30 p.m.',  msk: '9:30 p.m.' },
+      { date: 'August 30', name: 'Snap-on IndyCar Weekend',               track: 'Milwaukee Mile',                       location: 'West Allis, Wisconsin',            est: '1:00 p.m.',  msk: '8:00 p.m.' },
+      { date: 'September 6', name: 'Mission Foods Grand Prix of Monterey', track: 'WeatherTech Raceway Laguna Seca',      location: 'Monterey, California',             est: '12:05 p.m.', msk: '10:05 p.m.' }
     ],
 
     f1: [
@@ -156,7 +156,7 @@
         feature: '26 July', featureLocal: '11:25', featureMsk: '12:25' },
       { rd: 10,  circuit: 'Italy — Monza Circuit, Monza', event_id: 'F2_2026_10',
         sprint: '5 September', sprintLocal: '14:15', sprintMsk: '15:15',
-        feature: '6 September', featureLocal: '11:25', featureMsk: '12:25' },
+        feature: '6 September', featureLocal: '09:45', featureMsk: '10:45' },
       { rd: 11,  circuit: 'Spain — Madring, Madrid', event_id: 'F2_2026_11',
         sprint: '12 September', sprintLocal: '14:15', sprintMsk: '15:15',
         feature: '13 September', featureLocal: '11:25', featureMsk: '12:25' },
@@ -194,8 +194,8 @@
         sprint: '25 July', sprintLocal: '10:05', sprintMsk: '11:05',
         feature: '26 July', featureLocal: '08:40', featureMsk: '09:40' },
       { rd:  8,  circuit: 'Italy — Monza Circuit, Monza', event_id: 'F3_2026_8',
-        sprint: '5 September', sprintLocal: '10:05', sprintMsk: '11:05',
-        feature: '6 September', featureLocal: '08:40', featureMsk: '09:40' },
+        sprint: '5 September', sprintLocal: '09:30', sprintMsk: '10:30',
+        feature: '6 September', featureLocal: '08:15', featureMsk: '09:15' },
       { rd:  9,  circuit: 'Spain — Madring, Madrid', event_id: 'F3_2026_9',
         sprint: '12 September', sprintLocal: '11:05', sprintMsk: '12:05',
         feature: '13 September', featureLocal: '09:55', featureMsk: '10:55' }

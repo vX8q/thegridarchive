@@ -47,3 +47,23 @@ func TestHandleSeriesStats_EarlyCacheSkipsBuild(t *testing.T) {
 		t.Fatalf("early cache miss — build ran; body = %s", rec.Body.String())
 	}
 }
+
+func TestHandleSeriesTeams_EarlyCacheSkipsBuild(t *testing.T) {
+	dataDir := testDataDir(t)
+	seriesResponseCache = newComputedResponseCache(seriesComputedCacheTTL)
+
+	sentinel := `{"teams":[],"_cache_sentinel":true}`
+	mtime := schedulefile.TeamsDataMaxMtime(dataDir, "F1", "2026")
+	seriesResponseCache.Set("teams/f1/2026", mtime, []byte(sentinel))
+
+	req := httptest.NewRequest(http.MethodGet, "/api/series/f1/teams", nil)
+	rec := httptest.NewRecorder()
+	handleSeriesTeams(rec, req, dataDir, "F1", "2026")
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200, body = %s", rec.Code, rec.Body.String())
+	}
+	if rec.Body.String() != sentinel {
+		t.Fatalf("early cache miss — build ran; body = %s", rec.Body.String())
+	}
+}

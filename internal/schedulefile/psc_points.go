@@ -36,9 +36,33 @@ func pscIsClassifiedRacePos(pos string) bool {
 	return err == nil
 }
 
+// pscMetaHalfPoints is true when race_results / race session meta marks a shortened race
+// that awards 50% points (<50% of scheduled distance; Art. 8 PMSC).
+func pscMetaHalfPoints(meta map[string]string) bool {
+	if meta == nil {
+		return false
+	}
+	for _, key := range []string{"half_points", "HalfPoints", "Half points"} {
+		v := strings.TrimSpace(strings.ToLower(meta[key]))
+		if v == "true" || v == "1" || v == "yes" {
+			return true
+		}
+	}
+	return false
+}
+
+func formatPSCPoints(pts float64) string {
+	if pts == float64(int(pts)) {
+		return strconv.Itoa(int(pts))
+	}
+	s := strconv.FormatFloat(pts, 'f', 1, 64)
+	return s
+}
+
 // ApplyPSCRacePoints sets the Points column for a PSC race using guest rules:
 // guest drivers always score 0; eligible classified finishers receive the next
 // points value in PSCPointsScale (guest positions are skipped).
+// When table.Meta half_points is true, awards 50% of the scale (shortened race).
 func ApplyPSCRacePoints(entry []EntryListRow, table *EventTable) {
 	if table == nil || len(table.Headers) == 0 || len(table.Rows) == 0 {
 		return
@@ -50,13 +74,14 @@ func ApplyPSCRacePoints(entry []EntryListRow, table *EventTable) {
 	posCol := firstColIndex(table.Headers, "Pos", "Pos.", "Fin")
 	carCol := firstColIndex(table.Headers, "No", "No.", "#", "Car")
 	guests := pscGuestCarsFromEntry(entry)
+	half := pscMetaHalfPoints(table.Meta)
 	eligible := 0
 	for i := range table.Rows {
 		row := table.Rows[i]
 		for len(row) <= ptsCol {
 			row = append(row, "")
 		}
-		pts := 0
+		pts := 0.0
 		pos := ""
 		if posCol >= 0 && posCol < len(row) {
 			pos = row[posCol]
@@ -67,11 +92,14 @@ func ApplyPSCRacePoints(entry []EntryListRow, table *EventTable) {
 		}
 		if pscIsClassifiedRacePos(pos) && !guests[car] {
 			if eligible < len(PSCPointsScale) {
-				pts = PSCPointsScale[eligible]
+				pts = float64(PSCPointsScale[eligible])
+				if half {
+					pts /= 2
+				}
 			}
 			eligible++
 		}
-		row[ptsCol] = strconv.Itoa(pts)
+		row[ptsCol] = formatPSCPoints(pts)
 		table.Rows[i] = row
 	}
 }

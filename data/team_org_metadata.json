@@ -1,0 +1,2609 @@
+{
+  "1-4-ley-racing": {"headquarters":"United States"},
+  "13-autosport": {"headquarters":"United States"},
+  "2-seas-motorsport": {
+    "founded": "2021",
+    "headquarters": "United Kingdom",
+    "owner": "Ian James",
+    "staff": [
+      {"name":"Ian James","role":"Owner","group":"management"}
+    ]
+  },
+  "23xi-racing": {
+    "founded": "2020",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Michael Jordan / Denny Hamlin",
+    "president": "Curtis Polk",
+    "staff": [
+      {"name":"Michael Jordan","role":"Co-Owner","group":"management"},
+      {"name":"Denny Hamlin","role":"Co-Owner","group":"management"},
+      {"name":"Curtis Polk","role":"President","group":"management"},
+      {"name":"Steve O'Donnell","role":"President of Competition and Operations","group":"sporting"}
+    ]
+  },
+  "75-express": {"headquarters":"United States"},
+  "a-j-foyt-enterprises": {
+    "founded": "1965",
+    "headquarters": "Houston, Texas, U.S.",
+    "owner": "A. J. Foyt",
+    "staff": [
+      {"name":"A. J. Foyt","role":"Owner","group":"management"}
+    ]
+  },
+  "abel-motorsports": {
+    "founded": "2023",
+    "headquarters": "Speedway, Indiana, U.S.",
+    "owner": "Bill Abel",
+    "staff": [
+      {"name":"Bill Abel","role":"Owner","group":"management"}
+    ]
+  },
+  "acr-motorsports": {"headquarters":"United States"},
+  "af-corse": {
+    "founded": "1995",
+    "headquarters": "Piacenza, Italy",
+    "owner": "Amato Ferrari",
+    "staff": [
+      {"name":"Amato Ferrari","role":"Team Principal","group":"management"}
+    ]
+  },
+  "aix-racing": {
+    "founded": "2023",
+    "headquarters": "Saint-Laurent-du-Var, France",
+    "owner": "Paul Muller",
+    "staff": [
+      {"name":"Paul Muller","role":"Owner","group":"management"}
+    ]
+  },
+  "akm-motorsport": {"headquarters":"Italy"},
+  "algarve-pro-racing": {
+    "founded": "2008",
+    "headquarters": "Portimao, Portugal",
+    "owner": "Stewart Cox",
+    "staff": [
+      {"name":"Stewart Cox","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "allgaier-motorsports": {
+    "headquarters": "United States",
+    "owner": "Justin Allgaier",
+    "staff": [
+      {"name":"Justin Allgaier","role":"Owner","group":"management"}
+    ]
+  },
+  "alpha-54-racing": {"headquarters":"Italy"},
+  "alpha-prime-racing": {
+    "founded": "2021",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Tommy Joe Martins / Caesar Bacarella",
+    "staff": [
+      {"name":"Tommy Joe Martins","role":"Co-owner","group":"management"},
+      {"name":"Caesar Bacarella","role":"Co-owner","group":"management"}
+    ]
+  },
+  "alpine": {
+    "founded": "1986",
+    "headquarters": "Enstone, Oxfordshire, England",
+    "owner": "Renault Group",
+    "team_principal": "Flavio Briatore",
+    "staff": [
+      {"name":"Bruno Famin","role":"Team Principal / VP Motorsports Alpine","group":"management","seasons":["2024"]},
+      {"name":"Oliver Oakes","role":"Team Principal","group":"management","seasons":["2025"]},
+      {"name":"Flavio Briatore","role":"Executive Advisor","group":"management","seasons":["2025","2026"]},
+      {"name":"Steve Nielsen","role":"Managing Director","group":"management","seasons":["2026"]},
+      {"name":"David Sanchez","role":"Executive Technical Director","group":"technical","seasons":["2025","2026"]},
+      {"name":"Matt Harman","role":"Technical Director","group":"technical","seasons":["2024"]}
+    ],
+    "lineage": "Toleman -> Benetton Formula -> Renault -> Lotus -> Renault -> Alpine"
+  },
+  "am-racing": {
+    "founded": "2017",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Bill Ambrose / Matt Ambrose",
+    "staff": [
+      {"name":"Bill Ambrose / Matt Ambrose","role":"Owner","group":"management"}
+    ]
+  },
+  "andretti-global": {
+    "founded": "2003",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Michael Andretti",
+    "team_principal": "Ron Ruzewski",
+    "staff": [
+      {"name":"Michael Andretti","role":"Owner","group":"management"},
+      {"name":"Rob Edwards","role":"COO, Andretti Global","group":"management"},
+      {"name":"Ron Ruzewski","role":"Team Principal, IndyCar / Indy NXT","group":"sporting"}
+    ],
+    "lineage": "Andretti Green Racing -> Andretti Autosport -> Andretti Global"
+  },
+  "andrew-patterson-racing": {
+    "owner": "Andrew Patterson",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Andrew Patterson","role":"Owner","group":"management"}
+    ]
+  },
+  "anest-iwata-racing": {"headquarters":"Japan"},
+  "ao-by-tf": {
+    "founded": "2021",
+    "headquarters": "United Kingdom",
+    "owner": "PJ Hyett",
+    "staff": [
+      {"name":"PJ Hyett","role":"Owner","group":"management"},
+      {"name":"Tom Ferrier","role":"Team Principal, TF Sport","group":"management"}
+    ]
+  },
+  "ao-racing": {
+    "founded": "2022",
+    "headquarters": "St. Charles, Illinois, U.S.",
+    "owner": "PJ Hyett",
+    "staff": [
+      {"name":"PJ Hyett","role":"Owner","group":"management"},
+      {"name":"Gunnar Jeannette","role":"Team Principal","group":"management"}
+    ]
+  },
+  "apex-racing": {
+    "owner": "Apex",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Apex","role":"Owner","group":"management"}
+    ]
+  },
+  "apr": {"founded":"1990","headquarters":"Japan"},
+  "arrow-mclaren": {
+    "founded": "2001",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "McLaren Racing",
+    "team_principal": "Tony Kanaan",
+    "staff": [
+      {"name":"Zak Brown","role":"CEO, McLaren Racing","group":"management"},
+      {"name":"Tony Kanaan","role":"Team Principal","group":"management"},
+      {"name":"Gavin Ward","role":"Director of Performance Engineering","group":"technical"}
+    ],
+    "lineage": "Schmidt Peterson Motorsports -> Arrow McLaren SP -> Arrow McLaren"
+  },
+  "art-grand-prix": {
+    "founded": "1995",
+    "headquarters": "Villeneuve-la-Guyard, France",
+    "owner": "Nicolas Todt",
+    "staff": [
+      {"name":"Nicolas Todt","role":"Co-founder / Owner","group":"management"},
+      {"name":"Sebastien Philippe","role":"Team Principal","group":"management"}
+    ],
+    "team_principal": "Sebastien Philippe"
+  },
+  "arta-mugen": {
+    "founded": "1997",
+    "headquarters": "Japan",
+    "owner": "Aguri Suzuki",
+    "staff": [
+      {"name":"Aguri Suzuki","role":"Founder / Team Owner, ARTA","group":"management"}
+    ]
+  },
+  "as-motorsport": {"headquarters":"Italy"},
+  "astemo-real-racing": {
+    "founded": "2006",
+    "headquarters": "Japan",
+    "owner": "Real Racing",
+    "staff": [
+      {"name":"Real Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "aston-martin": {
+    "founded": "2018",
+    "headquarters": "Silverstone, Northamptonshire, England",
+    "owner": "Lawrence Stroll",
+    "team_principal": "Adrian Newey",
+    "staff": [
+      {"name":"Lawrence Stroll","role":"Owner / Executive Chairman","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Mike Krack","role":"Team Principal","group":"management","seasons":["2024","2025"]},
+      {"name":"Adrian Newey","role":"Managing Technical Partner","group":"technical","seasons":["2025"]},
+      {"name":"Adrian Newey","role":"Team Principal / Managing Technical Partner","group":"management","seasons":["2026"]},
+      {"name":"Andy Cowell","role":"CEO, Aston Martin Performance Technologies","group":"management","seasons":["2025","2026"]},
+      {"name":"Bob Bell","role":"Executive Director, Technical","group":"technical","seasons":["2024"]}
+    ],
+    "lineage": "Jordan -> Midland -> Spyker -> Force India -> Racing Point -> Aston Martin"
+  },
+  "aston-martin-thor-team": {
+    "headquarters": "Seattle, Washington, U.S.",
+    "owner": "The Heart of Racing / Aston Martin",
+    "founded": "2020",
+    "staff": [
+      {"name":"The Heart of Racing / Aston Martin","role":"Owner","group":"management"}
+    ]
+  },
+  "audi": {
+    "founded": "1993",
+    "headquarters": "Hinwil, Switzerland",
+    "team_principal": "Jonathan Wheatley",
+    "staff": [
+      {"name":"Jonathan Wheatley","role":"Team Principal","group":"management","seasons":["2025","2026"]},
+      {"name":"Mattia Binotto","role":"Chief Operating and Technical Officer","group":"management","seasons":["2025","2026"]},
+      {"name":"Allan McNish","role":"Racing Director","group":"sporting","seasons":["2025","2026"]}
+    ],
+    "owner": "Audi AG",
+    "lineage": "Sauber -> BMW Sauber -> Sauber -> Alfa Romeo -> Kick Sauber -> Audi"
+  },
+  "barrett-cope-racing": {"headquarters":"United States"},
+  "beard-motorsports": {
+    "founded": "2016",
+    "headquarters": "Daytona Beach, Florida, U.S.",
+    "owner": "John Beard Jr.",
+    "staff": [
+      {"name":"John Beard Jr.","role":"Owner","group":"management"}
+    ]
+  },
+  "big-machine-racing": {
+    "founded": "2021",
+    "headquarters": "Nashville, Tennessee, U.S.",
+    "owner": "Scott Borchetta",
+    "staff": [
+      {"name":"Scott Borchetta","role":"Owner","group":"management"}
+    ]
+  },
+  "bill-mcanally-racing": {
+    "founded": "1989",
+    "headquarters": "Roseville, California, U.S.",
+    "owner": "Bill McAnally",
+    "staff": [
+      {"name":"Bill McAnally","role":"Owner","group":"management"}
+    ]
+  },
+  "blanchard-racing-team": {
+    "founded": "2019",
+    "headquarters": "Melbourne, Victoria, Australia",
+    "owner": "Tim Blanchard",
+    "staff": [
+      {"name":"Tim Blanchard","role":"Owner","group":"management"}
+    ]
+  },
+  "bmw-m-team-wrt": {
+    "founded": "2009",
+    "headquarters": "Bierset, Belgium / Kannapolis, North Carolina, U.S.",
+    "owner": "BMW M / Team WRT",
+    "staff": [
+      {"name":"Vincent Vosse","role":"Team Principal, WRT","group":"management"},
+      {"name":"Andreas Roos","role":"Head of BMW M Motorsport","group":"management"}
+    ]
+  },
+  "boehler-racing-enterprises": {
+    "owner": "Boehler",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Boehler","role":"Owner","group":"management"}
+    ]
+  },
+  "boutsen-vds": {
+    "founded": "2007",
+    "headquarters": "Belgium",
+    "owner": "Thierry Boutsen",
+    "staff": [
+      {"name":"Thierry Boutsen","role":"Co-owner","group":"management"}
+    ]
+  },
+  "brad-jones-racing": {
+    "founded": "1986",
+    "headquarters": "Albury, New South Wales, Australia",
+    "owner": "Brad Jones / Kim Jones",
+    "staff": [
+      {"name":"Brad Jones","role":"Co-owner / Team Principal","group":"management"},
+      {"name":"Kim Jones","role":"Co-owner","group":"management"}
+    ]
+  },
+  "brad-smith-motorsports": {
+    "owner": "Brad Smith",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Brad Smith","role":"Owner","group":"management"}
+    ]
+  },
+  "bre-racing": {"headquarters":"United States"},
+  "brother-in-law-racing": {
+    "owner": "Brother-In-Law",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Brother-In-Law","role":"Owner","group":"management"}
+    ]
+  },
+  "bryan-herta-autosport-with-pr1": {
+    "founded": "2004",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Bryan Herta",
+    "staff": [
+      {"name":"Bryan Herta","role":"Owner","group":"management"}
+    ]
+  },
+  "bryan-herta-autosport-with-pr1-mathiasen": {
+    "founded": "2004",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Bryan Herta",
+    "staff": [
+      {"name":"Bryan Herta","role":"Owner","group":"management"}
+    ]
+  },
+  "bwt-lechner-racing": {
+    "founded": "1990",
+    "headquarters": "Austria",
+    "owner": "Walter Lechner Jr.",
+    "staff": [
+      {"name":"Walter Lechner","role":"Founder","group":"management"},
+      {"name":"Walter Lechner Jr.","role":"Team Principal","group":"management"}
+    ]
+  },
+  "cadillac": {
+    "founded": "2023",
+    "headquarters": "Silverstone, Northamptonshire, England",
+    "owner": "General Motors / TWG Motorsports",
+    "team_principal": "Marcin Budkowski",
+    "staff": [
+      {"name":"Marcin Budkowski","role":"Team Principal","group":"management","seasons":["2026"]},
+      {"name":"Graeme Lowdon","role":"CEO, Cadillac Formula 1 Team","group":"management","seasons":["2026"]},
+      {"name":"Nick Chester","role":"Chassis Technical Director","group":"technical","seasons":["2026"]}
+    ]
+  },
+  "cadillac-whelen": {
+    "founded": "1984",
+    "headquarters": "Denver, North Carolina, U.S.",
+    "owner": "General Motors / Whelen",
+    "staff": [
+      {"name":"Laura Whelen Quigley","role":"Owner, Whelen Engineering","group":"management"}
+    ]
+  },
+  "campos-racing": {
+    "founded": "1998",
+    "headquarters": "Alzira, Valencia, Spain",
+    "owner": "Adrian Campos Jr.",
+    "staff": [
+      {"name":"Adrian Campos","role":"Founder","group":"management"},
+      {"name":"Adrian Campos Jr.","role":"Team Principal","group":"management"}
+    ],
+    "team_principal": "Adrian Campos Jr."
+  },
+  "car-blanche": {"headquarters":"United States"},
+  "car-collection-motorsport": {"founded":"2008","headquarters":"Germany"},
+  "carguy-mks-racing": {
+    "headquarters": "Japan",
+    "owner": "Takeshi Kimura",
+    "staff": [
+      {"name":"Takeshi Kimura","role":"Owner","group":"management"}
+    ]
+  },
+  "catalano-motorsports": {
+    "owner": "Catalano",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Catalano","role":"Owner","group":"management"}
+    ]
+  },
+  "ccm-racing": {"headquarters":"United States"},
+  "central-coast-racing": {
+    "owner": "Central Coast",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Central Coast","role":"Owner","group":"management"}
+    ]
+  },
+  "chase-grennan": {"headquarters":"United States"},
+  "chip-ganassi-racing": {
+    "founded": "1990",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Chip Ganassi",
+    "staff": [
+      {"name":"Chip Ganassi","role":"Owner","group":"management"},
+      {"name":"Mike Hull","role":"Managing Director","group":"management"}
+    ]
+  },
+  "city-garage-motorsports": {
+    "owner": "City Garage",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"City Garage","role":"Owner","group":"management"}
+    ]
+  },
+  "ck-motorsports": {"headquarters":"United States"},
+  "cl-motorsport": {"headquarters":"Italy"},
+  "clubb-racing-inc": {
+    "owner": "Clubb",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Clubb","role":"Owner","group":"management"}
+    ]
+  },
+  "clx-motorsport": {"headquarters":"France"},
+  "comtoyou-racing": {
+    "founded": "2006",
+    "headquarters": "Ath, Belgium",
+    "owner": "Jean-Michel Baert",
+    "staff": [
+      {"name":"Jean-Michel Baert","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "connolly-racing": {
+    "owner": "Connolly",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Connolly","role":"Owner","group":"management"}
+    ]
+  },
+  "conquest-racing": {
+    "founded": "1997",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Eric Bachelart",
+    "staff": [
+      {"name":"Eric Bachelart","role":"Owner","group":"management"}
+    ]
+  },
+  "cook-racing-technologies": {"headquarters":"United States"},
+  "corvette-racing-by-pratt-miller-motorsports": {
+    "founded": "1999",
+    "headquarters": "Detroit, Michigan, U.S.",
+    "owner": "General Motors / Pratt Miller",
+    "staff": [
+      {"name":"Jim Miller","role":"Co-Owner, Pratt Miller","group":"management"},
+      {"name":"Gary Pratt","role":"Co-Owner, Pratt Miller","group":"management"}
+    ]
+  },
+  "costner-motorsports": {"headquarters":"United States"},
+  "coulter-motorsports": {
+    "owner": "Coulter",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Coulter","role":"Owner","group":"management"}
+    ]
+  },
+  "cr7-motorsports": {
+    "founded": "2021",
+    "headquarters": "United States",
+    "owner": "Bobby Keselowski",
+    "staff": [
+      {"name":"Bobby Keselowski","role":"Owner","group":"management"}
+    ]
+  },
+  "cram-motorsport": {"founded":"1994","headquarters":"Rome, Italy"},
+  "crowdstrike-racing-by-apr": {
+    "headquarters": "Auburn Hills, Michigan, U.S.",
+    "owner": "CrowdStrike / APR",
+    "founded": "2023",
+    "staff": [
+      {"name":"CrowdStrike / APR","role":"Owner","group":"management"}
+    ]
+  },
+  "csa-racing": {"headquarters":"France"},
+  "d-station-racing": {
+    "headquarters": "Japan",
+    "owner": "Satoshi Hoshino",
+    "staff": [
+      {"name":"Satoshi Hoshino","role":"Owner","group":"management"}
+    ]
+  },
+  "dale-coyne-racing": {
+    "founded": "1984",
+    "headquarters": "Plainfield, Illinois, U.S.",
+    "owner": "Dale Coyne",
+    "staff": [
+      {"name":"Dale Coyne","role":"Owner","group":"management"}
+    ]
+  },
+  "dams-lucas-oil": {
+    "founded": "1988",
+    "headquarters": "Le Mans, France",
+    "owner": "Gregory Driot / Olivier Driot",
+    "staff": [
+      {"name":"Gregory Driot","role":"Co-owner / Team Principal","group":"management"},
+      {"name":"Olivier Driot","role":"Co-owner","group":"management"}
+    ]
+  },
+  "david-brigati": {"headquarters":"United States"},
+  "delightworks-racing": {"headquarters":"Japan"},
+  "dgm-racing": {
+    "founded": "2011",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Mario Gosselin",
+    "staff": [
+      {"name":"Mario Gosselin","role":"Owner","group":"management"}
+    ]
+  },
+  "dgm-racing-x-jim": {
+    "founded": "2011",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Mario Gosselin",
+    "staff": [
+      {"name":"Mario Gosselin","role":"Owner","group":"management"}
+    ]
+  },
+  "dick-johnson-racing": {
+    "founded": "1980",
+    "headquarters": "Stapylton, Queensland, Australia",
+    "owner": "Dick Johnson / Ryan Story",
+    "staff": [
+      {"name":"Dick Johnson","role":"Co-owner","group":"management"},
+      {"name":"Ryan Story","role":"Co-owner / Managing Director","group":"management"}
+    ],
+    "lineage": "Dick Johnson Racing -> DJR Team Penske -> Dick Johnson Racing",
+    "team_principal": "Ryan Story"
+  },
+  "dinamic-motorsport": {
+    "founded": "2008",
+    "headquarters": "Italy",
+    "owner": "Roberto Paladino",
+    "staff": [
+      {"name":"Roberto Paladino","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "dkr-engineering": {"founded":"2004","headquarters":"Luxembourg"},
+  "docomo-team-dandelion-racing": {
+    "founded": "1989",
+    "headquarters": "Japan",
+    "owner": "Dandelion Racing",
+    "staff": [
+      {"name":"Dandelion Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "dorr-motorsport": {
+    "headquarters": "Germany",
+    "owner": "Rainer Dorr",
+    "staff": [
+      {"name":"Rainer Dorr","role":"Founder / Owner","group":"management"},
+      {"name":"Ben Dorr","role":"Team Manager","group":"operations"}
+    ]
+  },
+  "dragonspeed": {
+    "founded": "2005",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Elton Julian",
+    "staff": [
+      {"name":"Elton Julian","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "dreyer-reinbold-racing": {
+    "founded": "1994",
+    "headquarters": "Carmel, Indiana, U.S.",
+    "owner": "Dennis Reinbold / Robbie Buhl",
+    "staff": [
+      {"name":"Dennis Reinbold / Robbie Buhl","role":"Owner","group":"management"}
+    ]
+  },
+  "duqueine-team": {
+    "founded": "2014",
+    "headquarters": "France",
+    "owner": "Jean-Marc Duqueine",
+    "staff": [
+      {"name":"Jean-Marc Duqueine","role":"Owner","group":"management"}
+    ]
+  },
+  "dwr-racing": {"headquarters":"United States"},
+  "dxdt-racing": {"headquarters":"United States"},
+  "eastalent-racing": {"headquarters":"Austria"},
+  "ecurie-ecosse-blackthorn": {"headquarters":"United Kingdom","owner":"Ecurie Ecosse / Blackthorn"},
+  "ed-carpenter-racing": {
+    "founded": "2012",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Ed Carpenter",
+    "staff": [
+      {"name":"Ed Carpenter","role":"Owner / Driver","group":"management"}
+    ]
+  },
+  "eighty-two-autosport": {
+    "owner": "Eighty-Two",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Eighty-Two","role":"Owner","group":"management"}
+    ]
+  },
+  "elite-motorsports": {
+    "owner": "Elite",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Elite","role":"Owner","group":"management"}
+    ]
+  },
+  "elite-racing": {
+    "owner": "Elite",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Elite","role":"Owner","group":"management"}
+    ]
+  },
+  "emil-frey-racing": {
+    "founded": "2011",
+    "headquarters": "Safnern, Switzerland",
+    "owner": "Lorenz Frey-Hilti",
+    "staff": [
+      {"name":"Lorenz Frey-Hilti","role":"Owner","group":"management"}
+    ]
+  },
+  "empire-racing": {"headquarters":"United States"},
+  "era-motorsport": {
+    "founded": "2018",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Kyle Tilley",
+    "staff": [
+      {"name":"Kyle Tilley","role":"Owner","group":"management"}
+    ]
+  },
+  "erebus-motorsport": {
+    "founded": "2013",
+    "headquarters": "Melbourne, Victoria, Australia",
+    "owner": "Betty Klimenko",
+    "staff": [
+      {"name":"Betty Klimenko","role":"Owner","group":"management"},
+      {"name":"Barry Ryan","role":"CEO","group":"management"}
+    ]
+  },
+  "eurointernational": {"founded":"1989","headquarters":"Italy"},
+  "fast-track-racing": {
+    "owner": "Fast Track",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Fast Track","role":"Owner","group":"management"}
+    ]
+  },
+  "fdny-racing": {"headquarters":"United States"},
+  "ferguson-motorsports": {
+    "owner": "Ferguson",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Ferguson","role":"Owner","group":"management"}
+    ]
+  },
+  "ferrari": {
+    "founded": "1929",
+    "headquarters": "Maranello, Italy",
+    "team_principal": "Frederic Vasseur",
+    "staff": [
+      {"name":"Frederic Vasseur","role":"Team Principal","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Loic Serra","role":"Chassis Technical Director","group":"technical","seasons":["2025","2026"]},
+      {"name":"Enrico Cardile","role":"Chassis Technical Director","group":"technical","seasons":["2024"]},
+      {"name":"Diego Tondi","role":"Head of Vehicle Performance","group":"sporting","seasons":["2025","2026"]},
+      {"name":"Bryan Bozzi","role":"Race Engineer (Charles Leclerc)","group":"sporting","seasons":["2024","2025","2026"]},
+      {"name":"Riccardo Adami","role":"Race Engineer (Carlos Sainz)","group":"sporting","seasons":["2024"]},
+      {"name":"Riccardo Adami","role":"Race Engineer (Lewis Hamilton)","group":"sporting","seasons":["2025"]},
+      {"name":"Carlo Santi","role":"Race Engineer (Lewis Hamilton)","group":"sporting","seasons":["2026"]}
+    ],
+    "owner": "Ferrari N.V."
+  },
+  "ford-multimatic-motorsports": {
+    "founded": "1984",
+    "headquarters": "Markham, Ontario, Canada",
+    "owner": "Ford / Multimatic",
+    "staff": [
+      {"name":"Ford / Multimatic","role":"Owner","group":"management"}
+    ]
+  },
+  "ford-racing": {
+    "owner": "Ford",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Ford","role":"Owner","group":"management"}
+    ]
+  },
+  "forestier-racing-by-panis": {
+    "headquarters": "France",
+    "owner": "Panis Racing",
+    "staff": [
+      {"name":"Panis Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "frank-fleming-motorsports": {
+    "owner": "Frank Fleming",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Frank Fleming","role":"Owner","group":"management"}
+    ]
+  },
+  "freedom-racing": {
+    "headquarters": "United States",
+    "owner": "Freedom Racing",
+    "founded": "2023",
+    "staff": [
+      {"name":"Freedom Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "front-row-motorsports": {
+    "founded": "2004",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Bob Jenkins",
+    "president": "Jerry Freeze",
+    "staff": [
+      {"name":"Bob Jenkins","role":"Owner","group":"management"},
+      {"name":"Jerry Freeze","role":"General Manager","group":"management"}
+    ]
+  },
+  "fueled-up-motorsports": {
+    "owner": "Fueled Up",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Fueled Up","role":"Owner","group":"management"}
+    ]
+  },
+  "g4-racing": {"headquarters":"France"},
+  "gainer": {"founded":"2002","headquarters":"Japan"},
+  "garage-59": {
+    "founded": "2015",
+    "headquarters": "Silverstone, England",
+    "owner": "Andrew Kirkaldy",
+    "staff": [
+      {"name":"Andrew Kirkaldy","role":"Co-owner / Team Principal","group":"management"}
+    ]
+  },
+  "garage-66": {"founded":"2024","headquarters":"United States"},
+  "gershow-motorsports": {
+    "owner": "Gershow",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Gershow","role":"Owner","group":"management"}
+    ]
+  },
+  "getspeed": {
+    "headquarters": "Meuspath, Germany",
+    "owner": "Adam Osieka",
+    "founded": "2017",
+    "staff": [
+      {"name":"Adam Osieka","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "gk-racing": {"headquarters":"United States"},
+  "glenn-styers": {"headquarters":"United States"},
+  "gmr-enterprises": {"headquarters":"United States"},
+  "goodie-motorsports": {
+    "owner": "Goodie",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Goodie","role":"Owner","group":"management"}
+    ]
+  },
+  "goodsmile-racing-teamukyo": {
+    "founded": "2010",
+    "headquarters": "Japan",
+    "owner": "Good Smile Company / TeamUKYO",
+    "staff": [
+      {"name":"Ukyo Katayama","role":"Team Principal, Team Ukyo","group":"management"},
+      {"name":"Takanori Aki","role":"Owner, Good Smile Racing","group":"management"}
+    ]
+  },
+  "gp-elite": {"founded":"2017","headquarters":"Netherlands"},
+  "gr-racing": {"founded":"2017","headquarters":"United Kingdom"},
+  "gradient-racing": {"founded":"2018","headquarters":"United States"},
+  "greg-van-alst-motorsports": {
+    "headquarters": "United States",
+    "owner": "Greg Van Alst",
+    "staff": [
+      {"name":"Greg Van Alst","role":"Owner","group":"management"}
+    ]
+  },
+  "greystone-gt": {"headquarters":"United Kingdom"},
+  "grove-racing": {
+    "founded": "2021",
+    "headquarters": "Braeside, Victoria, Australia",
+    "owner": "Stephen Grove / Brenton Grove",
+    "staff": [
+      {"name":"Stephen Grove","role":"Co-owner","group":"management"},
+      {"name":"Brenton Grove","role":"Co-owner","group":"management"}
+    ]
+  },
+  "grupo-prom-racing-team": {
+    "owner": "Grupo Prom",
+    "headquarters": "Europe",
+    "staff": [
+      {"name":"Grupo Prom","role":"Owner","group":"management"}
+    ]
+  },
+  "gsr-motorsports": {"headquarters":"United States"},
+  "haas": {
+    "founded": "2016",
+    "headquarters": "Kannapolis, North Carolina, U.S. (main); Banbury, Oxfordshire, England (European)",
+    "owner": "Gene Haas",
+    "team_principal": "Ayao Komatsu",
+    "staff": [
+      {"name":"Gene Haas","role":"Owner","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Ayao Komatsu","role":"Team Principal","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Joe Custer","role":"President / Board Member","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Andrea De Zordo","role":"Technical Director","group":"technical","seasons":["2025","2026"]}
+    ]
+  },
+  "haas-factory-team": {
+    "founded": "2025",
+    "headquarters": "Kannapolis, North Carolina, U.S.",
+    "owner": "Gene Haas",
+    "president": "Joe Custer",
+    "staff": [
+      {"name":"Gene Haas","role":"Owner","group":"management"},
+      {"name":"Joe Custer","role":"President","group":"management"}
+    ],
+    "lineage": "Stewart-Haas Racing -> Haas Factory Team"
+  },
+  "haas-rt": {"headquarters":"Belgium"},
+  "halmar-friesen-racing": {
+    "founded": "2016",
+    "headquarters": "Sprakers, New York, U.S.",
+    "owner": "Chris Larsen / Stewart Friesen",
+    "staff": [
+      {"name":"Chris Larsen","role":"Co-owner","group":"management"},
+      {"name":"Stewart Friesen","role":"Co-owner / Driver","group":"management"}
+    ]
+  },
+  "hartwig-racing": {
+    "owner": "Hartwig",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Hartwig","role":"Owner","group":"management"}
+    ]
+  },
+  "haydt-yannone-racing": {
+    "owner": "Haydt Yannone",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Haydt Yannone","role":"Owner","group":"management"}
+    ]
+  },
+  "hazama-ando-triple-tree-racing": {
+    "headquarters": "Japan",
+    "owner": "Triple Tree Racing",
+    "staff": [
+      {"name":"Triple Tree Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "heagy-motorsports": {
+    "owner": "Heagy",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Heagy","role":"Owner","group":"management"}
+    ]
+  },
+  "heart-of-racing-team": {
+    "founded": "2020",
+    "headquarters": "Seattle, Washington, U.S.",
+    "owner": "Gabe Newell",
+    "staff": [
+      {"name":"Gabe Newell","role":"Owner","group":"management"},
+      {"name":"Ian James","role":"Team Principal","group":"management"}
+    ],
+    "team_principal": "Ian James"
+  },
+  "helm-motorsports": {"headquarters":"Japan"},
+  "henderson-motorsports": {
+    "founded": "1990",
+    "headquarters": "United States",
+    "owner": "Burton Henderson",
+    "staff": [
+      {"name":"Burton Henderson","role":"Owner","group":"management"}
+    ]
+  },
+  "hendrick-motorsports": {
+    "founded": "1984",
+    "headquarters": "Concord, North Carolina, U.S.",
+    "owner": "Rick Hendrick",
+    "president": "Jeff Andrews",
+    "staff": [
+      {"name":"Rick Hendrick","role":"Owner","group":"management"},
+      {"name":"Jeff Gordon","role":"Vice Chairman","group":"management"},
+      {"name":"Jeff Andrews","role":"President and General Manager","group":"management"},
+      {"name":"Marshall Carlson","role":"President, Hendrick Companies","group":"management"},
+      {"name":"Chad Knaus","role":"Vice President of Competition","group":"sporting"},
+      {"name":"Brian Whitesell","role":"Vice President of Manufacturing","group":"technical"},
+      {"name":"Alba Colon","role":"Director, Technical Partnerships","group":"technical"},
+      {"name":"Ashly Ennis","role":"Director of Racing Communications","group":"operations"}
+    ]
+  },
+  "herberth-motorsport": {
+    "founded": "1996",
+    "headquarters": "Mutterstadt, Germany",
+    "owner": "Alfred Herberth",
+    "staff": [
+      {"name":"Alfred Herberth","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "hettinger-racing": {"founded":"2024","headquarters":"United States"},
+  "high-class-racing": {
+    "founded": "2011",
+    "headquarters": "Denmark",
+    "owner": "Anders Fjordbach / Dennis Andersen",
+    "staff": [
+      {"name":"Anders Fjordbach","role":"Co-owner","group":"management"},
+      {"name":"Dennis Andersen","role":"Co-owner","group":"management"}
+    ]
+  },
+  "high-point-racing": {
+    "owner": "High Point",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"High Point","role":"Owner","group":"management"}
+    ]
+  },
+  "hill-motorsports": {
+    "founded": "2010",
+    "headquarters": "United States",
+    "owner": "Bruce Hill",
+    "staff": [
+      {"name":"Bruce Hill","role":"Owner","group":"management"}
+    ]
+  },
+  "hitech": {
+    "founded": "2002",
+    "headquarters": "Silverstone, Northamptonshire, England",
+    "owner": "Oliver Oakes",
+    "staff": [
+      {"name":"Oliver Oakes","role":"Founder","group":"management"}
+    ]
+  },
+  "hmd-motorsports-with-a-j-foyt-racing": {
+    "headquarters": "United States",
+    "owner": "HMD Motorsports / A. J. Foyt Enterprises",
+    "staff": [
+      {"name":"HMD Motorsports / A. J. Foyt Enterprises","role":"Owner","group":"management"}
+    ]
+  },
+  "hoppy-team-tsuchiya": {
+    "headquarters": "Japan",
+    "staff": [
+      {"name":"Keiichi Tsuchiya","role":"Founder, Team Tsuchiya","group":"management"}
+    ]
+  },
+  "hrt-ford-racing": {
+    "founded": "2016",
+    "headquarters": "Langenhagen, Germany",
+    "owner": "Hubert Haupt",
+    "staff": [
+      {"name":"Hubert Haupt","role":"Founder / Owner","group":"management"},
+      {"name":"Ulrich Fritz","role":"Managing Director","group":"management"}
+    ]
+  },
+  "hyak-motorsports": {"founded":"2024","headquarters":"United States"},
+  "hyper-water-racing-inging": {
+    "headquarters": "Japan",
+    "owner": "Inging",
+    "staff": [
+      {"name":"Inging","role":"Owner","group":"management"}
+    ]
+  },
+  "idec-sport": {
+    "founded": "1999",
+    "headquarters": "France",
+    "owner": "Patrice Lafargue",
+    "staff": [
+      {"name":"Patrice Lafargue","role":"Owner","group":"management"},
+      {"name":"Paul Lafargue","role":"Co-owner","group":"management"}
+    ]
+  },
+  "inception-racing": {"founded":"2020","headquarters":"United Kingdom"},
+  "integrity-autosports": {
+    "owner": "Integrity",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Integrity","role":"Owner","group":"management"}
+    ]
+  },
+  "inter-europol-competition": {
+    "founded": "2010",
+    "headquarters": "Malopole, Poland",
+    "owner": "Mariusz Lisiewicz",
+    "staff": [
+      {"name":"Mariusz Lisiewicz","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "intersport-racing": {
+    "owner": "Intersport",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Intersport","role":"Owner","group":"management"}
+    ]
+  },
+  "invicta-racing": {
+    "founded": "2012",
+    "headquarters": "Silverstone, Northamptonshire, England",
+    "team_principal": "Andy Roche",
+    "staff": [
+      {"name":"Andy Roche","role":"Team Principal","group":"management"}
+    ]
+  },
+  "iron-lynx": {
+    "founded": "2017",
+    "headquarters": "Italy",
+    "owner": "Claudio Schiavoni",
+    "staff": [
+      {"name":"Claudio Schiavoni","role":"Founder / Owner","group":"management"},
+      {"name":"Andrea Piccini","role":"Team Principal","group":"management"}
+    ]
+  },
+  "jan-s-towing-racing": {
+    "owner": "Jan's Towing",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Jan's Towing","role":"Owner","group":"management"}
+    ]
+  },
+  "jdc-miller-motorsports": {
+    "founded": "2010",
+    "headquarters": "Midland, Michigan, U.S.",
+    "owner": "John Fallon / Keith Miller",
+    "staff": [
+      {"name":"John Fallon / Keith Miller","role":"Owner","group":"management"}
+    ]
+  },
+  "jenzer-motorsport": {
+    "founded": "1993",
+    "headquarters": "Lyssach, Switzerland",
+    "owner": "Andreas Jenzer",
+    "staff": [
+      {"name":"Andreas Jenzer","role":"Founder / Team Principal","group":"management"}
+    ]
+  },
+  "jeremy-clements-racing": {
+    "founded": "2010",
+    "headquarters": "Spartanburg, South Carolina, U.S.",
+    "owner": "Jeremy Clements",
+    "staff": [
+      {"name":"Jeremy Clements","role":"Owner","group":"management"}
+    ]
+  },
+  "jerry-pitts-racing": {
+    "owner": "Jerry Pitts",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Jerry Pitts","role":"Owner","group":"management"}
+    ]
+  },
+  "jerry-solomito-sr": {
+    "owner": "Jerry Solomito",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Jerry Solomito","role":"Owner","group":"management"}
+    ]
+  },
+  "jett-motorsports": {
+    "owner": "Jett",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Jett","role":"Owner","group":"management"}
+    ]
+  },
+  "jloc": {
+    "founded": "1993",
+    "headquarters": "Japan",
+    "owner": "Japan Lamborghini Owner's Club",
+    "staff": [
+      {"name":"Japan Lamborghini Owner's Club","role":"Owner","group":"management"}
+    ]
+  },
+  "jmw-motorsport": {
+    "founded": "2009",
+    "headquarters": "United Kingdom",
+    "owner": "Jim McWhirter",
+    "staff": [
+      {"name":"Jim McWhirter","role":"Owner","group":"management"}
+    ]
+  },
+  "joe-gibbs-racing": {
+    "founded": "1992",
+    "headquarters": "Huntersville, North Carolina, U.S.",
+    "owner": "Joe Gibbs",
+    "president": "Coy Gibbs",
+    "staff": [
+      {"name":"Joe Gibbs","role":"Owner","group":"management"},
+      {"name":"Coy Gibbs","role":"President","group":"management"},
+      {"name":"Dave Alpern","role":"President of Business Operations","group":"operations"},
+      {"name":"Chris Gabehart","role":"Competition Director","group":"sporting"}
+    ]
+  },
+  "joey-gase-motorsports": {
+    "founded": "2021",
+    "headquarters": "United States",
+    "owner": "Joey Gase",
+    "staff": [
+      {"name":"Joey Gase","role":"Owner","group":"management"}
+    ]
+  },
+  "john-morgan": {"headquarters":"United States"},
+  "johor-motorsports-racing-jmr": {
+    "owner": "Johor",
+    "headquarters": "Europe",
+    "staff": [
+      {"name":"Johor","role":"Owner","group":"management"}
+    ]
+  },
+  "jon-mckennedy-racing": {
+    "owner": "Jon McKennedy",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Jon McKennedy","role":"Owner","group":"management"}
+    ]
+  },
+  "jordan-anderson-racing": {
+    "founded": "2018",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Jordan Anderson",
+    "staff": [
+      {"name":"Jordan Anderson","role":"Owner","group":"management"}
+    ]
+  },
+  "jr-motorsports": {
+    "founded": "2005",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Dale Earnhardt Jr., Kelley Earnhardt Miller",
+    "president": "Kelley Earnhardt Miller",
+    "staff": [
+      {"name":"Dale Earnhardt Jr.","role":"Owner","group":"management"},
+      {"name":"Kelley Earnhardt Miller","role":"Owner / President","group":"management"}
+    ]
+  },
+  "jt-motorsports": {"headquarters":"United States"},
+  "judy-thilberg": {"headquarters":"United States"},
+  "juncos-hollinger-racing": {
+    "founded": "2009",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Ricardo Juncos / Brad Hollinger",
+    "staff": [
+      {"name":"Ricardo Juncos","role":"Co-Owner / Team Principal","group":"management"},
+      {"name":"Brad Hollinger","role":"Co-Owner","group":"management"}
+    ]
+  },
+  "k-tunes-racing": {"headquarters":"Japan"},
+  "k2-r-d-leon-racing": {
+    "headquarters": "Japan",
+    "owner": "LEON Racing",
+    "staff": [
+      {"name":"LEON Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "kaulig-racing": {
+    "founded": "2016",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Matt Kaulig",
+    "president": "Chris Rice",
+    "staff": [
+      {"name":"Matt Kaulig","role":"Owner","group":"management"},
+      {"name":"Chris Rice","role":"President","group":"management"}
+    ]
+  },
+  "kc-motorsports": {"headquarters":"United States"},
+  "kcmg": {
+    "founded": "2007",
+    "headquarters": "Hong Kong",
+    "owner": "Paul Ip",
+    "staff": [
+      {"name":"Paul Ip","role":"Founder","group":"management"}
+    ]
+  },
+  "kddi-tgmgp-tgr-dc": {
+    "headquarters": "Japan",
+    "owner": "Toyota Gazoo Racing",
+    "staff": [
+      {"name":"Toyota Gazoo Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "kenneth-massa-motorsports": {
+    "owner": "Kenneth Massa",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Kenneth Massa","role":"Owner","group":"management"}
+    ]
+  },
+  "kessel-racing": {
+    "founded": "2006",
+    "headquarters": "Lugano, Switzerland",
+    "owner": "Ronnie Kessel",
+    "staff": [
+      {"name":"Loris Kessel","role":"Founder","group":"management"},
+      {"name":"Ronnie Kessel","role":"CEO / Team Principal","group":"management"}
+    ]
+  },
+  "kick-sauber": {
+    "founded": "1993",
+    "headquarters": "Hinwil, Switzerland",
+    "owner": "Audi",
+    "team_principal": "Jonathan Wheatley",
+    "staff": [
+      {"name":"Alessandro Alunni Bravi","role":"Team Representative","group":"management","seasons":["2024"]},
+      {"name":"Jonathan Wheatley","role":"Team Principal","group":"management","seasons":["2025","2026"]},
+      {"name":"Mattia Binotto","role":"Chief Operating and Technical Officer","group":"management","seasons":["2025","2026"]},
+      {"name":"Allan McNish","role":"Racing Director","group":"sporting","seasons":["2025","2026"]}
+    ],
+    "lineage": "Sauber -> BMW Sauber -> Sauber -> Alfa Romeo -> Kick Sauber"
+  },
+  "kimmel-racing": {
+    "founded": "1998",
+    "headquarters": "United States",
+    "owner": "Bill Kimmel",
+    "staff": [
+      {"name":"Bill Kimmel","role":"Owner","group":"management"}
+    ]
+  },
+  "klas-motorsports": {"headquarters":"United States"},
+  "klm-motorsports": {"headquarters":"United States"},
+  "kondo-racing": {
+    "founded": "2000",
+    "headquarters": "Japan",
+    "owner": "Masahiko Kondo",
+    "staff": [
+      {"name":"Masahiko Kondo","role":"Owner","group":"management"}
+    ]
+  },
+  "kpx-motorsport": {"headquarters":"Europe"},
+  "kyle-bonsignore": {"headquarters":"United States"},
+  "land-motorsport": {
+    "founded": "2008",
+    "headquarters": "Germany",
+    "owner": "Wolfgang Land",
+    "staff": [
+      {"name":"Wolfgang Land","role":"Founder / Owner","group":"management"},
+      {"name":"Christian Land","role":"Team Manager","group":"operations"}
+    ]
+  },
+  "legacy-motor-club": {
+    "founded": "2009",
+    "headquarters": "Statesville, North Carolina, U.S.",
+    "owner": "Jimmie Johnson / Maury Gallagher / Planet Fitness",
+    "president": "T. J. Majors",
+    "staff": [
+      {"name":"Jimmie Johnson","role":"Co-Owner","group":"management"},
+      {"name":"Maury Gallagher","role":"Co-Owner","group":"management"},
+      {"name":"T. J. Majors","role":"President","group":"management"}
+    ],
+    "lineage": "Petty Enterprises -> Richard Petty Motorsports -> Petty GMS Motorsports -> Legacy Motor Club"
+  },
+  "lionspeed-gp": {"headquarters":"Switzerland"},
+  "live-fast-motorsports": {
+    "founded": "2019",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "B. J. McLeod / Matt Tifft",
+    "staff": [
+      {"name":"B. J. McLeod / Matt Tifft","role":"Owner","group":"management"}
+    ]
+  },
+  "lm-corsa": {"headquarters":"Japan"},
+  "lone-star-racing": {
+    "owner": "Lone Star",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Lone Star","role":"Owner","group":"management"}
+    ]
+  },
+  "looping-by-cartech": {
+    "headquarters": "France",
+    "owner": "CarTech / Looping",
+    "staff": [
+      {"name":"CarTech / Looping","role":"Owner","group":"management"}
+    ]
+  },
+  "m-racing": {"headquarters":"France"},
+  "maczink-racing": {
+    "owner": "MacZink",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"MacZink","role":"Owner","group":"management"}
+    ]
+  },
+  "maffi-racing": {"headquarters":"Italy"},
+  "magnus-racing": {
+    "founded": "2008",
+    "headquarters": "United States",
+    "owner": "John Potter",
+    "staff": [
+      {"name":"John Potter","role":"Owner","group":"management"}
+    ]
+  },
+  "man-motorsports": {"headquarters":"United States"},
+  "manthey-1st-phorm": {
+    "founded": "1996",
+    "headquarters": "Meuspath, Germany",
+    "owner": "Olaf Manthey / Porsche",
+    "staff": [
+      {"name":"Olaf Manthey","role":"Founder","group":"management"},
+      {"name":"Nicolas Raeder","role":"CEO","group":"management"}
+    ]
+  },
+  "manthey-racing": {
+    "founded": "1996",
+    "headquarters": "Meuspath, Germany",
+    "owner": "Olaf Manthey / Porsche",
+    "staff": [
+      {"name":"Olaf Manthey","role":"Founder","group":"management"},
+      {"name":"Nicolas Raeder","role":"CEO","group":"management"}
+    ]
+  },
+  "maples-motorsports": {
+    "owner": "Maples",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Maples","role":"Owner","group":"management"}
+    ]
+  },
+  "martin-racing": {
+    "owner": "Martin",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Martin","role":"Owner","group":"management"}
+    ]
+  },
+  "martinet-by-almeras": {
+    "founded": "1988",
+    "headquarters": "France",
+    "owner": "Almeras / Martinet",
+    "staff": [
+      {"name":"Almeras / Martinet","role":"Owner","group":"management"}
+    ]
+  },
+  "matt-stone-racing": {
+    "founded": "2011",
+    "headquarters": "Yatala, Queensland, Australia",
+    "owner": "Matt Stone / Jimmy Stone",
+    "staff": [
+      {"name":"Matt Stone","role":"Co-owner / Team Principal","group":"management"},
+      {"name":"Jimmy Stone","role":"Co-owner","group":"management"}
+    ]
+  },
+  "matt-swanson": {"headquarters":"United States"},
+  "mbm-motorsports": {
+    "founded": "2015",
+    "headquarters": "Statesville, North Carolina, U.S.",
+    "owner": "Carl Long",
+    "staff": [
+      {"name":"Carl Long","role":"Owner","group":"management"}
+    ]
+  },
+  "mcanally-hilgemann-racing": {
+    "founded": "1989",
+    "headquarters": "Roseville, California, U.S.",
+    "owner": "Bill McAnally / Chris Hilgemann",
+    "staff": [
+      {"name":"Bill McAnally","role":"Co-owner","group":"management"},
+      {"name":"Chris Hilgemann","role":"Co-owner","group":"management"}
+    ]
+  },
+  "mclaren": {
+    "founded": "1963",
+    "headquarters": "Woking, Surrey, England",
+    "owner": "McLaren Racing",
+    "team_principal": "Andrea Stella",
+    "staff": [
+      {"name":"Zak Brown","role":"CEO, McLaren Racing","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Andrea Stella","role":"Team Principal","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Rob Marshall","role":"Chief Designer","group":"technical","seasons":["2025","2026"]},
+      {"name":"Neil Hannon","role":"Racing Director","group":"sporting","seasons":["2025","2026"]},
+      {"name":"Will Courtenay","role":"Sporting Director","group":"sporting","seasons":["2026"]},
+      {"name":"Peter Prodromou","role":"Technical Director (Aerodynamics)","group":"technical","seasons":["2024","2025","2026"]},
+      {"name":"David Sanchez","role":"Technical Director (Concept / Performance)","group":"technical","seasons":["2024"]}
+    ]
+  },
+  "mcm-racing-development": {"headquarters":"United States"},
+  "mercedes": {
+    "founded": "2010",
+    "headquarters": "Brackley, Northamptonshire, England",
+    "owner": "Mercedes-Benz",
+    "team_principal": "Toto Wolff",
+    "staff": [
+      {"name":"Toto Wolff","role":"Team Principal / CEO","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"James Allison","role":"Technical Director","group":"technical","seasons":["2024","2025","2026"]},
+      {"name":"Andrew Shovlin","role":"Trackside Engineering Director","group":"sporting","seasons":["2024","2025","2026"]},
+      {"name":"Ron Meadows","role":"Sporting Director","group":"sporting","seasons":["2024","2025","2026"]}
+    ],
+    "lineage": "Tyrrell -> BAR -> Honda -> Brawn -> Mercedes"
+  },
+  "mercedes-amg-team-landgraf": {
+    "headquarters": "Germany",
+    "owner": "Klaus Landgraf",
+    "staff": [
+      {"name":"Klaus Landgraf","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "mercedes-amg-team-mann-filter": {
+    "headquarters": "Affalterbach, Germany",
+    "owner": "Mercedes-AMG",
+    "staff": [
+      {"name":"Mercedes-AMG","role":"Owner","group":"management"}
+    ]
+  },
+  "mercedes-amg-team-ravenol": {
+    "headquarters": "Germany",
+    "owner": "Mercedes-AMG",
+    "staff": [
+      {"name":"Mercedes-AMG","role":"Owner","group":"management"}
+    ]
+  },
+  "mercedes-amg-team-verstappen-racing": {
+    "headquarters": "Emmen, Netherlands",
+    "owner": "Verstappen.com Racing / Mercedes-AMG",
+    "staff": [
+      {"name":"Verstappen.com Racing / Mercedes-AMG","role":"Owner","group":"management"}
+    ]
+  },
+  "meyer-shank-racing-with-curb-agajanian": {
+    "founded": "1989",
+    "headquarters": "Pataskala, Ohio, U.S.",
+    "owner": "Michael Shank / Jim Meyer",
+    "staff": [
+      {"name":"Michael Shank","role":"Co-Owner","group":"management"},
+      {"name":"Jim Meyer","role":"Co-Owner","group":"management"}
+    ]
+  },
+  "michele-davini": {"headquarters":"United States"},
+  "mike-christopher-sr": {
+    "owner": "Mike Christopher",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Mike Christopher","role":"Owner","group":"management"}
+    ]
+  },
+  "mike-harmon-racing": {
+    "founded": "2009",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Mike Harmon",
+    "staff": [
+      {"name":"Mike Harmon","role":"Owner","group":"management"}
+    ]
+  },
+  "modulo-nakajima-racing": {
+    "founded": "1981",
+    "headquarters": "Okazaki, Aichi, Japan",
+    "owner": "Satoru Nakajima",
+    "staff": [
+      {"name":"Satoru Nakajima","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "morgan-zachem-racing": {
+    "owner": "Morgan Zachem",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Morgan Zachem","role":"Owner","group":"management"}
+    ]
+  },
+  "motorsports-business": {"headquarters":"United States","owner":"Motorsports Business Management"},
+  "moyer-petroniro-racing": {
+    "owner": "Moyer-Petroniro",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Moyer-Petroniro","role":"Owner","group":"management"}
+    ]
+  },
+  "mp-motorsport": {
+    "founded": "1995",
+    "headquarters": "Westzaan, Netherlands",
+    "owner": "Sander Dorsman",
+    "staff": [
+      {"name":"Sander Dorsman","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "muhlner-motorsport": {
+    "founded": "1999",
+    "headquarters": "Belgium",
+    "owner": "Bernhard Muhlner",
+    "staff": [
+      {"name":"Bernhard Muhlner","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "mullins-racing": {
+    "owner": "Mullins",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Mullins","role":"Owner","group":"management"}
+    ]
+  },
+  "myers-riley-motorsports": {
+    "owner": "Myers Riley",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Myers Riley","role":"Owner","group":"management"}
+    ]
+  },
+  "nascimento-motorsports": {
+    "owner": "Nascimento",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Nascimento","role":"Owner","group":"management"}
+    ]
+  },
+  "natural-elements-by-walkenhorst-motorsport": {
+    "founded": "1999",
+    "headquarters": "Germany",
+    "owner": "Henry Walkenhorst",
+    "staff": [
+      {"name":"Henry Walkenhorst","role":"Owner, Walkenhorst Motorsport","group":"management"}
+    ]
+  },
+  "navikuru-buzz-mk-racing": {
+    "headquarters": "Japan",
+    "owner": "Buzz Racing / MK",
+    "staff": [
+      {"name":"Buzz Racing / MK","role":"Owner","group":"management"}
+    ]
+  },
+  "nds-motorsports": {"headquarters":"United States"},
+  "nemco-motorsports": {
+    "founded": "1989",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Joe Nemechek",
+    "staff": [
+      {"name":"Joe Nemechek","role":"Owner","group":"management"}
+    ]
+  },
+  "newman-motorsports": {
+    "owner": "Newman",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Newman","role":"Owner","group":"management"}
+    ]
+  },
+  "niece-motorsports": {
+    "founded": "2018",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Cody Niece",
+    "staff": [
+      {"name":"Cody Niece","role":"Owner","group":"management"}
+    ]
+  },
+  "nielsen-racing": {
+    "founded": "2016",
+    "headquarters": "United Kingdom",
+    "owner": "David Nielsen",
+    "staff": [
+      {"name":"David Nielsen","role":"Owner","group":"management"}
+    ]
+  },
+  "nilzz-racing": {"headquarters":"Japan"},
+  "nismo": {
+    "founded": "1984",
+    "headquarters": "Yokohama, Japan",
+    "owner": "Nissan",
+    "staff": [
+      {"name":"Nissan","role":"Owner","group":"management"}
+    ]
+  },
+  "nitro-motorsports": {
+    "owner": "Nitro",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Nitro","role":"Owner","group":"management"}
+    ]
+  },
+  "norm-benning-racing": {
+    "founded": "1989",
+    "headquarters": "Level Green, Pennsylvania, U.S.",
+    "owner": "Norm Benning",
+    "staff": [
+      {"name":"Norm Benning","role":"Owner","group":"management"}
+    ]
+  },
+  "ntt-docomo-business-rookie": {
+    "headquarters": "Japan",
+    "owner": "Akio Toyoda",
+    "staff": [
+      {"name":"Akio Toyoda","role":"Owner, Rookie Racing","group":"management"}
+    ]
+  },
+  "ny-racing-team": {
+    "founded": "2021",
+    "headquarters": "United States",
+    "owner": "John Cohen",
+    "staff": [
+      {"name":"John Cohen","role":"Owner","group":"management"}
+    ]
+  },
+  "oman-racing-by-century-motorsport": {
+    "owner": "Oman",
+    "headquarters": "Europe",
+    "staff": [
+      {"name":"Oman","role":"Owner","group":"management"}
+    ]
+  },
+  "ombra-racing": {"headquarters":"Italy"},
+  "optimum-motorsport": {
+    "founded": "2013",
+    "headquarters": "United Kingdom",
+    "owner": "Shaun Goff",
+    "staff": [
+      {"name":"Shaun Goff","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "pa-racing": {"headquarters":"Italy"},
+  "pacific-racing-team": {"headquarters":"Japan"},
+  "paradine-competition": {"headquarters":"United Kingdom"},
+  "pardus-racing-inc": {
+    "headquarters": "United States",
+    "owner": "Pardus Racing",
+    "staff": [
+      {"name":"Pardus Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "paul-miller-racing": {
+    "founded": "1987",
+    "headquarters": "Little Falls, New Jersey, U.S.",
+    "owner": "Paul Miller",
+    "staff": [
+      {"name":"Paul Miller","role":"Owner","group":"management"}
+    ]
+  },
+  "peedee-motorsports": {
+    "owner": "PeeDee",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"PeeDee","role":"Owner","group":"management"}
+    ]
+  },
+  "perry-racing": {
+    "owner": "Perry",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Perry","role":"Owner","group":"management"}
+    ]
+  },
+  "peter-clark-motorsports": {
+    "owner": "Peter Clark",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Peter Clark","role":"Owner","group":"management"}
+    ]
+  },
+  "peterson-racing": {"headquarters":"United States"},
+  "peterson-racing-group": {"headquarters":"United States"},
+  "pfaff-motorsports": {"founded":"2017","headquarters":"Ontario, Canada","owner":"Pfaff Automotive"},
+  "phm-racing": {
+    "founded": "2022",
+    "headquarters": "Germany",
+    "owner": "Paul Muller",
+    "staff": [
+      {"name":"Paul Muller","role":"Owner","group":"management"}
+    ]
+  },
+  "pinnacle-racing-group": {"headquarters":"United States"},
+  "ponos-nakajima-racing": {
+    "founded": "1981",
+    "headquarters": "Okazaki, Aichi, Japan",
+    "owner": "Satoru Nakajima",
+    "staff": [
+      {"name":"Satoru Nakajima","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "ponos-racing": {"headquarters":"Japan"},
+  "porsche-motorsport": {
+    "founded": "1984",
+    "headquarters": "Weissach, Germany",
+    "owner": "Porsche",
+    "staff": [
+      {"name":"Porsche","role":"Owner","group":"management"}
+    ]
+  },
+  "porsche-penske-motorsport": {
+    "founded": "2022",
+    "headquarters": "Mannheim, Germany / Mooresville, North Carolina, U.S.",
+    "owner": "Porsche / Roger Penske",
+    "staff": [
+      {"name":"Roger Penske","role":"Owner","group":"management"},
+      {"name":"Jonathan Diuguid","role":"Managing Director","group":"management"},
+      {"name":"Urs Kuratle","role":"Director of Factory Motorsport LMDh","group":"sporting"}
+    ]
+  },
+  "pratt-miller-motorsports": {
+    "founded": "1985",
+    "headquarters": "New Hudson, Michigan, U.S.",
+    "owner": "Pratt Miller",
+    "staff": [
+      {"name":"Pratt Miller","role":"Owner","group":"management"}
+    ]
+  },
+  "prema-racing": {
+    "founded": "1983",
+    "headquarters": "Grisignano di Zocco, Italy",
+    "owner": "Angelo Rosin / Rene Rosin",
+    "staff": [
+      {"name":"Angelo Rosin","role":"Owner","group":"management"},
+      {"name":"Rene Rosin","role":"Team Principal","group":"management"}
+    ]
+  },
+  "premiair-racing": {
+    "founded": "2021",
+    "headquarters": "Stapylton, Queensland, Australia",
+    "owner": "Peter Xiberras",
+    "staff": [
+      {"name":"Peter Xiberras","role":"Owner","group":"management"}
+    ]
+  },
+  "proton-competition": {
+    "founded": "1998",
+    "headquarters": "Germany",
+    "owner": "Christian Ried",
+    "staff": [
+      {"name":"Christian Ried","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "psr-racing": {"headquarters":"United States"},
+  "pure-rxcing": {
+    "founded": "2021",
+    "headquarters": "Switzerland",
+    "owner": "Alex Malykhin",
+    "staff": [
+      {"name":"Alex Malykhin","role":"Owner","group":"management"}
+    ]
+  },
+  "r-ace-gp": {
+    "founded": "2010",
+    "headquarters": "Saint-Maur-des-Fosses, France",
+    "owner": "Bertrand Pugnet",
+    "staff": [
+      {"name":"Bertrand Pugnet","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "r-d-sport": {"headquarters":"Japan"},
+  "r-qs-motor-sports": {"headquarters":"Japan"},
+  "racing-bulls": {
+    "founded": "2006",
+    "headquarters": "Faenza, Italy",
+    "owner": "Red Bull GmbH",
+    "team_principal": "Alan Permane",
+    "staff": [
+      {"name":"Laurent Mekies","role":"Team Principal","group":"management","seasons":["2024"]},
+      {"name":"Alan Permane","role":"Racing Director","group":"sporting","seasons":["2024"]},
+      {"name":"Alan Permane","role":"Team Principal","group":"management","seasons":["2025","2026"]},
+      {"name":"Peter Bayer","role":"CEO","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Jody Egginton","role":"Technical Director","group":"technical","seasons":["2024","2025"]},
+      {"name":"Pierre Hamelin","role":"Race Engineer (Isack Hadjar)","group":"sporting","seasons":["2025"]}
+    ],
+    "lineage": "Minardi -> Scuderia Toro Rosso -> Scuderia AlphaTauri -> Racing Bulls"
+  },
+  "racing-spirit-of-leman": {"headquarters":"France"},
+  "rackley-w-a-r": {
+    "founded": "2020",
+    "headquarters": "Nashville, Tennessee, U.S.",
+    "owner": "Willie Allen / Kevin Rackley",
+    "staff": [
+      {"name":"Willie Allen / Kevin Rackley","role":"Owner","group":"management"}
+    ]
+  },
+  "rafa-racing-team": {"headquarters":"United States"},
+  "rahal-letterman-lanigan-racing": {
+    "founded": "1991",
+    "headquarters": "Hilliard, Ohio, U.S.",
+    "owner": "Bobby Rahal / David Letterman / Mike Lanigan",
+    "staff": [
+      {"name":"Bobby Rahal","role":"Co-Owner","group":"management"},
+      {"name":"David Letterman","role":"Co-Owner","group":"management"},
+      {"name":"Mike Lanigan","role":"Co-Owner","group":"management"},
+      {"name":"Ricky Taylor","role":"Sporting Director","group":"sporting"}
+    ]
+  },
+  "razoon-more-than-racing": {
+    "owner": "Razoon - more than",
+    "headquarters": "Europe",
+    "staff": [
+      {"name":"Razoon - more than","role":"Owner","group":"management"}
+    ]
+  },
+  "real-racing": {"headquarters":"Italy"},
+  "realize-kondo-racing": {
+    "founded": "2000",
+    "headquarters": "Japan",
+    "owner": "Masahiko Kondo",
+    "staff": [
+      {"name":"Masahiko Kondo","role":"Owner","group":"management"}
+    ]
+  },
+  "red-bull-racing": {
+    "founded": "2005",
+    "headquarters": "Milton Keynes, Buckinghamshire, England",
+    "owner": "Red Bull GmbH",
+    "team_principal": "Laurent Mekies",
+    "staff": [
+      {"name":"Christian Horner","role":"Team Principal / CEO","group":"management","seasons":["2024"]},
+      {"name":"Laurent Mekies","role":"Team Principal / CEO","group":"management","seasons":["2025","2026"]},
+      {"name":"Pierre Wache","role":"Technical Director","group":"technical","seasons":["2024","2025","2026"]},
+      {"name":"Jonathan Wheatley","role":"Sporting Director","group":"sporting","seasons":["2024"]},
+      {"name":"Gianpiero Lambiase","role":"Race Engineer (Max Verstappen)","group":"sporting","seasons":["2024"]},
+      {"name":"Gianpiero Lambiase","role":"Head of Racing / Race Engineer (Max Verstappen)","group":"sporting","seasons":["2025","2026"]},
+      {"name":"Richard Wood","role":"Race Engineer (Liam Lawson)","group":"sporting","seasons":["2025"]},
+      {"name":"Richard Wood","role":"Race Engineer (Yuki Tsunoda)","group":"sporting","seasons":["2025"]},
+      {"name":"Richard Wood","role":"Race Engineer (Isack Hadjar)","group":"sporting","seasons":["2026"]},
+      {"name":"Ben Waterhouse","role":"Chief Performance and Design Engineer","group":"technical","seasons":["2026"]},
+      {"name":"Helmut Marko","role":"Motorsport Advisor","group":"management","seasons":["2024","2025"]}
+    ],
+    "lineage": "Stewart Grand Prix -> Jaguar Racing -> Red Bull Racing"
+  },
+  "red-bull-team-abt": {
+    "founded": "1987",
+    "headquarters": "Kempten, Germany",
+    "owner": "Abt Sportsline",
+    "staff": [
+      {"name":"Hans-Jurgen Abt","role":"CEO, Abt Sportsline","group":"management"},
+      {"name":"Thomas Biermaier","role":"CEO / Team Principal","group":"management"}
+    ]
+  },
+  "rette-jones-racing": {
+    "founded": "2014",
+    "headquarters": "United States",
+    "owner": "Mark Rette",
+    "staff": [
+      {"name":"Mark Rette","role":"Owner","group":"management"}
+    ]
+  },
+  "rfk-racing": {
+    "founded": "1991",
+    "headquarters": "Concord, North Carolina, U.S.",
+    "owner": "Jack Roush / Brad Keselowski",
+    "president": "Joey Cohen",
+    "staff": [
+      {"name":"Jack Roush","role":"Co-Owner","group":"management"},
+      {"name":"Brad Keselowski","role":"Co-Owner / Driver","group":"management"},
+      {"name":"Joey Cohen","role":"President","group":"management"}
+    ],
+    "lineage": "Roush Racing -> Roush Fenway Racing -> RFK Racing"
+  },
+  "rgb-racing": {"headquarters":"France"},
+  "richard-childress-racing": {
+    "founded": "1969",
+    "headquarters": "Welcome, North Carolina, U.S.",
+    "owner": "Richard Childress",
+    "president": "Mike Dillon",
+    "staff": [
+      {"name":"Richard Childress","role":"Chairman and CEO","group":"management"},
+      {"name":"Mike Dillon","role":"Chief Operating Officer","group":"management"},
+      {"name":"John Klausmeier","role":"Technical Director","group":"technical"},
+      {"name":"Andy Street","role":"Performance Director","group":"sporting"}
+    ]
+  },
+  "rick-ware-racing": {
+    "founded": "2011",
+    "headquarters": "Concord, North Carolina, U.S.",
+    "owner": "Rick Ware",
+    "staff": [
+      {"name":"Rick Ware","role":"Owner","group":"management"}
+    ]
+  },
+  "rinaldi-racing": {"founded":"2011","headquarters":"Germany"},
+  "rise-racing": {
+    "owner": "Rise",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Rise","role":"Owner","group":"management"}
+    ]
+  },
+  "risi-competizione": {
+    "founded": "1997",
+    "headquarters": "Houston, Texas, U.S.",
+    "owner": "Giuseppe Risi",
+    "staff": [
+      {"name":"Giuseppe Risi","role":"Owner","group":"management"}
+    ]
+  },
+  "rll-team-mclaren": {
+    "founded": "1991",
+    "headquarters": "Hilliard, Ohio, U.S.",
+    "owner": "Bobby Rahal / David Letterman / Mike Lanigan / McLaren",
+    "staff": [
+      {"name":"Bobby Rahal / David Letterman / Mike Lanigan / McLaren","role":"Owner","group":"management"}
+    ]
+  },
+  "rodin-motorsport": {
+    "founded": "2012",
+    "headquarters": "Woking, Surrey, England",
+    "owner": "David Dicker",
+    "staff": [
+      {"name":"David Dicker","role":"Owner","group":"management"}
+    ]
+  },
+  "roger-turbush": {"headquarters":"United States"},
+  "ronnie-williams": {"headquarters":"United States"},
+  "rossa-racing-by-virage": {
+    "headquarters": "France",
+    "owner": "Team Virage",
+    "staff": [
+      {"name":"Team Virage","role":"Owner","group":"management"}
+    ]
+  },
+  "rowe-racing": {
+    "founded": "2011",
+    "headquarters": "St. Ingbert, Germany",
+    "team_principal": "Hans-Peter Naundorf",
+    "staff": [
+      {"name":"Hans-Peter Naundorf","role":"Founder / Team Principal","group":"management"}
+    ]
+  },
+  "rpm": {"headquarters":"Italy"},
+  "rs1": {"headquarters":"United States"},
+  "rss-racing": {
+    "founded": "2015",
+    "headquarters": "United States",
+    "owner": "Rod Sieg",
+    "staff": [
+      {"name":"Rod Sieg","role":"Owner","group":"management"}
+    ]
+  },
+  "rutronik-racing": {
+    "founded": "2018",
+    "headquarters": "Winnenden, Germany",
+    "owner": "Michael Rebhan",
+    "staff": [
+      {"name":"Michael Rebhan","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "ryan-huff-motorsports": {
+    "owner": "Ryan Huff",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Ryan Huff","role":"Owner","group":"management"}
+    ]
+  },
+  "ryan-preece-racing": {
+    "headquarters": "United States",
+    "owner": "Ryan Preece",
+    "staff": [
+      {"name":"Ryan Preece","role":"Owner","group":"management"}
+    ]
+  },
+  "sainteloc-racing": {
+    "founded": "2004",
+    "headquarters": "Saint-Jean-de-Soudain, France",
+    "team_principal": "Philippe Sinault",
+    "staff": [
+      {"name":"Philippe Sinault","role":"Team Principal","group":"management"}
+    ]
+  },
+  "saitama-green-brave": {
+    "headquarters": "Japan",
+    "owner": "Saitama Toyopet Green Brave",
+    "staff": [
+      {"name":"Saitama Toyopet Green Brave","role":"Owner","group":"management"}
+    ]
+  },
+  "sam-hunt-racing": {
+    "founded": "2017",
+    "headquarters": "United States",
+    "owner": "Sam Hunt",
+    "staff": [
+      {"name":"Sam Hunt","role":"Owner","group":"management"}
+    ]
+  },
+  "san-ei-gen-with-b-max": {
+    "headquarters": "Japan",
+    "owner": "B-Max Racing",
+    "staff": [
+      {"name":"B-Max Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "sanki-vertex-partners-cerumo-inging": {
+    "founded": "1991",
+    "headquarters": "Japan",
+    "owner": "Cerumo / Inging",
+    "staff": [
+      {"name":"Cerumo / Inging","role":"Owner","group":"management"}
+    ]
+  },
+  "sapienza-racing": {
+    "owner": "Sapienza",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Sapienza","role":"Owner","group":"management"}
+    ]
+  },
+  "schubert-motorsport": {
+    "founded": "1999",
+    "headquarters": "Germany",
+    "owner": "Torsten Schubert",
+    "staff": [
+      {"name":"Torsten Schubert","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "schumacher-clrt": {
+    "founded": "2007",
+    "headquarters": "Signes, France",
+    "owner": "Christophe Lemeret",
+    "staff": [
+      {"name":"Christophe Lemeret","role":"Owner","group":"management"}
+    ]
+  },
+  "scuderia-buell": {"headquarters":"Italy"},
+  "selected-car-racing": {
+    "owner": "Selected Car",
+    "headquarters": "Europe",
+    "staff": [
+      {"name":"Selected Car","role":"Owner","group":"management"}
+    ]
+  },
+  "seven-x-seven-racing": {"headquarters":"Japan"},
+  "shade-racing": {"headquarters":"Japan"},
+  "shearer-speed-racing": {
+    "owner": "Shearer Speed",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Shearer Speed","role":"Owner","group":"management"}
+    ]
+  },
+  "shockwave-motorsports": {
+    "owner": "Shockwave",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Shockwave","role":"Owner","group":"management"}
+    ]
+  },
+  "spire-motorsports": {
+    "founded": "2018",
+    "headquarters": "Concord, North Carolina, U.S.",
+    "owner": "Jeff Dickerson / T. J. Gizzo",
+    "staff": [
+      {"name":"Jeff Dickerson","role":"Co-Owner","group":"management"},
+      {"name":"T. J. Gizzo","role":"Co-Owner","group":"management"}
+    ]
+  },
+  "spirit-of-race": {"founded":"2011","headquarters":"Switzerland"},
+  "sps-racing": {"headquarters":"United States"},
+  "ss-green-light-racing": {
+    "founded": "2010",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Bobby Dotter / Mary Louise Miller",
+    "staff": [
+      {"name":"Bobby Dotter / Mary Louise Miller","role":"Owner","group":"management"}
+    ]
+  },
+  "ss-motorsports": {"headquarters":"United States"},
+  "stanley-team-kunimitsu": {
+    "founded": "1991",
+    "headquarters": "Japan",
+    "owner": "Kunimitsu Takahashi / Team Kunimitsu",
+    "staff": [
+      {"name":"Kunimitsu Takahashi","role":"Founder","group":"management"}
+    ]
+  },
+  "steller-motorsport": {"headquarters":"United Kingdom"},
+  "steve-lewis-racing": {
+    "owner": "Steve Lewis",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Steve Lewis","role":"Owner","group":"management"}
+    ]
+  },
+  "strike-mamba-racing": {
+    "owner": "Strike Mamba",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Strike Mamba","role":"Owner","group":"management"}
+    ]
+  },
+  "supreme-racing": {
+    "owner": "Supreme",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Supreme","role":"Owner","group":"management"}
+    ]
+  },
+  "target-competition": {"founded":"2011","headquarters":"Belgium"},
+  "tc-motorsports": {"headquarters":"United States"},
+  "tds-racing": {
+    "founded": "1987",
+    "headquarters": "Magny-Cours, France",
+    "team_principal": "Xavier Combet",
+    "staff": [
+      {"name":"Xavier Combet","role":"Team Principal","group":"management"}
+    ]
+  },
+  "team-18": {
+    "founded": "2013",
+    "headquarters": "Melbourne, Victoria, Australia",
+    "owner": "Charlie Schwerkolt",
+    "staff": [
+      {"name":"Charlie Schwerkolt","role":"Owner","group":"management"}
+    ]
+  },
+  "team-25-llc": {"headquarters":"United States"},
+  "team-36": {"headquarters":"United States"},
+  "team-amerivet": {"founded":"2024","headquarters":"United States"},
+  "team-eneos-rookie": {
+    "headquarters": "Japan",
+    "owner": "Akio Toyoda",
+    "staff": [
+      {"name":"Akio Toyoda","role":"Owner, Rookie Racing","group":"management"}
+    ]
+  },
+  "team-gershow": {"headquarters":"United States"},
+  "team-goh": {
+    "founded": "1996",
+    "headquarters": "Japan",
+    "owner": "Kazumichi Goh",
+    "staff": [
+      {"name":"Kazumichi Goh","role":"Owner","group":"management"}
+    ]
+  },
+  "team-hrc-arta-mugen": {
+    "founded": "1997",
+    "headquarters": "Japan",
+    "owner": "Aguri Suzuki",
+    "staff": [
+      {"name":"Aguri Suzuki","role":"Founder / Team Owner, ARTA","group":"management"}
+    ]
+  },
+  "team-impul": {
+    "founded": "1980",
+    "headquarters": "Japan",
+    "owner": "Kazuyoshi Hoshino",
+    "staff": [
+      {"name":"Kazuyoshi Hoshino","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "team-mach": {"headquarters":"Japan"},
+  "team-motopark": {
+    "founded": "1998",
+    "headquarters": "Germany",
+    "owner": "Timo Rumpfkeil",
+    "staff": [
+      {"name":"Timo Rumpfkeil","role":"Owner","group":"management"}
+    ]
+  },
+  "team-mugen-autobacs": {
+    "founded": "1973",
+    "headquarters": "Japan",
+    "owner": "Hirotoshi Honda",
+    "staff": [
+      {"name":"Hirotoshi Honda","role":"Founder / Owner, M-TEC (Mugen)","group":"management"}
+    ]
+  },
+  "team-penske": {
+    "founded": "1966",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Roger Penske",
+    "president": "Michael Nelson",
+    "staff": [
+      {"name":"Roger Penske","role":"Owner","group":"management"},
+      {"name":"Michael Nelson","role":"President, Penske Racing South (NASCAR)","group":"management"},
+      {"name":"Jonathan Diuguid","role":"President, Penske Racing (IndyCar)","group":"management"},
+      {"name":"Travis Geisler","role":"Vice President of NASCAR Competition","group":"sporting"},
+      {"name":"Travis Law","role":"Competition Director, IndyCar","group":"sporting"}
+    ]
+  },
+  "team-qatar-by-iron-lynx": {
+    "founded": "2017",
+    "headquarters": "Italy",
+    "owner": "Claudio Schiavoni",
+    "staff": [
+      {"name":"Claudio Schiavoni","role":"Founder / Owner","group":"management"},
+      {"name":"Andrea Piccini","role":"Team Principal","group":"management"}
+    ]
+  },
+  "team-reaume": {
+    "founded": "2014",
+    "headquarters": "United States",
+    "owner": "Josh Reaume",
+    "staff": [
+      {"name":"Josh Reaume","role":"Owner","group":"management"}
+    ]
+  },
+  "team-rjn": {"headquarters":"United Kingdom"},
+  "team-stange-racing": {"headquarters":"United States"},
+  "team-upgarage": {"headquarters":"Japan"},
+  "team-virage": {"headquarters":"France"},
+  "team-wrt": {
+    "founded": "2009",
+    "headquarters": "Bierset, Belgium",
+    "owner": "Vincent Vosse / Yves Weerts",
+    "staff": [
+      {"name":"Vincent Vosse","role":"Founder / Team Principal","group":"management"}
+    ],
+    "team_principal": "Vincent Vosse"
+  },
+  "teddy-hodgdon-racing": {
+    "owner": "Teddy Hodgdon",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Teddy Hodgdon","role":"Owner","group":"management"}
+    ]
+  },
+  "terry-carroll-motorsports": {
+    "headquarters": "United States",
+    "owner": "Terry Carroll",
+    "staff": [
+      {"name":"Terry Carroll","role":"Owner","group":"management"}
+    ]
+  },
+  "tf-sport": {
+    "founded": "2013",
+    "headquarters": "United Kingdom",
+    "owner": "Tom Ferrier",
+    "staff": [
+      {"name":"Tom Ferrier","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "tgi-team-by-grt": {
+    "headquarters": "Germany",
+    "owner": "Gottfried Grasser",
+    "staff": [
+      {"name":"Gottfried Grasser","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "tgr-team-au-tom-s": {
+    "founded": "1974",
+    "headquarters": "Japan",
+    "owner": "Toyota Gazoo Racing / TOM'S",
+    "staff": [
+      {"name":"Nobuhide Tachi","role":"Co-founder, TOM'S","group":"management"}
+    ]
+  },
+  "tgr-team-deloitte-tom-s": {
+    "founded": "1974",
+    "headquarters": "Japan",
+    "owner": "Toyota Gazoo Racing / TOM'S",
+    "staff": [
+      {"name":"Nobuhide Tachi","role":"Co-founder, TOM'S","group":"management"}
+    ]
+  },
+  "tgr-team-eneos-rookie": {
+    "headquarters": "Japan",
+    "owner": "Akio Toyoda",
+    "staff": [
+      {"name":"Akio Toyoda","role":"Owner, Rookie Racing","group":"management"}
+    ]
+  },
+  "tgr-team-keeper-cerumo": {
+    "founded": "1991",
+    "headquarters": "Japan",
+    "owner": "Toyota Gazoo Racing / Cerumo",
+    "staff": [
+      {"name":"Toyota Gazoo Racing / Cerumo","role":"Owner","group":"management"}
+    ]
+  },
+  "tgr-team-sard": {
+    "founded": "1972",
+    "headquarters": "Japan",
+    "owner": "Toyota Gazoo Racing / SARD",
+    "staff": [
+      {"name":"Toyota Gazoo Racing / SARD","role":"Owner","group":"management"}
+    ]
+  },
+  "tgr-team-wedssport-bandoh": {
+    "founded": "1994",
+    "headquarters": "Japan",
+    "owner": "Toyota Gazoo Racing / Bandoh",
+    "staff": [
+      {"name":"Toyota Gazoo Racing / Bandoh","role":"Owner","group":"management"}
+    ]
+  },
+  "thor-team": {
+    "headquarters": "Seattle, Washington, U.S.",
+    "owner": "The Heart of Racing",
+    "founded": "2020",
+    "staff": [
+      {"name":"The Heart of Racing","role":"Owner","group":"management"}
+    ]
+  },
+  "thorsport-racing": {
+    "founded": "1996",
+    "headquarters": "Sandusky, Ohio, U.S.",
+    "owner": "Duke Thorson",
+    "staff": [
+      {"name":"Duke Thorson","role":"Owner","group":"management"},
+      {"name":"Rhonda Thorson","role":"Co-owner","group":"management"}
+    ]
+  },
+  "threebond-racing": {"headquarters":"Japan"},
+  "tickford-racing": {
+    "founded": "2003",
+    "headquarters": "Campbellfield, Victoria, Australia",
+    "owner": "Rod Nash",
+    "staff": [
+      {"name":"Rod Nash","role":"Owner","group":"management"}
+    ]
+  },
+  "tim-richmond-racing": {
+    "owner": "Tim Richmond",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Tim Richmond","role":"Owner","group":"management"}
+    ]
+  },
+  "timothy-solomito": {"headquarters":"United States"},
+  "tinio-racing": {
+    "owner": "Tinio",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Tinio","role":"Owner","group":"management"}
+    ]
+  },
+  "tinkle-family-racing": {
+    "owner": "Tinkle Family",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Tinkle Family","role":"Owner","group":"management"}
+    ]
+  },
+  "tjs-holdings": {"headquarters":"United States","owner":"TJS Holdings LLC"},
+  "tlc-performance": {"headquarters":"United States"},
+  "tomei-sports": {"headquarters":"Japan"},
+  "tommy-baldwin-racing": {
+    "founded": "2009",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Tommy Baldwin Jr.",
+    "staff": [
+      {"name":"Tommy Baldwin Jr.","role":"Owner","group":"management"}
+    ]
+  },
+  "tower-motorsports": {
+    "founded": "2019",
+    "headquarters": "Riviera Beach, Florida, U.S.",
+    "owner": "John Farano",
+    "staff": [
+      {"name":"John Farano","role":"Owner","group":"management"}
+    ]
+  },
+  "trackhouse-racing": {
+    "founded": "2021",
+    "headquarters": "Concord, North Carolina, U.S.",
+    "owner": "Justin Marks / Pitbull",
+    "president": "Todd Meredith",
+    "staff": [
+      {"name":"Justin Marks","role":"Owner","group":"management"},
+      {"name":"Pitbull","role":"Co-Owner","group":"management"},
+      {"name":"Todd Meredith","role":"President","group":"management"},
+      {"name":"Darian Grubb","role":"Competition Director","group":"sporting"}
+    ],
+    "lineage": "Chip Ganassi Racing (NASCAR) -> Trackhouse Racing"
+  },
+  "tresor-attempto-racing": {
+    "founded": "2014",
+    "headquarters": "Germany / Italy",
+    "owner": "Attempto Racing / Tresor",
+    "staff": [
+      {"name":"Attempto Racing / Tresor","role":"Owner","group":"management"}
+    ]
+  },
+  "triarsi-competizione": {"founded":"2021","headquarters":"United States"},
+  "tricon-garage": {
+    "founded": "2022",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "David Gilliland",
+    "staff": [
+      {"name":"David Gilliland","role":"Co-owner","group":"management"}
+    ]
+  },
+  "trident": {
+    "founded": "2006",
+    "headquarters": "Milan, Italy",
+    "owner": "Maurizio Salvadori",
+    "staff": [
+      {"name":"Maurizio Salvadori","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "triple-eight-race-engineering": {
+    "founded": "2003",
+    "headquarters": "Banyo, Queensland, Australia",
+    "owner": "Tony Quinn",
+    "staff": [
+      {"name":"Tony Quinn","role":"Owner","group":"management"},
+      {"name":"Jamie Whincup","role":"Co-owner / Team Principal","group":"management"}
+    ],
+    "team_principal": "Jamie Whincup"
+  },
+  "tsunami-rt": {"headquarters":"Europe"},
+  "turbush-racing": {
+    "owner": "Turbush",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Turbush","role":"Owner","group":"management"}
+    ]
+  },
+  "turner-motorsport": {
+    "founded": "1993",
+    "headquarters": "Amesbury, Massachusetts, U.S.",
+    "owner": "Will Turner",
+    "staff": [
+      {"name":"Will Turner","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "ultimate": {"founded":"2015","headquarters":"France"},
+  "united-autosports": {
+    "founded": "2009",
+    "headquarters": "Wakefield, England",
+    "owner": "Richard Dean / Zak Brown",
+    "staff": [
+      {"name":"Richard Dean","role":"Co-owner / CEO","group":"management"},
+      {"name":"Zak Brown","role":"Co-owner","group":"management"}
+    ]
+  },
+  "united-autosports-usa": {
+    "founded": "2009",
+    "headquarters": "Wakefield, England",
+    "owner": "Richard Dean / Zak Brown",
+    "staff": [
+      {"name":"Richard Dean","role":"Co-owner / CEO","group":"management"},
+      {"name":"Zak Brown","role":"Co-owner","group":"management"}
+    ]
+  },
+  "us-racing": {
+    "founded": "2010",
+    "headquarters": "Meuspath, Germany",
+    "owner": "Ralf Schumacher / Gerhard Ungar",
+    "staff": [
+      {"name":"Ralf Schumacher","role":"Co-founder / Co-owner","group":"management"},
+      {"name":"Gerhard Ungar","role":"Co-founder / Team Principal","group":"management"}
+    ]
+  },
+  "usne-motorsports": {"headquarters":"United States"},
+  "usnepower-motorsports": {
+    "owner": "USNEPower",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"USNEPower","role":"Owner","group":"management"}
+    ]
+  },
+  "van-amersfoort-racing": {
+    "founded": "1975",
+    "headquarters": "Zeewolde, Netherlands",
+    "owner": "Frits van Amersfoort",
+    "staff": [
+      {"name":"Frits van Amersfoort","role":"Founder / Owner","group":"management"},
+      {"name":"Rob Niessink","role":"CEO","group":"management"}
+    ]
+  },
+  "van-der-steur-racing": {
+    "owner": "van der Steur",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"van der Steur","role":"Owner","group":"management"}
+    ]
+  },
+  "vanco-racing": {
+    "owner": "Vanco",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Vanco","role":"Owner","group":"management"}
+    ]
+  },
+  "vantelin-team-tom-s": {
+    "founded": "1974",
+    "headquarters": "Japan",
+    "owner": "TOM'S",
+    "staff": [
+      {"name":"Nobuhide Tachi","role":"Co-founder, TOM'S","group":"management"}
+    ]
+  },
+  "vasser-sullivan-racing": {
+    "founded": "2015",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Jimmy Vasser / James Sullivan",
+    "staff": [
+      {"name":"Jimmy Vasser","role":"Co-owner","group":"management"},
+      {"name":"James Sullivan","role":"Co-owner","group":"management"}
+    ]
+  },
+  "vector-sport": {
+    "founded": "2020",
+    "headquarters": "United Kingdom",
+    "owner": "Phil Hall",
+    "staff": [
+      {"name":"Phil Hall","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "velorex": {"headquarters":"Japan"},
+  "viking-motorsports": {"headquarters":"United States"},
+  "vsr": {
+    "founded": "2008",
+    "headquarters": "Italy",
+    "owner": "Vincenzo Sospiri",
+    "staff": [
+      {"name":"Vincenzo Sospiri","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "vwv-racing": {"headquarters":"United States"},
+  "walkenhorst-motorsport": {
+    "founded": "1999",
+    "headquarters": "Melle, Germany",
+    "owner": "Henry Walkenhorst",
+    "staff": [
+      {"name":"Henry Walkenhorst","role":"Owner","group":"management"}
+    ]
+  },
+  "walkinshaw-twg-racing": {
+    "founded": "1988",
+    "headquarters": "Clayton, Victoria, Australia",
+    "owner": "Ryan Walkinshaw / TWG Motorsports",
+    "staff": [
+      {"name":"Ryan Walkinshaw","role":"Co-owner","group":"management"},
+      {"name":"Zak Brown","role":"Co-owner","group":"management"}
+    ],
+    "lineage": "Holden Racing Team -> Walkinshaw Racing -> Walkinshaw Andretti United -> Walkinshaw TWG Racing"
+  },
+  "wanick-motorsports": {
+    "owner": "Wanick",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Wanick","role":"Owner","group":"management"}
+    ]
+  },
+  "wayne-peterson-motorsports": {
+    "owner": "Wayne Peterson",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Wayne Peterson","role":"Owner","group":"management"}
+    ]
+  },
+  "wayne-taylor-racing": {
+    "founded": "2004",
+    "headquarters": "Indianapolis, Indiana, U.S.",
+    "owner": "Wayne Taylor",
+    "staff": [
+      {"name":"Wayne Taylor","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "weslowski-racing": {
+    "owner": "Weslowski",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Weslowski","role":"Owner","group":"management"}
+    ]
+  },
+  "white-motorsports": {
+    "owner": "White",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"White","role":"Owner","group":"management"}
+    ]
+  },
+  "william-kimball-jr": {
+    "owner": "William Kimball",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"William Kimball","role":"Owner","group":"management"}
+    ]
+  },
+  "williams": {
+    "founded": "1977",
+    "headquarters": "Grove, Oxfordshire, England",
+    "owner": "Dorilton Capital",
+    "team_principal": "James Vowles",
+    "staff": [
+      {"name":"James Vowles","role":"Team Principal","group":"management","seasons":["2024","2025","2026"]},
+      {"name":"Pat Fry","role":"Chief Technical Officer","group":"technical","seasons":["2024","2025"]},
+      {"name":"David Wheater","role":"Head of Aerodynamics","group":"technical","seasons":["2024","2025","2026"]}
+    ]
+  },
+  "winward-racing": {
+    "founded": "2017",
+    "headquarters": "Indianapolis, Indiana, U.S. / Germany",
+    "owner": "Bryce Ward",
+    "staff": [
+      {"name":"Bryce Ward","role":"Owner","group":"management"},
+      {"name":"Russell Ward","role":"Co-owner","group":"management"}
+    ]
+  },
+  "wood-brothers-racing": {
+    "founded": "1950",
+    "headquarters": "Stuart, Virginia, U.S.",
+    "owner": "Wood family",
+    "president": "Eddie Wood / Len Wood",
+    "staff": [
+      {"name":"Eddie Wood","role":"Co-Owner / President","group":"management"},
+      {"name":"Len Wood","role":"Co-Owner / President","group":"management"}
+    ]
+  },
+  "wright-motorsports": {
+    "founded": "2014",
+    "headquarters": "United States",
+    "owner": "John Wright",
+    "staff": [
+      {"name":"John Wright","role":"Owner / Team Principal","group":"management"}
+    ]
+  },
+  "young-s-motorsports": {
+    "founded": "2014",
+    "headquarters": "Mooresville, North Carolina, U.S.",
+    "owner": "Andrew Young / Tyler Young",
+    "staff": [
+      {"name":"Andrew Young / Tyler Young","role":"Owner","group":"management"}
+    ]
+  },
+  "zacharias-motorsports": {
+    "owner": "Zacharias",
+    "headquarters": "United States",
+    "staff": [
+      {"name":"Zacharias","role":"Owner","group":"management"}
+    ]
+  },
+  "zengo-motorsport": {
+    "founded": "1996",
+    "headquarters": "Budapest, Hungary",
+    "owner": "Zoltan Zengo",
+    "staff": [
+      {"name":"Zoltan Zengo","role":"Founder / Owner","group":"management"}
+    ]
+  },
+  "ziggo-sport-tempesta-racing": {
+    "headquarters": "Netherlands / Italy",
+    "owner": "Tempesta Racing",
+    "staff": [
+      {"name":"Tempesta Racing","role":"Owner","group":"management"}
+    ]
+  }
+}

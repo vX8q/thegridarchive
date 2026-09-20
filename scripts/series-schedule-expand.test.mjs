@@ -120,4 +120,22 @@ test('resolveRaceSessionLabel uses sprint kind', () => {
   assert.strictEqual(label, 'Sprint');
 });
 
-console.log('All series-schedule-expand tests passed.');
+test('expandSeriesScheduleEvents splits PSC Zandvoort into two rows with same id', () => {
+  const e = loadScheduleEntry('psc.json', 'PSC_2026_6');
+  assert.ok(e);
+  const out = TGA.expandSeriesScheduleEvents('PSC', [e]);
+  assert.strictEqual(out.length, 2);
+  assert.strictEqual(out[0].id, 'PSC_2026_6');
+  assert.strictEqual(out[1].id, 'PSC_2026_6');
+  assert.strictEqual(out[0].start_date, '2026-08-22');
+  assert.strictEqual(out[1].start_date, '2026-08-23');
+  assert.strictEqual(out[0]._scheduleGroupId, 'PSC_2026_6');
+});
+
+test('expandSeriesScheduleEvents leaves PSC Hungaroring as a single row', () => {
+  const e = loadScheduleEntry('psc.json', 'PSC_2026_5');
+  assert.ok(e);
+  const out = TGA.expandSeriesScheduleEvents('PSC', [e]);
+  assert.strictEqual(out.length, 1);
+  assert.strictEqual(out[0].id, 'PSC_2026_5');
+});

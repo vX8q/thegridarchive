@@ -14,12 +14,12 @@ import (
 
 // dataResultsSummary is an aggregated JSON vs DB result count summary.
 type dataResultsSummary struct {
-	Series     string `json:"series"`
-	Season     string `json:"season"`
-	JSONEvents int    `json:"json_events"`
-	DBEvents   int    `json:"db_events"`
-	JSONResults int   `json:"json_results"`
-	DBResults   int   `json:"db_results"`
+	Series      string `json:"series"`
+	Season      string `json:"season"`
+	JSONEvents  int    `json:"json_events"`
+	DBEvents    int    `json:"db_events"`
+	JSONResults int    `json:"json_results"`
+	DBResults   int    `json:"db_results"`
 }
 
 // resultDiff is a specific event/race/driver mismatch.

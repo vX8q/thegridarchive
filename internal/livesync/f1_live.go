@@ -75,7 +75,7 @@ var (
 	fetchOpenF1DriversFunc               = fetchOpenF1Drivers
 	fetchOpenF1PositionsFunc             = fetchOpenF1Positions
 	fetchOpenF1IntervalsForDriverFunc    = fetchOpenF1IntervalsForDriver
-	fetchOpenF1StartingGridFunc        = fetchOpenF1StartingGrid
+	fetchOpenF1StartingGridFunc          = fetchOpenF1StartingGrid
 	fetchOpenF1LapsFunc                  = fetchOpenF1Laps
 	openF1NowFunc                        = func() time.Time { return time.Now().UTC() }
 )
@@ -411,9 +411,9 @@ func f1LeaderboardFrom(
 			continue
 		}
 		entry := nascarLiveRunningEntry{
-			Position:   r.pos,
-			CarNumber:  strconv.Itoa(r.dn),
-			Driver:     name,
+			Position:     r.pos,
+			CarNumber:    strconv.Itoa(r.dn),
+			Driver:       name,
 			Manufacturer: strings.TrimSpace(d.TeamName),
 		}
 		if gp, ok := grid[r.dn]; ok && gp > 0 {
